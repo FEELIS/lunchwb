@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
@@ -63,9 +64,9 @@
                                     <div class="text-center">
                                         <h4 class="text-dark mb-4" style="font-family: 'Nanum Gothic', sans-serif;">로그인</h4>
                                     </div>
-                                    <form class="user">
-                                        <div class="mb-3"><input class="form-control form-control-user" type="email" id="InputLoginEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="email" style="font-family: 'Nanum Gothic', sans-serif;"></div>
-                                        <div class="mb-3"><input class="form-control form-control-user" type="password" id="inputLoginPassword" placeholder="비밀번호를 입력해주세요." name="password" style="font-family: 'Nanum Gothic', sans-serif;"></div>
+                                    <form method="post" action="${pageContext.request.contextPath}/login" class="user">
+                                        <div class="mb-3"><input class="form-control form-control-user" type="email" id="InputLoginEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="userEmail" style="font-family: 'Nanum Gothic', sans-serif;"></div>
+                                        <div class="mb-3"><input class="form-control form-control-user" type="password" id="inputLoginPassword" placeholder="비밀번호를 입력해주세요." name="userPassword" style="font-family: 'Nanum Gothic', sans-serif;"></div>
                                         <div class="mb-3">
                                             <div class="custom-control custom-checkbox small">
                                                 <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1" style="font-family: 'Nanum Gothic', sans-serif;">로그인 상태 유지</label></div>
