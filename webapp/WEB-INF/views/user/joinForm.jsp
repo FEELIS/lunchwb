@@ -1,31 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Join</title>
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&amp;display=swap">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding&amp;display=swap">
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo&amp;display=swap">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/admin.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/alert.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/Features-Large-Icons-icons.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/group.css">
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/Login-Form-Basic-icons.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/main사이즈재려고...css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/random.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/storeinfo.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/user.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/visited.css">
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
+    <title> 회원가입 </title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Login-Form-Basic-icons.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/user.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
 </head>
 
 <body>
@@ -75,23 +63,23 @@
                             <div class="col-lg-6 col-xxl-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h4 class="text-dark mb-4" style="font-family: 'Nanum Gothic', sans-serif;font-weight: bold;">회원가입</h4>
+                                        <h4 class="text-dark mb-4" style="font-weight: bold;">회원가입</h4>
                                     </div>
-                                    <form class="user">
-                                        <div class="mb-3"><strong class="join-text">아이디</strong><input class="form-control form-control-user join-email" type="email" id="inputJoinEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="email" style="font-family: 'Nanum Gothic', sans-serif;"><button class="btn btn-primary" id="check-email" type="button">중복 확인</button></div>
-                                        <div class="mb-3"><strong class="join-text">비밀번호</strong><input class="form-control form-control-user" type="password" id="inputJoinPassword" placeholder="비밀번호를 입력해주세요." name="password" style="font-family: 'Nanum Gothic', sans-serif;"></div>
-                                        <div class="mb-3"><strong class="join-text">비밀번호 확인</strong><input class="form-control form-control-user" type="password" id="checkJoinPassword" placeholder="비밀번호를 한 번 더 입력해주세요." name="password" style="font-family: 'Nanum Gothic', sans-serif;"></div>
-                                        <div class="mb-3"><strong class="join-text">닉네임</strong><input class="form-control form-control-user" type="password" id="inputJoinNickname" placeholder="사용하실 닉네임을 입력해주세요" name="password" style="font-family: 'Nanum Gothic', sans-serif;"></div>
-                                        <div class="mb-3"><strong class="join-text">생년월일</strong><input id="inputJoinDate" type="date"></div>
-                                        <div class="mb-3"><strong class="join-text">성별</strong><select class="form-select" style="width: 150px;height: auto;">
-                                                <option value="male" selected="">남자</option>
+                                    <form method="post" action="${pageContext.request.contextPath}/join" class="user">
+                                        <div class="mb-3"><strong class="join-text">아이디</strong><input class="form-control form-control-user join-email" type="email" id="inputJoinEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="userEmail"><button class="btn btn-primary" id="check-email" type="button">중복 확인</button></div>
+                                        <div class="mb-3"><strong class="join-text">비밀번호</strong><input class="form-control form-control-user" type="password" id="inputJoinPassword" placeholder="비밀번호를 입력해주세요." name="userPassword"></div>
+                                        <div class="mb-3"><strong class="join-text">비밀번호 확인</strong><input class="form-control form-control-user" type="password" id="checkJoinPassword" placeholder="비밀번호를 한 번 더 입력해주세요." name="checkPassword"></div>
+                                        <div class="mb-3"><strong class="join-text">닉네임</strong><input class="form-control form-control-user" type="text" id="inputJoinNickname" placeholder="사용하실 닉네임을 입력해주세요" name="userName"></div>
+                                        <div class="mb-3"><strong class="join-text">생년월일</strong><input id="inputJoinDate" type="date" name="userBirth"></div>
+                                        <div class="mb-3"><strong class="join-text">성별</strong><select class="form-select" style="width: 150px;height: auto;" name="userSex">
+                                                <option value="male" selected="selected">남자</option>
                                                 <option value="female">여자</option>
                                             </select></div>
                                         <div class="mb-3">
                                             <div class="custom-control custom-checkbox small">
-                                                <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1" style="font-family: 'Nanum Gothic', sans-serif;">이용약관을 확인하였습니다.</label></div>
+                                                <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1">이용약관을 확인하였습니다.</label></div>
                                             </div>
-                                        </div><button class="btn btn-primary d-block btn-user w-100" id="btn-join" type="submit" style="font-family: 'Nanum Gothic', sans-serif;">가입하기</button>
+                                        </div><button class="btn btn-primary d-block btn-user w-100" id="btn-join" type="submit">가입하기</button>
                                     </form>
                                 </div>
                             </div>
@@ -106,9 +94,11 @@
             <div class="text-center my-auto copyright"><span>Copyright © FEELIS 2022<br>https://github.com/FEELIS&nbsp;<br></span></div>
         </div>
     </footer>
-    <script src="../../assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../../assets/js/bs-init.js"></script>
-    <script src="../../assets/js/theme.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 </body>
 
 </html>
+

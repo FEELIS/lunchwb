@@ -1,0 +1,39 @@
+#user-alert-list {
+  font-size: 12px;
+}
+
+#user-alert-list .dropdown-item {
+  padding: 8px 12px;
+}
+
+#user-alert-list .dropdown-item .alert-basic {
+  width: 235px;
+  margin: 0px;
+  padding: 0px;
+}
+
+#user-alert-list .dropdown-item .alert-choice {
+  width: 188px;
+  margin: 0px;
+  padding: 0px;
+}
+
+#user-alert-list .dropdown-item .btn-alert-check {
+  height: 22px;
+  font-size: 12px;
+  padding: 1px 12px;
+}
+
+#user-alert-list .dropdown-item .btn-alert-opposite {
+  height: 22px;
+  font-size: 12px;
+  padding: 1px 12px;
+  background: var(--bs-gray-200);
+  color: var(--bs-blue);
+}
+
+#group-name {
+  padding: 0px 0px 5px 0px;
+  font-size: 18px;
+  border-bottom: 1px solid #bbbbbb;
+}

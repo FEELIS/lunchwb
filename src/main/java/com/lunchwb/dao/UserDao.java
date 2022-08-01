@@ -16,5 +16,10 @@ public class UserDao {
 		UserVo authUser = sqlSession.selectOne("user.login", userVo);
 		return authUser;
 	}
+	
+	public int join(UserVo userVo) {
+		int count = sqlSession.insert("user.join", userVo);
+		return count;
+	}
 
 }

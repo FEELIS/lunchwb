@@ -8,10 +8,18 @@
 			select user_no userNo
 			        ,user_email userEmail
 			        ,user_name userName
+			        ,user_grade userGrade
 			from users
 			where user_email = #{userEmail}
 			and user_password = #{userPassword} 		
 		]]>
 	</select>
+	
+	<insert id="join" parameterType="com.lunchwb.vo.UserVo">
+		<![CDATA[
+			insert into users
+			values (seq_user_no.nextval, #{userEmail}, #{userPassword}, #{userName}, #{userBirth}, #{userSex}, sysdate, 0)
+		]]>
+	</insert>
 
 </mapper>

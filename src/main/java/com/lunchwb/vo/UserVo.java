@@ -16,8 +16,41 @@ public class UserVo {
 	private int adminNo;
 	// private int userNo (user table fk)
 
+	
 	public int getUserNo() {
 		return userNo;
+	}
+	
+
+	public UserVo() {
+		super();
+	}
+
+	public UserVo(int userNo, String userEmail, String userPassword, String userName, String userBirth, String userSex,
+			String userJoinDate, int userGrade) {
+		this.userNo = userNo;
+		this.userEmail = userEmail;
+		this.userPassword = userPassword;
+		this.userName = userName;
+		this.userBirth = userBirth;
+		this.userSex = userSex;
+		this.userJoinDate = userJoinDate;
+		this.userGrade = userGrade;
+	}
+
+
+
+	public UserVo(int userNo, String userEmail, String userPassword, String userName, String userBirth, String userSex,
+			String userJoinDate, int userGrade, int adminNo) {
+		this.userNo = userNo;
+		this.userEmail = userEmail;
+		this.userPassword = userPassword;
+		this.userName = userName;
+		this.userBirth = userBirth;
+		this.userSex = userSex;
+		this.userJoinDate = userJoinDate;
+		this.userGrade = userGrade;
+		this.adminNo = adminNo;
 	}
 
 	public void setUserNo(int userNo) {

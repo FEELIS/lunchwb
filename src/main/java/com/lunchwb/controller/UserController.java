@@ -1,5 +1,6 @@
 package com.lunchwb.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -50,10 +51,30 @@ public class UserController {
 	}
 	
 	@GetMapping("/join")
-	public String joinForm() {
+	public String joinForm(HttpServletRequest req) {
 		logger.info("user > joinForm()");
+		HttpSession session = req.getSession();
+		UserVo loginUser = (UserVo) session.getAttribute("authUser");
 		
+		if(loginUser != null) {
+			return "redirect:./";
+		}
 		return "user/joinForm";
+	}
+	
+	@PostMapping("/join")
+	public String join(@ModelAttribute UserVo userVo, HttpSession session ) {
+		logger.info("user > joinForm()");
+		System.out.println(userVo);
+		UserVo authUser = userService.join(userVo);
+		
+		if(authUser != null) {
+			session.setAttribute("authUser", authUser);
+			return "user/joinSuccess";
+		}else {
+			return "redirect:./join?result=fail";
+		}
+		
 	}
 
 

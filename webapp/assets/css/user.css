@@ -50,7 +50,11 @@
   font-size: 16px;
 }
 
-.join-login-logo {
+.login_logo {
+  width: 200px;
+  height: 44.16px;
+  margin: 15px 0px 15px 0px;
+  padding: 0;
 }
 
 .join-login-page {

@@ -16,5 +16,11 @@ public class UserService {
 		UserVo authUser = userDao.login(userVo);
 		return authUser;
 	}
+	
+	public UserVo join(UserVo userVo) {
+		int count = userDao.join(userVo);
+		UserVo authUser = userDao.login(userVo);
+		return authUser;
+	}
 
 }
