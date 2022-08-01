@@ -2,16 +2,17 @@ package com.lunchwb.vo;
 
 public class ReviewVo {
 	
-	//////////////////// review table //////////////////// 
+	//////////////////// review table ////////////////////
 	private int reviewNo;
 	private int userNo;
 	private int menuNo;
 	private int visitedNo;
-	private int storeNo;
-	private int menu2ndCateNo;
 	private String reviewContent;
 	private int userScore;
 	private String reviewFilePath;
 	private int reviewReported;
+	
+	// store table //
+	private int storeNo;
 
 }

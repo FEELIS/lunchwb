@@ -4,6 +4,7 @@ public class NotificationVo {
 	//////////////////// notification table ////////////////////
 	private int notiNo;
 	private int userNo;
+	/* join해서 써야합니다.*/
 	// private int notiType;
 	
 	
@@ -15,13 +16,16 @@ public class NotificationVo {
 	//////////////////// notiGroup table ////////////////////
 	private int groupNo;
 	// private int notiNo;
+	/* join해서 써야합니다.*/
 	// private int notiType;
 	
 	//////////////////// notiCs table ////////////////////
-	// private int notiNo;
-	// private notiType;
 	private int replyNo;
 	private int adminNo;
+	/* join해서 써야합니다.*/
+	// private int notiNo;
+	// private notiType;
+	
 	
 	
 
