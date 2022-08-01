@@ -9,6 +9,7 @@ public class VoteVo {
 	private String voteItems;
 	
 	//////////////////// voteGroup table ////////////////////
+	private int voteGroupNo;
 	// private int voteNo; (vote table fk)
 	private int userNo;
 	private int bossCheck;

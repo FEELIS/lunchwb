@@ -4,7 +4,7 @@ public class StoreVo {
 	
 	//////////////////// store table ////////////////////
 	private int storeNo;
-	private int menu2ndCateNo;
+	private int menu2ndCateNo; 
 	private String storeName;
 	private double storeX;
 	private double storeY;
@@ -15,14 +15,12 @@ public class StoreVo {
 	
 	//////////////////// ratingBujang table ////////////////////
 	// private int storeNo; (store table fk)
-	// private int menu2ndCateNo;
 	private float ratingSum;
 	private float ratingAvg;
 	private float ratingNum;
 	
 	//////////////////// ratingOthers table ////////////////////
 	// private int storeNo; (store table fk)
-	// private int menu2ndCateNo;
 	private float ratingNaver;
 	private float ratingKakao;
 	private float ratingGoogle;

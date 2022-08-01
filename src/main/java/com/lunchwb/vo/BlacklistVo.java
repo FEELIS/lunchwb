@@ -6,7 +6,7 @@ public class BlacklistVo {
 	private int blackNp;
 	private int storeNo;
 	private int groupNo;
-	private int menu2ndCateNo;
+	
 	
 
 }
