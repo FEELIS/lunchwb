@@ -7,7 +7,6 @@ public class ReviewVo {
 	private int userNo;
 	private int menuNo;
 	private int visitedNo;
-	private int menu2ndCateNo;
 	private String reviewContent;
 	private int userScore;
 	private String reviewFilePath;

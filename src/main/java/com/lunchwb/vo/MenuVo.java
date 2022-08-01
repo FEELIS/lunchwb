@@ -4,8 +4,10 @@ public class MenuVo {
 	//////////////////// menu table ////////////////////
 	private int menuNo;
 	//private int menu2ndCateNo;
-	//private int menu1stCateNo;
 	private String menuName;
+	/* join해서 사용 */
+	//private int menu1stCateNo;
+	
 	
 	
 	//////////////////// food2ndCategory table ////////////////////

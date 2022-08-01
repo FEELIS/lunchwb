@@ -20,11 +20,12 @@ public class NotificationVo {
 	// private int notiType;
 	
 	//////////////////// notiCs table ////////////////////
+	private int replyNo;
+	private int adminNo;
 	/* join해서 써야합니다.*/
 	// private int notiNo;
 	// private notiType;
-	private int replyNo;
-	private int adminNo;
+	
 	
 	
 
