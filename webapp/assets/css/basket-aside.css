@@ -1,0 +1,252 @@
+#basket-aside {
+  position: static;
+  display: grid;
+  min-width: 300px;
+  background: rgb(234,236,244);
+}
+
+#basket-aside #bujang-logo-wrap {
+  width: 100%;
+  padding: 15px 30px 11px 20px;
+}
+
+#basket-aside #bujang-logo-blue {
+  cursor: pointer;
+  margin: 0;
+  width: 200px;
+  height: 44.16px;
+}
+
+#basket-aside #comment-box {
+  background: var(--bs-gray-200);
+  padding: 25px 0;
+  margin: 0 0 20px 0;
+  margin-bottom: 0;
+}
+
+#basket-aside #comment-box #eat-what {
+  color: #000000;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 3px;
+}
+
+#basket-aside #comment-box #prefer-data span {
+  font-size: 13px;
+  color: var(--bs-gray-900);
+}
+
+#basket-aside .basket-aside-title {
+  font-weight: bold;
+  color: rgb(255,255,255);
+  background: var(--bs-blue);
+  margin-top: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+}
+
+#basket-aside .basket-group {
+  width: 75px;
+  height: 90px;
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+#basket-aside .basket-group:active {
+  box-shadow: inset 1px 1px 11px var(--bs-gray-300);
+}
+
+#basket-aside .basket-group:hover {
+  box-shadow: inset 1px 1px 11px var(--bs-gray-300);
+}
+
+#basket-aside .basket-group span {
+  font-size: 12px;
+  display: block;
+  margin-bottom: 3px;
+  font-weight: bold;
+  color: var(--bs-gray-600);
+}
+
+#basket-aside .basket-group i {
+  font-size: 40px;
+  color: var(--bs-gray-600);
+}
+
+#basket-aside .basket-group-add i {
+  font-size: 30px !important;
+  padding-top: 0px;
+  margin-top: 5px;
+  margin-left: 4px;
+  color: var(--bs-gray-600);
+}
+
+#basket-aside .basket-selected-group {
+  box-shadow: inset 1px 1px 11px var(--bs-gray-400);
+}
+
+#basket-aside .basket-selected-group i {
+  color: var(--bs-blue);
+}
+
+#basket-aside .basket-selected-group span {
+  color: var(--bs-blue);
+}
+
+#basket-aside #basket-table {
+  margin-bottom: 10px;
+}
+
+#basket-aside #basket-table #basket-table-button-area {
+  width: 100%;
+  padding: 15px 0;
+}
+
+#basket-aside #basket-table #basket-table-button-area i {
+  cursor: pointer;
+  background: #eaecf4;
+  color: var(--bs-dark);
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  margin-left: 13px;
+  border: 1px solid var(--bs-gray-100);
+}
+
+#basket-aside #basket-table #basket-table-button-area i:hover {
+  background-color: var(--bs-gray-400);
+}
+
+#basket-aside #basket-table #basket-table-button-area button {
+  border-radius: 10px;
+  font-size: 14px;
+  padding: 7px 40px;
+  margin-top: -1px;
+  margin-left: 10px;
+  margin-right: 13px;
+  color: var(--bs-gray-900);
+  background: #eaecf4;
+  font-weight: bold;
+  border-color: #eaecf4;
+}
+
+#basket-aside #basket-table #basket-table-button-area button:hover {
+  background-color: var(--bs-gray-400);
+}
+
+#basket-aside #basket-table .basket-table-cell {
+  display: table-cell !important;
+}
+
+#basket-aside #basket-table .basket-table-store-info {
+  margin-left: 13px;
+  margin-top: 5px;
+  margin-right: 0;
+  margin-bottom: 5px;
+}
+
+#basket-aside #basket-table .basket-table-store-info .basket-table-store-name {
+  color: rgb(14,14,14);
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  display: block;
+}
+
+#basket-aside #basket-table .basket-table-store-info .basket-table-store-detail {
+  font-size: 14px;
+  color: rgb(62,62,65);
+  display: block;
+}
+
+#basket-aside #basket-table .basket-table-del-cell {
+  width: 5%;
+  min-width: 5%;
+  max-width: 5%;
+  display: table-cell;
+}
+
+#basket-aside #basket-table .basket-table-del-cell i {
+  color: var(--bs-gray-500);
+  cursor: pointer;
+  display: flex;
+  margin-right: 15px;
+  margin-top: 19px;
+}
+
+.basket-del-btn:active {
+  color: var(--bs-red) !important;
+}
+
+.basket-del-btn:hover {
+  color: var(--bs-red) !important;
+}
+
+#basket-button-area button {
+  padding: 6px 20px;
+  font-size: 14px;
+  background: var(--bs-blue);
+  border-color: var(--bs-blue);
+  display: inline;
+  margin-right: 12px;
+  border-radius: 12px;
+}
+
+#basket-button-area button:hover {
+  background: rgb(50,83,177);
+}
+
+#basket-aside-login-area {
+  margin-top: 20px;
+  margin-bottom: 15px;
+}
+
+#basket-aside-login-area #login-jebal {
+  color: var(--bs-dark);
+  font-size: 13px;
+  margin: 0 0 10px 0;
+  margin-bottom: 9px;
+}
+
+#basket-aside #basket-login-btn {
+  background: var(--bs-blue);
+  color: rgb(255,255,255);
+  font-weight: bold;
+  border-radius: 15px;
+  padding: 10px 80px;
+  width: 255.203px;
+  height: 59px;
+  padding-top: 17px;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+#basket-aside #basket-login-btn:hover {
+  background: rgb(50,83,177);
+}
+
+#basket-aside #basket-login-controll {
+  margin: 5px 0 5px 0;
+  margin-top: 6px;
+}
+
+#basket-login-controll #basket-join-link {
+  color: var(--bs-gray-800);
+  font-size: 12px;
+  width: auto;
+  margin: 0 20px 0 0;
+  cursor: pointer;
+}
+
+#basket-login-controll #basket-findpw-link {
+  color: var(--bs-gray-800);
+  font-size: 12px;
+  width: auto;
+  margin: 0 0 0 10px;
+  cursor: pointer;
+}
+
+#basket-filter-btn {
+}
+
