@@ -11,6 +11,7 @@ public class StoreVo {
 	private String storeRoadAddress;
 	private String storeOldAddress;
 	private String storeOpeningHours;
+	private String storeBreakTime;
 	private int storeVisitCount;
 	
 	//////////////////// ratingBujang table ////////////////////
