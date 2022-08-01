@@ -1,0 +1,205 @@
+/* group page */
+
+/*********************************** group-aside / 그룹 페이지 공통 *****************************/
+#group-aside {
+  color: var(--bs-blue);
+  background: #6484dd;
+  width: 250px;
+}
+
+#group-aside #group-aside-header {
+  color: var(--bs-indigo);
+  background: var(--bs-white);
+  width: 250px;
+  height: 70px;
+}
+
+#group-aside #group-nav-title {
+  padding: 35px 0 0px 0 !important;
+  text-align: center !important;
+  font-size: 20px !important;
+  font-weight: bold !important;
+  color: white !important;
+}
+
+#group-aside #group-aside-ul {
+  margin: 20px;
+}
+
+#group-aside #group-aside-ul .nav-item .group-nav-menu {
+  margin: 0px 0 5px 0 !important;
+  padding: 10px 0 10px 0 !important;
+  text-align: center !important;
+  font-size: 16px !important;
+  color: white;
+  font-weight: normal !important;
+}
+
+#group-aside #group-aside-ul .nav-item .group-nav-active {
+  width: initial;
+  text-align: center !important;
+  background-color: var(--bs-white) !important;
+  border-radius: 7px !important;
+  color: var(--bs-blue) !important;
+  font-weight: 900 !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+#group-aside .group-nav-btn {
+  width: 210px;
+  margin: 0px 0px 15px 20px;
+  padding: 7px 0 7px 0 !important;
+  text-align: center !important;
+  font-size: 16px !important;
+  color: #ffffff;
+  font-weight: normal !important;
+  text-align: center;
+}
+
+.group-title-btn-area {
+  float: right;
+}
+
+.group-title-btn, .btn-groupmem-invt, .btn-store-search {
+  padding: 2px 12px 2px 12px;
+  height: 30px;
+  font-size: 14px;
+}
+
+
+
+/*********************************** group-content *****************************/
+.group-content-title {
+  min-width: 700px;
+}
+
+#groupmem-list, #groupmem-invt, #groupmem-add, #group-blacklist, #group-blacklist-add {
+  min-width: 700px;
+}
+
+.groupmem-user, .groupmem-delete, .group-black-delete, .blacklist-add {
+  width: 40px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+#groupmem-list-table, .store-list-table {
+  height: 250px;
+  text-align: center;
+}
+
+#groupmem-list, #groupmem-invt, #group-blacklist {
+  margin: 0px 0px 30px 0px;
+}
+
+#groupmem-add, #new-group, #group-blacklist-add {
+  margin: 0px 0px 50px 0px;
+}
+
+input[type="email"] {
+  width: 250px;
+  height: 28px;
+  margin: 0px 5px 10px 0px;
+  padding: 0px 5px;
+  font-size: 14px;
+}
+
+input[type="text"] {
+  width: 170px;
+  height: 28px;
+  margin: 0px 5px 10px 0px;
+  padding: 0px 5px;
+  font-size: 14px;
+}
+
+#group-blacklist-add input {
+  width: 170px;
+  height: 28px;
+  margin: 0px 5px 1px 0px;
+  padding: 0px 5px;
+  font-size: 14px;
+}
+
+select {
+  height: 28px;
+  margin: 0px 5px 0px 1px;
+}
+
+#group-blacklist .blacklist-search {
+  float: right;
+}
+
+#store-search-limit {
+  font-size: 14px;
+}
+
+.blacklist-delete, .blacklist-add {
+  color: var(--bs-table-striped-color);
+}
+
+.order-drag-icon {
+  float: right;
+}
+
+#modal-group-order-change .ion-arrow-up-b {
+  float: right;
+  font-size: 20px;
+}
+
+#modal-group-order-change .ion-arrow-down-b {
+  float: left;
+  font-size: 20px;
+}
+
+.group-order-area {
+  padding: 8px 10px 0px 10px;
+  margin: 2px 0px 0px 0px;
+  background-color: var(--bs-light);
+  text-align: center;
+}
+
+#modal-group-name-change .modal-body-custom {
+  text-align: center;
+}
+
+#modal-group-name-change input[type="text"] {
+  width: 100%;
+  margin: 10px 0px 5px 0px;
+}
+
+.group-order-area > p {
+  margin: 0px 5px 10px 5px;
+  padding-bottom: 5px;
+}
+
+#groupmem-add, #groupmem-invt {
+  font-size: 14px;
+}
+
+.group-color-blue {
+  color: rgb(66,98,190);
+  font-weight: bolder;
+}
+
+.modal-group-p {
+  margin: 0px;
+  text-align: center;
+}
+
+#dropdown-group-leader-pass {
+  width: 216px;
+  margin: 20px 0px 0px 0px;
+  padding: 3px;
+  background-color: rgba(254,254,254,0);
+  color: var(--bs-gray);
+  border-color: var(--bs-gray);
+}
+
+.col-md-6 {
+  max-width: 50%;
+}
+
+option:hover {
+  background-color: var(--bs-gray-300);
+}
