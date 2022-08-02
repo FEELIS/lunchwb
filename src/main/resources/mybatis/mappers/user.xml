@@ -52,7 +52,7 @@
 	   <select id="groupMemInfo" parameterType="int" resultType="com.lunchwb.vo.UserVo">
 	  		 select  user_no userNo,
 			         user_name userName,
-			         to_char(user_birth, 'YYYY') userBirth,
+			         to_char(user_birth, 'YYYYMMDD') userBirth,
 			         user_sex userSex
 	         from users
 	         where user_no = #{userNo}
