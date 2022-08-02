@@ -36,7 +36,7 @@
                                 <div class="col-md-6 col-xl-4">
                                     <div class="p-5">
                                         <div class="text-center"></div>
-                                        <form method="get" action="${pageContext.request.contextPath}/user/userInfo" class="user">
+                                        <form method="post" action="${pageContext.request.contextPath}/user/userInfo" class="user">
                                         	<span id="infoEmail" class="input-group-text">${authUser.userEmail}</span>
                                             <div class="mb-3"><input class="form-control form-control-user btn-radius" type="password" id="inputLoginPassword" placeholder="비밀번호를 입력해주세요." name="userPassword"></div>
                                             <div class="mb-3">

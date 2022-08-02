@@ -90,7 +90,7 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/user/userInfo/{userPassword}")
+	@PostMapping("/user/userInfo/{userPassword}")
 	public String userInfo(HttpSession session,
 							@PathVariable("userPassword") String password) {
 		logger.info("user > checkUser()");
@@ -110,7 +110,7 @@ public class UserController {
 
 	}
 	
-	@PostMapping("user/userInfo")
+	@PostMapping("user/modifyUser")
 	public String modifyUser(@ModelAttribute UserVo userVo, HttpSession session) {
 		logger.info("user > userInfo()");
 		

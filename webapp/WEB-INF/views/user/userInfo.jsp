@@ -112,7 +112,7 @@
                                 <div class="col-md-6 col-xl-4 col-xxl-5">
                                     <div class="p-5">
                                         <div class="text-center"></div>
-                                        <form class="user">
+                                        <form method="post" action="${pageContext.request.contextPath}/user/modifyUser" class="user">
                                             <div class="mb-3"><strong class="join-text">아이디</strong><span id="infoEmail" class="input-group-text">${userInfo.userEmail}</span></div>
                                             <div class="mb-3"><strong class="join-text">새 비밀번호</strong><input class="form-control form-control-user btn-radius" type="password" id="inputJoinPassword" placeholder="비밀번호를 입력해주세요." name="userPassword"></div>
                                             <div class="mb-3"><strong class="join-text">새 비밀번호 확인</strong><input class="form-control form-control-user btn-radius" type="password" id="checkJoinPassword" placeholder="비밀번호를 한 번 더 입력해주세요." name="checkPassword"></div>
