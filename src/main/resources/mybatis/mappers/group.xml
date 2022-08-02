@@ -27,7 +27,7 @@
 	<insert id="addMember" parameterType="com.lunchwb.vo.GroupVo">
 		INSERT INTO GROUP_MEMBER
 		VALUES (SEQ_GROUP_MEMBER_NO.NEXTVAL, #{userNo}, #{groupNo}, #{leaderCheck}, 
-				#{bossCheck}, #{memberName}, #{memberAge}, #{memberSex})
+				#{bossCheck}, #{memberName}, #{memberSex}, #{memberAge})
 	</insert>
 
 </mapper>

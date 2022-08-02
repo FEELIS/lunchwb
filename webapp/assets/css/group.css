@@ -64,7 +64,8 @@
 .group-title-btn, .btn-groupmem-invt, .btn-store-search {
   padding: 2px 12px 2px 12px;
   height: 30px;
-  font-size: 14px;
+  font-size: 14px !important;
+  vertical-align: middle;
 }
 
 
