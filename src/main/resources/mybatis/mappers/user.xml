@@ -47,12 +47,12 @@
 	<!-- 이지희 -->
 	<select id="groupMemInfo" parameterType="int" resultType="com.lunchwb.vo.UserVo">
 	   <![CDATA[
-	      select    user_no userNo
+	      select user_no userNo
 	         ,user_name userName
 	         ,user_birth userBirth
 	         ,user_sex userSex
 	         from users
-	         where user_no = ${userNo}
+	         where user_no = #{userNo}
 	   ]]>
 	</select>
 
