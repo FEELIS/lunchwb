@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="group">
+
+	<resultMap id="GroupVo" type="com.lunchwb.vo.GroupVo">
+		<result column="group_no" property="groupNo" />
+		<result column="group_leader" property="groupLeader" />
+		<result column="group_name" property="groupName" />
+		<result column="group_member_no" property="groupMemberNo" />
+		<result column="leader_check" property="leaderCheck" />
+		<result column="boss_check" property="bossCheck" />
+		<result column="member_name" property="memberName" />
+		<result column="member_sex" property="member_Sex" />
+		<result column="member_age" property="memberAge" />
+	</resultMap>	
+
+	
+	<insert id="createGroup" parameterType="com.lunchwb.vo.GroupVo">
+		<selectKey keyProperty="groupNo" resultType="int" order="BEFORE">
+			SELECT SEQ_GROUP_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO GROUPS
+		VALUES (#{groupNo}, #{groupLeader}, #{groupName})
+	</insert>
+	
+	<insert id="addMember" parameterType="com.lunchwb.vo.GroupVo">
+		INSERT INTO GROUP_MEMBER
+		VALUES (SEQ_GROUP_MEMBER_NO.NEXTVAL, #{userNo}, #{groupNo}, #{leaderCheck}, 
+				#{bossCheck}, #{memberName}, #{memberAge}, #{memberSex})
+	</insert>
+
+</mapper>
