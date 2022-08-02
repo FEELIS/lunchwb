@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="user">
-
+	
+	<!-- 김준호 -->
 	<select id="login" parameterType="com.lunchwb.vo.UserVo" resultType="com.lunchwb.vo.UserVo">
 		<![CDATA[
 			select user_no userNo
@@ -21,5 +22,38 @@
 			values (seq_user_no.nextval, #{userEmail}, #{userPassword}, #{userName}, #{userBirth}, #{userSex}, sysdate, 0)
 		]]>
 	</insert>
+	
+	<select id="getUser" parameterType="com.lunchwb.vo.UserVo" resultType="com.lunchwb.vo.UserVo">
+		<![CDATA[
+			select user_email userEmail
+			        ,user_name userName
+			        ,user_birth userBirth
+			        ,user_sex userSex
+			from users
+			where user_email = #{userEmail}
+			and user_password = #{userPassword} 		
+		]]>
+	</select>
+	
+	<update id="modifyUser">
+		<![CDATA[
+		
+		
+		]]>
+	</update>
+	
+	
+	
+	<!-- 이지희 -->
+	<select id="groupMemInfo" parameterType="int" resultType="com.lunchwb.vo.UserVo">
+	   <![CDATA[
+	      select    user_no userNo
+	         ,user_name userName
+	         ,user_birth userBirth
+	         ,user_sex userSex
+	         from users
+	         where user_no = ${userNo}
+	   ]]>
+	</select>
 
 </mapper>

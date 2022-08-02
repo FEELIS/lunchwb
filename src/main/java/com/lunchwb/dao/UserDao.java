@@ -17,9 +17,16 @@ public class UserDao {
 		return authUser;
 	}
 	
+	public UserVo getUser(UserVo userVo) {
+		UserVo userInfo = sqlSession.selectOne("user.getUser", userVo);
+		return userInfo;
+	}
+	
 	public int join(UserVo userVo) {
 		int count = sqlSession.insert("user.join", userVo);
 		return count;
 	}
+	
+	
 
 }
