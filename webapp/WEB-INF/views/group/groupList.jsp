@@ -4,30 +4,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>부장님여기요</title>
-    <link rel="stylesheet" href="../../../assets/bootstrap/css/bootstrap.min.css">
+    <title>부장님요기요:나의그룹</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding&amp;display=swap">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo&amp;display=swap">
-    <link rel="stylesheet" href="../../../assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="../../../assets/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="../../../assets/css/Features-Large-Icons-icons.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Features-Large-Icons-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="../../../assets/css/yogiyo.css">
-    <link rel="stylesheet" href="../../../assets/css/group.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/alert.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/group.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/storeinfo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/customModal.css">
+
 </head>
 <body id="page-top">
+
 <div id="wrapper">
 	
-	<c:import url="/WEB-INF/views/includes/aside/user-aside.jsp"></c:import>
+	<c:import url="/WEB-INF/views/includes/aside/user-aside.html"></c:import>
 	
-	<c:import url="/WEB-INF/views/includes/aside/groupAsdie.jsp"></c:import>
+	<c:import url="/WEB-INF/views/includes/aside/groupAside.jsp"></c:import>
 	
 	<div id="content-wrapper" class="d-flex flex-column">
-           <div id="content">
+		<div id="content">
+			
+			<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
+               
+               <!-- 
                <nav id="header" class="navbar navbar-light navbar-expand bg-white shadow d-xxl-flex justify-content-xxl-end mb-4 topbar static-top">
                    <div class="container">
                        <div></div>
@@ -84,6 +93,8 @@
                        </ul>
                    </div>
                </nav>
+                -->
+                
                <div class="container-fluid">
                    <h3 class="text-dark mb-4 group-content-title"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -64 640 640" width="1em" height="1em" fill="currentColor" style="font-size: 30px;">
                            <!--! Font Awesome Free 6.1.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. -->
@@ -368,12 +379,10 @@
     </div>
 </div>
 
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
-    <script src="assets/js/theme.js"></script>
-    <script src="../../../assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../../../assets/js/bs-init.js"></script>
-    <script src="../../../assets/js/theme.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
        
 
 </body>
