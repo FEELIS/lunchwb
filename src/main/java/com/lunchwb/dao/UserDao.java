@@ -27,6 +27,11 @@ public class UserDao {
 		return count;
 	}
 	
+	public int modifyUser(UserVo userVo) {
+		int count = sqlSession.update("user.modifyUser", userVo);
+		return count;
+	}
+	
 	
 	/* 이지희 */
 	public UserVo groupMemInfo(int userNo) {

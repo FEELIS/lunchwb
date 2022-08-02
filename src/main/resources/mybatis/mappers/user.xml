@@ -35,29 +35,27 @@
 		]]>
 	</select>
 	
-	<update id="modifyUser">
+	<update id="modifyUser" parameterType="com.lunchwb.vo.UserVo">
 		<![CDATA[
 			update users
-			set user_password = ''
-			    ,user_name = ''
-			    ,user_birth =''
-			    ,user_sex =''
-			where user_email ='';
+			set user_password = #{userPassword}
+			    ,user_name = #{userName}
+			    ,user_birth = #{userBirth}
+			    ,user_sex = #{userSex}
+			where user_email = #{userEmail};
 		]]>
 	</update>
 	
 	
 	
 	<!-- 이지희 -->
-	<select id="groupMemInfo" parameterType="int" resultType="com.lunchwb.vo.UserVo">
-	   <![CDATA[
-	      select user_no userNo
-	         ,user_name userName
-	         ,user_birth userBirth
-	         ,user_sex userSex
+	   <select id="groupMemInfo" parameterType="int" resultType="com.lunchwb.vo.UserVo">
+	  		 select  user_no userNo,
+			         user_name userName,
+			         to_char(user_birth, 'YYYY') userBirth,
+			         user_sex userSex
 	         from users
 	         where user_no = #{userNo}
-	   ]]>
-	</select>
+	   </select>
 
 </mapper>

@@ -28,5 +28,16 @@ public class UserService {
 		UserVo authUser = userDao.login(userVo);
 		return authUser;
 	}
+	
+	public UserVo modifyUser(UserVo userVo) {
+		int count = userDao.modifyUser(userVo);
+		
+		if(count > 0) {
+			UserVo authUser = userDao.login(userVo);
+			return authUser;
+		}else {
+			return null;
+		}
+	}
 
 }

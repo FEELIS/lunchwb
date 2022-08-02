@@ -109,5 +109,17 @@ public class UserController {
 		}
 
 	}
-
+	
+	@PostMapping("user/userInfo")
+	public String modifyUser(@ModelAttribute UserVo userVo, HttpSession session) {
+		logger.info("user > userInfo()");
+		
+		UserVo authUser = userService.modifyUser(userVo);
+		if(authUser != null) {
+			session.setAttribute("authUser", authUser);
+			return "redirect:./checkUser";
+		}else {
+			return "redirect:/";
+		}
+	}
 }
