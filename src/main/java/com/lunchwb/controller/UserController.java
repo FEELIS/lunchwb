@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -89,9 +90,9 @@ public class UserController {
 		}
 	}
 
-	@GetMapping("/user/userInfo")
+	@GetMapping("/user/userInfo/{userPassword}")
 	public String userInfo(HttpSession session,
-							@RequestParam("userPassword") String password) {
+							@PathVariable("userPassword") String password) {
 		logger.info("user > checkUser()");
 		UserVo checkUser = new UserVo();
 		

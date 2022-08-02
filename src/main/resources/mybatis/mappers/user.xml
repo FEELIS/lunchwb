@@ -37,8 +37,12 @@
 	
 	<update id="modifyUser">
 		<![CDATA[
-		
-		
+			update users
+			set user_password = ''
+			    ,user_name = ''
+			    ,user_birth =''
+			    ,user_sex =''
+			where user_email ='';
 		]]>
 	</update>
 	
