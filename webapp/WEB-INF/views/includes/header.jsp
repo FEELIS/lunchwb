@@ -5,7 +5,7 @@
         <ul class="navbar-nav d-xxl-flex align-items-xxl-center">
         
             <li id="user-alert" class="nav-item dropdown show d-xxl-flex no-arrow">
-            	<a class="dropdown-toggle nav-link nav-link" aria-expanded="false" data-bs-toggle="dropdown">
+            	<a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
             		<span class="badge bg-danger badge-counter">3+</span>
             		<i class="fas fa-bell fa-fw"></i>
             	</a>
