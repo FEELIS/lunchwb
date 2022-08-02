@@ -70,6 +70,13 @@
 
 
 /*********************************** group-content *****************************/
+#group-name {
+  padding: 0px 0px 5px 0px;
+  font-size: 18px;
+  border-bottom: 1px solid #bbbbbb;
+}
+
+
 .group-content-title {
   min-width: 700px;
 }

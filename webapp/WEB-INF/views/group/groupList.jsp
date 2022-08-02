@@ -27,7 +27,7 @@
 
 <div id="wrapper">
 	
-	<c:import url="/WEB-INF/views/includes/aside/user-aside.html"></c:import>
+	<c:import url="/WEB-INF/views/includes/aside/userAside.jsp"></c:import>
 	
 	<c:import url="/WEB-INF/views/includes/aside/groupAside.jsp"></c:import>
 	

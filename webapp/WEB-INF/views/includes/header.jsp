@@ -1,10 +1,39 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>부장님여기요</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo&amp;display=swap">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Features-Large-Icons-icons.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/group.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/user.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/group.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/alert.css">
+</head>
+
+<body>
+
 <nav id="header" class="navbar navbar-light navbar-expand bg-white shadow d-xxl-flex justify-content-xxl-end mb-4 topbar static-top">
     <div class="container">
         <div></div>
         
         <ul class="navbar-nav d-xxl-flex align-items-xxl-center">
         
-            <li id="user-alert" class="nav-item dropdown show d-xxl-flex no-arrow">
+            <li id="user-alert" class="nav-item dropdown d-xxl-flex no-arrow">
             	<a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
             		<span class="badge bg-danger badge-counter">3+</span>
             		<i class="fas fa-bell fa-fw"></i>
@@ -107,3 +136,12 @@
         </ul>
     </div>
 </nav>
+
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="../../../assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../../assets/js/bs-init.js"></script>
+    <script src="../../../assets/js/theme.js"></script>
+</body>
+</html>
