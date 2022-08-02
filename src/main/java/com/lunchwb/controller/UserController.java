@@ -90,9 +90,9 @@ public class UserController {
 		}
 	}
 
-	@PostMapping("/user/userInfo/{userPassword}")
+	@PostMapping("/user/userInfo/")
 	public String userInfo(HttpSession session,
-							@PathVariable("userPassword") String password) {
+							@RequestParam("userPassword") String password) {
 		logger.info("user > checkUser()");
 		UserVo checkUser = new UserVo();
 		
@@ -100,12 +100,14 @@ public class UserController {
 		checkUser.setUserPassword(password);
 		
 		UserVo userInfo = userService.getUserInfo(checkUser);
-
+		
+		
 		if (userInfo != null) {
+			System.out.println("남자입니까? : " + userInfo.getUserSex().equals("male"));
 			session.setAttribute("userInfo", userInfo);
 			return "user/userInfo";
 		} else {
-			return "redirect:../";
+			return "redirect:../checkUser";
 		}
 
 	}
@@ -113,6 +115,8 @@ public class UserController {
 	@PostMapping("user/modifyUser")
 	public String modifyUser(@ModelAttribute UserVo userVo, HttpSession session) {
 		logger.info("user > userInfo()");
+		System.out.println(userVo);
+	
 		
 		UserVo authUser = userService.modifyUser(userVo);
 		if(authUser != null) {

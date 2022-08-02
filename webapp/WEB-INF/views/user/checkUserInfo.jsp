@@ -14,8 +14,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/alert.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/group.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Login-Form-Basic-icons.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/user.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/user.css">
 </head>
 
 <body id="page-top">
@@ -36,12 +36,10 @@
                                 <div class="col-md-6 col-xl-4">
                                     <div class="p-5">
                                         <div class="text-center"></div>
-                                        <form method="post" action="${pageContext.request.contextPath}/user/userInfo" class="user">
+                                        <form method="post" action="${pageContext.request.contextPath}/user/userInfo/" class="user">
                                         	<span id="infoEmail" class="input-group-text">${authUser.userEmail}</span>
                                             <div class="mb-3"><input class="form-control form-control-user btn-radius" type="password" id="inputLoginPassword" placeholder="비밀번호를 입력해주세요." name="userPassword"></div>
-                                            <div class="mb-3">
-                                                <div class="custom-control custom-checkbox small"></div>
-                                            </div><button class="btn btn-primary d-block btn-user w-100 btn-radius" id="btn-login" type="submit">확인</button>
+                                            <button class="btn btn-primary d-block btn-user w-100 btn-radius" id="btn-login" type="submit">확인</button>
                                         </form>
                                     </div>
                                 </div>

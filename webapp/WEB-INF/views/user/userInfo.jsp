@@ -113,15 +113,15 @@
                                     <div class="p-5">
                                         <div class="text-center"></div>
                                         <form method="post" action="${pageContext.request.contextPath}/user/modifyUser" class="user">
-                                            <div class="mb-3"><strong class="join-text">아이디</strong><span id="infoEmail" class="input-group-text">${userInfo.userEmail}</span></div>
+                                            <div class="mb-3"><strong class="join-text">아이디</strong><input id="infoEmail" class="form-control form-control-user btn-radius" name = "userEmail" value="${userInfo.userEmail}"readonly></div>
                                             <div class="mb-3"><strong class="join-text">새 비밀번호</strong><input class="form-control form-control-user btn-radius" type="password" id="inputJoinPassword" placeholder="비밀번호를 입력해주세요." name="userPassword"></div>
                                             <div class="mb-3"><strong class="join-text">새 비밀번호 확인</strong><input class="form-control form-control-user btn-radius" type="password" id="checkJoinPassword" placeholder="비밀번호를 한 번 더 입력해주세요." name="checkPassword"></div>
-                                            <div class="mb-3"><strong class="join-text">닉네임</strong><input class="form-control form-control-user btn-radius" type="password" id="inputJoinNickname" placeholder="${userInfo.userName}" name="userName"></div>
-                                            <div class="mb-3"><strong class="join-text">생년월일</strong><input id="inputJoinDate" type="date" value="${userInfo.userBirth}"></div>
+                                            <div class="mb-3"><strong class="join-text">닉네임</strong><input class="form-control form-control-user btn-radius" type="text" id="inputJoinNickname" placeholder="${userInfo.userName}" value="${userInfo.userName}" name="userName"></div>
+                                            <div class="mb-3"><strong class="join-text">생년월일</strong><input id="inputJoinDate" type="date" value="${userInfo.userBirth}" name="userBirth"></div>
                                             <div class="mb-3"><strong class="join-text">성별</strong>
-                                            	<select class="form-select gender-box">
+                                            	<select class="form-select gender-box" name="userSex">
                                             		<c:choose>
-                                            			<c:when test="${userInfo.userSex eq 'male' } ">
+                                            			<c:when test="${userInfo.userSex eq 'male'} ">
                                             				<option value="male" selected="selected">남자</option>
 	                                                    	<option value="female">여자</option>
                                             			</c:when>
@@ -130,7 +130,8 @@
 	                                                    	<option value="female" selected="selected">여자</option>
                                             			</c:otherwise>
                                             		</c:choose>
-                                                </select></div>
+                                                </select>
+                                            </div>
                                             <div class="mb-3"></div><button class="btn btn-primary d-block btn-user w-100 btn-radius" id="btn-join" type="submit">수정하기</button>
                                         </form>
                                     </div>

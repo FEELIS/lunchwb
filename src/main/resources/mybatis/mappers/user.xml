@@ -27,7 +27,7 @@
 		<![CDATA[
 			select user_email userEmail
 			        ,user_name userName
-			        ,user_birth userBirth
+			        ,to_char(user_Birth, 'yyyy-mm-dd') userBirth
 			        ,user_sex userSex
 			from users
 			where user_email = #{userEmail}
@@ -42,7 +42,7 @@
 			    ,user_name = #{userName}
 			    ,user_birth = #{userBirth}
 			    ,user_sex = #{userSex}
-			where user_email = #{userEmail};
+			where user_email = #{userEmail}
 		]]>
 	</update>
 	

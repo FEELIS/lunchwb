@@ -7,6 +7,7 @@
 				<c:when test="${authUser != null }">
 					<!-- 로그인 후 메뉴 -->
 					<li><a href="${pageContext.request.contextPath}/logout">로그아웃</a></li>
+					<li><a href="${pageContext.request.contextPath}/user/checkUser">회원정보수정</a></li>
 					<input type="text" value = "${authUser.userEmail }">
 				</c:when>
 				
