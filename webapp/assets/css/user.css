@@ -35,7 +35,7 @@
 
 #inputJoinEmail {
   display: inline-block;
-  width: 370px;
+  width: 350px;
   margin-right: 10px;
 }
 
@@ -94,6 +94,11 @@
 .check-text {
   font-size: 12px;
   color: #e74a3b;
+}
+
+.collect-text{
+  font-size: 12px;
+  color: #4e73df;
 }
 
 .gender-box {

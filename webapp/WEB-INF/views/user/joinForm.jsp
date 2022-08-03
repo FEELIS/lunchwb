@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Login-Form-Basic-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/user.css">
+    <!-- js -->
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -65,20 +67,52 @@
                                     <div class="text-center">
                                         <h4 class="text-dark mb-4" style="font-weight: bold;">회원가입</h4>
                                     </div>
-                                    <form method="post" action="${pageContext.request.contextPath}/join" class="user">
-                                        <div class="mb-3"><strong class="join-text">아이디</strong><input class="form-control form-control-user join-email" type="email" id="inputJoinEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="userEmail"><button class="btn btn-primary" id="check-email" type="button">중복 확인</button></div>
-                                        <div class="mb-3"><strong class="join-text">비밀번호</strong><input class="form-control form-control-user" type="password" id="inputJoinPassword" placeholder="비밀번호를 입력해주세요." name="userPassword"></div>
-                                        <div class="mb-3"><strong class="join-text">비밀번호 확인</strong><input class="form-control form-control-user" type="password" id="checkJoinPassword" placeholder="비밀번호를 한 번 더 입력해주세요." name="checkPassword"></div>
-                                        <div class="mb-3"><strong class="join-text">닉네임</strong><input class="form-control form-control-user" type="text" id="inputJoinNickname" placeholder="사용하실 닉네임을 입력해주세요" name="userName"></div>
-                                        <div class="mb-3"><strong class="join-text">생년월일</strong><input id="inputJoinDate" type="date" name="userBirth"></div>
-                                        <div class="mb-3"><strong class="join-text">성별</strong><select class="form-select" style="width: 150px;height: auto;" name="userSex">
+                                    <form method="post" action="${pageContext.request.contextPath}/join" class="user" id="joinForm">
+                                        <div class="mb-3">
+                                        	<strong class="join-text">아이디</strong>
+                                        	<input class="form-control form-control-user join-email" type="email" id="inputJoinEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="userEmail">
+                                        	<button class="btn btn-primary" id="check-email" type="button">중복 확인</button>
+                                        	<br>
+                                        	<span class="check-text" id="msgOverlapEmail"></span>
+                                        	<span class="check-text" id="msgErrorEmail"></span>
+                                       	</div>
+                                        <div class="mb-3">
+                                        	<strong class="join-text">비밀번호</strong>
+                                        	<input class="form-control form-control-user" type="password" id="inputJoinPassword" placeholder="비밀번호를 입력해주세요." name="userPassword">
+                                        	<span class="check-text" id="msgPassword"></span>
+                                       	</div>
+                                        <div class="mb-3">
+                                        	<strong class="join-text">비밀번호 확인</strong>
+                                        	<input class="form-control form-control-user" type="password" id="checkJoinPassword" placeholder="비밀번호를 한 번 더 입력해주세요." name="checkPassword">
+                                        	<span class="check-text" id="msgCheckPassword"></span>
+                                       	</div>
+                                        <div class="mb-3">
+                                        	<strong class="join-text">닉네임</strong>
+                                        	<input class="form-control form-control-user" type="text" id="inputJoinNickname" placeholder="사용하실 닉네임을 입력해주세요" name="userName">
+                                        	<span class="check-text" id="msgName"></span>
+                                       	</div>
+                                        <div class="mb-3">
+                                        	<strong class="join-text">생년월일</strong>
+                                        	<input id="inputBirthDate" type="date" name="userBirth">
+                                        	<span class="check-text" id="msgBirth"></span>
+                                       	</div>
+                                        <div class="mb-3">
+                                        	<strong class="join-text">성별</strong>
+                                       		<select class="form-select" style="width: 150px;height: auto;" name="userSex">
                                                 <option value="male" selected="selected">남자</option>
                                                 <option value="female">여자</option>
-                                            </select></div>
+                                           	</select>
+                                           	<span class="check-text" id="msgSex"></span>
+                                       	</div>
                                         <div class="mb-3">
                                             <div class="custom-control custom-checkbox small">
-                                                <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1">이용약관을 확인하였습니다.</label></div>
+                                                <div class="form-check">
+                                                	<input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1">
+                                                	<label class="form-check-label custom-control-label" for="formCheck-1">이용약관을 확인하였습니다.</label>
+                                                	<span class="check-text" id="msgCheckBox"></span>
+                                               	</div>
                                             </div>
+                                            <span class="check-text" id="msgCheckOverlap"></span>
                                         </div><button class="btn btn-primary d-block btn-user w-100" id="btn-join" type="submit">가입하기</button>
                                     </form>
                                 </div>
@@ -94,11 +128,116 @@
             <div class="text-center my-auto copyright"><span>Copyright © FEELIS 2022<br>https://github.com/FEELIS&nbsp;<br></span></div>
         </div>
     </footer>
-    <script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 </body>
+<script type="text/javascript">
+
+var idChk;
+
+$("#check-email").on("click", function(){
+	console.log("아이디 체크");
+	
+	var id = $('[name = "userEmail"]').val();
+	
+	console.log(id);
+	
+ 	$.ajax({
+		url : "${pageContext.request.contextPath }/user/checkEmail",		
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(id),
+		dataType : "json",
+		success : function(result){
+			console.log(result);
+			
+			if(result == "success"){
+				if($("#msgOverlapEmail").hasClass("collect-text") === false) {
+						$("#msgOverlapEmail").addClass("collect-text");
+						$("#msgOverlapEmail").removeClass("check-text");
+					} 
+				$("#msgOverlapEmail").text("사용할 수 있는 이메일 입니다.");
+				idChk = id;
+			}else {
+				if($("#msgOverlapEmail").hasClass("check-text") === false) {
+					$("#msgOverlapEmail").addClass("check-text");
+					$("#msgOverlapEmail").removeClass("collect-text");
+				}
+				$("#msgOverlapEmail").text("이미 사용중인 이메일 입니다.");
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	}); 
+});
+
+$("#btn-join").on("click", function(){
+	console.log("회원가입 버튼 체크");
+	
+	var id = $('#joinForm [name = userEmail]').val();
+	var password = $('#joinForm [name = userPassword]').val();
+	var checkPassword = $('#joinForm [name = checkPassword]').val();
+	var name = $('#joinForm [name = userName]').val();
+	var birth = $('#joinForm [name = userBirth]').val();
+	var sex = $('#joinForm [name = userSex]').val();
+	var Check = $('#formCheck-1').is(":checked");
+	
+	console.log(id);
+	console.log(password);
+	console.log(name);
+	console.log(Check);
+		
+	if(id=="" || id == null){
+		alert("아이디를 확인해주세요.");
+		/* $("#msgErrorEmail").text("아이디를 입력해주세요."); */
+		return false;
+	}
+	
+	console.log(idChk);
+	
+	if(idChk != id){
+		alert("이메일 중복 확인을 다시 해주세요.");
+		/* $("#msgCheckOverlap").text("id 중복 확인을 다시 해주세요"); */
+		return false;
+	}
+	
+	if(password =="" || password == null){
+		alert("비밀번호를 확인해주세요.");
+		return false;
+	}
+	
+	if(password != checkPassword){
+		alert("비밀번호가 일치하지 않습니다.");
+		return false;
+	}
+	
+	if(name == "" || name == null){
+		alert("이름을 입력해주세요.");
+		return false;
+	}
+	
+	if(birth == "" || birth == null){
+		alert("생년월일을 입력해주세요.");
+		return false;
+	}
+	
+	if(sex == "" || sex == null){
+		alert("성별을 입력해주세요.");
+		return false;
+	}
+	
+	if(Check == false){
+		alert("약관에 동의해주세요");
+		return false;
+	}
+	
+	return true;
+	
+});
+
+</script>
 
 </html>
 

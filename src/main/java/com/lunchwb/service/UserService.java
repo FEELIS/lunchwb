@@ -39,5 +39,27 @@ public class UserService {
 			return null;
 		}
 	}
+	
+	
+	
+	
+	
+	/* JSON */
+	public String checkEmail(String userEmail) {
+		
+		UserVo emailCheck = userDao.checkEmail(userEmail);
+		
+		String result;
+		
+		if(emailCheck == null) {
+			result = "success";
+		}else {
+			result = "fail";
+		}
+		
+		return result;
+	}
+	
+	
 
 }

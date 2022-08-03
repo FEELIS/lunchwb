@@ -9,9 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lunchwb.service.UserService;
 import com.lunchwb.vo.UserVo;
@@ -121,9 +122,19 @@ public class UserController {
 		UserVo authUser = userService.modifyUser(userVo);
 		if(authUser != null) {
 			session.setAttribute("authUser", authUser);
+			session.removeAttribute("userInfo");
 			return "redirect:./checkUser";
 		}else {
 			return "redirect:/";
 		}
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/user/checkEmail")
+	public String checkEmail(@RequestBody String Email) {
+		String result = userService.checkEmail(Email);
+		
+		return result;
 	}
 }

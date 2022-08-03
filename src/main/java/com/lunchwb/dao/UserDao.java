@@ -33,6 +33,13 @@ public class UserDao {
 	}
 	
 	
+	/* Json */
+	/* 이메일 중복확인 */
+	public UserVo checkEmail(String userEmail) {
+		UserVo checkEmail = sqlSession.selectOne("user.checkEmail", userEmail);
+		return checkEmail;
+	}
+	
 	/* 이지희 */
 	public UserVo groupMemInfo(int userNo) {
 		//logger.info("groupMemInfo()");
