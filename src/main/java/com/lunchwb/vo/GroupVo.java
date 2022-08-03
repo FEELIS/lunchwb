@@ -18,8 +18,24 @@ public class GroupVo {
 	private String memberSex;
 	private int memberAge;
 	
-	public GroupVo(int groupNo, int groupLeader, String groupName, int groupMemberNo, int userNo, int leaderCheck,
+	public GroupVo() {
+	}
+	
+	public GroupVo(int groupLeader, String groupName, int groupMemberNo, int userNo, int leaderCheck, 
 			int bossCheck, String memberName, String memberSex, int memberAge) {
+		this.groupLeader = groupLeader;
+		this.groupName = groupName;
+		this.groupMemberNo = groupMemberNo;
+		this.userNo = userNo;
+		this.leaderCheck = leaderCheck;
+		this.bossCheck = bossCheck;
+		this.memberName = memberName;
+		this.memberSex = memberSex;
+		this.memberAge = memberAge;
+	}
+
+	public GroupVo(int groupNo, int groupLeader, String groupName, int groupMemberNo, int userNo, 
+			int leaderCheck, int bossCheck, String memberName, String memberSex, int memberAge) {
 		this.groupNo = groupNo;
 		this.groupLeader = groupLeader;
 		this.groupName = groupName;
