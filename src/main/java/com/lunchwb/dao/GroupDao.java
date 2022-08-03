@@ -1,5 +1,7 @@
 package com.lunchwb.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,27 @@ public class GroupDao {
 	private SqlSession sqlSession;
 	
 	private static final Logger logger = LoggerFactory.getLogger(GroupDao.class);
+	
+	
+	/******************** 그룹 리스트 **********************************************/
+	public List<GroupVo> userGroups(int groupNo) {
+		logger.info("userGroups");
+		
+		List<GroupVo> groupList = sqlSession.selectList("group.groupList", groupNo);
+		
+		return groupList;
+	}
+	
+	
+	/******************** 그룹 멤버 리스트 *******************************************/
+	public List<GroupVo> groupMembers(int groupNo) {
+		logger.info("groupMembers");
+		
+		List<GroupVo> memberList = sqlSession.selectList("group.groupMembers", groupNo);
+		
+		return memberList;
+	}
+
 	
 	
 	/******************** 그룹 생성 ***********************************************/

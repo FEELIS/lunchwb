@@ -1,6 +1,9 @@
 package com.lunchwb.service;
 
-import java.util.*;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +24,43 @@ public class GroupService {
 	private UserDao userDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(GroupService.class);
+	
+	
+	/******************** 그룹 리스트 페이지 ********************************************/
+	public Map<String, Object> groupList(UserVo authUser, int groupNo) {
+		logger.info("groupList()");
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		/////////////////// 유저 그룹 리스트  /////////////////////////////
+		int userNo = authUser.getUserNo();
+		List<GroupVo> groupList = groupDao.userGroups(userNo);
+		map.put("grouopList", groupList);
+		
+		//그룹 개수
+		//그룹이 없으면 그룹 생성페이지로 전송
+		int groupCount = groupList.size();
+		map.put("groupCount", groupCount);
+		
+		/////////////////// 그룹원 리스트 //////////////////////////////
+		//나의그룹 접근 groupNo == 0: 첫번째 그룹페이지
+
+		if(groupCount != 0) {
+			
+			if(groupNo == 0) {
+				groupNo = groupList.get(0).getGroupNo();
+			}
+			
+			List<GroupVo> memberList = groupDao.groupMembers(groupNo);
+			map.put("memberList", memberList);
+			
+			int memberCount = memberList.size();
+			map.put("memberCount", memberCount);
+		}
+		
+		return map;
+	}
+	
 	
 	
 	/******************** 그룹 생성 ***********************************************/
