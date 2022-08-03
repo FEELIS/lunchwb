@@ -1,4 +1,4 @@
--- 처음부터 해보려면 --
+-- 처음부터 해보려면(추천 안해요^^) -- 
 
 1. lunchwb DB에 store, menu, food_2nd_category, food_1st_category, raiting_bujang, raiting_others 테이블 생성
 
