@@ -64,9 +64,9 @@ public class GroupController {
 		logger.info("addGroup()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		groupService.addGroup(authUser, groupVo);
+		int groupNo = groupService.addGroup(authUser, groupVo);
 	
-		return "group/addGroup";
+		return "group/addGroup?no=" + groupNo;
 	}
 	
 

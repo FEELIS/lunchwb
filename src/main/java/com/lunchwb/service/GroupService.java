@@ -51,6 +51,8 @@ public class GroupService {
 				groupNo = groupList.get(0).getGroupNo();
 			}
 			
+			map.put("groupNo", groupNo);
+			
 			List<GroupVo> memberList = groupDao.groupMembers(groupNo);
 			map.put("memberList", memberList);
 			
