@@ -18,11 +18,11 @@
 
 	<!-- 그룹 리스트 -->
 	<select id="userGroups" parameterType="int" resultMap="GroupVo">
-		SELECT  g.group_no
+		SELECT  g.group_no,
 				g.group_name
 		FROM groups g, group_member m
 		WHERE g.group_no = m.gorup_no
-		AND user_no = #{groupNo}
+		AND user_no = #{userNo}
 		ORDER BY group_member_no ASC;
 	</select>
 

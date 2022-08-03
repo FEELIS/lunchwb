@@ -20,10 +20,10 @@ public class GroupDao {
 	
 	
 	/******************** 그룹 리스트 **********************************************/
-	public List<GroupVo> userGroups(int groupNo) {
+	public List<GroupVo> userGroups(int userNo) {
 		logger.info("userGroups");
 		
-		List<GroupVo> groupList = sqlSession.selectList("group.groupList", groupNo);
+		List<GroupVo> groupList = sqlSession.selectList("group.userGroups", userNo);
 		
 		return groupList;
 	}

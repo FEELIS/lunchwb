@@ -34,6 +34,11 @@ public class GroupController {
 		logger.info("groupList()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		if(authUser == null) {
+			return "user/loginForm";
+		}
+		
 		Map<String, Object> map = groupService.groupList(authUser, groupNo);
 		
 		

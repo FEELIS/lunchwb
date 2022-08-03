@@ -42,6 +42,7 @@ public class GroupService {
 		int groupCount = groupList.size();
 		map.put("groupCount", groupCount);
 		
+		logger.info("gCount: " + groupCount);
 		/////////////////// 그룹원 리스트 //////////////////////////////
 		//나의그룹 접근 groupNo == 0: 첫번째 그룹페이지
 
@@ -50,6 +51,7 @@ public class GroupService {
 			if(groupNo == 0) {
 				groupNo = groupList.get(0).getGroupNo();
 			}
+			logger.info("groupNo" + groupNo);
 			
 			map.put("groupNo", groupNo);
 			
