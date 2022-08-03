@@ -9,20 +9,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>부장님여기요</title>
-    <link rel="stylesheet" href="../../../assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding&amp;display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Myeongjo&amp;display=swap">
-    <link rel="stylesheet" href="../../../assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="../../../assets/fonts/ionicons.min.css">
-    <link rel="stylesheet" href="../../../assets/css/admin.css">
-    <link rel="stylesheet" href="../../../assets/css/alert.css">
-    <link rel="stylesheet" href="../../../assets/css/Features-Large-Icons-icons.css">
-    <link rel="stylesheet" href="../../../assets/css/group.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="../../../assets/css/user.css">
-    <link rel="stylesheet" href="../../../assets/css/yogiyo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/user.css">
 </head>
 
 <body>
@@ -38,8 +28,8 @@
                     <hr class="nav-line">
                 </li>
                 <li class="nav-item"><a class="nav-link nav-title no-drag">나의그룹</a></li>
-                <li class="nav-item"><a class="nav-link nav-menu" href="#">그룹목록</a></li>
-                <li class="nav-item"><a class="nav-link nav-menu" href="#">그룹추가</a></li>
+                <li class="nav-item"><a class="nav-link nav-menu" href="${pageContext.request.contextPath}/group/list">그룹목록</a></li>
+                <li class="nav-item"><a class="nav-link nav-menu" href="${pageContext.request.contextPath}/group/add">그룹추가</a></li>
                 <li class="nav-item"><a class="nav-link nav-menu" href="#">블랙리스트</a></li>
                 <li class="nav-item">
                     <hr class="nav-line">
@@ -59,12 +49,11 @@
     </nav>
     
 
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="assets/js/bs-init.js"></script>
-    <script src="assets/js/theme.js"></script>
-    <script src="../../../assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../../../assets/js/bs-init.js"></script>
-    <script src="../../../assets/js/theme.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 </body>
 
 </html>
