@@ -265,7 +265,8 @@ CREATE TABLE group_member (
  user_no number(20) NULL, 
  group_no number(20) NOT NULL, 
  leader_check number(10) DEFAULT 0 not NULL, 
- boss_check number(10) DEFAULT 0 not NULL
+ boss_check number(10) DEFAULT 0 not NULL, 
+ group_order number(20) not null
 );
 
 --===== 블랙리스트 =====
