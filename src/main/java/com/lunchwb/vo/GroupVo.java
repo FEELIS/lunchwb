@@ -7,35 +7,29 @@ public class GroupVo {
 	private int groupLeader;
 	private String groupName;
 	
-	//////////////////// groupMember table ////////////////////
+	//////////////////// group_member table ////////////////////
 	// private int groupNo(group table fk);
+	// private int userNo(users table pk);
 	private int groupMemberNo;
 	private int userNo;
-	
 	private int leaderCheck;
 	private int bossCheck;
-	private String memberName;
-	private String memberSex;
-	private int memberAge;
+	
+	/////////////////// users table ////////////////////
+	private String userName;
+	private int userBirthYear;
+	private String userSex;
+	
+	///////group_member table +//////
+	private int groupOrder;
+	
+	
 	
 	public GroupVo() {
 	}
 	
-	public GroupVo(int groupLeader, String groupName, int groupMemberNo, int userNo, int leaderCheck, 
-			int bossCheck, String memberName, String memberSex, int memberAge) {
-		this.groupLeader = groupLeader;
-		this.groupName = groupName;
-		this.groupMemberNo = groupMemberNo;
-		this.userNo = userNo;
-		this.leaderCheck = leaderCheck;
-		this.bossCheck = bossCheck;
-		this.memberName = memberName;
-		this.memberSex = memberSex;
-		this.memberAge = memberAge;
-	}
-
-	public GroupVo(int groupNo, int groupLeader, String groupName, int groupMemberNo, int userNo, 
-			int leaderCheck, int bossCheck, String memberName, String memberSex, int memberAge) {
+	public GroupVo(int groupNo, int groupLeader, String groupName, int groupMemberNo, int userNo, int leaderCheck,
+					int bossCheck, String userName, int userBirthYear, String userSex, int groupOrder) {
 		this.groupNo = groupNo;
 		this.groupLeader = groupLeader;
 		this.groupName = groupName;
@@ -43,11 +37,13 @@ public class GroupVo {
 		this.userNo = userNo;
 		this.leaderCheck = leaderCheck;
 		this.bossCheck = bossCheck;
-		this.memberName = memberName;
-		this.memberSex = memberSex;
-		this.memberAge = memberAge;
+		this.userName = userName;
+		this.userBirthYear = userBirthYear;
+		this.userSex = userSex;
+		this.groupOrder = groupOrder;
 	}
-
+	
+	
 	public int getGroupNo() {
 		return groupNo;
 	}
@@ -104,36 +100,48 @@ public class GroupVo {
 		this.bossCheck = bossCheck;
 	}
 
-	public String getMemberName() {
-		return memberName;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public String getMemberSex() {
-		return memberSex;
+	public int getUserBirthYear() {
+		return userBirthYear;
 	}
 
-	public void setMemberSex(String memberSex) {
-		this.memberSex = memberSex;
+	public void setUserBirthYear(int userBirthYear) {
+		this.userBirthYear = userBirthYear;
 	}
 
-	public int getMemberAge() {
-		return memberAge;
+	public String getUserSex() {
+		return userSex;
 	}
 
-	public void setMemberAge(int memberAge) {
-		this.memberAge = memberAge;
+	public void setUserSex(String userSex) {
+		this.userSex = userSex;
+	}
+	
+	public void setGroupOrder(int groupOrder) {
+		this.groupOrder = groupOrder;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "GroupVo [groupNo=" + groupNo + ", groupLeader=" + groupLeader + ", groupName=" + groupName
 				+ ", groupMemberNo=" + groupMemberNo + ", userNo=" + userNo + ", leaderCheck=" + leaderCheck
-				+ ", bossCheck=" + bossCheck + ", memberName=" + memberName + ", memberSex=" + memberSex
-				+ ", memberAge=" + memberAge + "]";
+				+ ", bossCheck=" + bossCheck + ", userName=" + userName + ", userBirthYear=" + userBirthYear
+				+ ", userSex=" + userSex + ", groupOrder=" + groupOrder + ", getGroupNo()=" + getGroupNo()
+				+ ", getGroupLeader()=" + getGroupLeader() + ", getGroupName()=" + getGroupName()
+				+ ", getGroupMemberNo()=" + getGroupMemberNo() + ", getUserNo()=" + getUserNo() + ", getLeaderCheck()="
+				+ getLeaderCheck() + ", getBossCheck()=" + getBossCheck() + ", getUserName()=" + getUserName()
+				+ ", getUserBirthYear()=" + getUserBirthYear() + ", getUserSex()=" + getUserSex() + ", getClass()="
+				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
+
+	
 	
 }

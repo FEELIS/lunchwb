@@ -50,6 +50,16 @@ public class GroupDao {
 	}
 	
 	
+	/******************** 그룹 개수 ***********************************************/
+	public int groupCount(int userNo) {
+		logger.info("groupCount()");
+		
+		int groupCount = sqlSession.selectOne("group.groupCount", userNo);
+		
+		return groupCount;
+	}
+	
+	
 	/******************** 그룹 멤버 추가 ***********************************************/
 	public void addMember(GroupVo groupVo) {
 		logger.info("addMember()");

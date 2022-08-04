@@ -8,11 +8,12 @@
 		<result column="group_leader" property="groupLeader" />
 		<result column="group_name" property="groupName" />
 		<result column="group_member_no" property="groupMemberNo" />
+		<result column="user_no" property="userNo" />
 		<result column="leader_check" property="leaderCheck" />
 		<result column="boss_check" property="bossCheck" />
-		<result column="member_name" property="memberName" />
-		<result column="member_sex" property="member_Sex" />
-		<result column="member_age" property="memberAge" />
+		<result column="user_name" property="userName" />
+		<result column="user_birth_year" property="userBirthYear" />
+		<result column="user_sex" property="userSex" />
 	</resultMap>	
 
 
@@ -21,7 +22,7 @@
 		SELECT  g.group_no,
 				g.group_name
 		FROM groups g, group_member m
-		WHERE g.group_no = m.gorup_no
+		WHERE g.group_no = m.group_no
 		AND user_no = #{userNo}
 		ORDER BY group_member_no ASC;
 	</select>
@@ -30,22 +31,23 @@
 	<!-- 그룹 멤버 리스트 -->
 	<select id="groupMembers" parameterType="int" resultMap="GroupVo">
 		SELECT  group_member_no,
-				user_no,
-				group_no,
-				leader_check,
-				boss_check,
-				member_name,
-				member_sex,
-				member_age
-		FROM group_member
-		WHERE group_no = #{groupNo}
+		        u.user_no,
+		        group_no
+		        leader_check,
+		        boss_check,
+		        user_name,
+		        user_birth_year,
+		        user_sex
+		FROM group_member m, users u
+		WHERE m.user_no = u.user_no
+		AND group_no = 1
 		ORDER BY boss_check DESC,
-				 group_member_no ASC
+		         group_member_no ASC
 	</select>
 
 
 	<!-- 그룹 생성 -->
-	<insert id="createGroup" parameterType="com.lunchwb.vo.GroupVo">
+	<insert id="createGroup" parameterType="GroupVo">
 		<selectKey keyProperty="groupNo" resultType="int" order="BEFORE">
 			SELECT SEQ_GROUP_NO.NEXTVAL FROM DUAL
 		</selectKey>
@@ -54,11 +56,19 @@
 	</insert>
 	
 	
-	<!-- 그룹원 추가 : user일 경우-->
-	<insert id="addMember" parameterType="com.lunchwb.vo.GroupVo">
+	<!-- 그룹 개수 -->
+	<select id="groupCount" parameterType="int" resultType="int">
+		SELECT COUNT(group_no)
+		FROM group_member
+		WHERE user_no = #{userNo}
+	</select>
+	
+	
+	<!-- 그룹원 추가 -->
+	<insert id="addMember" parameterType="GroupVo">
 		INSERT INTO GROUP_MEMBER
-		VALUES (SEQ_GROUP_MEMBER_NO.NEXTVAL, #{userNo}, #{groupNo}, #{leaderCheck}, 
-				#{bossCheck}, #{memberName}, #{memberSex}, #{memberAge})
+		VALUES (SEQ_GROUP_MEMBER_NO.NEXTVAL, #{userNo}, #{groupNo}, 
+				#{leaderCheck}, #{bossCheck}, #{groupOrder})
 	</insert>
 
 </mapper>

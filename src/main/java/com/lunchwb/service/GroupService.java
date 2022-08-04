@@ -1,6 +1,5 @@
 package com.lunchwb.service;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +41,6 @@ public class GroupService {
 		int groupCount = groupList.size();
 		map.put("groupCount", groupCount);
 		
-		logger.info("gCount: " + groupCount);
 		/////////////////// 그룹원 리스트 //////////////////////////////
 		//나의그룹 접근 groupNo == 0: 첫번째 그룹페이지
 
@@ -51,7 +49,6 @@ public class GroupService {
 			if(groupNo == 0) {
 				groupNo = groupList.get(0).getGroupNo();
 			}
-			logger.info("groupNo" + groupNo);
 			
 			map.put("groupNo", groupNo);
 			
@@ -85,39 +82,20 @@ public class GroupService {
 		//생성된 그룹 번호
 		int groupNo = groupVo.getGroupNo();
 		
-		logger.info(groupNo + "그룹번호");
+		//UserVo userVo = userDao.groupMemInfo(userNo);
 		
-		//그룹멤버에 추가할 유저 정보 받기
 		int userNo = authUser.getUserNo();
-		UserVo userVo = userDao.groupMemInfo(userNo);
 		
-		//생년 4자리 + 생월 + 생일
-		int birthYear = Integer.parseInt(userVo.getUserBirth().substring(0, 4));
-		int birthMonth = Integer.parseInt(userVo.getUserBirth().substring(4, 6));
-		int birthDay = Integer.parseInt(userVo.getUserBirth().substring(6));
-		
-		//오늘날짜 연도 +달(month:지난달출력) +날짜
-		Calendar today = Calendar.getInstance();
-		int thisYear = today.get(Calendar.YEAR);
-		int thisMonth = today.get(Calendar.MONTH) + 1;
-		int thisDay = today.get(Calendar.DAY_OF_MONTH);
-		
-		// 만나이 (생일 안지났으면 -1)
-		int age = thisYear - birthYear; 
-		if(birthMonth*100 + birthDay > thisMonth*100 + thisDay) {
-			age = age - 1;
-		}
+		//groupOrder는 1부터 시작 순서대로 해당 유저의 그룹개수 +1로
+		int groupOrder = groupDao.groupCount(userNo) + 1;
 		
 		//vo 정보 추가
 		groupVo.setUserNo(userNo);
 		groupVo.setLeaderCheck(1);
-		groupVo.setMemberName(userVo.getUserName());
-		groupVo.setMemberAge(age);
-		groupVo.setMemberSex(userVo.getUserSex());
+		groupVo.setGroupOrder(groupOrder);
 		
 		//그룹 멤버 추가
 		groupDao.addMember(groupVo);
-		
 		
 		return groupNo;
 	}
