@@ -5,16 +5,16 @@ public class VoteVo {
 	//////////////////// vote table ////////////////////
 	private int voteNo;
 	private int voteMadeUser;
+	private int groupNo;
 	private String voteEndTime;
 	private String voteItems;
+	private String voteResults;
 	
-	//////////////////// voteGroup table ////////////////////
-	private int voteGroupNo;
+	//////////////////// vote_members table ////////////////////
+	private int voteMemberNo;
 	// private int voteNo; (vote table fk)
-	private int userNo;
-	private int bossCheck;
-	private String memberName;
-	private int votedCheck;
+	private int groupMemberNo;
+	private String userName;
 	
 
 }
