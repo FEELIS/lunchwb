@@ -6,6 +6,7 @@ public class BlacklistVo {
 	private int blackNo;
 	private int storeNo;
 	private int groupNo;
+	private String regDate;
 	
 	
 
