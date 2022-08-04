@@ -11,14 +11,7 @@ public class StoreVo {
 	private String storeRoadAddress;
 	private String storeOldAddress;
 	private String storeOpeningHours;
-	private String storeBreakTime;
-	private int storeVisitCount;
-	
-	//////////////////// ratingBujang table ////////////////////
-	// private int storeNo; (store table fk)
-	private float ratingSum;
-	private float ratingAvg;
-	private float ratingNum;
+	private String storeBreaktime;
 	
 	//////////////////// ratingOthers table ////////////////////
 	// private int storeNo; (store table fk)
