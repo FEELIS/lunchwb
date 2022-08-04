@@ -1,14 +1,12 @@
 package com.lunchwb.vo;
 
-public class Visited {
+public class VisitedVo {
 	
 	//////////////////// visited table //////////////////// 
 	private int visitedNo;
+	private int userNo;
 	private int groupNo;
 	private int StoreNo;
-	private int menuNo;
 	private String visitedDate;
-	private String visitedStoreName;
-	private String visitedAteMenu;
 
-}
+};
