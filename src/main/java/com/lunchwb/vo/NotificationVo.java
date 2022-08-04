@@ -6,27 +6,14 @@ public class NotificationVo {
 	private int userNo;
 	/* join해서 써야합니다.*/
 	// private int notiType;
+	private int groupNo;
+	private int replyNo;
+	private String alertComment;
 	
 	
 	////////////////////notiNo table ////////////////////
 	private int notiType;
 	private String notiName;
 	
-	
-	//////////////////// notiGroup table ////////////////////
-	private int groupNo;
-	// private int notiNo;
-	/* join해서 써야합니다.*/
-	// private int notiType;
-	
-	//////////////////// notiCs table ////////////////////
-	private int replyNo;
-	private int adminNo;
-	/* join해서 써야합니다.*/
-	// private int notiNo;
-	// private notiType;
-	
-	
-	
 
-}
+};
