@@ -5,6 +5,7 @@
     <typeAliases>
         <typeAlias alias="InquiryVo" type="com.lunchwb.vo.InquiryVo"/>
    		<typeAlias alias="FaqVo" type="com.lunchwb.vo.FaqVo"/>
+   		<typeAlias alias="GroupVo" type="com.lunchwb.vo.GroupVo"/>
     </typeAliases>
 
     <mappers>
