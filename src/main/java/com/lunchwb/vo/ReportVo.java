@@ -16,4 +16,4 @@ public class ReportVo {
 	private int storeNo;
 	
 
-}
+};
