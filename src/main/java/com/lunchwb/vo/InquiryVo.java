@@ -13,7 +13,6 @@ public class InquiryVo {
 	//////////////////// replyInquiry table ////////////////////
 	private int replyNo;
 	// private int inquiryNo;
-	private int adminNo;
 	private String replyContent;
 
 	// 생성자
@@ -50,15 +49,14 @@ public class InquiryVo {
 		this.inquiryStatus = inquiryStatus;
 	};
 
-	public InquiryVo(int replyNo, int inquiryNo, int adminNo, String replyContent) {
+	public InquiryVo(int replyNo, int inquiryNo, String replyContent) {
 		this.replyNo = replyNo;
 		this.inquiryNo = inquiryNo;
-		this.adminNo = adminNo;
 		this.replyContent = replyContent;
 	};
 
 	public InquiryVo(int inquiryNo, int userNo, String inquiryTitle, String inquiryContent, String inquiryFilePath,
-			String inquiryDate, String inquiryStatus, int replyNo, int adminNo, String replyContent) {
+			String inquiryDate, String inquiryStatus, int replyNo,  String replyContent) {
 		this.inquiryNo = inquiryNo;
 		this.userNo = userNo;
 		this.inquiryTitle = inquiryTitle;
@@ -67,7 +65,6 @@ public class InquiryVo {
 		this.inquiryDate = inquiryDate;
 		this.inquiryStatus = inquiryStatus;
 		this.replyNo = replyNo;
-		this.adminNo = adminNo;
 		this.replyContent = replyContent;
 	};
 
@@ -136,13 +133,6 @@ public class InquiryVo {
 		this.replyNo = replyNo;
 	};
 
-	public int getAdminNo() {
-		return adminNo;
-	};
-
-	public void setAdminNo(int adminNo) {
-		this.adminNo = adminNo;
-	};
 
 	public String getReplyContent() {
 		return replyContent;
@@ -156,7 +146,7 @@ public class InquiryVo {
 	public String toString() {
 		return "InquiryVo [inquiryNo=" + inquiryNo + ", userNo=" + userNo + ", inquiryTitle=" + inquiryTitle
 				+ ", inquiryContent=" + inquiryContent + ", inquiryFilePath=" + inquiryFilePath + ", inquiryDate="
-				+ inquiryDate + ", inquiryStatus=" + inquiryStatus + ", replyNo=" + replyNo + ", adminNo=" + adminNo
+				+ inquiryDate + ", inquiryStatus=" + inquiryStatus + ", replyNo=" + replyNo
 				+ ", replyContent=" + replyContent + "]";
 	};
 
