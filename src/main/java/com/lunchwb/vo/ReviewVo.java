@@ -5,7 +5,6 @@ public class ReviewVo {
 	//////////////////// review table ////////////////////
 	private int reviewNo;
 	private int userNo;
-	private int menuNo;
 	private int visitedNo;
 	private String reviewContent;
 	private int userScore;
@@ -14,5 +13,6 @@ public class ReviewVo {
 	
 	// store table //
 	private int storeNo;
+	
 
 }
