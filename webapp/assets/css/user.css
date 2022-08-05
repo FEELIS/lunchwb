@@ -78,6 +78,23 @@
   display: block;
 }
 
+#inputBirthDate{
+  width : 150px;
+  height : 40px;
+  text-align :center;
+  padding : 5px 10px;
+  border: 1px solid #d1d3e2;
+  border-radius: 10rem;
+}
+
+#inputBirthDate:focus{
+  color: #858796;
+  background-color: #fff;
+  border-color: #a7b9ef;
+  outline: 0;
+  box-shadow: 0 0 0 .25rem rgba(78,115,223,.25);
+}
+
 #footer span {
   font-size: 12px;
 }

@@ -93,7 +93,7 @@
                                        	</div>
                                         <div class="mb-3">
                                         	<strong class="join-text">생년월일</strong>
-                                        	<input id="inputBirthDate" type="date" name="userBirth">
+                                        	<input id="inputBirthDate" type="number" name="userBirth" min="1900" max="2100">
                                         	<span class="check-text" id="msgBirth"></span>
                                        	</div>
                                         <div class="mb-3">
