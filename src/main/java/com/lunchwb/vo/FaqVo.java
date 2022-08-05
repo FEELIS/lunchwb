@@ -3,7 +3,6 @@ package com.lunchwb.vo;
 public class FaqVo {
 	//////////////////// FAQ table ////////////////////
 	private int faqNo;
-	private int replyNo;
 	private int userNo;
 	private String faqTitle;
 	private String faqContent;
@@ -16,6 +15,14 @@ public class FaqVo {
 	public FaqVo(String faqStatus) {
 		this.faqStatus = faqStatus;
 	};
+	
+	
+	public FaqVo(int faqNo, String faqTitle, String faqContent, String faqStatus) {
+		this.faqNo = faqNo;
+		this.faqTitle = faqTitle;
+		this.faqContent = faqContent;
+		this.faqStatus = faqStatus;
+	}
 
 	public FaqVo(int faqNo, int userNo, String faqTitle, String faqContent, String faqStatus) {
 		this.faqNo = faqNo;
@@ -23,7 +30,7 @@ public class FaqVo {
 		this.faqTitle = faqTitle;
 		this.faqContent = faqContent;
 		this.faqStatus = faqStatus;
-	};
+	}
 
 	// 메소드 - gs
 	public int getFaqNo() {
@@ -32,14 +39,6 @@ public class FaqVo {
 
 	public void setFaqNo(int faqNo) {
 		this.faqNo = faqNo;
-	};
-
-	public int getReplyNo() {
-		return replyNo;
-	};
-
-	public void setReplyNo(int replyNo) {
-		this.replyNo = replyNo;
 	};
 
 	public int getUserNo() {
@@ -76,7 +75,7 @@ public class FaqVo {
 
 	@Override
 	public String toString() {
-		return "FaqVo [faqNo=" + faqNo + ", replyNo=" + replyNo + ", userNo=" + userNo + ", faqTitle=" + faqTitle
+		return "FaqVo [faqNo=" + faqNo + ", userNo=" + userNo + ", faqTitle=" + faqTitle
 				+ ", faqContent=" + faqContent + ", faqStatus=" + faqStatus + "]";
 	};
 
