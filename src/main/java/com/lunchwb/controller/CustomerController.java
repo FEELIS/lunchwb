@@ -32,9 +32,9 @@ public class CustomerController {
 
 	
 	// ============================================ FAQ 폼 ============================================
-	@GetMapping("/FAQ")
-	public String FAQForm(Model model) {
-		logger.info("CustomerController > FAQForm()");
+	@GetMapping("/faq")
+	public String faqForm(Model model) {
+		logger.info("CustomerController > faqForm()");
 		
 		Map<String,Object> fMap = faqService.divFaqList();
 		logger.info(fMap.toString());
@@ -44,6 +44,24 @@ public class CustomerController {
 		
 		return "customer/FAQ";
 	};
+	
+	@GetMapping("/manageFaq")
+	public String manageFaqForm(Model model) {
+		logger.info("CustomerController > manageFaqForm()");
+		
+		Map<String,Object> fMap = faqService.divFaqList();
+		logger.info(fMap.toString());
+		
+		
+		model.addAttribute("fMap",fMap);
+		
+		
+		
+		return "customer/manageFAQ";
+	};
+	
+	
+	
 	
 	
 	// ============================================ 문의작성 폼 ============================================
