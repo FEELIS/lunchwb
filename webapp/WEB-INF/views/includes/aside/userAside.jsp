@@ -49,7 +49,7 @@
 				<a class="nav-link nav-title no-drag">고객센터</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link nav-menu" href="${pageContext.request.contextPath}/customer/FAQ">FAQ</a>
+				<a class="nav-link nav-menu" href="${pageContext.request.contextPath}/customer/faq">FAQ</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link nav-menu" href="${pageContext.request.contextPath}/customer/writeInquiry">문의하기</a>
