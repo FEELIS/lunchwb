@@ -9,18 +9,17 @@
 <meta name="og:type" content="article">
 
 <!-- css -->
-<link href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath}/assets/css/yogiyo.css" rel="stylesheet"
-	type="text/css">
+<link href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/notification.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/yogiyo.css" rel="stylesheet" type="text/css">
+
+
 
 <!-- fonts -->
-<link href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css"
-	rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css" rel="stylesheet" type="text/css">
 
 <!-- js -->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
 
 
 <title>문의내역</title>
@@ -28,7 +27,7 @@
 <body>
 	<div id="wrapper">
 		<!-- aside -->
-		<c:import url="/WEB-INF/views/includes/aside/aside.jsp"></c:import>
+		<c:import url="/WEB-INF/views/includes/aside/userAside.jsp"></c:import>
 		<!-- /aside -->
 
 		<div class="d-flex flex-column" id="content-wrapper">
@@ -39,7 +38,6 @@
 				<!-- /header -->
 
 			</div>
-
 
 			<!-- 회원들 문의내역 읽기  -->
 			<div class="container-fluid">
@@ -52,32 +50,35 @@
 						<div class="row">
 							<div class="col-md-6 text-nowrap">
 								<div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-									<label class="form-label">Show&nbsp;
-										<select class="d-inline-block form-select form-select-sm">
+									<label class="form-label">Show&nbsp; <select
+										class="d-inline-block form-select form-select-sm">
 											<option value="10" selected="">10</option>
 											<option value="25">25</option>
 											<option value="50">50</option>
 											<option value="100">100</option>
-										</select>&nbsp;
+									</select>&nbsp;
 									</label>
 								</div>
 							</div>
-							
-							
+
+
 							<div class="col-md-6">
 								<div class="text-md-end dataTables_filter" id="dataTable_filter">
-									<label class="form-label">
-										<input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search">
+									<label class="form-label"> <input type="search"
+										class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search">
 									</label>
-									<button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button>
+									<button class="btn btn-primary py-0" type="button">
+										<i class="fas fa-search"></i>
+									</button>
 								</div>
 							</div>
-							
+
 						</div>
 						<!-- row 종료 -->
-						
-						
-						<div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+
+
+						<div class="table-responsive table mt-2" id="dataTable" role="grid"
+							aria-describedby="dataTable_info">
 							<table class="table my-0" id="dataTable">
 								<thead>
 									<tr>
@@ -90,29 +91,29 @@
 									</tr>
 								</thead>
 								<tbody>
-								
-								<c:forEach items="${inqList}" var="inqVo" varStatus="status" >
-									<tr>
-										<td>${status.count}</td>
-										<td>${inqVo.inquiryTitle}</td>
-										
-										<c:choose>
-											<c:when test="${inqVo.inquiryStatus eq '접수'}">
-												<td class="text-primary">접수</td>
-											</c:when>
-											<c:when test="${inqVo.inquiryStatus eq '접수중'}">
-												<td class="text-warning">접수중</td>
-											</c:when>
-											<c:otherwise>
-												<td class="text-secondary">답변완료</td>
-											</c:otherwise>
-										</c:choose>
-										
-										<td>${inqVo.inquiryNo} </td>
-										<td>----</td>
-										<td>${inqVo.inquiryDate }</td>
-									</tr>
-								</c:forEach>
+
+									<c:forEach items="${inqList}" var="inqVo" varStatus="status">
+										<tr>
+											<td>${status.count}</td>
+											<td>${inqVo.inquiryTitle}</td>
+
+											<c:choose>
+												<c:when test="${inqVo.inquiryStatus eq '접수'}">
+													<td class="text-primary">접수</td>
+												</c:when>
+												<c:when test="${inqVo.inquiryStatus eq '접수중'}">
+													<td class="text-warning">접수중</td>
+												</c:when>
+												<c:otherwise>
+													<td class="text-secondary">답변완료</td>
+												</c:otherwise>
+											</c:choose>
+
+											<td>${inqVo.inquiryNo}</td>
+											<td>----</td>
+											<td>${inqVo.inquiryDate }</td>
+										</tr>
+									</c:forEach>
 									<tr>
 								</tbody>
 								<tfoot>
@@ -127,30 +128,26 @@
 								</tfoot>
 							</table>
 						</div>
-						
+
 						<div class="row">
 							<div class="col-md-6">
 								<nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
 									<ul class="pagination">
-										<li class="page-item disabled">
-											<a class="page-link" aria-label="Previous" href="#">
+										<li class="page-item disabled"><a class="page-link" aria-label="Previous" href="#">
 												<span aria-hidden="true">«</span>
-											</a>
-										</li>
+										</a></li>
 										<li class="page-item active"><a class="page-link" href="#">1</a></li>
 										<li class="page-item"><a class="page-link" href="#">2</a></li>
 										<li class="page-item"><a class="page-link" href="#">3</a></li>
-										<li class="page-item">
-											<a class="page-link" aria-label="Next" href="#">
-												<span aria-hidden="true">»</span>
-											</a>
-										</li>
+										<li class="page-item"><a class="page-link" aria-label="Next" href="#"> <span
+												aria-hidden="true">»</span>
+										</a></li>
 									</ul>
 								</nav>
 							</div>
 						</div>
 						<!-- row 종료 -->
-						
+
 					</div>
 				</div>
 			</div>
