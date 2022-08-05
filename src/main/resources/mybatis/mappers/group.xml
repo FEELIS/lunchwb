@@ -13,18 +13,21 @@
 		<result column="boss_check" property="bossCheck" />
 		<result column="user_name" property="userName" />
 		<result column="user_birth_year" property="userBirthYear" />
+		<result column="user_age" property="userAge" />
 		<result column="user_sex" property="userSex" />
+		<result column="group_order" property="groupOrder" />
 	</resultMap>	
 
 
 	<!-- 그룹 리스트 -->
 	<select id="userGroups" parameterType="int" resultMap="GroupVo">
 		SELECT  g.group_no,
-				g.group_name
+				g.group_name,
+				group_order
 		FROM groups g, group_member m
 		WHERE g.group_no = m.group_no
 		AND user_no = #{userNo}
-		ORDER BY group_member_no ASC;
+		ORDER BY group_order ASC
 	</select>
 
 
@@ -37,12 +40,33 @@
 		        boss_check,
 		        user_name,
 		        user_birth_year,
-		        user_sex
-		FROM group_member m, users u
+		<![CDATA[		       
+		        CASE WHEN user_birth_year > "30_start" THEN '20대 이하'
+             		 WHEN user_birth_year > "40_start" AND user_birth_year <= "30_start" THEN '30대'
+             		 WHEN user_birth_year > "50_start" AND user_birth_year <= "40_start" THEN '40대'
+             		 WHEN user_birth_year <= "50_start" THEN '50대 이상'
+		        END user_age,
+        ]]>
+		        CASE WHEN user_sex = 'male' THEN '남자'
+		        	 WHEN user_sex = 'female' THEN '여자'
+			    END	user_sex,
+			    group_order
+		FROM group_member m, users u, ( SELECT  TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - 29 "30_start",
+                                       			TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - 39 "40_start",
+                                        		TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - 49 "50_start"
+                                		FROM DUAL )
 		WHERE m.user_no = u.user_no
-		AND group_no = 1
+		AND group_no = #{groupNo}
 		ORDER BY boss_check DESC,
 		         group_member_no ASC
+	</select>
+	
+	
+	<!-- 그룹 리더 -->
+	<select id="groupLeader" parameterType="int" resultType="int">
+		SELECT group_leader
+		FROM groups
+		WHERE group_no = #{groupNo}
 	</select>
 
 

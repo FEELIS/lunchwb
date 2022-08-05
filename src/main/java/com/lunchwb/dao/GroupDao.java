@@ -21,7 +21,7 @@ public class GroupDao {
 	
 	/******************** 그룹 리스트 **********************************************/
 	public List<GroupVo> userGroups(int userNo) {
-		logger.info("userGroups");
+		logger.info("userGroups()");
 		
 		List<GroupVo> groupList = sqlSession.selectList("group.userGroups", userNo);
 		
@@ -31,7 +31,7 @@ public class GroupDao {
 	
 	/******************** 그룹 멤버 리스트 *******************************************/
 	public List<GroupVo> groupMembers(int groupNo) {
-		logger.info("groupMembers");
+		logger.info("groupMembers()");
 		
 		List<GroupVo> memberList = sqlSession.selectList("group.groupMembers", groupNo);
 		
@@ -39,6 +39,14 @@ public class GroupDao {
 	}
 
 	
+	/******************** 그룹 리더 ***********************************************/
+	public int groupLeader(int groupNo) {
+		logger.info("groupLeader()");
+		
+		int leader = sqlSession.selectOne("group.groupLeader", groupNo);
+		
+		return leader;
+	}
 	
 	/******************** 그룹 생성 ***********************************************/
 	public void createGroup(GroupVo groupVo) {

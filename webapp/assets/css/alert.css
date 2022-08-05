@@ -21,6 +21,7 @@
 }
 
 #user-alert-list .dropdown-item button {
+  width: 50px;
   height: 22px;
   font-size: 12px;
   padding: 1px 12px;
@@ -28,7 +29,7 @@
 }
 
 #user-alert-list .dropdown-item .alert-choice {
-  width: 173px;
+  width: 171px;
   margin: 0px 8px;
   padding: 0px;
 }

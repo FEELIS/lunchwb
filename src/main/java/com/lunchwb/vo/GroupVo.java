@@ -18,18 +18,18 @@ public class GroupVo {
 	/////////////////// users table ////////////////////
 	private String userName;
 	private int userBirthYear;
+	private String userAge;
 	private String userSex;
 	
 	///////group_member table +//////
 	private int groupOrder;
 	
 	
-	
 	public GroupVo() {
 	}
 	
 	public GroupVo(int groupNo, int groupLeader, String groupName, int groupMemberNo, int userNo, int leaderCheck,
-					int bossCheck, String userName, int userBirthYear, String userSex, int groupOrder) {
+					int bossCheck, String userName, int userBirthYear, String userAge, String userSex, int groupOrder) {
 		this.groupNo = groupNo;
 		this.groupLeader = groupLeader;
 		this.groupName = groupName;
@@ -39,6 +39,7 @@ public class GroupVo {
 		this.bossCheck = bossCheck;
 		this.userName = userName;
 		this.userBirthYear = userBirthYear;
+		this.userAge = userAge;
 		this.userSex = userSex;
 		this.groupOrder = groupOrder;
 	}
@@ -107,13 +108,21 @@ public class GroupVo {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
+	
 	public int getUserBirthYear() {
 		return userBirthYear;
 	}
-
+	
 	public void setUserBirthYear(int userBirthYear) {
 		this.userBirthYear = userBirthYear;
+	}
+
+	public String getUserAge() {
+		return userAge;
+	}
+
+	public void setUserAge(String userAge) {
+		this.userAge = userAge;
 	}
 
 	public String getUserSex() {
@@ -124,24 +133,21 @@ public class GroupVo {
 		this.userSex = userSex;
 	}
 	
+	public int getGroupOrder() {
+		return groupOrder;
+	}
+	
 	public void setGroupOrder(int groupOrder) {
 		this.groupOrder = groupOrder;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "GroupVo [groupNo=" + groupNo + ", groupLeader=" + groupLeader + ", groupName=" + groupName
 				+ ", groupMemberNo=" + groupMemberNo + ", userNo=" + userNo + ", leaderCheck=" + leaderCheck
 				+ ", bossCheck=" + bossCheck + ", userName=" + userName + ", userBirthYear=" + userBirthYear
-				+ ", userSex=" + userSex + ", groupOrder=" + groupOrder + ", getGroupNo()=" + getGroupNo()
-				+ ", getGroupLeader()=" + getGroupLeader() + ", getGroupName()=" + getGroupName()
-				+ ", getGroupMemberNo()=" + getGroupMemberNo() + ", getUserNo()=" + getUserNo() + ", getLeaderCheck()="
-				+ getLeaderCheck() + ", getBossCheck()=" + getBossCheck() + ", getUserName()=" + getUserName()
-				+ ", getUserBirthYear()=" + getUserBirthYear() + ", getUserSex()=" + getUserSex() + ", getClass()="
-				+ getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
+				+ ", userAge=" + userAge + ", userSex=" + userSex + ", groupOrder=" + groupOrder + "]";
 	}
 
-	
 	
 }

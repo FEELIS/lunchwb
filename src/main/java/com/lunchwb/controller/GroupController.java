@@ -46,7 +46,7 @@ public class GroupController {
 		
 		//그룹 없음
 		if((Integer)map.get("groupCount") == 0) {
-			return "group/addGroup()";
+			return "group/addGroup";
 		}
 			
 		return "group/groupList";

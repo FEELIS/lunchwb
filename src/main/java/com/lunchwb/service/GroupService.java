@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lunchwb.dao.GroupDao;
-import com.lunchwb.dao.UserDao;
 import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.UserVo;
 
@@ -19,8 +18,6 @@ public class GroupService {
 	
 	@Autowired
 	private GroupDao groupDao;
-	@Autowired
-	private UserDao userDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(GroupService.class);
 	
@@ -34,14 +31,14 @@ public class GroupService {
 		/////////////////// 유저 그룹 리스트  /////////////////////////////
 		int userNo = authUser.getUserNo();
 		List<GroupVo> groupList = groupDao.userGroups(userNo);
-		map.put("grouopList", groupList);
+		map.put("groupList", groupList);
 		
 		//그룹 개수
 		//그룹이 없으면 그룹 생성페이지로 전송
 		int groupCount = groupList.size();
 		map.put("groupCount", groupCount);
 		
-		/////////////////// 그룹원 리스트 //////////////////////////////
+		/////////////////// 그룹 //////// //////////////////////////////
 		//나의그룹 접근 groupNo == 0: 첫번째 그룹페이지
 
 		if(groupCount != 0) {
@@ -52,11 +49,17 @@ public class GroupService {
 			
 			map.put("groupNo", groupNo);
 			
+			//그룹원 리스트
 			List<GroupVo> memberList = groupDao.groupMembers(groupNo);
 			map.put("memberList", memberList);
 			
+			//그룹원 수(혼자인지 아닌지 판단하게)
 			int memberCount = memberList.size();
 			map.put("memberCount", memberCount);
+			
+			//그룹 리더 
+			int leader = groupDao.groupLeader(groupNo);
+			map.put("leader", leader);
 		}
 		
 		return map;

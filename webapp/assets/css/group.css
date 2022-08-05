@@ -62,7 +62,7 @@
 }
 
 .group-title-btn, .btn-groupmem-invt, .btn-store-search {
-  padding: 2px 12px 2px 12px;
+  padding: 2px 12px 2px 12px !important;
   height: 30px;
   font-size: 14px !important;
   vertical-align: middle;
@@ -82,11 +82,16 @@
   min-width: 700px;
 }
 
-#groupmem-list, #groupmem-invt, #groupmem-add, #group-blacklist, #group-blacklist-add {
+#groupmem-list, #groupmem-invt, #groupmem-add, #new-group, #group-blacklist, #group-blacklist-add {
   min-width: 700px;
 }
 
-.groupmem-user, .groupmem-delete, .group-black-delete, .blacklist-add {
+.groupmem-user {
+  width: 40px;
+  font-size: 20px;	
+}
+
+.groupmem-delete, .group-black-delete, .blacklist-add {
   width: 40px;
   font-size: 20px;
   cursor: pointer;
@@ -97,7 +102,7 @@
   text-align: center;
 }
 
-#groupmem-list, #groupmem-invt, #group-blacklist {
+#groupmem-list, #groupmem-invt ,#new-group, #group-blacklist {
   margin: 0px 0px 30px 0px;
 }
 
@@ -113,8 +118,21 @@ input[type="email"] {
   font-size: 14px;
 }
 
-input[type="text"] {
+#groupmem-add input[type="text"] {
   width: 170px;
+  height: 28px;
+  margin: 0px 5px 10px 0px;
+  padding: 0px 5px;
+  font-size: 14px;
+}
+
+#groupmem-add select {
+  margin-right: 5px;
+  color: #858796;
+}
+
+#new-group input[type="text"] {
+  width: 200px;
   height: 28px;
   margin: 0px 5px 10px 0px;
   padding: 0px 5px;
@@ -151,13 +169,15 @@ select {
 }
 
 #modal-group-order-change .ion-arrow-up-b {
-  float: right;
+  float: left;
   font-size: 20px;
+  cursor: pointer;
 }
 
 #modal-group-order-change .ion-arrow-down-b {
-  float: left;
+  float: right;
   font-size: 20px;
+  cursor: pointer;
 }
 
 .group-order-area {
