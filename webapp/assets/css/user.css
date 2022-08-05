@@ -1,3 +1,11 @@
+input {
+  width: 170px;
+  height: 35px;
+  margin: 0px 5px 10px 0px;
+  padding: 0px 5px;
+  font-size: 14px;
+}
+
 .btn-kakao {
   color: #fff;
   background-color: #f6c23e;
@@ -69,6 +77,11 @@
   padding: 0;
 }
 
+#inputJoinNickname{
+  width : 300px;
+  height : 35px;
+}
+
 #inputJoinDate {
   font-weight: 400;
   line-height: 3;
@@ -79,12 +92,15 @@
 }
 
 #inputBirthDate{
-  width : 150px;
-  height : 40px;
+  width : 200px;
+  height : 35px;
+  font-size: .8rem;
   text-align :center;
+  color: #858796;
   padding : 5px 10px;
   border: 1px solid #d1d3e2;
   border-radius: 10rem;
+  
 }
 
 #inputBirthDate:focus{

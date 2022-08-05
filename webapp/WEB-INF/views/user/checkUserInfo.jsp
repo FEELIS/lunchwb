@@ -38,7 +38,9 @@
                                         <div class="text-center"></div>
                                         <form method="post" action="${pageContext.request.contextPath}/user/userInfo/" class="user">
                                         	<span id="infoEmail" class="input-group-text">${authUser.userEmail}</span>
-                                            <div class="mb-3"><input class="form-control form-control-user btn-radius" type="password" id="inputLoginPassword" placeholder="비밀번호를 입력해주세요." name="userPassword"></div>
+                                            <div class="mb-3">
+                                            	<input class="form-control form-control-user btn-radius" type="password" id="inputLoginPassword" placeholder="비밀번호를 입력해주세요." name="userPassword">
+                                           	</div>
                                             <button class="btn btn-primary d-block btn-user w-100 btn-radius" id="btn-login" type="submit">확인</button>
                                         </form>
                                     </div>

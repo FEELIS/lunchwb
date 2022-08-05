@@ -92,8 +92,8 @@
                                         	<span class="check-text" id="msgName"></span>
                                        	</div>
                                         <div class="mb-3">
-                                        	<strong class="join-text">생년월일</strong>
-                                        	<input id="inputBirthDate" type="number" name="userBirth" min="1900" max="2100">
+                                        	<strong class="join-text">생년</strong>
+                                        	<input id="inputBirthDate" type="number" name="userBirthYear" placeholder="출생연도를 적어주세요." min="1900" max="2100">
                                         	<span class="check-text" id="msgBirth"></span>
                                        	</div>
                                         <div class="mb-3">
@@ -180,7 +180,7 @@ $("#btn-join").on("click", function(){
 	var password = $('#joinForm [name = userPassword]').val();
 	var checkPassword = $('#joinForm [name = checkPassword]').val();
 	var name = $('#joinForm [name = userName]').val();
-	var birth = $('#joinForm [name = userBirth]').val();
+	var birth = $('#joinForm [name = userBirthYear]').val();
 	var sex = $('#joinForm [name = userSex]').val();
 	var Check = $('#formCheck-1').is(":checked");
 	

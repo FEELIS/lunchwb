@@ -40,10 +40,16 @@
                                             <div class="mb-3"><strong class="join-text">아이디</strong><input id="infoEmail" class="form-control form-control-user btn-radius" name = "userEmail" value="${userInfo.userEmail}"readonly></div>
                                             <div class="mb-3"><strong class="join-text">새 비밀번호</strong><input class="form-control form-control-user btn-radius" type="password" id="inputJoinPassword" placeholder="비밀번호를 입력해주세요." name="userPassword"></div>
                                             <div class="mb-3"><strong class="join-text">새 비밀번호 확인</strong><input class="form-control form-control-user btn-radius" type="password" id="checkJoinPassword" placeholder="비밀번호를 한 번 더 입력해주세요." name="checkPassword"></div>
-                                            <div class="mb-3"><strong class="join-text">닉네임</strong><input class="form-control form-control-user btn-radius" type="text" id="inputJoinNickname" placeholder="${userInfo.userName}" value="${userInfo.userName}" name="userName"></div>
-                                            <div class="mb-3"><strong class="join-text">생년월일</strong><input id="inputJoinDate" type="date" value="${userInfo.userBirth}" name="userBirth"></div>
+                                            <div class="mb-3">
+                                            	<strong class="join-text">닉네임</strong>
+                                            	<input class="form-control form-control-user" type="text" id="inputJoinNickname" placeholder="${userInfo.userName}" value="${userInfo.userName}" name="userName">
+                                           	</div>
+                                            <div class="mb-3">
+                                            	<strong class="join-text">생년월일</strong>
+                                            	<input id=inputBirthDate type="number" value="${userInfo.userBirthYear}" name="userBirthYear" min="1900" max="2100">
+                                           	</div>
                                             <div class="mb-3"><strong class="join-text">성별</strong>
-                                            	<select class="form-select gender-box" name="userSex">
+                                            	<select class="form-select gender-box" style="width: 150px;height: auto;" name="userSex">
                                             		<option value="male" <c:if test="${userInfo.userSex eq 'male' }">selected</c:if>>남자</option>
                                                    	<option value="female" <c:if test="${userInfo.userSex eq 'female' }">selected</c:if>>여자</option>
                                                 </select>
