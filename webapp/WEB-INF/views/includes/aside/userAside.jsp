@@ -16,18 +16,17 @@
 			<li class="nav-item">
 				<hr class="nav-line">
 			</li>
+
 			<li class="nav-item">
 				<a class="nav-link nav-title no-drag">나의그룹</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link nav-menu" href="${pageContext.request.contextPath}/group/groupList">그룹목록</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link nav-menu" href="${pageContext.request.contextPath}/group/groupList">그룹추가</a>
+				<a class="nav-link nav-menu" href="${pageContext.request.contextPath}/group/list">그룹목록</a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link nav-menu" href="${pageContext.request.contextPath}/group/blackList">블랙리스트</a>
 			</li>
+
 			<li class="nav-item">
 				<hr class="nav-line">
 			</li>
