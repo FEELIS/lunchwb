@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.lunchwb.service.UserService;
 import com.lunchwb.vo.UserVo;
 
+import oracle.jdbc.proxy.annotation.Post;
+
 @Controller
 public class UserController {
 
@@ -129,12 +131,17 @@ public class UserController {
 		}
 	}
 	
-	
+	/* Json */
 	@ResponseBody
 	@PostMapping("/user/checkEmail")
 	public String checkEmail(@RequestBody String Email) {
 		String result = userService.checkEmail(Email);
 		
 		return result;
+	}
+	
+	@PostMapping("/autoLoginCheck")
+	public String autoLogin() {
+		
 	}
 }

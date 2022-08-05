@@ -61,6 +61,22 @@
 	</update>
 	
 	
+	<!-- 자동로그인 -->
+	<update id="autoLogin">
+        update users
+        set session_id= #{sessionId}
+            ,limit_date= #{limitDate}
+        where id= #{id};
+	</update>
+	    
+	<select id="selectSession">
+	        select user_no userNo
+		        	,user_email userEmail
+			        ,user_name userName
+			        ,user_grade userGrade
+	        from users
+	        where sessionId = #{sessionId}
+	</select>
 	
 	
 	

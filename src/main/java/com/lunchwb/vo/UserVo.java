@@ -1,5 +1,7 @@
 package com.lunchwb.vo;
 
+import java.util.Date;
+
 public class UserVo {
 	
 	//////////////////// users table ////////////////////
@@ -12,15 +14,15 @@ public class UserVo {
 	private String userJoinDate;
 	private String userGrade;
 	private String sessionId;
-	private String limitDate;
+	private Date limitDate;
 	private boolean autoLogin;
 	
 	public UserVo() {
 		super();
 	}
-	
+
 	public UserVo(int userNo, String userEmail, String userPassword, String userName, int userBirthYear, String userSex,
-			String userJoinDate, String userGrade, String sessionId, String limitDate, boolean autoLogin) {
+			String userJoinDate, String userGrade, String sessionId, Date limitDate, boolean autoLogin) {
 		super();
 		this.userNo = userNo;
 		this.userEmail = userEmail;
@@ -34,8 +36,6 @@ public class UserVo {
 		this.limitDate = limitDate;
 		this.autoLogin = autoLogin;
 	}
-
-
 
 	public int getUserNo() {
 		return userNo;
@@ -109,11 +109,11 @@ public class UserVo {
 		this.sessionId = sessionId;
 	}
 
-	public String getLimitDate() {
+	public Date getLimitDate() {
 		return limitDate;
 	}
 
-	public void setLimitDate(String limitDate) {
+	public void setLimitDate(Date limitDate) {
 		this.limitDate = limitDate;
 	}
 
@@ -132,8 +132,6 @@ public class UserVo {
 				+ ", userJoinDate=" + userJoinDate + ", userGrade=" + userGrade + ", sessionId=" + sessionId
 				+ ", limitDate=" + limitDate + ", autoLogin=" + autoLogin + "]";
 	}
-	
-	
-	
+		
 	
 }

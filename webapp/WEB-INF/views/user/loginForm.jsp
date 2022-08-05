@@ -14,6 +14,9 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Login-Form-Basic-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/user.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
+    
+    <!-- js -->
+	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -106,6 +109,46 @@
     <script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 </body>
+<script type="text/javascript">
+
+$("#check-email").on("click", function(){
+	console.log("아이디 체크");
+	
+	var id = $('[name = "userEmail"]').val();
+	
+	console.log(id);
+	
+ 	$.ajax({
+		url : "${pageContext.request.contextPath }/user/checkEmail",		
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(id),
+		dataType : "json",
+		success : function(result){
+			console.log(result);
+			
+			if(result == "success"){
+				if($("#msgOverlapEmail").hasClass("collect-text") === false) {
+						$("#msgOverlapEmail").addClass("collect-text");
+						$("#msgOverlapEmail").removeClass("check-text");
+					} 
+				$("#msgOverlapEmail").text("사용할 수 있는 이메일 입니다.");
+				idChk = id;
+			}else {
+				if($("#msgOverlapEmail").hasClass("check-text") === false) {
+					$("#msgOverlapEmail").addClass("check-text");
+					$("#msgOverlapEmail").removeClass("collect-text");
+				}
+				$("#msgOverlapEmail").text("이미 사용중인 이메일 입니다.");
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	}); 
+});
+
+</script>
 
 </html>
 

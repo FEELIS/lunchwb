@@ -1,5 +1,9 @@
 package com.lunchwb.service;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +28,7 @@ public class UserService {
 	
 	
 	public UserVo join(UserVo userVo) {
-		int count = userDao.join(userVo);
+		userDao.join(userVo);
 		UserVo authUser = userDao.login(userVo);
 		return authUser;
 	}
@@ -38,6 +42,23 @@ public class UserService {
 		}else {
 			return null;
 		}
+	}
+	
+	/* 자동로그인 */
+	public void autoLogin(String sessionId, Date limitDate, String email) {
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("sessionId", sessionId);
+		map.put("limitDate", limitDate);
+		map.put("email", email);
+		
+		userDao.autoLogin(map);
+		
+	}
+	
+	public UserVo selectSession(String sessionId) {
+		UserVo autoLogin = userDao.selectSession(sessionId);
+		return autoLogin;
 	}
 	
 	

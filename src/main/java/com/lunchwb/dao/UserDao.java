@@ -1,5 +1,7 @@
 package com.lunchwb.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -30,6 +32,17 @@ public class UserDao {
 	public int modifyUser(UserVo userVo) {
 		int count = sqlSession.update("user.modifyUser", userVo);
 		return count;
+	}
+	
+	/* 자동로그인 */
+	public int autoLogin(Map<String, Object> map) {
+		int count = sqlSession.update("user.autoLogin", map);
+		return count;
+	}
+	
+	public UserVo selectSession(String sessionId) {
+		UserVo autoLogin = sqlSession.selectOne("user.selectSession", sessionId);
+		return autoLogin;
 	}
 	
 	
