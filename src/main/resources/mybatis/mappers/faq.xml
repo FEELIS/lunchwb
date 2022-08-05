@@ -4,7 +4,7 @@
 <mapper namespace="faq">
 	<resultMap id="resultMapFaqVo" type="FaqVo">
 		<result column="faq_no" property="faqNo" />
-		<result column="admin_no" property="adminNo" />
+		<result column="user_no" property="userNo" />
 		<result column="faq_title" property="faqTitle" />
 		<result column="faq_content" property="faqContent" />
 		<result column="faq_status" property="faqStatus" />
@@ -12,8 +12,7 @@
 
 	<select id="faqList" resultMap="resultMapFaqVo">
 		<![CDATA[
-			select  faq_no,  
-					admin_no, 
+			select  faq_no, 
 					faq_title, 
 					faq_content, 
 					faq_status 
@@ -21,5 +20,11 @@
 			order by faq_no asc
 		]]>
 	</select>
+	
+	<insert id="insertFaq" >
+	
+	
+	
+	</insert>
 
 </mapper>
