@@ -37,17 +37,18 @@ input {
 #check-email {
   display: inline-block;
   width: 100px;
-  height: auto;
+  height: 35px;
   border-radius: 5rem;
 }
 
 #inputJoinEmail {
   display: inline-block;
-  width: 350px;
+  width: 300px;
   margin-right: 10px;
 }
 
 .join-text {
+  min-width:420px;
   font-size: 14px;
   display: block;
   margin-bottom: 5px;
@@ -92,7 +93,7 @@ input {
 }
 
 #inputBirthDate{
-  width : 200px;
+  width : 180px;
   height : 35px;
   font-size: .8rem;
   text-align :center;
@@ -143,3 +144,8 @@ input {
   border-radius: 10rem !important;
 }
 
+.input-box{
+	min-width:380px;
+	width:380px;
+	min-height: 35px;
+}

@@ -37,11 +37,11 @@
                                     <div class="p-5">
                                         <div class="text-center"></div>
                                         <form method="post" action="${pageContext.request.contextPath}/user/userInfo/" class="user">
-                                        	<span id="infoEmail" class="input-group-text">${authUser.userEmail}</span>
+                                        	<span id="infoEmail" class="input-group-text ">${authUser.userEmail}</span>
                                             <div class="mb-3">
                                             	<input class="form-control form-control-user btn-radius" type="password" id="inputLoginPassword" placeholder="비밀번호를 입력해주세요." name="userPassword">
                                            	</div>
-                                            <button class="btn btn-primary d-block btn-user w-100 btn-radius" id="btn-login" type="submit">확인</button>
+                                            <button class="btn btn-primary d-block btn-user w-100 btn-radius" id="btn-submit" type="submit">확인</button>
                                         </form>
                                     </div>
                                 </div>
@@ -57,10 +57,10 @@
             </footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
-    <script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 </body>
+
 
 </html>

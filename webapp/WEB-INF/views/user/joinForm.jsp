@@ -70,7 +70,7 @@
                                     <form method="post" action="${pageContext.request.contextPath}/join" class="user" id="joinForm">
                                         <div class="mb-3">
                                         	<strong class="join-text">아이디</strong>
-                                        	<input class="form-control form-control-user join-email" type="email" id="inputJoinEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="userEmail">
+                                        	<input class="form-control form-control-user" type="email" id="inputJoinEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="userEmail">
                                         	<button class="btn btn-primary" id="check-email" type="button">중복 확인</button>
                                         	<br>
                                         	<span class="check-text" id="msgOverlapEmail"></span>
@@ -78,21 +78,21 @@
                                        	</div>
                                         <div class="mb-3">
                                         	<strong class="join-text">비밀번호</strong>
-                                        	<input class="form-control form-control-user" type="password" id="inputJoinPassword" placeholder="비밀번호를 입력해주세요." name="userPassword">
+                                        	<input class="form-control form-control-user input-box" type="password" id="inputJoinPassword" placeholder="비밀번호를 입력해주세요." name="userPassword">
                                         	<span class="check-text" id="msgPassword"></span>
                                        	</div>
                                         <div class="mb-3">
                                         	<strong class="join-text">비밀번호 확인</strong>
-                                        	<input class="form-control form-control-user" type="password" id="checkJoinPassword" placeholder="비밀번호를 한 번 더 입력해주세요." name="checkPassword">
+                                        	<input class="form-control form-control-user input-box" type="password" id="checkJoinPassword" placeholder="비밀번호를 한 번 더 입력해주세요." name="checkPassword">
                                         	<span class="check-text" id="msgCheckPassword"></span>
                                        	</div>
                                         <div class="mb-3">
                                         	<strong class="join-text">닉네임</strong>
-                                        	<input class="form-control form-control-user" type="text" id="inputJoinNickname" placeholder="사용하실 닉네임을 입력해주세요" name="userName">
+                                        	<input class="form-control form-control-user input-box" type="text" id="inputJoinNickname" placeholder="사용하실 닉네임을 입력해주세요" name="userName">
                                         	<span class="check-text" id="msgName"></span>
                                        	</div>
                                         <div class="mb-3">
-                                        	<strong class="join-text">생년</strong>
+                                        	<strong class="join-text">출생연도</strong>
                                         	<input id="inputBirthDate" type="number" name="userBirthYear" placeholder="출생연도를 적어주세요." min="1900" max="2100">
                                         	<span class="check-text" id="msgBirth"></span>
                                        	</div>

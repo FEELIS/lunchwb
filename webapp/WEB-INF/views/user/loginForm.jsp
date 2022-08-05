@@ -62,23 +62,32 @@
                         <div class="row">
                             <div class="col-lg-6 col-xxl-12">
                                 <div class="p-5">
-                                    <div class="text-center"><img class="login_logo" src="${pageContext.request.contextPath}/assets/img/bujang-logo%20blue.png"></div>
                                     <div class="text-center">
-                                        <h4 class="text-dark mb-4 h3">로그인</h4>
+                                    	<img class="login_logo" src="${pageContext.request.contextPath}/assets/img/bujang-logo%20blue.png">
+                                   	</div>
+                                    <div class="text-center">
+                                        <h4 class="text-dark mb-4 h3 input-box">로그인</h4>
                                     </div>
                                     <form method="post" action="${pageContext.request.contextPath}/login" class="user">
-                                        <div class="mb-3"><input class="form-control form-control-user" type="email" id="InputLoginEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="userEmail"></div>
-                                        <div class="mb-3"><input class="form-control form-control-user" type="password" id="inputLoginPassword" placeholder="비밀번호를 입력해주세요." name="userPassword"></div>
+                                        <div class="mb-3"><input class="form-control form-control-user " type="email" id="InputLoginEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="userEmail"></div>
+                                        <div class="mb-3"><input class="form-control form-control-user " type="password" id="inputLoginPassword" placeholder="비밀번호를 입력해주세요." name="userPassword"></div>
                                         <div class="mb-3">
                                             <div class="custom-control custom-checkbox small">
-                                                <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1">로그인 상태 유지</label></div>
+                                                <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label input-box" for="formCheck-1">로그인 상태 유지</label></div>
                                             </div>
-                                        </div><button class="btn btn-primary d-block btn-user w-100" id="btn-login" type="submit">로그인</button>
-                                        <hr><a class="btn btn-primary d-block btn-naver btn-user w-100 mb-2" role="button">네이버 아이디로 로그인</a><a class="btn btn-primary d-block btn-kakao btn-user w-100 mb-2" role="button">카카오 아이디로 로그인</a><a class="btn btn-primary d-block btn-google btn-user w-100 mb-2" role="button">&nbsp; 구글 아이디로 로그인</a>
+                                        </div><button class="btn btn-primary d-block btn-user w-100 " id="btn-login" type="submit">로그인</button>
+                                        <hr>
+                                        <a class="btn btn-primary d-block btn-naver btn-user w-100 mb-2 " role="button">네이버 아이디로 로그인</a>
+                                        <a class="btn btn-primary d-block btn-kakao btn-user w-100 mb-2 " role="button">카카오 아이디로 로그인</a>
+                                        <a class="btn btn-primary d-block btn-google btn-user w-100 mb-2 " role="button">구글 아이디로 로그인</a>
                                         <hr>
                                     </form>
-                                    <div class="text-center"><a class="small" href="../../jihee/etc/forgot-password.html">비밀번호 찾기</a></div>
-                                    <div class="text-center"><a class="small" href="${pageContext.request.contextPath}/join">회원가입</a></div>
+                                    <div class="text-center">
+                                    	<a class="small " href="../../jihee/etc/forgot-password.html">비밀번호 찾기</a>
+                                   	</div>
+                                    <div class="text-center">
+                                    	<a class="small " href="${pageContext.request.contextPath}/join">회원가입</a>
+                                   	</div>
                                 </div>
                             </div>
                         </div>

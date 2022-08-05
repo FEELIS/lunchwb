@@ -11,13 +11,16 @@ public class UserVo {
 	private String userSex;
 	private String userJoinDate;
 	private String userGrade;
+	private String sessionId;
+	private String limitDate;
+	private boolean autoLogin;
 	
 	public UserVo() {
 		super();
 	}
-
+	
 	public UserVo(int userNo, String userEmail, String userPassword, String userName, int userBirthYear, String userSex,
-			String userJoinDate, String userGrade) {
+			String userJoinDate, String userGrade, String sessionId, String limitDate, boolean autoLogin) {
 		super();
 		this.userNo = userNo;
 		this.userEmail = userEmail;
@@ -27,7 +30,12 @@ public class UserVo {
 		this.userSex = userSex;
 		this.userJoinDate = userJoinDate;
 		this.userGrade = userGrade;
+		this.sessionId = sessionId;
+		this.limitDate = limitDate;
+		this.autoLogin = autoLogin;
 	}
+
+
 
 	public int getUserNo() {
 		return userNo;
@@ -93,12 +101,39 @@ public class UserVo {
 		this.userGrade = userGrade;
 	}
 
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
+	public String getLimitDate() {
+		return limitDate;
+	}
+
+	public void setLimitDate(String limitDate) {
+		this.limitDate = limitDate;
+	}
+
+	public boolean isAutoLogin() {
+		return autoLogin;
+	}
+
+	public void setAutoLogin(boolean autoLogin) {
+		this.autoLogin = autoLogin;
+	}
+
 	@Override
 	public String toString() {
 		return "UserVo [userNo=" + userNo + ", userEmail=" + userEmail + ", userPassword=" + userPassword
 				+ ", userName=" + userName + ", userBirthYear=" + userBirthYear + ", userSex=" + userSex
-				+ ", userJoinDate=" + userJoinDate + ", userGrade=" + userGrade + "]";
+				+ ", userJoinDate=" + userJoinDate + ", userGrade=" + userGrade + ", sessionId=" + sessionId
+				+ ", limitDate=" + limitDate + ", autoLogin=" + autoLogin + "]";
 	}
+	
+	
 	
 	
 }
