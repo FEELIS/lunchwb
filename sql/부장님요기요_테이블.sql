@@ -140,8 +140,6 @@ drop constraint groups_group_leader;
 --===== FAQ =====
 alter table faq 
 drop constraint faq_user_no;
-alter table faq 
-drop constraint faq_reply_no;
 
 --===== 문의_답변하기 =====
 alter table reply_inquiry 
@@ -243,7 +241,6 @@ CREATE TABLE reply_inquiry (
 --===== FAQ =====
 CREATE TABLE faq (
  faq_no number(20) NOT NULL, 
- reply_no number(20) NOT NULL, 
  user_no number(20) NOT NULL, 
  faq_title varchar2(200) NOT NULL, 
  faq_content varchar2(4000) not NULL, 
@@ -265,7 +262,7 @@ CREATE TABLE group_member (
  user_no number(20) NULL, 
  group_no number(20) NOT NULL, 
  leader_check number(10) DEFAULT 0 not NULL, 
- boss_check number(10) DEFAULT 0 not NULL, 
+ boss_check number(10) DEFAULT 0 not null,
  group_order number(20) not null
 );
 
@@ -458,8 +455,6 @@ ALTER table reply_inquiry
 add constraint reply_inquiry_inquiry_no FOREIGN KEY (inquiry_no) REFERENCES inquiry(inquiry_no) ON DELETE CASCADE;
 
 --===== FAQ =====
-ALTER table faq
-add constraint faq_reply_no FOREIGN KEY (reply_no) REFERENCES reply_inquiry(reply_no) ON DELETE CASCADE;
 ALTER table faq
 add constraint faq_user_no FOREIGN KEY (user_no) REFERENCES users(user_no) ON DELETE CASCADE;
 
@@ -675,11 +670,4 @@ nocache;
 
 
 
-
-
-
-
 commit;
-
-
-
