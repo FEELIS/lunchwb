@@ -47,7 +47,7 @@
 
 				<div id="main-content" class="container-fluid">
 
-					<div class="calendar card">
+					<div class="calendar card mb-4">
 						<div class="d-flex align-items-center">
 							<i class="far fa-calendar fa-3x me-3"></i>
 							<h1 class="month fw-bold mb-0 text-uppercase">2022년 7월</h1>
