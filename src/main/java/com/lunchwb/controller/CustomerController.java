@@ -28,7 +28,7 @@ public class CustomerController {
 	@Autowired
 	private InquiryService inquiryService;
 	
-	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
 	
 	// ============================================ FAQ 폼 ============================================
