@@ -55,14 +55,26 @@
             	<c:forEach items="${map.groupList}" var="groupVo">
             		<div class="group-order-area">
                     	<p id="order-${groupVo.groupOrder}">
-                    		<i class="icon ion-arrow-up-b" <c:if test="${groupVo.groupOrder == 1}"> style="color: rgba(0,0,0,0); cursor: dafault; pointer-events: none;"</c:if>></i>
+                    		<input type="hidden" name="groupNo" value="${groupVo.groupNo}">
+                    		<i class="icon ion-arrow-up-b" data-order="${groupVo.groupOrder}"
+                    			<c:if test="${groupVo.groupOrder == 1}"> 
+                    				style="color: rgba(0,0,0,0); cursor: dafault; pointer-events: none;"
+                    			</c:if>>
+                    		</i>
                     		${groupVo.groupName}
-                    		<i class="icon ion-arrow-down-b" <c:if test="${groupVo.groupOrder == map.groupCount}">style="color: rgba(0,0,0,0); cursor: dafault; pointer-events: none;"</c:if>></i>
+                    		<i class="icon ion-arrow-down-b" data-order="${groupVo.groupOrder}"
+                    			<c:if test="${groupVo.groupOrder == map.groupCount}">
+                    				style="color: rgba(0,0,0,0); cursor: dafault; pointer-events: none;"
+                    			</c:if>>
+                    		</i>
                     	</p>
                 	</div>
             	</c:forEach>
             </div>
-            <div class="modal-footer-custom"><button class="btn btn-primary" type="button">변경</button><button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button></div>
+            <div class="modal-footer-custom">
+            	<%-- <a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"> --%><button class="btn btn-primary" type="button">변경</button><!-- </a> -->
+            	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"><button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button></a>
+            </div>
         </div>
     </div>
 </div>
@@ -164,9 +176,165 @@
 
 <script type="text/javascript">
 
+//그룹 개수
+var groupCount
+
 $("#btn-order-change").on("click", function(){
 	console.log("그룹 순서 변경 모달 열기")
+	
+	var $this = $(this)
+	groupCount = $this.data("count")
+	console.log("groupCount: " + groupCount)
+	
 })
+
+
+$("#group-order").on("click", ".ion-arrow-up-b", function(){
+	console.log("그룹 순서 위로 보내기")
+	
+	$this = $(this)
+	var orderNo = $this.data("order")
+	var beforeNo = orderNo-1
+	
+	//위로 보낼 그룹 이름
+	var thisName = $("#order-"+orderNo).text()
+	//위로 보낼 그룹 번호
+	var thisGNo = $("#order-"+orderNo+" [type='hidden']").val()
+	
+	//반대로 내려오게 될 그룹 이름
+	var beforeName = $("#order-"+beforeNo).text()
+	//반대로 내려오게 될 그룹 이름
+	var beforeGNo = $("#order-"+beforeNo+" [type='hidden']").val()
+	
+	//위쪽 
+	var str1 = ""
+		str1 += '<input type="hidden" name="groupNo" value="' + thisGNo +'">'
+		str1 += '<i class="icon ion-arrow-up-b" data-order="' + beforeNo +'"'
+	
+	if(beforeNo == 1){
+		str1 += '	style="color: rgba(0,0,0,0); cursor: dafault; pointer-events: none;"'
+	}
+		str1 +=	'>'
+		str1 += '</i>'
+		str1 += thisName
+		str1 += '<i class="icon ion-arrow-down-b" data-order="' + beforeNo +'"></i>'
+		
+	//아래쪽
+	var str2 = ""
+		str2 += '<input type="hidden" name="groupNo" value="' + beforeGNo +'">'
+		str2 += '<i class="icon ion-arrow-up-b" data-order="' + orderNo +'"></i>'
+		str2 += beforeName
+		str2 += '<i class="icon ion-arrow-down-b" data-order="' + orderNo +'"' 
+	
+	if(orderNo == groupCount){
+		str2 +=	'	style="color: rgba(0,0,0,0); cursor: dafault; pointer-events: none;"'
+	}
+		str2 += '>'
+		str2 +=	'</i>'
+	
+	//바꾸기
+	$("#order-"+beforeNo).html(str1)
+	$("#order-"+orderNo).html(str2)
+})
+
+
+$("#group-order").on("click", ".ion-arrow-down-b", function(){
+	console.log("그룹 순서 아래로 보내기")
+	
+	$this = $(this)
+	var orderNo = $this.data("order")
+	var afterNo = orderNo+1
+	
+	//아래로 보낼 그룹 이름
+	var thisName = $("#order-"+orderNo).text()
+	//아래로 보낼 그룹 번호
+	var thisGNo = $("#order-"+orderNo+ " [type='hidden']").val()
+	
+	//반대로 올라오게 될 그룹 이름
+	var afterName = $("#order-"+afterNo).text()
+	//반대로 올라오게 될 그룹 번호
+	var afterGNo = $("#order-"+afterNo+ " [type='hidden']").val()
+	
+	//위쪽 
+	var str1 = ""
+		str1 += '<input type="hidden" name="groupNo" value="' + afterGNo +'">'
+		str1 += '<i class="icon ion-arrow-up-b" data-order="' + orderNo +'"'
+
+	if(orderNo == 1){
+		str1 += '	style="color: rgba(0,0,0,0); cursor: dafault; pointer-events: none;"'
+	}
+		str1 += '>'
+		str1 += '</i>'
+		str1 += afterName
+		str1 += '<i class="icon ion-arrow-down-b" data-order="' + orderNo +'"></i>'
+		
+	//아래쪽
+	var str2 = ""
+		str2 += '<input type="hidden" name="groupNo" value="' + thisGNo +'">'
+		str2 += '<i class="icon ion-arrow-up-b" data-order="' + afterNo +'"></i>'
+		str2 += thisName
+		str2 += '<i class="icon ion-arrow-down-b" data-order="' + afterNo +'"' 
+	
+	if(afterNo == groupCount){
+		str2 +=	'	style="color: rgba(0,0,0,0); cursor: dafault; pointer-events: none;"'
+	}
+		str2 += '>'
+		str2 +=	'</i>'
+	
+	//바꾸기
+	$("#order-"+orderNo).html(str1)
+	$("#order-"+afterNo).html(str2)
+	
+})
+
+
+$("#modal-group-order-change").on("click", ".btn-primary", function(){
+	console.log("그룹 순서 변경 버튼 클릭")
+	
+	var order1 = $("#order-1 [type='hidden']").val()
+	var order2 = $("#order-2 [type='hidden']").val()
+	var order3 = $("#order-3 [type='hidden']").val()
+	var order4 = $("#order-4 [type='hidden']").val()
+	
+	console.log(order1)
+	console.log(order2)
+	console.log(order3)
+	console.log(order4)
+	console.log(groupCount)
+	
+	var gpOrder = {
+		order1: order1,
+		order2: order2,
+		order3: order3,
+		order4: order4,
+		groupCount: groupCount
+	}
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath }/group/orderChange",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(gpOrder),
+		dataType : "json",
+		
+		success : function(result){
+			
+			if(result == "success"){
+				return true
+				
+			}else{
+				alert("그룹 순서 변경에 실패했습니다")
+				return false
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+			
+		}
+	})
+		
+})
+
 
 
 </script>

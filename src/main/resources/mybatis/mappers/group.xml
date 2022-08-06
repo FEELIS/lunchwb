@@ -94,5 +94,14 @@
 		VALUES (SEQ_GROUP_MEMBER_NO.NEXTVAL, #{userNo}, #{groupNo}, 
 				#{leaderCheck}, #{bossCheck}, #{groupOrder})
 	</insert>
+	
+	
+	<!-- 그룹 순서 변경 -->
+	<update id="changeOrder" parameterType="int">
+		UPDATE GROUP_MAMBER
+		SET GROUP_ORDER = #{order}
+		WHERE USER_NO = #{userNo}
+		AND GROUP_NO = #{groupNo}
+	</update>
 
 </mapper>

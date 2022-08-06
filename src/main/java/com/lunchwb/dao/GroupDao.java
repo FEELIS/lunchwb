@@ -1,6 +1,7 @@
 package com.lunchwb.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -75,6 +76,18 @@ public class GroupDao {
 		int count = sqlSession.insert("group.addMember", groupVo);
 		
 		logger.info("그룹 멤버 " + count + "명 추가 완료");
+	}
+	
+	
+	/******************** 그룹 순서 변경 ***********************************************/
+	public int changeOrder(Map<String, Integer> orderMap) {
+		logger.info("changeOrder()");
+		
+		int count = sqlSession.update("group.changeOrder", orderMap);
+		
+		logger.info("그룹 순서 " + count + "건 변경 완료");
+		
+		return count;
 	}
 
 }

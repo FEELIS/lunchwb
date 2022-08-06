@@ -66,7 +66,6 @@ public class GroupService {
 	}
 	
 	
-	
 	/******************** 그룹 생성 ***********************************************/
 	public int addGroup(UserVo authUser, GroupVo groupVo) {
 		logger.info("addGroup()");
@@ -102,5 +101,40 @@ public class GroupService {
 		
 		return groupNo;
 	}
+	
+	
+	/******************** 그룹 순서 변경 ***********************************************/
+	public String changeOrder(HashMap<String, Integer> gpOrder, UserVo authUser) {
+		logger.info("changeOrder()");
+		
+		Map<String,Integer> orderMap = new HashMap<String, Integer>();
+		
+		int userNo = authUser.getUserNo();
+		orderMap.put("userNO", userNo);
+		
+		int count = 0;
+		int groupCount = gpOrder.get("groupCount");
+		
+		for(int i=1; i<=groupCount; i++) {
+			orderMap.put("order", i);
+			
+			int groupNo = gpOrder.get("order"+i);
+			orderMap.put("groupNo", groupNo);
+			
+			count += groupDao.changeOrder(orderMap);
+		}
+		
+		String result = "";
+		
+		if(count == groupCount) {
+			result = "success";
+			
+		}else {
+			result = "fail";
+		}
+		
+		return result;
+	}
+	
 
 }

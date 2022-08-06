@@ -1,5 +1,6 @@
 package com.lunchwb.controller;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -11,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lunchwb.service.GroupService;
 import com.lunchwb.vo.GroupVo;
@@ -58,10 +61,15 @@ public class GroupController {
 	public String addGroupForm(HttpSession session) {
 		logger.info("addGroupForm()");
 		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		
+		if(authUser == null) {
+			return "user/loginForm";
+		}
 		
 		return "group/addGroup";
 	}
+	
 	
 	/******************** 그룹 생성 ***********************************************/
 	@PostMapping("group/add")
@@ -73,6 +81,19 @@ public class GroupController {
 	
 		return "group/addGroup?no=" + groupNo;
 	}
+
 	
+	/******************** 그룹 순서 변경 ********************************************/
+	@ResponseBody
+	@PostMapping("group/changeOrder")
+	public String changeOrder(@RequestBody HashMap<String, Integer> gpOrder, HttpSession session) {
+		logger.info("changeOrder()");
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		String result = groupService.changeOrder(gpOrder, authUser);
+		
+		return result;
+	}
 
 }
