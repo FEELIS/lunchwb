@@ -24,20 +24,22 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter{
 		
 		HttpSession session = request.getSession();
 		Object obj = session.getAttribute("authUser");
-		
+		System.out.println("obj = " + obj);
 		if ( obj == null) {
 			Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+			System.out.println("loginCookie = " + loginCookie);
 			if(loginCookie != null) {
 				String sessionId = loginCookie.getValue();
 				UserVo userVo = userService.selectSession(sessionId);
 				
+				System.out.println("userVo = " + userVo);
 				if(userVo != null) {
 					session.setAttribute("authUser", userVo);
 					return true;
 				}
 			}
 			
-			response.sendRedirect("/login");
+			response.sendRedirect("../login");
 			return false;
 		}
 		
