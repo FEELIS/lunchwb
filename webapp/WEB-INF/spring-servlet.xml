@@ -67,8 +67,8 @@
 
 	<mvc:interceptors>
          <mvc:interceptor>
-        	<!-- <mvc:mapping path="/stat/**" />
-        	<mvc:mapping path="/group/**" /> -->
+        	<mvc:mapping path="/stat/**" />
+        	<mvc:mapping path="/group/**" />
         	<mvc:mapping path="/abcdefg/**" />  
         	<bean class="com.lunchwb.interceptor.AuthenticationInterceptor" />
 		</mvc:interceptor>

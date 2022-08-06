@@ -311,7 +311,7 @@ $("#modal-group-order-change").on("click", ".btn-primary", function(){
 	}
 	
 	$.ajax({
-		url : "${pageContext.request.contextPath }/group/orderChange",
+		url : "${pageContext.request.contextPath }/group/changeOrder",
 		type : "post",
 		contentType : "application/json",
 		data : JSON.stringify(gpOrder),

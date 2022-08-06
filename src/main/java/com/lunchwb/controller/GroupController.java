@@ -38,10 +38,6 @@ public class GroupController {
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		
-		if(authUser == null) {
-			return "user/loginForm";
-		}
-		
 		Map<String, Object> map = groupService.groupList(authUser, groupNo);
 		
 		
@@ -58,14 +54,8 @@ public class GroupController {
 	
 	/******************** 그룹 추가 페이지 ***********************************************/
 	@GetMapping("group/add")
-	public String addGroupForm(HttpSession session) {
+	public String addGroupForm() {
 		logger.info("addGroupForm()");
-		
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		
-		if(authUser == null) {
-			return "user/loginForm";
-		}
 		
 		return "group/addGroup";
 	}

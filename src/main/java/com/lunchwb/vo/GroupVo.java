@@ -24,12 +24,15 @@ public class GroupVo {
 	///////group_member table +//////
 	private int groupOrder;
 	
+	//그룹 순서 변경 +
+	private int order;
+	
 	
 	public GroupVo() {
 	}
 	
 	public GroupVo(int groupNo, int groupLeader, String groupName, int groupMemberNo, int userNo, int leaderCheck,
-					int bossCheck, String userName, int userBirthYear, String userAge, String userSex, int groupOrder) {
+					int bossCheck, String userName, int userBirthYear, String userAge, String userSex, int groupOrder, int order) {
 		this.groupNo = groupNo;
 		this.groupLeader = groupLeader;
 		this.groupName = groupName;
@@ -42,6 +45,7 @@ public class GroupVo {
 		this.userAge = userAge;
 		this.userSex = userSex;
 		this.groupOrder = groupOrder;
+		this.order = order;
 	}
 	
 	
@@ -140,13 +144,22 @@ public class GroupVo {
 	public void setGroupOrder(int groupOrder) {
 		this.groupOrder = groupOrder;
 	}
+	
+	public int getOrder() {
+		return order;
+	}
+	
+	public void setOrder(int order) {
+		this.order = order;
+	}
 
 	@Override
 	public String toString() {
 		return "GroupVo [groupNo=" + groupNo + ", groupLeader=" + groupLeader + ", groupName=" + groupName
 				+ ", groupMemberNo=" + groupMemberNo + ", userNo=" + userNo + ", leaderCheck=" + leaderCheck
 				+ ", bossCheck=" + bossCheck + ", userName=" + userName + ", userBirthYear=" + userBirthYear
-				+ ", userAge=" + userAge + ", userSex=" + userSex + ", groupOrder=" + groupOrder + "]";
+				+ ", userAge=" + userAge + ", userSex=" + userSex + ", groupOrder=" + groupOrder 
+				+ ", order=" + order + "]";
 	}
 
 	

@@ -107,21 +107,21 @@ public class GroupService {
 	public String changeOrder(HashMap<String, Integer> gpOrder, UserVo authUser) {
 		logger.info("changeOrder()");
 		
-		Map<String,Integer> orderMap = new HashMap<String, Integer>();
+		GroupVo groupVo = new GroupVo();
 		
 		int userNo = authUser.getUserNo();
-		orderMap.put("userNO", userNo);
+		groupVo.setUserNo(userNo);
 		
 		int count = 0;
 		int groupCount = gpOrder.get("groupCount");
 		
 		for(int i=1; i<=groupCount; i++) {
-			orderMap.put("order", i);
+			groupVo.setOrder(i);
 			
 			int groupNo = gpOrder.get("order"+i);
-			orderMap.put("groupNo", groupNo);
+			groupVo.setGroupNo(groupNo);
 			
-			count += groupDao.changeOrder(orderMap);
+			count += groupDao.changeOrder(groupVo);
 		}
 		
 		String result = "";

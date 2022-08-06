@@ -80,10 +80,10 @@ public class GroupDao {
 	
 	
 	/******************** 그룹 순서 변경 ***********************************************/
-	public int changeOrder(Map<String, Integer> orderMap) {
+	public int changeOrder(GroupVo groupVo) {
 		logger.info("changeOrder()");
 		
-		int count = sqlSession.update("group.changeOrder", orderMap);
+		int count = sqlSession.update("group.changeOrder", groupVo);
 		
 		logger.info("그룹 순서 " + count + "건 변경 완료");
 		
