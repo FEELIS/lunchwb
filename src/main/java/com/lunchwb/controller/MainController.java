@@ -10,10 +10,6 @@ public class MainController {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
-	@GetMapping("/")
-	public String test() {
-		logger.info("test()");
-		return "main/test";
-	}
+	
 
 }

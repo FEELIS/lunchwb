@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <!DOCTYPE html>
 <html>
 
@@ -36,32 +38,39 @@
             <div id="comment-box">
             	<span id="eat-what" class="d-inline-block">오늘 점심 뭐 먹지?</span>
             	<span id="prefer-data" class="d-inline-block">
+            	<!--  
             		<span class="d-inline-block emphasize-blue">막냉이</span>
             		<span class="d-inline-block">님은 패스트푸드를 좋아하시니까!</span>
+            	-->
+            		<span class="d-inline-block">오늘도 점심은 부장님요기요</span>
             	</span>
             </div>
             
-            <div id="basket-aside-login-area">
-            	<span class="d-inline-block" id="login-jebal">로그인을 하면 취향에 맞는 식당을 추천해드려요</span>
-            	<span class="d-inline-block" id="basket-login-btn">로그인하기</span>
-            	
-                <div id="basket-login-controll">
-                	<span class="d-inline-block" id="basket-join-link">회원가입</span>
-                	<span class="d-inline-block" id="basket-findpw-link">비밀번호 찾기</span>
-                </div>
-            </div>
+            <c:if test="${empty(authUser)}">
+	            <div id="basket-aside-login-area">
+	            	<span class="d-inline-block" id="login-jebal">로그인을 하면 취향에 맞는 식당을 추천해드려요</span>
+	            	<a href="${pageContext.request.contextPath}/login"><span class="d-inline-block" id="basket-login-btn">로그인하기</span></a>
+	            
+	                <div id="basket-login-controll">
+	                	<a href="${pageContext.request.contextPath}/login/join"><span class="d-inline-block" id="basket-join-link">회원가입</span></a>
+	                	<a><span class="d-inline-block" id="basket-findpw-link">비밀번호 찾기</span></a>
+	                </div>
+	            </div>
+            </c:if>
             
             <div id="basket-aside-content" class="full-box">
-                <div class="text-start d-flex basket-aside-title" id="basket-title-group">
-                	<span class="d-inline-block">나의 그룹</span>
-                </div>
-                
-                <div class="d-flex" id="basket-groups">
-                    <div class="basket-group no-drag basket-selected-group"><span>개발1팀</span><i class="fas fa-user-circle"></i></div>
-                    <div class="basket-group no-drag"><span>동기모임</span><i class="fas fa-user-circle"></i></div>
-                    <div class="basket-group no-drag"><span>정필1팀</span><i class="fas fa-user-circle"></i></div>
-                    <div class="basket-group no-drag basket-group-add"><span>그룹추가</span><i class="fas fa-user-plus"></i></div>
-                </div>
+            	<c:if test="${!empty(authUser)}">
+	                <div class="text-start d-flex basket-aside-title" id="basket-title-group">
+	                	<span class="d-inline-block">나의 그룹</span>
+	                </div>
+	                
+	                <div class="d-flex" id="basket-groups">
+	                    <div class="basket-group no-drag basket-selected-group"><span>개발1팀</span><i class="fas fa-user-circle"></i></div>
+	                    <div class="basket-group no-drag"><span>동기모임</span><i class="fas fa-user-circle"></i></div>
+	                    <div class="basket-group no-drag"><span>정필1팀</span><i class="fas fa-user-circle"></i></div>
+	                    <div class="basket-group no-drag basket-group-add"><span>그룹추가</span><i class="fas fa-user-plus"></i></div>
+	                </div>
+                </c:if>
                 
                 <div class="text-start d-flex basket-aside-title" id="basket-title-lunch-candidates">
                 	<span class="d-inline-block">오늘의 점심 후보</span>
@@ -137,23 +146,23 @@
                 <div class="modal-body text-center text-dark" style="font-size: 14px;">
                     <div class="row">
                         <div class="col" style="border-right: 1px solid voar(--bs-gray-200);">
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">뷔페</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label" for="formCheck-6">아시아음식</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-5">양식</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-4"><label class="form-check-label" for="formCheck-4">일식</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-5"><label class="form-check-label" for="formCheck-3">한식</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" checked="checked"><label class="form-check-label" for="formCheck-1">뷔페</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2" checked="checked"><label class="form-check-label" for="formCheck-6">아시아음식</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3" checked="checked"><label class="form-check-label" for="formCheck-5">양식</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-4" checked="checked"><label class="form-check-label" for="formCheck-4">일식</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-5" checked="checked"><label class="form-check-label" for="formCheck-3">한식</label></div>
                         </div>
                         <div class="col" style="border-right: 1px solid voar(--bs-gray-200);">
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-7"><label class="form-check-label" for="formCheck-7">패스트푸드</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-8"><label class="form-check-label" for="formCheck-8">패밀리레스토랑</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-9"><label class="form-check-label" for="formCheck-9">치킨</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-10"><label class="form-check-label" for="formCheck-10">분식</label></div>
-                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-11"><label class="form-check-label" for="formCheck-11">중식</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-7" checked="checked"><label class="form-check-label" for="formCheck-7">패스트푸드</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-8" checked="checked"><label class="form-check-label" for="formCheck-8">패밀리레스토랑</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-9" checked="checked"><label class="form-check-label" for="formCheck-9">치킨</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-10" checked="checked"><label class="form-check-label" for="formCheck-10">분식</label></div>
+                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-11" checked="checked"><label class="form-check-label" for="formCheck-11">중식</label></div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer modal-footer-custom">
-                	<button class="btn btn-primary" type="button">저장</button>
+                	<button id="modal-filter-submit" class="btn btn-primary" type="button">저장</button>
                 	<button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button>
                 </div>
             </div>
