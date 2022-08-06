@@ -153,4 +153,17 @@
 </div>
 </body>
 
+<script type="text/javascript">
+	$("#basket-filter-btn").on("click", function(){
+		$("#modal-recFilter").modal("show")
+	})
+	
+	
+	$("#modal-filter-submit").on("click", function(){
+		// 뭔가 ajax로 알고리즘을 적용 한 뒤
+		
+		$("#modal-recFilter").modal("hide")
+	})
+</script>
+
 </html>
