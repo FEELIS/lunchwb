@@ -93,3 +93,15 @@
 
 -- 2022.08.05 17:46 =====================
 -- group_member 테이블에 group_order 칼럼 null 로 변경
+
+-- 2022.08.06 11:49 =====================
+-- users테이블에 자동로그인용 session_id 그리고 limit_date 칼럼 추가
+-- rating_others 테이블 칼럼들 자료형 number(13,10) 에서 number(20,3)으로 변경
+-- rating_others 테이블 rating_google 칼럼 삭제 
+
+
+
+
+
+
+
