@@ -217,7 +217,9 @@ CREATE TABLE users (
  user_birth_year number(20) NOT NULL, 
  user_sex varchar2(20) NOT NULL, 
  user_joindate DATE NULL, 
- user_grade varchar2(50) DEFAULT 1 NOT null
+ user_grade varchar2(50) DEFAULT 1 NOT null, 
+ session_id varchar2(100) default 'none' not null, 
+ limit_date timestamp null
 );
 
 --===== 문의하기 =====
@@ -292,9 +294,8 @@ CREATE TABLE store (
 --===== 타사별점 =====
 CREATE TABLE rating_others (
  store_no number(20) NOT NULL, 
- rating_naver number(20) null, 
- rating_kakao number(20) null, 
- rating_google number(20) null 
+ rating_naver number(20,3) null, 
+ rating_kakao number(20,3) null 
 );
 
 
@@ -672,6 +673,3 @@ nocache;
 
 
 commit;
-
-
-
