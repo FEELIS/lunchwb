@@ -1,6 +1,10 @@
 package com.lunchwb.controller;
 
+import java.util.Date;
+
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,11 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.util.WebUtils;
 
 import com.lunchwb.service.UserService;
 import com.lunchwb.vo.UserVo;
-
-import oracle.jdbc.proxy.annotation.Post;
 
 @Controller
 public class UserController {
@@ -32,25 +35,57 @@ public class UserController {
 		logger.info("user > loginForm()");
 		return "user/loginForm";
 	}
-
+	
 	@PostMapping("/login")
-	public String login(@ModelAttribute UserVo userVo, HttpSession session) {
-		logger.info("user > login()");
-		UserVo authUser = userService.login(userVo);
-
-		if (authUser != null) {
-			session.setAttribute("authUser", authUser);
-			return "redirect:./";
-		} else {
-			return "redirect:./login?result=fail";
+	public String autoLogin(HttpSession session, UserVo userVo, HttpServletResponse response){
+		String returnURL = "";
+		System.out.println(userVo.isAutoLogin());
+		if (session.getAttribute("authUser") != null) {
+			session.removeAttribute("authUser");
 		}
+		
+		UserVo authUser = userService.login(userVo); 
+		
+		if(authUser != null) {
+			session.setAttribute("authUser", authUser);
+			returnURL = "redirect:./";
+			if(userVo.isAutoLogin()) {
+				Cookie cookie = new Cookie("loginCookie", session.getId());
+				
+				cookie.setPath("/");
+				cookie.setMaxAge(60*60*24*7);
+				response.addCookie(cookie);
+			}
+		}else { // 로그인 실패
+			returnURL = "redirect:./login?result=fail";
+			
+		}
+		return returnURL;
 	}
-
+	
 	@GetMapping("/logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		logger.info("user > logout()");
-		session.removeAttribute("authUser");
-		session.invalidate();
+		
+		Object obj = session.getAttribute("authUser");
+		
+		if(obj != null) {
+			UserVo vo = (UserVo) obj;
+			
+			session.removeAttribute("authUser");
+			session.invalidate();
+			
+			Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+			if( loginCookie != null) {
+				loginCookie.setPath("/");
+				loginCookie.setMaxAge(0);
+				response.addCookie(loginCookie);
+				
+				Date date = new Date(System.currentTimeMillis());
+				userService.autoLogin(vo.getUserEmail(), date, session.getId());
+			}
+		}
+		
 		return "redirect:./";
 
 	}
@@ -140,8 +175,33 @@ public class UserController {
 		return result;
 	}
 	
-	@PostMapping("/autoLoginCheck")
-	public String autoLogin() {
-		
+	
+	
+	//////////////////////////////////////////////////////////////////////////
+	///////////////////////////추후 삭제 예정////////////////////////////////////
+	/* 과거 ... 이었던 것.*/
+	/* 로그인 상태 유지 전 로그인 컨트롤러.
+	@PostMapping("/login")
+	public String login(@ModelAttribute UserVo userVo, HttpSession session) {
+		logger.info("user > login()");
+		UserVo authUser = userService.login(userVo);
+
+		if (authUser != null) {
+			session.setAttribute("authUser", authUser);
+			return "redirect:./";
+		} else {
+			return "redirect:./login?result=fail";
+		}
 	}
+	*/
+	
+	/* 로그인 상태 유지 전 로그아웃 컨트롤러
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		logger.info("user > logout()");
+		session.removeAttribute("authUser");
+		session.invalidate();
+		return "redirect:./";
+
+	}*/
 }

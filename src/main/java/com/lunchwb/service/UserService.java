@@ -45,12 +45,12 @@ public class UserService {
 	}
 	
 	/* 자동로그인 */
-	public void autoLogin(String sessionId, Date limitDate, String email) {
+	public void autoLogin(String sessionId, Date limitDate, String userEmail) {
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("sessionId", sessionId);
 		map.put("limitDate", limitDate);
-		map.put("email", email);
+		map.put("userEmail", userEmail);
 		
 		userDao.autoLogin(map);
 		

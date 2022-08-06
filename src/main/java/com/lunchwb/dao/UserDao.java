@@ -35,9 +35,8 @@ public class UserDao {
 	}
 	
 	/* 자동로그인 */
-	public int autoLogin(Map<String, Object> map) {
-		int count = sqlSession.update("user.autoLogin", map);
-		return count;
+	public void autoLogin(Map<String, Object> map) {
+		sqlSession.update("user.autoLogin", map);
 	}
 	
 	public UserVo selectSession(String sessionId) {

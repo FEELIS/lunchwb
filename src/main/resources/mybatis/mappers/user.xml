@@ -62,20 +62,21 @@
 	
 	
 	<!-- 자동로그인 -->
-	<update id="autoLogin">
+	<update id="autoLogin" parameterType="com.lunchwb.vo.UserVo">
         update users
         set session_id= #{sessionId}
             ,limit_date= #{limitDate}
-        where id= #{id};
+        where user_email= #{userEmail}
 	</update>
 	    
-	<select id="selectSession">
+	<select id="selectSession" parameterType="com.lunchwb.vo.UserVo" resultType="com.lunchwb.vo.UserVo">
 	        select user_no userNo
 		        	,user_email userEmail
 			        ,user_name userName
 			        ,user_grade userGrade
 	        from users
 	        where sessionId = #{sessionId}
+	        and limit_date > now()
 	</select>
 	
 	
