@@ -35,7 +35,7 @@
          	<a href="${pageContext.request.contextPath}/login"><span class="d-inline-block" id="basket-login-btn">로그인하기</span></a>
          
              <div id="basket-login-controll">
-             	<a href="${pageContext.request.contextPath}/login/join"><span class="d-inline-block" id="basket-join-link">회원가입</span></a>
+             	<a href="${pageContext.request.contextPath}/join"><span class="d-inline-block" id="basket-join-link">회원가입</span></a>
              	<a><span class="d-inline-block" id="basket-findpw-link">비밀번호 찾기</span></a>
              </div>
          </div>
