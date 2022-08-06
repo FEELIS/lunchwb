@@ -72,7 +72,7 @@
             	</c:forEach>
             </div>
             <div class="modal-footer-custom">
-            	<%-- <a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"> --%><button class="btn btn-primary" type="button">변경</button><!-- </a> -->
+            	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"><button class="btn btn-primary" type="button">변경</button></a>
             	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"><button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button></a>
             </div>
         </div>

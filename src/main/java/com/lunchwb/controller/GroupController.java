@@ -54,8 +54,20 @@ public class GroupController {
 	
 	/******************** 그룹 추가 페이지 ***********************************************/
 	@GetMapping("group/add")
-	public String addGroupForm() {
+	public String addGroupForm(Model model, HttpSession session) {
 		logger.info("addGroupForm()");
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		Map<String, Object> map = groupService.addGroupForm(authUser);
+		
+		//그룹 최대 개수 보유(4개) > 잘못된 접근
+		/*
+		if((Integer)map.get("groupCount") == 4) {
+			return "error/403";
+		}
+		*/
+		
+		model.addAttribute("map", map);
 		
 		return "group/addGroup";
 	}
@@ -69,7 +81,7 @@ public class GroupController {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		int groupNo = groupService.addGroup(authUser, groupVo);
 	
-		return "group/addGroup?no=" + groupNo;
+		return "group/list?no=" + groupNo;
 	}
 
 	
