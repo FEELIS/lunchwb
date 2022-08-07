@@ -32,12 +32,10 @@ public class GroupController {
 	
 	/********************* 그룹원 리스트 페이지 ********************************************/
 	@RequestMapping("/group/list")
-	public String groupList(Model model, HttpSession session, 
-							@RequestParam(name="no", defaultValue="0") int groupNo) {
-		logger.info("groupList()");
+	public String groupList(Model model, HttpSession session, @RequestParam(name="no", defaultValue="0") int groupNo) {
+		logger.info("GroupController > groupList()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		
 		Map<String, Object> map = groupService.groupList(authUser, groupNo);
 		
 		model.addAttribute("map", map);
@@ -61,7 +59,7 @@ public class GroupController {
 	/******************** 그룹 추가 페이지 ***********************************************/
 	@GetMapping("group/add")
 	public String addGroupForm(Model model, HttpSession session) {
-		logger.info("addGroupForm()");
+		logger.info("GroupController > addGroupForm()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		Map<String, Object> map = groupService.addGroupForm(authUser);
@@ -82,12 +80,12 @@ public class GroupController {
 	/******************** 그룹 생성 ***********************************************/
 	@PostMapping("group/add")
 	public String addGroup(HttpSession session, GroupVo groupVo) {
-		logger.info("addGroup()");
+		logger.info("GroupController > addGroup()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		int groupNo = groupService.addGroup(authUser, groupVo);
 	
-		return "group/grouplist?no=" + groupNo;
+		return "group/groupList?no=" + groupNo;
 	}
 
 	
@@ -95,7 +93,7 @@ public class GroupController {
 	@ResponseBody
 	@PostMapping("group/changeOrder")
 	public String changeOrder(@RequestBody HashMap<String, Integer> gpOrder, HttpSession session) {
-		logger.info("changeOrder()");
+		logger.info("GroupController > changeOrder()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		
@@ -107,8 +105,8 @@ public class GroupController {
 	
 	/******************** 비회원 그룹 추가 ********************************************/
 	@PostMapping("group/addMember")
-	public String addMember(GroupVo groupVo) {
-		logger.info("addMember()");
+	public String addMember(@RequestBody GroupVo groupVo) {
+		logger.info("GroupController > addMember()");
 		
 		groupService.addMember(groupVo);
 		

@@ -88,6 +88,16 @@ public class GroupDao {
 	}
 	
 	
+	/******************** 그룹 멤버 1명 정보(방금 추가한 멤버 정보 조회) *********************/
+	public GroupVo memberInfo(int memberNo) {
+		logger.info("GroupDao > memberInfo()");
+		
+		GroupVo memberInfo = sqlSession.selectOne("group.memberInfo", memberNo);
+		
+		return memberInfo;
+	}
+	
+	
 	/******************** 그룹 순서 변경 ***********************************************/
 	public int changeOrder(GroupVo groupVo) {
 		logger.info("GroupDao > changeOrder()");

@@ -27,7 +27,7 @@ public class GroupService {
 	
 	/******************** 그룹 리스트 페이지 ********************************************/
 	public Map<String, Object> groupList(UserVo authUser, int groupNo) {
-		logger.info("groupList()");
+		logger.info("GroupService > groupList()");
 		
 		Map<String, Object> map = new HashMap<>();
 		
@@ -50,15 +50,19 @@ public class GroupService {
 				groupNo = groupList.get(0).getGroupNo();
 			}
 			
-			//내 그룹 맞아?
+			//그룹 이름
 			GroupVo groupVo = new GroupVo();
 			groupVo.setUserNo(userNo);
 			groupVo.setGroupNo(groupNo);
 			
-			int myGroup = groupDao.myGroup(groupVo);
 			
-			if(myGroup != 0) {
+			String groupName = groupDao.selectedGpName(groupVo);
+			
+			//주소접근 > 내 그룹이 아니면 에러
+			if(groupName != null && groupName != "") {
 				
+				//그룹 이름
+				map.put("groupName", groupName);
 				map.put("groupNo", groupNo);
 				
 				//그룹원 리스트
@@ -81,7 +85,7 @@ public class GroupService {
 	
 	/******************** 그룹 추가 페이지 *******************************************/
 	public Map<String, Object> addGroupForm(UserVo authUser) {
-		logger.info("addGroupForm()");
+		logger.info("GroupService > ddGroupForm()");
 		
 		Map<String, Object> map = new HashMap<>();
 		
@@ -100,7 +104,7 @@ public class GroupService {
 	
 	/******************** 그룹 생성 ***********************************************/
 	public int addGroup(UserVo authUser, GroupVo groupVo) {
-		logger.info("addGroup()");
+		logger.info("GroupService > addGroup()");
 		
 		//그룹 최대 4개 보유 가능 > 4개 이후 생성 못함 (새 그룹 추가 버튼이 보이지 않음 - 혹시 주소접근은 새 그룹 추가 페이지 접근시 막을 것)
 		
@@ -133,7 +137,7 @@ public class GroupService {
 	
 	/******************** 그룹 순서 변경 ***********************************************/
 	public String changeOrder(HashMap<String, Integer> gpOrder, UserVo authUser) {
-		logger.info("changeOrder()");
+		logger.info("GroupService > changeOrder()");
 		
 		GroupVo groupVo = new GroupVo();
 		
@@ -166,19 +170,46 @@ public class GroupService {
 	
 	
 	/******************** 비회원 그룹 추가 ********************************************/
-	public String addMember(GroupVo groupVo) {
-		logger.info("addMember()");
+	public GroupVo addMember(GroupVo groupVo) {
+		logger.info("GroupService > addMember()");
 		
+			
+		/////// 비회원 그룹 멤버 유령회원 생성 ////////////////////////////////
 		UserVo userVo = new UserVo();
 		userVo.setUserName(groupVo.getUserName());
 		userVo.setUserBirthYear(groupVo.getUserBirthYear());
 		userVo.setUserSex(groupVo.getUserSex());
+		//시크릿키안돼서 USERNO수동처리
+		userVo.setUserNo(9);
 		//user_grade = 0 고정
-		
 		userDao.addGpMember(userVo);
 		
+		//int userNo = userVo.getUserNo();
 		
-		return "";
+		/////////////// 그룹에 비회원 멤버 추가 ////////////////////////////
+		//groupVo : groupNo, bossCheck 있음
+		//유령회원 번호 가져오기
+		//System.out.println(userNo);
+		
+		//groupVo 정보 추가
+		//USERNO가 안돼서 수동입력을 해보겠다.
+		groupVo.setUserNo(9);
+		groupVo.setLeaderCheck(0);
+		//비회원한테 그룹순서는 필요 없어
+		groupVo.setGroupOrder(0);
+		//시크릿키안돼서..
+		groupVo.setGroupMemberNo(14);
+		groupDao.addMember(groupVo);
+		
+		//방금 추가한 그룹멤버번호
+		//시크릿키 왜 안될까 ? 수동으로 해보겠다.
+		//int memberNo = groupVo.getGroupMemberNo();
+		int memberNo = 14;
+		GroupVo memberInfo = groupDao.memberInfo(memberNo);
+	
+		System.out.println(memberInfo);
+		return memberInfo;
+		
 	}
 
 }

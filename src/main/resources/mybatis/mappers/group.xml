@@ -45,7 +45,7 @@
 	<select id="groupMembers" parameterType="int" resultMap="GroupVo">
 		SELECT  group_member_no,
 		        u.user_no,
-		        group_no
+		        group_no,
 		        leader_check,
 		        boss_check,
 		        user_name,
@@ -100,10 +100,48 @@
 	
 	<!-- 그룹원 추가 -->
 	<insert id="addMember" parameterType="GroupVo">
+		<!-- 
+		<selectKey keyProperty="groupNo" resultType="int" order="BEFORE">
+			SELECT SEQ_GROUP_MEMBER_NO.NEXTVAL FROM DUAL
+		</selectKey>
+		 -->
 		INSERT INTO GROUP_MEMBER
-		VALUES (SEQ_GROUP_MEMBER_NO.NEXTVAL, #{userNo}, #{groupNo}, 
-				#{leaderCheck}, #{bossCheck}, #{groupOrder})
+		VALUES (#{groupMemberNo}, 
+				#{userNo}, 
+				#{groupNo}, 
+				#{leaderCheck}, 
+				#{bossCheck}, 
+				#{groupOrder})
+		<![CDATA[		       
+		        CASE WHEN user_birth_year > "30_start" THEN '20대 이하'
+             		 WHEN user_birth_year > "40_start" AND user_birth_year <= "30_start" THEN '30대'
+             		 WHEN user_birth_year > "50_start" AND user_birth_year <= "40_start" THEN '40대'
+             		 WHEN user_birth_year <= "50_start" THEN '50대 이상'
+		        END user_age,
+        ]]>
+		        CASE WHEN user_sex = 'male' THEN '남자'
+		        	 WHEN user_sex = 'female' THEN '여자'
+			    END	user_sex,
+			    group_order
+		FROM group_member m, users u, ( SELECT  TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - 29 "30_start",
+                                       			TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - 39 "40_start",
+                                        		TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - 49 "50_start"
+                                		FROM DUAL )
+        WHERE m.user_no = u.user_no
+        AND group_member_no = #{groupMemberNo}
 	</insert>
+	
+	
+	<!-- 그룹 멤버 1명 정보(방금 추가한 멤버 정보 조회) -->
+	<select id="memberInfo" parameterType="int" resultMap="GroupVo">
+		SELECT  group_member_no,
+				u.user_no,
+				group_no,
+				leader_check,
+				boss_check,
+				user_name,
+				user_birth_year,
+	</select>
 	
 	
 	<!-- 그룹 순서 변경 -->

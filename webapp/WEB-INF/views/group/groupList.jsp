@@ -36,10 +36,12 @@
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -64 640 640" width="1em" height="1em" fill="currentColor" style="font-size: 30px;">
 							<path d="M224 256c70.7 0 128-57.31 128-128S294.7 0 224 0C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3c-95.73 0-173.3 77.6-173.3 173.3C0 496.5 15.52 512 34.66 512H413.3C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304zM479.1 320h-73.85C451.2 357.7 480 414.1 480 477.3C480 490.1 476.2 501.9 470 512h138C625.7 512 640 497.6 640 479.1C640 391.6 568.4 320 479.1 320zM432 256C493.9 256 544 205.9 544 144S493.9 32 432 32c-25.11 0-48.04 8.555-66.72 22.51C376.8 76.63 384 101.4 384 128c0 35.52-11.93 68.14-31.59 94.71C372.7 243.2 400.8 256 432 256z"></path>
 	                    </svg>
-	                    개발1팀
-	                    <button class="btn btn-sm link-dark" type="button" data-bs-target="#modal-group-name-change" data-bs-toggle="modal">
-	                    	<i class="fas fa-pencil-alt"></i>
-	                    </button>
+	                    ${map.groupName}
+	                    <c:if test="${authUser.userNo == map.leader}">
+		                    <button class="btn btn-sm link-dark" type="button" data-bs-target="#modal-group-name-change" data-bs-toggle="modal">
+		                    	<i class="fas fa-pencil-alt"></i>
+		                    </button>
+	                    </c:if>
 	                    
 	                    <span class="group-title-btn-area">
 	                    	<c:if test="${authUser.userNo == map.leader && map.memberCount > 1}">
@@ -181,7 +183,7 @@
 	                    </div>
 	                   
 	                    <!-- 그룹원 추가 -->
-						<form id="groupmem-add" class="card shadow" action="${pageContext.request.contextPath}/group/addMember" method="post">
+						<div id="groupmem-add" class="card shadow" <%-- action="${pageContext.request.contextPath}/group/addMember?groupNo=${map.groupNo}" method="post" --%>>
 	                       	<div class="card-header py-3">
 	                           	<p class="text-primary m-0 fw-bold">그룹원 직접 추가하기</p>
 	                       	</div>
@@ -194,14 +196,14 @@
                                        <option value="male">남자</option>
                                        <option value="female">여자</option>
 	                               	</select>
-	                               	<button class="btn btn-primary btn-groupmem-invt" type="button" data-bs-toggle="modal">추가하기</button>
+	                               	<button class="btn btn-primary btn-groupmem-invt" type="submit" data-bs-toggle="modal" data-groupno="${map.groupNo}">추가하기</button>
 	                            </div>
 	                           	<div class="form-check">
 	                           		<input id="chk-boss-notuser" class="form-check-input" type="checkbox" name="bossCheck" value="1"/>
 	                           		<label class="form-check-label" for="chk-boss-notuser">부장님이면 체크해주세요<br /></label>
 	                           	</div>
 							</div>
-	              		</form>
+	              		</div>
                    </c:if>
                    
 				</div>
@@ -224,6 +226,63 @@
 <script type="text/javascript">
 
 /* 그룹원 직접 추가 */
+$("#groupmem-add button").on("click", function(){
+	console.log("비회원 그룹 멤버 추가 버튼 클릭")
+	
+	var $this = $(this)
+	var groupNo = $this.data("groupno")
+	
+	var userName = $("#groupmem-add [name ='userName']").val()
+	if(userName == null || userName == ""){
+		alert("이름을 입력해주세요")
+		return false
+	}
+
+	var userBirthYear = $("#groupmem-add [name ='userBirthYear']").val()
+	if(userBirthYear == null || userBirthYear == ""){
+		alert("출생연도를 입력해주세요")
+		return false
+	}
+	
+	var userSex = $("#groupmem-add [name = 'userSex']").val()
+	if(userSex == null || userSex == ""){
+		alert("성별을 선택해주세요")
+		return false
+	}
+	
+	var groupVo = {
+			groupNo: groupNo,
+			userName: userName,
+			userBirthYear: userBirthYear,
+			userSex: userSex
+	}
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath }/group/addMember",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(groupVo),
+		dataType : "json",
+		
+		success : function(result){
+			
+			if(result == "success"){
+				$("#groupmem-add [name ='userName']").val("")
+				$("#groupmem-add [name ='userBirthYear']").val("")
+				$("#groupmem-add [name = 'userSex']").val("성별")
+				
+			}else{
+				alert("그룹 멤버 추가에 실패했습니다")
+				
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+			
+		}
+	})
+	
+})
 
 
 </script>
