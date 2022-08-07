@@ -1,5 +1,8 @@
 package com.lunchwb.vo;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class StoreVo {
 	
 	//////////////////// store table ////////////////////
@@ -10,8 +13,8 @@ public class StoreVo {
 	private double storeY;
 	private String storeRoadAddress;
 	private String storeOldAddress;
-	private String storeOpeningHours;
-	private String storeBreaktime;
+	private List<String> storeOpeningHours;
+	private List<String> storeBreaktime;
 	
 	//////////////////// ratingOthers table ////////////////////
 	// private int storeNo; (store table fk)
@@ -37,10 +40,11 @@ public class StoreVo {
 		
 	}
 
-
+	
 	public StoreVo(int storeNo, int menu2ndCateNo, String storeName, double storeX, double storeY,
-			String storeRoadAddress, String storeOldAddress, String storeOpeningHours, String storeBreaktime,
-			float ratingNaver, float ratingKakao, int distance, int score, float rating_bujang, int visitCnt) {
+			String storeRoadAddress, String storeOldAddress, List<String> storeOpeningHours,
+			List<String> storeBreaktime, float ratingNaver, float ratingKakao, int distance, int score,
+			float rating_bujang, int visitCnt) {
 		this.storeNo = storeNo;
 		this.menu2ndCateNo = menu2ndCateNo;
 		this.storeName = storeName;
@@ -58,7 +62,7 @@ public class StoreVo {
 		this.visitCnt = visitCnt;
 	}
 
-	
+
 	////////////// getter setter ////////////////////////////////////////////////////////////////////////
 
 	public int getStoreNo() {
@@ -130,23 +134,23 @@ public class StoreVo {
 		this.storeOldAddress = storeOldAddress;
 	}
 
-
-	public String getStoreOpeningHours() {
+	
+	public List<String> getStoreOpeningHours() {
 		return storeOpeningHours;
 	}
 
 
-	public void setStoreOpeningHours(String storeOpeningHours) {
+	public void setStoreOpeningHours(List<String> storeOpeningHours) {
 		this.storeOpeningHours = storeOpeningHours;
 	}
 
 
-	public String getStoreBreaktime() {
+	public List<String> getStoreBreaktime() {
 		return storeBreaktime;
 	}
 
 
-	public void setStoreBreaktime(String storeBreaktime) {
+	public void setStoreBreaktime(List<String> storeBreaktime) {
 		this.storeBreaktime = storeBreaktime;
 	}
 
@@ -217,10 +221,10 @@ public class StoreVo {
 	public String toString() {
 		return "StoreVo [storeNo=" + storeNo + ", menu2ndCateNo=" + menu2ndCateNo + ", storeName=" + storeName
 				+ ", storeX=" + storeX + ", storeY=" + storeY + ", storeRoadAddress=" + storeRoadAddress
-				+ ", storeOldAddress=" + storeOldAddress + ", storeOpeningHours=" + storeOpeningHours
-				+ ", storeBreaktime=" + storeBreaktime + ", ratingNaver=" + ratingNaver + ", ratingKakao=" + ratingKakao
+				+ ", storeOldAddress=" + storeOldAddress + ",\nstoreOpeningHours=" + storeOpeningHours.toString()
+				+ ",\nstoreBreaktime=" + storeBreaktime.toString() + ", ratingNaver=" + ratingNaver + ", ratingKakao=" + ratingKakao
 				+ ", distance=" + distance + ", score=" + score + ", rating_bujang=" + rating_bujang + ", visitCnt="
 				+ visitCnt + "]";
 	}
-
+	
 }
