@@ -52,9 +52,9 @@ public class GroupService {
 			groupVo.setUserNo(userNo);
 			groupVo.setGroupNo(groupNo);
 			
-			List<GroupVo> myGroup = groupDao.myGroup(groupVo);
+			int myGroup = groupDao.myGroup(groupVo);
 			
-			if(myGroup.size() != 0) {
+			if(myGroup != 0) {
 				
 				map.put("groupNo", groupNo);
 				

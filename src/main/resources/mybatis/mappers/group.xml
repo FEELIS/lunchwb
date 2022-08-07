@@ -32,7 +32,7 @@
 	
 	
 	<!-- 내 그룹 체크 -->
-	<select id="myGroup" parameterType="GroupVo" resultMap="int">
+	<select id="myGroup" parameterType="GroupVo" resultType="int">
 		SELECT group_no
 		FROM group_member
 		WHERE group_no = #{groupNo}

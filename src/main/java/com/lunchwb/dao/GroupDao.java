@@ -1,7 +1,6 @@
 package com.lunchwb.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
@@ -30,11 +29,11 @@ public class GroupDao {
 	}
 
 	
-	/******************** 그룹 멤버 리스트 *******************************************/
-	public List<GroupVo> myGroup(GroupVo groupVo) {
+	/******************** 내 그룹 여부 *******************************************/
+	public int myGroup(GroupVo groupVo) {
 		logger.info("myGroup()");
 		
-		List<GroupVo> myGroup = sqlSession.selectList("group.myGroup", groupVo);
+		int myGroup = sqlSession.selectOne("group.myGroup", groupVo);
 		
 		return myGroup;
 	}
