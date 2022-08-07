@@ -53,12 +53,11 @@ public class UserDao {
 	}
 	
 	/* 이지희 */
-	public UserVo groupMemInfo(int userNo) {
-		//logger.info("groupMemInfo()");
+	/* 그룹 비회원 멤버 추가*/
+	public void addGpMember(UserVo userVo) {
+		//logger.info("addGroupMem()");
 
-		UserVo userVo = sqlSession.selectOne("user.groupMemInfo", userNo);
-
-		return userVo;
+		sqlSession.selectOne("user.addGpMember", userVo);
 	}
 
 }

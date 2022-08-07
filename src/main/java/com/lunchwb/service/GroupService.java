@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lunchwb.dao.GroupDao;
+import com.lunchwb.dao.UserDao;
 import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.UserVo;
 
@@ -18,6 +19,8 @@ public class GroupService {
 	
 	@Autowired
 	private GroupDao groupDao;
+	@Autowired
+	private UserDao userDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(GroupService.class);
 	
@@ -161,5 +164,21 @@ public class GroupService {
 		return result;
 	}
 	
+	
+	/******************** 비회원 그룹 추가 ********************************************/
+	public String addMember(GroupVo groupVo) {
+		logger.info("addMember()");
+		
+		UserVo userVo = new UserVo();
+		userVo.setUserName(groupVo.getUserName());
+		userVo.setUserBirthYear(groupVo.getUserBirthYear());
+		userVo.setUserSex(groupVo.getUserSex());
+		//user_grade = 0 고정
+		
+		userDao.addGpMember(userVo);
+		
+		
+		return "";
+	}
 
 }

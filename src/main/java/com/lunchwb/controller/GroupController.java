@@ -103,5 +103,16 @@ public class GroupController {
 		
 		return result;
 	}
+	
+	
+	/******************** 비회원 그룹 추가 ********************************************/
+	@PostMapping("group/addMember")
+	public String addMember(GroupVo groupVo) {
+		logger.info("addMember()");
+		
+		groupService.addMember(groupVo);
+		
+		return "";
+	}
 
 }

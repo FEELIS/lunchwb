@@ -75,17 +75,19 @@
 		                                           	<th style="width: 10%;">부장님</th>
 		                                           	<th style="width: 10%;">그룹장</th>
 		                                           	<th style="width: 20%;">이름</th>
-		                                           	<th style="width: 15%;">성별</th>
-		                                           	<th style="width: 20%;">연령대</th>
+		                                           	<th style="width: 10%;">성별</th>
+		                                           	<th style="width: 10%;">출생연도</th>
+		                                           	<th style="width: 10%;">연령대</th>
 		                                           	<th style="width: 10%;">회원</th>
-		                                           	<th style="width: 15%;">내보내기</th>
+		                                           	<th style="width: 10%;">내보내기</th>
 	                                           	</c:when>
 	                                           	<c:otherwise>
 	                                           		<th style="width: 10%;">부장님</th>
 		                                           	<th style="width: 10%;">그룹장</th>
-		                                           	<th style="width: 35%;">이름</th>
-		                                           	<th style="width: 15%;">성별</th>
-		                                           	<th style="width: 20%;">연령대</th>
+		                                           	<th style="width: 30%;">이름</th>
+		                                           	<th style="width: 10%;">성별</th>
+		                                           	<th style="width: 10%;">출생연도</th>
+		                                           	<th style="width: 10%;">연령대</th>
 		                                           	<th style="width: 10%;">회원</th>
 	                                           	</c:otherwise>
 	                                        </c:choose>
@@ -109,14 +111,15 @@
 												</td>
 												<c:choose>
 		                          	      			<c:when test="${authUser.userNo == map.leader}">
-														<td style="width: 20%;">${memberVo.userName}</td>
+														<td style="width: 30%;">${memberVo.userName}</td>
 													</c:when>
 													<c:otherwise>
-														<td style="width: 35%;">${memberVo.userName}</td>
+														<td style="width: 40%;">${memberVo.userName}</td>
 													</c:otherwise>
 												</c:choose>
-												<td style="width: 15%;">${memberVo.userSex}</td>
-												<td style="width: 20%;">${memberVo.userAge}</td>
+												<td style="width: 10%;">${memberVo.userSex}</td>
+												<td style="width: 10%;">${memberVo.userBirthYear}</td>
+												<td style="width: 10%;">${memberVo.userAge}</td>
 												<td style="width: 10%;">
 													<c:if test="${memberVo.groupOrder != 0}">
 														<svg class="groupmem-user" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
@@ -125,7 +128,7 @@
 													</c:if>
 												</td>
 												<c:if test="${authUser.userNo == map.leader}">
-													<td style="width: 15%;">
+													<td style="width: 10%;">
 														<c:if test="${memberVo.userNo != authUser.userNo}">
 															<svg class="text-danger groupmem-delete" xmlns="http://www.w3.org/2000/svg" viewBox="-96 0 512 512" width="1em" height="1em" fill="currentColor">
 													        	<path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"></path>
@@ -164,9 +167,9 @@
                    
                    
                    <!-- 그룹 리더만 -->
-                   <!-- 그룹원 초대 -->
                    <c:if test="${authUser.userNo == map.leader}">
-	                   <div id="groupmem-invt" class="card shadow">
+	                    <!-- 그룹원 초대 -->
+	                    <div id="groupmem-invt" class="card shadow">
 	                       <div class="card-header py-3">
 	                           <p class="text-primary m-0 fw-bold">그룹원으로 초대하기</p>
 	                       </div>
@@ -175,10 +178,10 @@
 	                               <div class="form-check"><input id="chk-boss-user" class="form-check-input" type="checkbox" /><label class="form-check-label" for="chk-boss-user">부장님이면 체크해주세요</label></div>
 	                           </div>
 	                       </div>
-	                   </div>
+	                    </div>
 	                   
-	                   <!-- 그룹원 추가 -->
-	                   <div id="groupmem-add" class="card shadow">
+	                    <!-- 그룹원 추가 -->
+						<form id="groupmem-add" class="card shadow" action="${pageContext.request.contextPath}/group/addMember" method="post">
 	                       	<div class="card-header py-3">
 	                           	<p class="text-primary m-0 fw-bold">그룹원 직접 추가하기</p>
 	                       	</div>
@@ -187,33 +190,42 @@
 	                          		<input type="text" name="userName" placeholder="이름을 입력해주세요" />
 	                          		<input type="text" name="userBirthYear" placeholder="출생연도를 입력해주세요" />
 	                               	<select class="text-dark" name="userSex">
-	                                   <optgroup label="성별">
-	                                       <option value="male">남자</option>
-	                                       <option value="female">여자</option>
-	                                   </optgroup>
-	                               	</select><button class="btn btn-primary btn-groupmem-invt" type="button" data-bs-toggle="modal">추가하기</button></div>
-	                           	<div class="form-check"><input id="chk-boss-notuser" class="form-check-input" type="checkbox" /><label class="form-check-label" for="chk-boss-notuser">부장님이면 체크해주세요<br /></label></div>
-	                       	</div>
-	              		</div>
+                                       <option selected disabled>성별</option>
+                                       <option value="male">남자</option>
+                                       <option value="female">여자</option>
+	                               	</select>
+	                               	<button class="btn btn-primary btn-groupmem-invt" type="button" data-bs-toggle="modal">추가하기</button>
+	                            </div>
+	                           	<div class="form-check">
+	                           		<input id="chk-boss-notuser" class="form-check-input" type="checkbox" name="bossCheck" value="1"/>
+	                           		<label class="form-check-label" for="chk-boss-notuser">부장님이면 체크해주세요<br /></label>
+	                           	</div>
+							</div>
+	              		</form>
                    </c:if>
                    
-               </div>
-           </div>
-           <footer id="footer" class="bg-white sticky-footer" style="background-color: #ffffff;">
-               <div class="container my-auto">
-                   <div class="text-center my-auto copyright"><span>Copyright © FEELIS 2022<br />https://github.com/FEELIS <br /></span></div>
-               </div>
-           </footer>
-       </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
-   </div>
+				</div>
+			</div>
+           
+		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+           
+    </div>
+       
+	<a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+</div>
    
-   
-
-
-    <script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
+<script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
        
 
 </body>
+
+<script type="text/javascript">
+
+/* 그룹원 직접 추가 */
+
+
+</script>
+
 </html>
