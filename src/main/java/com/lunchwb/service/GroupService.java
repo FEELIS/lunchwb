@@ -180,7 +180,7 @@ public class GroupService {
 		userVo.setUserBirthYear(groupVo.getUserBirthYear());
 		userVo.setUserSex(groupVo.getUserSex());
 		//시크릿키안돼서 USERNO수동처리
-		userVo.setUserNo(9);
+		userVo.setUserNo(8);
 		//user_grade = 0 고정
 		userDao.addGpMember(userVo);
 		
@@ -193,18 +193,18 @@ public class GroupService {
 		
 		//groupVo 정보 추가
 		//USERNO가 안돼서 수동입력을 해보겠다.
-		groupVo.setUserNo(9);
+		groupVo.setUserNo(8);
 		groupVo.setLeaderCheck(0);
 		//비회원한테 그룹순서는 필요 없어
 		groupVo.setGroupOrder(0);
 		//시크릿키안돼서..
-		groupVo.setGroupMemberNo(14);
+		groupVo.setGroupMemberNo(15);
 		groupDao.addMember(groupVo);
 		
 		//방금 추가한 그룹멤버번호
 		//시크릿키 왜 안될까 ? 수동으로 해보겠다.
 		//int memberNo = groupVo.getGroupMemberNo();
-		int memberNo = 14;
+		int memberNo = 15;
 		GroupVo memberInfo = groupDao.memberInfo(memberNo);
 	
 		System.out.println(memberInfo);

@@ -104,13 +104,14 @@ public class GroupController {
 	
 	
 	/******************** 비회원 그룹 추가 ********************************************/
+	@ResponseBody
 	@PostMapping("group/addMember")
-	public String addMember(@RequestBody GroupVo groupVo) {
+	public GroupVo addMember(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > addMember()");
 		
-		groupService.addMember(groupVo);
+		GroupVo memberVo = groupService.addMember(groupVo);
 		
-		return "";
+		return memberVo;
 	}
 
 }

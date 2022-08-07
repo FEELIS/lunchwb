@@ -264,17 +264,14 @@ $("#groupmem-add button").on("click", function(){
 		data : JSON.stringify(groupVo),
 		dataType : "json",
 		
-		success : function(result){
+		success : function(memberVo){
 			
-			if(result == "success"){
-				$("#groupmem-add [name ='userName']").val("")
-				$("#groupmem-add [name ='userBirthYear']").val("")
-				$("#groupmem-add [name = 'userSex']").val("성별")
+			$("#groupmem-add [name ='userName']").val("")
+			$("#groupmem-add [name ='userBirthYear']").val("")
+			$("#groupmem-add [name = 'userSex']").val("성별")
+			
+			alert("멤버가 추가되었습니다")
 				
-			}else{
-				alert("그룹 멤버 추가에 실패했습니다")
-				
-			}
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);

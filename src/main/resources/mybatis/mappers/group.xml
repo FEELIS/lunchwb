@@ -112,6 +112,18 @@
 				#{leaderCheck}, 
 				#{bossCheck}, 
 				#{groupOrder})
+	</insert>
+	
+	
+	<!-- 그룹 멤버 1명 정보(방금 추가한 멤버 정보 조회) -->
+	<select id="memberInfo" parameterType="int" resultMap="GroupVo">
+		SELECT  group_member_no,
+				u.user_no,
+				group_no,
+				leader_check,
+				boss_check,
+				user_name,
+				user_birth_year,
 		<![CDATA[		       
 		        CASE WHEN user_birth_year > "30_start" THEN '20대 이하'
              		 WHEN user_birth_year > "40_start" AND user_birth_year <= "30_start" THEN '30대'
@@ -128,19 +140,7 @@
                                         		TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - 49 "50_start"
                                 		FROM DUAL )
         WHERE m.user_no = u.user_no
-        AND group_member_no = #{groupMemberNo}
-	</insert>
-	
-	
-	<!-- 그룹 멤버 1명 정보(방금 추가한 멤버 정보 조회) -->
-	<select id="memberInfo" parameterType="int" resultMap="GroupVo">
-		SELECT  group_member_no,
-				u.user_no,
-				group_no,
-				leader_check,
-				boss_check,
-				user_name,
-				user_birth_year,
+        AND group_member_no = #{groupMemberNo}			
 	</select>
 	
 	
