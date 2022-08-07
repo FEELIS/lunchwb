@@ -99,5 +99,14 @@ public class GroupDao {
 		
 		return count;
 	}
-
+	
+	
+	/******************** 장바구니 그룹 선택 ***********************************************/
+	public List<GroupVo> selectBasketGroup(int userNo) {
+		logger.info("selectBasketGroup()");
+		
+		List<GroupVo> basketGroup = sqlSession.selectList("group.selectBasketGroup", userNo);
+				
+		return basketGroup;
+	}
 }
