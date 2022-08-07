@@ -40,13 +40,19 @@ public class GroupController {
 		
 		Map<String, Object> map = groupService.groupList(authUser, groupNo);
 		
-		
 		model.addAttribute("map", map);
 		
-		//그룹 없음
+		//내 그룹 없음
 		if((Integer)map.get("groupCount") == 0) {
 			return "group/addGroup";
 		}
+		
+		/*
+		//내 그룹이 아님(가져온 멤버목록이 없음)
+		if((String)map.get("memberCount") == null) {
+			return "error/403";
+		}
+		*/
 			
 		return "group/groupList";
 	}

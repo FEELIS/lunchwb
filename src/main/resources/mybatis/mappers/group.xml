@@ -29,6 +29,15 @@
 		AND user_no = #{userNo}
 		ORDER BY group_order ASC
 	</select>
+	
+	
+	<!-- 내 그룹 체크 -->
+	<select id="myGroup" parameterType="GroupVo" resultMap="int">
+		SELECT group_no
+		FROM group_member
+		WHERE group_no = #{groupNo}
+		AND user_no = #{userNo}
+	</select>
 
 
 	<!-- 그룹 멤버 리스트 -->

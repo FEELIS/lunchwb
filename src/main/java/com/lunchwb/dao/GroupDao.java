@@ -28,6 +28,17 @@ public class GroupDao {
 		
 		return groupList;
 	}
+
+	
+	/******************** 그룹 멤버 리스트 *******************************************/
+	public List<GroupVo> myGroup(GroupVo groupVo) {
+		logger.info("myGroup()");
+		
+		List<GroupVo> myGroup = sqlSession.selectList("group.myGroup", groupVo);
+		
+		return myGroup;
+	}
+	
 	
 	
 	/******************** 그룹 멤버 리스트 *******************************************/

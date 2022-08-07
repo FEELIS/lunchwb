@@ -40,26 +40,36 @@ public class GroupService {
 		
 		/////////////////// 그룹 //////// //////////////////////////////
 		//나의그룹 접근 groupNo == 0: 첫번째 그룹페이지
-
+		
 		if(groupCount != 0) {
 			
 			if(groupNo == 0) {
 				groupNo = groupList.get(0).getGroupNo();
 			}
 			
-			map.put("groupNo", groupNo);
+			//내 그룹 맞아?
+			GroupVo groupVo = new GroupVo();
+			groupVo.setUserNo(userNo);
+			groupVo.setGroupNo(groupNo);
 			
-			//그룹원 리스트
-			List<GroupVo> memberList = groupDao.groupMembers(groupNo);
-			map.put("memberList", memberList);
+			List<GroupVo> myGroup = groupDao.myGroup(groupVo);
 			
-			//그룹원 수(혼자인지 아닌지 판단하게)
-			int memberCount = memberList.size();
-			map.put("memberCount", memberCount);
-			
-			//그룹 리더 
-			int leader = groupDao.groupLeader(groupNo);
-			map.put("leader", leader);
+			if(myGroup.size() != 0) {
+				
+				map.put("groupNo", groupNo);
+				
+				//그룹원 리스트
+				List<GroupVo> memberList = groupDao.groupMembers(groupNo);
+				map.put("memberList", memberList);
+				
+				//그룹원 수(혼자인지 아닌지 판단하게)
+				int memberCount = memberList.size();
+				map.put("memberCount", memberCount);
+				
+				//그룹 리더 
+				int leader = groupDao.groupLeader(groupNo);
+				map.put("leader", leader);
+			}
 		}
 		
 		return map;
