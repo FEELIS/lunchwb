@@ -31,15 +31,16 @@
 	</select>
 	
 	
-	<!-- 내 그룹 체크 -->
-	<select id="myGroup" parameterType="GroupVo" resultType="int">
-		SELECT group_no
-		FROM group_member
-		WHERE group_no = #{groupNo}
-		AND user_no = #{userNo}
+	<!-- 그룹 이름 -->
+	<select id="selectedGpName" parameterType="GroupVo" resultType="String">
+		SELECT g.group_name
+		FROM group_member m, groups g
+		WHERE m.group_no = g.group_no
+		AND g.group_no = #{groupNo}
+		AND m.user_no = #{userNo}
 	</select>
-
-
+	
+	
 	<!-- 그룹 멤버 리스트 -->
 	<select id="groupMembers" parameterType="int" resultMap="GroupVo">
 		SELECT  group_member_no,
@@ -115,7 +116,7 @@
 	
 	
 	<!-- index.jsp에서 그룹 선택 -->
-	<select id="selectBasketGroup" parameterType="int" resultType="GroupVo">
+	<select id="selectBasketGroup" parameterType="int" resultMap="GroupVo">
 		SELECT g.group_no, g.group_name
 		FROM   groups g, group_member m
 		WHERE  g.group_no = m.group_no

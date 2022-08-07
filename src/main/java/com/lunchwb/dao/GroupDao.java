@@ -21,7 +21,7 @@ public class GroupDao {
 	
 	/******************** 그룹 리스트 **********************************************/
 	public List<GroupVo> userGroups(int userNo) {
-		logger.info("userGroups()");
+		logger.info("GroupDao > userGroups()");
 		
 		List<GroupVo> groupList = sqlSession.selectList("group.userGroups", userNo);
 		
@@ -29,20 +29,19 @@ public class GroupDao {
 	}
 
 	
-	/******************** 내 그룹 여부 *******************************************/
-	public int myGroup(GroupVo groupVo) {
-		logger.info("myGroup()");
+	/******************** 그룹 이름 *******************************************/
+	public String selectedGpName(GroupVo groupVo) {
+		logger.info("GroupDao > selectedGqName()");
 		
-		int myGroup = sqlSession.selectOne("group.myGroup", groupVo);
+		String groupName = sqlSession.selectOne("group.selectedGpName", groupVo);
 		
-		return myGroup;
+		return groupName;
 	}
-	
 	
 	
 	/******************** 그룹 멤버 리스트 *******************************************/
 	public List<GroupVo> groupMembers(int groupNo) {
-		logger.info("groupMembers()");
+		logger.info("GroupDao > groupMembers()");
 		
 		List<GroupVo> memberList = sqlSession.selectList("group.groupMembers", groupNo);
 		
@@ -52,7 +51,7 @@ public class GroupDao {
 	
 	/******************** 그룹 리더 ***********************************************/
 	public int groupLeader(int groupNo) {
-		logger.info("groupLeader()");
+		logger.info("GroupDao > groupLeader()");
 		
 		int leader = sqlSession.selectOne("group.groupLeader", groupNo);
 		
@@ -61,7 +60,7 @@ public class GroupDao {
 	
 	/******************** 그룹 생성 ***********************************************/
 	public void createGroup(GroupVo groupVo) {
-		logger.info("createGroup()");
+		logger.info("GroupDao > createGroup()");
 		
 		int count = sqlSession.insert("group.createGroup", groupVo);
 		
@@ -71,7 +70,7 @@ public class GroupDao {
 	
 	/******************** 그룹 개수 ***********************************************/
 	public int groupCount(int userNo) {
-		logger.info("groupCount()");
+		logger.info("GroupDao > groupCount()");
 		
 		int groupCount = sqlSession.selectOne("group.groupCount", userNo);
 		
@@ -81,7 +80,7 @@ public class GroupDao {
 	
 	/******************** 그룹 멤버 추가 ***********************************************/
 	public void addMember(GroupVo groupVo) {
-		logger.info("addMember()");
+		logger.info("GroupDao > addMember()");
 		
 		int count = sqlSession.insert("group.addMember", groupVo);
 		
@@ -91,7 +90,7 @@ public class GroupDao {
 	
 	/******************** 그룹 순서 변경 ***********************************************/
 	public int changeOrder(GroupVo groupVo) {
-		logger.info("changeOrder()");
+		logger.info("GroupDao > changeOrder()");
 		
 		int count = sqlSession.update("group.changeOrder", groupVo);
 		
@@ -103,7 +102,7 @@ public class GroupDao {
 	
 	/******************** 장바구니 그룹 선택 ***********************************************/
 	public List<GroupVo> selectBasketGroup(int userNo) {
-		logger.info("selectBasketGroup()");
+		logger.info("GroupDao > selectBasketGroup()");
 		
 		List<GroupVo> basketGroup = sqlSession.selectList("group.selectBasketGroup", userNo);
 				
