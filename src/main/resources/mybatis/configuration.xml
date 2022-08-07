@@ -7,6 +7,7 @@
    		<typeAlias alias="FaqVo" type="com.lunchwb.vo.FaqVo"/>
    		<typeAlias alias="UserVo" type="com.lunchwb.vo.UserVo"/>
    		<typeAlias alias="GroupVo" type="com.lunchwb.vo.GroupVo"/>
+   		<typeAlias alias="StoreVo" type="com.lunchwb.vo.StoreVo"/>
     </typeAliases>
 
     <mappers>
@@ -14,5 +15,6 @@
         <mapper resource="mybatis/mappers/faq.xml" />
         <mapper resource="mybatis/mappers/user.xml" />
         <mapper resource="mybatis/mappers/group.xml" />
+        <mapper resource="mybatis/mappers/store.xml" />
     </mappers>
 </configuration>
