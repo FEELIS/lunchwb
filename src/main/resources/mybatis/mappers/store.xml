@@ -2,4 +2,31 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="store">
+
+	<select id="guestStoreRecommend" parameterType="GPSVo" resultType="StoreVo">
+		<![CDATA[
+			SELECT store_no storeNo
+			       ,menu_2nd_cate_no menu2ndCateNo
+			       ,store_name storeName
+			       ,store_road_address storeRoadAddress
+			       ,rating_bujang ratingBujang
+			       ,distance
+			       ,score
+			FROM (SELECT s.store_no, s.menu_2nd_cate_no, s.store_name, s.store_road_address, b.rating_bujang
+			             ,ROUND(SQRT(POWER(ABS(s.store_x-#{gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(s.store_y-#{gpsY})*6400000*2*3.14/360, 2)), 0) distance
+			             ,(NVL(v.cnt, 0)/10 + r.rating_naver * 50 + NVL(b.rating_bujang, 0) * 50) score
+			      FROM   store s, rating_others r, (SELECT store_no, COUNT(*) cnt FROM visited GROUP BY store_no) v, (SELECT store_no, AVG(user_score) rating_bujang
+			                                                                                                          FROM review, visited 
+			                                                                                                          WHERE review.visited_no = visited.visited_no 
+			                                                                                                          GROUP BY visited.store_no) b
+			      WHERE  s.store_no = r.store_no
+			      AND    s.store_no = b.store_no(+)
+			      AND    s.store_no = v.store_no(+)
+			      AND    ((r.rating_naver >= 4.3 AND r.rating_kakao >= 3) OR (r.rating_naver >= 4.5 AND r.rating_kakao = 0)) 
+			     )
+		    WHERE  distance <= 1000
+		    ORDER BY score DESC;
+		]]>
+	</select>
+	
 </mapper>

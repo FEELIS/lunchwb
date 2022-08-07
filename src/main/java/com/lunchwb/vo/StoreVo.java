@@ -25,7 +25,7 @@ public class StoreVo {
 	private int score;
 	
 	//////////// review table /////////////////////
-	private float rating_bujang;
+	private float ratingBujang;
 	
 	///////////// visited table //////////////////
 	private int visitCnt;
@@ -43,7 +43,7 @@ public class StoreVo {
 	public StoreVo(int storeNo, int menu2ndCateNo, String storeName, double storeX, double storeY,
 			String storeRoadAddress, String storeOldAddress, List<String> storeOpeningHours,
 			List<String> storeBreaktime, float ratingNaver, float ratingKakao, int distance, int score,
-			float rating_bujang, int visitCnt) {
+			float ratingBujang, int visitCnt) {
 		this.storeNo = storeNo;
 		this.menu2ndCateNo = menu2ndCateNo;
 		this.storeName = storeName;
@@ -57,7 +57,7 @@ public class StoreVo {
 		this.ratingKakao = ratingKakao;
 		this.distance = distance;
 		this.score = score;
-		this.rating_bujang = rating_bujang;
+		this.ratingBujang = ratingBujang;
 		this.visitCnt = visitCnt;
 	}
 
@@ -194,13 +194,13 @@ public class StoreVo {
 	}
 
 
-	public float getRating_bujang() {
-		return rating_bujang;
+	public float getRatingBujang() {
+		return ratingBujang;
 	}
 
 
-	public void setRating_bujang(float rating_bujang) {
-		this.rating_bujang = rating_bujang;
+	public void setRatingBujang(float ratingBujang) {
+		this.ratingBujang = ratingBujang;
 	}
 
 
@@ -222,7 +222,7 @@ public class StoreVo {
 				+ ", storeX=" + storeX + ", storeY=" + storeY + ", storeRoadAddress=" + storeRoadAddress
 				+ ", storeOldAddress=" + storeOldAddress + ",\nstoreOpeningHours=" + storeOpeningHours.toString()
 				+ ",\nstoreBreaktime=" + storeBreaktime.toString() + ", ratingNaver=" + ratingNaver + ", ratingKakao=" + ratingKakao
-				+ ", distance=" + distance + ", score=" + score + ", rating_bujang=" + rating_bujang + ", visitCnt="
+				+ ", distance=" + distance + ", score=" + score + ", ratingBujang=" + ratingBujang + ", visitCnt="
 				+ visitCnt + "]";
 	}
 	
