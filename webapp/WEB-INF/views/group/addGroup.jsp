@@ -53,46 +53,21 @@
                 </div>
             </div>
         </div>
-        <footer id="footer" class="bg-white sticky-footer" style="background-color: #ffffff;">
-            <div class="container my-auto">
-                <div class="text-center my-auto copyright"><span>Copyright © FEELIS 2022<br />https://github.com/FEELIS <br /></span></div>
-            </div>
-        </footer>
-    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
-</div>
-   
-   
-   
-<!-- 그룹 순서 변경 모달 -->
-<div id="modal-group-order-change" class="modal fade" role="dialog" tabindex="-1" data-bs-auto-close="outside" ara-expanded="false">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header modal-header-custom">
-                <div><span>그룹 순서 변경</span></div><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body modal-body-custom">
-                <div class="group-order-area">
-                    <p><i class="icon ion-arrow-up-b"></i><i class="icon ion-arrow-down-b"></i>동기모임</p>
-                </div>
-                <div class="group-order-area">
-                    <p>개발1팀<i class="icon ion-arrow-down-b"></i><i class="icon ion-arrow-up-b"></i></p>
-                </div>
-                <div class="group-order-area">
-                    <p>개발2팀<i class="icon ion-arrow-down-b"></i><i class="icon ion-arrow-up-b"></i></p>
-                </div>
-                <div class="group-order-area">
-                    <p><i class="icon ion-arrow-down-b"></i>지히팀<i class="icon ion-arrow-up-b"></i></p>
-                </div>
-            </div>
-            <div class="modal-footer-custom"><button class="btn btn-primary" type="button">변경</button><button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button></div>
-        </div>
+        
+        <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+        
     </div>
+    
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    
 </div>
+   
+   
  
-    <script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
-    <script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 
 </body>
 

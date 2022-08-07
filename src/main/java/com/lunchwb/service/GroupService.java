@@ -101,19 +101,17 @@ public class GroupService {
 		
 		//그룹 최대 4개 보유 가능 > 4개 이후 생성 못함 (새 그룹 추가 버튼이 보이지 않음 - 혹시 주소접근은 새 그룹 추가 페이지 접근시 막을 것)
 		
+		int userNo = authUser.getUserNo();
+		
 		//////////////////// 그룹 생성 //////////////////////////////////
 		//그룹 생성 > 생성자가 첫번째 리더
-		groupVo.setGroupLeader(authUser.getUserNo());
+		groupVo.setGroupLeader(userNo);
 		groupDao.createGroup(groupVo);
 		
 		/////////////////// 그룹 멤버 추가 ////////////////////////////////
 		//groupVo : groupNo / bossCheck 있음
 		//생성된 그룹 번호
 		int groupNo = groupVo.getGroupNo();
-		
-		//UserVo userVo = userDao.groupMemInfo(userNo);
-		
-		int userNo = authUser.getUserNo();
 		
 		//groupOrder는 1부터 시작 순서대로 해당 유저의 그룹개수 +1로
 		int groupOrder = groupDao.groupCount(userNo) + 1;
