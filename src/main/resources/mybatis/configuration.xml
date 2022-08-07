@@ -8,6 +8,7 @@
    		<typeAlias alias="UserVo" type="com.lunchwb.vo.UserVo"/>
    		<typeAlias alias="GroupVo" type="com.lunchwb.vo.GroupVo"/>
    		<typeAlias alias="StoreVo" type="com.lunchwb.vo.StoreVo"/>
+   		<typeAlias alias="GPSVo" type="com.lunchwb.vo.GPSVo"/>
     </typeAliases>
 
     <mappers>
