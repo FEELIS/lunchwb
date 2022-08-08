@@ -78,6 +78,24 @@ public class GroupDao {
 	}
 	
 	
+	/******************** 그룹 보스 유무 ***********************************************/
+	public int beBoss(int groupNo) {
+		logger.info("GroupDao > beBoss()");
+		
+		int count = sqlSession.selectOne("group.beBoss", groupNo);
+		
+		return count;
+	}
+	
+	
+	/******************** 그룹 보스 삭제 ***********************************************/
+	public void deleteBoss(int groupNo) {
+		logger.info("GroupDao > deleteBoss()");
+		
+		sqlSession.update("group.deleteBoss", groupNo);
+	}
+	
+	
 	/******************** 그룹 멤버 추가 ***********************************************/
 	public void addMember(GroupVo groupVo) {
 		logger.info("GroupDao > addMember()");

@@ -27,7 +27,9 @@
 		
 		<div id="content">
 			
-			<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
+			<div id="header-1">
+				<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
+			</div>
 			
                	<div class="container-fluid">
                	
@@ -98,7 +100,7 @@
                                   
                                     <tbody class="text-dark">
 										<c:forEach items="${map.memberList}" var="memberVo" varStatus="status">
-											<tr <c:if test="${memberVo.userNo == authUser.userNo}">class="fw-bold"</c:if>>
+											<tr id="memberList" <c:if test="${memberVo.userNo == authUser.userNo}">class="fw-bold"</c:if>>
 												<td style="width: 10%;">
 													<c:if test="${memberVo.bossCheck == 1}">
 	                                           			<img src="${pageContext.request.contextPath}/assets/img/bujang.png" width="24px" />
@@ -149,7 +151,7 @@
                            
                            <div class="row">
                                <div class="col-md-6 align-self-center">
-                                   <p class="dataTables_info" role="status" aria-live="polite">총 인원 : 13</p>
+                                   <p class="dataTables_info" role="status" aria-live="polite">총 인원 : <span id="memberCount">${map.memberCount}</span></p>
                                </div>
                                <div class="col-md-6">
                                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
@@ -183,7 +185,7 @@
 	                    </div>
 	                   
 	                    <!-- 그룹원 추가 -->
-						<div id="groupmem-add" class="card shadow" <%-- action="${pageContext.request.contextPath}/group/addMember?groupNo=${map.groupNo}" method="post" --%>>
+						<div id="groupmem-add" class="card shadow">
 	                       	<div class="card-header py-3">
 	                           	<p class="text-primary m-0 fw-bold">그룹원 직접 추가하기</p>
 	                       	</div>
@@ -225,6 +227,39 @@
 
 <script type="text/javascript">
 
+var groupNo = $("[name = 'groupNo']").val() 
+console.log(groupNo)
+
+$(".form-check-input").on("click", function(){
+	console.log("부장님 여부 체크")
+	
+	if($(".form-check-input").is(":checked")){
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath }/group/beBoss",
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(groupNo),
+			dataType : "json",
+			
+			success : function(result){
+				console.log(result)
+				
+				if(result == "can't"){
+					if(confirm("부장님을 교체하시겠습니까?") != true) {
+						$(".form-check-input").prop("checked", false)
+					}
+				}
+				
+			}, error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+				
+			}
+		})
+	}
+	
+})
+
 /* 그룹원 직접 추가 */
 $("#groupmem-add button").on("click", function(){
 	console.log("비회원 그룹 멤버 추가 버튼 클릭")
@@ -250,11 +285,20 @@ $("#groupmem-add button").on("click", function(){
 		return false
 	}
 	
+	var bossCheck = 0
+ 	if($("#chk-boss-notuser").is(":checked")){
+ 		bossCheck = 1
+ 	}
+	
+	console.log(bossCheck)
+	return false
+	
 	var groupVo = {
 			groupNo: groupNo,
 			userName: userName,
 			userBirthYear: userBirthYear,
-			userSex: userSex
+			userSex: userSex,
+			bossCheck: bossCheck
 	}
 	
 	$.ajax({
@@ -266,20 +310,58 @@ $("#groupmem-add button").on("click", function(){
 		
 		success : function(memberVo){
 			
+			alert("멤버가 추가되었습니다")
+
 			$("#groupmem-add [name ='userName']").val("")
 			$("#groupmem-add [name ='userBirthYear']").val("")
 			$("#groupmem-add [name = 'userSex']").val("성별")
+			$("#groupmem-add #chk-boss-notuser").val("")
 			
-			alert("멤버가 추가되었습니다")
+			var memberCount = $("#memberCount").text()
+			$("#memberCount").text(memberCount+1)
 				
-		},
-		error : function(XHR, status, error) {
+			render(memberVo)
+			
+		}, error : function(XHR, status, error) {
 			console.error(status + " : " + error);
 			
 		}
 	})
 	
 })
+
+
+function render(memberVo){
+	consol.log("추가된 그룹 멤버 목록 추가")
+	
+	var memberCount = $("#memberCount").val()
+	
+	var str = ''
+		str += '<tr>'
+		str += '	<td style="width: 10%;">'
+	
+	if(memberVo.bossCheck == 1){
+		str += '		<img src="${pageContext.request.contextPath}/assets/img/bujang.png" width="24px" />'
+	}
+		str += '	</td>'
+	/* 어차피 내가 리더야 */
+		str += '	<td style="widt: 10%;"></td>'	
+		str += '	<td style="width: 30%;">' + memberVo.userName + '</td>'
+		str += '	<td style="width: 10%;">' + memberVo.userSex + '</td>'
+		str += '	<td style="width: 10%;">' + memberVo.userBirthYear + '</td>'
+		str += '	<td style="width: 10%;">' + memberVo.userAge + '</td>'
+	/* 유령회원 */
+		str += '	<td style="width: 10%;"></td>'
+		str += '	<td style="width: 10%;">'
+		str += '		<svg class="text-danger groupmem-delete" xmlns="http://www.w3.org/2000/svg" viewBox="-96 0 512 512" width="1em" height="1em" fill="currentColor">'
+        str += '			<path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"></path>'
+	    str += '		</svg>'
+	    str += '	</td>'
+	    str += '</tr>'
+		
+	    
+	    $("#memberList").append(str)
+}
 
 
 </script>
