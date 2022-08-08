@@ -109,9 +109,15 @@
 	
 	
 	<!-- 이지희 -->
-	   <insert id="addGpMember" parameterType="UserVo" useGeneratedKeys="true" keyColumn="user_no" keyProperty="userNo">
-	  		 INSERT INTO USERS
-	  		 VALUES (SEQ_USER_NO.NEXTVAL, '', '', #{userName}, #{userBirthYear}, #{userSex}, '', 0)
-	   </insert>
+   <insert id="addGpMember" parameterType="UserVo" useGeneratedKeys="true" keyColumn="user_no" keyProperty="userNo">
+  		 INSERT INTO USERS
+  		 VALUES (SEQ_USER_NO.NEXTVAL, '', '', #{userName}, #{userBirthYear}, #{userSex}, '', 0)
+   </insert>
+   
+   <select id="userCheck" parameterType="String" resultType="int">
+   		SELECT user_no UserNo
+   		FROM users
+   		WHERE user_email = #{userEmail}
+   </select>
 
 </mapper>
