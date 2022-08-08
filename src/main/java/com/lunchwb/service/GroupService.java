@@ -169,6 +169,24 @@ public class GroupService {
 	}
 	
 	
+	/******************** 그룹에 보스가 있는지 *****************************************/
+	public String beBoss(int groupNo) {
+		logger.info("GroupService > beBoss()");
+		
+		int count = groupDao.beBoss(groupNo);
+		String result = "";
+		
+		if(count == 0) {
+			result = "can";
+		}else {
+			result = "can't";
+		}
+		
+		return result;
+	}
+
+	
+	
 	/******************** 비회원 그룹 추가 ********************************************/
 	public GroupVo addMember(GroupVo groupVo) {
 		logger.info("GroupService > addMember()");
@@ -182,12 +200,15 @@ public class GroupService {
 		//user_grade = 0 고정
 		userDao.addGpMember(userVo);
 		
-		int userNo = userVo.getUserNo();
-		
 		/////////////// 그룹에 비회원 멤버 추가 ////////////////////////////
+		//보스 변경
+		if(groupVo.getBossCheck() == 1) {
+			groupDao.deleteBoss(groupVo.getGroupNo());
+		}
+		
 		//groupVo : groupNo, bossCheck 있음
 		//유령회원 번호 가져오기
-		System.out.println(userNo);
+		int userNo = userVo.getUserNo();
 		
 		//groupVo 정보 추가
 		groupVo.setUserNo(userNo);

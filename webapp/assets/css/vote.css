@@ -520,10 +520,7 @@
 
 #vote-link-modal-header {
   border-color: rgb(255,255,255);
-  border-top-color: rgb(133,;
-  border-right-color: 135,;
-  border-bottom-color: 150);
-  border-left-color: 135,;
+  border-color: rgb(133, 135, 150);
   font-size: 13px;
   min-width: 498px;
 }
@@ -753,5 +750,9 @@
   border-width: 2px;
   border-color: var(--bs-blue);
   border-radius: 10px;
+}
+
+#waiting-vote-link-area {
+  z-index: 100;
 }
 

@@ -154,6 +154,18 @@
 </body>
 
 <script type="text/javascript">
+	var userNo = ""
+
+	$(document).ready(function(){
+		userNo = "${authUser.userNo}"
+		
+		if (userNo == "") {
+			console.log("사용자 없음")
+		} else {
+			console.log(userNo)
+		}
+	})
+
 	$("#basket-filter-btn").on("click", function(){
 		$("#modal-recFilter").modal("show")
 	})
