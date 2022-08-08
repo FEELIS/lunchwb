@@ -57,7 +57,7 @@ public class UserDao {
 	public void addGpMember(UserVo userVo) {
 		//logger.info("addGroupMem()");
 
-		sqlSession.selectOne("user.addGpMember", userVo);
+		sqlSession.insert("user.addGpMember", userVo);
 	}
 
 }
