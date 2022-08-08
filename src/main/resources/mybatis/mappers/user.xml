@@ -5,6 +5,22 @@
 	
 	<!-- 김준호 -->
 	<!-- 로그인 -->
+	
+
+	<select id="login" parameterType="com.lunchwb.vo.UserVo" resultType="com.lunchwb.vo.UserVo">
+		<![CDATA[
+			select user_no userNo
+			        ,user_email userEmail
+			        ,user_password userPassword
+			        ,user_name userName
+			        ,user_grade userGrade
+			from users
+			where user_email = #{userEmail}
+		]]>
+	</select>	
+	
+	<!-- 복호화 이전 로그인 
+	
 	<select id="login" parameterType="com.lunchwb.vo.UserVo" resultType="com.lunchwb.vo.UserVo">
 		<![CDATA[
 			select user_no userNo
@@ -15,7 +31,9 @@
 			where user_email = #{userEmail}
 			and user_password = #{userPassword} 		
 		]]>
-	</select>
+	</select> 
+	
+	-->
 	
 	<!-- 회원가입 -->
 	<insert id="join" parameterType="com.lunchwb.vo.UserVo">

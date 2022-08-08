@@ -46,7 +46,7 @@ public class UserController {
 	@PostMapping("/login")
 	public String autoLogin(HttpSession session, UserVo userVo, HttpServletResponse response){
 		String returnURL = "";
-		System.out.println(userVo.isAutoLogin());
+		
 		if (session.getAttribute("authUser") != null) {
 			session.removeAttribute("authUser");
 		}
@@ -54,15 +54,24 @@ public class UserController {
 		UserVo authUser = userService.login(userVo); 
 		
 		if(authUser != null) {
-			session.setAttribute("authUser", authUser);
-			returnURL = "redirect:./";
-			if(userVo.isAutoLogin()) {
-				Cookie cookie = new Cookie("loginCookie", session.getId());
+			
+			if(true == pwEncoder.matches(userVo.getUserPassword(), authUser.getUserPassword())) {
+				authUser.setUserPassword("");
+				session.setAttribute("authUser", authUser);
+				returnURL = "redirect:./";
+				if(userVo.isAutoLogin()) {
+					Cookie cookie = new Cookie("loginCookie", session.getId());
+					
+					cookie.setPath("/");
+					cookie.setMaxAge(60*60*24*7);
+					response.addCookie(cookie);
+				}
 				
-				cookie.setPath("/");
-				cookie.setMaxAge(60*60*24*7);
-				response.addCookie(cookie);
+			}else {
+				returnURL = "redirect:./login?result=fail";
 			}
+		
+			
 		}else { // 로그인 실패
 			returnURL = "redirect:./login?result=fail";
 			
