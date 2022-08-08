@@ -23,6 +23,7 @@ public class StoreVo {
 	////////// 장바구니에서 사용 될 것들 /////////////////////////
 	private int distance;
 	private int score;
+	private boolean stored;
 	
 	//////////// review table /////////////////////
 	private float ratingBujang;
@@ -42,7 +43,7 @@ public class StoreVo {
 	
 	public StoreVo(int storeNo, int menu2ndCateNo, String storeName, double storeX, double storeY,
 			String storeRoadAddress, String storeOldAddress, List<String> storeOpeningHours,
-			List<String> storeBreaktime, float ratingNaver, float ratingKakao, int distance, int score,
+			List<String> storeBreaktime, float ratingNaver, float ratingKakao, int distance, int score, boolean stored,
 			float ratingBujang, int visitCnt) {
 		this.storeNo = storeNo;
 		this.menu2ndCateNo = menu2ndCateNo;
@@ -57,6 +58,7 @@ public class StoreVo {
 		this.ratingKakao = ratingKakao;
 		this.distance = distance;
 		this.score = score;
+		this.stored = stored;
 		this.ratingBujang = ratingBujang;
 		this.visitCnt = visitCnt;
 	}
@@ -212,6 +214,16 @@ public class StoreVo {
 	public void setVisitCnt(int visitCnt) {
 		this.visitCnt = visitCnt;
 	}
+	
+	
+	public boolean isStored() {
+		return stored;
+	}
+
+
+	public void setStored(boolean stored) {
+		this.stored = stored;
+	}
 
 
 	///// toString //////////////////////////////////////////////////////////////
@@ -220,10 +232,10 @@ public class StoreVo {
 	public String toString() {
 		return "StoreVo [storeNo=" + storeNo + ", menu2ndCateNo=" + menu2ndCateNo + ", storeName=" + storeName
 				+ ", storeX=" + storeX + ", storeY=" + storeY + ", storeRoadAddress=" + storeRoadAddress
-				+ ", storeOldAddress=" + storeOldAddress + ",\nstoreOpeningHours=" + storeOpeningHours.toString()
-				+ ",\nstoreBreaktime=" + storeBreaktime.toString() + ", ratingNaver=" + ratingNaver + ", ratingKakao=" + ratingKakao
-				+ ", distance=" + distance + ", score=" + score + ", ratingBujang=" + ratingBujang + ", visitCnt="
-				+ visitCnt + "]";
+				+ ", storeOldAddress=" + storeOldAddress + ", storeOpeningHours=" + storeOpeningHours
+				+ ", storeBreaktime=" + storeBreaktime + ", ratingNaver=" + ratingNaver + ", ratingKakao=" + ratingKakao
+				+ ", distance=" + distance + ", score=" + score + ", stored=" + stored + ", ratingBujang="
+				+ ratingBujang + ", visitCnt=" + visitCnt + "]";
 	}
 	
 }
