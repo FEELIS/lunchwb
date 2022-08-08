@@ -21,12 +21,6 @@ body {
   width: 300px;
 }
 
-#basket-aside {
-  position: static;
-  display: grid;
-  min-width: 300px;
-}
-
 #bujang-logo {
   cursor: pointer;
   width: 200px;
@@ -141,14 +135,3 @@ body {
 #footer span {
   font-size: 12px;
 }
-
-#basket-aside .basket-aside-title {
-  font-weight: bold;
-  color: rgb(0,0,0);
-  background: var(--bs-gray-200);
-  margin-top: 10px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 20px;
-}
-
