@@ -109,12 +109,9 @@
 	
 	
 	<!-- 이지희 -->
-	   <insert id="addGpMember" parameterType="UserVo">
-	   		<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
-	   			SELECT SEQ_USER_NO.NEXTVAL FROM DUAL
-	   		</selectKey>
+	   <insert id="addGpMember" parameterType="UserVo" useGeneratedKeys="true" keyColumn="user_no" keyProperty="userNo">
 	  		 INSERT INTO USERS
-	  		 VALUES (#{userNo}, '', '', #{userName}, #{userBirthYear}, #{userSex}, '', 0)
+	  		 VALUES (SEQ_USER_NO.NEXTVAL, '', '', #{userName}, #{userBirthYear}, #{userSex}, '', 0)
 	   </insert>
 
 </mapper>
