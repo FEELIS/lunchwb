@@ -197,7 +197,7 @@ public class GroupService {
 		groupVo.setLeaderCheck(0);
 		//비회원한테 그룹순서는 필요 없어
 		groupVo.setGroupOrder(0);
-		//시크릿키안돼서..
+		//안돼서..
 		groupVo.setGroupMemberNo(15);
 		groupDao.addMember(groupVo);
 		
