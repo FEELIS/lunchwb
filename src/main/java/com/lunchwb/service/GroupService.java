@@ -179,7 +179,7 @@ public class GroupService {
 		userVo.setUserName(groupVo.getUserName());
 		userVo.setUserBirthYear(groupVo.getUserBirthYear());
 		userVo.setUserSex(groupVo.getUserSex());
-		//시크릿키안돼서 USERNO수동처리
+		//셀렉키안돼서 USERNO수동처리
 		userVo.setUserNo(8);
 		//user_grade = 0 고정
 		userDao.addGpMember(userVo);
@@ -202,7 +202,7 @@ public class GroupService {
 		groupDao.addMember(groupVo);
 		
 		//방금 추가한 그룹멤버번호
-		//시크릿키 왜 안될까 ? 수동으로 해보겠다.
+		//키가 왜 안될까 ? 수동으로 해보겠다.
 		//int memberNo = groupVo.getGroupMemberNo();
 		int memberNo = 15;
 		GroupVo memberInfo = groupDao.memberInfo(memberNo);

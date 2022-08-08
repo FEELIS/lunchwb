@@ -82,14 +82,12 @@
 	
 	
 	<!-- 이지희 -->
-	<insert id="addGpMember" parameterType="UserVo">
-			<!-- 
-			<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
-				SELECT SEQ_USER_NO.NEXTVAL FROM DUAL
-			</selectKey>
-			 -->
-		 INSERT INTO USERS
-		 VALUES (#{userNo}, '', '', #{userName}, #{userBirthYear}, #{userSex}, '', 0)
-	</insert>
+	   <insert id="addGpMember" parameterType="UserVo">
+	   		<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
+	   			SELECT SEQ_USER_NO.NEXTVAL FROM DUAL
+	   		</selectKey>
+	  		 INSERT INTO USERS
+	  		 VALUES (#{userNo}, '', '', #{userName}, #{userBirthYear}, #{userSex}, '', 0)
+	   </insert>
 
 </mapper>
