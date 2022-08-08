@@ -98,6 +98,23 @@
 	</select>
 	
 	
+	<!-- 그룹 보스 유무 -->
+	<select id="beBoss" parameterType="int" resultType="int">
+		SELECT COUNT(boss_check)
+		FROM group_member
+		WHERE group_no = #{groupNo}
+		AND boss_check = 1
+	</select>
+	
+	
+	<!-- 기존 보스 내려놓기 -->
+	<update id="deleteBoss" parameterType="int">
+		UPDATE group_member
+		SET boss_check = 0
+		WHERE group_no = #{groupNo}
+	</update>
+	
+	
 	<!-- 그룹원 추가 -->
 	<insert id="addMember" parameterType="GroupVo">
 		<selectKey keyProperty="groupMemberNo" resultType="int" order="BEFORE">

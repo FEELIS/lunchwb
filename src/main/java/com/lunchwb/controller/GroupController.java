@@ -103,6 +103,19 @@ public class GroupController {
 	}
 	
 	
+	/******************** 그룹 보스 유무 ********************************************/
+	@ResponseBody
+	@PostMapping("group/beBoss")
+	public String beBoss(@RequestBody int groupNo) {
+		logger.info("GroupController > beBoss()");
+		
+		String result = groupService.beBoss(groupNo);
+		
+		return result;
+	}
+	
+	
+	
 	/******************** 비회원 그룹 추가 ********************************************/
 	@ResponseBody
 	@PostMapping("group/addMember")
