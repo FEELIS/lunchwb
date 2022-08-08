@@ -170,7 +170,7 @@
 	
 	<!-- index.jsp에서 그룹 선택 -->
 	<select id="selectBasketGroup" parameterType="int" resultMap="GroupVo">
-		SELECT g.group_no, g.group_name
+		SELECT g.group_no groupNo, g.group_name groupName
 		FROM   groups g, group_member m
 		WHERE  g.group_no = m.group_no
 		AND    m.user_no = #{userNo}
