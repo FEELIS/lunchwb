@@ -48,10 +48,7 @@
              </div>
              
              <div class="d-flex" id="basket-groups">
-                 <div class="basket-group no-drag basket-selected-group"><span>개발1팀</span><i class="fas fa-user-circle"></i></div>
-                 <div class="basket-group no-drag"><span>동기모임</span><i class="fas fa-user-circle"></i></div>
-                 <div class="basket-group no-drag"><span>정필1팀</span><i class="fas fa-user-circle"></i></div>
-                 <div class="basket-group no-drag basket-group-add"><span>그룹추가</span><i class="fas fa-user-plus"></i></div>
+             	<!--  회원이 속한 그룹이 올 자리  -->
              </div>
             </c:if>
             
@@ -155,26 +152,69 @@
 
 <script type="text/javascript">
 	var userNo = ""
-
+	var basket = ""
+	var basket_group = 0
+	
 	$(document).ready(function(){
 		userNo = "${authUser.userNo}"
 		
 		if (userNo == "") {
-			console.log("사용자 없음")
+			console.log("비로그인 회원")
 		} else {
-			console.log(userNo)
+			console.log(userNo + "번 회원")
+			
+			// 그룹 불러오기
+		 	$.ajax({
+				url : "${pageContext.request.contextPath}/basket/getBasketGroup",		
+				type : "post",
+				contentType : "application/json",
+				data : JSON.stringify(userNo),
+				dataType : "json",
+				success : function(basketGroup){
+					for (var i = 0; i < basketGroup.length; i++) {
+						addBasketGroup(basketGroup[i])
+						
+						if (i == 0) {
+							basket_group = basketGroup[i].groupNo
+						}
+					}
+					
+					if (basketGroup.length < 4) {
+						$("#basket-groups").append(
+							"<div class=\"basket-group no-drag basket-group-add\"><span>그룹추가</span><i class=\"fas fa-user-plus\"></i></div>"
+						)
+					}
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			}); 
 		}
 	})
 
+	
+	function addBasketGroup(basketGroup) {
+		$("#basket-groups").append(
+			"<div class=\"basket-group no-drag\" data-groupNo=\"" + basketGroup.groupNo + "\"><span>" + basketGroup.groupName + "</span><i class=\"fas fa-user-circle\"></i></div>"
+		)
+	}
+	
+	// 장바구니 필터 클릭 시
 	$("#basket-filter-btn").on("click", function(){
 		$("#modal-recFilter").modal("show")
 	})
 	
 	
+	// 장바구니 필터 적용
 	$("#modal-filter-submit").on("click", function(){
 		// 뭔가 ajax로 알고리즘을 적용 한 뒤
 		
 		$("#modal-recFilter").modal("hide")
+	})
+	
+	// 그룹 추가 버튼 클릭
+	$("#basket-groups").on("click", ".basket-group-add", function(){
+		location.replace("${pageContext.request.contextPath}/group/add")
 	})
 </script>
 
