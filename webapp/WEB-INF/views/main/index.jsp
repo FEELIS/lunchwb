@@ -78,4 +78,9 @@
 
 </body>
 
+<script type="text/javascript">
+	$("#location-change-btn").on("click", function(){
+		$("#modal-location-change").modal("show")
+	})
+</script>
 </html>
