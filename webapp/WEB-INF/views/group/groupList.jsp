@@ -236,7 +236,7 @@ $(".form-check-input").on("click", function(){
 	if($(".form-check-input").is(":checked")){
 		
 		$.ajax({
-			url : "${pageContext.request.contextPath }/group/beBoss",
+			url : "${pageContext.request.contextPath}/group/beBoss",
 			type : "post",
 			contentType : "application/json",
 			data : JSON.stringify(groupNo),
@@ -251,8 +251,10 @@ $(".form-check-input").on("click", function(){
 					}
 				}
 				
-			}, error : function(XHR, status, error) {
-				console.error(status + " : " + error);
+			}, 
+			
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error)
 				
 			}
 		})
@@ -289,9 +291,6 @@ $("#groupmem-add button").on("click", function(){
  	if($("#chk-boss-notuser").is(":checked")){
  		bossCheck = 1
  	}
-	
-	console.log(bossCheck)
-	return false
 	
 	var groupVo = {
 			groupNo: groupNo,
@@ -360,7 +359,7 @@ function render(memberVo){
 	    str += '</tr>'
 		
 	    
-	    $("#memberList").append(str)
+	    $("#dataTable").append(str)
 }
 
 

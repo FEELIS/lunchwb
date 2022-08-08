@@ -85,7 +85,7 @@ public class GroupController {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		int groupNo = groupService.addGroup(authUser, groupVo);
 	
-		return "group/groupList?no=" + groupNo;
+		return "redirect:./list?no="+ groupNo;
 	}
 
 	
