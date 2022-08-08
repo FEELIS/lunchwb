@@ -60,9 +60,9 @@ public class UserDao {
 	}
 	
 	/* 그룹에 초대할 회원 존재 여부 */
-	public int userCheck(String userEmail) {
-		int userNo = sqlSession.selectOne("user.userCheck", userEmail);
-		return userNo;
+	public UserVo userCheck(String userEmail) {
+		UserVo userVo = sqlSession.selectOne("user.userCheck", userEmail);
+		return userVo;
 	}
 
 }
