@@ -133,11 +133,11 @@
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-5" checked="checked"><label class="form-check-label" for="formCheck-3">한식</label></div>
                     </div>
                     <div class="col" style="border-right: 1px solid voar(--bs-gray-200);">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-7" checked="checked"><label class="form-check-label" for="formCheck-7">패스트푸드</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-8" checked="checked"><label class="form-check-label" for="formCheck-8">패밀리레스토랑</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-9" checked="checked"><label class="form-check-label" for="formCheck-9">치킨</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-10" checked="checked"><label class="form-check-label" for="formCheck-10">분식</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-11" checked="checked"><label class="form-check-label" for="formCheck-11">중식</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-6" checked="checked"><label class="form-check-label" for="formCheck-6">패스트푸드</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-7" checked="checked"><label class="form-check-label" for="formCheck-7">패밀리레스토랑</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-8" checked="checked"><label class="form-check-label" for="formCheck-8">치킨</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-9" checked="checked"><label class="form-check-label" for="formCheck-9">분식</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-10" checked="checked"><label class="form-check-label" for="formCheck-10">중식</label></div>
                     </div>
                 </div>
             </div>
@@ -155,6 +155,8 @@
 	var basket = ""
 	var basket_group = 0
 	
+	
+	// 페이지 로드 시
 	$(document).ready(function(){
 		userNo = "${authUser.userNo}"
 		
@@ -168,6 +170,7 @@
 				url : "${pageContext.request.contextPath}/basket/getBasketGroup",		
 				type : "post",
 				contentType : "application/json",
+				async: false,
 				data : JSON.stringify(userNo),
 				dataType : "json",
 				success : function(basketGroup){
@@ -176,6 +179,7 @@
 						
 						if (i == 0) {
 							basket_group = basketGroup[i].groupNo
+							$(".basket-group").addClass("basket-selected-group")
 						}
 					}
 					
@@ -193,11 +197,20 @@
 	})
 
 	
-	function addBasketGroup(basketGroup) {
-		$("#basket-groups").append(
-			"<div class=\"basket-group no-drag\" data-groupNo=\"" + basketGroup.groupNo + "\"><span>" + basketGroup.groupName + "</span><i class=\"fas fa-user-circle\"></i></div>"
-		)
-	}
+	// 다른 그룹 클릭
+	$("#basket-groups").on("click", ".basket-normal-group", function(){
+		$(this).addClass("basket-selected-group")
+		$("[data-groupNo=" + basket_group + "]").removeClass("basket-selected-group")
+		
+		basket_group = $(this).attr("data-groupNo")
+	})	
+	
+	
+	// 그룹 추가 버튼 클릭
+	$("#basket-groups").on("click", ".basket-group-add", function(){
+		location.replace("${pageContext.request.contextPath}/group/add")
+	})
+	
 	
 	// 장바구니 필터 클릭 시
 	$("#basket-filter-btn").on("click", function(){
@@ -212,10 +225,26 @@
 		$("#modal-recFilter").modal("hide")
 	})
 	
-	// 그룹 추가 버튼 클릭
-	$("#basket-groups").on("click", ".basket-group-add", function(){
-		location.replace("${pageContext.request.contextPath}/group/add")
-	})
+	
+	// 그룹 목록 불러오기 메소드
+	function addBasketGroup(basketGroup) {
+		$("#basket-groups").append(
+			"<div class=\"basket-group basket-normal-group no-drag\" data-groupNo=\"" + basketGroup.groupNo + "\"><span>" + basketGroup.groupName + "</span><i class=\"fas fa-user-circle\"></i></div>"
+		)
+	}
+	
+	
+	// 장바구니 추가하기 메소드
+	function addToBasket(store) {
+		
+	}
+	
+	
+	// 장바구니에서 삭제하기 메소드
+	function deleteFromBasket(store) {
+		
+	}
+
 </script>
 
 </html>
