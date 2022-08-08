@@ -184,10 +184,50 @@ public class GroupService {
 		
 		return result;
 	}
+	
+	
+	/******************** 그룹에 초대할 회원 체크 ******************************************/
+	public Map<String, Object> userCheck(String userEmail) {
+		logger.info("GroupService > userCheck()");
+		
+		Map<String, Object> checkMap = new HashMap<String, Object>(); 
+		
+		int count = userDao.userCheck(userEmail);
+		
+		String state = "";
+		if(count != 0) {
+			
+			//int count = groupDao.groupCount(userNo);
+			
+			//그룹 추가 가능
+			if(count < 4) {
+				state = "possible";
+				//checkMap.put("userNo", userNo);
+			
+			//그룹 추가 불가(최대 개수 보유)
+			}else {
+				state = "impossoble";
+			}
+		}
+		
+		checkMap.put("state", state);
+		
+		return checkMap;
+	}
+	
 
 	
-	
-	/******************** 비회원 그룹 추가 ********************************************/
+	/******************** 회원 그룹 멤버 추가 ********************************************/
+	/*
+	 * public GroupVo invtMember(Map<String, Object> groupInvt) {
+	 * logger.info("GroupService > invtMember()");
+	 * 
+	 * //////// 그룹에 추가할 회원 번호 받아오기 ////////////////////////////
+	 * 
+	 * }
+	 * 
+	 */	
+	/******************** 유령회원 그룹 멤버 추가 ********************************************/
 	public GroupVo addMember(GroupVo groupVo) {
 		logger.info("GroupService > addMember()");
 		

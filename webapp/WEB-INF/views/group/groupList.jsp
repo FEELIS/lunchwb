@@ -182,14 +182,20 @@
                    
                    <!-- 그룹 리더만 -->
                    <c:if test="${authUser.userNo == map.leader}">
+	                    
 	                    <!-- 그룹원 초대 -->
 	                    <div id="groupmem-invt" class="card shadow">
 	                       <div class="card-header py-3">
 	                           <p class="text-primary m-0 fw-bold">그룹원으로 초대하기</p>
 	                       </div>
 	                       <div class="card-body">
-	                           <div><input type="email" placeholder="이메일을 입력해주세요" name="email" /><button class="btn btn-primary btn-groupmem-invt" type="button" data-bs-target="#modal-groupmem-invt" data-bs-toggle="modal">초대하기</button>
-	                               <div class="form-check"><input id="chk-boss-user" class="form-check-input" type="checkbox" /><label class="form-check-label" for="chk-boss-user">부장님이면 체크해주세요</label></div>
+	                       		<div>
+	                           		<input type="email" placeholder="이메일을 입력해주세요" name="userEmail" />
+	                           		<button class="btn btn-primary btn-groupmem-invt" type="submit" data-bs-target="#modal-groupmem-invt" data-bs-toggle="modal">초대하기</button>
+	                               	<div class="form-check">
+	                               		<input id="chk-boss-user" class="form-check-input" type="checkbox" />
+	                               		<label class="form-check-label" for="chk-boss-user">부장님이면 체크해주세요</label>
+	                               	</div>
 	                           </div>
 	                       </div>
 	                    </div>
@@ -208,7 +214,7 @@
                                        <option value="male">남자</option>
                                        <option value="female">여자</option>
 	                               	</select>
-	                               	<button class="btn btn-primary btn-groupmem-invt" type="submit" data-bs-toggle="modal" data-groupno="${map.groupNo}">추가하기</button>
+	                               	<button class="btn btn-primary btn-groupmem-invt" type="submit" data-bs-toggle="modal" <%-- data-groupno="${map.groupNo}" --%>>추가하기</button>
 	                            </div>
 	                           	<div class="form-check">
 	                           		<input id="chk-boss-notuser" class="form-check-input" type="checkbox" name="bossCheck" value="1"/>
@@ -268,13 +274,100 @@ $(".form-check-input").on("click", function(){
 	
 })
 
+
+/* 초대할 그룹원 확인 */
+$("#groupmem-invt button").on("click", function(){
+	console.log("그룹원 초대 버튼 클릭")
+	
+	var userEmail = $("[name = 'userEmail']").val()
+	if(userEmail == null || userEmail == ""){
+		alert("이메일을 입력해주세요")
+		return false
+	}
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/group/userCheck",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(userEmail),
+		dataType : "json",
+		
+		success : function(checkMap){
+			console.log(checkMap)
+			
+			//해당 이메일 유저 초대 가능
+			if(checkMap.state == "possible"){
+				//
+				invt(checkMap.userNo)
+		
+			//해당 이메일 유저 초대 불가(그룹 개수 초과)
+			}else if(checkMap.state == "impossible"){
+				alert(userEmail + " 님을 초대할 수 없습니다")
+			
+			//이메일 회원 없음
+			}else{
+				alert("해당하는 유저가 존재하지 않습니다")
+			}
+		}
+	})
+})
+
+
+/* 회원 > 그룹원으로 초대 하기 */
+/* 
+function invt(groupNo){
+	
+	if(confirm(userEmail + " 님을 초대하시겠습니까?") == true){
+		
+		var bossCheck = 0
+	 	if($("#chk-boss-notuser").is(":checked")){
+	 		bossCheck = 1
+	 	}
+		
+		var groupInvt = {
+				groupNo: groupNo,
+				userEmail: userEmail
+				bossCheck: bossCheck
+		}
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath }/group/invtMember",
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(groupInvt),
+			dataType : "json",
+			
+			success : function(memberVo){
+				
+				alert("멤버가 추가되었습니다")
+				
+				$("#groupmem-invt [name = 'userEmail']").val()
+				$("#groupmem-invt #chk-boss-user").val("")
+				
+				var memberCount = $("#memberCount").text()
+				$("#memberCount").text(Number(memberCount)+1)
+				console.log(memberCount)
+				
+				render(memberVo)
+				
+			}, 
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+				
+			}
+		})
+	}
+}
+
+ */
+
 /* 그룹원 직접 추가 */
 $("#groupmem-add button").on("click", function(){
 	console.log("비회원 그룹 멤버 추가 버튼 클릭")
-	
+	/* 
 	var $this = $(this)
 	var groupNo = $this.data("groupno")
-	
+	 */
 	var userName = $("#groupmem-add [name ='userName']").val()
 	if(userName == null || userName == ""){
 		alert("이름을 입력해주세요")

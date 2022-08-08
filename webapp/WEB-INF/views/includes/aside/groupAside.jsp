@@ -147,6 +147,7 @@
    
    
 <!-- 그룹원 초대(회원) 확인 모달 -->
+<!-- 
 <div id="modal-groupmem-invt" class="modal fade" role="dialog" tabindex="-1" aria-expanded="false">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
@@ -160,7 +161,7 @@
         </div>
     </div>
 </div>
-
+ -->
 </body>
 
 <script type="text/javascript">

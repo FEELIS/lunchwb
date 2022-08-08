@@ -115,8 +115,7 @@
    </insert>
    
    <select id="userCheck" parameterType="String" resultType="UserVo">
-   		SELECT  user_no userNo,
-   				user_email userEmail
+   		SELECT  count(user_no)
    		FROM users
    		WHERE user_email = #{userEmail}
    </select>
