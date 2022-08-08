@@ -1,18 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>부장님요기요: 새 그룹 추가</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/group.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/customModal.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>부장님요기요: 새 그룹 추가</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/group.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/alert.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/customModal.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&amp;display=swap">
+   
+<script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
+<script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 </head>
 
 <body id="page-top">
@@ -61,13 +69,6 @@
     <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     
 </div>
-   
-   
- 
-<script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 
 </body>
 

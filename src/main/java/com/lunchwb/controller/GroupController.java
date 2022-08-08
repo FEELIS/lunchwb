@@ -122,6 +122,7 @@ public class GroupController {
 	public GroupVo addMember(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > addMember()");
 		
+		System.out.println(groupVo.getUserNo());
 		GroupVo memberVo = groupService.addMember(groupVo);
 		
 		return memberVo;

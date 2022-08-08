@@ -209,6 +209,7 @@ public class GroupService {
 		//groupVo : groupNo, bossCheck 있음
 		//유령회원 번호 가져오기
 		int userNo = userVo.getUserNo();
+		System.out.println(userNo);
 		
 		//groupVo 정보 추가
 		groupVo.setUserNo(userNo);
@@ -219,10 +220,10 @@ public class GroupService {
 		
 		//방금 추가한 그룹멤버번호
 		int memberNo = groupVo.getGroupMemberNo();
-		GroupVo memberInfo = groupDao.memberInfo(memberNo);
+		GroupVo memberVo = groupDao.memberInfo(memberNo);
 	
-		System.out.println(memberInfo);
-		return memberInfo;
+		System.out.println(memberVo);
+		return memberVo;
 		
 	}
 
