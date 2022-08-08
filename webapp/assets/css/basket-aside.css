@@ -373,3 +373,24 @@
   font-size: 25px;
 }
 
+#basket-aside #basket-title-group {
+  font-weight: bold;
+  color: rgb(255,255,255);
+  background: var(--bs-blue) !important;
+  margin-top: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+}
+
+#basket-aside #basket-title-lunch-candidates {
+  font-weight: bold;
+  color: rgb(255,255,255);
+  background: var(--bs-blue) !important;
+  margin-top: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;	
+}
+
+
