@@ -100,11 +100,9 @@
 	
 	<!-- 그룹원 추가 -->
 	<insert id="addMember" parameterType="GroupVo">
-		<!-- 
-		<selectKey keyProperty="groupNo" resultType="int" order="BEFORE">
+		<selectKey keyProperty="groupMemberNo" resultType="int" order="BEFORE">
 			SELECT SEQ_GROUP_MEMBER_NO.NEXTVAL FROM DUAL
 		</selectKey>
-		 -->
 		INSERT INTO GROUP_MEMBER
 		VALUES (#{groupMemberNo}, 
 				#{userNo}, 

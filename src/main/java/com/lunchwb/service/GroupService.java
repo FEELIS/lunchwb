@@ -179,32 +179,25 @@ public class GroupService {
 		userVo.setUserName(groupVo.getUserName());
 		userVo.setUserBirthYear(groupVo.getUserBirthYear());
 		userVo.setUserSex(groupVo.getUserSex());
-		//셀렉키안돼서 USERNO수동처리
-		userVo.setUserNo(8);
 		//user_grade = 0 고정
 		userDao.addGpMember(userVo);
 		
-		//int userNo = userVo.getUserNo();
+		int userNo = userVo.getUserNo();
 		
 		/////////////// 그룹에 비회원 멤버 추가 ////////////////////////////
 		//groupVo : groupNo, bossCheck 있음
 		//유령회원 번호 가져오기
-		//System.out.println(userNo);
+		System.out.println(userNo);
 		
 		//groupVo 정보 추가
-		//USERNO가 안돼서 수동입력을 해보겠다.
-		groupVo.setUserNo(8);
+		groupVo.setUserNo(userNo);
 		groupVo.setLeaderCheck(0);
 		//비회원한테 그룹순서는 필요 없어
 		groupVo.setGroupOrder(0);
-		//안돼서..
-		groupVo.setGroupMemberNo(15);
 		groupDao.addMember(groupVo);
 		
 		//방금 추가한 그룹멤버번호
-		//키가 왜 안될까 ? 수동으로 해보겠다.
-		//int memberNo = groupVo.getGroupMemberNo();
-		int memberNo = 15;
+		int memberNo = groupVo.getGroupMemberNo();
 		GroupVo memberInfo = groupDao.memberInfo(memberNo);
 	
 		System.out.println(memberInfo);
