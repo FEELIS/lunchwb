@@ -122,9 +122,9 @@
 	            		<i class="fas fa-bars"></i>
 	            	</a>
 	                <div class="dropdown-menu dropdown-menu-end" data-bs-popper="none">
-	                	<a class="dropdown-item" href="${pageContext.request.contextPath}/user/userInfo">나의정보</a>
+	                	<a class="dropdown-item" href="${pageContext.request.contextPath}/user/checkUser">나의정보</a>
 	                	<a class="dropdown-item" href="${pageContext.request.contextPath}/group/list">나의그룹</a>
-	                	<a class="dropdown-item" href="${pageContext.request.contextPath}/stat/statCalender">방문내역</a>
+	                	<a class="dropdown-item" href="${pageContext.request.contextPath}/stat/statCalendar">방문내역</a>
 	                	<a class="dropdown-item" href="${pageContext.request.contextPath}/customer/faq">고객센터</a>
 	                </div>
 	            </li>
