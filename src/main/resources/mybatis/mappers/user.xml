@@ -20,7 +20,16 @@
 	<!-- 회원가입 -->
 	<insert id="join" parameterType="com.lunchwb.vo.UserVo">
 		<![CDATA[
-			insert into users
+			insert into users (
+								user_no
+								,user_email
+								,user_password
+								,user_name
+								,user_birth_year
+								,user_sex
+								,user_joindate
+								,user_grade
+								)
 			values (seq_user_no.nextval, #{userEmail}, #{userPassword}, #{userName}, #{userBirthYear}, #{userSex}, sysdate, 1)
 		]]>
 	</insert>
