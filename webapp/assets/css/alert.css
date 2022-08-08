@@ -1,4 +1,5 @@
 #user-alert-list {
+  z-index:100;
   width: 328px !important;
   vertical-align: middle;
   font-size: 12px;
