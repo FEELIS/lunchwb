@@ -5,6 +5,7 @@ import java.util.Date;
 public class UserVo {
 	
 	//////////////////// users table ////////////////////
+	
 	private int userNo;
 	private String userEmail;
 	private String userPassword;

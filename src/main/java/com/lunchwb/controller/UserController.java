@@ -10,6 +10,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -27,7 +29,12 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-
+	
+	@Autowired
+	@Qualifier("bcryptPasswordEncoder")
+	private PasswordEncoder pwEncoder;
+	
+	
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@GetMapping("/login")
@@ -106,6 +113,14 @@ public class UserController {
 	@PostMapping("/join")
 	public String join(@ModelAttribute UserVo userVo, HttpSession session) {
 		logger.info("user > joinForm()");
+		
+		String rawPw = userVo.getUserPassword();		// 복호화 전 비밀번호
+		String encodePw = pwEncoder.encode(rawPw);	// 복호화 후 비밀번호
+		
+		userVo.setUserPassword(encodePw);
+		
+		System.out.println(userVo);
+		
 		UserVo authUser = userService.join(userVo);
 
 		if (authUser != null) {
