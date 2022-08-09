@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,13 +20,8 @@ public class GroupService {
 	@Autowired
 	private UserDao userDao;
 	
-	private static final Logger logger = LoggerFactory.getLogger(GroupService.class);
-	
-	
 	/******************** 그룹 리스트 페이지 ********************************************/
 	public Map<String, Object> groupList(UserVo authUser, int groupNo) {
-		logger.info("GroupService > groupList()");
-		
 		Map<String, Object> map = new HashMap<>();
 		
 		/////////////////// 유저 그룹 리스트  /////////////////////////////
@@ -85,8 +78,6 @@ public class GroupService {
 	
 	/******************** 그룹 추가 페이지 *******************************************/
 	public Map<String, Object> addGroupForm(UserVo authUser) {
-		logger.info("GroupService > ddGroupForm()");
-		
 		Map<String, Object> map = new HashMap<>();
 		
 		/////////////////// 유저 그룹 리스트  /////////////////////////////
@@ -104,8 +95,6 @@ public class GroupService {
 	
 	/******************** 그룹 생성 ***********************************************/
 	public int addGroup(UserVo authUser, GroupVo groupVo) {
-		logger.info("GroupService > addGroup()");
-		
 		//그룹 최대 4개 보유 가능 > 4개 이후 생성 못함 (새 그룹 추가 버튼이 보이지 않음 - 혹시 주소접근은 새 그룹 추가 페이지 접근시 막을 것)
 		
 		int userNo = authUser.getUserNo();
@@ -137,8 +126,6 @@ public class GroupService {
 	
 	/******************** 그룹 순서 변경 ***********************************************/
 	public String changeOrder(HashMap<String, Integer> gpOrder, UserVo authUser) {
-		logger.info("GroupService > changeOrder()");
-		
 		GroupVo groupVo = new GroupVo();
 		
 		int userNo = authUser.getUserNo();
@@ -171,8 +158,6 @@ public class GroupService {
 	
 	/******************** 그룹에 보스가 있는지 *****************************************/
 	public String beBoss(int groupNo) {
-		logger.info("GroupService > beBoss()");
-		
 		int count = groupDao.beBoss(groupNo);
 		String result = "";
 		
@@ -188,21 +173,19 @@ public class GroupService {
 	
 	/******************** 그룹에 초대할 회원 체크 ******************************************/
 	public Map<String, Object> userCheck(String userEmail) {
-		logger.info("GroupService > userCheck()");
-		
 		Map<String, Object> checkMap = new HashMap<String, Object>(); 
 		
-		int count = userDao.userCheck(userEmail);
+		UserVo userVo = userDao.userCheck(userEmail);
 		
 		String state = "";
-		if(count != 0) {
-			
-			//int count = groupDao.groupCount(userNo);
+		if(userVo != null) {
+			int userNo = userVo.getUserNo();
+			int gpCount = groupDao.groupCount(userNo);
 			
 			//그룹 추가 가능
-			if(count < 4) {
+			if(gpCount < 4) {
 				state = "possible";
-				//checkMap.put("userNo", userNo);
+				checkMap.put("userNo", userNo);
 			
 			//그룹 추가 불가(최대 개수 보유)
 			}else {
@@ -229,8 +212,6 @@ public class GroupService {
 	 */	
 	/******************** 유령회원 그룹 멤버 추가 ********************************************/
 	public GroupVo addMember(GroupVo groupVo) {
-		logger.info("GroupService > addMember()");
-		
 			
 		/////// 비회원 그룹 멤버 유령회원 생성 ////////////////////////////////
 		UserVo userVo = new UserVo();
