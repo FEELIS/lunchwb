@@ -1,45 +1,17 @@
-/* 
-220803 11:53 최정필
-calendar.css 로 파일명 변경
-
-.card 에 text-align: center 추가
- 
-.show-menu {
-  flex: 0 0 auto;
-  margin-left: 16.66666667%;
-  width: 66.66666667%;
-  min-width: inherit;
-}  추가
-
-
- */
-
 @media (min-width: 992px) {
   .month {
     font-size: 3.5rem;
   }
 }
 
-
+/* ------------------ 달력 -------------------- */
 .calendar {
   border-radius: 10px;
 }
 
-.calendar-wrapper {
-  width: 100%;
-  margin: auto;
-  border: 1px solid #eee;
-  padding: 5px;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-
-.month {
-  font-size: 2rem;
-}
-
 .calendar ol li {
   float: left;
+  width: 14.28571%;
   list-style: none;
 }
 
@@ -59,10 +31,6 @@ calendar.css 로 파일명 변경
 
 .calendar .days li .date {
   margin: 0.5rem 0;
-}
-
-.date{
-	padding-right: 20px;
 }
 
 .calendar .days li .event {
@@ -100,34 +68,23 @@ calendar.css 로 파일명 변경
   color: #ddd;
 }
 
-.card, .h1 {
-	text-align: center;
+.month {
+  font-size: 2rem;
 }
 
-.prev-button, .next-button {
-  background: transparent;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
+
+.week {
+  margin: 0 !important;
+  overflow: hidden;
 }
+
+
 
 .show-menu {
   flex: 0 0 auto;
   margin-left: 16.66666667%;
   width: 100%;
   min-width: inherit;
-}
-
-.week {
-  overflow: hidden;
-}
-
-.week.start-on-sunday .day:last-child {
-  color: blue;
-}
-
-.week.start-on-sunday .day:nth-child(1) {
-  color: red;
 }
 
 
