@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lunchwb.service.BasketService;
+import com.lunchwb.vo.GPSVo;
 import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.StoreVo;
 
@@ -47,6 +48,23 @@ public class BasketController {
 		session.setAttribute("basket", basket);
 		
 		return basket;
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/basket/setGPS")
+	public boolean setGPS(@RequestBody GPSVo gpsVo, HttpSession session) {
+		logger.info("GPS 설정하기");
+		Boolean result;
+		
+		if (gpsVo == null) {
+			result = false;
+		} else {
+			result = true;
+		}
+		session.setAttribute("curr_location", gpsVo);
+		
+		return result;
 	}
 
 }

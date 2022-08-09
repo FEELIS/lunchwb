@@ -144,7 +144,9 @@
 												<c:if test="${authUser.userNo == map.leader}">
 													<td style="width: 10%;">
 														<c:if test="${memberVo.userNo != authUser.userNo}">
-															<svg class="text-danger groupmem-delete" xmlns="http://www.w3.org/2000/svg" viewBox="-96 0 512 512" width="1em" height="1em" fill="currentColor">
+															<svg class="text-danger groupmem-delete" data-no="${memberVo.userNo}" data-user="${memberVo.userName}"
+																 data-order="${memberVo.groupOrder}"
+																 xmlns="http://www.w3.org/2000/svg" viewBox="-96 0 512 512" width="1em" height="1em" fill="currentColor">
 													        	<path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"></path>
 													    	</svg>
 													    </c:if>
@@ -214,7 +216,7 @@
                                        <option value="male">남자</option>
                                        <option value="female">여자</option>
 	                               	</select>
-	                               	<button class="btn btn-primary btn-groupmem-invt" type="submit" data-bs-toggle="modal" <%-- data-groupno="${map.groupNo}" --%>>추가하기</button>
+	                               	<button class="btn btn-primary btn-groupmem-invt" type="submit" data-bs-toggle="modal">추가하기</button>
 	                            </div>
 	                           	<div class="form-check">
 	                           		<input id="chk-boss-notuser" class="form-check-input" type="checkbox" name="bossCheck" value="1"/>
@@ -247,7 +249,7 @@
                 <input type="text" name="groupName" placeholder="그룹 이름을 입력해주세요" />
             </div>
             <div class="modal-footer-custom">
-            	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"><button class="btn btn-primary" type="button">변경</button></a>
+            	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"><button class="btn btn-primary" type="submit">변경</button></a>
             	<button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button>
             </div>
         </div>
@@ -270,24 +272,7 @@
     </div>
 </div>
    
-   
-<!-- 그룹원 내보내기 모달 -->
-<div id="modal-groupmem-out" class="modal fade" role="dialog" tabindex="-1" aria-expanded="false">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body-custom">
-                <div>
-                    <p class="modal-group-p group-color-blue">남궁옥분1</p>
-                    <p class="modal-group-p">내보내시겠습니까?<br /></p>
-                </div>
-            </div>
-            <div class="modal-footer-custom"><button class="btn btn-primary" type="button">확인</button><button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button></div>
-        </div>
-    </div>
-</div>
-   
-   
-   
+     
 <!-- 그룹장 위임 모달 -->
 <div id="modal-group-leader-pass" class="modal fade" role="dialog" tabindex="-1" aria-expanded="false">
     <div class="modal-dialog modal-sm" role="document">
@@ -548,8 +533,8 @@ function render(memberVo){
 		str += '	<td style="width: 10%;">' + memberVo.userAge + '</td>'
 		str += '	<td style="width: 10%;"></td>'
 		str += '	<td style="width: 10%;">'
-		str += '		<svg class="text-danger groupmem-delete" xmlns="http://www.w3.org/2000/svg" viewBox="-96 0 512 512" width="1em" height="1em" fill="currentColor">'
-        str += '			<path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"></path>'
+		str += '		<svg class="text-danger groupmem-delete" data-no="' + memberVo.userNo +'" data-user="' + memberVo.userName +'" xmlns="http://www.w3.org/2000/svg" viewBox="-96 0 512 512" width="1em" height="1em" fill="currentColor">'
+        str += '				<path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"></path>'
 	    str += '		</svg>'
 	    str += '	</td>'
 	    str += '</tr>'
@@ -604,6 +589,38 @@ $("#modal-group-name-change .btn-primary").on("click", function(){
 			
 		}
 	})
+})
+
+
+$("#memberListArea").on("click", ".groupmem-delete", function(){
+	var $this = $(this)
+	var userName = $this.data("user")
+	
+	if(confirm(userName + "님을 내보내시겠습니까?") == false){
+		return false
+	}
+
+	var userNo = $this.data("no")
+	var groupOrder = $this.data("order")
+	
+	var groupVo = {
+		userNo: userNo,
+		groupNo: groupNo
+		groupOrder: groupOrder
+	}
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/group/outMember",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(groupVo),
+		dataType : "json",
+		
+		success : function(state){
+			
+		}
+	})
+	
 })
  
 

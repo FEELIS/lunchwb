@@ -85,5 +85,10 @@ public class UserDao {
       UserVo userVo = sqlSession.selectOne("user.userCheck", userEmail);
       return userVo;
    }
+   
+   /* 유령회원 제거 */
+   public void groupOut(int userNo) {
+	   sqlSession.delete("user.groupOut", userNo);
+   }
 
 }
