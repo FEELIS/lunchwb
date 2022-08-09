@@ -109,43 +109,32 @@ public class UserController {
 		Map<String, Object> apiJson = (Map<String, Object>) objectMapper.readValue(apiResult, Map.class).get("response");
 		System.out.println("apiJson =>"+apiJson);
 		System.out.println("email ->" + apiJson.get("email") );
-		apiJson.put("userEmail", apiJson.get("email"));
-		System.out.println("apiJson =>"+apiJson);
-		
 		
 		UserVo naverConnectionCheck = userService.naverConnectionCheck(apiJson.get("email"));
 		System.out.println(naverConnectionCheck);
-		/*
+		
 		if(naverConnectionCheck == null) { //일치하는 이메일 없으면 가입
-			
-			model.addAttribute("userEmail",apiJson.get("email"));
-			model.addAttribute("userPassword",apiJson.get("password"));
-			model.addAttribute("userName",apiJson.get("nickname"));
-			Integer registerCheck = userService.userNaverRegisterPro(paramMap);
-			
-			System.out.println("paramMap:" + paramMap);
-			Map <String, Object> resultMap = new HashMap<String, Object>();
-			Integer registerCheck = userservice.userNaverRegisterPro(paramMap);
-			System.out.println(registerCheck);
+			Integer registerCheck = userService.userNaverRegisterPro(apiJson);
 			
 			if(registerCheck != null && registerCheck > 0) {
-				Map<String, Object> loginCheck = userservice.userNaverLoginPro(paramMap);
-				session.setAttribute("userInfo", loginCheck);
+				UserVo loginCheck = userService.naverLogin(apiJson);
+				session.setAttribute("authUser", loginCheck);
 				resultMap.put("JavaData", "YES");
 			}else {
 				resultMap.put("JavaData", "NO");
 			}
-
-		}else if(naverConnectionCheck.get("NAVERLOGIN") == null && naverConnectionCheck.get("EMAIL") != null) { //이메일 가입 되어있고 네이버 연동 안되어 있을시
+			
+			return "redirect:./lunchwb";
+		}else if(naverConnectionCheck.getNaverLogin() == null && naverConnectionCheck.getUserEmail() != null) { //이메일 가입 되어있고 네이버 연동 안되어 있을시
 			userService.setNaverConnection(apiJson);
-			Map<String, Object> loginCheck = userService.userNaverLoginPro(apiJson);
-			session.setAttribute("userInfo", loginCheck);
+			UserVo loginCheck = userService.naverLogin(apiJson);
+			session.setAttribute("authUser", loginCheck);
 		}else { //모두 연동 되어있을시
-			Map<String, Object> loginCheck = userService.userNaverLoginPro(apiJson);
-			session.setAttribute("userInfo", loginCheck);
+			UserVo loginCheck = userService.naverLogin(apiJson);
+			session.setAttribute("authUser", loginCheck);
 		}
-		*/
-		return "redirect:/lunchwb";
+		
+		return "redirect:../lunchwb";
 	}
 	
 	

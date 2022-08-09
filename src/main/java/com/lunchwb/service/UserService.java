@@ -68,6 +68,27 @@ public class UserService {
 		return naverCheck;
 	}
 	
+	public UserVo naverLogin(Map<String, Object> apiJson) {
+		UserVo naverLogin = userDao.naverLogin(apiJson);
+		return naverLogin;
+	}
+	
+	public void setNaverConnection(Map<String, Object> apiJson) {
+		userDao.setNaverConnection(apiJson);
+	}
+	
+	public int userNaverRegisterPro(Map<String, Object> apiJson) {
+		
+		if(apiJson.get("gender").equals("M")) {
+			apiJson.put("gender", "male");
+		}else {
+			apiJson.put("gender", "female");
+		}
+		
+		int count = userDao.userNaverRegisterPro(apiJson);
+		return count;
+	}
+	
 	
 	/* JSON */
 	public String checkEmail(String userEmail) {

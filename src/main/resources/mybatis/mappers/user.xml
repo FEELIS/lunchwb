@@ -120,6 +120,43 @@
 		]]>
 	</select>
 	
+	<select id="naverLogin" parameterType="map" resultType="com.lunchwb.vo.UserVo">
+		<![CDATA[
+			select user_no userNo
+			        ,user_email userEmail
+			        ,user_password userPassword
+			        ,user_name userName
+			        ,user_grade userGrade
+			from users
+			where user_email = #{email}
+			and naver_login = #{id}
+		]]>
+	</select>
+	
+	<update id="setNaverConnection" parameterType="map">
+		<![CDATA[
+			update users
+			set naver_login = #{id}
+			where user_email = #{email}
+		]]>
+	</update>
+	
+	<insert id="userNaverRegisterPro" parameterType="map">
+		<![CDATA[
+			insert into users (
+								user_no
+								,user_email
+								,user_name
+								,user_birth_year
+								,user_sex
+								,user_joindate
+								,user_grade
+								,naver_login
+								)
+			values (seq_user_no.nextval, #{email}, #{nickname}, #{birthyear}, #{gender}, sysdate, 1, #{id})
+		]]>
+	</insert>
+	
 	
 	
 	<!-- 이지희 -->

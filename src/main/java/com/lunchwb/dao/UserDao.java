@@ -51,6 +51,20 @@ public class UserDao {
 		return naverCheck;
 	}
 	
+	public UserVo naverLogin(Map<String, Object> apiJson) {
+		UserVo naverLogin = sqlSession.selectOne("user.naverLogin", apiJson);
+		return naverLogin;
+	}
+	
+	public void setNaverConnection(Map<String, Object> apiJson) {
+		sqlSession.update("user.setNaverConnection", apiJson);
+	}
+	
+	public int userNaverRegisterPro(Map<String, Object> apiJson) {
+		int count = sqlSession.insert("user.userNaverRegisterPro", apiJson);
+		return count;
+	}
+	
 	
 	/* Json */
 	/* 이메일 중복확인 */
