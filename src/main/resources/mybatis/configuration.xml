@@ -17,5 +17,6 @@
         <mapper resource="mybatis/mappers/user.xml" />
         <mapper resource="mybatis/mappers/group.xml" />
         <mapper resource="mybatis/mappers/store.xml" />
+        <mapper resource="mybatis/mappers/basket.xml" />
     </mappers>
 </configuration>
