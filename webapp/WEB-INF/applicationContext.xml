@@ -47,9 +47,6 @@
 			value="classpath:mybatis/configuration.xml" />
 	</bean>
 
-
-
-
 	<!-- MyBatis SqlSessionTemplate 설정 -->
 	<bean id="sqlSession"
 		class="org.mybatis.spring.SqlSessionTemplate">
