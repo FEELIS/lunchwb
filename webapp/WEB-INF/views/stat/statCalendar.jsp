@@ -13,8 +13,6 @@
 	rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/calendar.css" rel="stylesheet"
 	type="text/css">
-<link href="${pageContext.request.contextPath}/assets/css/Powerful-Calendar.css" rel="stylesheet"
-	type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/notification.css" rel="stylesheet"
 	type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/yogiyo.css" rel="stylesheet"
@@ -52,7 +50,7 @@
 				<!-- /header -->
 
 				<div id="main-content" class="container-fluid">
-					<div class="calendar card mb-4 calendar-wrapper">
+					<div class="calendar card mb-4">
 					
 					</div>
 				</div>
@@ -73,7 +71,7 @@
 	  var todayDate = new Date();
 	  todayDate.setHours(0, 0, 0, 0);
 
-	  // These are the defaults.
+	  //기본값들
 	  var defaults = {
 	    date: null,
 	    weekDayLength: 1,
@@ -142,6 +140,7 @@
 	    7: "토요일",
 	  };
 	  
+	  //getMonth()는 0월부터 시작이여서 숫자1을 더해주어야 한다.
 	  function getFirstDayOfMonth(currentDate) {
 		    var thisDate =
 		      currentDate.getMonth() + 1 + "/1/" + currentDate.getFullYear();
@@ -412,7 +411,7 @@
 		          dateDisabled +
 		          " ><div class='date'><span class='d-flex flex-row-reverse'>" +
 		          day.getDate() +
-		          "</span></div></li>";
+		          "</span></div><div class='event bg-success show-menu'>중식/중화요리</div><div class='event bg-success show-menu'>흑룡강</div></li>";
 		      });
 
 		      str += "</ol>";
@@ -647,7 +646,7 @@
 })(jQuery);
 var config =
     `function selectDate(date) {
-      $('.calendar-wrapper').updateCalendarOptions({
+      $('.calendar').updateCalendarOptions({
         date: date
       });
     }
@@ -660,7 +659,7 @@ var config =
       startOnSunday: true,
     };
 
-    $('.calendar-wrapper').calendar(defaultConfig);`;
+    $('.calendar').calendar(defaultConfig);`;
 
   eval(config);
 
