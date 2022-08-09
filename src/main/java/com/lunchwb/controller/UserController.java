@@ -11,8 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
+import com.lunchwb.api.NaverLoginBo;
 import com.lunchwb.service.UserService;
 import com.lunchwb.vo.UserVo;
 
@@ -38,8 +41,11 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@GetMapping("/login")
-	public String loginForm() {
+	public String loginForm(Model model, HttpSession session) {
 		logger.info("user > loginForm()");
+		NaverLoginBo naverloginbo = new NaverLoginBo();
+		String naverAuthUrl = naverloginbo.getAuthorizationUrl(session);
+		model.addAttribute("naverUrl", naverAuthUrl);
 		return "user/loginForm";
 	}
 	

@@ -80,7 +80,7 @@
                                             </div>
                                         </div><button class="btn btn-primary d-block btn-user w-100 " id="btn-login" type="submit">로그인</button>
                                         <hr>
-                                        <a class="btn btn-primary d-block btn-naver btn-user w-100 mb-2 " role="button">네이버 아이디로 로그인</a>
+                                        <a class="btn btn-primary d-block btn-naver btn-user w-100 mb-2 " role="button" href="${naverUrl}">네이버 아이디로 로그인</a>
                                         <a class="btn btn-primary d-block btn-kakao btn-user w-100 mb-2 " role="button">카카오 아이디로 로그인</a>
                                         <a class="btn btn-primary d-block btn-google btn-user w-100 mb-2 " role="button">구글 아이디로 로그인</a>
                                         <hr>
