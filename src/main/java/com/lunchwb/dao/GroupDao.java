@@ -91,6 +91,12 @@ public class GroupDao {
 		return memberInfo;
 	}
 	
+	/******************** 그룹 멤버 강퇴 ***********************************************/
+	public int outMember(GroupVo groupVo) {
+		int count = sqlSession.delete("group.outMember", groupVo);
+		return count;
+	}
+
 	/******************** 장바구니 그룹 선택 ***********************************************/
 	public List<GroupVo> selectBasketGroup(int userNo) {
 		List<GroupVo> basketGroup = sqlSession.selectList("group.selectBasketGroup", userNo);

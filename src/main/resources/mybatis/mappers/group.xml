@@ -185,6 +185,13 @@
 	</select>
 	
 	
+	<!-- 그룹 강퇴시키기 -->
+	<delete id="outMember" parameterType="GroupVo">
+		DELETE FROM group_member
+		WHERE user_no = #{userNo}
+	</delete>
+	
+	
 	<!-- index.jsp에서 그룹 선택 -->
 	<select id="selectBasketGroup" parameterType="int" resultMap="GroupVo">
 		SELECT g.group_no groupNo, g.group_name groupName

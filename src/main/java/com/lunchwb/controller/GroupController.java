@@ -173,5 +173,17 @@ public class GroupController {
 		
 		return memberVo;
 	}
+	
+	
+	/******************** 그룹 멤버 내보내기(강퇴) *****************************************/
+	@ResponseBody
+	@PostMapping("group/outMember")
+	public String outMember(@RequestBody GroupVo groupVo) {
+		logger.info("GroupController > outMember()");
+		
+		String state = groupService.outMember(groupVo);		
+		
+		return state;
+	}
 
 }
