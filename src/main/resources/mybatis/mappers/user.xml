@@ -128,9 +128,10 @@
   		 VALUES (SEQ_USER_NO.NEXTVAL, '', '', #{userName}, #{userBirthYear}, #{userSex}, '', 0)
    </insert>
    
-   <select id="userCheck" parameterType="String" resultType="UserVo">
-   		SELECT  count(user_no)
-   		FROM users
-   		WHERE user_email = #{userEmail}
+   <select id="userCheck" parameterType="String" resultType="com.lunchwb.vo.UserVo">
+         SELECT  user_no userNo
+               ,user_email userEmail
+         FROM users
+         WHERE user_email = #{userEmail}
    </select>
 </mapper>
