@@ -14,10 +14,18 @@ public class UserVo {
 	private String userSex;
 	private String userJoinDate;
 	private String userGrade;
+	
+	
+	/* 자동 로그인 */
 	private String sessionId;
 	private Date limitDate;
 	private boolean autoLogin;
+	
+	
+	/* SNS 로그인 */
 	private String naverLogin;
+	
+	
 	
 	public UserVo() {
 	}
