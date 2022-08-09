@@ -187,9 +187,14 @@ public class UserController {
 	public String modifyUser(@ModelAttribute UserVo userVo, HttpSession session) {
 		logger.info("user > userInfo()");
 		System.out.println(userVo);
-	
+		
+		String rawPw = userVo.getUserPassword();		// 복호화 전 비밀번호
+		String encodePw = pwEncoder.encode(rawPw);	// 복호화 후 비밀번호
+		
+		userVo.setUserPassword(encodePw);
 		
 		UserVo authUser = userService.modifyUser(userVo);
+		
 		if(authUser != null) {
 			session.setAttribute("authUser", authUser);
 			session.removeAttribute("userInfo");
