@@ -574,6 +574,11 @@ $("#modal-group-name-change .btn-primary").on("click", function(){
 		return false
 	}
 	
+	if(groupName.length>8){
+		alert("그룹 이름을 8자리 이하로 입력해주세요")
+		return false
+	}
+	
 	var groupVo = {
 		groupNo: groupNo,
 		groupName: groupName

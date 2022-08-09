@@ -72,4 +72,24 @@
 
 </body>
 
+<script type="text/javascript">
+
+$("#addGroupForm").on("submit", function(){
+	var groupName = $("#addGroupForm [name = 'groupName']").val()
+	
+	if(groupName == null || groupName == ""){
+		alert("그룹 이름을 입력해주세요")
+		return false
+	}
+	
+	if(groupName.length>8){
+		alert("그룹 이름을 8자리 이하로 입력해주세요")
+		return false
+	}
+	
+	return true
+})
+
+</script>
+
 </html>
