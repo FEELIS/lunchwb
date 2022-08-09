@@ -50,6 +50,18 @@ public class GroupDao {
 		return groupCount;
 	}
 	
+	/******************** 그룹 순서 변경 ***********************************************/
+	public int changeOrder(GroupVo groupVo) {
+		int count = sqlSession.update("group.changeOrder", groupVo);
+		return count;
+	}
+	
+	/******************** 그룹 이름 변경 ***********************************************/
+	public int nameChange(GroupVo groupVo) {
+		int count = sqlSession.update("group.nameChange", groupVo);
+		return count;
+	}
+	
 	/******************** 그룹 보스 유무 ***********************************************/
 	public int beBoss(int groupNo) {
 		int count = sqlSession.selectOne("group.beBoss", groupNo);
@@ -77,12 +89,6 @@ public class GroupDao {
 	public GroupVo memberInfo(int memberNo) {
 		GroupVo memberInfo = sqlSession.selectOne("group.memberInfo", memberNo);
 		return memberInfo;
-	}
-	
-	/******************** 그룹 순서 변경 ***********************************************/
-	public int changeOrder(GroupVo groupVo) {
-		int count = sqlSession.update("group.changeOrder", groupVo);
-		return count;
 	}
 	
 	/******************** 장바구니 그룹 선택 ***********************************************/

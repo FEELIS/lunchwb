@@ -105,6 +105,18 @@ public class GroupController {
 	
 	/******************** 그룹 보스 유무 ********************************************/
 	@ResponseBody
+	@PostMapping("group/nameChange")
+	public String nameChange(@RequestBody GroupVo groupVo) {
+		logger.info("GroupController > nameChange()");
+		
+		String result = groupService.nameChange(groupVo);
+		
+		return result;
+	}
+	
+	
+	/******************** 그룹 보스 유무 ********************************************/
+	@ResponseBody
 	@PostMapping("group/beBoss")
 	public String beBoss(@RequestBody int groupNo) {
 		logger.info("GroupController > beBoss()");

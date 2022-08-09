@@ -40,7 +40,7 @@
    
 <!-- 그룹 순서 변경 모달 -->
 <div id="modal-group-order-change" class="modal fade" role="dialog" tabindex="-1" data-bs-auto-close="outside" aria-expanded="false">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-top" role="document">
         <div class="modal-content">
             <div class="modal-header modal-header-custom">
                 <div><span>그룹 순서 변경</span></div><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -67,90 +67,17 @@
             </div>
             <div class="modal-footer-custom">
             	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"><button class="btn btn-primary" type="button">변경</button></a>
-            	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"><button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button></a>
+            	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"><button class="btn btn-light" type="button">취소</button></a>
             </div>
         </div>
     </div>
 </div>
-   
-   
-   
-<!-- 그룹 이름 변경 모달 -->
-<div id="modal-group-name-change" class="modal fade" role="dialog" tabindex="-1" data-bs-auto-close="outside" aria-expanded="false">
-    <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header modal-header-custom">
-                <div><span>그룹 이름 변경</span></div><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body modal-body-custom">
-                <p class="modal-group-p">현재 그룹 이름 : <span class="group-color-blue">개발1팀</span></p><input type="text" placeholder="변경할 그룹 이름을 입력해주세요" />
-            </div>
-            <div class="modal-footer-custom"><button class="btn btn-primary" type="button">변경</button><button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button></div>
-        </div>
-    </div>
-</div>
-   
-   
-<!-- 그룹 탈퇴 확인 모달 -->
-<div id="modal-group-leave" class="modal fade" role="dialog" tabindex="-1" aria-expanded="false">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body-custom">
-                <div class="modal-group-p">
-                    <p class="modal-group-p group-color-blue">개발1팀</p>
-                    <p class="modal-group-p">탈퇴하시겠습니까?<br /></p>
-                </div>
-            </div>
-            <div class="modal-footer-custom"><button class="btn btn-primary" type="button">확인</button><button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button></div>
-        </div>
-    </div>
-</div>
-   
-   
-<!-- 그룹원 내보내기 모달 -->
-<div id="modal-groupmem-out" class="modal fade" role="dialog" tabindex="-1" aria-expanded="false">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body-custom">
-                <div>
-                    <p class="modal-group-p group-color-blue">남궁옥분1</p>
-                    <p class="modal-group-p">내보내시겠습니까?<br /></p>
-                </div>
-            </div>
-            <div class="modal-footer-custom"><button class="btn btn-primary" type="button">확인</button><button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button></div>
-        </div>
-    </div>
-</div>
-   
-   
-   
-<!-- 그룹장 위임 모달 -->
-<div id="modal-group-leader-pass" class="modal fade" role="dialog" tabindex="-1" aria-expanded="false">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body-custom">
-                <div>
-                    <p class="modal-group-p">그룹장을 위임할 그룹원을</p>
-                    <p class="modal-group-p">선택해주세요</p><select id="dropdown-group-leader-pass">
-                        <optgroup label="This is a group">
-                            <option value="12" selected>This is item 1</option>
-                            <option value="13">This is item 2</option>
-                            <option value="14">This is item 3</option>
-                        </optgroup>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer-custom"><button class="btn btn-primary" type="button">확인</button><button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button></div>
-        </div>
-    </div>
-</div>
-   
-   
+ 
 </body>
 
 <script type="text/javascript">
 
-//그룹 개수
+/* 그룹 개수 */
 var groupCount
 
 $("#btn-order-change").on("click", function(){
@@ -293,13 +220,11 @@ $("#modal-group-order-change").on("click", ".btn-primary", function(){
 		
 		success : function(result){
 			
-			if(result == "success"){
-				return true
-				
-			}else{
+			if(result != "success"){
 				alert("그룹 순서 변경에 실패했습니다")
-				return false
 			}
+			
+			return true
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);

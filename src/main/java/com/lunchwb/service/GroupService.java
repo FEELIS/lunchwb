@@ -157,14 +157,27 @@ public class GroupService {
 	
 	
 	/******************** 그룹에 보스가 있는지 *****************************************/
+	public String nameChange(GroupVo groupVo) {
+		String result = "fail";
+		
+		int count = groupDao.nameChange(groupVo);
+		
+		if(count == 1) {
+			result = "success";
+		}
+		
+		return result;
+	}
+	
+	
+	/******************** 그룹에 보스가 있는지 *****************************************/
 	public String beBoss(int groupNo) {
+		String result = "can't";
+		
 		int count = groupDao.beBoss(groupNo);
-		String result = "";
 		
 		if(count == 0) {
 			result = "can";
-		}else {
-			result = "can't";
 		}
 		
 		return result;
@@ -185,20 +198,6 @@ public class GroupService {
 				state = "It's U";
 				
 			}else {
-				//그룹원인지 체크하기
-				/*
-				int groupNo = Integer.parseInt(userGroupChk.get("groupNo"));
-				GroupVo groupVo = new GroupVo();
-				groupVo.setGroupNo(groupNo);
-				groupVo.setUserNo(userNo);
-				
-				GroupVo memberVo = groupDao.userCheck(groupVo);
-				
-				if(memberVo == null) {
-					state = "already";
-					
-				}else {
-				*/
 				int gpCount = groupDao.groupCount(userNo);
 				
 				//해당 회원이 그룹 추가 가능

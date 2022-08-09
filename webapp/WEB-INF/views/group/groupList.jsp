@@ -233,6 +233,83 @@
        
 	<a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
+
+   
+<!-- 그룹 이름 변경 모달 -->
+<div id="modal-group-name-change" class="modal fade" role="dialog" tabindex="-1" data-bs-auto-close="outside" aria-expanded="false">
+    <div class="modal-dialog modal-sm modal-dialog-top" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-custom">
+                <div><span>그룹 이름 변경</span></div><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body modal-body-custom">
+                <p class="modal-group-p">현재 그룹 이름 : <span class="group-color-blue">${map.groupName}</span></p>
+                <input type="text" name="groupName" placeholder="그룹 이름을 입력해주세요" />
+            </div>
+            <div class="modal-footer-custom">
+            	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"><button class="btn btn-primary" type="button">변경</button></a>
+            	<button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button>
+            </div>
+        </div>
+    </div>
+</div>
+   
+   
+<!-- 그룹 탈퇴 확인 모달 -->
+<div id="modal-group-leave" class="modal fade" role="dialog" tabindex="-1" aria-expanded="false">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body-custom">
+                <div class="modal-group-p">
+                    <p class="modal-group-p group-color-blue">${map.groupName}</p>
+                    <p class="modal-group-p">탈퇴하시겠습니까?<br /></p>
+                </div>
+            </div>
+            <div class="modal-footer-custom"><button class="btn btn-primary" type="button">확인</button><button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button></div>
+        </div>
+    </div>
+</div>
+   
+   
+<!-- 그룹원 내보내기 모달 -->
+<div id="modal-groupmem-out" class="modal fade" role="dialog" tabindex="-1" aria-expanded="false">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body-custom">
+                <div>
+                    <p class="modal-group-p group-color-blue">남궁옥분1</p>
+                    <p class="modal-group-p">내보내시겠습니까?<br /></p>
+                </div>
+            </div>
+            <div class="modal-footer-custom"><button class="btn btn-primary" type="button">확인</button><button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button></div>
+        </div>
+    </div>
+</div>
+   
+   
+   
+<!-- 그룹장 위임 모달 -->
+<div id="modal-group-leader-pass" class="modal fade" role="dialog" tabindex="-1" aria-expanded="false">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body-custom">
+                <div>
+                    <p class="modal-group-p">그룹장을 위임할 그룹원을</p>
+                    <p class="modal-group-p">선택해주세요</p><select id="dropdown-group-leader-pass">
+                        <optgroup label="This is a group">
+                            <option value="12" selected>This is item 1</option>
+                            <option value="13">This is item 2</option>
+                            <option value="14">This is item 3</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer-custom"><button class="btn btn-primary" type="button">확인</button><button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button></div>
+        </div>
+    </div>
+</div>
+   
+  
         
 
 </body>
@@ -389,10 +466,7 @@ function invt(groupVo){
 /* 그룹원 직접 추가 */
 $("#groupmem-add button").on("click", function(){
 	console.log("비회원 그룹 멤버 추가 버튼 클릭")
-	/* 
-	var $this = $(this)
-	var groupNo = $this.data("groupno")
-	 */
+
 	var userName = $("#groupmem-add [name ='userName']").val()
 	if(userName == null || userName == ""){
 		alert("이름을 입력해주세요")
@@ -483,6 +557,50 @@ function render(memberVo){
 	    
 	    $("#memberListArea").append(str)
 }
+
+
+$(".group-content-title .btn-sm").on("click", function(){
+	console.log("그룹 이름 변경 버튼 클릭")
+	$("#modal-group-name-change [name = 'groupName']").val("")
+	return true
+})
+
+
+$("#modal-group-name-change .btn-primary").on("click", function(){
+	var groupName = $("#modal-group-name-change [name = 'groupName']").val()
+	
+	if(groupName == null || groupName == ""){
+		alert("변경할 그룹 이름을 입력해주세요")
+		return false
+	}
+	
+	var groupVo = {
+		groupNo: groupNo,
+		groupName: groupName
+	}
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/group/nameChange",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(groupVo),
+		dataType : "json",
+		
+		success : function(result){
+			
+			if(result != success){
+				alert("그룹 이름 변경에 실패했습니다")
+			}
+			
+			return true
+		}, 
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+			
+		}
+	})
+})
+ 
 
 
 </script>

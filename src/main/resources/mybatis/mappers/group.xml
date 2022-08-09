@@ -98,6 +98,23 @@
 	</select>
 	
 	
+	<!-- 그룹 순서 변경 -->
+	<update id="changeOrder" parameterType="GroupVo">
+		UPDATE GROUP_MEMBER
+		SET GROUP_ORDER = #{order}
+		WHERE USER_NO = #{userNo}
+		AND GROUP_NO = #{groupNo}
+	</update>
+	
+	
+	<!-- 그룹 이름 변경 -->
+	<update id="nameChange" parameterType="GroupVo">
+		UPDATE groups
+		SET group_name = #{groupName}
+		WHERE group_no = #{groupNo}
+	</update>
+	
+	
 	<!-- 그룹 보스 유무 -->
 	<select id="beBoss" parameterType="int" resultType="int">
 		SELECT COUNT(boss_check)
@@ -166,15 +183,6 @@
         WHERE m.user_no = u.user_no
         AND group_member_no = #{groupMemberNo}			
 	</select>
-	
-	
-	<!-- 그룹 순서 변경 -->
-	<update id="changeOrder" parameterType="GroupVo">
-		UPDATE GROUP_MEMBER
-		SET GROUP_ORDER = #{order}
-		WHERE USER_NO = #{userNo}
-		AND GROUP_NO = #{groupNo}
-	</update>
 	
 	
 	<!-- index.jsp에서 그룹 선택 -->
