@@ -155,10 +155,23 @@
 	var basket = ""
 	var basket_group = 0
 	
+	var gpsVo = {
+			location_x : "${curr_location.gpsX}",
+			location_y : "${curr_location.gpsY}",
+			address : "${curr_location.roadAddress}",
+		}
 	
 	// 페이지 로드 시
-	$(document).ready(function(){
+	$(document).ready(function(){		
 		userNo = "${authUser.userNo}"
+		
+		document.cookie = "safeCookie1foo";
+		document.cookie = "crossCookie=bar; SameSite=None; Secure";
+		
+		if (gpsVo["location_x"].length == 0) {
+			curr_location()	
+		}
+
 		
 		if (userNo == "") {
 			console.log("비로그인 회원")
@@ -252,6 +265,48 @@
 		
 		$("#modal-recFilter").modal("hide")
 	})
+	
+	
+	// 현재 위치 저장 함수
+	function curr_location() {
+		document.cookie="safeCookie1=foo; SameSite=Lax";
+		document.cookie="safeCookie2=foo";
+		document.cookie="crossCookie=bar; SameSite=None; Secure";
+		
+		// gps 허용 시
+		if (navigator.geolocation) { 
+			// 위도, 경도 저장
+		    navigator.geolocation.getCurrentPosition(function(position) {
+		    	var gpsX = position.coords.longitude
+		    	var gpsY = position.coords.latitude
+		    	gpsVo.location_x = gpsX
+		    	gpsVo.location_y = gpsY
+				
+		    	// 카카오 API로 주소 알아내기(도로명 > 없으면 지번)
+				function getAddr(lat,lng) {
+		    		let address = ""
+		    		let geocoder = new kakao.maps.services.Geocoder()
+		    		
+		    		let coord = new kakao.maps.LatLng(lat, lng);
+		    		let callback = function(result, status) {
+		    			if (status === kakao.maps.services.Status.OK) {
+		    				$("#curr-location-address").text(result[0].address.address_name)
+		    				console.log(result[0].address.address_name)
+		    				gpsVo.address = result[0].address.address_name
+		    			}
+		    		}
+		    		geocoder.coord2Address(coord.getLng(), coord.getLat(), callback)
+		    	}
+		    	
+		    	getAddr(gpsY, gpsX)
+		    	
+		    	// 다 잘 됐으면 session에 값 저장
+				
+		})} else {
+			console.log("gps지원안함")
+		}
+		
+	}
 	
 	
 	// 그룹 목록 불러오기 메소드

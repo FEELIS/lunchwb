@@ -24,6 +24,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e74b599be710b798192fd5221284718a&libraries=services"></script>
+
 </head>
 
 
@@ -40,7 +42,7 @@
         
         <div class="flex-nowrap" id="curr-location">
         	<span style="margin-right: 5px;"><i class="fas fa-crosshairs"></i>&nbsp;현위치:</span>
-        	<span>서울 관악구 남부순환로 1820 에그옐로우&nbsp;</span><button class="btn btn-primary" id="location-change-btn" type="button">위치재설정</button>
+        	<span id="curr-location-address">서울 관악구 남부순환로 1820 에그옐로우&nbsp;</span><button class="btn btn-primary" id="location-change-btn" type="button">위치재설정</button>
         </div>
     </div>
 </div>
@@ -76,11 +78,20 @@
 
 </div>
 
-</body>
+
 
 <script type="text/javascript">
+	// 위치재설정 버튼 클릭 시
 	$("#location-change-btn").on("click", function(){
 		$("#modal-location-change").modal("show")
 	})
+	
+	console.log(basket_group)
+	
+
+	
 </script>
+
+</body>
+
 </html>
