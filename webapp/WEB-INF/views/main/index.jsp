@@ -137,11 +137,11 @@
 		        gpsVo.address = $("#modal-curr-location").text()
 		        
 		        setGPS(gpsVo)
-
 		   	  } 
 		});  
 		console.log("완료?")
-		alert(gpsVo.address)
+		
+		alert("현재 위치를 변경했습니다.")
 		location.replace("${pageContext.request.contextPath}/")
 	})
 	
