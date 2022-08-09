@@ -59,5 +59,10 @@ public class UserDao {
 
 		sqlSession.selectOne("user.addGpMember", userVo);
 	}
+	
+   public UserVo userCheck(String userEmail) {
+      UserVo userVo = sqlSession.selectOne("user.userCheck", userEmail);
+      return userVo;
+   }
 
 }
