@@ -4,13 +4,16 @@ public class GPSVo {
 
 	private double gpsX;
 	private double gpsY;
-	private String roadAddress;
+	private String address;
 	
+	public GPSVo() {
+		
+	}
 	
-	public GPSVo(double gpsX, double gpsY, String roadAddress) {
+	public GPSVo(double gpsX, double gpsY, String address) {
 		this.gpsX = gpsX;
 		this.gpsY = gpsY;
-		this.roadAddress = roadAddress;
+		this.address = address;
 	}
 
 
@@ -34,19 +37,19 @@ public class GPSVo {
 	}
 
 
-	public String getRoadAddress() {
-		return roadAddress;
+	public String getAddress() {
+		return address;
 	}
 
 
-	public void setRoadAddress(String roadAddress) {
-		this.roadAddress = roadAddress;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 
 	@Override
 	public String toString() {
-		return "GPSVO [gpsX=" + gpsX + ", gpsY=" + gpsY + ", roadAddress=" + roadAddress + "]";
+		return "GPSVO [gpsX=" + gpsX + ", gpsY=" + gpsY + ", address=" + address + "]";
 	}
 	
 }
