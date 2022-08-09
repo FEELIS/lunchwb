@@ -152,10 +152,4 @@ public class UserVo {
 				+ ", limitDate=" + limitDate + ", autoLogin=" + autoLogin + ", naverLogin=" + naverLogin + "]";
 	}
 	
-	
-	
-	
-	
-
-	
 }
