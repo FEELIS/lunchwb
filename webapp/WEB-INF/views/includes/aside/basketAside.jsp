@@ -151,7 +151,7 @@
 </body>
 
 <script type="text/javascript">
-	var userNo = ""
+	var userNo = "${authUser.userNo}"
 	var basket = ""
 	var basket_group = 0
 	
@@ -162,17 +162,18 @@
 		}
 	
 	// 페이지 로드 시
-	$(document).ready(function(){		
-		userNo = "${authUser.userNo}"
-		
+	$(document).ready(function(){				
 		document.cookie = "safeCookie1foo";
 		document.cookie = "crossCookie=bar; SameSite=None; Secure";
 		
-		if (gpsVo["gpsX"].length == 0) {
+		console.log(gpsVo)
+		if (gpsVo.address == "") {
 			curr_location()	
-		}
-
+		} 
 		
+		$("#curr-location-address").text(gpsVo.address)	
+		
+
 		if (userNo == "") {
 			console.log("비로그인 회원")
 			
@@ -290,36 +291,34 @@
 		    		let coord = new kakao.maps.LatLng(lat, lng);
 		    		let callback = function(result, status) {
 		    			if (status === kakao.maps.services.Status.OK) {
-		    				$("#curr-location-address").text(result[0].address.address_name)
 		    				console.log(result[0].address.address_name)
 		    				gpsVo.address = result[0].address.address_name
+		    				
+		    				// 다 잘 됐으면 session에 값 저장
+		    		    	$.ajax({
+		    					url : "${pageContext.request.contextPath}/basket/setGPS",		
+		    					type : "post",
+		    					contentType : "application/json",
+		    					data : JSON.stringify(gpsVo),
+		    					dataType : "json",
+		    					success : function(result){
+		    						if (result) {
+		    							console.log("gps 저장")
+		    						} else {
+		    							console.log("gps 저장 실패")
+		    						}
+		    					},
+		    					error : function(XHR, status, error) {
+		    						console.error(status + " : " + error);
+		    					}
+		    				}); 
 		    			}
 		    		}
 		    		geocoder.coord2Address(coord.getLng(), coord.getLat(), callback)
 		    	}
 		    	
 		    	getAddr(gpsY, gpsX)
-		    	
-		    	// 다 잘 됐으면 session에 값 저장
-		    	console.log(gpsVo)
-		    	$.ajax({
-					url : "${pageContext.request.contextPath}/basket/setGPS",		
-					type : "post",
-					contentType : "application/json",
-					data : JSON.stringify(gpsVo),
-					dataType : "json",
-					success : function(result){
-						if (result) {
-							console.log("gps 저장")
-						} else {
-							console.log("gps 저장 실패")
-						}
-					},
-					error : function(XHR, status, error) {
-						console.error(status + " : " + error);
-					}
-				}); 
-				
+		 
 		})} else {
 			console.log("gps 지원 안함")
 		}
@@ -337,7 +336,7 @@
 	
 	// 장바구니 추가하기 메소드
 	function addToBasket(store) {
-		
+		console.log("장바구니에 추가")
 	}
 	
 	

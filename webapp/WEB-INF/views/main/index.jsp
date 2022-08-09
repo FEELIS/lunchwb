@@ -42,7 +42,8 @@
         
         <div class="flex-nowrap" id="curr-location">
         	<span style="margin-right: 5px;"><i class="fas fa-crosshairs"></i>&nbsp;현위치:</span>
-        	<span id="curr-location-address">서울 관악구 남부순환로 1820 에그옐로우&nbsp;</span><button class="btn btn-primary" id="location-change-btn" type="button">위치재설정</button>
+        	<span id="curr-location-address">${curr_location.address}</span>
+        	<button class="btn btn-primary" id="location-change-btn" type="button">위치재설정</button>
         </div>
     </div>
 </div>
@@ -62,7 +63,7 @@
                 <div><span>출발 위치를 선택해주세요.</span>
                     <div id="modal-curr-location-box">
                     	<span class="emphasize-blue">현재 설정 위치:&nbsp;</span>
-                    	<span>서울 관악구 남부순환로 1820 에그옐로우</span>
+                    	<span id="modal-curr-location"></span>
                     	<button class="btn btn-primary float-end" id="modal-curr-location-btn" type="button">현위치</button>
                     </div>
                     <div id="write-location-box">
@@ -81,14 +82,26 @@
 
 
 <script type="text/javascript">
+	
+
+	
 	// 위치재설정 버튼 클릭 시
 	$("#location-change-btn").on("click", function(){
+		var curr_address = ""
+		if (gpsVo.address == "") {
+			curr_address = "현재 위치를 설정해주세요"
+		} else {
+			curr_address = gpsVo.address
+		}
+		$("#modal-curr-location").text(curr_address)
 		$("#modal-location-change").modal("show")
 	})
 	
-	console.log(basket_group)
 	
-
+	// 현위치로 재설정
+	$("#modal-curr-location-btn").on("click", function(){
+		curr_location()
+	})
 	
 </script>
 

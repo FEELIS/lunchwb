@@ -18,6 +18,7 @@ import com.lunchwb.vo.GPSVo;
 import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.StoreVo;
 
+
 @Controller
 public class BasketController {
 	
@@ -61,6 +62,10 @@ public class BasketController {
 			result = false;
 		} else {
 			result = true;
+		}
+		
+		if (session.getAttribute("curr_location") != null) {
+			session.removeAttribute("curr_location");
 		}
 		session.setAttribute("curr_location", gpsVo);
 		
