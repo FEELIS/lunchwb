@@ -72,6 +72,10 @@
                     </div>
                 </div>
             </div>
+            <div class="modal-footer modal-footer-custom">
+            	<button id="modal-gps-submit" class="btn btn-primary" type="button">저장</button>
+            	<button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button>
+            </div>
         </div>
     </div>
 </div>
@@ -79,10 +83,11 @@
 </div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e74b599be710b798192fd5221284718a&libraries=services"></script>
+
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script type="text/javascript">
-		
+
 	// 위치재설정 버튼 클릭 시
 	$("#location-change-btn").on("click", function(){
 		var curr_address = ""
@@ -101,14 +106,12 @@
 	// 현위치로 재설정
 	$("#modal-curr-location-btn").on("click", function(){
 		curr_location()
-		$("#modal-curr-location").text(gpsVo.address)
 	})
 	
 	
 	// 주소 검색하기
-	$(".location-search-bar").on("click", function(){
+	$(".location-search-bar").on("click", function(){			
 		DaumPostcode()
-		
 	})
 	
 	
@@ -116,29 +119,29 @@
     function DaumPostcode() {
        new daum.Postcode({
            oncomplete: function(data) {
-               var addr = data.jibunAddress;
-
-               $("#modal-curr-location").text(addr)
-               
-               var geocoder = new kakao.maps.services.Geocoder()
-       		
-       		   geocoder.addressSearch(addr, function(result, status) {
-       			
-       		   if (status === kakao.maps.services.Status.OK) {
-       			    gpsVo.gpsX = result[0].x
-       			    gpsVo.gpsY = result[0].y
-       		        gpsVo.address = addr
-       		        
-       		        setGPS(gpsVo)
-       		    } 
-       		});  
+               $("#modal-curr-location").text(data.jibunAddress)
            }
        }).open()
     }
 	
 	
 	// 모달 닫힐 때 페이지 로드
-	$("#modal-location-change").on("hidden.bs.modal", function(){
+	$("#modal-gps-submit").on("click", function(){
+		var geocoder = new kakao.maps.services.Geocoder()
+   		
+		   geocoder.addressSearch($("#modal-curr-location").text(), function(result, status) {
+			
+		   if (status === kakao.maps.services.Status.OK) {
+			    gpsVo.gpsX = result[0].x
+			    gpsVo.gpsY = result[0].y
+		        gpsVo.address = $("#modal-curr-location").text()
+		        
+		        setGPS(gpsVo)
+
+		   	  } 
+		});  
+		console.log("완료?")
+		alert(gpsVo.address)
 		location.replace("${pageContext.request.contextPath}/")
 	})
 	

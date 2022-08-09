@@ -161,6 +161,7 @@
 			"address" : "${curr_location.address}",
 		}
 	
+	
 	// 페이지 로드 시
 	$(document).ready(function(){				
 		document.cookie = "safeCookie1foo";
@@ -169,6 +170,7 @@
 		console.log(gpsVo)
 		if (gpsVo.address == "") {
 			curr_location()	
+			sertGPS(gpsVo)
 		} 
 		
 		$("#curr-location-address").text(gpsVo.address)	
@@ -291,17 +293,16 @@
 		    		let coord = new kakao.maps.LatLng(lat, lng);
 		    		let callback = function(result, status) {
 		    			if (status === kakao.maps.services.Status.OK) {
-		    				console.log(result[0].address.address_name)
 		    				gpsVo.address = result[0].address.address_name
 		    				
-		    				// 다 잘 됐으면 session에 값 저장
-		    		    	setGPS(gpsVo)
+		    				 $("#modal-curr-location").text(result[0].address.address_name)
 		    			}
 		    		}
 		    		geocoder.coord2Address(coord.getLng(), coord.getLat(), callback)
 		    	}
 		    	
 		    	getAddr(gpsY, gpsX)
+		    	
 		 
 		})} else {
 			console.log("gps 지원 안함")
