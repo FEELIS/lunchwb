@@ -24,7 +24,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e74b599be710b798192fd5221284718a&libraries=services"></script>
 
 </head>
 
@@ -79,20 +78,21 @@
 
 </div>
 
-
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e74b599be710b798192fd5221284718a&libraries=services"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script type="text/javascript">
-	
-
-	
+		
 	// 위치재설정 버튼 클릭 시
 	$("#location-change-btn").on("click", function(){
 		var curr_address = ""
+		
 		if (gpsVo.address == "") {
 			curr_address = "현재 위치를 설정해주세요"
 		} else {
 			curr_address = gpsVo.address
 		}
+		
 		$("#modal-curr-location").text(curr_address)
 		$("#modal-location-change").modal("show")
 	})
@@ -101,6 +101,45 @@
 	// 현위치로 재설정
 	$("#modal-curr-location-btn").on("click", function(){
 		curr_location()
+		$("#modal-curr-location").text(gpsVo.address)
+	})
+	
+	
+	// 주소 검색하기
+	$(".location-search-bar").on("click", function(){
+		DaumPostcode()
+		
+	})
+	
+	
+	// 주소 api
+    function DaumPostcode() {
+       new daum.Postcode({
+           oncomplete: function(data) {
+               var addr = data.jibunAddress;
+
+               $("#modal-curr-location").text(addr)
+               
+               var geocoder = new kakao.maps.services.Geocoder()
+       		
+       		   geocoder.addressSearch(addr, function(result, status) {
+       			
+       		   if (status === kakao.maps.services.Status.OK) {
+       			    gpsVo.gpsX = result[0].x
+       			    gpsVo.gpsY = result[0].y
+       		        gpsVo.address = addr
+       		        
+       		        setGPS(gpsVo)
+       		    } 
+       		});  
+           }
+       }).open()
+    }
+	
+	
+	// 모달 닫힐 때 페이지 로드
+	$("#modal-location-change").on("hidden.bs.modal", function(){
+		location.replace("${pageContext.request.contextPath}/")
 	})
 	
 </script>

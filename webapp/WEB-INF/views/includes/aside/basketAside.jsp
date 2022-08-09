@@ -295,23 +295,7 @@
 		    				gpsVo.address = result[0].address.address_name
 		    				
 		    				// 다 잘 됐으면 session에 값 저장
-		    		    	$.ajax({
-		    					url : "${pageContext.request.contextPath}/basket/setGPS",		
-		    					type : "post",
-		    					contentType : "application/json",
-		    					data : JSON.stringify(gpsVo),
-		    					dataType : "json",
-		    					success : function(result){
-		    						if (result) {
-		    							console.log("gps 저장")
-		    						} else {
-		    							console.log("gps 저장 실패")
-		    						}
-		    					},
-		    					error : function(XHR, status, error) {
-		    						console.error(status + " : " + error);
-		    					}
-		    				}); 
+		    		    	setGPS(gpsVo)
 		    			}
 		    		}
 		    		geocoder.coord2Address(coord.getLng(), coord.getLat(), callback)
@@ -325,6 +309,26 @@
 		
 	}
 	
+	// 세션 값 저장하기
+	function setGPS(gpsVo) {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/basket/setGPS",		
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(gpsVo),
+			dataType : "json",
+			success : function(result){
+				if (result) {
+					console.log("gps 저장")
+				} else {
+					console.log("gps 저장 실패")
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		}); 
+	}
 	
 	// 그룹 목록 불러오기 메소드
 	function addBasketGroup(basketGroup) {
