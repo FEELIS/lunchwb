@@ -157,8 +157,6 @@
 		]]>
 	</insert>
 	
-	
-	
 	<!-- 이지희 -->
    <insert id="addGpMember" parameterType="UserVo" useGeneratedKeys="true" keyColumn="user_no" keyProperty="userNo">
   		 INSERT INTO USERS
