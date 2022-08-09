@@ -66,7 +66,7 @@
 									<div class="col-1 text-center mt-4 pt-3">이메일</div>
 									<div class="mt-4 col-10">
 										<div id="loading" class="bg-light border rounded border-light jumbotron py-3 px-4">
-											<input type="text" name="userNo" value="${authUser.userNo}">
+											<input type="hidden" name="userNo" value="${authUser.userNo}">
 											<div>${authUser.userEmail }</div>
 										</div>
 									</div>
