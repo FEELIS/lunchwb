@@ -124,7 +124,7 @@ public class UserController {
 				resultMap.put("JavaData", "NO");
 			}
 			
-			return "redirect:./lunchwb";
+			return "redirect:./";
 		}else if(naverConnectionCheck.getNaverLogin() == null && naverConnectionCheck.getUserEmail() != null) { //이메일 가입 되어있고 네이버 연동 안되어 있을시
 			userService.setNaverConnection(apiJson);
 			UserVo loginCheck = userService.naverLogin(apiJson);
@@ -134,7 +134,7 @@ public class UserController {
 			session.setAttribute("authUser", loginCheck);
 		}
 		
-		return "redirect:../lunchwb";
+		return "redirect:./";
 	}
 	
 	
@@ -259,7 +259,7 @@ public class UserController {
 			session.removeAttribute("userInfo");
 			return "redirect:./checkUser";
 		}else {
-			return "redirect:/";
+			return "redirect:./";
 		}
 	}
 	

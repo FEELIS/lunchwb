@@ -219,7 +219,8 @@ CREATE TABLE users (
  user_joindate DATE NULL, 
  user_grade varchar2(50) DEFAULT 1 NOT null, 
  session_id varchar2(100) default 'none' not null, 
- limit_date timestamp null
+ limit_date timestamp null, 
+ naver_login VARCHAR2(200) null
 );
 
 --===== 문의하기 =====
@@ -265,7 +266,7 @@ CREATE TABLE group_member (
  group_no number(20) NOT NULL, 
  leader_check number(10) DEFAULT 0 not NULL, 
  boss_check number(10) DEFAULT 0 not null,
- group_order number(20) null
+ group_order number(20) not null
 );
 
 --===== 블랙리스트 =====
@@ -295,7 +296,8 @@ CREATE TABLE store (
 CREATE TABLE rating_others (
  store_no number(20) NOT NULL, 
  rating_naver number(20,3) null, 
- rating_kakao number(20,3) null 
+ rating_kakao number(20,3) null, 
+ rating_google number(20,3) null 
 );
 
 
