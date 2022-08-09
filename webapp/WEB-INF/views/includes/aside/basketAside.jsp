@@ -156,9 +156,9 @@
 	var basket_group = 0
 	
 	var gpsVo = {
-			location_x : "${curr_location.gpsX}",
-			location_y : "${curr_location.gpsY}",
-			address : "${curr_location.roadAddress}",
+			"gpsX" : "${curr_location.gpsX}",
+			"gpsY" : "${curr_location.gpsY}",
+			"address" : "${curr_location.address}",
 		}
 	
 	// 페이지 로드 시
@@ -168,7 +168,7 @@
 		document.cookie = "safeCookie1foo";
 		document.cookie = "crossCookie=bar; SameSite=None; Secure";
 		
-		if (gpsVo["location_x"].length == 0) {
+		if (gpsVo["gpsX"].length == 0) {
 			curr_location()	
 		}
 
@@ -279,8 +279,8 @@
 		    navigator.geolocation.getCurrentPosition(function(position) {
 		    	var gpsX = position.coords.longitude
 		    	var gpsY = position.coords.latitude
-		    	gpsVo.location_x = gpsX
-		    	gpsVo.location_y = gpsY
+		    	gpsVo.gpsX = parseFloat(gpsX)
+		    	gpsVo.gpsY = parseFloat(gpsY)
 				
 		    	// 카카오 API로 주소 알아내기(도로명 > 없으면 지번)
 				function getAddr(lat,lng) {
@@ -301,9 +301,27 @@
 		    	getAddr(gpsY, gpsX)
 		    	
 		    	// 다 잘 됐으면 session에 값 저장
+		    	console.log(gpsVo)
+		    	$.ajax({
+					url : "${pageContext.request.contextPath}/basket/setGPS",		
+					type : "post",
+					contentType : "application/json",
+					data : JSON.stringify(gpsVo),
+					dataType : "json",
+					success : function(result){
+						if (result) {
+							console.log("gps 저장")
+						} else {
+							console.log("gps 저장 실패")
+						}
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				}); 
 				
 		})} else {
-			console.log("gps지원안함")
+			console.log("gps 지원 안함")
 		}
 		
 	}
