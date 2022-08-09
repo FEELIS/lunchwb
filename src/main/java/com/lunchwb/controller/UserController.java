@@ -150,28 +150,37 @@ public class UserController {
 		} else {
 			return "redirect:../";
 		}
+		
 	}
 
 	@PostMapping("/user/userInfo/")
 	public String userInfo(HttpSession session,
 							@RequestParam("userPassword") String password) {
 		logger.info("user > checkUser()");
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		UserVo checkUser = new UserVo();
+		UserVo userInfo;
 		
-		checkUser.setUserEmail(((UserVo) session.getAttribute("authUser")).getUserEmail());
-		checkUser.setUserPassword(password);
+		String returnURL = "";
+		System.out.println(authUser.getUserEmail());
+		checkUser = userService.login(authUser);
+		System.out.println("checkUser = " + checkUser);
 		
-		UserVo userInfo = userService.getUserInfo(checkUser);
+		System.out.println("비밀번호 일치 : " + pwEncoder.matches(password, checkUser.getUserPassword()));
 		
-		
-		if (userInfo != null) {
-			System.out.println("남자입니까? : " + userInfo.getUserSex().equals("male"));
-			session.setAttribute("userInfo", userInfo);
-			return "user/userInfo";
-		} else {
-			return "redirect:../checkUser";
+		if(authUser != null) {
+			if(true == pwEncoder.matches(password, checkUser.getUserPassword())) {
+				userInfo = userService.getUserInfo(checkUser);
+				if (userInfo != null) {
+					checkUser.setUserPassword("");
+					session.setAttribute("userInfo", userInfo);
+					returnURL = "user/userInfo";
+				} else {
+					returnURL = "redirect:../checkUser";
+				}
+			}
 		}
-
+		return returnURL;
 	}
 	
 	@PostMapping("user/modifyUser")
