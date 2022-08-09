@@ -110,7 +110,7 @@
                                   
                                     <tbody id="memberListArea" class="text-dark">
 										<c:forEach items="${map.memberList}" var="memberVo" varStatus="status">
-											<tr id="memberList" <c:if test="${memberVo.userNo == authUser.userNo}">class="fw-bold"</c:if>>
+											<tr id="member-${memberVo.userNo}" <c:if test="${memberVo.userNo == authUser.userNo}">class="fw-bold"</c:if>>
 												<td style="width: 10%;">
 													<c:if test="${memberVo.bossCheck == 1}">
 	                                           			<img src="${pageContext.request.contextPath}/assets/img/bujang.png" width="24px" />
@@ -239,7 +239,7 @@
 
 <script type="text/javascript">
 
-var groupNo = $("[name = 'groupNo']").val() 
+var groupNo = $("[name = 'groupNo']").val()
 console.log(groupNo)
 
 $(".form-check-input").on("click", function(){
@@ -284,7 +284,7 @@ $("#groupmem-invt button").on("click", function(){
 		alert("이메일을 입력해주세요")
 		return false
 	}
-	
+
 	$.ajax({
 		url : "${pageContext.request.contextPath}/group/userCheck",
 		type : "post",
@@ -293,73 +293,98 @@ $("#groupmem-invt button").on("click", function(){
 		dataType : "json",
 		
 		success : function(checkMap){
-			console.log(checkMap)
+			console.log(checkMap.state)
 			
 			//해당 이메일 유저 초대 가능
 			if(checkMap.state == "possible"){
-				//
-				invt(checkMap.userNo)
-		
+				memberCheck(checkMap.userNo, userEmail, checkMap.gpCount)
+				
 			//해당 이메일 유저 초대 불가(그룹 개수 초과)
 			}else if(checkMap.state == "impossible"){
 				alert(userEmail + " 님을 초대할 수 없습니다")
 			
+			//지 이메일 썼을 때
+			}else if(checkMap.state == "It's U"){
+				alert("본인은 초대가 불가능합니다")
+				
 			//이메일 회원 없음
 			}else{
-				alert("해당하는 유저가 존재하지 않습니다")
+				alert("회원이 아닙니다")
 			}
 		}
 	})
 })
 
 
-/* 회원 > 그룹원으로 초대 하기 */
-/* 
-function invt(groupNo){
+/* 이 그룹 멤버인가요? */
+function memberCheck(userNo, userEmail, gpCount){
+	var groupVo = {
+			userNo: userNo,
+			groupNo: groupNo,
+			groupOrder: gpCount+1
+	}
 	
-	if(confirm(userEmail + " 님을 초대하시겠습니까?") == true){
+	$.ajax({
+		url : "${pageContext.request.contextPath}/group/memberCheck",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(groupVo),
+		dataType : "json",
 		
-		var bossCheck = 0
-	 	if($("#chk-boss-notuser").is(":checked")){
-	 		bossCheck = 1
-	 	}
-		
-		var groupInvt = {
-				groupNo: groupNo,
-				userEmail: userEmail
-				bossCheck: bossCheck
-		}
-		
-		$.ajax({
-			url : "${pageContext.request.contextPath }/group/invtMember",
-			type : "post",
-			contentType : "application/json",
-			data : JSON.stringify(groupInvt),
-			dataType : "json",
+		success : function(state){
+			console.log(state)
 			
-			success : function(memberVo){
-				
-				alert("멤버가 추가되었습니다")
-				
-				$("#groupmem-invt [name = 'userEmail']").val()
-				$("#groupmem-invt #chk-boss-user").val("")
-				
-				var memberCount = $("#memberCount").text()
-				$("#memberCount").text(Number(memberCount)+1)
-				console.log(memberCount)
-				
-				render(memberVo)
-				
-			}, 
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
+			if(state == "already"){
+				alert("이미 그룹 멤버입니다")
+			
+			}else if(confirm(userEmail + " 님을 초대하시겠습니까?") == true){
+				invt(groupVo)
 				
 			}
-		})
-	}
+		}
+	})
 }
 
- */
+	
+/* 회원 > 그룹원으로 초대 하기 */
+function invt(groupVo){
+	
+	var bossCheck = 0
+ 	if($("#chk-boss-user").is(":checked")){
+ 		bossCheck = 1
+ 	}
+		
+	groupVo.bossCheck = bossCheck
+	groupVo.leaderCheck = 0
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath }/group/invtMember",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(groupVo),
+		dataType : "json",
+		
+		success : function(memberVo){
+			
+			alert("멤버가 추가되었습니다")
+			
+			$("#groupmem-invt [name = 'userEmail']").val()
+			$("#groupmem-invt #chk-boss-user").val("")
+			
+			var memberCount = $("#memberCount").text()
+			$("#memberCount").text(Number(memberCount)+1)
+			console.log(memberCount)
+			
+			render(memberVo)
+			
+		}, 
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+			
+		}
+	})
+}
+
 
 /* 그룹원 직접 추가 */
 $("#groupmem-add button").on("click", function(){
@@ -435,7 +460,7 @@ function render(memberVo){
 	console.log("render()")
 	
 	var str = ''
-		str += '<tr>'
+		str += '<tr id="member-' + memberVo.userNo + '">'
 		str += '	<td style="width: 10%;">'
 	
 	if(memberVo.bossCheck == 1){

@@ -146,22 +146,6 @@
 </div>
    
    
-<!-- 그룹원 초대(회원) 확인 모달 -->
-<!-- 
-<div id="modal-groupmem-invt" class="modal fade" role="dialog" tabindex="-1" aria-expanded="false">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body-custom">
-                <div>
-                    <p class="modal-group-p group-color-blue">feelis0720@naver.com</p>
-                    <p class="modal-group-p">초대하시겠습니까?<br /></p>
-                </div>
-            </div>
-            <div class="modal-footer-custom"><button class="btn btn-primary" type="button">확인</button><button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button></div>
-        </div>
-    </div>
-</div>
- -->
 </body>
 
 <script type="text/javascript">

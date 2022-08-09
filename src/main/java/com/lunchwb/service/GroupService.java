@@ -172,24 +172,45 @@ public class GroupService {
 	
 	
 	/******************** 그룹에 초대할 회원 체크 ******************************************/
-	public Map<String, Object> userCheck(String userEmail) {
+	public Map<String, Object> userCheck(String userEmail, UserVo authUser) {
 		Map<String, Object> checkMap = new HashMap<String, Object>(); 
 		
 		UserVo userVo = userDao.userCheck(userEmail);
 		
-		String state = "";
+		String state = "not user";
 		if(userVo != null) {
 			int userNo = userVo.getUserNo();
-			int gpCount = groupDao.groupCount(userNo);
-			
-			//그룹 추가 가능
-			if(gpCount < 4) {
-				state = "possible";
-				checkMap.put("userNo", userNo);
-			
-			//그룹 추가 불가(최대 개수 보유)
+
+			if(userNo == authUser.getUserNo()) {
+				state = "It's U";
+				
 			}else {
-				state = "impossoble";
+				//그룹원인지 체크하기
+				/*
+				int groupNo = Integer.parseInt(userGroupChk.get("groupNo"));
+				GroupVo groupVo = new GroupVo();
+				groupVo.setGroupNo(groupNo);
+				groupVo.setUserNo(userNo);
+				
+				GroupVo memberVo = groupDao.userCheck(groupVo);
+				
+				if(memberVo == null) {
+					state = "already";
+					
+				}else {
+				*/
+				int gpCount = groupDao.groupCount(userNo);
+				
+				//해당 회원이 그룹 추가 가능
+				if(gpCount < 4) {
+					state = "possible";
+					checkMap.put("userNo", userNo);
+					checkMap.put("groupCount", gpCount);
+					
+					//그룹 추가 불가(최대 개수 보유)
+				}else {
+					state = "impossible";
+				}
 			}
 		}
 		
@@ -198,21 +219,32 @@ public class GroupService {
 		return checkMap;
 	}
 	
-
+	
+	/******************** 그룹 멤버 여부 ************************************************/
+	public String memberCheck(GroupVo groupVo) {
+		String state = "ok";
+		
+		int count = groupDao.memberCheck(groupVo);
+		if(count == 1) {
+			state = "already";
+		}
+		
+		return state;
+	}
+	
 	
 	/******************** 회원 그룹 멤버 추가 ********************************************/
-	/*
-	 * public GroupVo invtMember(Map<String, Object> groupInvt) {
-	 * logger.info("GroupService > invtMember()");
-	 * 
-	 * //////// 그룹에 추가할 회원 번호 받아오기 ////////////////////////////
-	 * 
-	 * }
-	 * 
-	 */	
+	public GroupVo invtMember(GroupVo groupVo) {
+		groupDao.addMember(groupVo);
+		int memberNo = groupVo.getGroupMemberNo();
+		GroupVo memberVo = groupDao.memberInfo(memberNo);
+		
+		return memberVo;
+	}
+	
+	
 	/******************** 유령회원 그룹 멤버 추가 ********************************************/
 	public GroupVo addMember(GroupVo groupVo) {
-			
 		/////// 비회원 그룹 멤버 유령회원 생성 ////////////////////////////////
 		UserVo userVo = new UserVo();
 		userVo.setUserName(groupVo.getUserName());
@@ -243,9 +275,7 @@ public class GroupService {
 		int memberNo = groupVo.getGroupMemberNo();
 		GroupVo memberVo = groupDao.memberInfo(memberNo);
 	
-		System.out.println(memberVo);
 		return memberVo;
-		
 	}
 
 }

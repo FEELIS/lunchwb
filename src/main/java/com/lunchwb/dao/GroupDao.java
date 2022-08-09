@@ -61,6 +61,13 @@ public class GroupDao {
 		sqlSession.update("group.deleteBoss", groupNo);
 	}
 	
+	/******************** 그룹 멤버 여부 ***********************************************/
+	public int memberCheck(GroupVo groupVo) {
+		int count = sqlSession.selectOne("group.memberCheck", groupVo);
+		return count;
+	}
+	
+	
 	/******************** 그룹 멤버 추가 ***********************************************/
 	public void addMember(GroupVo groupVo) {
 		sqlSession.insert("group.addMember", groupVo);

@@ -115,6 +115,15 @@
 	</update>
 	
 	
+	<!-- 그룹 멤버 여부 -->
+	<select id="memberCheck" parameterType="GroupVo" resultType="int">
+		SELECT  count(user_no)
+		FROM group_member
+		WHERE group_no = #{groupNo}
+		AND user_no = #{userNo}
+	</select>
+	
+	
 	<!-- 그룹원 추가 -->
 	<insert id="addMember" parameterType="GroupVo">
 		<selectKey keyProperty="groupMemberNo" resultType="int" order="BEFORE">

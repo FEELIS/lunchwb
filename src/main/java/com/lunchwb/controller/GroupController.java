@@ -115,30 +115,41 @@ public class GroupController {
 	}
 	
 
-	/******************** 회원 그룹 멤버 추가 *******************************************/
+	/******************** 초대할 유저 존재 확인 ***************************************/
 	@ResponseBody
 	@PostMapping("group/userCheck")
-	public Map<String, Object> userCheck(String userEmail) {
+	public Map<String, Object> userCheck(@RequestBody String userEmail, HttpSession session) {
 		logger.info("GroupController > userCheck()");
 		
-		Map<String, Object> checkMap = groupService.userCheck(userEmail);
+		UserVo authUser = (UserVo)session.getAttribute("authUser");	
+		Map<String, Object> checkMap = groupService.userCheck(userEmail, authUser);
 		
 		return checkMap;
 	}
 	
 	
+	/******************** 회원 그룹 멤버 여부 *******************************************/
+	@ResponseBody
+	@PostMapping("group/memberCheck")
+	public String memberCheck(@RequestBody GroupVo groupVo) {
+		logger.info("GroupController > memberCheck()");
+		
+		String state = groupService.memberCheck(groupVo);
+		
+		return state;
+	}
+
+	
 	/******************** 회원 그룹 멤버 추가 *******************************************/
-	/*
-	 * @ResponseBody
-	 * 
-	 * @PostMapping("group/invtMember") public GroupVo invtMember(@RequestBody
-	 * Map<String, Object> groupInvt) {
-	 * logger.info("GroupController > invtMember()");
-	 * 
-	 * //GroupVo memberVo = groupService.invtMember(groupInvt);
-	 * 
-	 * return memberVo; }
-	 */
+	@ResponseBody
+	@PostMapping("group/invtMember") public GroupVo invtMember(@RequestBody GroupVo groupVo) {
+		logger.info("GroupController > invtMember()");
+		
+		GroupVo memberVo = groupService.invtMember(groupVo);
+		
+		return memberVo; 
+	}
+	
 	
 	/******************** 유령회원 그룹 멤버 추가 *****************************************/
 	@ResponseBody
