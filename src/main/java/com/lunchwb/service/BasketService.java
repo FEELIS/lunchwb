@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.lunchwb.dao.GroupDao;
 import com.lunchwb.vo.GroupVo;
+import com.lunchwb.vo.StoreVo;
 
 @Service
 public class BasketService {
@@ -20,5 +21,10 @@ public class BasketService {
 		basketGroup = groupDao.selectBasketGroup(userNo);
 		
 		return basketGroup;
+	}
+	
+	
+	public List<StoreVo> addGuestBasket(List<StoreVo> basket) {
+		return basket;
 	}
 }

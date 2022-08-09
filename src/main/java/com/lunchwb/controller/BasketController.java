@@ -1,6 +1,9 @@
 package com.lunchwb.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lunchwb.service.BasketService;
 import com.lunchwb.vo.GroupVo;
+import com.lunchwb.vo.StoreVo;
 
 @Controller
 public class BasketController {
@@ -29,6 +33,20 @@ public class BasketController {
 		List<GroupVo> basketGroup = basketService.getBasketGroup(userNo);
 		
 		return basketGroup;
+	}
+	
+	
+	@ResponseBody
+	@PostMapping("/basket/guestMakeBasket")
+	public List<StoreVo> guestBasket(HttpSession session) {
+		logger.info("비회원 장바구니 생성하기");
+		
+		List<StoreVo> basket = new ArrayList<>();
+		basket = basketService.addGuestBasket(basket);
+		
+		session.setAttribute("basket", basket);
+		
+		return basket;
 	}
 
 }

@@ -162,6 +162,30 @@
 		
 		if (userNo == "") {
 			console.log("비로그인 회원")
+			
+			basket = "${basket}"
+			
+			if (basket == "") {
+				// 장바구니 만들기
+			 	$.ajax({
+					url : "${pageContext.request.contextPath}/basket/guestMakeBasket",		
+					type : "post",
+					contentType : "application/json",
+					async: false,
+					dataType : "json",
+					success : function(result){
+						if (result == "success") {
+							console.log("장바구니 생성")
+						} else {
+							console.log("장바구니 생성 오류")
+						}
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+				}); 
+			}
+			
 		} else {
 			console.log(userNo + "번 회원")
 			
@@ -199,10 +223,14 @@
 	
 	// 다른 그룹 클릭
 	$("#basket-groups").on("click", ".basket-normal-group", function(){
-		$(this).addClass("basket-selected-group")
-		$("[data-groupNo=" + basket_group + "]").removeClass("basket-selected-group")
-		
-		basket_group = $(this).attr("data-groupNo")
+		if (basket_group != $(this).attr("data-groupNo")) {
+			$("[data-groupNo=" + basket_group + "]").removeClass("basket-selected-group")
+			$(this).addClass("basket-selected-group")
+			
+			basket_group = $(this).attr("data-groupNo")
+			
+			// 장바구니 교체 작업
+		}
 	})	
 	
 	
