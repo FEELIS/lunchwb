@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<html>
-<head>
-</head>
-
-<body>
-
 <aside id="group-aside">
 
     <div id="group-aside-header"></div>
@@ -153,6 +147,7 @@
    
    
 <!-- 그룹원 초대(회원) 확인 모달 -->
+<!-- 
 <div id="modal-groupmem-invt" class="modal fade" role="dialog" tabindex="-1" aria-expanded="false">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
@@ -166,12 +161,7 @@
         </div>
     </div>
 </div>
-
-<script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
-
+ -->
 </body>
 
 <script type="text/javascript">
@@ -311,7 +301,7 @@ $("#modal-group-order-change").on("click", ".btn-primary", function(){
 	}
 	
 	$.ajax({
-		url : "${pageContext.request.contextPath }/group/changeOrder",
+		url : "${pageContext.request.contextPath}/group/changeOrder",
 		type : "post",
 		contentType : "application/json",
 		data : JSON.stringify(gpOrder),
@@ -335,8 +325,4 @@ $("#modal-group-order-change").on("click", ".btn-primary", function(){
 		
 })
 
-
-
 </script>
-
-</html>

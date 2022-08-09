@@ -1,15 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<html>
-<head>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/alert.css">
-</head>
-
-<body>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
 
 <nav id="header" class="navbar navbar-light navbar-expand bg-white shadow d-xxl-flex justify-content-xxl-end mb-4 topbar static-top">
     <div class="container">
@@ -129,5 +123,3 @@
     </div>
 </nav>
 
-</body>
-</html>

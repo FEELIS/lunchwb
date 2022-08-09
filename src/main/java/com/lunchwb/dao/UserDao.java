@@ -56,8 +56,13 @@ public class UserDao {
 	/* 그룹 비회원 멤버 추가*/
 	public void addGpMember(UserVo userVo) {
 		//logger.info("addGroupMem()");
-
-		sqlSession.selectOne("user.addGpMember", userVo);
+		sqlSession.insert("user.addGpMember", userVo);
+	}
+	
+	/* 그룹에 초대할 회원 존재 여부 */
+	public int userCheck(String userEmail) {
+		int count = sqlSession.selectOne("user.userCheck", userEmail);
+		return count;
 	}
 	
    public UserVo userCheck(String userEmail) {

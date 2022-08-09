@@ -114,9 +114,33 @@ public class GroupController {
 		return result;
 	}
 	
+
+	/******************** 회원 그룹 멤버 추가 *******************************************/
+	@ResponseBody
+	@PostMapping("group/userCheck")
+	public Map<String, Object> userCheck(String userEmail) {
+		logger.info("GroupController > userCheck()");
+		
+		Map<String, Object> checkMap = groupService.userCheck(userEmail);
+		
+		return checkMap;
+	}
 	
 	
-	/******************** 비회원 그룹 추가 ********************************************/
+	/******************** 회원 그룹 멤버 추가 *******************************************/
+	/*
+	 * @ResponseBody
+	 * 
+	 * @PostMapping("group/invtMember") public GroupVo invtMember(@RequestBody
+	 * Map<String, Object> groupInvt) {
+	 * logger.info("GroupController > invtMember()");
+	 * 
+	 * //GroupVo memberVo = groupService.invtMember(groupInvt);
+	 * 
+	 * return memberVo; }
+	 */
+	
+	/******************** 유령회원 그룹 멤버 추가 *****************************************/
 	@ResponseBody
 	@PostMapping("group/addMember")
 	public GroupVo addMember(@RequestBody GroupVo groupVo) {

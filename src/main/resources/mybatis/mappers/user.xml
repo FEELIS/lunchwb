@@ -109,19 +109,14 @@
 	
 	
 	<!-- 이지희 -->
-	   <insert id="addGpMember" parameterType="UserVo">
-	   		<selectKey keyProperty="userNo" resultType="int" order="BEFORE">
-	   			SELECT SEQ_USER_NO.NEXTVAL FROM DUAL
-	   		</selectKey>
-	  		 INSERT INTO USERS
-	  		 VALUES (#{userNo}, '', '', #{userName}, #{userBirthYear}, #{userSex}, '', 0)
-	   </insert>
-	   
-     <select id="userCheck" parameterType="String" resultType="com.lunchwb.vo.UserVo">
-         SELECT  user_no userNo
-               ,user_email userEmail
-         FROM users
-         WHERE user_email = #{userEmail}
-	</select>
-
+   <insert id="addGpMember" parameterType="UserVo" useGeneratedKeys="true" keyColumn="user_no" keyProperty="userNo">
+  		 INSERT INTO USERS
+  		 VALUES (SEQ_USER_NO.NEXTVAL, '', '', #{userName}, #{userBirthYear}, #{userSex}, '', 0)
+   </insert>
+   
+   <select id="userCheck" parameterType="String" resultType="UserVo">
+   		SELECT  count(user_no)
+   		FROM users
+   		WHERE user_email = #{userEmail}
+   </select>
 </mapper>

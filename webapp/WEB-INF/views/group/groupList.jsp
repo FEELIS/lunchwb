@@ -4,15 +4,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>부장님요기요: 나의그룹</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/customModal.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/group.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>부장님요기요: 나의그룹</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/customModal.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/group.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/alert.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&amp;display=swap">
+	
+<script type="text/javascript"src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript"src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
+<script type="text/javascript"src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
+	
 </head>
 
 <body id="page-top">
@@ -98,7 +108,7 @@
                                        	</tr>
                                     </thead>
                                   
-                                    <tbody class="text-dark">
+                                    <tbody id="memberListArea" class="text-dark">
 										<c:forEach items="${map.memberList}" var="memberVo" varStatus="status">
 											<tr id="memberList" <c:if test="${memberVo.userNo == authUser.userNo}">class="fw-bold"</c:if>>
 												<td style="width: 10%;">
@@ -172,14 +182,20 @@
                    
                    <!-- 그룹 리더만 -->
                    <c:if test="${authUser.userNo == map.leader}">
+	                    
 	                    <!-- 그룹원 초대 -->
 	                    <div id="groupmem-invt" class="card shadow">
 	                       <div class="card-header py-3">
 	                           <p class="text-primary m-0 fw-bold">그룹원으로 초대하기</p>
 	                       </div>
 	                       <div class="card-body">
-	                           <div><input type="email" placeholder="이메일을 입력해주세요" name="email" /><button class="btn btn-primary btn-groupmem-invt" type="button" data-bs-target="#modal-groupmem-invt" data-bs-toggle="modal">초대하기</button>
-	                               <div class="form-check"><input id="chk-boss-user" class="form-check-input" type="checkbox" /><label class="form-check-label" for="chk-boss-user">부장님이면 체크해주세요</label></div>
+	                       		<div>
+	                           		<input type="email" placeholder="이메일을 입력해주세요" name="userEmail" />
+	                           		<button class="btn btn-primary btn-groupmem-invt" type="submit" data-bs-target="#modal-groupmem-invt" data-bs-toggle="modal">초대하기</button>
+	                               	<div class="form-check">
+	                               		<input id="chk-boss-user" class="form-check-input" type="checkbox" />
+	                               		<label class="form-check-label" for="chk-boss-user">부장님이면 체크해주세요</label>
+	                               	</div>
 	                           </div>
 	                       </div>
 	                    </div>
@@ -198,7 +214,7 @@
                                        <option value="male">남자</option>
                                        <option value="female">여자</option>
 	                               	</select>
-	                               	<button class="btn btn-primary btn-groupmem-invt" type="submit" data-bs-toggle="modal" data-groupno="${map.groupNo}">추가하기</button>
+	                               	<button class="btn btn-primary btn-groupmem-invt" type="submit" data-bs-toggle="modal" <%-- data-groupno="${map.groupNo}" --%>>추가하기</button>
 	                            </div>
 	                           	<div class="form-check">
 	                           		<input id="chk-boss-notuser" class="form-check-input" type="checkbox" name="bossCheck" value="1"/>
@@ -217,11 +233,7 @@
        
 	<a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
-   
-<script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
-       
+        
 
 </body>
 
@@ -262,13 +274,100 @@ $(".form-check-input").on("click", function(){
 	
 })
 
+
+/* 초대할 그룹원 확인 */
+$("#groupmem-invt button").on("click", function(){
+	console.log("그룹원 초대 버튼 클릭")
+	
+	var userEmail = $("[name = 'userEmail']").val()
+	if(userEmail == null || userEmail == ""){
+		alert("이메일을 입력해주세요")
+		return false
+	}
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/group/userCheck",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(userEmail),
+		dataType : "json",
+		
+		success : function(checkMap){
+			console.log(checkMap)
+			
+			//해당 이메일 유저 초대 가능
+			if(checkMap.state == "possible"){
+				//
+				invt(checkMap.userNo)
+		
+			//해당 이메일 유저 초대 불가(그룹 개수 초과)
+			}else if(checkMap.state == "impossible"){
+				alert(userEmail + " 님을 초대할 수 없습니다")
+			
+			//이메일 회원 없음
+			}else{
+				alert("해당하는 유저가 존재하지 않습니다")
+			}
+		}
+	})
+})
+
+
+/* 회원 > 그룹원으로 초대 하기 */
+/* 
+function invt(groupNo){
+	
+	if(confirm(userEmail + " 님을 초대하시겠습니까?") == true){
+		
+		var bossCheck = 0
+	 	if($("#chk-boss-notuser").is(":checked")){
+	 		bossCheck = 1
+	 	}
+		
+		var groupInvt = {
+				groupNo: groupNo,
+				userEmail: userEmail
+				bossCheck: bossCheck
+		}
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath }/group/invtMember",
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(groupInvt),
+			dataType : "json",
+			
+			success : function(memberVo){
+				
+				alert("멤버가 추가되었습니다")
+				
+				$("#groupmem-invt [name = 'userEmail']").val()
+				$("#groupmem-invt #chk-boss-user").val("")
+				
+				var memberCount = $("#memberCount").text()
+				$("#memberCount").text(Number(memberCount)+1)
+				console.log(memberCount)
+				
+				render(memberVo)
+				
+			}, 
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+				
+			}
+		})
+	}
+}
+
+ */
+
 /* 그룹원 직접 추가 */
 $("#groupmem-add button").on("click", function(){
 	console.log("비회원 그룹 멤버 추가 버튼 클릭")
-	
+	/* 
 	var $this = $(this)
 	var groupNo = $this.data("groupno")
-	
+	 */
 	var userName = $("#groupmem-add [name ='userName']").val()
 	if(userName == null || userName == ""){
 		alert("이름을 입력해주세요")
@@ -317,11 +416,13 @@ $("#groupmem-add button").on("click", function(){
 			$("#groupmem-add #chk-boss-notuser").val("")
 			
 			var memberCount = $("#memberCount").text()
-			$("#memberCount").text(memberCount+1)
-				
+			$("#memberCount").text(Number(memberCount)+1)
+			console.log(memberCount)
+			
 			render(memberVo)
 			
-		}, error : function(XHR, status, error) {
+		}, 
+		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
 			
 		}
@@ -331,9 +432,7 @@ $("#groupmem-add button").on("click", function(){
 
 
 function render(memberVo){
-	consol.log("추가된 그룹 멤버 목록 추가")
-	
-	var memberCount = $("#memberCount").val()
+	console.log("render()")
 	
 	var str = ''
 		str += '<tr>'
@@ -343,13 +442,11 @@ function render(memberVo){
 		str += '		<img src="${pageContext.request.contextPath}/assets/img/bujang.png" width="24px" />'
 	}
 		str += '	</td>'
-	/* 어차피 내가 리더야 */
 		str += '	<td style="widt: 10%;"></td>'	
 		str += '	<td style="width: 30%;">' + memberVo.userName + '</td>'
 		str += '	<td style="width: 10%;">' + memberVo.userSex + '</td>'
 		str += '	<td style="width: 10%;">' + memberVo.userBirthYear + '</td>'
 		str += '	<td style="width: 10%;">' + memberVo.userAge + '</td>'
-	/* 유령회원 */
 		str += '	<td style="width: 10%;"></td>'
 		str += '	<td style="width: 10%;">'
 		str += '		<svg class="text-danger groupmem-delete" xmlns="http://www.w3.org/2000/svg" viewBox="-96 0 512 512" width="1em" height="1em" fill="currentColor">'
@@ -359,7 +456,7 @@ function render(memberVo){
 	    str += '</tr>'
 		
 	    
-	    $("#dataTable").append(str)
+	    $("#memberListArea").append(str)
 }
 
 
