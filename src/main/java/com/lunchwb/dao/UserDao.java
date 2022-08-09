@@ -44,6 +44,13 @@ public class UserDao {
 		return autoLogin;
 	}
 	
+	/* SNS로그인 */
+	/* 네이버 */
+	public UserVo naverConnectionCheck(Object userEmail) {
+		UserVo naverCheck = sqlSession.selectOne("user.naverConnectionCheck", userEmail);
+		return naverCheck;
+	}
+	
 	
 	/* Json */
 	/* 이메일 중복확인 */

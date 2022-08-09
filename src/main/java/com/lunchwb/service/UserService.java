@@ -61,8 +61,12 @@ public class UserService {
 		return autoLogin;
 	}
 	
-	
-	
+	/* SNS 로그인 */
+	/* 네이버 */
+	public UserVo naverConnectionCheck(Object userEmail) {
+		UserVo naverCheck = userDao.naverConnectionCheck(userEmail);
+		return naverCheck;
+	}
 	
 	
 	/* JSON */
@@ -80,6 +84,7 @@ public class UserService {
 		
 		return result;
 	}
+
 	
 	
 

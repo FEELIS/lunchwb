@@ -97,6 +97,7 @@
 	</update>
 	    
 	<select id="selectSession" parameterType="com.lunchwb.vo.UserVo" resultType="com.lunchwb.vo.UserVo">
+        <![CDATA[
 	        select user_no userNo
 		        	,user_email userEmail
 			        ,user_name userName
@@ -104,6 +105,19 @@
 	        from users
 	        where sessionId = #{sessionId}
 	        and limit_date > sysdate
+        ]]>
+	</select>
+	
+	<!-- SNS 로그인 -->
+	<!-- 네이버 -->
+	<select id="naverConnectionCheck" parameterType="com.lunchwb.vo.UserVo" resultType="com.lunchwb.vo.UserVo">
+		<![CDATA[
+			select user_email userEmail
+					,user_name userName
+					,naver_login naverLogin
+			from users
+			where user_email = #{email}
+		]]>
 	</select>
 	
 	

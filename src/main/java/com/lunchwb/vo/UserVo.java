@@ -17,13 +17,14 @@ public class UserVo {
 	private String sessionId;
 	private Date limitDate;
 	private boolean autoLogin;
+	private String naverLogin;
 	
 	public UserVo() {
-		super();
 	}
 
 	public UserVo(int userNo, String userEmail, String userPassword, String userName, int userBirthYear, String userSex,
-			String userJoinDate, String userGrade, String sessionId, Date limitDate, boolean autoLogin) {
+			String userJoinDate, String userGrade, String sessionId, Date limitDate, boolean autoLogin,
+			String naverLogin) {
 		super();
 		this.userNo = userNo;
 		this.userEmail = userEmail;
@@ -36,6 +37,7 @@ public class UserVo {
 		this.sessionId = sessionId;
 		this.limitDate = limitDate;
 		this.autoLogin = autoLogin;
+		this.naverLogin = naverLogin;
 	}
 
 	public int getUserNo() {
@@ -126,13 +128,26 @@ public class UserVo {
 		this.autoLogin = autoLogin;
 	}
 
+	public String getNaverLogin() {
+		return naverLogin;
+	}
+
+	public void setNaverLogin(String naverLogin) {
+		this.naverLogin = naverLogin;
+	}
+
 	@Override
 	public String toString() {
 		return "UserVo [userNo=" + userNo + ", userEmail=" + userEmail + ", userPassword=" + userPassword
 				+ ", userName=" + userName + ", userBirthYear=" + userBirthYear + ", userSex=" + userSex
 				+ ", userJoinDate=" + userJoinDate + ", userGrade=" + userGrade + ", sessionId=" + sessionId
-				+ ", limitDate=" + limitDate + ", autoLogin=" + autoLogin + "]";
+				+ ", limitDate=" + limitDate + ", autoLogin=" + autoLogin + ", naverLogin=" + naverLogin + "]";
 	}
-		
+	
+	
+	
+	
+	
+
 	
 }

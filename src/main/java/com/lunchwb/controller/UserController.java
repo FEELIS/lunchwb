@@ -1,6 +1,9 @@
 package com.lunchwb.controller;
 
+import java.sql.SQLException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +21,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.util.WebUtils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.lunchwb.api.NaverLoginBo;
 import com.lunchwb.service.UserService;
 import com.lunchwb.vo.UserVo;
@@ -32,6 +38,8 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	NaverLoginBo naverLoginBo;
 	
 	@Autowired
 	@Qualifier("bcryptPasswordEncoder")
@@ -43,8 +51,7 @@ public class UserController {
 	@GetMapping("/login")
 	public String loginForm(Model model, HttpSession session) {
 		logger.info("user > loginForm()");
-		NaverLoginBo naverloginbo = new NaverLoginBo();
-		String naverAuthUrl = naverloginbo.getAuthorizationUrl(session);
+		String naverAuthUrl = naverLoginBo.getAuthorizationUrl(session);
 		model.addAttribute("naverUrl", naverAuthUrl);
 		return "user/loginForm";
 	}
@@ -85,6 +92,63 @@ public class UserController {
 		return returnURL;
 	}
 	
+	/* SNS 로그인 네이버 */
+	@RequestMapping(value="/naverLoginCallback",  method = {RequestMethod.GET,RequestMethod.POST})
+	public String userNaverLoginPro(Model model,@RequestParam Map<String,Object> paramMap, @RequestParam String code, @RequestParam String state,HttpSession session) throws SQLException, Exception {
+		System.out.println("paramMap:" + paramMap);
+		Map <String, Object> resultMap = new HashMap<String, Object>();
+
+		OAuth2AccessToken oauthToken;
+		oauthToken = naverLoginBo.getAccessToken(session, code, state);
+		//로그인 사용자 정보를 읽어온다.
+		String apiResult = naverLoginBo.getUserProfile(oauthToken);
+		System.out.println("apiResult =>"+apiResult);
+		ObjectMapper objectMapper =new ObjectMapper();
+		
+		
+		Map<String, Object> apiJson = (Map<String, Object>) objectMapper.readValue(apiResult, Map.class).get("response");
+		System.out.println("apiJson =>"+apiJson);
+		System.out.println("email ->" + apiJson.get("email") );
+		apiJson.put("userEmail", apiJson.get("email"));
+		System.out.println("apiJson =>"+apiJson);
+		
+		
+		UserVo naverConnectionCheck = userService.naverConnectionCheck(apiJson.get("email"));
+		System.out.println(naverConnectionCheck);
+		/*
+		if(naverConnectionCheck == null) { //일치하는 이메일 없으면 가입
+			
+			model.addAttribute("userEmail",apiJson.get("email"));
+			model.addAttribute("userPassword",apiJson.get("password"));
+			model.addAttribute("userName",apiJson.get("nickname"));
+			Integer registerCheck = userService.userNaverRegisterPro(paramMap);
+			
+			System.out.println("paramMap:" + paramMap);
+			Map <String, Object> resultMap = new HashMap<String, Object>();
+			Integer registerCheck = userservice.userNaverRegisterPro(paramMap);
+			System.out.println(registerCheck);
+			
+			if(registerCheck != null && registerCheck > 0) {
+				Map<String, Object> loginCheck = userservice.userNaverLoginPro(paramMap);
+				session.setAttribute("userInfo", loginCheck);
+				resultMap.put("JavaData", "YES");
+			}else {
+				resultMap.put("JavaData", "NO");
+			}
+
+		}else if(naverConnectionCheck.get("NAVERLOGIN") == null && naverConnectionCheck.get("EMAIL") != null) { //이메일 가입 되어있고 네이버 연동 안되어 있을시
+			userService.setNaverConnection(apiJson);
+			Map<String, Object> loginCheck = userService.userNaverLoginPro(apiJson);
+			session.setAttribute("userInfo", loginCheck);
+		}else { //모두 연동 되어있을시
+			Map<String, Object> loginCheck = userService.userNaverLoginPro(apiJson);
+			session.setAttribute("userInfo", loginCheck);
+		}
+		*/
+		return "redirect:/lunchwb";
+	}
+	
+	
 	@GetMapping("/logout")
 	public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		logger.info("user > logout()");
@@ -119,7 +183,7 @@ public class UserController {
 		UserVo loginUser = (UserVo) session.getAttribute("authUser");
 
 		if (loginUser != null) {
-			return "redirect:./";
+			return "redirect:/lunchwb";
 		} else {
 			return "user/joinForm";
 		}
@@ -154,7 +218,7 @@ public class UserController {
 		if (loginUser != null) {
 			return "user/checkUserInfo";
 		} else {
-			return "redirect:../";
+			return "redirect:/lunchwb/login";
 		}
 		
 	}
