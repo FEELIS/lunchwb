@@ -40,7 +40,6 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	NaverLoginBo naverLoginBo;
-	
 	@Autowired
 	@Qualifier("bcryptPasswordEncoder")
 	private PasswordEncoder pwEncoder;
