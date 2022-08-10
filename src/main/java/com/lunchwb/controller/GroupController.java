@@ -185,5 +185,16 @@ public class GroupController {
 		
 		return result;
 	}
+	
+	
+	/******************** 그룹 블랙리스트 페이지 *******************************************/
+	@GetMapping("group/blacklist")
+	public String blacklist(Model model, HttpSession session, @RequestParam(name="no", defaultValue="0") int groupNo) {
+		logger.info("GroupController > blacklist()");
+		
+		
+		return "group/blacklist";
+	}
+
 
 }
