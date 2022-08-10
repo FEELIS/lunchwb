@@ -10,6 +10,7 @@
 	<select id="login" parameterType="com.lunchwb.vo.UserVo" resultType="com.lunchwb.vo.UserVo">
 		<![CDATA[
 			select user_no userNo
+					,user_password userPassword
 			        ,user_email userEmail
 			        ,user_name userName
 			        ,user_grade userGrade

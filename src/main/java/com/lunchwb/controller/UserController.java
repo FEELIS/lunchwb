@@ -205,11 +205,13 @@ public class UserController {
 		
 		if (loginUser != null) { // 로그인 했다면
 			UserVo checkSNSUser = userService.checkSNS(loginUser.getUserEmail());
-			
+			System.out.println(checkSNSUser);
 			if(checkSNSUser != null) {
 				session.setAttribute("userInfo", checkSNSUser);
 				return "user/userInfoSNS";
 			}else {
+				
+				session.setAttribute("userInfo", loginUser);
 				return "user/checkUserInfo";
 			}
 		} else { // 로그인을 하지 않았다면 로그인 화면으로
