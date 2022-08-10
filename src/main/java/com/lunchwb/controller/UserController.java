@@ -206,7 +206,7 @@ public class UserController {
 		if (loginUser != null) { // 로그인 했다면
 			UserVo checkSNSUser = userService.checkSNS(loginUser.getUserEmail());
 			System.out.println(checkSNSUser);
-			if(checkSNSUser != null) {
+			if(checkSNSUser.getNaverLogin() != null) {
 				session.setAttribute("userInfo", checkSNSUser);
 				return "user/userInfoSNS";
 			}else {
