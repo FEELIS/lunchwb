@@ -181,9 +181,9 @@ public class GroupController {
 	public String outMember(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > outMember()");
 		
-		String state = groupService.outMember(groupVo);		
+		String result = groupService.outMember(groupVo);		
 		
-		return state;
+		return result;
 	}
 
 }
