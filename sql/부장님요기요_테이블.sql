@@ -264,7 +264,6 @@ CREATE TABLE group_member (
  group_member_no number(20) not null, 
  user_no number(20) NULL, 
  group_no number(20) NOT NULL, 
- leader_check number(10) DEFAULT 0 not NULL, 
  boss_check number(10) DEFAULT 0 not null,
  group_order number(20) not null
 );
