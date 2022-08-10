@@ -189,7 +189,17 @@
 	<delete id="outMember" parameterType="GroupVo">
 		DELETE FROM group_member
 		WHERE user_no = #{userNo}
+		AND group_no = #{groupNo}
 	</delete>
+	
+	
+	<!-- 자동 그룹 순서 조정 -->
+	<update id="autoOrder" parameterType="GroupVo">
+		UPDATE group_member
+		SET group_order = group_order - 1
+		WHERE user_no = #{userNo}
+		AND group_order > #{groupOrder}
+	</update>
 	
 	
 	<!-- index.jsp에서 그룹 선택 -->
