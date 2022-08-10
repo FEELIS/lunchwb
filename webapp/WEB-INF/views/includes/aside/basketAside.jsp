@@ -70,7 +70,7 @@
                         <tr>
                             <td id="basket-no-items" colspan="2">점심 후보를 추가해주세요</td>
                         </tr>
-                        <tr>
+                        <tr class="basket-table-row" data-storeNo="2881">
                             <td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
                                 <div class="basket-table-store-info">
                                 	<span class="text-start basket-table-store-name">써브웨이 서울대점</span>
@@ -81,7 +81,7 @@
                             	<i class="fas fa-minus-circle d-xxl-flex basket-del-btn"></i>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="basket-table-row" data-storeNo="1857">
                             <td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
                                 <div class="basket-table-store-info">
                                 	<span class="text-start basket-table-store-name">맥도날드 신림점</span>
@@ -92,7 +92,7 @@
                             	<i class="fas fa-minus-circle d-xxl-flex basket-del-btn"></i>
                             </td>
                         </tr>
-                        <tr>
+                        <tr class="basket-table-row" data-storeNo="2247">
                             <td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
                                 <div class="basket-table-store-info">
                                 	<span class="text-start basket-table-store-name">양자강</span>
@@ -119,7 +119,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header text-primary modal-header-custom">
-            	<span>필터를 선택해주세요&nbsp;<i class="fas fa-check"></i></span>
+            	<span>제외하고 싶은 음식은 체크를 해제해주세요&nbsp;<i class="fas fa-check"></i></span>
             	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             
@@ -127,10 +127,10 @@
                 <div class="row">
                     <div class="col" style="border-right: 1px solid voar(--bs-gray-200);">
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">뷔페</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label" for="formCheck-6">아시아음식</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-5">양식</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label" for="formCheck-2">아시아음식</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-3">양식</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-4"><label class="form-check-label" for="formCheck-4">일식</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-5"><label class="form-check-label" for="formCheck-3">한식</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-5"><label class="form-check-label" for="formCheck-5">한식</label></div>
                     </div>
                     <div class="col" style="border-right: 1px solid voar(--bs-gray-200);">
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-6"><label class="form-check-label" for="formCheck-6">패스트푸드</label></div>
@@ -161,9 +161,9 @@
 	var filter_excluded = "${filter_excluded}"
 		
 	var gpsVo = {
-			"gpsX" : "${curr_location.gpsX}",
-			"gpsY" : "${curr_location.gpsY}",
-			"address" : "${curr_location.address}",
+			gpsX : "${curr_location.gpsX}",
+			gpsY : "${curr_location.gpsY}",
+			address : "${curr_location.address}",
 		}
 	
 	
@@ -196,13 +196,17 @@
 					console.error(status + " : " + error);
 				}
 			});
-			
+			console.log(filter_excluded)
 		} else {
-			filter_excluded = ${filter_excluded}
+			var temp1 = "${filter_excluded}"
+			var temp2 = temp1.substring(1, temp1.length-1)
+			filter_excluded = temp2.split(",")	
 			
-		}
-		
-		console.log(filter_excluded)
+			for (var i = 0; i < filter_excluded.length; i++) {
+				filter_excluded[i] = parseInt(filter_excluded[i])
+			}
+			console.log(filter_excluded)	
+		}	
 
 		if (userNo == "") {
 			console.log("비로그인 회원")
@@ -374,7 +378,6 @@
 		    	
 		    	getAddr(gpsY, gpsX)
 		    	
-		 
 		})} else {
 			console.log("gps 지원 안함")
 		}

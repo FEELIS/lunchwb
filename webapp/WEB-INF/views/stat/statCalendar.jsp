@@ -92,7 +92,7 @@
 	    min: null,
 	    max: null,
 	    disable: function (date) {},
-	    startOnSunday: false,
+	    startOnMonday: false,
 	  };
 
 	  var el,
@@ -115,23 +115,23 @@
 	  };
 
 	  var dayMap = {
-	    0: "saturday",
-	    1: "sunday",
-	    2: "monday",
-	    3: "tuesday",
-	    4: "wednesday",
-	    5: "thursday",
-	    6: "friday",
+	    0: "일요일",
+	    1: "월요일",
+	    2: "화요일",
+	    3: "수요일",
+	    4: "목요일",
+	    5: "금요일",
+	    6: "토요일",
 	  };
 
 	  var alternateDayMap = {
-	    1: "일요일",
-	    2: "월요일",
-	    3: "화요일",
-	    4: "수요일",
-	    5: "목요일",
-	    6: "금요일",
-	    7: "토요일",
+	    1: "monday",
+	    2: "tuesday",
+	    3: "wednesday",
+	    4: "thursday",
+	    5: "friday",
+	    6: "saturday",
+	    7: "sunday",
 	  };
 	  
 	  //getMonth()는 0월부터 시작이여서 숫자1을 더해주어야 한다.
@@ -165,7 +165,7 @@
 	    var days = [];
 
 	    var daysFromLastMonth = firstDay.getDay();
-	    if (settings.startOnSunday) {
+	    if (settings.startOnMonday) {
 	      daysFromLastMonth = daysFromLastMonth - 1;
 	    }
 	    
@@ -253,11 +253,11 @@
 
 	  function generateYearHeaderDOM(currentDate) {
 	    var str = ''
-		    str += '<div class="d-flex align-items-center">' +
+		    str += '<div class="d-flex align-items-center justify-content-center weeks-container">' +
 		      	 (settings.enableMonthChange 
 		        ? '<button class="prev-button">' + settings.prevButton + "</button>"
 		        : "") +
-		      '<h1 class="month fw-bold mb-0 text-uppercase">' +
+		      '<h1 class="month fw-bold mt-5 mb-5 text-uppercase">' +
 		      currentDate.getFullYear() + '년' + 
 		      settings.monthYearSeparator + monthMap[currentDate.getMonth() + 1] +
 		      "</h1>" +
@@ -270,7 +270,7 @@
 		    
 		    str +=
 		      '<ol class="day-names list-unstyled week' +
-		      (settings.startOnSunday ? " start-on-sunday" : "") +
+		      (settings.startOnMonday ? " start-on-monday" : "") +
 		      '" data-week-no="' +
 		      0 +
 		      '">';
@@ -278,7 +278,7 @@
 		    for (var weekDay in dayMap) {
 		      if (dayMap.hasOwnProperty(weekDay)) {
 		        str +=
-		          '<li class="fw-bold text-uppercase" data-day="' +
+		          '<li class="fw-bold" data-day="' +
 		          weekDay +
 		          '">' +
 		          dayMap[weekDay] +
@@ -294,10 +294,12 @@
 		  function generateWeekDOM(monthData, currentDate) {
 		  	  var str = "";
 		 	   monthData.forEach(function (week, weekNo) {
+		 		   console.log(currentDate.getMonth()+1);
+		 		   console.log(typeof(currentDate.getMonth()+1));
 		    	 
 			      str +=
 			        '<ol class="days list-unstyled' +
-			        (settings.startOnSunday ? " start-on-sunday" : "") +
+			        (settings.startOnMonday ? " start-on-monday" : "") +
 			        '" data-week-no="' +
 			        (weekNo + 1) +
 			        '">';
@@ -346,13 +348,13 @@
 			          '</div>' + 
 			          
 			          
-			          
 			      	    '<div class="event bg-success show-menu">중식/중화요리</div>' +
 			      	    '<div class="event bg-success show-menu">흑룡강</div>' +
 
 			      	    
 			      	    '</li>';
-			          
+			          console.log(day.getDate());
+			          console.log(typeof(day.getDate()));
 			      });
 
 			      str += "</ol>";
@@ -429,7 +431,7 @@
 
 		  $.fn.calendar = function (options) {
 		    settings = $.extend(defaults, options);
-		    if (settings.startOnSunday) {
+		    if (settings.startOnMonday) {
 		      dayMap = alternateDayMap;
 		    }
 		    if (settings.min) {
@@ -591,7 +593,7 @@ var config =
       date: new Date(),
       onClickDate: selectDate,
       showYearDropdown: true,
-      startOnSunday: true,
+      startOnMonday: false,
     };
 
     $('.calendar').calendar(defaultConfig);`;

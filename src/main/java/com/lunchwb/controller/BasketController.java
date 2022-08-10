@@ -88,6 +88,7 @@ public class BasketController {
 	}
 	
 	
+	// 필터 모달에서 저장 버튼 눌렀을 때 > 세션에 값 저장
 	@ResponseBody
 	@PostMapping("/saveFilterSession")
 	public boolean saveFilterSession(@RequestBody List<Integer> filter_excluded, HttpSession session) {
