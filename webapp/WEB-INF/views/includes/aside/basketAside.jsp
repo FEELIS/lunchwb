@@ -126,18 +126,18 @@
             <div class="modal-body text-center text-dark" style="font-size: 14px;">
                 <div class="row">
                     <div class="col" style="border-right: 1px solid voar(--bs-gray-200);">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1" checked="checked"><label class="form-check-label" for="formCheck-1">뷔페</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2" checked="checked"><label class="form-check-label" for="formCheck-6">아시아음식</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3" checked="checked"><label class="form-check-label" for="formCheck-5">양식</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-4" checked="checked"><label class="form-check-label" for="formCheck-4">일식</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-5" checked="checked"><label class="form-check-label" for="formCheck-3">한식</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">뷔페</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label" for="formCheck-6">아시아음식</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-5">양식</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-4"><label class="form-check-label" for="formCheck-4">일식</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-5"><label class="form-check-label" for="formCheck-3">한식</label></div>
                     </div>
                     <div class="col" style="border-right: 1px solid voar(--bs-gray-200);">
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-6" checked="checked"><label class="form-check-label" for="formCheck-6">패스트푸드</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-7" checked="checked"><label class="form-check-label" for="formCheck-7">패밀리레스토랑</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-8" checked="checked"><label class="form-check-label" for="formCheck-8">치킨</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-9" checked="checked"><label class="form-check-label" for="formCheck-9">분식</label></div>
-                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-10" checked="checked"><label class="form-check-label" for="formCheck-10">중식</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-6"><label class="form-check-label" for="formCheck-6">패스트푸드</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-7"><label class="form-check-label" for="formCheck-7">패밀리레스토랑</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-8"><label class="form-check-label" for="formCheck-8">치킨</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-9"><label class="form-check-label" for="formCheck-9">분식</label></div>
+                        <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-10"><label class="form-check-label" for="formCheck-10">중식</label></div>
                     </div>
                 </div>
             </div>
@@ -148,13 +148,15 @@
         </div>
     </div>
 </div>
+
 </body>
 
 <script type="text/javascript">
 	var userNo = "${authUser.userNo}"
 	var basket = ""
 	var basket_group = 0
-	
+	var filter_excluded = "${filter_excluded}"
+		
 	var gpsVo = {
 			"gpsX" : "${curr_location.gpsX}",
 			"gpsY" : "${curr_location.gpsY}",
@@ -163,26 +165,50 @@
 	
 	
 	// 페이지 로드 시
-	$(document).ready(function(){				
-		document.cookie = "safeCookie1foo";
-		document.cookie = "crossCookie=bar; SameSite=None; Secure";
-		
-		console.log(gpsVo)
+	$(document).ready(function(){							
 		if (gpsVo.address == "") {
 			curr_location()	
 			setGPS(gpsVo)
 		} 
 		
 		$("#curr-location-address").text(gpsVo.address)	
+		console.log(gpsVo)
 		
+		if (filter_excluded == "") {
+			$.ajax({
+				url : "${pageContext.request.contextPath}/basket/makeFilterSession",		
+				type : "post",
+				contentType : "application/json",
+				async: false,
+				dataType : "json",
+				success : function(result){
+					if (result) {
+						filter_excluded = []
+						console.log("필터 세션 생성 성공")
+					} else {
+						console.log("필터 세션 생성 실패")
+					}
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+			
+		} else {
+			filter_excluded = ${filter_excluded}
+			
+		}
+		
+		console.log(filter_excluded)
 
 		if (userNo == "") {
 			console.log("비로그인 회원")
 			
 			basket = "${basket}"
-			
-			if (basket == "") {
+			console.log(basket)
+			if (basket == "ssssssssssss") {
 				// 장바구니 만들기
+				console.log("엥?")
 			 	$.ajax({
 					url : "${pageContext.request.contextPath}/basket/guestMakeBasket",		
 					type : "post",
@@ -190,10 +216,11 @@
 					async: false,
 					dataType : "json",
 					success : function(result){
-						if (result == "success") {
-							console.log("장바구니 생성")
+						if (result[0].length != 0) {
+							basket = result[0]
+							console.log("장바구니 생성 완료")
 						} else {
-							console.log("장바구니 생성 오류")
+							console.log("장바구니 생성 실패")
 						}
 					},
 					error : function(XHR, status, error) {
@@ -258,13 +285,50 @@
 	
 	// 장바구니 필터 클릭 시
 	$("#basket-filter-btn").on("click", function(){
+		for (var i = 1; i <= 10; i++) {
+			var curr = "#formCheck-" + String(i)
+			
+			if (filter_excluded.includes(i)) {
+				$(curr).prop("checked", false)
+			} else {
+				$(curr).prop("checked", true)
+			}
+		}
 		$("#modal-recFilter").modal("show")
 	})
 	
 	
 	// 장바구니 필터 적용
 	$("#modal-filter-submit").on("click", function(){
-		// 뭔가 ajax로 알고리즘을 적용 한 뒤
+		filter_excluded = []
+		
+		for (var i = 1; i <= 10; i++) {
+			var curr = "#formCheck-" + String(i)
+			
+			if (!$(curr).is(":checked")) {
+				filter_excluded.push(i)
+			}
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/basket/saveFilterSession",		
+				type : "post",
+				contentType : "application/json",
+				data : JSON.stringify(filter_excluded),
+				async: false,
+				dataType : "json",
+				success : function(result){
+					if (result) {
+						console.log("필터 세션 저장 성공")
+					} else {
+						console.log("필터 세션 저장 실패")
+					}
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			});
+		}
+		console.log(filter_excluded)
 		
 		$("#modal-recFilter").modal("hide")
 	})
@@ -285,7 +349,7 @@
 		    	gpsVo.gpsX = parseFloat(gpsX)
 		    	gpsVo.gpsY = parseFloat(gpsY)
 				
-		    	// 카카오 API로 주소 알아내기(도로명 > 없으면 지번)
+		    	// 카카오 API로 주소 알아내기
 				function getAddr(lat,lng) {
 		    		let address = ""
 		    		let geocoder = new kakao.maps.services.Geocoder()
@@ -311,7 +375,8 @@
 		
 	}
 	
-	// 세션 값 저장하기
+	
+	// gps 세션 값 저장하기
 	function setGPS(gpsVo) {
 		$.ajax({
 			url : "${pageContext.request.contextPath}/basket/setGPS",		
@@ -332,6 +397,7 @@
 		}); 
 	}
 	
+	
 	// 그룹 목록 불러오기 메소드
 	function addBasketGroup(basketGroup) {
 		$("#basket-groups").append(
@@ -350,6 +416,7 @@
 	function deleteFromBasket(store) {
 		
 	}
+	
 
 </script>
 

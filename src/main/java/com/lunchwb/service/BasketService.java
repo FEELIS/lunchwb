@@ -1,6 +1,9 @@
 package com.lunchwb.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +24,14 @@ public class BasketService {
 		basketGroup = groupDao.selectBasketGroup(userNo);
 		
 		return basketGroup;
+	}
+	
+	
+	public Map<Integer, List<StoreVo>> makeNewbasket() {
+		Map<Integer, List<StoreVo>> basket = new HashMap<>();
+		basket.put(0, new ArrayList<>());
+		
+		return basket;
 	}
 	
 	
