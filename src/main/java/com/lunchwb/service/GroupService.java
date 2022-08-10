@@ -281,7 +281,7 @@ public class GroupService {
 	/******************** 그룹 멤버 내보내기(강퇴) *****************************************/
 	public String outMember(GroupVo groupVo) {
 		String result = "fail";
-		int userNo = groupVo.getUserNo();
+		//int userNo = groupVo.getUserNo();
 		///////////////////// 그룹 멤버에서 삭제 //////////////////////////
 		int count = groupDao.outMember(groupVo);
 		
@@ -289,10 +289,13 @@ public class GroupService {
 			result = "success";
 		
 			//유령회원 user 테이블에서 제거
-			if(groupVo.getGroupOrder() == 0) {
-				userDao.groupOut(userNo);
-			}
+			//그룹없는 회원도 있어서 이거 아니야 없애지말까 아니면 유저검사 joindate나 email
+			/*
+			 * if(groupVo.getGroupOrder() == 0) { userDao.groupOut(userNo); }
+			 */
 			
+			//group_order 조정
+			groupDao.autoOrder(groupVo);
 		}
 		
 		return result;
