@@ -3,7 +3,7 @@
 
 <mapper namespace="store">
 
-	<select id="guestStoreRecommend" parameterType="GPSVo" resultType="StoreVo">
+	<select id="guestStoreRecommend" parameterType="map" resultType="StoreVo">
 		<![CDATA[
 			SELECT store_no storeNo
 			       ,menu_2nd_cate_no menu2ndCateNo
@@ -13,19 +13,32 @@
 			       ,distance
 			       ,score
 			FROM (SELECT s.store_no, s.menu_2nd_cate_no, s.store_name, s.store_road_address, b.rating_bujang
-			             ,ROUND(SQRT(POWER(ABS(s.store_x-#{gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(s.store_y-#{gpsY})*6400000*2*3.14/360, 2)), 0) distance
+			             ,ROUND(SQRT(POWER(ABS(s.store_x-#{gps.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(s.store_y-#{gps.gpsY})*6400000*2*3.14/360, 2)), 0) distance
 			             ,(NVL(v.cnt, 0)/10 + r.rating_naver * 50 + NVL(b.rating_bujang, 0) * 50) score
-			      FROM   store s, rating_others r, (SELECT store_no, COUNT(*) cnt FROM visited GROUP BY store_no) v, (SELECT store_no, AVG(user_score) rating_bujang
-			                                                                                                          FROM review, visited 
-			                                                                                                          WHERE review.visited_no = visited.visited_no 
-			                                                                                                          GROUP BY visited.store_no) b
+			      FROM   store s, rating_others r, food_2nd_category f
+			             ,(SELECT store_no, COUNT(*) cnt 
+			               FROM visited 
+			               GROUP BY store_no) v
+			             ,(SELECT store_no, AVG(user_score) rating_bujang
+			               FROM review, visited 
+			               WHERE review.visited_no = visited.visited_no 
+			               GROUP BY visited.store_no) b
 			      WHERE  s.store_no = r.store_no
 			      AND    s.store_no = b.store_no(+)
 			      AND    s.store_no = v.store_no(+)
-			      AND    ((r.rating_naver >= 4.3 AND r.rating_kakao >= 3) OR (r.rating_naver >= 4.5 AND r.rating_kakao = 0)) 
-			     )
+			      AND    s.menu_2nd_cate_no = f.menu_2nd_cate_no
+	    ]]>
+		
+		<foreach collection="filter_excluded" item="cate_1st">
+	              AND    f.menu_1st_cate_no != #{cate_1st}
+		</foreach>
+			  
+		<![CDATA[
+		         AND    ((r.rating_naver >= 4.3 AND r.rating_kakao >= 3) OR (r.rating_naver >= 4.5 AND r.rating_kakao = 0)) 
+			     ORDER BY score DESC)
 		    WHERE  distance <= 1000
-		    ORDER BY score DESC;
+		    AND    ROWNUM <= 15
+		    ORDER BY DBMS_RANDOM.value;
 		]]>
 	</select>
 	
