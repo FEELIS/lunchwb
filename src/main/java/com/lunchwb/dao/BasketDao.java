@@ -16,7 +16,7 @@ public class BasketDao {
 	
 	
 	public List<StoreVo> guestStoreRecommend() {
-		List<StoreVo> basket = sqlSession.selectList("basket.guestStoreRecommend");
+		List<StoreVo> basket = sqlSession.selectList("store.guestStoreRecommend");
 				
 		return basket;
 	}

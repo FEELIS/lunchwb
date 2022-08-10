@@ -24,6 +24,7 @@ public class BasketService {
 	private BasketDao basketDao;
 	
 	
+	// 초기 로드 시 장바구니 그룹 선택
 	public List<GroupVo> getBasketGroup(int userNo) {
 		List<GroupVo> basketGroup = null;
 		basketGroup = groupDao.selectBasketGroup(userNo);
@@ -32,18 +33,19 @@ public class BasketService {
 	}
 	
 	
+	// 비회원 새 장바구니 만들기
 	public Map<Integer, List<StoreVo>> makeNewbasket() {
 		Map<Integer, List<StoreVo>> basket = new HashMap<>();	
 		basket.put(0, new ArrayList<>());
-		
-		List<StoreVo> basketItems = basketDao.guestStoreRecommend();
-		basket.put(0, addGuestBasket(basket.get(0), basketItems));
-				
+						
 		return basket;
 	}
 	
 	
-	public List<StoreVo> addGuestBasket(List<StoreVo> basket, List<StoreVo> basketItem) {
+	// 비회원 장바구니에 아이템 3개 추가하기
+	public List<StoreVo> addGuestBasket(List<StoreVo> basket) {
+		List<StoreVo> basketItem = basketDao.guestStoreRecommend();
+		
 		Calendar cal = Calendar.getInstance();
 		int day = (cal.get(Calendar.DAY_OF_WEEK)+5) % 7;
 		
