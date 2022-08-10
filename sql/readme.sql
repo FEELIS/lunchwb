@@ -99,6 +99,8 @@
 -- rating_others 테이블 칼럼들 자료형 number(13,10) 에서 number(20,3)으로 변경
 -- rating_others 테이블 rating_google 칼럼 삭제 
 
+-- 2022.08.10 14:24 =====================
+-- group_member테이블 leader_check삭제
 
 
 
