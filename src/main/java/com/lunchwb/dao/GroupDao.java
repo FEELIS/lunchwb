@@ -96,6 +96,11 @@ public class GroupDao {
 		int count = sqlSession.delete("group.outMember", groupVo);
 		return count;
 	}
+	
+	/******************** 그룹 순서 조정(선택 변경x) **************************************/
+	public void autoOrder(GroupVo groupVo) {
+		sqlSession.update("group.autoOrder", groupVo);
+	}
 
 	/******************** 장바구니 그룹 선택 ***********************************************/
 	public List<GroupVo> selectBasketGroup(int userNo) {
