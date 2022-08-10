@@ -131,6 +131,14 @@ public class UserController {
 		return "redirect:./";
 	}
 	
+	/* SNS 로그인 카카오 */
+	@RequestMapping(value="/kakaoLoginCallback",  method = {RequestMethod.GET,RequestMethod.POST})
+	public String userKakaoLoginPro(Model model,@RequestParam Map<String,Object> paramMap, @RequestParam String code, @RequestParam String state,HttpSession session) throws SQLException, Exception {
+		
+		
+		return "redirect:./";
+	}
+	
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
