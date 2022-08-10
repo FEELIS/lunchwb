@@ -4,6 +4,32 @@
   }
 }
 
+
+
+#main-content {
+  margin-left: 20px;
+  margin-right: 20px;
+  color: var(--bs-dark);
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  width: 100%;
+  min-height: auto;
+}
+
+#main-content .week {
+	text-align: center;
+}
+	
+
+#main-content .disabled{
+  color: #ddd;
+}
+
+
+
+
 /* ------------------ 달력 -------------------- */
 .calendar {
   border-radius: 10px;
@@ -26,8 +52,9 @@
 
 .calendar .days li {
   border-bottom: 1px solid #eee;
-  min-height: 8rem;
+  min-height: 12rem;
 }
+
 
 .calendar .days li .date {
   margin: 0.5rem 0;
@@ -72,19 +99,25 @@
   font-size: 2rem;
 }
 
-.start-on-sunday .day:first-child {
-  color: red;
-}
+
 
 .week {
   margin: 0 !important;
   overflow: hidden;
 }
 
+
+
 .show-menu {
   flex: 0 0 auto;
   width: 95%;
   min-width: inherit;
+}
+
+.prev-button, .next-button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
 
