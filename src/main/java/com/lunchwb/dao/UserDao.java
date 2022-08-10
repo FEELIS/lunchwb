@@ -56,6 +56,11 @@ public class UserDao {
 		return naverLogin;
 	}
 	
+	public UserVo modifyAfterNaverLogin(UserVo userVo) {
+		UserVo naverLogin = sqlSession.selectOne("user.modifyAfterNaverLogin", userVo);
+		return naverLogin;
+	}
+	
 	public void setNaverConnection(Map<String, Object> apiJson) {
 		sqlSession.update("user.setNaverConnection", apiJson);
 	}
@@ -65,6 +70,18 @@ public class UserDao {
 		return count;
 	}
 	
+	
+	/* SNS 유저 확인 */
+	public UserVo checkNaverUser(String userEmail) {
+		UserVo checkNaverUser = sqlSession.selectOne("user.checkNaverUser", userEmail);
+		return checkNaverUser;
+	}
+	
+	/* SNS 유저 회원 정보 수정 */
+	public int modifySNSUser(UserVo userVo) {
+		int count = sqlSession.update("user.modifySNSUser", userVo);
+		return count;
+	}
 	
 	/* Json */
 	/* 이메일 중복확인 */

@@ -202,10 +202,17 @@ public class UserController {
 	public String checkUser(HttpSession session) {
 		logger.info("user > checkUser()");
 		UserVo loginUser = (UserVo) session.getAttribute("authUser");
-
-		if (loginUser != null) {
-			return "user/checkUserInfo";
-		} else {
+		
+		if (loginUser != null) { // 로그인 했다면
+			UserVo checkSNSUser = userService.checkSNS(loginUser.getUserEmail());
+			
+			if(checkSNSUser != null) {
+				session.setAttribute("userInfo", checkSNSUser);
+				return "user/userInfoSNS";
+			}else {
+				return "user/checkUserInfo";
+			}
+		} else { // 로그인을 하지 않았다면 로그인 화면으로
 			return "redirect:/lunchwb/login";
 		}
 		
@@ -226,8 +233,8 @@ public class UserController {
 		
 		System.out.println("비밀번호 일치 : " + pwEncoder.matches(password, checkUser.getUserPassword()));
 		
-		if(authUser != null) {
-			if(true == pwEncoder.matches(password, checkUser.getUserPassword())) {
+		if(authUser != null) { 
+			if(true == pwEncoder.matches(password, checkUser.getUserPassword())) { 
 				userInfo = userService.getUserInfo(checkUser);
 				if (userInfo != null) {
 					checkUser.setUserPassword("");
@@ -241,6 +248,7 @@ public class UserController {
 		return returnURL;
 	}
 	
+	/* 회원가입 유저 회원정보 수정 */
 	@PostMapping("user/modifyUser")
 	public String modifyUser(@ModelAttribute UserVo userVo, HttpSession session) {
 		logger.info("user > userInfo()");
@@ -259,6 +267,26 @@ public class UserController {
 			return "redirect:./checkUser";
 		}else {
 			return "redirect:./";
+		}
+	}
+
+	/* SNS 유저 회원정보 수정 */
+	@PostMapping("user/modifySNSUser")
+	public String modifySNSUser(@ModelAttribute UserVo userVo, HttpSession session) {
+		logger.info("user > userInfo()");
+		System.out.println("before = " + userVo);
+		UserVo SNSID = (UserVo)session.getAttribute("userInfo");
+		userVo.setNaverLogin(SNSID.getNaverLogin());
+		System.out.println("after = " + userVo);
+		UserVo authUser = userService.modifySNSUser(userVo);
+		
+		
+		if(authUser != null) {
+			session.setAttribute("authUser", authUser);
+			session.removeAttribute("userInfo");
+			return "redirect:../";
+		}else {
+			return "redirect:../";
 		}
 	}
 	

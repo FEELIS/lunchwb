@@ -6,7 +6,7 @@
 <html>
 
 <head>
-    <meta charset="utf-8">
+<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>회원정보 변경</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
@@ -39,18 +39,10 @@
                                 <div class="col-md-6 col-xl-4 col-xxl-5">
                                     <div class="p-5">
                                         <div class="text-center"></div>
-                                        <form method="post" action="${pageContext.request.contextPath}/user/modifyUser" class="user" id="updateForm">
+                                        <form method="post" action="${pageContext.request.contextPath}/user/modifySNSUser" class="user" id="updateForm">
                                             <div class="mb-3">
                                             	<strong class="join-text">아이디</strong>
                                             	<input id="infoEmail" class="form-control form-control-user input-box btn-radius" name = "userEmail" value="${userInfo.userEmail}"readonly>
-                                           	</div>
-                                            <div class="mb-3">
-                                            	<strong class="join-text">새 비밀번호</strong>
-                                            	<input class="form-control form-control-user input-box btn-radius" type="password" id="inputPassword" placeholder="비밀번호를 입력해주세요." name="userPassword">
-                                           	</div>
-                                            <div class="mb-3">
-                                            	<strong class="join-text">새 비밀번호 확인</strong>
-                                            	<input class="form-control form-control-user input-box btn-radius" type="password" id="checkPassword" placeholder="비밀번호를 한 번 더 입력해주세요." name="checkPassword">
                                            	</div>
                                             <div class="mb-3">
                                             	<strong class="join-text">닉네임</strong>
@@ -60,15 +52,16 @@
                                             	<strong class="join-text">출생연도</strong>
                                             	<input id=inputBirthDate type="number" value="${userInfo.userBirthYear}" name="userBirthYear" placeholder="출생연도를 적어주세요." min="1900" max="2100">
                                            	</div>
-                                            <div class="mb-3"><strong class="join-text">성별</strong>
+                                            <div class="mb-3">
+                                            	<strong class="join-text">성별</strong>
                                             	<select class="form-select gender-box" style="width: 150px;height: auto;" name="userSex">
                                             		<option value="male" <c:if test="${userInfo.userSex eq 'male' }">selected</c:if>>남자</option>
                                                    	<option value="female" <c:if test="${userInfo.userSex eq 'female' }">selected</c:if>>여자</option>
                                                 </select>
-                                            </div>
+                                               </div>
                                             <div class="mb-3">
                                             	<button class="btn btn-primary d-block btn-user w-100 btn-radius" id="btn-submit" type="submit">수정하기</button>
-                                           	</div>
+                                            </div>
                                         </form>
                                     </div>
                                 </div>
@@ -78,7 +71,7 @@
                 </div>
             </div>
             <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
-    <script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
+	 <script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 </body>
@@ -88,27 +81,13 @@
 $("#btn-submit").on("click", function(){
 	console.log("버튼 확인");
 	
-	var password = $('#updateForm [name = userPassword]').val();
-	var checkPassword = $('#updateForm [name = checkPassword]').val();
 	var name = $('#updateForm [name = userName]').val();
 	var birth = $('#updateForm [name = userBirthYear]').val();
 	var sex = $('#updateForm [name = userSex]').val();
 	
-	console.log(password);
-	console.log(checkPassword);
 	console.log(name);
 	console.log(birth);
 	console.log(sex);
-	
-	if(password =="" || password == null){
-		alert("비밀번호를 확인해주세요.");
-		return false;
-	}
-	
-	if(password != checkPassword){
-		alert("비밀번호가 일치하지 않습니다.");
-		return false;
-	}
 	
 	if(name == "" || name == null){
 		alert("이름을 입력해주세요.");
@@ -129,7 +108,4 @@ $("#btn-submit").on("click", function(){
 
 </script>
 
-
-
 </html>
-

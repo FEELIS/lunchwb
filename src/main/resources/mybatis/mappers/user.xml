@@ -11,7 +11,6 @@
 		<![CDATA[
 			select user_no userNo
 			        ,user_email userEmail
-			        ,user_password userPassword
 			        ,user_name userName
 			        ,user_grade userGrade
 			from users
@@ -124,7 +123,6 @@
 		<![CDATA[
 			select user_no userNo
 			        ,user_email userEmail
-			        ,user_password userPassword
 			        ,user_name userName
 			        ,user_grade userGrade
 			from users
@@ -156,6 +154,43 @@
 			values (seq_user_no.nextval, #{email}, #{nickname}, #{birthyear}, #{gender}, sysdate, 1, #{id})
 		]]>
 	</insert>
+	
+	<!-- SNS 유저 회원정보 수정 -->
+	
+	<update id="modifySNSUser" parameterType="com.lunchwb.vo.UserVo">
+		<![CDATA[
+			update users
+			set user_name = #{userName}
+			    ,user_birth_year = #{userBirthYear}
+			    ,user_sex = #{userSex}
+			where user_email = #{userEmail}
+		]]>
+	</update>
+	
+	<select id="modifyAfterNaverLogin" parameterType="com.lunchwb.vo.UserVo" resultType="com.lunchwb.vo.UserVo">
+		<![CDATA[
+			select user_no userNo
+			        ,user_email userEmail
+			        ,user_name userName
+			        ,user_grade userGrade
+			from users
+			where user_email = #{userEmail}
+			and naver_login = #{naverLogin}
+		]]>
+	</select>
+	
+	<!-- SNS 유저 확인 -->
+	<select id="checkNaverUser" parameterType="com.lunchwb.vo.UserVo" resultType="com.lunchwb.vo.UserVo">
+		<![CDATA[
+			select naver_login naverLogin
+					,user_email userEmail
+			        ,user_name userName
+			        ,user_birth_year userBirthYear
+			        ,user_sex userSex
+			from users
+			where user_email = #{userEmail}
+		]]>
+	</select>
 	
 	<!-- 이지희 -->
 	  <insert id="addGpMember" parameterType="UserVo" useGeneratedKeys="true" keyColumn="user_no" keyProperty="userNo">

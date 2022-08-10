@@ -89,6 +89,24 @@ public class UserService {
 		return count;
 	}
 	
+	/* SNS 회원 가입 유저 확인 */
+	public UserVo checkSNS(String userEmail) {
+		UserVo checkSNSUser = userDao.checkNaverUser(userEmail);
+		return checkSNSUser;
+	}
+	
+	/* SNS 회원 회원정보 수정 */
+	public UserVo modifySNSUser(UserVo userVo) {
+		int count = userDao.modifySNSUser(userVo);
+		System.out.println("userVo = " +userVo);
+		if(count > 0) {
+			UserVo authUser = userDao.modifyAfterNaverLogin(userVo);
+			return authUser;
+		}else {
+			return null;
+		}
+	}
+	
 	
 	/* JSON */
 	public String checkEmail(String userEmail) {
