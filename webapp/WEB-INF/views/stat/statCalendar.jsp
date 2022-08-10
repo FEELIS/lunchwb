@@ -9,28 +9,20 @@
 <meta name="og:type" content="article">
 
 <!-- css -->
-<link href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath}/assets/css/calendar.css" rel="stylesheet"
-	type="text/css">
-<link href="${pageContext.request.contextPath}/assets/css/notification.css" rel="stylesheet"
-	type="text/css">
-<link href="${pageContext.request.contextPath}/assets/css/yogiyo.css" rel="stylesheet"
-	type="text/css">
+<link href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/calendar.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/notification.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/yogiyo.css" rel="stylesheet" type="text/css">
 
 <!-- fonts -->
-<link href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css"
-	rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css" rel="stylesheet" type="text/css">
 
 <!-- js -->
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/liveReload.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/assets/js/WOWSlider-about-us.js"></script>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/WOWSlider-about-us.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
 
 
 
@@ -50,9 +42,10 @@
 				<!-- /header -->
 
 				<div id="main-content" class="container-fluid">
-					<div class="calendar card mb-4">
-					
+					<div class="d-sm-flex justify-content-between align-items-center mb-4">
+						<h3 class="text-dark mb-0">캘린더</h3>
 					</div>
+					<div class="calendar card mb-4"></div>
 				</div>
 				<!-- content -->
 			</div>
@@ -147,11 +140,12 @@
 		    console.log(thisDate);
 		    return new Date(thisDate);
 		  }
-
+	
+	  // 이번달 마지막 날짜 구하기
 		  function getLastDayOfMonth(currentDate) {
 		    return new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
 		  }
-
+	  // 저번달 마지막날 구하기
 		  function getLastMonthLastDay(currentDate) {
 		    var month = currentDate.getMonth();
 		    var year = currentDate.getFullYear();
@@ -161,7 +155,7 @@
 		    }
 		    return new Date(year, month, 0);
 		  }
-
+	// 달력 정보 구성 배열로 하기
 	  function generateWeekData(currentDate, weekNo) {
 	    var firstDay = getFirstDayOfMonth(currentDate);
 	    var firstDayDate = firstDay.getDate();
@@ -173,6 +167,8 @@
 	    if (settings.startOnSunday) {
 	      daysFromLastMonth = daysFromLastMonth - 1;
 	    }
+	    
+	    //달 넘어가면 1로 초기화
 	    var daysFromNextMonth = 1;
 
 	    if (weekNo === 1) {
@@ -241,7 +237,8 @@
 	    }
 	    return monthData;
 	  }
-
+	
+	  //클릭하면 오늘로 초기화해주는 버튼
 	  function generateTodayButton() {
 	    return (
 	      "" +
@@ -283,6 +280,8 @@
 	      "</div>";
 	    return str;
 	  }
+	  
+	  
 	  function generateMonthDOM(currentDate) {
 		    var str = "";
 		    str += '<div class="months-wrapper">';
@@ -435,6 +434,8 @@
 		      calendarDump += "</div>";
 		    } else {
 		      calendarDump += '<div class="weeks-container">';
+		      
+
 
 		      calendarDump += generateMonthHeaderDOM(currentDate);
 
@@ -444,10 +445,11 @@
 
 		      calendarDump += "</div>";
 		    }
-
+			/*
 		    if (settings.showTodayButton) {
 		      calendarDump += generateTodayButton();
 		    }
+		    */
 
 		    calendarDump += "</div>";
 
