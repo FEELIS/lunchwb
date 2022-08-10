@@ -156,7 +156,7 @@ public class GroupService {
 	}
 	
 	
-	/******************** 그룹에 보스가 있는지 *****************************************/
+	/******************** 그룹 이름 변경 *********************************************/
 	public String nameChange(GroupVo groupVo) {
 		String result = "fail";
 		
@@ -204,7 +204,7 @@ public class GroupService {
 				if(gpCount < 4) {
 					state = "possible";
 					checkMap.put("userNo", userNo);
-					checkMap.put("groupCount", gpCount);
+					checkMap.put("gpCount", gpCount);
 					
 					//그룹 추가 불가(최대 개수 보유)
 				}else {
