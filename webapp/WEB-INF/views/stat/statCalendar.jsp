@@ -45,7 +45,8 @@
 					<div class="d-sm-flex justify-content-between align-items-center mb-4">
 						<h3 class="text-dark mb-0">캘린더</h3>
 					</div>
-					<div class="calendar card mb-4"></div>
+					<div class="calendar card mb-4">
+					</div>
 				</div>
 				<!-- content -->
 			</div>
@@ -251,90 +252,22 @@
 	  }
 
 	  function generateYearHeaderDOM(currentDate) {
-	    var str =
-	      "" +
-	      '<div class="buttons-container">' +
-	      (settings.enableMonthChange && settings.enableYearView
-	        ? '<button class="prev-button">' + settings.prevButton + "</button>"
-	        : "") +
-	      '<span class="label-container year-label">';
-	    if (settings.showYearDropdown) {
-	      str += "" + '<select class="year-dropdown">';
-	      for (var i = 2020; i < 2025; i++) {
-	        if (i === currentDate.getFullYear()) {
-	          str +=
-	            '<option selected="selected" value="' + i + '">' + i + '년' + "</option>";
-	        } else {
-	          str += '<option value="' + i + '">' + i + '년' + "</option>";
-	        }
-	      }
-	      str += "</select>";
-	    } else {
-	      str += currentDate.getFullYear() + '년';
-	    }
-	    str +=
-	      "</span>" +
-	      (settings.enableMonthChange && settings.enableYearView
-	        ? '<button class="next-button">' + settings.nextButton + "</button>"
-	        : "") +
-	      "</div>";
-	    return str;
-	  }
-	  
-	  
-	  function generateMonthDOM(currentDate) {
-		    var str = "";
-		    str += '<div class="months-wrapper">';
-
-		    for (var month in monthMap) {
-		      if (monthMap.hasOwnProperty(month)) {
-		        var showThreeMonthsInARow = "";
-		        showThreeMonthsInARow = settings.showThreeMonthsInARow
-		          ? " one-third"
-		          : "";
-		        str +=
-		          '<span class="month' +
-		          showThreeMonthsInARow +
-		          '" data-year="' +
-		          currentDate.getFullYear() + 
-		          '" data-month="' +
-		          month + 
-		          '"><span>' +
-		          monthMap[month] +
-		          "</span></span>";
-		      }
-		    }
-
-		    str += "</div>";
-		    return str;
-		  }
-
-		  function generateMonthHeaderDOM(currentDate) {
-		    return (
-		      "" +
-		      '<div class="buttons-container d-flex align-items-center">' +
-		      (settings.enableMonthChange
+	    var str = ''
+		    str += '<div class="d-flex align-items-center">' +
+		      	 (settings.enableMonthChange 
 		        ? '<button class="prev-button">' + settings.prevButton + "</button>"
 		        : "") +
-		      '<span class="label-container month-container">' +
-		      '<span class="year-label month fw-bold mb-0 text-uppercase">' +
+		      '<h1 class="month fw-bold mb-0 text-uppercase">' +
 		      currentDate.getFullYear() + '년' + 
-		      "</span>" +
-		      settings.monthYearSeparator +
-		      '<span class="month-label">' +
-		      monthMap[currentDate.getMonth() + 1] +
-		      "</span>" +
-		      "</span>" +
+		      settings.monthYearSeparator + monthMap[currentDate.getMonth() + 1] +
+		      "</h1>" +
 		      (settings.enableMonthChange
 		        ? '<button class="next-button">' + settings.nextButton + "</button>"
 		        : "") +
 		      "</div>"
-		    );
-		  }
-
-		  function generateWeekHeaderDOM(currentDate) {
-		    var str = "";
-	    	str += '<div class="weeks-wrapper header">';
+		    
+		    
+		    
 		    str +=
 		      '<ol class="day-names list-unstyled week' +
 		      (settings.startOnSunday ? " start-on-sunday" : "") +
@@ -345,7 +278,7 @@
 		    for (var weekDay in dayMap) {
 		      if (dayMap.hasOwnProperty(weekDay)) {
 		        str +=
-		          '<li class="day header fw-bold text-uppercase" data-day="' +
+		          '<li class="fw-bold text-uppercase" data-day="' +
 		          weekDay +
 		          '">' +
 		          dayMap[weekDay] +
@@ -354,84 +287,88 @@
 		    }
 
 		    str += "</ol>";
-		    str += "</div>";
+		    
+		    
 		    return str;
 		  }
-
 		  function generateWeekDOM(monthData, currentDate) {
-		    var str = "";
-		    str += '<div class="weeks-wrapper">';
+		  	  var str = "";
+		 	   monthData.forEach(function (week, weekNo) {
+		    	 
+			      str +=
+			        '<ol class="days list-unstyled' +
+			        (settings.startOnSunday ? " start-on-sunday" : "") +
+			        '" data-week-no="' +
+			        (weekNo + 1) +
+			        '">';
 
-		    monthData.forEach(function (week, weekNo) {
-		      str +=
-		        '<ol class="days week' +
-		        (settings.startOnSunday ? " start-on-sunday" : "") +
-		        '" data-week-no="' +
-		        (weekNo + 1) +
-		        '">';
+			      week.forEach(function (day, dayNo) {
+			        var disabled = false;
+			        if (day.getMonth() !== currentDate.getMonth()) disabled = true;
+			        disabled = disabled ? " disabled" : "";
 
-		      week.forEach(function (day, dayNo) {
-		        var disabled = false;
-		        if (day.getMonth() !== currentDate.getMonth()) disabled = true;
-		        disabled = disabled ? " disabled" : "";
+			        var selected = false;
+			        if (selectedDate) {
+			          if (day == selectedDate.toString()) selected = true;
+			          selected = selected ? " selected" : "";
+			        } else {
+			          selected = "";
+			        }
 
-		        var selected = false;
-		        if (selectedDate) {
-		          if (day == selectedDate.toString()) selected = true;
-		          selected = selected ? " selected" : "";
-		        } else {
-		          selected = "";
-		        }
+			        var today = false;
 
-		        var today = false;
+			        if (day == todayDate.toString()) today = true;
+			        today = today ? " today" : "";
 
-		        if (day == todayDate.toString()) today = true;
-		        today = today ? " today" : "";
+			        var dateDisabled = "ola";
+			        if (
+			          (settings.min && settings.min > day) ||
+			          (settings.max && settings.max < day) ||
+			          (settings.disable &&
+			            typeof settings.disable === "function" &&
+			            settings.disable(day))
+			        ) {
+			          dateDisabled = 'disabled="disabled" ';
+			        }
 
-		        var dateDisabled = "ola";
-		        if (
-		          (settings.min && settings.min > day) ||
-		          (settings.max && settings.max < day) ||
-		          (settings.disable &&
-		            typeof settings.disable === "function" &&
-		            settings.disable(day))
-		        ) {
-		          dateDisabled = 'disabled="disabled" ';
-		        }
+			        str +=
+			          '<li class="day' +
+			          disabled +
+			          selected +
+			          today +
+			          '" data-date="' +
+			          day +
+			          '" ' +
+			          dateDisabled +
+			          '><div class="date"><span class="d-flex flex-row-reverse">' +
+			          day.getDate() +
+			          '</span>' + 
+			          '</div>' + 
+			          
+			          
+			          
+			      	    '<div class="event bg-success show-menu">중식/중화요리</div>' +
+			      	    '<div class="event bg-success show-menu">흑룡강</div>' +
 
-		        str +=
-		          '<li class="day' +
-		          disabled +
-		          selected +
-		          today +
-		          '" data-date="' +
-		          day +
-		          '" ' +
-		          dateDisabled +
-		          " ><div class='date'><span class='d-flex flex-row-reverse'>" +
-		          day.getDate() +
-		          "</span></div><div class='event bg-success show-menu'>중식/중화요리</div><div class='event bg-success show-menu'>흑룡강</div></li>";
-		      });
+			      	    
+			      	    '</li>';
+			          
+			      });
 
-		      str += "</ol>";
-		    });
-		    str += "</div>";
+			      str += "</ol>";
+			    });
 		    return str;
 		  }
 
 		  function generateDomString(monthData, currentDate) {
 		    var calendarDump = "";
 
-		    calendarDump += '<div class="calendar-box">';
-
-		    if (yearView) {
-		      calendarDump += '<div class="months-container">';
-
 		      calendarDump += generateYearHeaderDOM(currentDate);
+		      
+		      calendarDump += generateWeekDOM(monthData, currentDate);
 
-		      calendarDump += generateMonthDOM(currentDate);
 
-		      calendarDump += "</div>";
+		     /* 
 		    } else {
 		      calendarDump += '<div class="weeks-container">';
 		      
@@ -441,17 +378,13 @@
 
 		      calendarDump += generateWeekHeaderDOM(currentDate);
 
-		      calendarDump += generateWeekDOM(monthData, currentDate);
 
 		      calendarDump += "</div>";
 		    }
-			/*
 		    if (settings.showTodayButton) {
 		      calendarDump += generateTodayButton();
 		    }
 		    */
-
-		    calendarDump += "</div>";
 
 		    return calendarDump;
 		  }
