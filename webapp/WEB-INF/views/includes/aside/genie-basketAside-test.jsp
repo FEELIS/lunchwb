@@ -15,7 +15,7 @@
 <nav id="basket-aside" class="navbar navbar-light bg-white text-center d-xxl-flex align-items-start justify-content-xxl-center sidebar accordion p-0">
     <div class="container-fluid d-flex flex-column p-0">
         <div id="bujang-logo-wrap">
-        	<a href=""><img data-bss-hover-animate="pulse" id="bujang-logo-blue" class="no-drag" src="assets/img/bujang-logo%20blue.png"></a>
+        	<a href=""><img data-bss-hover-animate="pulse" id="bujang-logo-blue" class="no-drag" src="assets/img/bujang-logo blue.png"></a>
         </div>
         
         <div id="comment-box">
@@ -73,7 +73,8 @@
                         <tr>
                             <td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
                                 <div class="basket-table-store-info">
-                                	<span class="text-start basket-table-store-name">써브웨이 서울대점</span>
+                                	<!--  가게 이름 클릭 > 가게 정보 모달(+지도에서도) -->
+                                	<span class="text-start basket-table-store-name" data-storeno ="1">써브웨이 서울대점</span>
                                 	<span class="text-start basket-table-store-detail">샌드위치 / 251m</span>
                                 </div>
                             </td>
@@ -422,6 +423,9 @@
 	function deleteFromBasket(store) {
 		
 	}
+	
+	
+	
 	
 
 </script>

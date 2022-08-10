@@ -3,6 +3,19 @@
 
 <mapper namespace="store">
 
+	<resultMap id="GroupVo" type="com.lunchwb.vo.GroupVo">
+		<result column="store_no" property="storeNo" />
+		<result column="menu_2nd_cate_no" property="menu2ndCateNo" />
+		<result column="store_name" property="storeName" />
+		<result column="store_road_address" property="storeRoadAddress" />
+		<result column="store_old_address" property="storeOldAddress" />
+		<result column="store_opening_hours" property="storeOpeningHours" />
+		<result column="store_breaktime" property="storeBreaktime" />
+		<result column="visit_count" property="visitCnt" />
+		<result column="rating_bujang" property="ratingBujang" />
+	</resultMap>
+	
+
 	<select id="guestStoreRecommend" parameterType="map" resultType="StoreVo">
 		<![CDATA[
 			SELECT store_no storeNo
@@ -40,6 +53,29 @@
 		    AND    ROWNUM <= 15
 		    ORDER BY DBMS_RANDOM.value;
 		]]>
+	</select>
+	
+	
+	<select id="basicStoreInfo" parameterType="int" resultMap="StoreVo">
+		SELECT  s.store_no
+		        , store_name
+				, menu_2nd_cate_name
+				, store_road_address
+				, store_opening_hours
+				, store_breaktime
+		        , visit_count
+		        , rating_bujang
+		FROM store s
+		     , food_2nd_category f
+		     , (SELECT COUNT(visited_no) visit_count
+		        FROM visited
+		        WHERE store_no = #{storeNo} ) 
+		     , (SELECT  ROUND(SUM(user_score)/COUNT(user_score), 2) rating_bujang
+		        FROM review r, visited v
+		        WHERE v.visited_no = r.visited_no
+		        AND v.store_no = 8) 
+		WHERE s.menu_2nd_cate_no = f.menu_2nd_cate_no
+		AND s.store_no = #{storeNo}
 	</select>
 	
 </mapper>

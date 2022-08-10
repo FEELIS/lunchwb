@@ -15,6 +15,10 @@ public class StoreVo {
 	private List<String> storeOpeningHours;
 	private List<String> storeBreaktime;
 	
+	////////////////// food 2nd category ////////////////////
+	private String menu2ndCateName;
+	
+	
 	//////////////////// ratingOthers table ////////////////////
 	// private int storeNo; (store table fk)
 	private float ratingNaver;
@@ -42,8 +46,8 @@ public class StoreVo {
 
 	
 	public StoreVo(int storeNo, int menu2ndCateNo, String storeName, double storeX, double storeY,
-			String storeRoadAddress, String storeOldAddress, List<String> storeOpeningHours,
-			List<String> storeBreaktime, float ratingNaver, float ratingKakao, int distance, int score, boolean stored,
+			String storeRoadAddress, String storeOldAddress, List<String> storeOpeningHours, List<String> storeBreaktime,
+			String menu2ndCateName, float ratingNaver, float ratingKakao, int distance, int score, boolean stored,
 			float ratingBujang, int visitCnt) {
 		this.storeNo = storeNo;
 		this.menu2ndCateNo = menu2ndCateNo;
@@ -54,6 +58,7 @@ public class StoreVo {
 		this.storeOldAddress = storeOldAddress;
 		this.storeOpeningHours = storeOpeningHours;
 		this.storeBreaktime = storeBreaktime;
+		this.menu2ndCateName = menu2ndCateName;
 		this.ratingNaver = ratingNaver;
 		this.ratingKakao = ratingKakao;
 		this.distance = distance;
@@ -154,6 +159,16 @@ public class StoreVo {
 	public void setStoreBreaktime(List<String> storeBreaktime) {
 		this.storeBreaktime = storeBreaktime;
 	}
+	
+
+	public String getMenu2ndCateName() {
+		return menu2ndCateName;
+	}
+
+
+	public void setMenu2ndCateName(String menu2ndCateName) {
+		this.menu2ndCateName = menu2ndCateName;
+	}
 
 
 	public float getRatingNaver() {
@@ -232,8 +247,8 @@ public class StoreVo {
 	public String toString() {
 		return "StoreVo [storeNo=" + storeNo + ", menu2ndCateNo=" + menu2ndCateNo + ", storeName=" + storeName
 				+ ", storeX=" + storeX + ", storeY=" + storeY + ", storeRoadAddress=" + storeRoadAddress
-				+ ", storeOldAddress=" + storeOldAddress + ", storeOpeningHours=" + storeOpeningHours
-				+ ", storeBreaktime=" + storeBreaktime + ", ratingNaver=" + ratingNaver + ", ratingKakao=" + ratingKakao
+				+ ", storeOldAddress=" + storeOldAddress + ", storeOpeningHours=" + storeOpeningHours + ", storeBreaktime=" + storeBreaktime
+				+ ", menu2ndCateName=" + menu2ndCateName + ", ratingNaver=" + ratingNaver + ", ratingKakao=" + ratingKakao
 				+ ", distance=" + distance + ", score=" + score + ", stored=" + stored + ", ratingBujang="
 				+ ratingBujang + ", visitCnt=" + visitCnt + "]";
 	}
