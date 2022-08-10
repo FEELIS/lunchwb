@@ -57,6 +57,7 @@ public class UserController {
 	
 	@PostMapping("/login")
 	public String autoLogin(HttpSession session, UserVo userVo, HttpServletResponse response){
+		logger.info("loginPost...UserVo={}", userVo);
 		String returnURL = "";
 		
 		if (session.getAttribute("authUser") != null) {
@@ -82,8 +83,6 @@ public class UserController {
 			}else {
 				returnURL = "redirect:./login?result=fail";
 			}
-		
-			
 		}else { // 로그인 실패
 			returnURL = "redirect:./login?result=fail";
 			
@@ -101,16 +100,12 @@ public class UserController {
 		oauthToken = naverLoginBo.getAccessToken(session, code, state);
 		//로그인 사용자 정보를 읽어온다.
 		String apiResult = naverLoginBo.getUserProfile(oauthToken);
-		System.out.println("apiResult =>"+apiResult);
 		ObjectMapper objectMapper =new ObjectMapper();
-		
 		
 		Map<String, Object> apiJson = (Map<String, Object>) objectMapper.readValue(apiResult, Map.class).get("response");
 		System.out.println("apiJson =>"+apiJson);
-		System.out.println("email ->" + apiJson.get("email") );
 		
 		UserVo naverConnectionCheck = userService.naverConnectionCheck(apiJson.get("email"));
-		System.out.println(naverConnectionCheck);
 		
 		if(naverConnectionCheck == null) { //일치하는 이메일 없으면 가입
 			Integer registerCheck = userService.userNaverRegisterPro(apiJson);
@@ -179,7 +174,7 @@ public class UserController {
 
 	@PostMapping("/join")
 	public String join(@ModelAttribute UserVo userVo, HttpSession session) {
-		logger.info("user > joinForm()");
+		logger.info("joinPost...UserVo={}",userVo);
 		
 		String rawPw = userVo.getUserPassword();		// 복호화 전 비밀번호
 		String encodePw = pwEncoder.encode(rawPw);	// 복호화 후 비밀번호
@@ -253,7 +248,7 @@ public class UserController {
 	/* 회원가입 유저 회원정보 수정 */
 	@PostMapping("user/modifyUser")
 	public String modifyUser(@ModelAttribute UserVo userVo, HttpSession session) {
-		logger.info("user > userInfo()");
+		logger.info("modifyUser...Uservo={}", userVo);
 		System.out.println(userVo);
 		
 		String rawPw = userVo.getUserPassword();		// 복호화 전 비밀번호
@@ -275,7 +270,7 @@ public class UserController {
 	/* SNS 유저 회원정보 수정 */
 	@PostMapping("user/modifySNSUser")
 	public String modifySNSUser(@ModelAttribute UserVo userVo, HttpSession session) {
-		logger.info("user > userInfo()");
+		logger.info("modifySNSUser...Uservo={}", userVo);
 		System.out.println("before = " + userVo);
 		UserVo SNSID = (UserVo)session.getAttribute("userInfo");
 		userVo.setNaverLogin(SNSID.getNaverLogin());
