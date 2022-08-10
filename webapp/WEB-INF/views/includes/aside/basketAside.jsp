@@ -149,7 +149,10 @@
     </div>
 </div>
 
-</body>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e74b599be710b798192fd5221284718a&libraries=services"></script>
+
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 
 <script type="text/javascript">
 	var userNo = "${authUser.userNo}"
@@ -359,8 +362,11 @@
 		    			if (status === kakao.maps.services.Status.OK) {
 		    				gpsVo.address = result[0].address.address_name
 		    				
-		    				$("#curr-location-address").text(result[0].address.address_name)	
-		    				$("#modal-curr-location").text(result[0].address.address_name)
+		    				if (!$('#modal-location-change').is(':visible')) {
+		    					$("#curr-location-address").text(result[0].address.address_name)
+		    				} else {
+		    					$("#modal-curr-location").text(result[0].address.address_name)
+		    				}
 		    			}
 		    		}
 		    		geocoder.coord2Address(coord.getLng(), coord.getLat(), callback)
@@ -419,5 +425,7 @@
 	
 
 </script>
+
+</body>
 
 </html>
