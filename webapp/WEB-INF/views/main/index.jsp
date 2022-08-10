@@ -62,7 +62,7 @@
                 <div><span>출발 위치를 선택해주세요.</span>
                     <div id="modal-curr-location-box">
                     	<span class="emphasize-blue">현재 설정 위치:&nbsp;</span>
-                    	<span id="modal-curr-location"></span>
+                    	<span id="modal-curr-location">${curr_location.address}</span>
                     	<button class="btn btn-primary float-end" id="modal-curr-location-btn" type="button">현위치</button>
                     </div>
                     <div id="write-location-box">
@@ -141,7 +141,7 @@
 		});  
 		console.log("완료?")
 		
-		alert("현재 위치를 변경했습니다.")
+		alert("현재 위치가 변경되었습니다.")
 		location.replace("${pageContext.request.contextPath}/")
 	})
 	

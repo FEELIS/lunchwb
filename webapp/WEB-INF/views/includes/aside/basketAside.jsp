@@ -170,7 +170,7 @@
 		console.log(gpsVo)
 		if (gpsVo.address == "") {
 			curr_location()	
-			sertGPS(gpsVo)
+			setGPS(gpsVo)
 		} 
 		
 		$("#curr-location-address").text(gpsVo.address)	
@@ -295,7 +295,8 @@
 		    			if (status === kakao.maps.services.Status.OK) {
 		    				gpsVo.address = result[0].address.address_name
 		    				
-		    				 $("#modal-curr-location").text(result[0].address.address_name)
+		    				$("#curr-location-address").text(result[0].address.address_name)	
+		    				$("#modal-curr-location").text(result[0].address.address_name)
 		    			}
 		    		}
 		    		geocoder.coord2Address(coord.getLng(), coord.getLat(), callback)
