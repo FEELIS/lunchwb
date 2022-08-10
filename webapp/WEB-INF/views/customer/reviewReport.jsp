@@ -37,7 +37,7 @@
 				<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 				<!-- /header -->
 
-			</div>
+			
 
 			<!-- 회원들 문의내역 읽기  -->
 			<div class="container-fluid">
@@ -152,6 +152,7 @@
 				</div>
 			</div>
 			<!-- 문의내역 읽기 종료 -->
+			</div>
 
 			<!-- footer -->
 			<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
