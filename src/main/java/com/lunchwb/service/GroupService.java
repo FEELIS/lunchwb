@@ -114,7 +114,6 @@ public class GroupService {
 		
 		//vo 정보 추가
 		groupVo.setUserNo(userNo);
-		groupVo.setLeaderCheck(1);
 		groupVo.setGroupOrder(groupOrder);
 		
 		//그룹 멤버 추가
@@ -160,7 +159,7 @@ public class GroupService {
 	public String nameChange(GroupVo groupVo) {
 		String result = "fail";
 		
-		int count = groupDao.nameChange(groupVo);
+		int count = groupDao.groupChange(groupVo);
 		
 		if(count == 1) {
 			result = "success";
@@ -265,7 +264,6 @@ public class GroupService {
 		
 		//groupVo 정보 추가
 		groupVo.setUserNo(userNo);
-		groupVo.setLeaderCheck(0);
 		//비회원한테 그룹순서는 필요 없어
 		groupVo.setGroupOrder(0);
 		groupDao.addMember(groupVo);
@@ -296,6 +294,20 @@ public class GroupService {
 			
 			//group_order 조정
 			groupDao.autoOrder(groupVo);
+		}
+		
+		return result;
+	}
+	
+	
+	/******************** 그룹장 위임 ****************************************************/
+	public String leaderChange(GroupVo groupVo, UserVo authUser) {
+		String result = "fail";
+		
+		int count = groupDao.groupChange(groupVo);
+		
+		if(count > 0) {
+			result = "success";
 		}
 		
 		return result;

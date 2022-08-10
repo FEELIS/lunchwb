@@ -58,7 +58,7 @@
 	                    
 	                    <span class="group-title-btn-area">
 	                    	<c:if test="${authUser.userNo == map.leader && map.memberCount > 1}">
-		                    	<button class="btn btn-primary group-title-btn" type="button" data-bs-target="#modal-group-leader-pass" data-bs-toggle="modal">
+		                    	<button class="btn btn-primary group-title-btn btn-leader-pass" type="button" data-bs-target="#modal-group-leader-pass" data-bs-toggle="modal">
 		                    		그룹장 위임
 		                    	</button>
 	                    	</c:if>
@@ -280,17 +280,24 @@
         <div class="modal-content">
             <div class="modal-body-custom">
                 <div>
-                    <p class="modal-group-p">그룹장을 위임할 그룹원을</p>
-                    <p class="modal-group-p">선택해주세요</p><select id="dropdown-group-leader-pass">
-                        <optgroup label="This is a group">
-                            <option value="12" selected>This is item 1</option>
-                            <option value="13">This is item 2</option>
-                            <option value="14">This is item 3</option>
-                        </optgroup>
+                    <p class="modal-group-p">그룹장을 위임할 회원을</p>
+                    <p class="modal-group-p">선택해주세요</p>
+                    <select id="dropdown-group-leader-pass" class="text-center" name="leaderNo">
+						<option class="text-center"selected disabled>그룹원(회원) 선택</option>
+						<c:forEach items="${map.memberList}" var="memberVo" varStatus="status">
+							<c:if test="${memberVo.userNo != authUser.userNo && memberVo.groupOrder > 0}">
+								<option value="${memberVo.userNo}">${memberVo.userName}</option>
+							</c:if>
+						</c:forEach>
                     </select>
                 </div>
             </div>
-            <div class="modal-footer-custom"><button class="btn btn-primary" type="button">확인</button><button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button></div>
+            <div class="modal-footer-custom">
+            	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}">
+            		<button class="btn btn-primary" type="submit">확인</button>
+            	</a>
+            	<button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button>
+            </div>
         </div>
     </div>
 </div>
@@ -418,7 +425,6 @@ function invt(groupVo){
  	}
 		
 	groupVo.bossCheck = bossCheck
-	groupVo.leaderCheck = 0
 	
 	$.ajax({
 		url : "${pageContext.request.contextPath }/group/invtMember",
@@ -432,7 +438,7 @@ function invt(groupVo){
 			alert("멤버가 추가되었습니다")
 			
 			$("[name = 'userEmail']").val()
-			$("#chk-boss-user").val("")
+			$(".form-check-input").prop("checked", false)
 			
 			var memberCount = $("#memberCount").text()
 			$("#memberCount").text(Number(memberCount)+1)
@@ -503,7 +509,7 @@ $("#groupmem-add button").on("click", function(){
 			$("#groupmem-add [name ='userName']").val("")
 			$("#groupmem-add [name ='userBirthYear']").val("")
 			$("#groupmem-add [name = 'userSex']").val("성별")
-			$("#groupmem-add #chk-boss-notuser").val("")
+			$(".form-check-input").prop("checked", false)
 			
 			var memberCount = $("#memberCount").text()
 			$("#memberCount").text(Number(memberCount)+1)
@@ -638,6 +644,52 @@ $("#memberListArea").on("click", ".groupmem-delete", function(){
 })
  
 
+$(".btn-leader-pass").on("click", function(){
+	console.log("그룹장 위임 버튼 클릭 > 모달")
+	$("#dropdown-group-leader-pass").val("그룹원(회원) 선택")
+})
+
+
+$("#modal-group-leader-pass .btn-primary").on("click", function(){
+	var groupLeader = $("[name = 'leaderNo']").val()
+	var userName = $("[name = 'eaderNo']").text()
+	
+	if(groupLeader == null || groupLeader == ""){
+		alter("그룹원을 선택해주세요")
+		return false
+	}
+	
+	var groupVo = {
+		groupLeader: groupLeader,
+		groupNo: groupNo
+	}
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/group/leaderChange",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(groupVo),
+		dataType : "json",
+		
+		success : function(result){
+			
+			if(result != "success"){
+				alert("그룹장 위임을 실패했습니다")
+				
+				return false
+				
+			}else{
+				alert("그룹장을 " + userName + "님에게 위임하였습니다")
+				return true
+				
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+		
+	})
+})
 
 </script>
 

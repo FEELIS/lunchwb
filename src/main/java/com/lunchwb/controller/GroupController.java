@@ -187,6 +187,20 @@ public class GroupController {
 	}
 	
 	
+	/******************** 그룹장 위임 ***************************************************/
+	@ResponseBody
+	@PostMapping("group/leaderChange")
+	public String leaderChange(@RequestBody GroupVo groupVo, HttpSession session) {
+		logger.info("GroupController > leaderchange()");
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");	
+		String result = groupService.leaderChange(groupVo, authUser);
+		
+		return result;
+	}
+	
+	
+	
 	/******************** 그룹 블랙리스트 페이지 *******************************************/
 	@GetMapping("group/blacklist")
 	public String blacklist(Model model, HttpSession session, @RequestParam(name="no", defaultValue="0") int groupNo) {

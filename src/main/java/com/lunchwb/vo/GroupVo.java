@@ -12,7 +12,6 @@ public class GroupVo {
 	// private int userNo(users table pk);
 	private int groupMemberNo;
 	private int userNo;
-	private int leaderCheck;
 	private int bossCheck;
 	
 	/////////////////// users table ////////////////////
@@ -31,14 +30,13 @@ public class GroupVo {
 	public GroupVo() {
 	}
 	
-	public GroupVo(int groupNo, int groupLeader, String groupName, int groupMemberNo, int userNo, int leaderCheck,
-					int bossCheck, String userName, int userBirthYear, String userAge, String userSex, int groupOrder, int order) {
+	public GroupVo(int groupNo, int groupLeader, String groupName, int groupMemberNo, int userNo, int bossCheck, 
+					String userName, int userBirthYear, String userAge, String userSex, int groupOrder, int order) {
 		this.groupNo = groupNo;
 		this.groupLeader = groupLeader;
 		this.groupName = groupName;
 		this.groupMemberNo = groupMemberNo;
 		this.userNo = userNo;
-		this.leaderCheck = leaderCheck;
 		this.bossCheck = bossCheck;
 		this.userName = userName;
 		this.userBirthYear = userBirthYear;
@@ -87,14 +85,6 @@ public class GroupVo {
 
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
-	}
-
-	public int getLeaderCheck() {
-		return leaderCheck;
-	}
-
-	public void setLeaderCheck(int leaderCheck) {
-		this.leaderCheck = leaderCheck;
 	}
 
 	public int getBossCheck() {
@@ -156,7 +146,7 @@ public class GroupVo {
 	@Override
 	public String toString() {
 		return "GroupVo [groupNo=" + groupNo + ", groupLeader=" + groupLeader + ", groupName=" + groupName
-				+ ", groupMemberNo=" + groupMemberNo + ", userNo=" + userNo + ", leaderCheck=" + leaderCheck
+				+ ", groupMemberNo=" + groupMemberNo + ", userNo=" + userNo 
 				+ ", bossCheck=" + bossCheck + ", userName=" + userName + ", userBirthYear=" + userBirthYear
 				+ ", userAge=" + userAge + ", userSex=" + userSex + ", groupOrder=" + groupOrder 
 				+ ", order=" + order + "]";

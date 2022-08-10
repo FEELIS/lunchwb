@@ -56,9 +56,9 @@ public class GroupDao {
 		return count;
 	}
 	
-	/******************** 그룹 이름 변경 ***********************************************/
-	public int nameChange(GroupVo groupVo) {
-		int count = sqlSession.update("group.nameChange", groupVo);
+	/******************** 그룹 정보 변경(이름/리더) ***************************************/
+	public int groupChange(GroupVo groupVo) {
+		int count = sqlSession.update("group.groupChange", groupVo);
 		return count;
 	}
 	
@@ -101,7 +101,7 @@ public class GroupDao {
 	public void autoOrder(GroupVo groupVo) {
 		sqlSession.update("group.autoOrder", groupVo);
 	}
-
+	
 	/******************** 장바구니 그룹 선택 ***********************************************/
 	public List<GroupVo> selectBasketGroup(int userNo) {
 		List<GroupVo> basketGroup = sqlSession.selectList("group.selectBasketGroup", userNo);
