@@ -72,20 +72,21 @@
   font-size: 2rem;
 }
 
+.start-on-sunday .day:first-child {
+  color: red;
+}
 
 .week {
   margin: 0 !important;
   overflow: hidden;
 }
 
-
-
 .show-menu {
   flex: 0 0 auto;
-  margin-left: 16.66666667%;
-  width: 100%;
+  width: 95%;
   min-width: inherit;
 }
+
 
 
 
