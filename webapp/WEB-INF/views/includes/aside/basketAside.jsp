@@ -196,13 +196,17 @@
 					console.error(status + " : " + error);
 				}
 			});
-			
+			console.log(filter_excluded)
 		} else {
-			filter_excluded = ${filter_excluded}
+			var temp1 = "${filter_excluded}"
+			var temp2 = temp1.substring(1, temp1.length-1)
+			filter_excluded = temp2.split(",")	
 			
-		}
-		
-		console.log(filter_excluded)
+			for (var i = 0; i < filter_excluded.length; i++) {
+				filter_excluded[i] = parseInt(filter_excluded[i])
+			}
+			console.log(filter_excluded)	
+		}	
 
 		if (userNo == "") {
 			console.log("비로그인 회원")
