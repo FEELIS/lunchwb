@@ -43,10 +43,18 @@ public class BasketController {
 	
 	@ResponseBody
 	@PostMapping("/guestMakeBasket")
-	public Map<Integer, List<StoreVo>> guestMakeBasket(HttpSession session) {
-		logger.info("비회원 장바구니 생성하기");
+	public Map<Integer, List<StoreVo>> guestMakeBasket(HttpSession session){
+		logger.info("비로그인 회원 장바구니 생성");
+		GPSVo gps = (GPSVo)session.getAttribute("curr_location");
+		System.out.println(gps.toString());
+		List<Integer> filter_excluded = (List<Integer>)session.getAttribute("filter_excluded");
+		System.out.println(filter_excluded.toString());
+		
+		
 		
 		Map<Integer, List<StoreVo>> basket = basketService.makeNewbasket();
+		
+		
 		
 		session.setAttribute("basket", basket);
 		
