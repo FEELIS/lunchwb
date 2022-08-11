@@ -220,7 +220,7 @@ CREATE TABLE users (
  user_grade varchar2(50) DEFAULT 1 NOT null, 
  session_id varchar2(100) default 'none' not null, 
  limit_date timestamp null, 
- naver_login VARCHAR2(200) null
+ sns_login VARCHAR2(200) null
 );
 
 --===== 문의하기 =====
