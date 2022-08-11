@@ -114,7 +114,7 @@
 		<![CDATA[
 			select user_email userEmail
 					,user_name userName
-					,naver_login naverLogin
+					,sns_login snsLogin
 			from users
 			where user_email = #{email}
 		]]>
@@ -127,15 +127,15 @@
 			        ,user_name userName
 			        ,user_grade userGrade
 			from users
-			where user_email = #{email}
-			and naver_login = #{id}
+			where user_email = #{userEmail}
+			and sns_login = #{snsLogin}
 		]]>
 	</select>
 	
 	<update id="setNaverConnection" parameterType="map">
 		<![CDATA[
 			update users
-			set naver_login = #{id}
+			set sns_login = #{id}
 			where user_email = #{email}
 		]]>
 	</update>
@@ -150,9 +150,9 @@
 								,user_sex
 								,user_joindate
 								,user_grade
-								,naver_login
+								,sns_login
 								)
-			values (seq_user_no.nextval, #{email}, #{nickname}, #{birthyear}, #{gender}, sysdate, 1, #{id})
+			values (seq_user_no.nextval, #{userEmail}, #{userName}, #{userBirthYear}, #{userSex}, sysdate, 1, #{snsLogin})
 		]]>
 	</insert>
 	
@@ -176,14 +176,14 @@
 			        ,user_grade userGrade
 			from users
 			where user_email = #{userEmail}
-			and naver_login = #{naverLogin}
+			and sns_login = #{snsLogin}
 		]]>
 	</select>
 	
 	<!-- SNS 유저 확인 -->
 	<select id="checkNaverUser" parameterType="com.lunchwb.vo.UserVo" resultType="com.lunchwb.vo.UserVo">
 		<![CDATA[
-			select naver_login naverLogin
+			select sns_login snsLogin
 					,user_email userEmail
 			        ,user_name userName
 			        ,user_birth_year userBirthYear

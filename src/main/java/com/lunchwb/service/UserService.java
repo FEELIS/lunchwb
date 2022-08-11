@@ -79,12 +79,6 @@ public class UserService {
 	
 	public int userNaverRegisterPro(Map<String, Object> apiJson) {
 		
-		if(apiJson.get("gender").equals("M")) {
-			apiJson.put("gender", "male");
-		}else {
-			apiJson.put("gender", "female");
-		}
-		
 		int count = userDao.userNaverRegisterPro(apiJson);
 		return count;
 	}

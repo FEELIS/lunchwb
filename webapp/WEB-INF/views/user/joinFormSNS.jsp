@@ -8,20 +8,19 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title> 로그인 </title>
-	<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
+    <title> 회원가입 </title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Login-Form-Basic-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/user.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
-    
     <!-- js -->
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
     <nav class="navbar navbar-light navbar-expand bg-white shadow d-xxl-flex justify-content-xxl-end mb-4 topbar static-top no-side-bar-header">
-        <div class="container join-login-page"><span><img data-bss-hover-animate="pulse" id="bujang-logo-blue" class="no-drag" width="159" height="38" src="${pageContext.request.contextPath}/assets/img/bujang-logo%20blue.png" href="header+aside+footer.html"></span>
+        <div class="container join-login-page"><span class="logo-span"><img data-bss-hover-animate="pulse" id="bujang-logo-blue" class="no-drag" width="159" height="38" src="${pageContext.request.contextPath}/assets/img/bujang-logo%20blue.png" href="header+aside+footer.html"></span>
             <div></div>
             <ul class="navbar-nav d-xxl-flex align-items-xxl-center">
                 <li class="nav-item dropdown no-arrow" id="user-alert"><a class="dropdown-toggle nav-link nav-link" aria-expanded="false" data-bs-toggle="dropdown"><span class="badge bg-danger badge-counter">3</span><i class="fas fa-bell fa-fw"></i></a>
@@ -59,39 +58,47 @@
     </nav>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-9 col-lg-12 col-xl-10" style="width: 500px;">
+            <div class="col-md-9 col-lg-12 col-xl-10" style="width: 600px;">
                 <div class="card shadow-lg o-hidden border-0 my-5">
                     <div class="card-body p-0">
                         <div class="row">
                             <div class="col-lg-6 col-xxl-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                    	<img class="login_logo" src="${pageContext.request.contextPath}/assets/img/bujang-logo%20blue.png">
-                                   	</div>
-                                    <div class="text-center">
-                                        <h4 class="text-dark mb-4 h3 input-box">로그인</h4>
+                                        <h4 class="text-dark mb-4" style="font-weight: bold;">회원가입</h4>
                                     </div>
-                                    <form method="post" action="${pageContext.request.contextPath}/login" class="user">
-                                        <div class="mb-3"><input class="form-control form-control-user " type="email" id="InputLoginEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="userEmail"></div>
-                                        <div class="mb-3"><input class="form-control form-control-user " type="password" id="inputLoginPassword" placeholder="비밀번호를 입력해주세요." name="userPassword"></div>
+                                    <form method="post" action="${pageContext.request.contextPath}/joinNaver" class="user" id="joinForm">
+                                    	<input class="form-control form-control-user input-box" type="text" id="inputJoinNickname" name="userEmail" value="${userEmail}">
+                                    	<input class="form-control form-control-user input-box" type="text" id="inputJoinNickname" name="snsLogin" value="${snsLogin }">
+                                        <div class="mb-3">
+                                        	<strong class="join-text">닉네임</strong>
+                                        	<input class="form-control form-control-user input-box" type="text" id="inputJoinNickname" placeholder="사용하실 닉네임을 입력해주세요" name="userName">
+                                        	<span class="check-text" id="msgName"></span>
+                                       	</div>
+                                        <div class="mb-3">
+                                        	<strong class="join-text">출생연도</strong>
+                                        	<input id="inputBirthDate" type="number" name="userBirthYear" placeholder="출생연도를 적어주세요." min="1900" max="2100">
+                                        	<span class="check-text" id="msgBirth"></span>
+                                       	</div>
+                                        <div class="mb-3">
+                                        	<strong class="join-text">성별</strong>
+                                       		<select class="form-select" style="width: 150px;height: auto;" name="userSex">
+                                                <option value="male" selected="selected">남자</option>
+                                                <option value="female">여자</option>
+                                           	</select>
+                                           	<span class="check-text" id="msgSex"></span>
+                                       	</div>
                                         <div class="mb-3">
                                             <div class="custom-control custom-checkbox small">
-                                                <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="autoLogin" name = "autoLogin"><label class="form-check-label custom-control-label input-box" for="autoLogin">로그인 상태 유지</label></div>
+                                                <div class="form-check">
+                                                	<input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1">
+                                                	<label class="form-check-label custom-control-label" for="formCheck-1">이용약관을 확인하였습니다.</label>
+                                                	<span class="check-text" id="msgCheckBox"></span>
+                                               	</div>
                                             </div>
-                                        </div><button class="btn btn-primary d-block btn-user w-100 " id="btn-login" type="submit">로그인</button>
-                                        <hr>
-                                        <a class="btn btn-primary d-block btn-naver btn-user w-100 mb-2 " role="button" href="${naverUrl}">네이버 아이디로 로그인</a>
-                                        <a class="btn btn-primary d-block btn-kakao btn-user w-100 mb-2 " role="button" 
-                                        	href="https://kauth.kakao.com/oauth/authorize?client_id=730975601d99f3b911f8fb8fff4edafa&redirect_uri=http://localhost:8088/lunchwb/kakaoLoginCallback&response_type=code">카카오 아이디로 로그인</a>
-                                        <a class="btn btn-primary d-block btn-google btn-user w-100 mb-2 " role="button">구글 아이디로 로그인</a>
-                                        <hr>
+                                            <span class="check-text" id="msgCheckOverlap"></span>
+                                        </div><button class="btn btn-primary d-block btn-user w-100" id="btn-join" type="submit">가입하기</button>
                                     </form>
-                                    <div class="text-center">
-                                    	<a class="small " href="../../jihee/etc/forgot-password.html">비밀번호 찾기</a>
-                                   	</div>
-                                    <div class="text-center">
-                                    	<a class="small " href="${pageContext.request.contextPath}/join">회원가입</a>
-                                   	</div>
                                 </div>
                             </div>
                         </div>
@@ -105,48 +112,43 @@
             <div class="text-center my-auto copyright"><span>Copyright © FEELIS 2022<br>https://github.com/FEELIS&nbsp;<br></span></div>
         </div>
     </footer>
-    <script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 </body>
 <script type="text/javascript">
 
-$("#check-email").on("click", function(){
-	console.log("아이디 체크");
+
+$("#btn-join").on("click", function(){
+	console.log("회원가입 버튼 체크");
 	
-	var id = $('[name = "userEmail"]').val();
+	var name = $('#joinForm [name = userName]').val();
+	var birth = $('#joinForm [name = userBirthYear]').val();
+	var sex = $('#joinForm [name = userSex]').val();
+	var Check = $('#formCheck-1').is(":checked");
 	
-	console.log(id);
+	if(name == "" || name == null){
+		alert("이름을 입력해주세요.");
+		return false;
+	}
 	
- 	$.ajax({
-		url : "${pageContext.request.contextPath }/user/checkEmail",		
-		type : "post",
-		contentType : "application/json",
-		data : JSON.stringify(id),
-		dataType : "json",
-		success : function(result){
-			console.log(result);
-			
-			if(result == "success"){
-				if($("#msgOverlapEmail").hasClass("collect-text") === false) {
-						$("#msgOverlapEmail").addClass("collect-text");
-						$("#msgOverlapEmail").removeClass("check-text");
-					} 
-				$("#msgOverlapEmail").text("사용할 수 있는 이메일 입니다.");
-				idChk = id;
-			}else {
-				if($("#msgOverlapEmail").hasClass("check-text") === false) {
-					$("#msgOverlapEmail").addClass("check-text");
-					$("#msgOverlapEmail").removeClass("collect-text");
-				}
-				$("#msgOverlapEmail").text("이미 사용중인 이메일 입니다.");
-			}
-		},
-		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
-		}
-	}); 
+	if(birth == "" || birth == null){
+		alert("생년월일을 입력해주세요.");
+		return false;
+	}
+	
+	if(sex == "" || sex == null){
+		alert("성별을 입력해주세요.");
+		return false;
+	}
+	
+	if(Check == false){
+		alert("약관에 동의해주세요");
+		return false;
+	}
+	
+	return true;
+	
 });
 
 </script>

@@ -94,7 +94,6 @@ public class UserController {
 	@RequestMapping(value="/naverLoginCallback",  method = {RequestMethod.GET,RequestMethod.POST})
 	public String userNaverLoginPro(Model model,@RequestParam Map<String,Object> paramMap, @RequestParam String code, @RequestParam String state,HttpSession session) throws SQLException, Exception {
 		System.out.println("paramMap:" + paramMap);
-		Map <String, Object> resultMap = new HashMap<String, Object>();
 
 		OAuth2AccessToken oauthToken;
 		oauthToken = naverLoginBo.getAccessToken(session, code, state);
@@ -113,9 +112,7 @@ public class UserController {
 			if(registerCheck != null && registerCheck > 0) {
 				UserVo loginCheck = userService.naverLogin(apiJson);
 				session.setAttribute("authUser", loginCheck);
-				resultMap.put("JavaData", "YES");
 			}else {
-				resultMap.put("JavaData", "NO");
 			}
 			
 			return "redirect:./";
