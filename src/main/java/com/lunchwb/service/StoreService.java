@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lunchwb.dao.StoreDao;
+import com.lunchwb.dao.VisitedDao;
+import com.lunchwb.vo.GPSVo;
 import com.lunchwb.vo.StoreVo;
 import com.lunchwb.vo.UserVo;
 
@@ -17,16 +19,18 @@ public class StoreService {
 
 	@Autowired
 	private StoreDao storeDao; 
+	@Autowired
+	private VisitedDao visitedDao; 
 	
 	
 	/* 가게 정보 받아오기 */
-	public Map<String, Object> storeInfo(int storeNo, UserVo authUser){
+	public Map<String, Object> storeInfo(int storeNo, UserVo authUser, GPSVo gpsVo){
 		Map<String, Object> storeMap = new HashMap<>();
 		
 		//기본정보
 		StoreVo storeVo = storeDao.basicStoreInfo(storeNo);
 		
-		//영업시간
+		//영업시간 차후 //타입핸들러 건드리겠습니다 
 		Map<String, String> map = storeDao.storeTime(storeNo);
 		List<String> storeOpeningHours = new ArrayList<>();
 		String str = map.get("storeOpeningHours");
@@ -48,6 +52,14 @@ public class StoreService {
 			storeBreaktime.add(str2A[i]);
 		}
 		storeVo.setStoreBreaktime(storeBreaktime);
+		
+		storeMap.put("storeVo", storeVo);
+		
+		//거리 - storeinfo에 같이 잡아
+		
+		//나와 이곳 : visit (방문횟수/최근 방문날짜 그룹)
+		
+		
 		
 		
 		return storeMap;

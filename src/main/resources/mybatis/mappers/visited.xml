@@ -42,5 +42,18 @@
 			order by v.visited_date asc
 		]]>
 	</select>
+	
+	
+	<!-- 지니 -->
+	<select id="recentVisite" parameterType="VisitedVo" resultMap="resultMapVisitedVo">
+		SELECT  TO_CHAR(visited_date, 'YYYY.MM.DD') visited_date
+		        , group_name
+		FROM visited v, groups g
+		WHERE visited_no = (SELECT MAX(visited_no)
+		                    FROM visited
+		                    WHERE store_no = #{storeNo}
+		                    AND user_no = #{userNo})
+		AND v.group_no = g.group_no
+	</select>
 
 </mapper>

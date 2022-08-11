@@ -68,9 +68,10 @@
 		     , (SELECT COUNT(visited_no) visit_count
 		        FROM visited
 		        WHERE store_no = #{storeNo} ) 
-		     , (SELECT  ROUND(SUM(user_score)/COUNT(user_score), 2) rating_bujang
+		     , (SELECT  ROUND(AVG(user_score), 2) rating_bujang
 		        FROM review r, visited v
 		        WHERE v.visited_no = r.visited_no
+		        AND v.user_no = r.user_no
 		        AND v.store_no = 8) 
 		WHERE s.menu_2nd_cate_no = f.menu_2nd_cate_no
 		AND s.store_no = #{storeNo}

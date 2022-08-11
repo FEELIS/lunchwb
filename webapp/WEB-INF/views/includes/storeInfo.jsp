@@ -272,18 +272,20 @@
 
 <script type="text/javascript">
 
-
-
-
 /* 바구니에서 - 가게 정보 보기 클릭 */
+/* 메인페이지로 옮겨놓기 + 다른가게 눌렀을 때도*/
 $("#basket-table").on("click", ".basket-table-store-name", function(){
 	var storeNo = $(this).data("storeno")
-	console.log(storeNo)
-	storeInfo_open(storeNo)
+	console.log(storeNo+"번 가게 정보 보기)
+	storeInfo_open(storeNo, 1)
 })
 
-function storeInfo_open(storeNo){
-	/* 
+function storeInfo_open(storeNo, k){
+	var gpsX = ${curr_location.gpsX}
+	var gpsY = ${curr_location.gpsY}
+
+	console.log("가게: "+storeVo)
+	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/store/info",
 		type : "post",
@@ -291,18 +293,45 @@ function storeInfo_open(storeNo){
 		data : JSON.stringify(storeNo),
 		dataType : "json",
 		
-		success : function(result){
+		success : function(storeMap){
 			
-			if(result != "success"){
-			}
 			
-			return true
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
-			
 		}
-	 */
+	 
+	})
+	
+	//추천 때만 나와의 거리를 보여줌
+	if(k==1){
+		var gpsVo = {
+			gpsX: gpsX,
+			gpsY: gpsY
+		}
+		
+		console.log("현재위치: "+gpsVo)
+		
+		$.ajax({
+		url : "${pageContext.request.contextPath}/store/distance",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(storeNo),
+		dataType : "json",
+		
+		success : function(storeMap){
+			
+			
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	 
+	})
+			
+	}
+
+	
 	$("#modal-store").modal("show")
 }
 
@@ -310,6 +339,3 @@ function storeInfo_open(storeNo){
 
 </script>
 
-</body>
-
-</html>
