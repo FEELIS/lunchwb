@@ -15,6 +15,7 @@ values(seq_faq_no.nextval, 1,'권한 관련','그룹장이 부재 중일 경우�
 insert into faq 
 values(seq_faq_no.nextval, 1,'계정 관련','사이트탈퇴 기능은 없습니다.' , 'help');
 insert into faq 
+
 values(seq_faq_no.nextval, 1,'그룹 관리','그룹장이 모든 권한을 가집니다.' , 'help');
 insert into faq 
 values(seq_faq_no.nextval, 1,'전체 통계','개인통계기능은 지원하지 않습니다.' , 'help');
