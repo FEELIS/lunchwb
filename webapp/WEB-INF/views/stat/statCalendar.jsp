@@ -9,20 +9,28 @@
 <meta name="og:type" content="article">
 
 <!-- css -->
-<link href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath}/assets/css/calendar.css" rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath}/assets/css/notification.css" rel="stylesheet" type="text/css">
-<link href="${pageContext.request.contextPath}/assets/css/yogiyo.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/calendar.css" rel="stylesheet"
+	type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/notification.css" rel="stylesheet"
+	type="text/css">
+<link href="${pageContext.request.contextPath}/assets/css/yogiyo.css" rel="stylesheet"
+	type="text/css">
 
 <!-- fonts -->
-<link href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css"
+	rel="stylesheet" type="text/css">
 
 <!-- js -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/liveReload.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/WOWSlider-about-us.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/assets/js/WOWSlider-about-us.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
 
 
 
@@ -45,8 +53,7 @@
 					<div class="d-sm-flex justify-content-between align-items-center mb-4">
 						<h3 class="text-dark mb-0">캘린더</h3>
 					</div>
-					<div class="calendar card mb-4">
-					</div>
+					<div class="calendar card mb-4"></div>
 				</div>
 				<!-- content -->
 			</div>
@@ -251,6 +258,7 @@
 	    );
 	  }
 
+	  //현재 연월, 일주일을 나열
 	  function generateYearHeaderDOM(currentDate) {
 	    var str = ''
 		    str += '<div class="d-flex align-items-center justify-content-center weeks-container">' +
@@ -291,9 +299,44 @@
 		    
 		    return str;
 		  }
+	  	//headerDom 끝
+	  	
 		  function generateWeekDOM(monthData, currentDate) {
+			  
+				var userNo = '${authUser.userNo}';
+				var selectMonth = currentDate.getFullYear() + settings.monthYearSeparator +(currentDate.getMonth()+1);
+				console.log("유저번호");
+				console.log(userNo);
+				console.log("선택한 달");
+				console.log(selectMonth);
+				
+				var vstVo = {
+					userNo: userNo,
+					selectMonth: selectMonth
+				};
+				
+				$.ajax({
+					url : "${pageContext.request.contextPath}/stat/showVstList",
+					type : "post",
+					contentType : "application/json",
+					data : JSON.stringify(vstVo),
+					
+					dataType : "json",
+					success : function(vstList) {
+						console.log(vstList);
+						
+
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+
+				})
+				// ajax 
+			  
+			  
 		  	  var str = "";
-		 	   monthData.forEach(function (week, weekNo) {
+		 	   monthData.forEach(function (week, weekNo, vstVo) {
 		 		   console.log(currentDate.getMonth()+1);
 		 		   console.log(typeof(currentDate.getMonth()+1));
 		    	 
@@ -345,16 +388,12 @@
 			          '><div class="date"><span class="d-flex flex-row-reverse">' +
 			          day.getDate() +
 			          '</span>' + 
-			          '</div>' + 
-			          
-			          
+			          '</div>' +
+ 
 			      	    '<div class="event bg-success show-menu">중식/중화요리</div>' +
 			      	    '<div class="event bg-success show-menu">흑룡강</div>' +
-
 			      	    
-			      	    '</li>';
-			          console.log(day.getDate());
-			          console.log(typeof(day.getDate()));
+			      	   '</li>' ;
 			      });
 
 			      str += "</ol>";
@@ -369,24 +408,6 @@
 		      
 		      calendarDump += generateWeekDOM(monthData, currentDate);
 
-
-		     /* 
-		    } else {
-		      calendarDump += '<div class="weeks-container">';
-		      
-
-
-		      calendarDump += generateMonthHeaderDOM(currentDate);
-
-		      calendarDump += generateWeekHeaderDOM(currentDate);
-
-
-		      calendarDump += "</div>";
-		    }
-		    if (settings.showTodayButton) {
-		      calendarDump += generateTodayButton();
-		    }
-		    */
 
 		    return calendarDump;
 		  }
@@ -428,6 +449,7 @@
 		    var calendarInitFn = $.fn.calendar.bind(this);
 		    calendarInitFn(updatedOptions);
 		  };
+		  
 
 		  $.fn.calendar = function (options) {
 		    settings = $.extend(defaults, options);
