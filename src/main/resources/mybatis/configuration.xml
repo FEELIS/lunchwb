@@ -9,6 +9,7 @@
    		<typeAlias alias="GroupVo" type="com.lunchwb.vo.GroupVo"/>
    		<typeAlias alias="StoreVo" type="com.lunchwb.vo.StoreVo"/>
    		<typeAlias alias="ReviewVo" type="com.lunchwb.vo.ReviewVo"/>
+   		<typeAlias alias="VisitedVo" type="com.lunchwb.vo.VistiedVo"/>
    		<typeAlias alias="GPSVo" type="com.lunchwb.vo.GPSVo"/>
     </typeAliases>
 
@@ -19,6 +20,7 @@
         <mapper resource="mybatis/mappers/group.xml" />
         <mapper resource="mybatis/mappers/store.xml" />
         <mapper resource="mybatis/mappers/review.xml" />
+        <mapper resource="mybatis/mappers/visited.xml" />
         <mapper resource="mybatis/mappers/basket.xml" />
     </mappers>
 </configuration>
