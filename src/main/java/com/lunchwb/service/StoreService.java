@@ -1,12 +1,15 @@
 package com.lunchwb.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lunchwb.dao.StoreDao;
+import com.lunchwb.vo.StoreVo;
 import com.lunchwb.vo.UserVo;
 
 @Service
@@ -20,8 +23,34 @@ public class StoreService {
 	public Map<String, Object> storeInfo(int storeNo, UserVo authUser){
 		Map<String, Object> storeMap = new HashMap<>();
 		
-		storeDao.basicStoreInfo(storeNo);
+		//기본정보
+		StoreVo storeVo = storeDao.basicStoreInfo(storeNo);
+		
+		//영업시간
+		Map<String, String> map = storeDao.storeTime(storeNo);
+		List<String> storeOpeningHours = new ArrayList<>();
+		String str = map.get("storeOpeningHours");
+		str.replace("[", "");		
+		str.replace("]", "");
+		String[] strA = str.split(",");
+		for(int i=0; i<strA.length; i++) {
+			storeOpeningHours.add(strA[i]);
+		}
+		storeVo.setStoreOpeningHours(storeOpeningHours);
+		
+		//휴식시간
+		List<String> storeBreaktime = new ArrayList<>();
+		String str2 = map.get("storeBreaktime");
+		str.replace("[", "");		
+		str.replace("]", "");
+		String[] str2A = str2.split(",");
+		for(int i=0; i<str2A.length; i++) {
+			storeBreaktime.add(str2A[i]);
+		}
+		storeVo.setStoreBreaktime(storeBreaktime);
+		
 		
 		return storeMap;
 	}
+	
 }

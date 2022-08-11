@@ -1,5 +1,7 @@
 package com.lunchwb.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,6 +19,12 @@ public class StoreDao {
 	public StoreVo basicStoreInfo(int storeNo) {
 		StoreVo StoreBasic = sqlSession.selectOne("store.basicStoreInfo", storeNo);
 		return StoreBasic;
+	}
+	
+	/* 가게 영업 시간 */
+	public Map<String, String> storeTime(int storeNo) {
+		Map<String, String> map = sqlSession.selectOne("store.storeTime", storeNo);
+		return map;
 	}
 	
 }

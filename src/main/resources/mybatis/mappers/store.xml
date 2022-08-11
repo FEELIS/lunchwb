@@ -9,8 +9,8 @@
 		<result column="store_name" property="storeName" />
 		<result column="store_road_address" property="storeRoadAddress" />
 		<result column="store_old_address" property="storeOldAddress" />
-		<result column="store_opening_hours" property="storeOpeningHours" />
-		<result column="store_breaktime" property="storeBreaktime" />
+		<!-- <result column="store_opening_hours" property="storeOpeningHours" /> -->
+		<!-- <result column="store_breaktime" property="storeBreaktime" /> -->
 		<result column="visit_count" property="visitCnt" />
 		<result column="rating_bujang" property="ratingBujang" />
 	</resultMap>
@@ -61,8 +61,6 @@
 		        , store_name
 				, menu_2nd_cate_name
 				, store_road_address
-				, store_opening_hours
-				, store_breaktime
 		        , visit_count
 		        , rating_bujang
 		FROM store s
@@ -76,6 +74,13 @@
 		        AND v.store_no = 8) 
 		WHERE s.menu_2nd_cate_no = f.menu_2nd_cate_no
 		AND s.store_no = #{storeNo}
+	</select>
+	
+	<select id="storeTime" parameterType="int" resultType="map">
+		SELECT  store_opening_hours storeOpeningHours
+				, store_breaktime storeBreaktime
+		FROM store
+		WHERE store_no = #{storeNo}
 	</select>
 	
 </mapper>
