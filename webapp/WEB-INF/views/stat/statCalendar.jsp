@@ -292,6 +292,44 @@
 		    return str;
 		  }
 		  function generateWeekDOM(monthData, currentDate) {
+			  
+				var userNo = '${authUser.userNo}';
+				var selectMonth = currentDate.getFullYear() + settings.monthYearSeparator +(currentDate.getMonth()+1);
+				console.log("유저번호");
+				console.log(userNo);
+				console.log("선택한 달");
+				console.log(selectMonth);
+				
+				var vstVo = {
+					userNo: userNo,
+					selectMonth: selectMonth
+				};
+				
+				$.ajax({
+					url : "${pageContext.request.contextPath}/stat/showVstList",
+					type : "post",
+					contentType : "application/json",
+					data : JSON.stringify(vstVo),
+					
+					dataType : "json",
+					success : function(vstList) {
+						/*성공시 처리해야될 코드 작성*/
+						console.log(vstList);
+						
+						var $this = $(this);
+						
+						
+						$(".date").append(vstList);
+
+					},
+					error : function(XHR, status, error) {
+						console.error(status + " : " + error);
+					}
+
+				})
+				// ajax 
+			  
+			  
 		  	  var str = "";
 		 	   monthData.forEach(function (week, weekNo) {
 		 		   console.log(currentDate.getMonth()+1);
@@ -345,14 +383,26 @@
 			          '><div class="date"><span class="d-flex flex-row-reverse">' +
 			          day.getDate() +
 			          '</span>' + 
-			          '</div>' + 
+			          '</div>';
 			          
-			          
+			          if (vstNo.groupNo== 1) {
 			      	    '<div class="event bg-success show-menu">중식/중화요리</div>' +
 			      	    '<div class="event bg-success show-menu">흑룡강</div>' +
+						
+					} else if(vstNo.groupNo == 2){
+			      	    '<div class="event bg-warning show-menu">흑룡강</div>' +
+			      	    '<div class="event bg-warning show-menu">중식/중화요리</div>' +
+						
+					} else if(vstNo.groupNo == 3){
+			      	    '<div class="event bg-primary show-menu">흑룡강</div>' +
+			      	    '<div class="event bg-primary show-menu">중식/중화요리</div>' +
+
+					}
+			          
+			          
 
 			      	    
-			      	    '</li>';
+			      	    str += '</li>';
 			          console.log(day.getDate());
 			          console.log(typeof(day.getDate()));
 			      });
