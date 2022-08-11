@@ -334,7 +334,6 @@
 				})
 				// ajax 
 			  
-				
 			  
 		  	  var str = "";
 		 	   monthData.forEach(function (week, weekNo, vstVo) {
@@ -349,13 +348,6 @@
 			        '">';
 
 			      week.forEach(function (day, dayNo) {
-			    	var vstVo = {};
-			    	  
-			    	if (visitList.length<=day.getDate()) {
-			    		vstVo = visitList[day.getDate()];
-						
-					} 
-			    	
 			        var disabled = false;
 			        if (day.getMonth() !== currentDate.getMonth()) disabled = true;
 			        disabled = disabled ? " disabled" : "";
