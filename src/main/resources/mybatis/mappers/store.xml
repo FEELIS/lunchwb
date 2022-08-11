@@ -3,7 +3,7 @@
 
 <mapper namespace="store">
 
-	<resultMap id="GroupVo" type="com.lunchwb.vo.GroupVo">
+	<resultMap id="StoreVo" type="com.lunchwb.vo.StoreVo">
 		<result column="store_no" property="storeNo" />
 		<result column="menu_2nd_cate_no" property="menu2ndCateNo" />
 		<result column="store_name" property="storeName" />
