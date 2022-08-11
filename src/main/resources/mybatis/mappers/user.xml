@@ -127,8 +127,8 @@
 			        ,user_name userName
 			        ,user_grade userGrade
 			from users
-			where user_email = #{userEmail}
-			and sns_login = #{snsLogin}
+			where user_email = #{email}
+			and sns_login = #{id}
 		]]>
 	</select>
 	
@@ -152,7 +152,7 @@
 								,user_grade
 								,sns_login
 								)
-			values (seq_user_no.nextval, #{userEmail}, #{userName}, #{userBirthYear}, #{userSex}, sysdate, 1, #{snsLogin})
+			values (seq_user_no.nextval, #{email}, #{userName}, #{userBirthYear}, #{userSex}, sysdate, 1, #{id})
 		]]>
 	</insert>
 	

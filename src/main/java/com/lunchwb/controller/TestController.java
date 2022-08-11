@@ -27,11 +27,6 @@ public class TestController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 
-	@Autowired
-	private UserService userService;
-	@Autowired
-	NaverLoginBo naverLoginBo;
-	
 	@RequestMapping("/logger")
 	public String root() {
 		System.out.println("logger");
@@ -52,9 +47,10 @@ public class TestController {
 		return "main/test";
 	}
 	
-	
-	/* SNS 로그인 네이버 */
-	@RequestMapping(value="/loginNaver",  method = {RequestMethod.GET,RequestMethod.POST})
+
+	/* 이전 네이버 로그인 백업 
+	// SNS 로그인 네이버 //
+	@RequestMapping(value="/naverLoginCallback",  method = {RequestMethod.GET,RequestMethod.POST})
 	public String userNaverLoginPro(Model model,@RequestParam Map<String,Object> paramMap, @RequestParam String code, @RequestParam String state,HttpSession session) throws SQLException, Exception {
 		System.out.println("paramMap:" + paramMap);
 
@@ -70,10 +66,16 @@ public class TestController {
 		UserVo naverConnectionCheck = userService.naverConnectionCheck(apiJson.get("email"));
 		
 		if(naverConnectionCheck == null) { //일치하는 이메일 없으면 가입
-			model.addAttribute("userEmail",apiJson.get("email"));
-			model.addAttribute("snsLogin",apiJson.get("id"));
-			return "user/joinFormSNS";
-		}else if(naverConnectionCheck.getSnsLogin() == null && naverConnectionCheck.getUserEmail() != null) { //이메일 가입 되어있고 네이버 연동 안되어 있을시
+			Integer registerCheck = userService.userNaverRegisterPro(apiJson);
+			
+			if(registerCheck != null && registerCheck > 0) {
+				UserVo loginCheck = userService.naverLogin(apiJson);
+				session.setAttribute("authUser", loginCheck);
+			}else {
+			}
+			
+			return "redirect:./";
+		}else if(naverConnectionCheck.getNaverLogin() == null && naverConnectionCheck.getUserEmail() != null) { //이메일 가입 되어있고 네이버 연동 안되어 있을시
 			userService.setNaverConnection(apiJson);
 			UserVo loginCheck = userService.naverLogin(apiJson);
 			session.setAttribute("authUser", loginCheck);
@@ -84,25 +86,5 @@ public class TestController {
 		
 		return "redirect:./";
 	}
-	
-	
-	@RequestMapping(value="/joinNaver", method=RequestMethod.POST)
-	public String joinNaver(@RequestParam Map<String,Object> paramMap,HttpSession session) throws SQLException, Exception {
-		System.out.println("paramMap:" + paramMap);
-		Integer registerCheck = userService.userNaverRegisterPro(paramMap);
-		System.out.println(registerCheck);
-		
-		if(registerCheck != null && registerCheck > 0) {
-			UserVo loginCheck = userService.naverLogin(paramMap);
-			session.setAttribute("authUser", loginCheck);
-		}else {
-		}
-		return "redirect:./";
-	}
-	
-	
-	
-	
-	
-	
+	*/
 }

@@ -107,16 +107,10 @@ public class UserController {
 		UserVo naverConnectionCheck = userService.naverConnectionCheck(apiJson.get("email"));
 		
 		if(naverConnectionCheck == null) { //일치하는 이메일 없으면 가입
-			Integer registerCheck = userService.userNaverRegisterPro(apiJson);
-			
-			if(registerCheck != null && registerCheck > 0) {
-				UserVo loginCheck = userService.naverLogin(apiJson);
-				session.setAttribute("authUser", loginCheck);
-			}else {
-			}
-			
-			return "redirect:./";
-		}else if(naverConnectionCheck.getNaverLogin() == null && naverConnectionCheck.getUserEmail() != null) { //이메일 가입 되어있고 네이버 연동 안되어 있을시
+			model.addAttribute("userEmail",apiJson.get("email"));
+			model.addAttribute("snsLogin",apiJson.get("id"));
+			return "user/joinFormSNS";
+		}else if(naverConnectionCheck.getSnsLogin() == null && naverConnectionCheck.getUserEmail() != null) { //이메일 가입 되어있고 네이버 연동 안되어 있을시
 			userService.setNaverConnection(apiJson);
 			UserVo loginCheck = userService.naverLogin(apiJson);
 			session.setAttribute("authUser", loginCheck);
@@ -136,6 +130,20 @@ public class UserController {
 		return "redirect:./";
 	}
 	
+	/* SNS 회원가입 추가정보 입력 */
+	@RequestMapping(value="/joinSNS", method=RequestMethod.POST)
+	public String joinNaver(@RequestParam Map<String,Object> paramMap,HttpSession session) throws SQLException, Exception {
+		System.out.println("paramMap:" + paramMap);
+		Integer registerCheck = userService.userNaverRegisterPro(paramMap);
+		System.out.println(registerCheck);
+		
+		if(registerCheck != null && registerCheck > 0) {
+			UserVo loginCheck = userService.naverLogin(paramMap);
+			session.setAttribute("authUser", loginCheck);
+		}else {
+		}
+		return "redirect:./";
+	}
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
@@ -206,7 +214,7 @@ public class UserController {
 		if (loginUser != null) { // 로그인 했다면
 			UserVo checkSNSUser = userService.checkSNS(loginUser.getUserEmail());
 			System.out.println(checkSNSUser);
-			if(checkSNSUser.getNaverLogin() != null) {
+			if(checkSNSUser.getSnsLogin() != null) {
 				session.setAttribute("userInfo", checkSNSUser);
 				return "user/userInfoSNS";
 			}else {
@@ -278,7 +286,7 @@ public class UserController {
 		logger.info("modifySNSUser...Uservo={}", userVo);
 		System.out.println("before = " + userVo);
 		UserVo SNSID = (UserVo)session.getAttribute("userInfo");
-		userVo.setNaverLogin(SNSID.getNaverLogin());
+		userVo.setSnsLogin(SNSID.getSnsLogin());
 		System.out.println("after = " + userVo);
 		UserVo authUser = userService.modifySNSUser(userVo);
 		
