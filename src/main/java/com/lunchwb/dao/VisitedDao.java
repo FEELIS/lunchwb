@@ -22,5 +22,12 @@ public class VisitedDao {
 		return calendarList;
 	};
 	
+	
+	/* 지니 */
+	public VisitedVo recentVisit(VisitedVo visitedVo) {
+		visitedVo = sqlSession.selectOne("visited.recentVisit", visitedVo);
+		return visitedVo;
+	}
+	
 
 }

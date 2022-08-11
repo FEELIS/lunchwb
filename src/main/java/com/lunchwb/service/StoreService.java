@@ -13,6 +13,7 @@ import com.lunchwb.dao.VisitedDao;
 import com.lunchwb.vo.GPSVo;
 import com.lunchwb.vo.StoreVo;
 import com.lunchwb.vo.UserVo;
+import com.lunchwb.vo.VisitedVo;
 
 @Service
 public class StoreService {
@@ -58,6 +59,16 @@ public class StoreService {
 		//거리 - storeinfo에 같이 잡아
 		
 		//나와 이곳 : visit (방문횟수/최근 방문날짜 그룹)
+		if(authUser != null) {
+			int userNo = authUser.getUserNo();
+			
+			VisitedVo visitedVo = new VisitedVo();
+			visitedVo.setUserNo(userNo);
+			visitedVo.setUserNo(storeNo);
+			
+			visitedVo = visitedDao.recentVisit(visitedVo);
+			storeMap.put("visitedVo", visitedVo);
+		}
 		
 		
 		

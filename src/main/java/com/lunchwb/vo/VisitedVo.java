@@ -10,6 +10,9 @@ public class VisitedVo {
 	private int menuNo;
 	private String visitedDate;
 	
+	///////////집계용//////
+	private int visitCount;
+	
 	//////////////////// 달력용 //////////////////// 
 	private String menu1stCateName;
 	//private int groupNo;
@@ -40,7 +43,7 @@ public class VisitedVo {
 		this.menuName = menuName;
 	}
 
-	public VisitedVo(int visitedNo, int userNo, int groupNo, int storeNo, int menuNo, String visitedDate,
+	public VisitedVo(int visitedNo, int userNo, int groupNo, int storeNo, int menuNo, String visitedDate, int visitCount,
 			String menu1stCateName, String groupName, String storeName, String menuName, String selectMonth) {
 		this.visitedNo = visitedNo;
 		this.userNo = userNo;
@@ -48,6 +51,7 @@ public class VisitedVo {
 		this.StoreNo = storeNo;
 		this.menuNo = menuNo;
 		this.visitedDate = visitedDate;
+		this.visitCount = visitCount;
 		this.menu1stCateName = menu1stCateName;
 		this.groupName = groupName;
 		this.storeName = storeName;
@@ -107,6 +111,14 @@ public class VisitedVo {
 		return menu1stCateName;
 	}
 
+	public int getVisitCount() {
+		return visitCount;
+	}
+
+	public void setVisitCount(int visitCount) {
+		this.visitCount = visitCount;
+	}
+
 	public void setMenu1stCateName(String menu1stCateName) {
 		this.menu1stCateName = menu1stCateName;
 	}
@@ -143,16 +155,14 @@ public class VisitedVo {
 		this.selectMonth = selectMonth;
 	}
 
+	
 	@Override
 	public String toString() {
 		return "VisitedVo [visitedNo=" + visitedNo + ", userNo=" + userNo + ", groupNo=" + groupNo + ", StoreNo="
-				+ StoreNo + ", menuNo=" + menuNo + ", visitedDate=" + visitedDate + ", menu1stCateName="
-				+ menu1stCateName + ", groupName=" + groupName + ", storeName=" + storeName + ", menuName=" + menuName
-				+ ", selectMonth=" + selectMonth + "]";
+				+ StoreNo + ", menuNo=" + menuNo + ", visitedDate=" + visitedDate + ", visitCount=" + visitCount
+				+ ", menu1stCateName=" + menu1stCateName + ", groupName=" + groupName + ", storeName=" + storeName
+				+ ", menuName=" + menuName + ", selectMonth=" + selectMonth + "]";
 	}
-	
-	
-	
-	
+
 
 };

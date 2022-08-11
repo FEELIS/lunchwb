@@ -45,15 +45,22 @@
 	
 	
 	<!-- 지니 -->
-	<select id="recentVisite" parameterType="VisitedVo" resultMap="resultMapVisitedVo">
-		SELECT  TO_CHAR(visited_date, 'YYYY.MM.DD') visited_date
-		        , group_name
-		FROM visited v, groups g
-		WHERE visited_no = (SELECT MAX(visited_no)
-		                    FROM visited
-		                    WHERE store_no = #{storeNo}
-		                    AND user_no = #{userNo})
-		AND v.group_no = g.group_no
+	<select id="recentVisit" parameterType="VisitedVo" resultMap="resultMapVisitedVo">
+		SELECT  visit_count
+				, visited_date
+				, group_name
+		FROM (SELECT count(visited_no) visit_count
+			  FROM visited
+			  WHERE store_no = #{storeNo}
+			  AND user_no = #{userNo}), 
+			 (SELECT TO_CHAR(visited_date, 'YYYY.MM.DD') visited_date
+		         	 , group_name
+			  FROM visited v, groups g
+			  WHERE visited_no = (SELECT MAX(visited_no)
+		                   		  FROM visited
+		                    	  WHERE store_no = #{storeNo}
+		                    	  AND user_no = #{userNo})
+			  AND v.group_no = g.group_no) 
 	</select>
 
 </mapper>
