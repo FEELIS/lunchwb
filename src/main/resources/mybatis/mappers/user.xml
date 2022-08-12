@@ -181,7 +181,8 @@
 	</select>
 	
 	<!-- SNS 유저 확인 -->
-	<select id="checkNaverUser" parameterType="com.lunchwb.vo.UserVo" resultType="com.lunchwb.vo.UserVo">
+	<!-- 네이버, 카카오 -->
+	<select id="checkSNSUser" parameterType="com.lunchwb.vo.UserVo" resultType="com.lunchwb.vo.UserVo">
 		<![CDATA[
 			select sns_login snsLogin
 					,user_email userEmail
@@ -192,6 +193,8 @@
 			where user_email = #{userEmail}
 		]]>
 	</select>
+	
+	
 	
 	<!-- 이지희 -->
 	  <insert id="addGpMember" parameterType="UserVo" useGeneratedKeys="true" keyColumn="user_no" keyProperty="userNo">
