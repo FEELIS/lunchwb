@@ -123,10 +123,14 @@ public class UserController {
 	}
 	
 	/* SNS 로그인 카카오 */
-	@RequestMapping(value="/kakaoLoginCallback",  method = {RequestMethod.GET,RequestMethod.POST})
-	public String userKakaoLoginPro(Model model,@RequestParam Map<String,Object> paramMap, @RequestParam String code, @RequestParam String state,HttpSession session) throws SQLException, Exception {
+	@RequestMapping(value="/kakaoLoginCallback",  method = {RequestMethod.GET})
+	public String userKakaoLoginPro(@RequestParam(value = "code", required = false) String code) throws Exception{
+		System.out.println("#########" + code);
+		String access_Token = userService.getAccessToken(code);
 		
-		
+		UserVo userInfo = userService.getUserInfo(access_Token);
+        System.out.println("###access_Token#### : " + access_Token);
+        System.out.println("###userInfo#### : " + userInfo.getUserEmail());
 		return "redirect:./";
 	}
 	

@@ -1,5 +1,6 @@
 package com.lunchwb.dao;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -72,10 +73,11 @@ public class UserDao {
 	
 	
 	/* SNS 유저 확인 */
-	public UserVo checkNaverUser(String userEmail) {
-		UserVo checkNaverUser = sqlSession.selectOne("user.checkNaverUser", userEmail);
-		return checkNaverUser;
+	public UserVo checkSNSUser(String userEmail) {
+		UserVo checkSNSUser = sqlSession.selectOne("user.checkSNSUser", userEmail);
+		return checkSNSUser;
 	}
+	
 	
 	/* SNS 유저 회원 정보 수정 */
 	public int modifySNSUser(UserVo userVo) {

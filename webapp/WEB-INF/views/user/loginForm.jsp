@@ -87,7 +87,7 @@
                                         <hr>
                                         <a class="btn btn-primary d-block btn-naver btn-user w-100 mb-2 " role="button" href="${naverUrl}">네이버 아이디로 로그인</a>
                                         <a class="btn btn-primary d-block btn-kakao btn-user w-100 mb-2 " role="button" 
-                                        	href="https://kauth.kakao.com/oauth/authorize?client_id=730975601d99f3b911f8fb8fff4edafa&redirect_uri=http://localhost:8088/lunchwb/kakaoLoginCallback&response_type=code">카카오 아이디로 로그인</a>
+                                        	href="https://kauth.kakao.com/oauth/authorize?client_id=76831635e5a5685d3617238b00847def&redirect_uri=http://localhost:8088/lunchwb/kakaoLoginCallback&response_type=code">카카오 아이디로 로그인</a>
                                         <a class="btn btn-primary d-block btn-google btn-user w-100 mb-2 " role="button">구글 아이디로 로그인</a>
                                         <hr>
                                     </form>
