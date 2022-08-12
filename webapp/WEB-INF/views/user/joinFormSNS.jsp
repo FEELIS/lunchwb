@@ -70,6 +70,7 @@
                                     <form method="post" action="${pageContext.request.contextPath}/joinSNS" class="user" id="joinForm">
                                     	<input class="form-control form-control-user input-box" type="text" id="inputJoinNickname" name="email" value="${userEmail}">
                                     	<input class="form-control form-control-user input-box" type="text" id="inputJoinNickname" name="id" value="${snsLogin }">
+                                    	<input class="form-control form-control-user input-box" type="text" id="inputJoinNickname" name="access_token" value="${access_Token }">
                                         <div class="mb-3">
                                         	<strong class="join-text">닉네임</strong>
                                         	<input class="form-control form-control-user input-box" type="text" id="inputJoinNickname" placeholder="사용하실 닉네임을 입력해주세요" name="userName">
