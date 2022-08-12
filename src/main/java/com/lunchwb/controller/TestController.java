@@ -48,6 +48,9 @@ public class TestController {
 	}
 	
 
+	//////////////////////////////////////////////////////////////////////////
+	///////////////////////////추후 삭제 예정////////////////////////////////////
+	
 	/* 이전 네이버 로그인 백업 
 	// SNS 로그인 네이버 //
 	@RequestMapping(value="/naverLoginCallback",  method = {RequestMethod.GET,RequestMethod.POST})
@@ -86,5 +89,32 @@ public class TestController {
 		
 		return "redirect:./";
 	}
+	
 	*/
+	
+
+	/* 로그인 상태 유지 전 로그인 컨트롤러.
+	@PostMapping("/login")
+	public String login(@ModelAttribute UserVo userVo, HttpSession session) {
+		logger.info("user > login()");
+		UserVo authUser = userService.login(userVo);
+
+		if (authUser != null) {
+			session.setAttribute("authUser", authUser);
+			return "redirect:./";
+		} else {
+			return "redirect:./login?result=fail";
+		}
+	}
+	*/
+	
+	/* 로그인 상태 유지 전 로그아웃 컨트롤러
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		logger.info("user > logout()");
+		session.removeAttribute("authUser");
+		session.invalidate();
+		return "redirect:./";
+
+	}*/
 }
