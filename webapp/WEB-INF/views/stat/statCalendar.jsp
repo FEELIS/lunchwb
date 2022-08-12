@@ -268,16 +268,6 @@
 		);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 	//현재 연월, 일주일을 나열
 	function generateYearHeaderDOM(currentDate) {
 		var str = ''
@@ -294,8 +284,6 @@
 			: "") +
 			"</div>"
 		   
-		   
-		   
 			str +=
 			'<ol class="day-names list-unstyled week' +
 			(settings.startOnMonday ? " start-on-monday" : "") +
@@ -310,16 +298,13 @@
 			weekDay +
 			'">' +
 			dayMap[weekDay] +
-					"</li>";
+			"</li>";
 			}
 		}
 		str += "</ol>";
 		return str;
 	}
-//headerDom 끝
-
-
-
+	//headerDom 끝
 
 
 
@@ -423,114 +408,115 @@
 		var calendarDump = "";
 			calendarDump += generateYearHeaderDOM(currentDate);
 			calendarDump += generateWeekDOM(monthData, currentDate);
-
+			
 		return calendarDump;
 	}
+	
+	// 날짜 강조
+	function highlightDays() {
+		var selectedElement = el.find(".selected");
+		
+		if (selectedElement.length > 0) {
+			var date = new Date(selectedElement.data("date"));
+			var weekDayNo = date.getDay();
+			el.find(".week").each(function (i, elm) {
+				$(elm)
+				.find(".day:eq(" + (weekDayNo - 0) + ")")
+				.addClass("highlight");
+			});
+		}
+	}
+	// 주간 강조
+	function highlightWeek() {
+		el.find(".selected").parents(".week").addClass("highlight");
+	}
+	
+	// 렌더링
+	function renderToDom(currentDate) {
+		var monthData = generateMonthData(currentDate);
+		
+		el.html(generateDomString(monthData, currentDate));
+		
+		if (settings.highlightSelectedWeekday) {
+			highlightDays();
+		}
+		if (settings.highlightSelectedWeek) {
+			highlightWeek();
+		}
+	}
 
-		  function highlightDays() {
-		    var selectedElement = el.find(".selected");
+	$.fn.updateCalendarOptions = function (options) {
+		var updatedOptions = $.extend(settings, options);
+		var calendarInitFn = $.fn.calendar.bind(this);
+			calendarInitFn(updatedOptions);
+	};
+ 
 
-		    if (selectedElement.length > 0) {
-		      var date = new Date(selectedElement.data("date"));
-		      var weekDayNo = date.getDay();
+	$.fn.calendar = function (options) {
+		settings = $.extend(defaults, options);
+		if (settings.startOnMonday) {
+			dayMap = alternateDayMap;
+		}
+		if (settings.min) {
+			settings.min = new Date(settings.min);
+			settings.min.setHours(0);
+			settings.min.setMinutes(0);
+			settings.min.setSeconds(0);
+		}
+		if (settings.max) {
+			settings.max = new Date(settings.max);
+			settings.max.setHours(0);
+			settings.max.setMinutes(0);
+			settings.max.setSeconds(0);
+		}
 
-		      el.find(".week").each(function (i, elm) {
-		        $(elm)
-		          .find(".day:eq(" + (weekDayNo - 0) + ")")
-		          .addClass("highlight");
-		      });
-		    }
-		  }
+		el = $(this);
+		var currentDate;
 
-		  function highlightWeek() {
-		    el.find(".selected").parents(".week").addClass("highlight");
-		  }
+		if (settings.date) {
+			if (typeof settings.date === "string") {
+				selectedDate = new Date(settings.date);
+			} else {
+				selectedDate = settings.date;
+			}
+			selectedDate.setHours(0, 0, 0, 0);
+			currentDate = selectedDate;
+		} else {
+			currentDate = todayDate;
+		}
 
-		  function renderToDom(currentDate) {
-		    var monthData = generateMonthData(currentDate);
+		window.currentDate = currentDate;
+		renderToDom(currentDate);
 
-		    el.html(generateDomString(monthData, currentDate));
-
-		    if (settings.highlightSelectedWeekday) {
-		      highlightDays();
-		    }
-		    if (settings.highlightSelectedWeek) {
-		      highlightWeek();
-		    }
-		  }
-
-		  $.fn.updateCalendarOptions = function (options) {
-		    var updatedOptions = $.extend(settings, options);
-		    var calendarInitFn = $.fn.calendar.bind(this);
-		    calendarInitFn(updatedOptions);
-		  };
-		  
-
-		  $.fn.calendar = function (options) {
-		    settings = $.extend(defaults, options);
-		    if (settings.startOnMonday) {
-		      dayMap = alternateDayMap;
-		    }
-		    if (settings.min) {
-		      settings.min = new Date(settings.min);
-		      settings.min.setHours(0);
-		      settings.min.setMinutes(0);
-		      settings.min.setSeconds(0);
-		    }
-		    if (settings.max) {
-		      settings.max = new Date(settings.max);
-		      settings.max.setHours(0);
-		      settings.max.setMinutes(0);
-		      settings.max.setSeconds(0);
-		    }
-
-		    el = $(this);
-		    var currentDate;
-
-		    if (settings.date) {
-		      if (typeof settings.date === "string") {
-		        selectedDate = new Date(settings.date);
-		      } else {
-		        selectedDate = settings.date;
-		      }
-		      selectedDate.setHours(0, 0, 0, 0);
-		      currentDate = selectedDate;
-		    } else {
-		      currentDate = todayDate;
-		    }
-
-		    window.currentDate = currentDate;
-		    renderToDom(currentDate);
-
-		    if (settings.enableMonthChange) {
-		      el.off("click", ".weeks-container .prev-button").on(
-		        "click",
-		        ".weeks-container .prev-button",
-		        function (e) {
-		          currentDate = new Date(
-		            currentDate.getFullYear(),
-		            currentDate.getMonth() - 1,
-		            1
-		          );
-		          settings.onClickMonthPrev(currentDate);
-		          renderToDom(currentDate);
-		        }
-		      );
-
-			el.off("click", ".weeks-container .next-button").on(
-			"click",
-			".weeks-container .next-button",
+		if (settings.enableMonthChange) {
+			el.off("click", ".weeks-container .prev-button").on(
+				"click",
+				".weeks-container .prev-button",
 				function (e) {
 					currentDate = new Date(
-					currentDate.getFullYear(),
-					currentDate.getMonth() + 1,
-					1
+						currentDate.getFullYear(),
+						currentDate.getMonth() - 1,
+						1
+					);
+					settings.onClickMonthPrev(currentDate);
+					renderToDom(currentDate);
+				}
+			);
+			
+			el.off("click", ".weeks-container .next-button").on(
+				"click",
+				".weeks-container .next-button",
+				function (e) {
+					currentDate = new Date(
+						currentDate.getFullYear(),
+						currentDate.getMonth() + 1,
+						1
 					);
 					settings.onClickMonthNext(currentDate);
 					renderToDom(currentDate);
 				}
 			);
-	}
+		}
 
 	el.off("click", ".day").on("click", ".day", function (e) {
 		var date = $(this).data("date");
