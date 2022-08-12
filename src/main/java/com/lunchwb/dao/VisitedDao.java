@@ -14,13 +14,16 @@ public class VisitedDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	//이번달 방문장소
+	// ================================ 달력 ================================
+	// 이번달 방문장소
 	public List<VisitedVo> getCalendar(VisitedVo vstVo){
 		List<VisitedVo> calendarList = sqlSession.selectList("visited.calendar",vstVo); 
 		
 		
 		return calendarList;
 	};
+	
+	// ================================ 달력 끝 ================================
 	
 	
 	/* 지니 */

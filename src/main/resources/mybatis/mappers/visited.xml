@@ -15,9 +15,9 @@
 		<result column="menu_name" property="menuName" />
 		<result column="select_month" property="selectMonth" />
 	</resultMap>
-
+	
+	<!-- 달력 가게정보 띄우기 -->
 	<select id="calendar" parameterType="VisitedVo" resultMap="resultMapVisitedVo">
-		<![CDATA[
 			select	g.group_no, 
 					v.visited_date, 
 					f1.menu_1st_cate_name, 
@@ -40,7 +40,6 @@
 					 and to_char(v.visited_date,'YYMM')=to_char(to_date(${selectMonth},'YYMM'),'YYMM') 
 					 and v.user_no = #{userNo} 
 			order by v.visited_date asc
-		]]>
 	</select>
 	
 	

@@ -27,7 +27,7 @@ public class StatController {
 
 	
 	// ============================================ 캘린더 ============================================
-	// -------------------- 달력폼 --------------------
+	// =============== 달력폼 ===============
 	@GetMapping("/statCalendar")
 	public String statCalendarForm() {
 		logger.info("StatController > statCalendarForm()");
@@ -36,6 +36,7 @@ public class StatController {
 	};
 	
 	
+	// =============== 달력폼에 방문한 곳 정보가져오기(ajax + json) ===============
 	@ResponseBody
 	@RequestMapping(value = "/showVstList",method = {RequestMethod.GET,RequestMethod.POST})
 	public List<VisitedVo> showVstList(@RequestBody VisitedVo vstVo){
@@ -50,8 +51,11 @@ public class StatController {
 	
 	
 	
+	
+	
 	// ============================================ 리뷰 ============================================
-	// -------------------- 리뷰내역폼 --------------------
+	
+	// =============== 리뷰내역폼 ===============
 	@GetMapping("/reviewList")
 	public String reviewListForm() {
 		logger.info("StatController > reviewListForm()");
@@ -75,7 +79,7 @@ public class StatController {
 	
 
 	// ============================================ 통계 ============================================
-	// -------------------- 통계폼 --------------------
+	// =============== 통계폼 ===============
 	@GetMapping("/statChart")
 	public String statChartForm() {
 		logger.info("StatController > statChartForm()");
