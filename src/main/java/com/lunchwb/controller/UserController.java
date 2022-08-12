@@ -104,18 +104,18 @@ public class UserController {
 		Map<String, Object> apiJson = (Map<String, Object>) objectMapper.readValue(apiResult, Map.class).get("response");
 		System.out.println("apiJson =>"+apiJson);
 		
-		UserVo naverConnectionCheck = userService.naverConnectionCheck(apiJson.get("email"));
+		UserVo snsConnectionCheck = userService.snsConnectionCheck(apiJson.get("email"));
 		
-		if(naverConnectionCheck == null) { //일치하는 이메일 없으면 가입
+		if(snsConnectionCheck == null) { //일치하는 이메일 없으면 가입
 			model.addAttribute("userEmail",apiJson.get("email"));
 			model.addAttribute("snsLogin",apiJson.get("id"));
 			return "user/joinFormSNS";
-		}else if(naverConnectionCheck.getSnsLogin() == null && naverConnectionCheck.getUserEmail() != null) { //이메일 가입 되어있고 네이버 연동 안되어 있을시
-			userService.setNaverConnection(apiJson);
-			UserVo loginCheck = userService.naverLogin(apiJson);
+		}else if(snsConnectionCheck.getSnsLogin() == null && snsConnectionCheck.getUserEmail() != null) { //이메일 가입 되어있고 네이버 연동 안되어 있을시
+			userService.setSNSConnection(apiJson);
+			UserVo loginCheck = userService.snsLogin(apiJson);
 			session.setAttribute("authUser", loginCheck);
 		}else { //모두 연동 되어있을시
-			UserVo loginCheck = userService.naverLogin(apiJson);
+			UserVo loginCheck = userService.snsLogin(apiJson);
 			session.setAttribute("authUser", loginCheck);
 		}
 		
@@ -124,7 +124,7 @@ public class UserController {
 	
 	/* SNS 로그인 카카오 */
 	@RequestMapping(value="/kakaoLoginCallback",  method = {RequestMethod.GET})
-	public String userKakaoLoginPro(Model model, @RequestParam(value = "code", required = false) String code) throws Exception{
+	public String userKakaoLoginPro(Model model, @RequestParam(value = "code", required = false) String code, HttpSession session) throws Exception{
 		System.out.println("#########" + code);
 		String access_Token = userService.getAccessToken(code);
 		
@@ -132,20 +132,23 @@ public class UserController {
         System.out.println("###access_Token#### : " + access_Token);
         System.out.println("userInfo = " + userInfo);
         System.out.println("###userInfo#### : " + userInfo.get("email"));
-       /* 
-        if(userInfo == null) { //일치하는 이메일 없으면 가입
-			model.addAttribute("userEmail",apiJson.get("email"));
-			model.addAttribute("snsLogin",apiJson.get("id"));
+       
+        UserVo snsConnectionCheck = userService.snsConnectionCheck(userInfo.get("email"));
+        System.out.println("####snsConnectionCheck#### : " +snsConnectionCheck);
+        
+        if(snsConnectionCheck == null) { //일치하는 이메일 없으면 가입
+			model.addAttribute("userEmail",userInfo.get("email"));
+			model.addAttribute("snsLogin",userInfo.get("id"));
 			return "user/joinFormSNS";
-		}else if(naverConnectionCheck.getSnsLogin() == null && naverConnectionCheck.getUserEmail() != null) { //이메일 가입 되어있고 네이버 연동 안되어 있을시
-			userService.setNaverConnection(apiJson);
-			UserVo loginCheck = userService.naverLogin(apiJson);
+		}else if(snsConnectionCheck.getSnsLogin() == null && snsConnectionCheck.getUserEmail() != null) { //이메일 가입 되어있고 카카오 연동 안되어 있을시
+			userService.setSNSConnection(userInfo);
+			UserVo loginCheck = userService.snsLogin(userInfo);
 			session.setAttribute("authUser", loginCheck);
 		}else { //모두 연동 되어있을시
-			UserVo loginCheck = userService.naverLogin(apiJson);
+			UserVo loginCheck = userService.snsLogin(userInfo);
 			session.setAttribute("authUser", loginCheck);
 		}
-        */
+       
 		return "redirect:./";
 	}
 	
@@ -153,11 +156,11 @@ public class UserController {
 	@RequestMapping(value="/joinSNS", method=RequestMethod.POST)
 	public String joinNaver(@RequestParam Map<String,Object> paramMap,HttpSession session) throws SQLException, Exception {
 		System.out.println("paramMap:" + paramMap);
-		Integer registerCheck = userService.userNaverRegisterPro(paramMap);
+		Integer registerCheck = userService.userJoinSns(paramMap);
 		System.out.println(registerCheck);
 		
 		if(registerCheck != null && registerCheck > 0) {
-			UserVo loginCheck = userService.naverLogin(paramMap);
+			UserVo loginCheck = userService.snsLogin(paramMap);
 			session.setAttribute("authUser", loginCheck);
 		}else {
 		}

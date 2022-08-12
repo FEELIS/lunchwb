@@ -73,23 +73,23 @@ public class UserService {
 
 	/* SNS 로그인 */
 	/* 네이버 */
-	public UserVo naverConnectionCheck(Object userEmail) {
-		UserVo naverCheck = userDao.naverConnectionCheck(userEmail);
-		return naverCheck;
+	public UserVo snsConnectionCheck(Object userEmail) {
+		UserVo snsCheck = userDao.snsConnectionCheck(userEmail);
+		return snsCheck;
 	}
 
-	public UserVo naverLogin(Map<String, Object> apiJson) {
-		UserVo naverLogin = userDao.naverLogin(apiJson);
-		return naverLogin;
+	public UserVo snsLogin(Map<String, Object> apiJson) {
+		UserVo snsLogin = userDao.snsLogin(apiJson);
+		return snsLogin;
 	}
 
-	public void setNaverConnection(Map<String, Object> apiJson) {
-		userDao.setNaverConnection(apiJson);
+	public void setSNSConnection(Map<String, Object> apiJson) {
+		userDao.setSNSConnection(apiJson);
 	}
 
-	public int userNaverRegisterPro(Map<String, Object> apiJson) {
+	public int userJoinSns(Map<String, Object> apiJson) {
 
-		int count = userDao.userNaverRegisterPro(apiJson);
+		int count = userDao.userJoinSns(apiJson);
 		return count;
 	}
 
@@ -218,13 +218,17 @@ public class UserService {
 
 			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 			JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-			System.out.println("kakao_account = " + kakao_account);
-			//String kakao_id = element.getAsJsonObject().get("id").getAsString();
+			
+			// 카카오 ID 받아오기
+			String id = element.getAsJsonObject().get("id").getAsString();
+			// 카카오 Email 받아오기
 			String email = kakao_account.getAsJsonObject().get("email").getAsString();
 			
-
+			System.out.println("id = " + id);
+			System.out.println("email = " + email);
+			
 			userInfo.put("email", email);
-			//userInfo.put("id", kakao_id);
+			userInfo.put("id", id);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
