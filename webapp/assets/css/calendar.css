@@ -8,7 +8,7 @@
 
 /* =================================== 달력헤더 =================================== */
 #main-content {
-  margin-left: 20px;
+  margin-left: 5px;
   margin-right: 20px;
   color: var(--bs-dark);
   font-size: 18px;
@@ -65,6 +65,7 @@
 
 .calendar .days li .date {
   margin: 0.5rem 0;
+  padding-right: 1rem;
 }
 
 .calendar .days li .event {
@@ -101,6 +102,10 @@
 /* ===== 이전달 or 다음달 ===== */
 .calendar .days li.outside .date {
   color: #ddd;
+}
+
+.week.start-on-sunday .day:first-child{
+  color: red;
 }
 
 
