@@ -90,6 +90,8 @@
 		enableMonthChange: true,
 		enableYearView: true,
 		showTodayButton: true,
+		addEventWeekday: true,
+		addEventWeek: true,
 		highlightSelectedWeekday: true,
 		highlightSelectedWeek: true,
 		todayButtonContent: "Today",
@@ -312,44 +314,12 @@
 
 	// 일주일마다 방문한 곳 정보 올리기
 	function generateWeekDOM(monthData, currentDate) {
-		  
-		var userNo = '${authUser.userNo}';
-		var selectMonth = currentDate.getFullYear() + settings.monthYearSeparator +(currentDate.getMonth()+1);
-		console.log("유저번호");
-		console.log(userNo);
-		console.log("선택한 달");
-		console.log(selectMonth);
-		
-		var vstVo = {
-			userNo: userNo,
-			selectMonth: selectMonth
-		};
-		
-			$.ajax({
-				url : "${pageContext.request.contextPath}/stat/showVstList",
-				type : "post",
-				contentType : "application/json",
-				data : JSON.stringify(vstVo),
-				
-				dataType : "json",
-				success : function(vstList) {
-					console.log(vstList);
-				
-				},
-				error : function(XHR, status, error) {
-					console.error(status + " : " + error);
-				}
-				
-			})
-		// ajax 끝 
 		 
 		 
 		var str = "";
 		
 		// 달력에 날짜별로 for문출력
 		monthData.forEach(function (week, weekNo, vstVo) {
-			console.log(currentDate.getMonth()+1);
-			console.log(typeof(currentDate.getMonth()+1));
 			  	 
 		str +=
 		'<ol class="days list-unstyled week' +
@@ -393,7 +363,11 @@
 						'<span class="d-flex flex-row-reverse">' + day.getDate() + '</span>' +  
 					'</div>' +
 					
-					'<div class="event bg-success show-menu">중식/중화요리</div>' +
+					'<div class="visited"' +
+					'data-vDate="' + 
+					day +
+					'"></div>' +
+					//'<div class="event bg-success show-menu">중식/중화요리</div>' +
 					'<div class="event bg-success show-menu">흑룡강</div>' +
 							      	    
 				'</li>' ;
@@ -414,6 +388,61 @@
 	}
 	
 	// 날짜 강조
+	function addEvent(monthData,currentDate) {
+		
+		var selectedElement = el.find(".visited");
+		  
+		var userNo = '${authUser.userNo}';
+		var selectMonth = currentDate.getFullYear() + settings.monthYearSeparator +(currentDate.getMonth()+1);
+		console.log("유저번호");
+		console.log(userNo);
+		console.log("선택한 달");
+		console.log(selectMonth);
+		
+		var vstVo = {
+			userNo: userNo,
+			selectMonth: selectMonth
+		};
+		
+			$.ajax({
+				url : "${pageContext.request.contextPath}/stat/showVstList",
+				type : "post",
+				contentType : "application/json",
+				data : JSON.stringify(vstVo),
+				
+				dataType : "json",
+				success : function(vstList) {
+					console.log(vstList);
+					
+					console.log(vstList[1].visitedDate);
+					
+					if (selectedElement.length > 0) {
+						var date = new Date(selectedElement.data("vdate"));
+						var vdate = selectedElement.data("vdate");
+						console.log("vdate");
+						console.log(vdate);
+						console.log(typeof(vdate));
+						/* var weekDayNo = date.getDay();
+						console.log("weekDayNo");
+						console.log(weekDayNo);
+						el.find(".week").each(function (i, elm) {
+							$(elm)
+							.find(".day:eq(" + (weekDayNo - 0) + ")")
+							.addClass("event");
+							
+						}); */
+					}
+				
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+				
+			})
+		// ajax 끝 
+	}
+	
+	
 	function highlightDays() {
 		var selectedElement = el.find(".selected");
 		
@@ -438,6 +467,9 @@
 		
 		el.html(generateDomString(monthData, currentDate));
 		
+		if (settings.addEventWeekday) {
+			addEvent(monthData,currentDate);
+		}
 		if (settings.highlightSelectedWeekday) {
 			highlightDays();
 		}
@@ -485,7 +517,12 @@
 		} else {
 			currentDate = todayDate;
 		}
-
+		
+		console.log("currentDate");
+		console.log(currentDate);
+		console.log(typeof(currentDate));
+		console.log(currentDate.getDate());
+		
 		window.currentDate = currentDate;
 		renderToDom(currentDate);
 
