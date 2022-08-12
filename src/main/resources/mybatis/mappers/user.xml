@@ -110,7 +110,7 @@
 	
 	<!-- SNS 로그인 -->
 	<!-- 네이버 -->
-	<select id="naverConnectionCheck" parameterType="com.lunchwb.vo.UserVo" resultType="com.lunchwb.vo.UserVo">
+	<select id="snsConnectionCheck" parameterType="string" resultType="com.lunchwb.vo.UserVo">
 		<![CDATA[
 			select user_email userEmail
 					,user_name userName
@@ -120,7 +120,7 @@
 		]]>
 	</select>
 	
-	<select id="naverLogin" parameterType="map" resultType="com.lunchwb.vo.UserVo">
+	<select id="snsLogin" parameterType="map" resultType="com.lunchwb.vo.UserVo">
 		<![CDATA[
 			select user_no userNo
 			        ,user_email userEmail
@@ -132,7 +132,7 @@
 		]]>
 	</select>
 	
-	<update id="setNaverConnection" parameterType="map">
+	<update id="setSNSConnection" parameterType="map">
 		<![CDATA[
 			update users
 			set sns_login = #{id}
@@ -140,7 +140,7 @@
 		]]>
 	</update>
 	
-	<insert id="userNaverRegisterPro" parameterType="map">
+	<insert id="userJoinSns" parameterType="map">
 		<![CDATA[
 			insert into users (
 								user_no

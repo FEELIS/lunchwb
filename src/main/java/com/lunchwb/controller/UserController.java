@@ -104,18 +104,18 @@ public class UserController {
 		Map<String, Object> apiJson = (Map<String, Object>) objectMapper.readValue(apiResult, Map.class).get("response");
 		System.out.println("apiJson =>"+apiJson);
 		
-		UserVo naverConnectionCheck = userService.naverConnectionCheck(apiJson.get("email"));
+		UserVo snsConnectionCheck = userService.snsConnectionCheck(apiJson.get("email"));
 		
-		if(naverConnectionCheck == null) { //일치하는 이메일 없으면 가입
+		if(snsConnectionCheck == null) { //일치하는 이메일 없으면 가입
 			model.addAttribute("userEmail",apiJson.get("email"));
 			model.addAttribute("snsLogin",apiJson.get("id"));
 			return "user/joinFormSNS";
-		}else if(naverConnectionCheck.getSnsLogin() == null && naverConnectionCheck.getUserEmail() != null) { //이메일 가입 되어있고 네이버 연동 안되어 있을시
-			userService.setNaverConnection(apiJson);
-			UserVo loginCheck = userService.naverLogin(apiJson);
+		}else if(snsConnectionCheck.getSnsLogin() == null && snsConnectionCheck.getUserEmail() != null) { //이메일 가입 되어있고 네이버 연동 안되어 있을시
+			userService.setSNSConnection(apiJson);
+			UserVo loginCheck = userService.snsLogin(apiJson);
 			session.setAttribute("authUser", loginCheck);
 		}else { //모두 연동 되어있을시
-			UserVo loginCheck = userService.naverLogin(apiJson);
+			UserVo loginCheck = userService.snsLogin(apiJson);
 			session.setAttribute("authUser", loginCheck);
 		}
 		
@@ -124,41 +124,57 @@ public class UserController {
 	
 	/* SNS 로그인 카카오 */
 	@RequestMapping(value="/kakaoLoginCallback",  method = {RequestMethod.GET})
-	public String userKakaoLoginPro(Model model, @RequestParam(value = "code", required = false) String code) throws Exception{
-		System.out.println("#########" + code);
+	public String userKakaoLoginPro(Model model, @RequestParam(value = "code", required = false) String code, HttpSession session) throws Exception{
+		System.out.println("code  =>" + code);
 		String access_Token = userService.getAccessToken(code);
 		
 		Map<String, Object> userInfo = userService.getUserInfo(access_Token);
-        System.out.println("###access_Token#### : " + access_Token);
-        System.out.println("userInfo = " + userInfo);
-        System.out.println("###userInfo#### : " + userInfo.get("email"));
-       /* 
-        if(userInfo == null) { //일치하는 이메일 없으면 가입
-			model.addAttribute("userEmail",apiJson.get("email"));
-			model.addAttribute("snsLogin",apiJson.get("id"));
+        System.out.println("access_Token => : " + access_Token);
+        System.out.println("userInfo  => " + userInfo);
+        System.out.println("userInfo  => : " + userInfo.get("email"));
+       
+        // SNS 계정과 동일한 이메일이 있는지 확인.
+        UserVo snsConnectionCheck = userService.snsConnectionCheck(userInfo.get("email"));
+        System.out.println("snsConnectionCheck => : " +snsConnectionCheck);
+        
+        if(snsConnectionCheck == null) { //일치하는 이메일 없으면 가입
+			model.addAttribute("userEmail",userInfo.get("email"));
+			model.addAttribute("snsLogin",userInfo.get("id"));
+			model.addAttribute("access_Token",access_Token); //회원가입 후 로그인이 바로 진행되기 때문에 로그아웃을 위해 토큰을 같이 넘겨줌.
 			return "user/joinFormSNS";
-		}else if(naverConnectionCheck.getSnsLogin() == null && naverConnectionCheck.getUserEmail() != null) { //이메일 가입 되어있고 네이버 연동 안되어 있을시
-			userService.setNaverConnection(apiJson);
-			UserVo loginCheck = userService.naverLogin(apiJson);
+			
+		}else if(snsConnectionCheck.getSnsLogin() == null && snsConnectionCheck.getUserEmail() != null) { //이메일 가입 되어있고 카카오 연동 안되어 있을시
+			userService.setSNSConnection(userInfo); // 카카오에서 보내주는 ID 업데이트.
+			UserVo loginCheck = userService.snsLogin(userInfo);
 			session.setAttribute("authUser", loginCheck);
+			session.setAttribute("access_Token", access_Token);
 		}else { //모두 연동 되어있을시
-			UserVo loginCheck = userService.naverLogin(apiJson);
+			UserVo loginCheck = userService.snsLogin(userInfo);
 			session.setAttribute("authUser", loginCheck);
+			session.setAttribute("access_Token", access_Token);
 		}
-        */
+       
 		return "redirect:./";
 	}
 	
 	/* SNS 회원가입 추가정보 입력 */
 	@RequestMapping(value="/joinSNS", method=RequestMethod.POST)
-	public String joinNaver(@RequestParam Map<String,Object> paramMap,HttpSession session) throws SQLException, Exception {
+	public String joinSNS(@RequestParam Map<String,Object> paramMap,HttpSession session) throws SQLException, Exception {
 		System.out.println("paramMap:" + paramMap);
-		Integer registerCheck = userService.userNaverRegisterPro(paramMap);
+		Integer registerCheck = userService.userJoinSns(paramMap);
 		System.out.println(registerCheck);
 		
-		if(registerCheck != null && registerCheck > 0) {
-			UserVo loginCheck = userService.naverLogin(paramMap);
+		// 카카오 회원가입일 경우에 로그아웃을 대비하여 토큰값을 받아주어야함.
+		String access_Token = (String) paramMap.get("access_token");
+		
+		if(registerCheck != null && registerCheck > 0) { // 회원가입이 되었다면 바로 로그인.
+			UserVo loginCheck = userService.snsLogin(paramMap);
 			session.setAttribute("authUser", loginCheck);
+			
+			if(access_Token != null) { // 카카오 회원이라면 토큰값을 세션에 넣어줍니다.
+				session.setAttribute("access_Token", access_Token);
+			}
+			
 		}else {
 		}
 		return "redirect:./";
@@ -167,11 +183,17 @@ public class UserController {
 	@GetMapping("/logout")
 	public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		logger.info("user > logout()");
+		String kakaoToken = (String) session.getAttribute("access_Token");
+		//System.out.println("로그아웃 카카오 토근 = " + kakaoToken);
 		
 		Object obj = session.getAttribute("authUser");
-		
 		if(obj != null) {
 			UserVo vo = (UserVo) obj;
+			
+			if(kakaoToken != null) { // 카카오 계정의 경우 카카오 로그아웃 추가로 실시.
+				userService.kakaoLogout(kakaoToken);
+				session.removeAttribute("access_Token");
+			}
 			
 			session.removeAttribute("authUser");
 			session.invalidate();
@@ -327,34 +349,5 @@ public class UserController {
 		
 		return result;
 	}
-	
-	
-	
-	//////////////////////////////////////////////////////////////////////////
-	///////////////////////////추후 삭제 예정////////////////////////////////////
-	/* 과거 ... 이었던 것.*/
-	/* 로그인 상태 유지 전 로그인 컨트롤러.
-	@PostMapping("/login")
-	public String login(@ModelAttribute UserVo userVo, HttpSession session) {
-		logger.info("user > login()");
-		UserVo authUser = userService.login(userVo);
 
-		if (authUser != null) {
-			session.setAttribute("authUser", authUser);
-			return "redirect:./";
-		} else {
-			return "redirect:./login?result=fail";
-		}
-	}
-	*/
-	
-	/* 로그인 상태 유지 전 로그아웃 컨트롤러
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		logger.info("user > logout()");
-		session.removeAttribute("authUser");
-		session.invalidate();
-		return "redirect:./";
-
-	}*/
 }

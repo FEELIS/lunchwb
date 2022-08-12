@@ -73,23 +73,23 @@ public class UserService {
 
 	/* SNS 로그인 */
 	/* 네이버 */
-	public UserVo naverConnectionCheck(Object userEmail) {
-		UserVo naverCheck = userDao.naverConnectionCheck(userEmail);
-		return naverCheck;
+	public UserVo snsConnectionCheck(Object userEmail) {
+		UserVo snsCheck = userDao.snsConnectionCheck(userEmail);
+		return snsCheck;
 	}
 
-	public UserVo naverLogin(Map<String, Object> apiJson) {
-		UserVo naverLogin = userDao.naverLogin(apiJson);
-		return naverLogin;
+	public UserVo snsLogin(Map<String, Object> apiJson) {
+		UserVo snsLogin = userDao.snsLogin(apiJson);
+		return snsLogin;
 	}
 
-	public void setNaverConnection(Map<String, Object> apiJson) {
-		userDao.setNaverConnection(apiJson);
+	public void setSNSConnection(Map<String, Object> apiJson) {
+		userDao.setSNSConnection(apiJson);
 	}
 
-	public int userNaverRegisterPro(Map<String, Object> apiJson) {
+	public int userJoinSns(Map<String, Object> apiJson) {
 
-		int count = userDao.userNaverRegisterPro(apiJson);
+		int count = userDao.userJoinSns(apiJson);
 		return count;
 	}
 
@@ -180,7 +180,6 @@ public class UserService {
 			br.close();
 			bw.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -216,40 +215,26 @@ public class UserService {
 			JsonParser parser = new JsonParser();
 			JsonElement element = parser.parse(result);
 
-			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
+			//JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 			JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-			System.out.println("kakao_account = " + kakao_account);
-			//String kakao_id = element.getAsJsonObject().get("id").getAsString();
+			
+			// 카카오 ID 받아오기
+			String id = element.getAsJsonObject().get("id").getAsString();
+			// 카카오 Email 받아오기
 			String email = kakao_account.getAsJsonObject().get("email").getAsString();
 			
-
+			System.out.println("id = " + id);
+			System.out.println("email = " + email);
+			
 			userInfo.put("email", email);
-			//userInfo.put("id", kakao_id);
+			userInfo.put("id", id);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		
 		return userInfo;
-		/* 회원가입 컨트롤러로 이동
-		// catch 아래 코드 추가.
-		UserVo result = userDao.checkSNSUser((String) userInfo.get("email"));
-		// 위 코드는 먼저 정보가 저장되있는지 확인하는 코드.
-		System.out.println("S:" + result);
-		if (result == null) {
-			// result가 null이면 정보가 저장이 안되있는거므로 정보를 저장.
-			userDao.userNaverRegisterPro(userInfo);
-			// 위 코드가 정보를 저장하기 위해 Repository로 보내는 코드임.
-			return userDao.checkSNSUser((String) userInfo.get("email"));
-			// 위 코드는 정보 저장 후 컨트롤러에 정보를 보내는 코드임.
-			// result를 리턴으로 보내면 null이 리턴되므로 위 코드를 사용.
-		} else {
-			return result;
-			// 정보가 이미 있기 때문에 result를 리턴함.
-		}
-		*/
 	}
 
 	public void kakaoLogout(String access_Token) {
@@ -273,7 +258,6 @@ public class UserService {
 			}
 			System.out.println(result);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

@@ -47,14 +47,14 @@ public class UserDao {
 	
 	/* SNS로그인 */
 	/* 네이버 */
-	public UserVo naverConnectionCheck(Object userEmail) {
-		UserVo naverCheck = sqlSession.selectOne("user.naverConnectionCheck", userEmail);
-		return naverCheck;
+	public UserVo snsConnectionCheck(Object userEmail) {
+		UserVo snsCheck = sqlSession.selectOne("user.snsConnectionCheck", userEmail);
+		return snsCheck;
 	}
 	
-	public UserVo naverLogin(Map<String, Object> apiJson) {
-		UserVo naverLogin = sqlSession.selectOne("user.naverLogin", apiJson);
-		return naverLogin;
+	public UserVo snsLogin(Map<String, Object> apiJson) {
+		UserVo snsLogin = sqlSession.selectOne("user.snsLogin", apiJson);
+		return snsLogin;
 	}
 	
 	public UserVo modifyAfterNaverLogin(UserVo userVo) {
@@ -62,12 +62,12 @@ public class UserDao {
 		return naverLogin;
 	}
 	
-	public void setNaverConnection(Map<String, Object> apiJson) {
-		sqlSession.update("user.setNaverConnection", apiJson);
+	public void setSNSConnection(Map<String, Object> apiJson) {
+		sqlSession.update("user.setSNSConnection", apiJson);
 	}
 	
-	public int userNaverRegisterPro(Map<String, Object> apiJson) {
-		int count = sqlSession.insert("user.userNaverRegisterPro", apiJson);
+	public int userJoinSns(Map<String, Object> apiJson) {
+		int count = sqlSession.insert("user.userJoinSns", apiJson);
 		return count;
 	}
 	
