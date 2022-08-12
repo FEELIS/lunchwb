@@ -15,8 +15,7 @@
 <link href="${pageContext.request.contextPath}/assets/css/yogiyo.css" rel="stylesheet" type="text/css">
 
 <!-- fonts -->
-<link href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css"
-	rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css" rel="stylesheet" type="text/css">
 
 <!-- js -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
@@ -99,6 +98,7 @@
 		max: null,
 		disable: function (date) {},
 		startOnMonday: false,
+		startOnSunday: true,
 	};
 
 	var el,
@@ -286,7 +286,7 @@
 		   
 			str +=
 			'<ol class="day-names list-unstyled week' +
-			(settings.startOnMonday ? " start-on-monday" : "") +
+			(settings.startOnSunday ? " start-on-sunday" : "") +
 			'" data-week-no="' +
 			0 +
 			'">';
@@ -294,7 +294,7 @@
 			for (var weekDay in dayMap) {
 			if (dayMap.hasOwnProperty(weekDay)) {
 			str +=
-			'<li class="fw-bold" data-day="' +
+			'<li class="fw-bold day" data-day="' +
 			weekDay +
 			'">' +
 			dayMap[weekDay] +
@@ -304,7 +304,7 @@
 		str += "</ol>";
 		return str;
 	}
-	//headerDom 끝
+	// headerDom 끝
 
 
 
@@ -341,18 +341,19 @@
 				}
 				
 			})
-		// ajax 
+		// ajax 끝 
 		 
 		 
 		var str = "";
-			
+		
+		// 달력에 날짜별로 for문출력
 		monthData.forEach(function (week, weekNo, vstVo) {
 			console.log(currentDate.getMonth()+1);
 			console.log(typeof(currentDate.getMonth()+1));
 			  	 
 		str +=
-		'<ol class="days list-unstyled' +
-		(settings.startOnMonday ? " start-on-monday" : "") +
+		'<ol class="days list-unstyled week' +
+		(settings.startOnSunday ? " start-on-sunday" : "") +
 		'" data-week-no="' +
 		(weekNo + 1) +
 		'">';
@@ -603,10 +604,10 @@
 		}
 	return this;
 	};
-})(jQuery);
+})(jQuery);	//jquery로 취급하겠다 라고 선언
 
 
-
+// eval로 문구를 자바스크립트로 변환한다.
 var config = 
 	`function selectDate(date) {
 		$('.calendar').updateCalendarOptions({
@@ -620,6 +621,7 @@ var config =
 		onClickDate: selectDate,
 		showYearDropdown: true,
 		startOnMonday: false,
+		startOnSunday: true,
 	};
 	
 	$('.calendar').calendar(defaultConfig);`;
