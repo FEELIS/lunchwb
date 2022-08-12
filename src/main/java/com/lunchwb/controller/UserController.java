@@ -125,16 +125,16 @@ public class UserController {
 	/* SNS 로그인 카카오 */
 	@RequestMapping(value="/kakaoLoginCallback",  method = {RequestMethod.GET})
 	public String userKakaoLoginPro(Model model, @RequestParam(value = "code", required = false) String code, HttpSession session) throws Exception{
-		System.out.println("#########" + code);
+		System.out.println("code  =>" + code);
 		String access_Token = userService.getAccessToken(code);
 		
 		Map<String, Object> userInfo = userService.getUserInfo(access_Token);
-        System.out.println("###access_Token#### : " + access_Token);
-        System.out.println("userInfo = " + userInfo);
-        System.out.println("###userInfo#### : " + userInfo.get("email"));
+        System.out.println("access_Token => : " + access_Token);
+        System.out.println("userInfo  => " + userInfo);
+        System.out.println("userInfo  => : " + userInfo.get("email"));
        
         UserVo snsConnectionCheck = userService.snsConnectionCheck(userInfo.get("email"));
-        System.out.println("####snsConnectionCheck#### : " +snsConnectionCheck);
+        System.out.println("snsConnectionCheck => : " +snsConnectionCheck);
         
         if(snsConnectionCheck == null) { //일치하는 이메일 없으면 가입
 			model.addAttribute("userEmail",userInfo.get("email"));
@@ -330,34 +330,5 @@ public class UserController {
 		
 		return result;
 	}
-	
-	
-	
-	//////////////////////////////////////////////////////////////////////////
-	///////////////////////////추후 삭제 예정////////////////////////////////////
-	/* 과거 ... 이었던 것.*/
-	/* 로그인 상태 유지 전 로그인 컨트롤러.
-	@PostMapping("/login")
-	public String login(@ModelAttribute UserVo userVo, HttpSession session) {
-		logger.info("user > login()");
-		UserVo authUser = userService.login(userVo);
 
-		if (authUser != null) {
-			session.setAttribute("authUser", authUser);
-			return "redirect:./";
-		} else {
-			return "redirect:./login?result=fail";
-		}
-	}
-	*/
-	
-	/* 로그인 상태 유지 전 로그아웃 컨트롤러
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-		logger.info("user > logout()");
-		session.removeAttribute("authUser");
-		session.invalidate();
-		return "redirect:./";
-
-	}*/
 }
