@@ -187,7 +187,7 @@ public class UserService {
 		return access_Token;
 	}
 
-	public UserVo getUserInfo(String access_Token) {
+	public HashMap<String, Object> getUserInfo(String access_Token) {
 
 		// 요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
 		HashMap<String, Object> userInfo = new HashMap<>();
@@ -219,15 +219,21 @@ public class UserService {
 			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 			JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
 			System.out.println("kakao_account = " + kakao_account);
+			//String kakao_id = element.getAsJsonObject().get("id").getAsString();
 			String email = kakao_account.getAsJsonObject().get("email").getAsString();
+			
 
 			userInfo.put("email", email);
+			//userInfo.put("id", kakao_id);
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
+		
+		return userInfo;
+		/* 회원가입 컨트롤러로 이동
 		// catch 아래 코드 추가.
 		UserVo result = userDao.checkSNSUser((String) userInfo.get("email"));
 		// 위 코드는 먼저 정보가 저장되있는지 확인하는 코드.
@@ -243,6 +249,7 @@ public class UserService {
 			return result;
 			// 정보가 이미 있기 때문에 result를 리턴함.
 		}
+		*/
 	}
 
 	public void kakaoLogout(String access_Token) {
