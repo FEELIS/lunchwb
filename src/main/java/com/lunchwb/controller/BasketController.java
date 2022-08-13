@@ -66,6 +66,18 @@ public class BasketController {
 	}
 	
 	
+	// 비회원 저장된 장바구니 불러오기
+	@ResponseBody
+	@PostMapping("/guestGetBasket")
+	public Map<Integer, List<StoreVo>> guestMaketBasket(HttpSession session) {
+		logger.info("비로그인 회원 장바구니 불러오기");
+		
+		Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
+		
+		return basket;
+	}
+	
+	
 	// GPS 위치 세션에 저장
 	@ResponseBody
 	@PostMapping("/setGPS")

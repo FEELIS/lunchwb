@@ -58,49 +58,12 @@
             
             <div class="table-responsive" id="basket-table">
                 <table class="table" id="basket-table-table">
-                    <thead>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td id="basket-table-button-area" colspan="2">
-                            	<i class="fas fa-filter" id="basket-filter-btn"></i>
-                            	<button class="btn btn-primary d-inline-block" id="basket-another-stores-btn" type="button">다른 가게 추천 받기</button>
-                            </td>
-                        </tr>
-                        <tr class="basket-table-row" data-storeNo="2881">
-                            <td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
-                                <div class="basket-table-store-info">
-                                	<span class="text-start basket-table-store-name">써브웨이 서울대점</span>
-                                	<span class="text-start basket-table-store-detail">샌드위치 / 251m</span>
-                                </div>
-                            </td>
-                            <td class="basket-table-del-cell">
-                            	<i class="fas fa-minus-circle d-xxl-flex basket-del-btn"></i>
-                            </td>
-                        </tr>
-                        <tr class="basket-table-row" data-storeNo="1857">
-                            <td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
-                                <div class="basket-table-store-info">
-                                	<span class="text-start basket-table-store-name">맥도날드 신림점</span>
-                                	<span class="text-start basket-table-store-detail">햄버거 / 320m</span>
-                                </div>
-                            </td>
-                            <td class="basket-table-del-cell">
-                            	<i class="fas fa-minus-circle d-xxl-flex basket-del-btn"></i>
-                            </td>
-                        </tr>
-                        <tr class="basket-table-row" data-storeNo="2247">
-                            <td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
-                                <div class="basket-table-store-info">
-                                	<span class="text-start basket-table-store-name">양자강</span>
-                                	<span class="text-start basket-table-store-detail">중국요리 / 520m</span>
-                                </div>
-                            </td>
-                            <td class="basket-table-del-cell">
-                            	<i class="fas fa-minus-circle d-xxl-flex basket-del-btn"></i>
-                            </td>
-                        </tr>
-                    </tbody>
+	                <tr>
+	                    <td id="basket-table-button-area" colspan="2">
+	                    	<i class="fas fa-filter" id="basket-filter-btn"></i>
+	                    	<button class="btn btn-primary d-inline-block" id="basket-another-stores-btn" type="button">다른 가게 추천 받기</button>
+	                    </td>
+	                </tr>
                 </table>
             </div>
             
@@ -430,6 +393,10 @@
 			
 			if (basket == "") {				
 				await makeGuestBasket()
+				
+			} else {
+				await loadGuestBasket()
+				
 			}
 			
 		} else {
@@ -452,9 +419,13 @@
 			success : function(result){				
 				if (result[0].length != 0) {
 					basket = result
-					console.log("장바구니 생성 완료")
 					console.log(basket)
-					console.log(basket[0][0].storeName)
+					
+					for (var i = 0; i < 3; i++) {
+						addToBasket(basket[0][i])
+					}
+					console.log("장바구니 생성 완료")
+					
 				} else {
 					console.log("장바구니 생성 실패")
 				}
@@ -467,6 +438,36 @@
 	}
 	
 	
+	// 비회원 장바구니 불러오기
+	async function loadGuestBasket() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/basket/guestGetBasket",		
+			type : "post",
+			contentType : "application/json",
+			async : false,
+			dataType : "json",
+			success : function(result){				
+				if (result[0].length != 0) {
+					basket = result
+					console.log(basket)
+					
+					for (var i = 0; i < basket[0].length; i++) {
+						if (basket[0][i].stored) {
+							addToBasket(basket[0][i])
+						}
+					}
+					console.log("장바구니 생성 완료")
+					
+				} else {
+					console.log("장바구니 생성 실패")
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+		console.log("makeGuestBasket() 끝")
+	}
 	
 	// 장바구니 그룹 목록 불러오기
 	async function getBasketGroups() {
@@ -526,7 +527,14 @@
 	
 	// 장바구니 추가하기 메소드
 	function addToBasket(store) {
-		console.log("장바구니에 추가")
+		$("#basket-table-table").append(
+			  "<tr data-storeNo=\"" + store.storeNo + "\">"
+            + 	"<td class=\"d-xxl-flex justify-content-xxl-start basket-table-cell\">"                    
+            + 		"<div class=\"basket-table-store-info\"><span class=\"text-start basket-table-store-name\">" + store.storeName + "</span><span class=\"text-start basket-table-store-detail\">" + store.menu2ndCateName + " / " + store.distance + "m</span></div>"                        
+            + 	"</td>"                    
+            + 	"<td class=\"basket-table-del-cell\"><i class=\"fas fa-minus-circle d-xxl-flex basket-del-btn\"></i></td>"                    
+            + "</tr>"
+		)
 	}
 	
 	
