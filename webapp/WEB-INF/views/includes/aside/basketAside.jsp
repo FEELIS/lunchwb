@@ -355,7 +355,6 @@
 			url : "${pageContext.request.contextPath}/basket/setGPS",		
 			type : "post",
 			contentType : "application/json",
-			async : false,
 			data : JSON.stringify(gpsVo),
 			dataType : "json",
 			success : function(result){
@@ -397,7 +396,6 @@
 		$.ajax({
 			url : "${pageContext.request.contextPath}/basket/makeFilterSession",		
 			type : "post",
-			async : false,
 			contentType : "application/json",
 			dataType : "json",
 			success : function(result){
@@ -444,7 +442,6 @@
 		$.ajax({
 			url : "${pageContext.request.contextPath}/basket/guestMakeBasket",		
 			type : "post",
-			async: false,
 			contentType : "application/json",
 			dataType : "json",
 			success : function(){
@@ -470,7 +467,6 @@
 		$.ajax({
 			url : "${pageContext.request.contextPath}/basket/getBasketGroup",		
 			type : "post",
-			async : false,
 			contentType : "application/json",
 			data : JSON.stringify(userNo),
 			dataType : "json",
