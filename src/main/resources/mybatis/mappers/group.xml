@@ -212,7 +212,7 @@
 		FROM   groups g, group_member m
 		WHERE  g.group_no = m.group_no
 		AND    m.user_no = #{userNo}
-		ORDER BY m.group_member_no ASC
+		ORDER BY m.group_order ASC
 	</select>
 
 </mapper>
