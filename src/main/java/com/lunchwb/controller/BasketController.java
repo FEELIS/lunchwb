@@ -30,10 +30,12 @@ public class BasketController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BasketController.class);
 
+	// 로그인 회원 장바구니 그룹 목록 가져오기
 	@ResponseBody
 	@PostMapping("/getBasketGroup")
 	public List<GroupVo> getBasketGroup(@RequestBody int userNo) {
 		logger.info("basket group 불러오기");
+		logger.info("userNo: " + userNo);
 		
 		List<GroupVo> basketGroup = basketService.getBasketGroup(userNo);
 		
@@ -41,20 +43,22 @@ public class BasketController {
 	}
 	                                                                                                                                                                                                                                                                                          
 	
+	// 비로그인 회원 장바구니 생성 + 초기 3개 항목 담기
 	@ResponseBody
 	@PostMapping("/guestMakeBasket")
 	public Map<Integer, List<StoreVo>> guestMakeBasket(HttpSession session){
 		logger.info("비로그인 회원 장바구니 생성");
-		GPSVo gps = (GPSVo)session.getAttribute("curr_location");
-		System.out.println(gps.toString());
+		
+		GPSVo curr_location = (GPSVo)session.getAttribute("curr_location");
+		logger.info(curr_location.toString());
+		
 		List<Integer> filter_excluded = (List<Integer>)session.getAttribute("filter_excluded");
-		System.out.println(filter_excluded.toString());
+		logger.info(filter_excluded.toString());
 		
-		
-		
-		Map<Integer, List<StoreVo>> basket = basketService.makeNewbasket();
-		
-		
+		boolean firstTime = true;
+			
+		Map<Integer, List<StoreVo>> basket = basketService.makeNewbasket();	
+		basket.put(0, basketService.addGuestBasket(basket.get(0), curr_location, filter_excluded, firstTime));		
 		
 		session.setAttribute("basket", basket);
 		
@@ -62,16 +66,19 @@ public class BasketController {
 	}
 	
 	
+	// GPS 위치 세션에 저장
 	@ResponseBody
 	@PostMapping("/setGPS")
 	public boolean setGPS(@RequestBody GPSVo gpsVo, HttpSession session) {
 		logger.info("GPS 설정하기");
+				
 		Boolean result;
 		
 		if (gpsVo == null) {
 			result = false;
 			
 		} else {
+			logger.info("gpsVo: " + gpsVo.toString());
 			result = true;
 		}
 		
@@ -84,6 +91,7 @@ public class BasketController {
 	}
 	
 	
+	// 세션에 필터 없을 때 필터 생성
 	@ResponseBody
 	@PostMapping("/makeFilterSession")
 	public boolean makeFilterSession(HttpSession session) {
@@ -101,6 +109,7 @@ public class BasketController {
 	@PostMapping("/saveFilterSession")
 	public boolean saveFilterSession(@RequestBody List<Integer> filter_excluded, HttpSession session) {
 		logger.info("세션 필터 저장");
+		logger.info("filter_excluded: " + filter_excluded.toString());
 		
 		session.setAttribute("filter_excluded", filter_excluded);
 		

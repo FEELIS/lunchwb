@@ -192,6 +192,7 @@
 			$(this).addClass("basket-selected-group")
 			
 			curr_basket_group = $(this).attr("data-groupNo")
+			console.log("현재 장바구니 그룹: " + curr_basket_group)
 			
 			// 장바구니 교체 작업
 		}
@@ -235,6 +236,7 @@
 				type : "post",
 				contentType : "application/json",
 				data : JSON.stringify(filter_excluded),
+				async : false,
 				dataType : "json",
 				success : function(result){
 					if (result) {
@@ -357,6 +359,7 @@
 			contentType : "application/json",
 			data : JSON.stringify(gpsVo),
 			dataType : "json",
+			async : false,
 			success : function(result){
 				if (result) {
 					console.log("gps 저장")
@@ -397,6 +400,7 @@
 			url : "${pageContext.request.contextPath}/basket/makeFilterSession",		
 			type : "post",
 			contentType : "application/json",
+			async : false,
 			dataType : "json",
 			success : function(result){
 				if (result) {
@@ -443,15 +447,17 @@
 			url : "${pageContext.request.contextPath}/basket/guestMakeBasket",		
 			type : "post",
 			contentType : "application/json",
+			async : false,
 			dataType : "json",
-			success : function(){
-				console.log("여기까진 왔다")
-				//if (result[0].length != 0) {
-				//	basket = result[0]
-				//	console.log("장바구니 생성 완료")
-				//} else {
-				//	console.log("장바구니 생성 실패")
-				//}
+			success : function(result){				
+				if (result[0].length != 0) {
+					basket = result
+					console.log("장바구니 생성 완료")
+					console.log(basket)
+					console.log(basket[0][0].storeName)
+				} else {
+					console.log("장바구니 생성 실패")
+				}
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
@@ -477,6 +483,7 @@
 					
 					if (i == 0) {
 						curr_basket_group = basketGroup[i].groupNo
+						console.log("현재 선택 그룹: " + curr_basket_group)
 						$(".basket-group").addClass("basket-selected-group")
 					}
 				}
@@ -496,6 +503,7 @@
 		})
 		console.log("getBasketGroups() 끝")
 	}
+	
 	
 	// 장바구니 그룹 탭 생성 메소드
 	function addBasketGroup(basketGroup) {

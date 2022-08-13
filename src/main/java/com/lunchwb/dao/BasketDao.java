@@ -1,6 +1,7 @@
 package com.lunchwb.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,10 @@ public class BasketDao {
 	private SqlSession sqlSession;
 	
 	
-	public List<StoreVo> guestStoreRecommend() {
-		List<StoreVo> basket = sqlSession.selectList("store.guestStoreRecommend");
-				
-		return basket;
+	public List<StoreVo> guestStoreRecommend(Map<String, Object> basketInput) {
+		List<StoreVo> basketItem = sqlSession.selectList("store.guestStoreRecommend", basketInput);
+		System.out.println(basketItem.toString());		
+		
+		return basketItem;
 	}
 }
