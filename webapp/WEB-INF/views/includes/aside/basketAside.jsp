@@ -276,9 +276,8 @@
 			await setGPS(gpsVo)
 		} 
 		
-		$("#curr-location-address").text(gpsVo.address)	
-		console.log("callGPS() 종료")
 		console.log(gpsVo)
+		console.log("callGPS() 종료")
 	} 
 	
 	
@@ -313,37 +312,42 @@
 		
 		// 카카오 API로 주소 알아내기
 	    await getAddr(gpsVo.gpsY, gpsVo.gpsX)
-		
+				
 		console.log("curr_location() 종료")
 	}
 	
 	
 	// 좌표 > 주소 변환 api
 	async function getAddr(lat, lng) {
-		var address = ""
+		console.log("getAddr() 시작")
 		let geocoder = new kakao.maps.services.Geocoder()
 		
-		let callback = function(result, status) {
-			if (status === kakao.maps.services.Status.OK) {
-				gpsVo.address = result[0].address.address_name
-								
-				if (!$('#modal-location-change').is(':visible')) {
-					$("#curr-location-address").text(result[0].address.address_name)
-				} else {
-					$("#modal-curr-location").text(result[0].address.address_name)
-				}
-			}
-		}
-		geocoder.coord2Address(lng, lat, callback)
-		console.log(gpsVo.address)
-		console.log("getAddr() 종료")
+		let addressSearch = (lat, lng) => {
+			return new Promise((resolve, reject) => {
+				geocoder.coord2Address(lng, lat, (result, status) => {
+					if (status === kakao.maps.services.Status.OK) {
+						gpsVo.address = result[0].address.address_name
+						console.log(gpsVo.address)
+											
+						if (!$('#modal-location-change').is(':visible')) {
+							$("#curr-location-address").text(result[0].address.address_name)
+						} else {
+							$("#modal-curr-location").text(result[0].address.address_name)
+						}
+						resolve(result[0].address.address_name)
+					} else {
+						reject('geocoder error')
+					}
+				})
+			})
+		}	
+		
+		await addressSearch(lat, lng)
 	}
 	
 	
 	// gps 세션 값 저장하기
 	async function setGPS(gpsVo) {		
-		console.log(gpsVo.gpsX)
-		console.log(gpsVo.gpsY)
 		$.ajax({
 			url : "${pageContext.request.contextPath}/basket/setGPS",		
 			type : "post",
@@ -419,10 +423,7 @@
 			basket = "${basket}"
 			console.log("basket " + basket)
 			
-			if (basket == "") {
-				console.log(gpsVo.gpsX)
-				console.log(gpsVo.gpsY)
-				
+			if (basket == "") {				
 				await makeGuestBasket()
 			}
 			
