@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ReviewDao {
+public class AloneDao {
 	
 	@Autowired
 	private SqlSession sqlSession;
