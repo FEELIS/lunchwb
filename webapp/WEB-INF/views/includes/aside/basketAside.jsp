@@ -274,7 +274,10 @@
 						
 			// 세션에 현재 gps 저장
 			await setGPS(gpsVo)
-		} 
+		} else {
+			gpsVo.gpsX = parseFloat(gpsVo.gpsX)
+			gpsVo.gpsY = parseFloat(gpsVo.gpsY)
+		}
 		
 		console.log(gpsVo)
 		console.log("callGPS() 종료")
