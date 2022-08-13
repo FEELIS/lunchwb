@@ -364,7 +364,7 @@
 					'</div>' +
 					
 					'<div class="visited"' +
-					'data-vDate="' + 
+					'data-vdate="' + 
 					day +
 					'"></div>' +
 					//'<div class="event bg-success show-menu">중식/중화요리</div>' +
