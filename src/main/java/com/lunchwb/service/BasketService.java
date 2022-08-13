@@ -83,9 +83,9 @@ public class BasketService {
 					breakTime.add(jsonArray.get(j).toString());
 				} 
 			}
-			
+			//(지니 : 이거 xml도 소문자로 되어있고 해서 바꿔놨는데 대문자로 하려면 말해조 다시 바꿔놓을게) 
 			store.setOpeningHours(opening);
-			store.setBreakTime(breakTime);
+			store.setBreaktime(breakTime);
 			store.setStoreBreaktime(null);
 			store.setStoreOpeningHours(null);
 			

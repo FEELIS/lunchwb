@@ -17,7 +17,7 @@ public class StoreVo {
 	
 	//////// 스페어용 ////////////////////////////////
 	private List<String> openingHours;
-	private List<String> breakTime;
+	private List<String> breaktime;
 	
 	
 	////////////////// food 2nd category ////////////////////
@@ -52,7 +52,7 @@ public class StoreVo {
 	
 	public StoreVo(int storeNo, int menu2ndCateNo, String storeName, double storeX, double storeY,
 			String storeRoadAddress, String storeOldAddress, String storeOpeningHours, String storeBreaktime,
-			List<String> openingHours, List<String> breakTime, String menu2ndCateName, float ratingNaver,
+			List<String> openingHours, List<String> breaktime, String menu2ndCateName, float ratingNaver,
 			float ratingKakao, int distance, int score, boolean stored, float ratingBujang, int visitCnt) {
 		this.storeNo = storeNo;
 		this.menu2ndCateNo = menu2ndCateNo;
@@ -64,7 +64,7 @@ public class StoreVo {
 		this.storeOpeningHours = storeOpeningHours;
 		this.storeBreaktime = storeBreaktime;
 		this.openingHours = openingHours;
-		this.breakTime = breakTime;
+		this.breaktime = breaktime;
 		this.menu2ndCateName = menu2ndCateName;
 		this.ratingNaver = ratingNaver;
 		this.ratingKakao = ratingKakao;
@@ -258,13 +258,13 @@ public class StoreVo {
 	}
 
 
-	public List<String> getBreakTime() {
-		return breakTime;
+	public List<String> getBreaktime() {
+		return breaktime;
 	}
 
 
-	public void setBreakTime(List<String> breakTime) {
-		this.breakTime = breakTime;
+	public void setBreaktime(List<String> breaktime) {
+		this.breaktime = breaktime;
 	}
 
 

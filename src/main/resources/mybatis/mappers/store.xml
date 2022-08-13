@@ -85,8 +85,8 @@
 	</select>
 	
 	<select id="storeTime" parameterType="int" resultType="map">
-		SELECT  store_opening_hours storeOpeningHours
-				, store_breaktime storeBreaktime
+		SELECT  store_opening_hours openingHours
+				, store_breaktime breaktime
 		FROM store
 		WHERE store_no = #{storeNo}
 	</select>
