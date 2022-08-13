@@ -5,7 +5,7 @@ def insert_users(email, password, name, birth_year, sex):
     conn = cx_Oracle.connect("lunchwb", "lunchwb", "localhost:1521/xe")
     cs = conn.cursor()
 
-    sql = "INSERT INTO users VALUES(seq_user_no.nextval, :email, :password, :name, :birth_year, :sex, sysdate, 1, 'none', '')"
+    sql = "INSERT INTO users VALUES(seq_user_no.nextval, :email, :password, :name, :birth_year, :sex, sysdate, 1, 'none', '', '')"
 
     cs.execute(sql, email=email, password=password, name=name, birth_year=birth_year, sex=sex)
     conn.commit()
@@ -27,13 +27,13 @@ def insert_groups(group_leader, group_name):
     conn.close()
 
 
-def insert_member(user_no, group_no, leader, boss):
+def insert_member(user_no, group_no, boss, group_order):
     conn = cx_Oracle.connect("lunchwb", "lunchwb", "localhost:1521/xe")
     cs = conn.cursor()
 
-    sql = "INSERT INTO group_member VALUES(seq_group_member_no.nextval, :user_no, :group_no, :leader, :boss, '')"
+    sql = "INSERT INTO group_member VALUES(seq_group_member_no.nextval, :user_no, :group_no, :boss, :group_order)"
 
-    cs.execute(sql, user_no=user_no, group_no=group_no, leader=leader, boss=boss)
+    cs.execute(sql, user_no=user_no, group_no=group_no, boss=boss, group_order=group_order)
     conn.commit()
 
     cs.close()
@@ -69,8 +69,8 @@ def insert_review(user_no, visited_no, review_content, user_score):
 
 gender = ["male", "female"]
 
-## 회원 삽입
-for i in range(1, 101):
+## 회원 삽입(1~5번은 로그인 가능하게 홈페이지에서 회원가입함)
+for i in range(6, 101):
     email = "test" + str(i) + "@naver.com"
     password = "1234"
     name = "test" + str(i)
@@ -84,10 +84,10 @@ for i in range(1, 101):
 ## 그룹 삽입
 for i in range(1, 21):
     group_name = "group" + str(i)
-
-    insert_groups(i, group_name)
+    if i != 1:
+        insert_groups(i, group_name)
     print("groups", group_name)
-    insert_member(i, i, 1, 0)
+    insert_member(i, i, 0, 1)
     print("group_member", i)
 
 
@@ -101,16 +101,16 @@ for i in range(1, 21):
     if group2 == 0:
         group2 += 1
 
-    insert_member(i, group1, 0, 0)
+    insert_member(i, group1, 0, 2)
     print("group_member", i, group1)
-    insert_member(i, group2, 0, 0)
+    insert_member(i, group2, 0, 3)
     print("group_member", i, group2)
 
 
 ## 그룹원 삽입
 for i in range(22, 101):
     group_no = random.randrange(1, 21)
-    insert_member(i, group_no, 0, 0)
+    insert_member(i, group_no, 0, 1)
     print("group_member", i, group_no)
 
 ## 방문 기록 + 리뷰 삽입
