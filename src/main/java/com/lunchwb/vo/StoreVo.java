@@ -1,7 +1,5 @@
 package com.lunchwb.vo;
 
-import java.util.List;
-
 public class StoreVo {
 	
 	//////////////////// store table ////////////////////
@@ -12,8 +10,8 @@ public class StoreVo {
 	private double storeY;
 	private String storeRoadAddress;
 	private String storeOldAddress;
-	private List<String> storeOpeningHours;
-	private List<String> storeBreaktime;
+	private String storeOpeningHours;
+	private String storeBreaktime;
 	
 	////////////////// food 2nd category ////////////////////
 	private String menu2ndCateName;
@@ -46,7 +44,7 @@ public class StoreVo {
 
 	
 	public StoreVo(int storeNo, int menu2ndCateNo, String storeName, double storeX, double storeY,
-			String storeRoadAddress, String storeOldAddress, List<String> storeOpeningHours, List<String> storeBreaktime,
+			String storeRoadAddress, String storeOldAddress, String storeOpeningHours, String storeBreaktime,
 			String menu2ndCateName, float ratingNaver, float ratingKakao, int distance, int score, boolean stored,
 			float ratingBujang, int visitCnt) {
 		this.storeNo = storeNo;
@@ -141,22 +139,22 @@ public class StoreVo {
 	}
 
 	
-	public List<String> getStoreOpeningHours() {
+	public String getStoreOpeningHours() {
 		return storeOpeningHours;
 	}
 
 
-	public void setStoreOpeningHours(List<String> storeOpeningHours) {
+	public void setStoreOpeningHours(String storeOpeningHours) {
 		this.storeOpeningHours = storeOpeningHours;
 	}
 
 
-	public List<String> getStoreBreaktime() {
+	public String getStoreBreaktime() {
 		return storeBreaktime;
 	}
 
 
-	public void setStoreBreaktime(List<String> storeBreaktime) {
+	public void setStoreBreaktime(String storeBreaktime) {
 		this.storeBreaktime = storeBreaktime;
 	}
 	
