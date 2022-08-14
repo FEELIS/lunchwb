@@ -519,7 +519,7 @@
 				
 				if (basketGroup.length < 4) {
 					$("#basket-groups").append(
-						"<div class=\"basket-group no-drag basket-group-add\"><span>그룹추가</span><i class=\"fas fa-user-plus\"></i></div>"
+						"<div class='basket-group no-drag basket-group-add'><span>그룹추가</span><i class='fas fa-user-plus'></i></div>"
 					)
 					console.log("그룹 추가하기 추가")
 				}
@@ -558,7 +558,7 @@
 	// 장바구니 그룹 탭 생성 메소드
 	function addBasketGroup(basketGroup) {
 		$("#basket-groups").append(
-			"<div class=\"basket-group basket-normal-group no-drag\" data-groupNo=\"" + basketGroup.groupNo + "\"><span>" + basketGroup.groupName + "</span><i class=\"fas fa-user-circle\"></i></div>"
+			"<div class='basket-group basket-normal-group no-drag' data-groupNo='" + basketGroup.groupNo + "'><span>" + basketGroup.groupName + "</span><i class='fas fa-user-circle'></i></div>"
 		)
 		console.log("그룹 탭 추가")
 	}
@@ -567,7 +567,7 @@
 	// 점심후보를 추가해주세요 추가 메소드
 	function basketNoItem() {
 		$("#basket-table-table").append(
-			"<tr><td id=\"basket-no-items\" colspan=\"2\">점심 후보를 추가해주세요</td></tr>"
+			"<tr><td id='basket-no-items' colspan='2'>점심 후보를 추가해주세요</td></tr>"
 		)
 		
 		console.log("basketNoItem() 끝")
@@ -577,11 +577,11 @@
 	// 장바구니 추가하기 메소드
 	function addToBasket(store) {
 		$("#basket-table-table").append(
-			  "<tr class=\"basket-table-row\" data-storeNo=\"" + store.storeNo + "\">"
-            + 	"<td class=\"d-xxl-flex justify-content-xxl-start basket-table-cell\">"                    
-            + 		"<div class=\"basket-table-store-info\"><span class=\"text-start basket-table-store-name\">" + store.storeName + "</span><span class=\"text-start basket-table-store-detail\">" + store.menu2ndCateName + " / " + store.distance + "m</span></div>"                        
+			  "<tr class='basket-table-row' data-storeNo='" + store.storeNo + "'>"
+            + 	"<td class='d-xxl-flex justify-content-xxl-start basket-table-cell'>"                    
+            + 		"<div class='basket-table-store-info'><span class='text-start basket-table-store-name'>" + store.storeName + "</span><span class='text-start basket-table-store-detail'>" + store.menu2ndCateName + " / " + store.distance + "m</span></div>"                        
             + 	"</td>"                    
-            + 	"<td class=\"basket-table-del-cell\"><i class=\"fas fa-minus-circle d-xxl-flex basket-del-btn\"></i></td>"                    
+            + 	"<td class='basket-table-del-cell'><i class='fas fa-minus-circle d-xxl-flex basket-del-btn'></i></td>"                    
             + "</tr>"
 		)
 	}
