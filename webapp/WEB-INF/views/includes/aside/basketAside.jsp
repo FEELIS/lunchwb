@@ -181,28 +181,6 @@
 	//})
 	
 	
-	// 다른 그룹 클릭
-	$("#basket-groups").on("click", ".basket-normal-group", function(){
-		if (curr_basket_group != $(this).attr("data-groupNo")) {
-			$("[data-groupNo=" + curr_basket_group + "]").removeClass("basket-selected-group")
-			$(this).addClass("basket-selected-group")
-			
-			curr_basket_group = $(this).attr("data-groupNo")
-			console.log("현재 장바구니 그룹: " + curr_basket_group)
-			
-			setSessionBasketGroup()
-			
-			// 장바구니 교체 작업
-		}
-	})	
-	
-	
-	// 그룹 추가 버튼 클릭
-	$("#basket-groups").on("click", ".basket-group-add", function(){
-		location.replace("${pageContext.request.contextPath}/group/add")
-	})
-	
-	
 	// 장바구니 필터 클릭 시
 	$("#basket-filter-btn").on("click", function(){
 		for (var i = 1; i <= 10; i++) {
@@ -422,7 +400,10 @@
 		
 		if (userNo == "") {
 			console.log("비로그인 회원")
-			await setSessionBasketGroup()
+			
+			if ("${curr_basket_group}" == ""){
+				await setSessionBasketGroup()
+			}
 			
 			console.log("basket " + basket)
 			
@@ -437,6 +418,10 @@
 			
 		} else {
 			console.log(userNo + "번 회원")
+						
+			if ("${curr_basket_group}" != "" && "${curr_basket_group}" != "0") {
+				curr_basket_group = parseInt("${curr_basket_group}")
+			} 
 			await getBasketGroups()
 			await setSessionBasketGroup()
 		}
@@ -498,6 +483,7 @@
 				console.error(status + " : " + error);
 			}
 		})
+		
 		console.log("setSessionBasketGroup() 끝")
 	}
 	
@@ -507,6 +493,7 @@
 		$.ajax({
 			url : "${pageContext.request.contextPath}/basket/getBasketGroup",		
 			type : "post",
+			async : false,
 			contentType : "application/json",
 			data : JSON.stringify(userNo),
 			dataType : "json",
@@ -515,12 +502,15 @@
 					addBasketGroup(basketGroup[i])
 					basket_group.push(basketGroup[i].groupNo)
 					
-					if (i == 0) {
-						curr_basket_group = basketGroup[i].groupNo
-						console.log("현재 선택 그룹: " + curr_basket_group)
-						$(".basket-group").addClass("basket-selected-group")
-					}
+					if (curr_basket_group == 0) {
+						if (i == 0) {
+							curr_basket_group = basketGroup[i].groupNo
+
+						}
+					} 
 				}
+				
+				$("[data-groupNo=" + curr_basket_group + "]").addClass("basket-selected-group")
 				
 				console.log("나의 그룹 " +  basket_group)
 				
@@ -535,8 +525,31 @@
 				console.error(status + " : " + error);
 			}
 		})
+		
 		console.log("getBasketGroups() 끝")
 	}
+	
+	
+	// 다른 그룹 클릭
+	$("#basket-groups").on("click", ".basket-normal-group", async function(){
+		if (curr_basket_group != $(this).attr("data-groupNo")) {
+			$("[data-groupNo=" + curr_basket_group + "]").removeClass("basket-selected-group")
+			$(this).addClass("basket-selected-group")
+			
+			curr_basket_group = parseInt($(this).attr("data-groupNo"))
+			console.log("현재 장바구니 그룹: " + curr_basket_group)
+			
+			await setSessionBasketGroup()
+			
+			// 장바구니 교체 작업
+		}
+	})	
+	
+	
+	// 그룹 추가 버튼 클릭
+	$("#basket-groups").on("click", ".basket-group-add", function(){
+		location.replace("${pageContext.request.contextPath}/group/add")
+	})
 	
 	
 	// 장바구니 그룹 탭 생성 메소드
