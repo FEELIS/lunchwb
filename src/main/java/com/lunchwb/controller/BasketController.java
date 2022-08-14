@@ -61,23 +61,10 @@ public class BasketController {
 		Map<Integer, List<StoreVo>> basket = basketService.makeNewbasket();	
 		basket.put(0, basketService.addGuestBasket(basket.get(0), curr_location, filter_excluded, firstTime));	
 		
-		JSONObject json = new JSONObject(basket);
-		
-		session.setAttribute("basket_json", json);
+		//JSONObject json = new JSONObject(basket);
+		//session.setAttribute("basket_json", json);
+
 		session.setAttribute("basket", basket);
-		logger.info(basket.toString());
-		
-		return basket;
-	}
-	
-	
-	// 비회원 저장된 장바구니 불러오기
-	@ResponseBody
-	@PostMapping("/guestGetBasket")
-	public Map<Integer, List<StoreVo>> guestMaketBasket(HttpSession session) {
-		logger.info("비로그인 회원 장바구니 불러오기");
-		
-		Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
 		
 		return basket;
 	}
@@ -108,6 +95,30 @@ public class BasketController {
 	}
 	
 	
+	// 현재 장바구니 그룹 세션 저장
+	@ResponseBody
+	@PostMapping("/setSessionBasketGroup")
+	public boolean setSessionBasketGroup(@RequestBody Map<String, Object> basket_group, HttpSession session) {
+		logger.info("세션 장바구니 그룹 저장");
+		boolean result = true;
+		
+		if (basket_group == null) {
+			result = false;
+		}
+		
+		Integer currBasketGroup = (Integer)basket_group.get("curr_basket_group");
+		
+		if (session.getAttribute("curr_basket_group") != null) {
+			session.removeAttribute("curr_basket_group");
+		}
+		session.setAttribute("curr_basket_group", currBasketGroup);
+		logger.info("현재 장바구니 그룹: " + currBasketGroup);
+		
+		return result;
+		
+	}
+	
+	
 	// 세션에 필터 없을 때 필터 생성
 	@ResponseBody
 	@PostMapping("/makeFilterSession")
@@ -128,6 +139,9 @@ public class BasketController {
 		logger.info("세션 필터 저장");
 		logger.info("filter_excluded: " + filter_excluded.toString());
 		
+		if (session.getAttribute("filter_excluded") != null) {
+			session.removeAttribute("filter_excluded");
+		}
 		session.setAttribute("filter_excluded", filter_excluded);
 		
 		return true;

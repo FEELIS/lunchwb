@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 
 <!DOCTYPE html>
 <html>
@@ -65,6 +67,8 @@
 	                    </td>
 	                </tr>
 	                <!--  장바구니 아이템이 올 자리 -->
+	                
+	                <!-- 1) 비로그인 + 장바구니 존재 -->
 	                <c:if test="${empty(authUser) and !empty(basket)}">
 		                <c:forEach var="basketItems" items="${basket}">
 		                	<c:if test="${basketItems.key == 0}">
@@ -80,6 +84,12 @@
 			                			<td class="basket-table-del-cell"><i class="fas fa-minus-circle d-xxl-flex basket-del-btn"></i></td>
 			                		</tr>
 			                	</c:forEach>
+			                	
+			                	<c:if test="${fn:length(stores) == 0}">
+			                		<tr>
+                                		<td id="basket-no-items" colspan="2">점심 후보를 추가해주세요</td>
+                            		</tr>
+			                	</c:if>
 			                </c:if>
 		                </c:forEach>
 	                </c:if>
@@ -88,7 +98,6 @@
             
 
             <div id="basket-button-area">
-            
             	<button class="btn btn-primary" id="basket-vote-btn" type="button">투표하기</button>
             	<button class="btn btn-primary" id="basket-random-btn" type="button">랜덤선택</button>
             </div>
@@ -140,7 +149,7 @@
 	let indexJSP = false
 	
 	const userNo = "${authUser.userNo}"
-	let basket = '${basket}'
+	let basket = "${basket}"
 		
 	let basket_group = []
 	let curr_basket_group = 0
@@ -180,6 +189,8 @@
 			
 			curr_basket_group = $(this).attr("data-groupNo")
 			console.log("현재 장바구니 그룹: " + curr_basket_group)
+			
+			setSessionBasketGroup()
 			
 			// 장바구니 교체 작업
 		}
@@ -411,6 +422,7 @@
 		
 		if (userNo == "") {
 			console.log("비로그인 회원")
+			await setSessionBasketGroup()
 			
 			console.log("basket " + basket)
 			
@@ -426,6 +438,7 @@
 		} else {
 			console.log(userNo + "번 회원")
 			await getBasketGroups()
+			await setSessionBasketGroup()
 		}
 		
 		console.log("callUser() 끝")
@@ -462,35 +475,30 @@
 	}
 	
 	
-	// 비회원 장바구니 불러오기
-	async function loadGuestBasket() {
+	// 세션에 현재 선택된 장바구니 그룹 저장
+	async function setSessionBasketGroup() {
+		var data_group = {"curr_basket_group": curr_basket_group}
+		
 		$.ajax({
-			url : "${pageContext.request.contextPath}/basket/guestGetBasket",		
+			url : "${pageContext.request.contextPath}/basket/setSessionBasketGroup",		
 			type : "post",
 			contentType : "application/json",
-			async : false,
+			data : JSON.stringify(data_group),
 			dataType : "json",
+			async : false,
 			success : function(result){				
-				if (result[0].length != 0) {
-					basket = result
-					console.log(basket)
-					
-					for (var i = 0; i < basket[0].length; i++) {
-						if (basket[0][i].stored) {
-							addToBasket(basket[0][i])
-						}
-					}
-					console.log("장바구니 생성 완료")
+				if (result) {
+					console.log("현재 그룹: " + curr_basket_group + " - 세션 저장 완료")
 					
 				} else {
-					console.log("장바구니 생성 실패")
+					console.log("현재 그룹 세션 저장 실패")
 				}
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
 			}
 		})
-		console.log("makeGuestBasket() 끝")
+		console.log("setSessionBasketGroup() 끝")
 	}
 	
 	
