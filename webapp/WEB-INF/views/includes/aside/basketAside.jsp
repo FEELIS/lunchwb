@@ -64,10 +64,31 @@
 	                    	<button class="btn btn-primary d-inline-block" id="basket-another-stores-btn" type="button">다른 가게 추천 받기</button>
 	                    </td>
 	                </tr>
+	                <!--  장바구니 아이템이 올 자리 -->
+	                <c:if test="${empty(authUser) and !empty(basket)}">
+		                <c:forEach var="basketItems" items="${basket}">
+		                	<c:if test="${basketItems.key == 0}">
+		                		<c:set var="stores" value="${basketItems.value}" />
+		                		<c:forEach var="store" items="${stores}">
+			                		<tr data-storeNo="${store.storeNo}">
+			                			<td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
+			                				<div class="basket-table-store-info">
+			                					<span class="text-start basket-table-store-name">${store.storeName}</span>
+			                					<span class="text-start basket-table-store-detail">${store.menu2ndCateName}/${store.distance}m</span>
+			                				</div>
+			                			</td>
+			                			<td class="basket-table-del-cell"><i class="fas fa-minus-circle d-xxl-flex basket-del-btn"></i></td>
+			                		</tr>
+			                	</c:forEach>
+			                </c:if>
+		                </c:forEach>
+	                </c:if>
                 </table>
             </div>
             
+
             <div id="basket-button-area">
+            
             	<button class="btn btn-primary" id="basket-vote-btn" type="button">투표하기</button>
             	<button class="btn btn-primary" id="basket-random-btn" type="button">랜덤선택</button>
             </div>
@@ -116,8 +137,11 @@
 
 
 <script type="text/javascript">
+	let indexJSP = false
+	
 	const userNo = "${authUser.userNo}"
-	let basket = ""
+	let basket = '${basket}'
+		
 	let basket_group = []
 	let curr_basket_group = 0
 	
@@ -388,14 +412,14 @@
 		if (userNo == "") {
 			console.log("비로그인 회원")
 			
-			basket = "${basket}"
 			console.log("basket " + basket)
 			
 			if (basket == "") {				
 				await makeGuestBasket()
 				
 			} else {
-				await loadGuestBasket()
+				
+				//await loadGuestBasket()
 				
 			}
 			
@@ -468,6 +492,7 @@
 		})
 		console.log("makeGuestBasket() 끝")
 	}
+	
 	
 	// 장바구니 그룹 목록 불러오기
 	async function getBasketGroups() {

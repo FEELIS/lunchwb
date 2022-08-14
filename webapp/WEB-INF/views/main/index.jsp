@@ -84,6 +84,7 @@
 
 
 <script type="text/javascript">
+	indexJSP = true
 
 	// 위치재설정 버튼 클릭 시
 	$("#location-change-btn").on("click", function(){

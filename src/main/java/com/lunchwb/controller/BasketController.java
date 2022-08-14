@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,9 +59,13 @@ public class BasketController {
 		boolean firstTime = true;
 			
 		Map<Integer, List<StoreVo>> basket = basketService.makeNewbasket();	
-		basket.put(0, basketService.addGuestBasket(basket.get(0), curr_location, filter_excluded, firstTime));		
+		basket.put(0, basketService.addGuestBasket(basket.get(0), curr_location, filter_excluded, firstTime));	
 		
+		JSONObject json = new JSONObject(basket);
+		
+		session.setAttribute("basket_json", json);
 		session.setAttribute("basket", basket);
+		logger.info(basket.toString());
 		
 		return basket;
 	}
