@@ -74,7 +74,7 @@
 			                			<td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
 			                				<div class="basket-table-store-info">
 			                					<span class="text-start basket-table-store-name">${store.storeName}</span>
-			                					<span class="text-start basket-table-store-detail">${store.menu2ndCateName}/${store.distance}m</span>
+			                					<span class="text-start basket-table-store-detail">${store.menu2ndCateName}&nbsp;/&nbsp;${store.distance}m</span>
 			                				</div>
 			                			</td>
 			                			<td class="basket-table-del-cell"><i class="fas fa-minus-circle d-xxl-flex basket-del-btn"></i></td>
