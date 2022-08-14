@@ -2,7 +2,6 @@ package com.lunchwb.controller;
 
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.Cookie;
@@ -14,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,9 +25,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
 import org.springframework.web.util.WebUtils;
 
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.lunchwb.api.NaverLoginBo;
 import com.lunchwb.service.UserService;
@@ -155,6 +159,51 @@ public class UserController {
 		}
        
 		return "redirect:./";
+	}
+	
+	/* SNS 로그인 구글 */
+	@RequestMapping(value="/googleLoginCallback",  method = {RequestMethod.GET})
+	public String userGoogleLoginPro(Model model, @RequestParam(value = "code") String authCode,HttpServletRequest request)
+			throws Exception {
+		
+		//HTTP Request를 위한 RestTemplate
+		RestTemplate restTemplate = new RestTemplate();
+		/*
+		//Google OAuth Access Token 요청을 위한 파라미터 세팅
+		GoogleOAuthRequest googleOAuthRequestParam =  new GoogleOAuthRequest();
+		googleOAuthRequestParam.setClientId("1028174609911-433j0ub6ablgbnubj4i6bvm0dclv23je.apps.googleusercontent.com");
+		googleOAuthRequestParam.setClientSecret("ALSEXcRMY_WyYA_ogxYAAXvp");
+		googleOAuthRequestParam.setCode(authCode);
+		googleOAuthRequestParam.setRedirectUri("http://localhost:8080/score/User/google/auth");
+		googleOAuthRequestParam.setGrantType("authorization_code");
+		
+		//JSON 파싱을 위한 기본값 세팅
+		//요청시 파라미터는 스네이크 케이스로 세팅되므로 Object mapper에 미리 설정해준다.
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+		mapper.setSerializationInclusion(Include.NON_NULL);
+ 
+		//AccessToken 발급 요청
+		ResponseEntity<String> resultEntity = restTemplate.postForEntity("https://oauth2.googleapis.com/token", googleOAuthRequestParam, String.class);
+		
+		//Token Request
+		GoogleOAuthResponse result = mapper.readValue(resultEntity.getBody(), new TypeReference<GoogleOAuthResponse>() {
+		});
+ 
+		//ID Token만 추출 (사용자의 정보는 jwt로 인코딩 되어있다)
+		String jwtToken = result.getIdToken();
+		String requestUrl = UriComponentsBuilder.fromHttpUrl("https://oauth2.googleapis.com/tokeninfo").queryParam("id_token", jwtToken).toUriString();
+		
+		String resultJson = restTemplate.getForObject(requestUrl, String.class);
+		
+		Map<String,String> userInfo = mapper.readValue(resultJson, new TypeReference<Map<String, String>>(){});
+		model.addAllAttributes(userInfo);
+		model.addAttribute("token", result.getAccessToken());
+		*/
+		
+		return "";
+		
+		
 	}
 	
 	/* SNS 회원가입 추가정보 입력 */
