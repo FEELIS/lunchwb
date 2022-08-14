@@ -11,6 +11,7 @@
    		<typeAlias alias="ReviewVo" type="com.lunchwb.vo.ReviewVo"/>
    		<typeAlias alias="VisitedVo" type="com.lunchwb.vo.VisitedVo"/>
    		<typeAlias alias="GPSVo" type="com.lunchwb.vo.GPSVo"/>
+   		<typeAlias alias="Map" type="java.util.Map"/>
     </typeAliases>
 
     <mappers>

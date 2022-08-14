@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +31,12 @@ public class BasketController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(BasketController.class);
 
+	// 로그인 회원 장바구니 그룹 목록 가져오기
 	@ResponseBody
 	@PostMapping("/getBasketGroup")
 	public List<GroupVo> getBasketGroup(@RequestBody int userNo) {
 		logger.info("basket group 불러오기");
+		logger.info("userNo: " + userNo);
 		
 		List<GroupVo> basketGroup = basketService.getBasketGroup(userNo);
 		
@@ -41,37 +44,46 @@ public class BasketController {
 	}
 	                                                                                                                                                                                                                                                                                          
 	
+	// 비로그인 회원 장바구니 생성 + 초기 3개 항목 담기
 	@ResponseBody
 	@PostMapping("/guestMakeBasket")
 	public Map<Integer, List<StoreVo>> guestMakeBasket(HttpSession session){
 		logger.info("비로그인 회원 장바구니 생성");
-		GPSVo gps = (GPSVo)session.getAttribute("curr_location");
-		System.out.println(gps.toString());
+		
+		GPSVo curr_location = (GPSVo)session.getAttribute("curr_location");
+		logger.info(curr_location.toString());
+		
 		List<Integer> filter_excluded = (List<Integer>)session.getAttribute("filter_excluded");
-		System.out.println(filter_excluded.toString());
+		logger.info(filter_excluded.toString());
 		
+		boolean firstTime = true;
+			
+		Map<Integer, List<StoreVo>> basket = basketService.makeNewbasket();	
+		basket.put(0, basketService.addGuestBasket(new ArrayList<StoreVo>(), curr_location, filter_excluded, firstTime));	
 		
-		
-		Map<Integer, List<StoreVo>> basket = basketService.makeNewbasket();
-		
-		
-		
+		//JSONObject json = new JSONObject(basket);
+		//session.setAttribute("basket_json", json);
+
 		session.setAttribute("basket", basket);
+		logger.info(basket.toString());
 		
 		return basket;
 	}
 	
 	
+	// GPS 위치 세션에 저장
 	@ResponseBody
 	@PostMapping("/setGPS")
 	public boolean setGPS(@RequestBody GPSVo gpsVo, HttpSession session) {
 		logger.info("GPS 설정하기");
+				
 		Boolean result;
 		
 		if (gpsVo == null) {
 			result = false;
 			
 		} else {
+			logger.info("gpsVo: " + gpsVo.toString());
 			result = true;
 		}
 		
@@ -84,6 +96,31 @@ public class BasketController {
 	}
 	
 	
+	// 현재 장바구니 그룹 세션 저장
+	@ResponseBody
+	@PostMapping("/setSessionBasketGroup")
+	public boolean setSessionBasketGroup(@RequestBody Map<String, Object> basket_group, HttpSession session) {
+		logger.info("세션 장바구니 그룹 저장");
+		boolean result = true;
+		
+		if (basket_group == null) {
+			result = false;
+		}
+		
+		Integer currBasketGroup = (Integer)basket_group.get("curr_basket_group");
+		
+		if (session.getAttribute("curr_basket_group") != null) {
+			session.removeAttribute("curr_basket_group");
+		}
+		session.setAttribute("curr_basket_group", currBasketGroup);
+		logger.info("현재 장바구니 그룹: " + currBasketGroup);
+		
+		return result;
+		
+	}
+	
+	
+	// 세션에 필터 없을 때 필터 생성
 	@ResponseBody
 	@PostMapping("/makeFilterSession")
 	public boolean makeFilterSession(HttpSession session) {
@@ -101,10 +138,36 @@ public class BasketController {
 	@PostMapping("/saveFilterSession")
 	public boolean saveFilterSession(@RequestBody List<Integer> filter_excluded, HttpSession session) {
 		logger.info("세션 필터 저장");
+		logger.info("filter_excluded: " + filter_excluded.toString());
 		
+		if (session.getAttribute("filter_excluded") != null) {
+			session.removeAttribute("filter_excluded");
+		}
 		session.setAttribute("filter_excluded", filter_excluded);
 		
 		return true;
+	}
+	
+	
+	// 장바구니에서 항목 삭제 > 세션 반영
+	@ResponseBody
+	@PostMapping("/deleteFromBasket")
+	public Map<Integer, List<StoreVo>> deleteFromBasket(@RequestBody Map<String, Object> deleteStore, HttpSession session) {
+		logger.info("장바구니 삭제");
+		
+		Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
+		Integer groupNo = (Integer)session.getAttribute("curr_basket_group");
+		Integer storeNo = (Integer)deleteStore.get("storeNo");
+		
+		basket.put(groupNo, basketService.deleteBasket(basket.get(groupNo), storeNo));
+		
+		if (session.getAttribute("basket") != null) {
+			session.removeAttribute("basket");
+		}
+		session.setAttribute("basket", basket);
+		logger.info(basket.toString());
+		
+		return basket;
 	}
 
 }

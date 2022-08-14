@@ -15,18 +15,21 @@
 		<result column="rating_bujang" property="ratingBujang" />
 	</resultMap>
 	
-
-	<select id="guestStoreRecommend" parameterType="map" resultType="StoreVo">
+	
+	<!-- 비로그인 회원 장바구니 아이템 추천 -->
+	<select id="guestStoreRecommend" parameterType="java.util.Map" resultType="StoreVo">
 		<![CDATA[
 			SELECT store_no storeNo
-			       ,menu_2nd_cate_no menu2ndCateNo
+			       ,menu_2nd_cate_name menu2ndCateName
 			       ,store_name storeName
 			       ,store_road_address storeRoadAddress
 			       ,rating_bujang ratingBujang
+			       ,store_opening_hours storeOpeningHours
+                   ,store_breaktime storeBreaktime
 			       ,distance
 			       ,score
-			FROM (SELECT s.store_no, s.menu_2nd_cate_no, s.store_name, s.store_road_address, b.rating_bujang
-			             ,ROUND(SQRT(POWER(ABS(s.store_x-#{gps.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(s.store_y-#{gps.gpsY})*6400000*2*3.14/360, 2)), 0) distance
+			FROM (SELECT s.store_no, f.menu_2nd_cate_name, s.store_name, s.store_road_address, b.rating_bujang, s.store_opening_hours, s.store_breaktime
+			             ,ROUND(SQRT(POWER(ABS(s.store_x-#{curr_location.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(s.store_y-#{curr_location.gpsY})*6400000*2*3.14/360, 2)), 0) distance
 			             ,(NVL(v.cnt, 0)/10 + r.rating_naver * 50 + NVL(b.rating_bujang, 0) * 50) score
 			      FROM   store s, rating_others r, food_2nd_category f
 			             ,(SELECT store_no, COUNT(*) cnt 
@@ -42,16 +45,20 @@
 			      AND    s.menu_2nd_cate_no = f.menu_2nd_cate_no
 	    ]]>
 		
-		<foreach collection="filter_excluded" item="cate_1st">
+		<foreach collection="filter_excluded" item="cate_1st" separator="">
 	              AND    f.menu_1st_cate_no != #{cate_1st}
+		</foreach>
+		
+		<foreach collection="basket" item="storedItem" separator="">
+	              AND    s.store_no != #{storedItem.storeNo}
 		</foreach>
 			  
 		<![CDATA[
 		         AND    ((r.rating_naver >= 4.3 AND r.rating_kakao >= 3) OR (r.rating_naver >= 4.5 AND r.rating_kakao = 0)) 
 			     ORDER BY score DESC)
 		    WHERE  distance <= 1000
-		    AND    ROWNUM <= 15
-		    ORDER BY DBMS_RANDOM.value;
+		    AND    ROWNUM <= 30
+		    ORDER BY DBMS_RANDOM.value
 		]]>
 	</select>
 	
@@ -78,8 +85,8 @@
 	</select>
 	
 	<select id="storeTime" parameterType="int" resultType="map">
-		SELECT  store_opening_hours storeOpeningHours
-				, store_breaktime storeBreaktime
+		SELECT  store_opening_hours openingHours
+				, store_breaktime breaktime
 		FROM store
 		WHERE store_no = #{storeNo}
 	</select>

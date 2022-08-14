@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+
 <!DOCTYPE html>
 <html>
 
@@ -57,58 +58,53 @@
             </div>
             
             <div class="table-responsive" id="basket-table">
-                <table class="table">
-                    <thead>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td id="basket-table-button-area" colspan="2">
-                            	<i class="fas fa-filter" id="basket-filter-btn"></i>
-                            	<button class="btn btn-primary d-inline-block" id="basket-another-stores-btn" type="button">다른 가게 추천 받기</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td id="basket-no-items" colspan="2">점심 후보를 추가해주세요</td>
-                        </tr>
-                        <tr class="basket-table-row" data-storeNo="2881">
-                            <td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
-                                <div class="basket-table-store-info">
-                                	<span class="text-start basket-table-store-name">써브웨이 서울대점</span>
-                                	<span class="text-start basket-table-store-detail">샌드위치 / 251m</span>
-                                </div>
-                            </td>
-                            <td class="basket-table-del-cell">
-                            	<i class="fas fa-minus-circle d-xxl-flex basket-del-btn"></i>
-                            </td>
-                        </tr>
-                        <tr class="basket-table-row" data-storeNo="1857">
-                            <td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
-                                <div class="basket-table-store-info">
-                                	<span class="text-start basket-table-store-name">맥도날드 신림점</span>
-                                	<span class="text-start basket-table-store-detail">햄버거 / 320m</span>
-                                </div>
-                            </td>
-                            <td class="basket-table-del-cell">
-                            	<i class="fas fa-minus-circle d-xxl-flex basket-del-btn"></i>
-                            </td>
-                        </tr>
-                        <tr class="basket-table-row" data-storeNo="2247">
-                            <td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
-                                <div class="basket-table-store-info">
-                                	<span class="text-start basket-table-store-name">양자강</span>
-                                	<span class="text-start basket-table-store-detail">중국요리 / 520m</span>
-                                </div>
-                            </td>
-                            <td class="basket-table-del-cell">
-                            	<i class="fas fa-minus-circle d-xxl-flex basket-del-btn"></i>
-                            </td>
-                        </tr>
-                    </tbody>
+                <table class="table" id="basket-table-table">
+	                <tr>
+	                    <td id="basket-table-button-area" colspan="2">
+	                    	<i class="fas fa-filter" id="basket-filter-btn"></i>
+	                    	<button class="btn btn-primary d-inline-block" id="basket-another-stores-btn" type="button">다른 가게 추천 받기</button>
+	                    </td>
+	                </tr>
+	                <!--  장바구니 아이템이 올 자리 -->
+	                <c:if test="${!empty(basket)}">
+		                <c:forEach var="basketItems" items="${basket}">
+		                	<c:if test="${basketItems.key == curr_basket_group}">
+		                		<c:set var="basketCnt" value="0" />
+		                		<c:set var="stores" value="${basketItems.value}" />
+		                		
+		                		<c:forEach var="store" items="${stores}">
+		                			<c:if test="${store.stored}">
+		                				<c:set var="basketCnt" value="${basketCnt + 1}" />
+		                				
+				                		<tr class="basket-table-row" data-storeNo="${store.storeNo}">
+				                			<td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
+				                				<div class="basket-table-store-info">
+				                					<span class="text-start basket-table-store-name">${store.storeName}</span>
+				                					<span class="text-start basket-table-store-detail">${store.menu2ndCateName}&nbsp;/&nbsp;${store.distance}m</span>
+				                				</div>
+				                			</td>
+				                			<td class="basket-table-del-cell"><i class="fas fa-minus-circle d-xxl-flex basket-del-btn"></i></td>
+				                		</tr>
+				                		
+			                		</c:if>
+			                	</c:forEach>
+			                	
+			                	<c:if test="${basketCnt == 0}">
+			                		<tr>
+                                		<td id="basket-no-items" class="no-drag" colspan="2">점심 후보를 추가해주세요</td>
+                            		</tr>
+			                	</c:if>
+			                </c:if>
+		                </c:forEach>
+	                </c:if>
                 </table>
             </div>
             
+
             <div id="basket-button-area">
-            	<button class="btn btn-primary" id="basket-vote-btn" type="button">투표하기</button>
+            	<c:if test="${!empty(authUser)}">
+            		<button class="btn btn-primary" id="basket-vote-btn" type="button">투표하기</button>
+            	</c:if>
             	<button class="btn btn-primary" id="basket-random-btn" type="button">랜덤선택</button>
             </div>
         </div>
@@ -149,145 +145,46 @@
     </div>
 </div>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e74b599be710b798192fd5221284718a&libraries=services"></script>
+<!--<c:import url="/WEB-INF/views/includes/storeInfo.jsp" />-->
 
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e74b599be710b798192fd5221284718a&libraries=services"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 
 <script type="text/javascript">
-	var userNo = "${authUser.userNo}"
-	var basket = ""
-	var basket_group = 0
-	var filter_excluded = "${filter_excluded}"
+	let indexJSP = false
+	
+	const userNo = "${authUser.userNo}"
+	let basket = "${basket}"
 		
-	var gpsVo = {
+	let basket_group = []
+	let curr_basket_group = 0
+	
+	let filter_excluded = "${filter_excluded}"
+		
+	let gpsVo = {
 			gpsX : "${curr_location.gpsX}",
 			gpsY : "${curr_location.gpsY}",
-			address : "${curr_location.address}",
+			address : "${curr_location.address}"
 		}
-	
+			
 	
 	// 페이지 로드 시
-	$(document).ready(function(){							
-		if (gpsVo.address == "") {
-			curr_location()	
-			setGPS(gpsVo)
-		} 
-		
-		$("#curr-location-address").text(gpsVo.address)	
-		console.log(gpsVo)
-		
-		if (filter_excluded == "") {
-			$.ajax({
-				url : "${pageContext.request.contextPath}/basket/makeFilterSession",		
-				type : "post",
-				contentType : "application/json",
-				async: false,
-				dataType : "json",
-				success : function(result){
-					if (result) {
-						filter_excluded = []
-						console.log("필터 세션 생성 성공")
-					} else {
-						console.log("필터 세션 생성 실패")
-					}
-				},
-				error : function(XHR, status, error) {
-					console.error(status + " : " + error);
-				}
-			});
-			console.log(filter_excluded)
-		} else {
-			var temp1 = "${filter_excluded}"
-			var temp2 = temp1.substring(1, temp1.length-1)
-			filter_excluded = temp2.split(",")	
-			
-			for (var i = 0; i < filter_excluded.length; i++) {
-				filter_excluded[i] = parseInt(filter_excluded[i])
-			}
-			console.log(filter_excluded)	
-		}	
-
-		if (userNo == "") {
-			console.log("비로그인 회원")
-			
-			basket = "${basket}"
-			console.log(basket)
-			if (basket == "ssssssssssss") {
-				// 장바구니 만들기
-				console.log("엥?")
-			 	$.ajax({
-					url : "${pageContext.request.contextPath}/basket/guestMakeBasket",		
-					type : "post",
-					contentType : "application/json",
-					async: false,
-					dataType : "json",
-					success : function(result){
-						if (result[0].length != 0) {
-							basket = result[0]
-							console.log("장바구니 생성 완료")
-						} else {
-							console.log("장바구니 생성 실패")
-						}
-					},
-					error : function(XHR, status, error) {
-						console.error(status + " : " + error);
-					}
-				}); 
-			}
-			
-		} else {
-			console.log(userNo + "번 회원")
-			
-			// 그룹 불러오기
-		 	$.ajax({
-				url : "${pageContext.request.contextPath}/basket/getBasketGroup",		
-				type : "post",
-				contentType : "application/json",
-				async: false,
-				data : JSON.stringify(userNo),
-				dataType : "json",
-				success : function(basketGroup){
-					for (var i = 0; i < basketGroup.length; i++) {
-						addBasketGroup(basketGroup[i])
-						
-						if (i == 0) {
-							basket_group = basketGroup[i].groupNo
-							$(".basket-group").addClass("basket-selected-group")
-						}
-					}
-					
-					if (basketGroup.length < 4) {
-						$("#basket-groups").append(
-							"<div class=\"basket-group no-drag basket-group-add\"><span>그룹추가</span><i class=\"fas fa-user-plus\"></i></div>"
-						)
-					}
-				},
-				error : function(XHR, status, error) {
-					console.error(status + " : " + error);
-				}
-			}); 
-		}
+	$(document).ready(
+		async function(){
+			await callGPS()
+			await callFilter()		
+			await callUser()
 	})
 
 	
-	// 다른 그룹 클릭
-	$("#basket-groups").on("click", ".basket-normal-group", function(){
-		if (basket_group != $(this).attr("data-groupNo")) {
-			$("[data-groupNo=" + basket_group + "]").removeClass("basket-selected-group")
-			$(this).addClass("basket-selected-group")
-			
-			basket_group = $(this).attr("data-groupNo")
-			
-			// 장바구니 교체 작업
-		}
-	})	
-	
-	
-	// 그룹 추가 버튼 클릭
-	$("#basket-groups").on("click", ".basket-group-add", function(){
-		location.replace("${pageContext.request.contextPath}/group/add")
-	})
+	// 장바구니 클릭 시 모달 팝업
+	//$("#basket-table").on("click", ".basket-table-store-name", function(){
+	//	var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
+	//	console.log(storeNo)
+		
+	//	$("#modal-store").modal("show")
+	//})
 	
 	
 	// 장바구니 필터 클릭 시
@@ -321,7 +218,7 @@
 				type : "post",
 				contentType : "application/json",
 				data : JSON.stringify(filter_excluded),
-				async: false,
+				async : false,
 				dataType : "json",
 				success : function(result){
 					if (result) {
@@ -333,66 +230,118 @@
 				error : function(XHR, status, error) {
 					console.error(status + " : " + error);
 				}
-			});
+			})
 		}
-		console.log(filter_excluded)
+		console.log("필터 제외 항목 " + filter_excluded)
 		
 		$("#modal-recFilter").modal("hide")
 	})
 	
 	
+	async function sleep(ms) {
+		let start = Date.now(), now = start
+	    while (now - start < ms) {
+	        now = Date.now()
+	    }
+	}
+	
+	
+	// 페이지 로딩 초기 gps 확인 함수
+	async function callGPS() {
+		sleep(500)
+		console.log(gpsVo.gpsX)
+		console.log(gpsVo.gpsY)
+		
+		if (gpsVo.gpsX == "" || gpsVo.gpsX == 0.0) {
+			// geolocation으로 현재 좌표 알아내기
+			await curr_location()
+						
+			// 세션에 현재 gps 저장
+			await setGPS(gpsVo)
+		} else {
+			gpsVo.gpsX = parseFloat(gpsVo.gpsX)
+			gpsVo.gpsY = parseFloat(gpsVo.gpsY)
+		}
+		
+		console.log(gpsVo)
+		console.log("callGPS() 종료")
+	} 
+	
+	
 	// 현재 위치 저장 함수
-	function curr_location() {
+	async function curr_location() {
 		document.cookie="safeCookie1=foo; SameSite=Lax";
 		document.cookie="safeCookie2=foo";
 		document.cookie="crossCookie=bar; SameSite=None; Secure";
 		
-		// gps 허용 시
-		if (navigator.geolocation) { 
-			// 위도, 경도 저장
-		    navigator.geolocation.getCurrentPosition(function(position) {
+		var options = {enableHighAccuracy: true}
+		
+		let getPosition = async function(options) {
+			return new Promise(function (resolve, reject) {
+				navigator.geolocation.getCurrentPosition(resolve, reject, options)
+			})
+		}
+		
+		await getPosition()
+			.then((position) => {
+				console.log("geolocation")
 		    	var gpsX = position.coords.longitude
 		    	var gpsY = position.coords.latitude
 		    	gpsVo.gpsX = parseFloat(gpsX)
 		    	gpsVo.gpsY = parseFloat(gpsY)
+			})
+			.catch((error) => {
+				alert("GPS 사용을 허용해주세요")
+			})
 				
-		    	// 카카오 API로 주소 알아내기
-				function getAddr(lat,lng) {
-		    		let address = ""
-		    		let geocoder = new kakao.maps.services.Geocoder()
-		    		
-		    		let coord = new kakao.maps.LatLng(lat, lng);
-		    		let callback = function(result, status) {
-		    			if (status === kakao.maps.services.Status.OK) {
-		    				gpsVo.address = result[0].address.address_name
-		    				
-		    				if (!$('#modal-location-change').is(':visible')) {
-		    					$("#curr-location-address").text(result[0].address.address_name)
-		    				} else {
-		    					$("#modal-curr-location").text(result[0].address.address_name)
-		    				}
-		    			}
-		    		}
-		    		geocoder.coord2Address(coord.getLng(), coord.getLat(), callback)
-		    	}
-		    	
-		    	getAddr(gpsY, gpsX)
-		    	
-		})} else {
-			console.log("gps 지원 안함")
-		}
+		console.log(gpsVo.gpsX)
+		console.log(gpsVo.gpsY)
 		
+		// 카카오 API로 주소 알아내기
+	    await getAddr(gpsVo.gpsY, gpsVo.gpsX)
+				
+		console.log("curr_location() 종료")
+	}
+	
+	
+	// 좌표 > 주소 변환 api
+	async function getAddr(lat, lng) {
+		console.log("getAddr() 시작")
+		let geocoder = new kakao.maps.services.Geocoder()
+		
+		let addressSearch = (lat, lng) => {
+			return new Promise((resolve, reject) => {
+				geocoder.coord2Address(lng, lat, (result, status) => {
+					if (status === kakao.maps.services.Status.OK) {
+						gpsVo.address = result[0].address.address_name
+						console.log(gpsVo.address)
+											
+						if (!$('#modal-location-change').is(':visible')) {
+							$("#curr-location-address").text(result[0].address.address_name)
+						} else {
+							$("#modal-curr-location").text(result[0].address.address_name)
+						}
+						resolve(result[0].address.address_name)
+					} else {
+						reject('geocoder error')
+					}
+				})
+			})
+		}	
+		
+		await addressSearch(lat, lng)
 	}
 	
 	
 	// gps 세션 값 저장하기
-	function setGPS(gpsVo) {
+	async function setGPS(gpsVo) {		
 		$.ajax({
 			url : "${pageContext.request.contextPath}/basket/setGPS",		
 			type : "post",
 			contentType : "application/json",
 			data : JSON.stringify(gpsVo),
 			dataType : "json",
+			async : false,
 			success : function(result){
 				if (result) {
 					console.log("gps 저장")
@@ -403,30 +352,310 @@
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
 			}
-		}); 
+		})
+		console.log("setGPS() 종료")
+	}
+	
+
+	// 필터 확인 함수
+	async function callFilter() {
+		if (filter_excluded == "") {
+			await makeFilterSession()
+						
+		} else {
+			var temp1 = "${filter_excluded}"
+			var temp2 = temp1.substring(1, temp1.length-1)
+			filter_excluded = temp2.split(",")	
+			
+			for (var i = 0; i < filter_excluded.length; i++) {
+				filter_excluded[i] = parseInt(filter_excluded[i])
+			}
+		}
+		console.log("필터 제외 항목 " + filter_excluded)
+		console.log("callFilter() 끝")
 	}
 	
 	
-	// 그룹 목록 불러오기 메소드
+	// 필터 세션 생성
+	async function makeFilterSession() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/basket/makeFilterSession",		
+			type : "post",
+			contentType : "application/json",
+			async : false,
+			dataType : "json",
+			success : function(result){
+				if (result) {
+					filter_excluded = []
+					console.log("필터 세션 생성 성공")
+				} else {
+					console.log("필터 세션 생성 실패")
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+		console.log("makeFilterSession() 끝")
+	}
+	
+	
+	// 페이지 로딩 초기 사용자 확인 + 장바구니 확인
+	async function callUser() {
+		console.log("callUser() 시작")
+		
+		if (userNo == "") {
+			console.log("비로그인 회원")
+			
+			if ("${curr_basket_group}" == ""){
+				await setSessionBasketGroup()
+			}
+			
+			console.log("basket " + basket)
+			
+			if (basket == "") {				
+				await makeGuestBasket()
+				
+				if (basket[0].length == 0) {
+					basketNoItem()
+				}
+			}
+			
+		} else {
+			console.log(userNo + "번 회원")
+						
+			if ("${curr_basket_group}" != "" && "${curr_basket_group}" != "0") {
+				curr_basket_group = parseInt("${curr_basket_group}")
+			} 
+			await getBasketGroups()
+			await setSessionBasketGroup()
+		}
+		
+		console.log("callUser() 끝")
+	}
+	
+	
+	// 비회원 장바구니 생성
+	async function makeGuestBasket() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/basket/guestMakeBasket",		
+			type : "post",
+			contentType : "application/json",
+			async : false,
+			dataType : "json",
+			success : function(result){	
+				basket = result
+				console.log(basket)
+				
+				if (result[0].length != 0) {							
+					for (var i = 0; i < 3; i++) {
+						addToBasket(basket[0][i])
+					}
+					console.log("장바구니 생성 완료")
+					
+				} else {
+					alert("현재 위치에서 추천 가능한 가게가 없습니다.")
+					noStore()
+					
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+		console.log("makeGuestBasket() 끝")
+	}
+	
+	
+	// 세션에 현재 선택된 장바구니 그룹 저장
+	async function setSessionBasketGroup() {
+		var data_group = {"curr_basket_group": curr_basket_group}
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/basket/setSessionBasketGroup",		
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(data_group),
+			dataType : "json",
+			async : false,
+			success : function(result){				
+				if (result) {
+					console.log("현재 그룹: " + curr_basket_group + " - 세션 저장 완료")
+					
+				} else {
+					console.log("현재 그룹 세션 저장 실패")
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+		
+		console.log("setSessionBasketGroup() 끝")
+	}
+	
+	
+	// 장바구니 그룹 목록 불러오기
+	async function getBasketGroups() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/basket/getBasketGroup",		
+			type : "post",
+			async : false,
+			contentType : "application/json",
+			data : JSON.stringify(userNo),
+			dataType : "json",
+			success : function(basketGroup){
+				for (var i = 0; i < basketGroup.length; i++) {
+					addBasketGroup(basketGroup[i])
+					basket_group.push(basketGroup[i].groupNo)
+					
+					if (curr_basket_group == 0) {
+						if (i == 0) {
+							curr_basket_group = basketGroup[i].groupNo
+
+						}
+					} 
+				}
+				
+				$("[data-groupNo=" + curr_basket_group + "]").addClass("basket-selected-group")
+				
+				console.log("나의 그룹 " +  basket_group)
+				
+				if (basketGroup.length < 4) {
+					$("#basket-groups").append(
+						"<div class='basket-group no-drag basket-group-add'><span>그룹추가</span><i class='fas fa-user-plus'></i></div>"
+					)
+					console.log("그룹 추가하기 추가")
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+		
+		console.log("getBasketGroups() 끝")
+	}
+	
+	
+	// 다른 그룹 클릭
+	$("#basket-groups").on("click", ".basket-normal-group", async function(){
+		if (curr_basket_group != $(this).attr("data-groupNo")) {
+			$("[data-groupNo=" + curr_basket_group + "]").removeClass("basket-selected-group")
+			$(this).addClass("basket-selected-group")
+			
+			curr_basket_group = parseInt($(this).attr("data-groupNo"))
+			console.log("현재 장바구니 그룹: " + curr_basket_group)
+			
+			await setSessionBasketGroup()
+			
+			// 장바구니 교체 작업
+		}
+	})	
+	
+	
+	// 그룹 추가 버튼 클릭
+	$("#basket-groups").on("click", ".basket-group-add", function(){
+		location.replace("${pageContext.request.contextPath}/group/add")
+	})
+	
+	
+	// 장바구니 그룹 탭 생성 메소드
 	function addBasketGroup(basketGroup) {
 		$("#basket-groups").append(
-			"<div class=\"basket-group basket-normal-group no-drag\" data-groupNo=\"" + basketGroup.groupNo + "\"><span>" + basketGroup.groupName + "</span><i class=\"fas fa-user-circle\"></i></div>"
+			"<div class='basket-group basket-normal-group no-drag' data-groupNo='" + basketGroup.groupNo + "'><span>" + basketGroup.groupName + "</span><i class='fas fa-user-circle'></i></div>"
+		)
+		console.log("그룹 탭 추가")
+	}
+	
+		
+	// 장바구니 추가하기 메소드
+	function addToBasket(store) {
+		$("#basket-table-table").append(
+			  "<tr class='basket-table-row' data-storeNo='" + store.storeNo + "'>"
+            + 	"<td class='d-xxl-flex justify-content-xxl-start basket-table-cell'>"                    
+            + 		"<div class='basket-table-store-info'><span class='text-start basket-table-store-name'>" + store.storeName + "</span><span class='text-start basket-table-store-detail'>" + store.menu2ndCateName + " / " + store.distance + "m</span></div>"                        
+            + 	"</td>"                    
+            + 	"<td class='basket-table-del-cell'><i class='fas fa-minus-circle d-xxl-flex basket-del-btn'></i></td>"                    
+            + "</tr>"
 		)
 	}
 	
 	
-	// 장바구니 추가하기 메소드
-	function addToBasket(store) {
-		console.log("장바구니에 추가")
-	}
+	// 다른 가게 추천받기 버튼 클릭
+	$("#basket-another-stores-btn").on("click", async function(){
+		console.log("아야")
+	})
 	
 	
-	// 장바구니에서 삭제하기 메소드
-	function deleteFromBasket(store) {
+	// 장바구니 삭제 버튼 클릭 시
+	$("#basket-table").on("click", ".basket-del-btn", async function(){
+		var deleteStoreNo = parseInt($(this).closest(".basket-table-row").attr("data-storeNo"))
+		console.log(deleteStoreNo)
+		$(this).closest(".basket-table-row").remove()
 		
+		await deleteSessionBasketGroup(deleteStoreNo)
+		
+		var cnt = 0
+		for (var i = 0; i < basket[curr_basket_group].length; i++) {
+			if (basket[curr_basket_group][i].stored) {
+				cnt += 1
+			}
+		}
+		console.log(cnt)
+		if (cnt == 0) {
+			basketNoItem()
+		}
+	})
+	
+	
+	// 장바구니 세션 삭제
+	async function deleteSessionBasketGroup(deleteStoreNo) {
+		var delete_obj = {"storeNo": deleteStoreNo}
+		console.log(delete_obj)
+		$.ajax({
+			url : "${pageContext.request.contextPath}/basket/deleteFromBasket",		
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(delete_obj),
+			dataType : "json",
+			async : false,
+			success : function(result){				
+				basket = result
+				console.log(basket[curr_basket_group])
+				alert("장바구니에서 항목이 삭제되었습니다.")
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+		
+		console.log("setSessionBasketGroup() 끝")
 	}
 	
-
+	
+	// 점심후보를 추가해주세요 추가 메소드
+	function basketNoItem() {
+		$("#basket-table-table").append(
+			"<tr><td id='basket-no-items' class='no-drag' colspan='2'>점심 후보를 추가해주세요</td></tr>"
+		)
+		
+		console.log("basketNoItem() 끝")
+	}
+	
+	
+	// 주변에 가게가 하나도 없을 때 창
+	function noStore() {
+		$("#container").append(
+			  "<div class='d-inline-flex justify-content-center align-items-center' id='no-store'>"
+            + 	"<div>"
+            +   	"<span class='d-block justify-content-center' id='no-store-alert-1'>주변에 추천 가능한 가게가 없어요</span>"
+            +       "<span class='d-flex justify-content-center' id='no-store-alert-2'>현재 위치나 필터를 확인해주세요</span>"
+            +   "</div>"
+            + "</div>"
+		)
+	}
+	
+	
 </script>
 
 </body>

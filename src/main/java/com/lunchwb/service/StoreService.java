@@ -8,9 +8,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lunchwb.dao.ReviewDao;
 import com.lunchwb.dao.StoreDao;
 import com.lunchwb.dao.VisitedDao;
 import com.lunchwb.vo.GPSVo;
+import com.lunchwb.vo.ReviewVo;
 import com.lunchwb.vo.StoreVo;
 import com.lunchwb.vo.UserVo;
 import com.lunchwb.vo.VisitedVo;
@@ -22,6 +24,8 @@ public class StoreService {
 	private StoreDao storeDao; 
 	@Autowired
 	private VisitedDao visitedDao; 
+	@Autowired
+	private ReviewDao reviewDao; 
 	
 	
 	/* 가게 정보 받아오기 */
@@ -31,28 +35,28 @@ public class StoreService {
 		//기본정보
 		StoreVo storeVo = storeDao.basicStoreInfo(storeNo);
 		
-		//영업시간 차후 //타입핸들러 건드리겠습니다 
+		//영업시간 차후 //타입핸들러 할수있으면 할게요
 		Map<String, String> map = storeDao.storeTime(storeNo);
-		List<String> storeOpeningHours = new ArrayList<>();
-		String str = map.get("storeOpeningHours");
+		List<String> openingHours = new ArrayList<>();
+		String str = map.get("openingHours");
 		str.replace("[", "");		
 		str.replace("]", "");
 		String[] strA = str.split(",");
 		for(int i=0; i<strA.length; i++) {
-			storeOpeningHours.add(strA[i]);
+			openingHours.add(strA[i]);
 		}
-		storeVo.setStoreOpeningHours(storeOpeningHours);
+		storeVo.setOpeningHours(openingHours);
 		
 		//휴식시간
-		List<String> storeBreaktime = new ArrayList<>();
-		String str2 = map.get("storeBreaktime");
+		List<String> breaktime = new ArrayList<>();
+		String str2 = map.get("breaktime");
 		str.replace("[", "");		
 		str.replace("]", "");
 		String[] str2A = str2.split(",");
 		for(int i=0; i<str2A.length; i++) {
-			storeBreaktime.add(str2A[i]);
+			breaktime.add(str2A[i]);
 		}
-		storeVo.setStoreBreaktime(storeBreaktime);
+		storeVo.setBreaktime(breaktime);
 		
 		storeMap.put("storeVo", storeVo);
 		
@@ -70,6 +74,11 @@ public class StoreService {
 			storeMap.put("visitedVo", visitedVo);
 		}
 		
+		//최근 리뷰 3건
+		List<ReviewVo> reviewList = reviewDao.recentReviews(storeNo);
+		storeMap.put("reviewList", reviewList);
+		
+		//최근 리뷰 사진(null 가능이라 따로 최근 3개? - 이거는 리뷰 작성부터.............)
 		
 		
 		

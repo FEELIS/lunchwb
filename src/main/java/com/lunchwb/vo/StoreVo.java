@@ -12,8 +12,13 @@ public class StoreVo {
 	private double storeY;
 	private String storeRoadAddress;
 	private String storeOldAddress;
-	private List<String> storeOpeningHours;
-	private List<String> storeBreaktime;
+	private String storeOpeningHours;
+	private String storeBreaktime;
+	
+	//////// 스페어용 ////////////////////////////////
+	private List<String> openingHours;
+	private List<String> breaktime;
+	
 	
 	////////////////// food 2nd category ////////////////////
 	private String menu2ndCateName;
@@ -46,9 +51,9 @@ public class StoreVo {
 
 	
 	public StoreVo(int storeNo, int menu2ndCateNo, String storeName, double storeX, double storeY,
-			String storeRoadAddress, String storeOldAddress, List<String> storeOpeningHours, List<String> storeBreaktime,
-			String menu2ndCateName, float ratingNaver, float ratingKakao, int distance, int score, boolean stored,
-			float ratingBujang, int visitCnt) {
+			String storeRoadAddress, String storeOldAddress, String storeOpeningHours, String storeBreaktime,
+			List<String> openingHours, List<String> breaktime, String menu2ndCateName, float ratingNaver,
+			float ratingKakao, int distance, int score, boolean stored, float ratingBujang, int visitCnt) {
 		this.storeNo = storeNo;
 		this.menu2ndCateNo = menu2ndCateNo;
 		this.storeName = storeName;
@@ -58,6 +63,8 @@ public class StoreVo {
 		this.storeOldAddress = storeOldAddress;
 		this.storeOpeningHours = storeOpeningHours;
 		this.storeBreaktime = storeBreaktime;
+		this.openingHours = openingHours;
+		this.breaktime = breaktime;
 		this.menu2ndCateName = menu2ndCateName;
 		this.ratingNaver = ratingNaver;
 		this.ratingKakao = ratingKakao;
@@ -141,22 +148,22 @@ public class StoreVo {
 	}
 
 	
-	public List<String> getStoreOpeningHours() {
+	public String getStoreOpeningHours() {
 		return storeOpeningHours;
 	}
 
 
-	public void setStoreOpeningHours(List<String> storeOpeningHours) {
+	public void setStoreOpeningHours(String storeOpeningHours) {
 		this.storeOpeningHours = storeOpeningHours;
 	}
 
 
-	public List<String> getStoreBreaktime() {
+	public String getStoreBreaktime() {
 		return storeBreaktime;
 	}
 
 
-	public void setStoreBreaktime(List<String> storeBreaktime) {
+	public void setStoreBreaktime(String storeBreaktime) {
 		this.storeBreaktime = storeBreaktime;
 	}
 	
@@ -238,6 +245,26 @@ public class StoreVo {
 
 	public void setStored(boolean stored) {
 		this.stored = stored;
+	}
+	
+	
+	public List<String> getOpeningHours() {
+		return openingHours;
+	}
+
+
+	public void setOpeningHours(List<String> openingHours) {
+		this.openingHours = openingHours;
+	}
+
+
+	public List<String> getBreaktime() {
+		return breaktime;
+	}
+
+
+	public void setBreaktime(List<String> breaktime) {
+		this.breaktime = breaktime;
 	}
 
 
