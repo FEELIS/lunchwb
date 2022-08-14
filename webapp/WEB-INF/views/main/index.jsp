@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <!DOCTYPE html>
 <html>
@@ -44,6 +45,22 @@
         	<span id="curr-location-address">${curr_location.address}</span>
         	<button class="btn btn-primary" id="location-change-btn" type="button">위치재설정</button>
         </div>
+        
+        <c:if test="${!empty(curr_location)}">
+        	<c:forEach var="basketItems" items="${basket}">
+            	<c:if test="${basketItems.key == curr_basket_group}">
+            		<c:set var="stores" value="${basketItems.value}" />
+            		<c:if test="${fn:length(stores)==0}">
+            			<div class='d-inline-flex justify-content-center align-items-center' id='no-store'>
+                    		<div>
+                    			<span class='d-block justify-content-center' id='no-store-alert-1'>주변에 추천 가능한 가게가 없어요</span>
+                    			<span class='d-flex justify-content-center' id='no-store-alert-2'>현재 위치나 필터를 확인해주세요</span>
+                    		</div>
+                		</div>
+            		</c:if>		
+             	</c:if>
+             </c:forEach>
+        </c:if>
     </div>
 </div>
 

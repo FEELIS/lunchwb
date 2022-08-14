@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 
 <!DOCTYPE html>
@@ -67,14 +66,16 @@
 	                    </td>
 	                </tr>
 	                <!--  장바구니 아이템이 올 자리 -->
-	                <c:if test="${empty(authUser) and !empty(basket)}">
+	                <c:if test="${!empty(basket)}">
 		                <c:forEach var="basketItems" items="${basket}">
 		                	<c:if test="${basketItems.key == curr_basket_group}">
 		                		<c:set var="basketCnt" value="0" />
 		                		<c:set var="stores" value="${basketItems.value}" />
+		                		
 		                		<c:forEach var="store" items="${stores}">
 		                			<c:if test="${store.stored}">
 		                				<c:set var="basketCnt" value="${basketCnt + 1}" />
+		                				
 				                		<tr class="basket-table-row" data-storeNo="${store.storeNo}">
 				                			<td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
 				                				<div class="basket-table-store-info">
@@ -84,12 +85,13 @@
 				                			</td>
 				                			<td class="basket-table-del-cell"><i class="fas fa-minus-circle d-xxl-flex basket-del-btn"></i></td>
 				                		</tr>
+				                		
 			                		</c:if>
 			                	</c:forEach>
 			                	
 			                	<c:if test="${basketCnt == 0}">
 			                		<tr>
-                                		<td id="basket-no-items" colspan="2">점심 후보를 추가해주세요</td>
+                                		<td id="basket-no-items" class="no-drag" colspan="2">점심 후보를 추가해주세요</td>
                             		</tr>
 			                	</c:if>
 			                </c:if>
@@ -441,18 +443,20 @@
 			contentType : "application/json",
 			async : false,
 			dataType : "json",
-			success : function(result){				
-				if (result[0].length != 0) {
-					basket = result
-					console.log(basket)
-					
+			success : function(result){	
+				basket = result
+				console.log(basket)
+				
+				if (result[0].length != 0) {							
 					for (var i = 0; i < 3; i++) {
 						addToBasket(basket[0][i])
 					}
 					console.log("장바구니 생성 완료")
 					
 				} else {
-					console.log("장바구니 생성 실패")
+					alert("현재 위치에서 추천 가능한 가게가 없습니다.")
+					noStore()
+					
 				}
 			},
 			error : function(XHR, status, error) {
@@ -563,17 +567,7 @@
 		console.log("그룹 탭 추가")
 	}
 	
-	
-	// 점심후보를 추가해주세요 추가 메소드
-	function basketNoItem() {
-		$("#basket-table-table").append(
-			"<tr><td id='basket-no-items' colspan='2'>점심 후보를 추가해주세요</td></tr>"
-		)
 		
-		console.log("basketNoItem() 끝")
-	}
-	
-	
 	// 장바구니 추가하기 메소드
 	function addToBasket(store) {
 		$("#basket-table-table").append(
@@ -585,6 +579,12 @@
             + "</tr>"
 		)
 	}
+	
+	
+	// 다른 가게 추천받기 버튼 클릭
+	$("#basket-another-stores-btn").on("click", async function(){
+		console.log("아야")
+	})
 	
 	
 	// 장바구니 삭제 버튼 클릭 시
@@ -630,6 +630,29 @@
 		})
 		
 		console.log("setSessionBasketGroup() 끝")
+	}
+	
+	
+	// 점심후보를 추가해주세요 추가 메소드
+	function basketNoItem() {
+		$("#basket-table-table").append(
+			"<tr><td id='basket-no-items' class='no-drag' colspan='2'>점심 후보를 추가해주세요</td></tr>"
+		)
+		
+		console.log("basketNoItem() 끝")
+	}
+	
+	
+	// 주변에 가게가 하나도 없을 때 창
+	function noStore() {
+		$("#container").append(
+			  "<div class='d-inline-flex justify-content-center align-items-center' id='no-store'>"
+            + 	"<div>"
+            +   	"<span class='d-block justify-content-center' id='no-store-alert-1'>주변에 추천 가능한 가게가 없어요</span>"
+            +       "<span class='d-flex justify-content-center' id='no-store-alert-2'>현재 위치나 필터를 확인해주세요</span>"
+            +   "</div>"
+            + "</div>"
+		)
 	}
 	
 	

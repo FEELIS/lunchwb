@@ -48,14 +48,9 @@ public class BasketService {
 	public List<StoreVo> addGuestBasket(List<StoreVo> basket, GPSVo curr_location, List<Integer> filter_excluded, boolean firstTime) {
 		Map<String, Object> basketInput = new HashMap<>();
 		basketInput.put("basket", basket);
-		// basketInput.put("curr_location", curr_location);
+		//basketInput.put("curr_location", curr_location);
 		basketInput.put("curr_location", new GPSVo(126.9520316, 37.4810793, ""));
-		// basketInput.put("filter_excluded", filter_excluded);
-		List<Integer> filter = new ArrayList<>();
-		filter.add(1);
-		filter.add(5);
-		filter.add(7);
-		basketInput.put("filter_excluded", filter);
+		basketInput.put("filter_excluded", filter_excluded);
 		
 		List<StoreVo> basketItem = basketDao.guestStoreRecommend(basketInput);
 		

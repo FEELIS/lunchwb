@@ -59,12 +59,13 @@ public class BasketController {
 		boolean firstTime = true;
 			
 		Map<Integer, List<StoreVo>> basket = basketService.makeNewbasket();	
-		basket.put(0, basketService.addGuestBasket(basket.get(0), curr_location, filter_excluded, firstTime));	
+		basket.put(0, basketService.addGuestBasket(new ArrayList<StoreVo>(), curr_location, filter_excluded, firstTime));	
 		
 		//JSONObject json = new JSONObject(basket);
 		//session.setAttribute("basket_json", json);
 
 		session.setAttribute("basket", basket);
+		logger.info(basket.toString());
 		
 		return basket;
 	}

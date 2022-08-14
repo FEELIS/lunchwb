@@ -39,7 +39,7 @@
 #basket-aside .basket-aside-title {
   font-weight: bold;
   color: rgb(255,255,255);
-  background: var(--bs-blue) !important;
+  background: var(--bs-blue);
   margin-top: 0;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -247,6 +247,8 @@
   cursor: pointer;
 }
 
+#basket-filter-btn {
+}
 
 #basket-no-items {
   padding: 80px 0;
@@ -331,7 +333,7 @@
   font-size: 12px;
   border-radius: 8px;
   border: 1px solid var(--bs-gray-500);
-  width: 330px;
+  width: 341px;
   height: 25px;
 }
 
@@ -372,25 +374,4 @@
   color: var(--bs-blue);
   font-size: 25px;
 }
-
-#basket-aside #basket-title-group {
-  font-weight: bold;
-  color: rgb(255,255,255);
-  background: var(--bs-blue) !important;
-  margin-top: 0;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 20px;
-}
-
-#basket-aside #basket-title-lunch-candidates {
-  font-weight: bold;
-  color: rgb(255,255,255);
-  background: var(--bs-blue) !important;
-  margin-top: 0;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 20px;	
-}
-
 
