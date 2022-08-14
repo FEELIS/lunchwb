@@ -146,5 +146,27 @@ public class BasketController {
 		
 		return true;
 	}
+	
+	
+	// 장바구니에서 항목 삭제 > 세션 반영
+	@ResponseBody
+	@PostMapping("/deleteFromBasket")
+	public Map<Integer, List<StoreVo>> deleteFromBasket(@RequestBody Map<String, Object> deleteStore, HttpSession session) {
+		logger.info("장바구니 삭제");
+		
+		Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
+		Integer groupNo = (Integer)session.getAttribute("curr_basket_group");
+		Integer storeNo = (Integer)deleteStore.get("storeNo");
+		
+		basket.put(groupNo, basketService.deleteBasket(basket.get(groupNo), storeNo));
+		
+		if (session.getAttribute("basket") != null) {
+			session.removeAttribute("basket");
+		}
+		session.setAttribute("basket", basket);
+		logger.info(basket.toString());
+		
+		return basket;
+	}
 
 }

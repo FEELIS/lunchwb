@@ -140,7 +140,9 @@
 		console.log("완료?")
 		
 		alert("현재 위치가 변경되었습니다.")
-		location.replace("${pageContext.request.contextPath}/")
+		$("#curr-location-address").text($("#modal-curr-location").text())
+		$("#modal-location-change").modal("hide")
+		//location.replace("${pageContext.request.contextPath}/")
 	})
 	
 </script>

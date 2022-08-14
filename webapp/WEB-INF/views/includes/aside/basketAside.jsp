@@ -67,25 +67,27 @@
 	                    </td>
 	                </tr>
 	                <!--  장바구니 아이템이 올 자리 -->
-	                
-	                <!-- 1) 비로그인 + 장바구니 존재 -->
 	                <c:if test="${empty(authUser) and !empty(basket)}">
 		                <c:forEach var="basketItems" items="${basket}">
-		                	<c:if test="${basketItems.key == 0}">
+		                	<c:if test="${basketItems.key == curr_basket_group}">
+		                		<c:set var="basketCnt" value="0" />
 		                		<c:set var="stores" value="${basketItems.value}" />
 		                		<c:forEach var="store" items="${stores}">
-			                		<tr data-storeNo="${store.storeNo}">
-			                			<td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
-			                				<div class="basket-table-store-info">
-			                					<span class="text-start basket-table-store-name">${store.storeName}</span>
-			                					<span class="text-start basket-table-store-detail">${store.menu2ndCateName}&nbsp;/&nbsp;${store.distance}m</span>
-			                				</div>
-			                			</td>
-			                			<td class="basket-table-del-cell"><i class="fas fa-minus-circle d-xxl-flex basket-del-btn"></i></td>
-			                		</tr>
+		                			<c:if test="${store.stored}">
+		                				<c:set var="basketCnt" value="${basketCnt + 1}" />
+				                		<tr class="basket-table-row" data-storeNo="${store.storeNo}">
+				                			<td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
+				                				<div class="basket-table-store-info">
+				                					<span class="text-start basket-table-store-name">${store.storeName}</span>
+				                					<span class="text-start basket-table-store-detail">${store.menu2ndCateName}&nbsp;/&nbsp;${store.distance}m</span>
+				                				</div>
+				                			</td>
+				                			<td class="basket-table-del-cell"><i class="fas fa-minus-circle d-xxl-flex basket-del-btn"></i></td>
+				                		</tr>
+			                		</c:if>
 			                	</c:forEach>
 			                	
-			                	<c:if test="${fn:length(stores) == 0}">
+			                	<c:if test="${basketCnt == 0}">
 			                		<tr>
                                 		<td id="basket-no-items" colspan="2">점심 후보를 추가해주세요</td>
                             		</tr>
@@ -98,7 +100,9 @@
             
 
             <div id="basket-button-area">
-            	<button class="btn btn-primary" id="basket-vote-btn" type="button">투표하기</button>
+            	<c:if test="${!empty(authUser)}">
+            		<button class="btn btn-primary" id="basket-vote-btn" type="button">투표하기</button>
+            	</c:if>
             	<button class="btn btn-primary" id="basket-random-btn" type="button">랜덤선택</button>
             </div>
         </div>
@@ -410,10 +414,9 @@
 			if (basket == "") {				
 				await makeGuestBasket()
 				
-			} else {
-				
-				//await loadGuestBasket()
-				
+				if (basket[0].length == 0) {
+					basketNoItem()
+				}
 			}
 			
 		} else {
@@ -563,18 +566,18 @@
 	
 	// 점심후보를 추가해주세요 추가 메소드
 	function basketNoItem() {
-		$("#basket-tabke-table").append(
+		$("#basket-table-table").append(
 			"<tr><td id=\"basket-no-items\" colspan=\"2\">점심 후보를 추가해주세요</td></tr>"
 		)
 		
-		$("#basket-button-area").remove()
+		console.log("basketNoItem() 끝")
 	}
 	
 	
 	// 장바구니 추가하기 메소드
 	function addToBasket(store) {
 		$("#basket-table-table").append(
-			  "<tr data-storeNo=\"" + store.storeNo + "\">"
+			  "<tr class=\"basket-table-row\" data-storeNo=\"" + store.storeNo + "\">"
             + 	"<td class=\"d-xxl-flex justify-content-xxl-start basket-table-cell\">"                    
             + 		"<div class=\"basket-table-store-info\"><span class=\"text-start basket-table-store-name\">" + store.storeName + "</span><span class=\"text-start basket-table-store-detail\">" + store.menu2ndCateName + " / " + store.distance + "m</span></div>"                        
             + 	"</td>"                    
@@ -584,12 +587,52 @@
 	}
 	
 	
-	// 장바구니에서 삭제하기 메소드
-	function deleteFromBasket(store) {
+	// 장바구니 삭제 버튼 클릭 시
+	$("#basket-table").on("click", ".basket-del-btn", async function(){
+		var deleteStoreNo = parseInt($(this).closest(".basket-table-row").attr("data-storeNo"))
+		console.log(deleteStoreNo)
+		$(this).closest(".basket-table-row").remove()
 		
+		await deleteSessionBasketGroup(deleteStoreNo)
+		
+		var cnt = 0
+		for (var i = 0; i < basket[curr_basket_group].length; i++) {
+			if (basket[curr_basket_group][i].stored) {
+				cnt += 1
+			}
+		}
+		console.log(cnt)
+		if (cnt == 0) {
+			basketNoItem()
+		}
+	})
+	
+	
+	// 장바구니 세션 삭제
+	async function deleteSessionBasketGroup(deleteStoreNo) {
+		var delete_obj = {"storeNo": deleteStoreNo}
+		console.log(delete_obj)
+		$.ajax({
+			url : "${pageContext.request.contextPath}/basket/deleteFromBasket",		
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(delete_obj),
+			dataType : "json",
+			async : false,
+			success : function(result){				
+				basket = result
+				console.log(basket[curr_basket_group])
+				alert("장바구니에서 항목이 삭제되었습니다.")
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+		
+		console.log("setSessionBasketGroup() 끝")
 	}
 	
-
+	
 </script>
 
 </body>
