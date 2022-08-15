@@ -99,6 +99,7 @@
 
 </div>
 
+</body>
 
 <script type="text/javascript">
 	indexJSP = true
@@ -163,7 +164,5 @@
 	})
 	
 </script>
-
-</body>
 
 </html>

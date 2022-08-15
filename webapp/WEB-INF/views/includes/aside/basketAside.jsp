@@ -203,7 +203,7 @@
 	
 	// 페이지 로딩 초기 gps 확인 함수
 	async function callGPS() {
-		sleep(500)
+		sleep(300)
 		console.log(gpsVo.gpsX)
 		console.log(gpsVo.gpsY)
 		
@@ -454,16 +454,14 @@
 		} else {
 			console.log(userNo + "번 회원")
 			
-			await getBasketGroups()
-			
 			if ("${curr_basket_group}" != "" && "${curr_basket_group}" != "0") {
 				curr_basket_group = parseInt("${curr_basket_group}")
-				
-			} else if ("${curr_basket_group}" == "" && curr_basket_group == 0) {
-				await setSessionBasketGroup()
-				
-			}
+		
+			} 
+			await getBasketGroups()
 			
+			console.log("장바구니 그룹: " + curr_basket_group)
+						
 			if (basket == "") {
 				await makeGroupBasket()
 				
@@ -601,7 +599,7 @@
 			contentType : "application/json",
 			data : JSON.stringify(userNo),
 			dataType : "json",
-			success : function(basketGroup){
+			success : async function(basketGroup){
 				for (var i = 0; i < basketGroup.length; i++) {
 					addBasketGroup(basketGroup[i])
 					basket_group.push(basketGroup[i].groupNo)
@@ -613,9 +611,12 @@
 					} 
 				}
 				
-				$("[data-groupNo=" + curr_basket_group + "]").addClass("basket-selected-group")
+				console.log(curr_basket_group)
+				if ("${curr_basket_group}" != String(curr_basket_group)) {
+					await setSessionBasketGroup()
+				}
 				
-				console.log("나의 그룹 " +  basket_group)
+				$("[data-groupNo=" + String(curr_basket_group) + "]").addClass("basket-selected-group")
 				
 				if (basketGroup.length < 4) {
 					$("#basket-groups").append(
@@ -635,8 +636,8 @@
 	
 	// 다른 그룹 클릭
 	$("#basket-groups").on("click", ".basket-normal-group", async function(){
-		if (curr_basket_group != $(this).attr("data-groupNo")) {
-			$("[data-groupNo=" + curr_basket_group + "]").removeClass("basket-selected-group")
+		if (String(curr_basket_group) != $(this).attr("data-groupNo")) {
+			$("[data-groupNo=" + String(curr_basket_group) + "]").removeClass("basket-selected-group")
 			$(this).addClass("basket-selected-group")
 			
 			curr_basket_group = parseInt($(this).attr("data-groupNo"))
@@ -645,6 +646,7 @@
 			await setSessionBasketGroup()
 			
 			// 장바구니 교체 작업
+			await changeGroupBasket()
 		}
 	})	
 	
@@ -822,7 +824,27 @@
 			}
 		})
 		
-		console.log("addToBasket() 끝")
+		console.log("addItemsToBasket() 끝")
+	}
+	
+	
+	// 다른 그룹 장바구니로 변경
+	async function changeGroupBasket() {
+		$(".basket-table-row").remove()
+		
+		var cnt = 0
+		for (var i = 0; i < basket[curr_basket_group].length; i++) {
+			if (basket[curr_basket_group][i].stored) {
+				cnt += 1
+				addToBasket(basket[curr_basket_group][i])
+			}
+		}
+		
+		$("#no-basket-items").remove()
+		if (cnt == 0) {
+			basketNoItem()
+		}
+		
 	}
 	
 	
