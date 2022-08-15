@@ -37,7 +37,7 @@
          
              <div id="basket-login-controll">
              	<a href="${pageContext.request.contextPath}/join"><span class="d-inline-block" id="basket-join-link">회원가입</span></a>
-             	<a><span class="d-inline-block" id="basket-findpw-link">비밀번호 찾기</span></a>
+             	<a href="${pageContext.request.contextPath}/findPW"><span class="d-inline-block" id="basket-findpw-link">비밀번호 찾기</span></a>
              </div>
          </div>
         </c:if>
@@ -384,7 +384,8 @@
 	
 	
 	// 장바구니 필터 적용
-	$("#modal-filter-submit").on("click", function(){
+	$("#modal-filter-submit").on("click", function() {
+		let temp_filter = filter_excluded
 		filter_excluded = []
 				
 		for (var i = 1; i <= 10; i++) {
@@ -393,31 +394,34 @@
 			if (!$(curr).is(":checked")) {
 				filter_excluded.push(i)
 			}
-			
-			if (filter_excluded.length == 10) {
-				alert("적어도 하나의 메뉴 카테고리를 선택하셔야합니다")
-				return false
-			}			
-			
-			$.ajax({
-				url : "${pageContext.request.contextPath}/basket/saveFilterSession",		
-				type : "post",
-				contentType : "application/json",
-				data : JSON.stringify(filter_excluded),
-				async : false,
-				dataType : "json",
-				success : function(result){
-					if (result) {
-						console.log("필터 세션 저장 성공")
-					} else {
-						console.log("필터 세션 저장 실패")
-					}
-				},
-				error : function(XHR, status, error) {
-					console.error(status + " : " + error);
-				}
-			})
 		}
+			
+		if (filter_excluded.length == 10) {
+			alert("적어도 하나의 카테고리를 선택해야 합니다")
+			filter_excluded = temp_filter
+				
+			return false
+		}		
+								
+		$.ajax({
+			url : "${pageContext.request.contextPath}/basket/saveFilterSession",		
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(filter_excluded),
+			async : false,
+			dataType : "json",
+			success : function(result){
+				if (result) {
+					console.log("필터 세션 저장 성공")
+				} else {
+					console.log("필터 세션 저장 실패")
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+
 		console.log("필터 제외 항목 " + filter_excluded)
 		
 		$("#modal-recFilter").modal("hide")
@@ -687,7 +691,7 @@
 				cnt += 1
 			}
 		}
-		console.log(cnt)
+
 		if (cnt == 0) {
 			basketNoItem()
 		}
