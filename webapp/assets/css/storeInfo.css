@@ -261,6 +261,10 @@
   font-size: 14px;
 }
 
+#modal-reviews .modal-footer-custom button {
+	width: 130px !important;
+}
+
 
 /*************************************************************************/
 /* 가게 최근 한달 메뉴 모달창 **************************************************/
@@ -363,4 +367,8 @@
 #modal-all-menu .modal-footer-custom p {
   margin-bottom: 5px;
   font-size: 14px;
+}
+
+#modal-all-menu .modal-footer-custom button {
+	width: 130px !important;
 }
