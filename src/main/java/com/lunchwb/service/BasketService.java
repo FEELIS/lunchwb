@@ -55,7 +55,7 @@ public class BasketService {
 		}
 	
 	
-	// 비회원 장바구니에 아이템 3개 추가하기
+	// 장바구니에 아이템 3개 추가하기
 	public List<StoreVo> addItemsToBasket(List<StoreVo> basket, Integer groupNo, GPSVo curr_location, List<Integer> filter_excluded, boolean firstTime, boolean user) {
 		Map<String, Object> basketInput = new HashMap<>();
 		basketInput.put("basket", basket);

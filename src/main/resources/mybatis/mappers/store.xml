@@ -17,7 +17,7 @@
 	</resultMap>
 	
 	
-	<!-- 비로그인 회원 장바구니 아이템 추천 -->
+	<!-- 비로그인 회원 장바구니 아이템 추천(알고리즘 이후에 더 세세히...)-->
 	<select id="guestStoreRecommend" parameterType="Map" resultType="StoreVo">
 		<![CDATA[
 			SELECT store_no storeNo
@@ -58,7 +58,7 @@
 		         AND    ((r.rating_naver >= 4.3 AND r.rating_kakao >= 3) OR (r.rating_naver >= 4.5 AND r.rating_kakao = 0)) 
 			     ORDER BY score DESC)
 		    WHERE  distance <= 1000
-		    AND    ROWNUM <= 50
+		    AND    ROWNUM <= 200
 		    ORDER BY DBMS_RANDOM.value
 		]]>
 	</select>
@@ -123,7 +123,7 @@
 		         AND    ((r.rating_naver >= 4.3 AND r.rating_kakao >= 3) OR (r.rating_naver >= 4.5 AND r.rating_kakao = 0)) 
 			     ORDER BY score DESC)
 		    WHERE  distance <= 1000
-		    AND    ROWNUM <= 50
+		    AND    ROWNUM <= 100
 		    ORDER BY DBMS_RANDOM.value
 		]]>
 	</select>

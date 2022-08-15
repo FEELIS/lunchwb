@@ -77,6 +77,9 @@ public class BasketController {
 		//JSONObject json = new JSONObject(basket);
 		//session.setAttribute("basket_json", json);
 
+		if (session.getAttribute("basket") != null) {
+			session.removeAttribute("basket");
+		}
 		session.setAttribute("basket", basket);
 		logger.info(basket.toString());
 		
@@ -86,9 +89,9 @@ public class BasketController {
 	
 	// 비로그인 회원+그룹 없는 회원 다른 가게 추천받기
 	@ResponseBody
-	@PostMapping("/guestAddStore")
-	public Map<Integer, List<StoreVo>> guestAddStore(HttpSession session) {
-		logger.info("비로그인 회원 장바구니 추가 추천");
+	@PostMapping("/addMoreStore")
+	public Map<Integer, List<StoreVo>> addMoreStore(HttpSession session) {
+		logger.info(" 장바구니 추가 추천");
 		
 		GPSVo curr_location = (GPSVo)session.getAttribute("curr_location");
 		logger.info(curr_location.toString());
@@ -101,8 +104,10 @@ public class BasketController {
 			user = true;
 		}
 		
+		Integer groupNo = (Integer)session.getAttribute("curr_basket_group");
+		
 		Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
-		basket.put(0, basketService.addItemsToBasket(basket.get(0), 0, curr_location, filter_excluded, false, user));
+		basket.put(groupNo, basketService.addItemsToBasket(basket.get(groupNo), groupNo, curr_location, filter_excluded, false, user));
 		
 		if (session.getAttribute("basket") != null) {
 			session.removeAttribute("basket");
@@ -112,7 +117,7 @@ public class BasketController {
 		
 		return basket;
 	}
-	
+		
 	
 	// 로그인 회원 장바구니 생성 + 초기 3개 항목 담기
 	@ResponseBody
@@ -134,6 +139,9 @@ public class BasketController {
 			basket.put(groupNo, basketService.addItemsToBasket(basket.get(groupNo), groupNo, curr_location, filter_excluded, true, true));	
 		}
 
+		if (session.getAttribute("basket") != null) {
+			session.removeAttribute("basket");
+		}
 		session.setAttribute("basket", basket);
 		logger.info(basket.toString());
 		

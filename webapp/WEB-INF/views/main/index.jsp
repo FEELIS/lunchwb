@@ -110,6 +110,7 @@
 		
 		if (gpsVo.address == "") {
 			curr_address = "현재 위치를 설정해주세요"
+			
 		} else {
 			curr_address = gpsVo.address
 		}
@@ -142,25 +143,57 @@
 	
 	
 	// 모달 닫힐 때 페이지 로드
-	$("#modal-gps-submit").on("click", function(){
-		var geocoder = new kakao.maps.services.Geocoder()
-   		
-		   geocoder.addressSearch($("#modal-curr-location").text(), function(result, status) {
+	$("#modal-gps-submit").on("click", async function(){
+		if ($("#curr-location-address").text() != $("#modal-curr-location").text()) {
+			var gpsChangeOK = confirm("현재 위치 변경 시 현재 저장한 점심 후보가 초기화됩니다. 정말로 변경하시겠습니까?")
+			console.log(1)
+			if (!gpsChangeOK) {
+				return false
+			}
 			
-		   if (status === kakao.maps.services.Status.OK) {
-			    gpsVo.gpsX = result[0].x
-			    gpsVo.gpsY = result[0].y
-		        gpsVo.address = $("#modal-curr-location").text()
-		        
-		        setGPS(gpsVo)
-		   	  } 
-		});  
-		console.log("완료?")
-		
-		alert("현재 위치가 변경되었습니다.")
-		$("#curr-location-address").text($("#modal-curr-location").text())
-		$("#modal-location-change").modal("hide")
-		//location.replace("${pageContext.request.contextPath}/")
+			async function getXY(address) {
+				console.log(2)
+				var geocoder = new kakao.maps.services.Geocoder()
+				
+				let addressChange = address => {
+					return new Promise((resolve, reject) => {
+						geocoder.addressSearch(address, (result, status) => {
+							if (status === kakao.maps.services.Status.OK) {
+								console.log(3)
+								console.log(gpsVo)
+								gpsVo.gpsX = result[0].x
+							    gpsVo.gpsY = result[0].y
+						        gpsVo.address = $("#modal-curr-location").text()
+						        console.log(gpsVo)
+						        resolve(gpsVo)
+							} else {
+								reject("error")
+							}
+						})
+					})
+				}
+			}
+			
+			await getXY($("#modal-curr-location").text())
+			console.log(4)
+			console.log(gpsVo)
+			console.log(4.2)
+			await setGPS(gpsVo)
+
+			if (userNo == "") {			
+				await makeGuestBasket()
+				
+			} else {
+				await makeGroupBasket()
+			}
+			console.log(5)
+			sleep(100)
+			alert("현재 위치가 변경되었습니다.")
+			//location.replace("${pageContext.request.contextPath}/")
+			
+		} else {
+			$("#modal-location-change").modal("hide")
+		}
 	})
 	
 </script>

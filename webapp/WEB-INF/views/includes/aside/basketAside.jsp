@@ -213,6 +213,7 @@
 						
 			// 세션에 현재 gps 저장
 			await setGPS(gpsVo)
+			
 		} else {
 			gpsVo.gpsX = parseFloat(gpsVo.gpsX)
 			gpsVo.gpsY = parseFloat(gpsVo.gpsY)
@@ -273,10 +274,13 @@
 											
 						if (!$('#modal-location-change').is(':visible')) {
 							$("#curr-location-address").text(result[0].address.address_name)
+							
 						} else {
 							$("#modal-curr-location").text(result[0].address.address_name)
+							
 						}
 						resolve(result[0].address.address_name)
+						
 					} else {
 						reject('geocoder error')
 					}
@@ -449,6 +453,7 @@
 				
 			} else {
 				await loadBasket()
+				
 			}
 			
 		} else {
@@ -524,6 +529,7 @@
 				if (result[curr_basket_group].length != 0) {							
 					for (var i = 0; i < 3; i++) {
 						addToBasket(basket[curr_basket_group][i])
+						
 					}
 					console.log("장바구니 생성 완료")
 					
@@ -689,29 +695,24 @@
 		console.log(typeof(basket))
 		console.log(basket[0])
 		
-		if (curr_basket_group == 0) {
-			await guestAddStore()
-			
-		} else {
-			
-		}
+		await addMoreStore()
 		
 		// 지도 핀 처리
 	})
 	
 	
 	// 그룹 없을 때 장바구니 추가 가게 선택
-	async function guestAddStore() {	
-		var temp = basket[0].length
+	async function addMoreStore() {	
+		var temp = basket[curr_basket_group].length
 		
 		$.ajax({
-			url : "${pageContext.request.contextPath}/basket/guestAddStore",		
+			url : "${pageContext.request.contextPath}/basket/addMoreStore",		
 			type : "post",
 			async : false,
 			success : function(result){				
 				basket = result
 				
-				if (basket[0].length > temp) {
+				if (basket[curr_basket_group].length > temp) {
 					console.log("가게가 추가되었습니다")
 					console.log(basket[curr_basket_group])
 				} else {
@@ -723,7 +724,7 @@
 			}
 		})
 		
-		console.log("guestAddStore() 끝")
+		console.log("addMoreStore() 끝")
 	}
 	
 	
