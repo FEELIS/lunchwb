@@ -6,6 +6,7 @@
 	<resultMap id="StoreVo" type="com.lunchwb.vo.StoreVo">
 		<result column="store_no" property="storeNo" />
 		<result column="menu_2nd_cate_no" property="menu2ndCateNo" />
+		<result column="menu_2nd_cate_name" property="menu2ndCateNamd" />
 		<result column="store_name" property="storeName" />
 		<result column="store_road_address" property="storeRoadAddress" />
 		<result column="store_old_address" property="storeOldAddress" />
@@ -147,7 +148,7 @@
 		        FROM review r, visited v
 		        WHERE v.visited_no = r.visited_no
 		        AND v.user_no = r.user_no
-		        AND v.store_no = 8) 
+		        AND v.store_no = #{storeNo}) 
 		WHERE s.menu_2nd_cate_no = f.menu_2nd_cate_no
 		AND s.store_no = #{storeNo}
 	</select>	
