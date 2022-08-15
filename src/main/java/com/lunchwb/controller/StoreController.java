@@ -47,9 +47,11 @@ public class StoreController {
 	@ResponseBody
 	@PostMapping("store/distance")
 	public int storeDistance(@RequestBody int storeNo, HttpSession session) {
-		logger.info("storeDistance...GPSVo={}", storeNo);
+		logger.info("storeDistance...storeNo={}", storeNo);
 		
 		GPSVo gpsVo = (GPSVo)session.getAttribute("curr_location");
+		
+		logger.info("gpsVo={}", gpsVo);
 		int distance = storeService.storeDistance(storeNo, gpsVo);
 		return distance;	
 	}
