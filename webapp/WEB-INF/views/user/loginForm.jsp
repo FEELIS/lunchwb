@@ -92,7 +92,7 @@
                                         <hr>
                                     </form>
                                     <div class="text-center">
-                                    	<a class="small " href="../../jihee/etc/forgot-password.html">비밀번호 찾기</a>
+                                    	<a class="small " href="${pageContext.request.contextPath}/findPW">비밀번호 찾기</a>
                                    	</div>
                                     <div class="text-center">
                                     	<a class="small " href="${pageContext.request.contextPath}/join">회원가입</a>

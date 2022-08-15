@@ -5,17 +5,16 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.mail.HtmlEmail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonElement;
@@ -29,6 +28,9 @@ public class UserService {
 
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	@Qualifier("bcryptPasswordEncoder")
+	private PasswordEncoder pwEncoder;
 
 	public UserVo login(UserVo userVo) {
 		UserVo authUser = userDao.login(userVo);
@@ -325,9 +327,14 @@ public class UserService {
 			for (int i = 0; i < 12; i++) {
 				userPassword += (char) ((Math.random() * 26) + 97);
 			}
-			userVo.setUserPassword(userPassword);
-			// 비밀번호 변경
+			String encodePw = pwEncoder.encode(userPassword);
+			
+			userVo.setUserPassword(encodePw);
+			// 암호화된 비밀번호로 DB 저장
 			userDao.updatePw(userVo);
+			
+			// 암호화 이전 비밀번호로 발송.
+			userVo.setUserPassword(userPassword);
 			// 비밀번호 변경 메일 발송
 			sendEmail(userVo, "findpw");
 			
