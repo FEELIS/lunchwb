@@ -96,6 +96,10 @@
   vertical-align: top;
 }
 
+#modal-store .store-about .review-area .store-reviews .store-review-right i {
+  font-size: 10px;
+}
+
 #modal-store .store-about .review-area .store-reviews .store-review-right .review-report {
   margin-top: -1px;
   margin-left: 5px;
@@ -246,6 +250,10 @@
 #modal-reviews .review-area .store-reviews .store-review-right {
   width: 175px;
   vertical-align: top;
+}
+
+#modal-reviews .store-about .review-area .store-reviews .store-review-right i {
+  font-size: 10px;
 }
 
 #modal-reviews .review-area .store-reviews .store-review-right .review-report {
