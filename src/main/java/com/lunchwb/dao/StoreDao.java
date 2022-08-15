@@ -21,10 +21,12 @@ public class StoreDao {
 		return StoreBasic;
 	}
 	
+	
 	/* 가게 영업 시간 */
+	/* 삭제 예정
 	public Map<String, String> storeTime(int storeNo) {
 		Map<String, String> map = sqlSession.selectOne("store.storeTime", storeNo);
 		return map;
 	}
-	
+	*/
 }

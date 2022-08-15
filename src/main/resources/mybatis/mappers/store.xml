@@ -68,6 +68,8 @@
 		        , store_name
 				, menu_2nd_cate_name
 				, store_road_address
+				, store_opening_hours
+		        , store_breaktime
 		        , visit_count
 		        , rating_bujang
 		FROM store s
@@ -82,13 +84,5 @@
 		        AND v.store_no = 8) 
 		WHERE s.menu_2nd_cate_no = f.menu_2nd_cate_no
 		AND s.store_no = #{storeNo}
-	</select>
-	
-	<select id="storeTime" parameterType="int" resultType="map">
-		SELECT  store_opening_hours openingHours
-				, store_breaktime breaktime
-		FROM store
-		WHERE store_no = #{storeNo}
-	</select>
-	
+	</select>	
 </mapper>

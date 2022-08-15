@@ -35,27 +35,28 @@ public class StoreService {
 		//기본정보
 		StoreVo storeVo = storeDao.basicStoreInfo(storeNo);
 		
-		//영업시간 차후 //타입핸들러 할수있으면 할게요
-		Map<String, String> map = storeDao.storeTime(storeNo);
+		//영업시간
 		List<String> openingHours = new ArrayList<>();
-		String str = map.get("openingHours");
-		str.replace("[", "");		
-		str.replace("]", "");
-		String[] strA = str.split(",");
+		String storeOpeingHours = storeVo.getStoreOpeningHours();
+		storeOpeingHours.replace("[", "");		
+		storeOpeingHours.replace("]", "");
+		String[] strA = storeOpeingHours.split(",");
 		for(int i=0; i<strA.length; i++) {
 			openingHours.add(strA[i]);
 		}
+		//리스트 저장
 		storeVo.setOpeningHours(openingHours);
 		
 		//휴식시간
 		List<String> breaktime = new ArrayList<>();
-		String str2 = map.get("breaktime");
-		str.replace("[", "");		
-		str.replace("]", "");
-		String[] str2A = str2.split(",");
+		String storeBreaktime = storeVo.getStoreBreaktime();
+		storeBreaktime.replace("[", "");		
+		storeBreaktime.replace("]", "");
+		String[] str2A = storeBreaktime.split(",");
 		for(int i=0; i<str2A.length; i++) {
 			breaktime.add(str2A[i]);
 		}
+		//리스트 저장
 		storeVo.setBreaktime(breaktime);
 		
 		storeMap.put("storeVo", storeVo);
