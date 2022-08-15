@@ -77,7 +77,7 @@
 			       ,score
 			FROM (SELECT s.store_no, f.menu_2nd_cate_name, s.store_name, s.store_road_address, b.rating_bujang, s.store_opening_hours, s.store_breaktime
 			             ,ROUND(SQRT(POWER(ABS(s.store_x-#{curr_location.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(s.store_y-#{curr_location.gpsY})*6400000*2*3.14/360, 2)), 0) distance
-			             ,(NVL(v.cnt, 0)/10 + (r.rating_naver-4) * 100 + NVL(b.rating_bujang, 0) * 50 + NVL(gv.group_cnt, 0) * 2 + NVL(gr.group_rating, 0) - NVL(rv.visit, 0) * 10000) score
+			             ,(NVL(v.cnt, 0)/10 + (r.rating_naver-4) * 100 + NVL(b.rating_bujang, 0) * 50 + NVL(gv.group_cnt, 0) * 10 + NVL(gr.group_rating-3, 0) * 10 - NVL(rv.visit, 0) * 10000) score
 			      FROM   store s, rating_others r, food_2nd_category f
 			             ,(SELECT store_no, COUNT(*) cnt 
 			               FROM   visited 

@@ -65,9 +65,14 @@ public class BasketController {
 		
 		List<Integer> filter_excluded = (List<Integer>)session.getAttribute("filter_excluded");
 		logger.info(filter_excluded.toString());
+		
+		boolean user = false;
+		if (session.getAttribute("authUser") != null) {
+			user = true;
+		}
 					
 		Map<Integer, List<StoreVo>> basket = basketService.makeNewbasket();	
-		basket.put(0, basketService.addGuestBasket(basket.get(0), curr_location, filter_excluded, true));	
+		basket.put(0, basketService.addItemsToBasket(basket.get(0), 0, curr_location, filter_excluded, true, user));	
 		
 		//JSONObject json = new JSONObject(basket);
 		//session.setAttribute("basket_json", json);
@@ -91,8 +96,13 @@ public class BasketController {
 		List<Integer> filter_excluded = (List<Integer>)session.getAttribute("filter_excluded");
 		logger.info(filter_excluded.toString());
 		
+		boolean user = false;
+		if (session.getAttribute("authUser") != null) {
+			user = true;
+		}
+		
 		Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
-		basket.put(0, basketService.addGuestBasket(basket.get(0), curr_location, filter_excluded, false));
+		basket.put(0, basketService.addItemsToBasket(basket.get(0), 0, curr_location, filter_excluded, false, user));
 		
 		if (session.getAttribute("basket") != null) {
 			session.removeAttribute("basket");
@@ -104,6 +114,32 @@ public class BasketController {
 	}
 	
 	
+	// 로그인 회원 장바구니 생성 + 초기 3개 항목 담기
+	@ResponseBody
+	@PostMapping("/groupMakeBasket")
+	public Map<Integer, List<StoreVo>> groupMakeBasket(@RequestBody List<Integer> basketGroup, HttpSession session) {
+		logger.info("로그인 회원 장바구니 생성");
+		
+		GPSVo curr_location = (GPSVo)session.getAttribute("curr_location");
+		logger.info(curr_location.toString());
+		
+		List<Integer> filter_excluded = (List<Integer>)session.getAttribute("filter_excluded");
+		logger.info(filter_excluded.toString());
+		
+		if (basketGroup.size() == 0) basketGroup.add(0);
+		
+		Map<Integer, List<StoreVo>> basket = basketService.makeNewbasket(basketGroup);	
+		
+		for (Integer groupNo: basketGroup) {
+			basket.put(groupNo, basketService.addItemsToBasket(basket.get(groupNo), groupNo, curr_location, filter_excluded, true, true));	
+		}
+
+		session.setAttribute("basket", basket);
+		logger.info(basket.toString());
+		
+		return basket;
+	}
+
 	
 	// GPS 위치 세션에 저장
 	@ResponseBody

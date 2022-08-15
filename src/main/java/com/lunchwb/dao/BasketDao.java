@@ -22,4 +22,12 @@ public class BasketDao {
 		
 		return basketItem;
 	}
+	
+	
+	public List<StoreVo> groupStoreRecommend(Map<String, Object> basketInput) {
+		List<StoreVo> basketItem = sqlSession.selectList("store.groupStoreRecommend", basketInput);
+		System.out.println(basketItem.toString());		
+		
+		return basketItem;
+	}
 }

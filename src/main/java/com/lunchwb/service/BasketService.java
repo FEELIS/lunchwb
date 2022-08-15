@@ -43,17 +43,40 @@ public class BasketService {
 		return basket;
 	}
 	
+	// 회원 새 장바구니 만들기
+		public Map<Integer, List<StoreVo>> makeNewbasket(List<Integer> basketGroup) {
+			Map<Integer, List<StoreVo>> basket = new HashMap<>();	
+			
+			for (Integer groupNo: basketGroup) {
+				basket.put(groupNo, new ArrayList<>());
+			}
+			
+			return basket;
+		}
+	
 	
 	// 비회원 장바구니에 아이템 3개 추가하기
-	public List<StoreVo> addGuestBasket(List<StoreVo> basket, GPSVo curr_location, List<Integer> filter_excluded, boolean firstTime) {
+	public List<StoreVo> addItemsToBasket(List<StoreVo> basket, Integer groupNo, GPSVo curr_location, List<Integer> filter_excluded, boolean firstTime, boolean user) {
 		Map<String, Object> basketInput = new HashMap<>();
 		basketInput.put("basket", basket);
 		//basketInput.put("curr_location", curr_location);
 		basketInput.put("curr_location", new GPSVo(126.9520316, 37.4810793, ""));
 		basketInput.put("filter_excluded", filter_excluded);
+		basketInput.put("groupNo", groupNo);
 		
-		List<StoreVo> basketItem = basketDao.guestStoreRecommend(basketInput);
-		
+		List<StoreVo> basketItem = null;
+		if (user) {
+			if (groupNo == 0) {
+				// 바꿔야함
+				basketItem = basketDao.guestStoreRecommend(basketInput);
+				
+			} else {
+				basketItem = basketDao.groupStoreRecommend(basketInput);
+			}
+			
+		} else {
+			basketItem = basketDao.guestStoreRecommend(basketInput);
+		}
 		
 		Calendar cal = Calendar.getInstance();
 		int day = (cal.get(Calendar.DAY_OF_WEEK)+5) % 7;

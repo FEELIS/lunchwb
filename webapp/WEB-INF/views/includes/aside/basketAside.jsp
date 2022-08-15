@@ -157,6 +157,11 @@
 
 
 <script type="text/javascript">
+	
+	// ----------------- 님들이 쓸만한 함수 --------------------------------------
+	// 장바구니에서 항목 삭제할 때 : deleteSessionBasketGroup(deleteStoreNo)
+	// 장바구니에 항목 추가할 때: addItemToBasket(storeNo)
+	
 	let indexJSP = false
 	
 	const userNo = "${authUser.userNo}"
@@ -442,21 +447,29 @@
 			if (basket == "") {				
 				await makeGuestBasket()
 				
-				if (basket[0].length == 0) {
-					basketNoItem()
-				}
 			} else {
 				await loadBasket()
 			}
 			
 		} else {
 			console.log(userNo + "번 회원")
-						
+			
+			await getBasketGroups()
+			
 			if ("${curr_basket_group}" != "" && "${curr_basket_group}" != "0") {
 				curr_basket_group = parseInt("${curr_basket_group}")
-			} 
-			await getBasketGroups()
-			await setSessionBasketGroup()
+				
+			} else if ("${curr_basket_group}" == "" && curr_basket_group == 0) {
+				await setSessionBasketGroup()
+				
+			}
+			
+			if (basket == "") {
+				await makeGroupBasket()
+				
+			} else {
+				await loadBasket()
+			}
 		}
 		
 		console.log(basket)
@@ -484,8 +497,43 @@
 					
 				} else {
 					alert("현재 위치에서 추천 가능한 가게가 없습니다.")
-					noStore()
 					
+					noStore()
+					basketNoItem()					
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+		console.log("makeGuestBasket() 끝")
+	}
+	
+	
+	// 회원 장바구니 생성
+	async function makeGroupBasket() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/basket/groupMakeBasket",		
+			type : "post",
+			contentType : "application/json",
+			async : false,
+			data : JSON.stringify(basket_group),
+			dataType : "json",
+			success : function(result){	
+				basket = result
+				console.log(basket)
+				
+				if (result[curr_basket_group].length != 0) {							
+					for (var i = 0; i < 3; i++) {
+						addToBasket(basket[curr_basket_group][i])
+					}
+					console.log("장바구니 생성 완료")
+					
+				} else {
+					alert("현재 위치에서 추천 가능한 가게가 없습니다.")
+					
+					noStore()
+					basketNoItem()					
 				}
 			},
 			error : function(XHR, status, error) {
@@ -561,7 +609,6 @@
 					if (curr_basket_group == 0) {
 						if (i == 0) {
 							curr_basket_group = basketGroup[i].groupNo
-
 						}
 					} 
 				}
@@ -642,6 +689,7 @@
 		
 		if (curr_basket_group == 0) {
 			await guestAddStore()
+			
 		} else {
 			
 		}
@@ -665,7 +713,7 @@
 					console.log("가게가 추가되었습니다")
 					console.log(basket[curr_basket_group])
 				} else {
-					alert("해당 설정에서 추가 가능한 가게가 없습니다.")
+					alert("현재 위치, 필터를 적용할 때 추천 가능한 가게가 없습니다.")
 				}
 			},
 			error : function(XHR, status, error) {
@@ -681,20 +729,8 @@
 	$("#basket-table").on("click", ".basket-del-btn", async function(){
 		var deleteStoreNo = parseInt($(this).closest(".basket-table-row").attr("data-storeNo"))
 		console.log(deleteStoreNo)
-		$(this).closest(".basket-table-row").remove()
 		
 		await deleteSessionBasketGroup(deleteStoreNo)
-		
-		var cnt = 0
-		for (var i = 0; i < basket[curr_basket_group].length; i++) {
-			if (basket[curr_basket_group][i].stored) {
-				cnt += 1
-			}
-		}
-
-		if (cnt == 0) {
-			basketNoItem()
-		}
 	})
 	
 	
@@ -712,12 +748,26 @@
 			success : function(result){				
 				basket = result
 				
-				console.log("장바구니에서 항목이 삭제되었습니다.")
+				console.log("장바구니에서 항목이 삭제되었습니다")
 				console.log(basket[curr_basket_group])
+				
+				$("[data-storeNo=" + deleteStoreNo + "]").remove()
+				
+				var cnt = 0
+				for (var i = 0; i < basket[curr_basket_group].length; i++) {
+					if (basket[curr_basket_group][i].stored) {
+						cnt += 1
+					}
+				}
+
+				if (cnt == 0) {
+					basketNoItem()
+				}
 			},
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
 			}
+			
 		})
 		
 		console.log("deleteFromBasket() 끝")
@@ -764,7 +814,7 @@
 				basket = result
 				$("#no-basket-items").remove()
 				
-				console.log("장바구니에서 항목이 추가되었습니다.")
+				console.log("장바구니에 항목이 추가되었습니다")
 				console.log(basket[curr_basket_group])
 			},
 			error : function(XHR, status, error) {
