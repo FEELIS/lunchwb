@@ -112,15 +112,26 @@ public class BasketService {
 	
 	// 장바구니에서 아이템 삭제
 	public List<StoreVo> deleteBasket(List<StoreVo> basketItems, Integer storeNo) {
-		System.out.println(basketItems);
-
 		for (StoreVo store: basketItems) {
 			if (store.getStoreNo() == storeNo) {
 				store.setStored(false);
 				break;
 			}
 		}
-		System.out.println(basketItems);
+
+		return basketItems;
+	}
+	
+	
+	// 장바구니에 아이템 추가
+	public List<StoreVo> addBasket(List<StoreVo> basketItems, Integer storeNo) {
+		for (StoreVo store: basketItems) {
+			if (store.getStoreNo() == storeNo) {
+				store.setStored(true);
+				break;
+			}
+		}
+
 		return basketItems;
 	}
 }
