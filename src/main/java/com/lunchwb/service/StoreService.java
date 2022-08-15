@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -36,28 +37,48 @@ public class StoreService {
 		StoreVo storeVo = storeDao.basicStoreInfo(storeNo);
 		
 		//영업시간
-		List<String> openingHours = new ArrayList<>();
-		String storeOpeingHours = storeVo.getStoreOpeningHours();
-		storeOpeingHours.replace("[", "");		
-		storeOpeingHours.replace("]", "");
-		String[] strA = storeOpeingHours.split(",");
-		for(int i=0; i<strA.length; i++) {
-			openingHours.add(strA[i]);
-		}
+		/*
+		 * List<String> openingHours = new ArrayList<>(); String storeOpeingHours =
+		 * storeVo.getStoreOpeningHours(); storeOpeingHours.replace("[", "");
+		 * storeOpeingHours.replace("]", ""); String[] strA =
+		 * storeOpeingHours.split(","); for(int i=0; i<strA.length; i++) {
+		 * openingHours.add(strA[i]); }
+		 */
+		ArrayList<String> openingHours = new ArrayList<String>();   
+		JSONArray jsonArray = new JSONArray(storeVo.getStoreOpeningHours());
+		if (jsonArray != null) { 
+		    int len = jsonArray.length();
+			for (int j = 0; j < len; j++){ 
+				openingHours.add(jsonArray.get(j).toString());
+			} 
+		} 
 		//리스트 저장
 		storeVo.setOpeningHours(openingHours);
+		storeVo.setStoreOpeningHours(null);
 		
 		//휴식시간
+		/*
 		List<String> breaktime = new ArrayList<>();
 		String storeBreaktime = storeVo.getStoreBreaktime();
 		storeBreaktime.replace("[", "");		
 		storeBreaktime.replace("]", "");
+		System.out.println(storeBreaktime);
 		String[] str2A = storeBreaktime.split(",");
 		for(int i=0; i<str2A.length; i++) {
 			breaktime.add(str2A[i]);
 		}
+		*/
+		ArrayList<String> breaktime = new ArrayList<String>();   
+		jsonArray = new JSONArray(storeVo.getStoreBreaktime());
+		if (jsonArray != null) { 
+		    int len = jsonArray.length();
+			for (int j = 0; j < len; j++){ 
+				breaktime.add(jsonArray.get(j).toString());
+			} 
+		}
 		//리스트 저장
 		storeVo.setBreaktime(breaktime);
+		storeVo.setStoreBreaktime(null);
 		
 		storeMap.put("storeVo", storeVo);
 		

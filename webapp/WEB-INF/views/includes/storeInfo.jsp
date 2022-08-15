@@ -17,16 +17,23 @@
         <div class="modal-content" style="width: 798px;">
             <div class="modal-header"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
             <div class="modal-body">
-                <div class="fs-4 fw-bold text-dark modal-store-title"><span class="d-inline-block">양자강</span><span class="fs-6 text-secondary d-inline-block store-cate">|   중식/중화요리   |</span>
+                <div class="fs-4 fw-bold text-dark modal-store-title"><span id="modalStoreName" class="d-inline-block"></span>
+                <span id="modalStoreCate" class="fs-6 text-secondary d-inline-block store-cate"></span>
                     <div class="dropdown d-inline-block"><button class="btn btn-sm dropdown-toggle fs-6 fw-bold text-start text-secondary" aria-expanded="false" data-bs-toggle="dropdown" type="button">영업시간</button>
-                        <div class="dropdown-menu"><a class="dropdown-item disabled link-secondary">Opening Hours:<br></a></div>
-                        <div class="dropdown-menu"><a class="dropdown-item disabled link-secondary">BreakTime:<br></a></div>
+                        <div class="dropdown-menu">
+                        	<div id="modalStoreOpening">
+	                        	<a class="dropdown-item disabled link-secondary bg-warning">영업시간 :</a>
+                        	</div>
+                        	<div id="modalStoreBreak">
+                        		<a class="dropdown-item disabled link-secondary bg-warning">브레이크타임 :</a>
+                        	</div>
+                        </div>
                     </div>
                 </div>
                 <div class="store-info">
                     <div class="d-inline-block store-info-left">
-                        <div><span>서울특별시 관악구 낙성대로 22-1</span><span id="modalStoreDistance"class="fw-bold text-primary"></span></div>
-                        <div><span class="fw-bold text-primary">여기갈래요 213회</span><span> / 40대 그룹 선호 가게</span></div>
+                        <div><span id="modalStoreAddress"></span><span id="modalStoreDistance"class="fw-bold text-primary"></span></div>
+                        <div><span id="modalStoreVisitCnt" class="fw-bold text-primary"></span><span> / 40대 그룹 선호 가게 "여기 해야함"</span></div>
                     </div>
                     <div class="text-end d-inline-block store-info-right">
                         <div><span>별점</span><span class="fw-bold text-primary">(3.33/5)</span></div>
@@ -277,6 +284,7 @@
 /* k : 1 바구니(추천) 경우 거리 표시
 k : 0 기록(비추천) 경우 거리 표시 제외 */
 
+/* 메인-가게바구니에서 조회할 때 */
 $("#basket-table").on("click", ".basket-table-store-name", function(){
 	//var storeNo = $(this).data("storeno")
 	console.log(storeNo+"번 가게 정보 보기")
@@ -291,7 +299,7 @@ $("#test-storeInfo").on("click", function(){
 })
 
 
-
+/* 가게정보 모달 오픈 */
 function storeInfoOpen(storeNo, k){
 	console.log("가게: "+storeNo)
 	
@@ -307,7 +315,9 @@ function storeInfoOpen(storeNo, k){
 }
 
 
+/* 가게 기본정보 */
 function storeBasicInfo(storeNo){
+	console.log("modalStoreBasicInfo storeNo : " + storeNo)
 	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/store/info",
@@ -317,8 +327,16 @@ function storeBasicInfo(storeNo){
 		dataType : "json",
 		
 		success : function(storeMap){
+			console.log(storeMap)
 			
+			$("#modalStoreName").text(storeMap.storeVo.storeName)
+			$("#modalStoreCate").text("|   " + storeMap.storeVo.menu2ndCateName + "   |")
+			$("#modalStoreAddress").text(storeMap.storeVo.storeRoadAddress)
+			$("#modalStoreVisitCnt").text("여기갈래요 "+ storeMap.storeVo.visitCnt +"회")
 			
+			modalStoreTime(storeMap.storeVo.openingHours, 1)
+			modalStoreTime(storeMap.storeVo.breaktime, 2)
+
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
@@ -327,8 +345,11 @@ function storeBasicInfo(storeNo){
 	})
 }
 
+
+/* 조회하는 유저와의 가게 거리 */
 function modalStoreDistance(storeNo) {
-	console.log("modalStoreDistance No : " + storeNo)
+	console.log("modalStoreDistance storeNo : " + storeNo)
+	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/store/distance",
 		type : "post",
@@ -337,8 +358,8 @@ function modalStoreDistance(storeNo) {
 		dataType : "json",
 		
 		success : function(distance){
-			console.log("distance"+distance)
-			$("#modalStoreDistance").text("("+distance+"m)")
+			console.log("distance: "+distance)
+			$("#modalStoreDistance").text(" ("+distance+"m)")
 			
 		},
 		error : function(XHR, status, error) {
@@ -346,6 +367,34 @@ function modalStoreDistance(storeNo) {
 		}
  
 	})
+}
+
+
+/* 영업시간+브레이크타임 드랍다운 리스트 */
+function modalStoreTime(storeTime, opt){
+	console.log("storeTime: " + opt)
+	
+	var str = ''
+	
+	if(storeTime[0] == "정보없음"){
+		str += '<a class="dropdown-item disabled link-secondary">정보없음</a>'
+	}else{
+		str += '<a class="dropdown-item disabled link-secondary">월 : ' + storeTime[0] + '</a>'
+		str += '<a class="dropdown-item disabled link-secondary">화 : ' + storeTime[1] + '</a>'
+		str += '<a class="dropdown-item disabled link-secondary">수 : ' + storeTime[2] + '</a>'
+		str += '<a class="dropdown-item disabled link-secondary">목 : ' + storeTime[3] + '</a>'
+		str += '<a class="dropdown-item disabled link-secondary">금 : ' + storeTime[4] + '</a>'
+		str += '<a class="dropdown-item disabled link-secondary">토 : ' + storeTime[5] + '</a>'
+		str += '<a class="dropdown-item disabled link-secondary">일 : ' + storeTime[6] + '</a>'
+	}
+	
+	if(opt == 1){
+		$("#modalStoreOpening").append(str)
+	}else if(opt == 2){
+		$("#modalStoreBreak").append(str)
+	}else{
+		console.log("opt 오류")
+	}
 }
 
 

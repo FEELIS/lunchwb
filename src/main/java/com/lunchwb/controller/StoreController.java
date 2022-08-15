@@ -50,9 +50,11 @@ public class StoreController {
 		logger.info("storeDistance...storeNo={}", storeNo);
 		
 		GPSVo gpsVo = (GPSVo)session.getAttribute("curr_location");
-		
 		logger.info("gpsVo={}", gpsVo);
+		
 		int distance = storeService.storeDistance(storeNo, gpsVo);
+		logger.info("distance={}", distance);
+		
 		return distance;	
 	}
 	
