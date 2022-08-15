@@ -37,13 +37,6 @@ public class StoreService {
 		StoreVo storeVo = storeDao.basicStoreInfo(storeNo);
 		
 		//영업시간
-		/*
-		 * List<String> openingHours = new ArrayList<>(); String storeOpeingHours =
-		 * storeVo.getStoreOpeningHours(); storeOpeingHours.replace("[", "");
-		 * storeOpeingHours.replace("]", ""); String[] strA =
-		 * storeOpeingHours.split(","); for(int i=0; i<strA.length; i++) {
-		 * openingHours.add(strA[i]); }
-		 */
 		ArrayList<String> openingHours = new ArrayList<String>();   
 		JSONArray jsonArray = new JSONArray(storeVo.getStoreOpeningHours());
 		if (jsonArray != null) { 
@@ -52,22 +45,11 @@ public class StoreService {
 				openingHours.add(jsonArray.get(j).toString());
 			} 
 		} 
-		//리스트 저장
+
 		storeVo.setOpeningHours(openingHours);
 		storeVo.setStoreOpeningHours(null);
 		
 		//휴식시간
-		/*
-		List<String> breaktime = new ArrayList<>();
-		String storeBreaktime = storeVo.getStoreBreaktime();
-		storeBreaktime.replace("[", "");		
-		storeBreaktime.replace("]", "");
-		System.out.println(storeBreaktime);
-		String[] str2A = storeBreaktime.split(",");
-		for(int i=0; i<str2A.length; i++) {
-			breaktime.add(str2A[i]);
-		}
-		*/
 		ArrayList<String> breaktime = new ArrayList<String>();   
 		jsonArray = new JSONArray(storeVo.getStoreBreaktime());
 		if (jsonArray != null) { 
@@ -76,13 +58,11 @@ public class StoreService {
 				breaktime.add(jsonArray.get(j).toString());
 			} 
 		}
-		//리스트 저장
+
 		storeVo.setBreaktime(breaktime);
 		storeVo.setStoreBreaktime(null);
 		
 		storeMap.put("storeVo", storeVo);
-		
-		//거리 - storeinfo에 같이 잡아 > 또 까먹었네 stat에서 열어야하니까 추천할때만 거리 보여주기로 했자너.. 바보야
 		
 		//나와 이곳 : visit (방문횟수/최근 방문날짜 그룹)
 		if(authUser != null) {
@@ -90,10 +70,11 @@ public class StoreService {
 			
 			VisitedVo visitedVo = new VisitedVo();
 			visitedVo.setUserNo(userNo);
-			visitedVo.setUserNo(storeNo);
+			visitedVo.setStoreNo(storeNo);
 			
 			visitedVo = visitedDao.recentVisit(visitedVo);
 			storeMap.put("visitedVo", visitedVo);
+			System.out.println("visitedVo: " + visitedVo);
 		}
 		
 		//최근 리뷰 3건

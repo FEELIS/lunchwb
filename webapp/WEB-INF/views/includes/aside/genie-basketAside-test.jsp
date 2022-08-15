@@ -16,7 +16,7 @@
 <nav id="basket-aside" class="navbar navbar-light bg-white text-center d-xxl-flex align-items-start justify-content-xxl-center sidebar accordion p-0">
     <div class="container-fluid d-flex flex-column p-0">
         <div id="bujang-logo-wrap">
-        	<a href=""><img data-bss-hover-animate="pulse" id="bujang-logo-blue" class="no-drag" src="assets/img/bujang-logo%20blue.png"></a>
+        	<a href=""><img data-bss-hover-animate="pulse" id="bujang-logo-blue" class="no-drag" src="${pageContext.request.contextPath}/assets/img/bujang-logo blue.png"></a>
         </div>
         
         <div id="comment-box">
@@ -150,8 +150,6 @@
     </div>
 </div>
 
-<!--<c:import url="/WEB-INF/views/includes/storeInfo.jsp" />-->
-
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e74b599be710b798192fd5221284718a&libraries=services"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
@@ -186,15 +184,6 @@
 			}
 	})
 
-	
-	// 장바구니 클릭 시 모달 팝업
-	//$("#basket-table").on("click", ".basket-table-store-name", function(){
-	//	var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
-	//	console.log(storeNo)
-		
-	//	$("#modal-store").modal("show")
-	//})
-		
 	
 	// 페이지 로딩 초기 gps 확인 함수
 	async function callGPS() {

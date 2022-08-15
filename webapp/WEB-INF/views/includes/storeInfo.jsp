@@ -1,103 +1,97 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/customModal.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/storeInfo.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&amp;display=swap">
-
-
-
 <div id="modal-store" class="modal visible" role="dialog" tabindex="-1" style="min-width: 800px;">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content" style="width: 798px;">
             <div class="modal-header"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
             <div class="modal-body">
-                <div class="fs-4 fw-bold text-dark modal-store-title"><span id="modalStoreName" class="d-inline-block"></span>
-                <span id="modalStoreCate" class="fs-6 text-secondary d-inline-block store-cate"></span>
+                <div class="fs-4 fw-bold text-dark modal-store-title">
+                	<span class="d-inline-block modalStoreName"></span>
+               		<span class="fs-6 text-secondary d-inline-block store-cate modalStoreCate"></span>
                     <div class="dropdown d-inline-block"><button class="btn btn-sm dropdown-toggle fs-6 fw-bold text-start text-secondary" aria-expanded="false" data-bs-toggle="dropdown" type="button">영업시간</button>
                         <div class="dropdown-menu">
-                        	<div id="modalStoreOpening">
-	                        	<a class="dropdown-item disabled link-secondary bg-warning">영업시간 :</a>
-                        	</div>
-                        	<div id="modalStoreBreak">
-                        		<a class="dropdown-item disabled link-secondary bg-warning">브레이크타임 :</a>
-                        	</div>
+                        	<div class="modalStoreOpening"></div>
+                        	<div class="modalStoreBreak"></div>
                         </div>
                     </div>
                 </div>
                 <div class="store-info">
                     <div class="d-inline-block store-info-left">
-                        <div><span id="modalStoreAddress"></span><span id="modalStoreDistance"class="fw-bold text-primary"></span></div>
-                        <div><span id="modalStoreVisitCnt" class="fw-bold text-primary"></span><span> / 40대 그룹 선호 가게 "여기 해야함"</span></div>
+                        <div><span class="modalStoreAddress"></span><span class="fw-bold text-primary modalStoreDistance"></span></div>
+                        <div><span class="fw-bold text-primary modalStoreVisitCnt"></span><span> / 40대 그룹 선호 가게 "여기 해야함"</span></div>
                     </div>
                     <div class="text-end d-inline-block store-info-right">
-                        <div><span>별점</span><span class="fw-bold text-primary">(3.33/5)</span></div>
-                        <div><span class="fw-bold text-warning"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-half-outline"></i><i class="typcn typcn-star-outline"></i></span></div>
+                        <div><span>별점</span><span class="fw-bold text-primary modalStoreScore"></span></div>
+                        <div>
+                        	<span class="fw-bold text-warning modalStoreStar"></span>
+                        </div>
                     </div>
                 </div>
                 <div>
                     <div class="store-about">
                         <div class="d-inline-block store-imgs">
-                            <div class="d-inline-block img-area height-full width-full"><span class="d-inline-block"><img src="map.png" /></span></div>
-                            <div class="text-center img-paging-icon"><i class="typcn typcn-media-record"></i><i class="typcn typcn-media-record-outline"></i><i class="typcn typcn-media-record-outline"></i></div>
+                            <div class="d-inline-block img-area height-full width-full"><span class="d-inline-block"><!-- <img src="" /> --></span></div>
+                            <div class="text-center img-paging-icon">
+                            	<i class="typcn typcn-media-record"></i>
+                            	<i class="typcn typcn-media-record-outline"></i>
+                            	<i class="typcn typcn-media-record-outline"></i>
+                            </div>
                         </div>
                         <div class="d-inline-block review-area">
-                            <div class="store-reviews">
-                                <div class="d-inline-block store-review-left"><span class="fw-bolder d-block">이** (20대 그룹 / 3인 / 짜장면)</span><span class="d-block">가나카타파하가바사아자차카타파하가나다라마바사아자    </span></div>
-                                <div class="text-end d-inline-block store-review-right">
-                                    <div class="d-block"><span class="d-inline-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i></span>
-                                        <div class="dropdown d-inline-block"><a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                                                    <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>
-                                                </svg></a>
-                                            <div class="dropdown-menu dropdown-menu-end text-start"><a class="dropdown-item" href="#">광고<br /></a><a class="dropdown-item" href="#">욕설</a><a class="dropdown-item" href="#">잘못된 메뉴</a></div>
-                                        </div>
-                                    </div>
-                                    <div><span>22.07.14 (105번째 방문) </span></div>
-                                </div>
-                            </div>
-                            <div class="store-reviews">
-                                <div class="d-inline-block store-review-left"><span class="fw-bolder d-block">이** (20대 그룹 / 3인 / 냉면)</span><span class="d-block">가나카타파하가바사아자차카타파냉면 dddddddddd와아     </span></div>
-                                <div class="text-end d-inline-block store-review-right">
-                                    <div><span class="d-inline-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i></span>
-                                        <div class="dropdown d-inline-block"><a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                                                    <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>
-                                                </svg></a>
-                                            <div class="dropdown-menu dropdown-menu-end text-start"><a class="dropdown-item" href="#">광고<br /></a><a class="dropdown-item" href="#">욕설</a><a class="dropdown-item" href="#">잘못된 메뉴</a></div>
-                                        </div>
-                                    </div>
-                                    <div><span>22.07.14 (105번째 방문) </span></div>
-                                </div>
-                            </div>
-                            <div class="store-reviews">
-                                <div class="d-inline-block store-review-left"><span class="fw-bolder d-block">이** (20대 그룹 / 3인 / 쟁반짜장)</span><span class="d-block">가나카타파하가바사아자차카타ddd파 이야아아아아아아   </span></div>
-                                <div class="text-end d-inline-block store-review-right">
-                                    <div><span class="d-inline-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i></span>
-                                        <div class="dropdown d-inline-block"><a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                                                    <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>
-                                                </svg></a>
-                                            <div class="dropdown-menu dropdown-menu-end text-start"><a class="dropdown-item" href="#">광고<br /></a><a class="dropdown-item" href="#">욕설</a><a class="dropdown-item" href="#">잘못된 메뉴</a></div>
-                                        </div>
-                                    </div>
-                                    <div><span>22.07.14 (105번째 방문) </span></div>
-                                </div>
-                            </div>
-                            <div id="more-reviews" class="text-end"><button id="modal-review-more" class="btn btn-sm" type="button" data-bs-target="#modal-reviews" data-bs-toggle="modal">리뷰 더보기 <i class="icon ion-android-arrow-dropright-circle"></i></button></div>
+	                        	<!-- 최근 리뷰 영역 -->
                         </div>
                     </div>
                     <div id="all-menu" class="text-start"><span class="fw-bold text-info d-inline-block" style="color: rgb(54, 185, 204);">#양자강에서 최근 한달 동안 다른 사람들이 선택한 메뉴를 볼 수 있어요 &gt;&gt;</span><button id="modal-see-menu" class="btn" type="button" data-bs-target="#modal-all-menu" data-bs-toggle="modal">메뉴 보러가기 <i class="icon ion-android-arrow-dropright-circle"></i></button></div>
                     <div class="other-stores">
-                        <div class="text-primary other-store-state"><span class="d-inline-block">중식/중화요리 다른 가게</span></div>
-                        <div class="text-start d-lg-flex justify-content-lg-center"><span class="d-inline-block"><button class="btn other-store-btn other-store-1" type="button">흑룡강<span class="fw-bold text-warning d-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-half-outline"></i><i class="typcn typcn-star-outline"></i></span></button></span><span class="d-inline-block"><button class="btn other-store-btn other-store-2" type="button">홍콩반점<span class="fw-bold text-warning d-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-half-outline"></i><i class="typcn typcn-star-outline"></i></span></button></span><span class="d-inline-block"><button class="btn link-light other-store-btn other-store-3" type="button">락궁<span class="fw-bold text-warning d-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-half-outline"></i><i class="typcn typcn-star-outline"></i></span></button></span></div>
+                        <div class="text-primary other-store-state">
+                        	<span class="d-inline-block">중식/중화요리 다른 가게</span>
+                        </div>
+                        <div class="text-start d-lg-flex justify-content-lg-center">
+                        	<span class="d-inline-block">
+		                        <button class="btn other-store-btn other-store-1" type="button">
+		                        	흑룡강
+		                        	<span class="fw-bold text-warning d-block">
+		                        		<i class="fa fa-star"></i>
+		                        		<i class="fa fa-star"></i>
+		                        		<i class="fa fa-star"></i>
+		                        		<i class="fa fa-star-half-o"></i>
+		                        		<i class="fa fa-star-o"></i>'
+		                        	</span>
+		                        </button>
+		                    </span>
+		                    <span class="d-inline-block">
+		                    	<button class="btn other-store-btn other-store-2" type="button">
+		                    		홍콩반점
+		                    		<span class="fw-bold text-warning d-block">
+			                    		<i class="typcn typcn-star-full-outline"></i>
+			                    		<i class="typcn typcn-star-full-outline"></i>
+			                    		<i class="typcn typcn-star-full-outline"></i>
+			                    		<i class="typcn typcn-star-half-outline"></i>
+			                    		<i class="typcn typcn-star-outline"></i>
+		                    		</span>
+		                    	</button>
+		                    </span>
+		                    <span class="d-inline-block">
+		                    	<button class="btn link-light other-store-btn other-store-3" type="button">
+		                    		락궁
+		                    		<span class="fw-bold text-warning d-block">
+		                    			<i class="typcn typcn-star-full-outline"></i>
+		                    			<i class="typcn typcn-star-full-outline"></i>
+		                    			<i class="typcn typcn-star-full-outline"></i>
+		                    			<i class="typcn typcn-star-half-outline"></i>
+		                    			<i class="typcn typcn-star-outline"></i>
+		                    		</span>
+		                    	</button>
+		                    </span>
+		                </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer-custom">
-                <p>나의 방문 횟수: 105회(최근 방문일 2022.07.14, 개발1팀)</p><button class="btn btn-primary" type="button">여기갈래요</button><button class="btn btn-light" type="button">점심후보추가</button>
+                <p class="modalStoreWithMe"></p>
+                <button class="btn btn-primary" type="button">여기갈래요</button>
+                <button class="btn btn-light" type="button">점심후보추가</button>
             </div>
         </div>
     </div>
@@ -109,19 +103,26 @@
         <div class="modal-content" style="width: 798px;">
             <div class="modal-header"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
             <div class="modal-body">
-                <div class="fs-4 fw-bold text-dark modal-store-title"><span class="d-inline-block">양자강</span><span class="fs-6 text-secondary d-inline-block store-cate">|   중식/중화요리   |</span>
+                <div class="fs-4 fw-bold text-dark modal-store-title">
+                	<span class="d-inline-block modalStoreName"></span>
+                	<span class="fs-6 text-secondary d-inline-block store-cate modalStoreCate"></span>
                     <div class="dropdown d-inline-block"><button class="btn btn-sm dropdown-toggle fs-6 fw-bold text-start text-secondary" aria-expanded="false" data-bs-toggle="dropdown" type="button">영업시간</button>
-                        <div class="dropdown-menu"><a class="dropdown-item disabled link-secondary">Second Item</a></div>
+                        <div class="dropdown-menu">
+                        	<div class="modalStoreOpening"></div>
+                        	<div class="modalStoreBreak"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="store-info">
                     <div class="d-inline-block store-info-left">
-                        <div><span>서울특별시 관악구 낙성대로 22-1</span><span class="fw-bold text-primary">(64m)</span></div>
-                        <div><span class="fw-bold text-primary">여기갈래요 213회</span><span> / 40대 그룹 선호 가게</span></div>
+                        <div><span class="modalStoreAddress"></span><span class="fw-bold text-primary modalStoreDistance"></span></div>
+                        <div><span class="fw-bold text-primary modalStoreVisitCnt"></span><span> / 40대 그룹 선호 가게 "여기 해야함"</span></div>
                     </div>
                     <div class="text-end d-inline-block store-info-right">
-                        <div><span>별점</span><span class="fw-bold text-primary">(3.33/5)</span></div>
-                        <div><span class="fw-bold text-warning"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-half-outline"></i><i class="typcn typcn-star-outline"></i></span></div>
+                        <div><span>별점</span><span class="fw-bold text-primary modalStoreScore"></span></div>
+                        <div>
+                        	<span class="fw-bold text-warning modalStoreStar"></span>
+                        </div>
                     </div>
                 </div>
                 <div class="d-inline-block review-area">
@@ -231,7 +232,9 @@
                 </div>
             </div>
             <div class="modal-footer-custom">
-                <p>나의 방문 횟수: 105회(최근 방문일 2022.07.14, 개발1팀)</p><button class="btn btn-primary" type="button">여기갈래요</button><button class="btn btn-light" type="button">점심후보추가</button>
+                <p class="modalStoreWithMe"></p>
+                <button class="btn btn-primary" type="button">여기갈래요</button>
+                <button class="btn btn-light" type="button">점심후보추가</button>
             </div>
         </div>
     </div>
@@ -243,19 +246,26 @@
         <div class="modal-content" style="width: 798px;">
             <div class="modal-header"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
             <div class="modal-body">
-                <div class="fs-4 fw-bold text-dark modal-store-title"><span class="d-inline-block">양자강</span><span class="fs-6 text-secondary d-inline-block store-cate">|   중식/중화요리   |</span>
+                <div class="fs-4 fw-bold text-dark modal-store-title">
+                	<span class="d-inline-block modalStoreName"></span>
+               		<span class="fs-6 text-secondary d-inline-block store-cate modalStoreCate"></span>
                     <div class="dropdown d-inline-block"><button class="btn btn-sm dropdown-toggle fs-6 fw-bold text-start text-secondary" aria-expanded="false" data-bs-toggle="dropdown" type="button">영업시간</button>
-                        <div class="dropdown-menu"><a class="dropdown-item disabled link-secondary">Second Item</a></div>
+                        <div class="dropdown-menu">
+                        	<div class="modalStoreOpening"></div>
+                        	<div class="modalStoreBreak"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="store-info">
                     <div class="d-inline-block store-info-left">
-                        <div><span>서울특별시 관악구 낙성대로 22-1</span><span class="fw-bold text-primary">(64m)</span></div>
-                        <div><span class="fw-bold text-primary">여기갈래요 213회</span><span> / 40대 그룹 선호 가게</span></div>
+                        <div><span class="modalStoreAddress"></span><span class="fw-bold text-primary modalStoreDistance"></span></div>
+                        <div><span class="fw-bold text-primary modalStoreVisitCnt"></span><span> / 40대 그룹 선호 가게 "여기 해야함"</span></div>
                     </div>
                     <div class="text-end d-inline-block store-info-right">
-                        <div><span>별점</span><span class="fw-bold text-primary">(3.33/5)</span></div>
-                        <div><span class="fw-bold text-warning"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-half-outline"></i><i class="typcn typcn-star-outline"></i></span></div>
+                        <div><span>별점</span><span class="fw-bold text-primary modalStoreScore"></span></div>
+                        <div>
+                        	<span class="fw-bold text-warning modalStoreStar"></span>
+                        </div>
                     </div>
                 </div>
                 <div id="latest-menu-area">
@@ -270,13 +280,14 @@
                 </div>
             </div>
             <div class="modal-footer-custom">
-                <p>나의 방문 횟수: 105회(최근 방문일 2022.07.14, 개발1팀)</p><button class="btn btn-primary" type="button">여기갈래요</button><button class="btn btn-light" type="button">점심후보추가</button>
+                <p class="modalStoreWithMe"></p>
+                <button class="btn btn-primary" type="button">여기갈래요</button>
+                <button class="btn btn-light" type="button">점심후보추가</button>
             </div>
         </div>
     </div>
 </div>
 
-<button id="test-storeInfo" type="button" data-storeno="284">실험용</button>
 <script type="text/javascript">
 
 /* 바구니에서 - 가게 정보 보기 클릭 */
@@ -329,13 +340,29 @@ function storeBasicInfo(storeNo){
 		success : function(storeMap){
 			console.log(storeMap)
 			
-			$("#modalStoreName").text(storeMap.storeVo.storeName)
-			$("#modalStoreCate").text("|   " + storeMap.storeVo.menu2ndCateName + "   |")
-			$("#modalStoreAddress").text(storeMap.storeVo.storeRoadAddress)
-			$("#modalStoreVisitCnt").text("여기갈래요 "+ storeMap.storeVo.visitCnt +"회")
+			$(".modalStoreName").text(storeMap.storeVo.storeName)
+			$(".modalStoreCate").text("|   " + storeMap.storeVo.menu2ndCateName + "   |")
+			$(".modalStoreAddress").text(storeMap.storeVo.storeRoadAddress)
+			$(".modalStoreVisitCnt").text("여기갈래요 "+ storeMap.storeVo.visitCnt +"회")
+			$(".modalStoreScore").text("(" + storeMap.storeVo.ratingBujang + "/5)")
 			
+			modalStoreStar(storeMap.storeVo.ratingBujang, 0)
+			
+			$(".modalStoreOpening").html('<a class="dropdown-item disabled link-secondary bg-warning">영업시간 :</a>')
+			$(".modalStoreBreak").html('<a class="dropdown-item disabled link-secondary bg-warning">브레이크타임 :</a>')
 			modalStoreTime(storeMap.storeVo.openingHours, 1)
 			modalStoreTime(storeMap.storeVo.breaktime, 2)
+			
+			$("#modal-store .review-area").text("")
+			for(var i=0; i<storeMap.reviewList.length; i++){
+				modalStoreReivew(storeMap.reviewList[i])
+			}
+			modalStoreMoreReivews()
+			
+			$(".other-store-state span").text(storeMap.storeVo.menu2ndCateName + " 카테고리 다른 가게")
+			
+			$(".modalStoreWithMe").text("나의 방문 횟수: " + storeMap.visitedVo.visitCount + "회(최근 방문일 " + storeMap.visitedVo.visitedDate + ", " + storeMap.visitedVo.groupName + ")")
+			
 
 		},
 		error : function(XHR, status, error) {
@@ -359,7 +386,7 @@ function modalStoreDistance(storeNo) {
 		
 		success : function(distance){
 			console.log("distance: "+distance)
-			$("#modalStoreDistance").text(" ("+distance+"m)")
+			$(".modalStoreDistance").text(" ("+distance+"m)")
 			
 		},
 		error : function(XHR, status, error) {
@@ -367,6 +394,34 @@ function modalStoreDistance(storeNo) {
 		}
  
 	})
+}
+
+
+/* 별 그리기 */
+/* k:별그릴위치 종류 0:이 가게, 1 2 3: 다른가게 */
+function modalStoreStar(starScore, k){
+	console.log("score: " + starScore)
+	
+	var str = ''
+	for(var i=0; i<5; i++){
+		if(starScore >= (i+0.25) && starScore < (i+0.75) ){
+			str += '				<i class="fas fa-star-half-alt"></i>'
+		}else if(starScore >= (i+0.75)){
+			str += '				<i class="fas fa-star"></i>'
+		}else{
+			str += '				<i class="far fa-star"></i>'
+		}
+	}
+	
+	switch(k){
+		case 0: 
+			console.log("k:" + k)
+			$(".modalStoreStar").html(str)
+			break
+		default:
+			break
+	}
+	
 }
 
 
@@ -389,12 +444,74 @@ function modalStoreTime(storeTime, opt){
 	}
 	
 	if(opt == 1){
-		$("#modalStoreOpening").append(str)
+		$(".modalStoreOpening").append(str)
 	}else if(opt == 2){
-		$("#modalStoreBreak").append(str)
+		$(".modalStoreBreak").append(str)
 	}else{
 		console.log("opt 오류")
 	}
+}
+
+
+/* 최근 리뷰 최대 3건 */
+function modalStoreReivew(storeReview){
+	console.log("review : " + storeReview.reviewNo)
+	
+	var str = ''
+	str += '<div class="store-reviews">'
+	str += '	<div class="d-inline-block store-review-left">'
+	str += '		<span class="fw-bolder d-block">'
+	str += '			' + storeReview.userName + ' (' + storeReview.aveAge + ' / ' + storeReview.withCount + '인 / ' + storeReview.menuName + ')'
+	str += '		</span>'
+	str += '		<span class="d-block">' + storeReview.reviewContent + '</span>'
+	str += '	</div>'
+	str += '	<div class="text-end d-inline-block store-review-right">'
+	str += '		<div class="d-block">'
+	str += '			<span class="d-inline-block">'
+	
+	for(var i=0; i<5; i++){
+		if(storeReview.userScore > i){
+			str += '				<i class="fas fa-star"></i>'
+		}else{
+			str += '				<i class="far fa-star"></i>'
+		}
+	}
+	
+	str += '			</span>'
+	str += '		<div class="dropdown d-inline-block">'
+	str += '			<a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기'
+	str += '				<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">'
+	str += '					<path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>'
+	str += '				</svg>'
+	str += '			</a>'
+	str += '			<div class="dropdown-menu dropdown-menu-end text-start">'
+	str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="1">광고/홍보글</a>'
+	str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="2">욕설/비방</a>'
+	str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="3">잘못된메뉴</a>'
+	str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="4">관련없는내용</a>'
+	str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="5">개인정보유출</a>'
+	str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="6">음산/선정성</a>'
+	str += '			</div>'
+	str += '		</div>'
+	str += '		<div><span>' + storeReview.visitedDate + ' (' + storeReview.visitedCount + '번째 방문) </span></div>'
+	str += '	</div>'
+	str += '</div>'
+	
+	$("#modal-store .review-area").append(str)
+}
+
+
+/* 리뷰더보기 */
+function modalStoreMoreReivews(){
+	
+	var str = ''
+	str += '<div id="more-reviews" class="text-end">'
+	str += '	<button id="modal-review-more" class="btn btn-sm" type="button" data-bs-target="#modal-reviews" data-bs-toggle="modal">'
+	str += '		리뷰더보기<i class="icon ion-android-arrow-dropright-circle"></i>'
+	str += '	</button>'
+	str += '</div>'
+	
+	$("#modal-store .review-area").append(str)
 }
 
 
