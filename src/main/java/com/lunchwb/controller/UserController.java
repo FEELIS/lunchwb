@@ -91,6 +91,11 @@ public class UserController {
 			returnURL = "redirect:./login?result=fail";
 			
 		}
+		
+		if (session.getAttribute("basket") != null) {
+	         session.removeAttribute("basket");
+	      }
+		
 		return returnURL;
 	}
 	
@@ -122,6 +127,10 @@ public class UserController {
 			UserVo loginCheck = userService.snsLogin(apiJson);
 			session.setAttribute("authUser", loginCheck);
 		}
+		
+		if (session.getAttribute("basket") != null) {
+	         session.removeAttribute("basket");
+	      }
 		
 		return "redirect:./";
 	}
@@ -158,6 +167,11 @@ public class UserController {
 			session.setAttribute("access_Token", access_Token);
 		}
        
+        if (session.getAttribute("basket") != null) {
+            session.removeAttribute("basket");
+         }
+        
+        
 		return "redirect:./";
 	}
 	
@@ -199,6 +213,11 @@ public class UserController {
 		Map<String,String> userInfo = mapper.readValue(resultJson, new TypeReference<Map<String, String>>(){});
 		model.addAllAttributes(userInfo);
 		model.addAttribute("token", result.getAccessToken());
+		
+		if (session.getAttribute("basket") != null) {
+         session.removeAttribute("basket");
+      }
+      
 		*/
 		
 		return "";
