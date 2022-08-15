@@ -390,6 +390,22 @@ public class UserController {
 		}
 	}
 	
+	/* 비밀번호 찾기 */
+	@GetMapping("findPW")
+	public String findPW(HttpServletRequest req) {
+		logger.info("findPW()");
+		
+		HttpSession session = req.getSession();
+		UserVo loginUser = (UserVo) session.getAttribute("authUser");
+
+		if (loginUser != null) {
+			return "redirect:/lunchwb";
+		} else {
+			return "user/findPW";
+		}
+	}
+	
+	
 	/* Json */
 	@ResponseBody
 	@PostMapping("/user/checkEmail")
