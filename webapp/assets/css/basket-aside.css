@@ -375,3 +375,62 @@
   font-size: 25px;
 }
 
+#modal-recFilter .modal-header {
+  padding-bottom: 8px;
+}
+
+#modal-recFilter .modal-body {
+  font-size: 14px;
+  padding-top: 0;
+}
+
+#modal-recFilter-btn-area {
+  margin-bottom: 19px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+#modal-recFilter-addAll {
+  font-size: 12px;
+  padding: 3px 6px;
+  margin-right: 7px;
+  background: var(--bs-blue);
+  color: #ffffff;
+  border-radius: 7px;
+}
+
+#modal-recFilter-addAll:hover {
+  background-color: #3253b1;
+}
+
+#modal-recFilter-delAll {
+  font-size: 12px;
+  padding: 3px 6px;
+  color: var(--bs-blue);
+  background: rgb(255,255,255);
+  border-radius: 7px;
+  border-color: var(--bs-blue);
+  border-top-color: var(--bs-blue);
+}
+
+#modal-recFilter-delAll:hover {
+  background-color: var(--bs-gray-200);
+}
+
+#modal-recFilter button {
+  border-radius: 8px;
+  padding: 4px 12px;
+}
+
+#modal-recFilter #modal-filter-submit {
+  margin-right: 4px;
+}
+
+#modal-recFilter #modal-filter-dismiss:hover {
+  background-color: var(--bs-gray-200);
+}
+
+#modal-recFilter label:hover {
+  cursor: pointer;
+}
+
