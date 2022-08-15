@@ -39,9 +39,8 @@
   padding-right: 10%;
 }
 
-#modal-store i {
-	width: 14px;
-	height: 16px;
+#modal-store .store-info .store-info-right .modalStoreStar{
+	font-size: 10px;
 }
 
 #modal-store .store-about .store-imgs .img-area {
@@ -209,6 +208,10 @@
   padding-right: 10%;
 }
 
+#modal-reviews .store-info .store-info-right .modalStoreStar{
+	font-size: 10px;
+}
+
 #modal-reviews .review-area {
   height: 470.5px;
   vertical-align: top;
@@ -305,6 +308,10 @@
 #modal-all-menu .store-info .store-info-left {
   width: 652px;
   padding-right: 10%;
+}
+
+#modal-all-menu .store-info .store-info-right .modalStoreStar{
+	font-size: 10px;
 }
 
 #modal-all-menu #latest-menu-area .back-store-info {
