@@ -14,6 +14,7 @@
 		<result column="store_name" property="storeName" />
 		<result column="menu_name" property="menuName" />
 		<result column="select_month" property="selectMonth" />
+		<result column="visit_count" property="visitCount" />
 	</resultMap>
 	
    

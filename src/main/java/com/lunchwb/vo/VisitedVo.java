@@ -6,7 +6,7 @@ public class VisitedVo {
 	private int visitedNo;
 	private int userNo;
 	private int groupNo;
-	private int StoreNo;
+	private int storeNo;
 	private int menuNo;
 	private String visitedDate;
 	
@@ -48,7 +48,7 @@ public class VisitedVo {
 		this.visitedNo = visitedNo;
 		this.userNo = userNo;
 		this.groupNo = groupNo;
-		this.StoreNo = storeNo;
+		this.storeNo = storeNo;
 		this.menuNo = menuNo;
 		this.visitedDate = visitedDate;
 		this.visitCount = visitCount;
@@ -84,11 +84,11 @@ public class VisitedVo {
 	}
 
 	public int getStoreNo() {
-		return StoreNo;
+		return storeNo;
 	}
 
 	public void setStoreNo(int storeNo) {
-		StoreNo = storeNo;
+		this.storeNo = storeNo;
 	}
 
 	public int getMenuNo() {
@@ -158,8 +158,8 @@ public class VisitedVo {
 	
 	@Override
 	public String toString() {
-		return "VisitedVo [visitedNo=" + visitedNo + ", userNo=" + userNo + ", groupNo=" + groupNo + ", StoreNo="
-				+ StoreNo + ", menuNo=" + menuNo + ", visitedDate=" + visitedDate + ", visitCount=" + visitCount
+		return "VisitedVo [visitedNo=" + visitedNo + ", userNo=" + userNo + ", groupNo=" + groupNo + ", storeNo="
+				+ storeNo + ", menuNo=" + menuNo + ", visitedDate=" + visitedDate + ", visitCount=" + visitCount
 				+ ", menu1stCateName=" + menu1stCateName + ", groupName=" + groupName + ", storeName=" + storeName
 				+ ", menuName=" + menuName + ", selectMonth=" + selectMonth + "]";
 	}
