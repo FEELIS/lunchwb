@@ -19,7 +19,7 @@
 	<!-- 달력 가게정보 띄우기 -->
 	<select id="calendar" parameterType="VisitedVo" resultMap="resultMapVisitedVo">
 			select	g.group_no, 
-					v.visited_date, 
+					to_char(v.visited_date,'Mon DD YYYY') visited_date, 
 					f1.menu_1st_cate_name, 
 					g.group_name, 
 					s.store_name, 

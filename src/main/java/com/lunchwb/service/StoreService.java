@@ -29,7 +29,7 @@ public class StoreService {
 	
 	
 	/* 가게 정보 받아오기 */
-	public Map<String, Object> storeInfo(int storeNo, UserVo authUser, GPSVo gpsVo){
+	public Map<String, Object> storeInfo(int storeNo, UserVo authUser){
 		Map<String, Object> storeMap = new HashMap<>();
 		
 		//기본정보
@@ -61,7 +61,7 @@ public class StoreService {
 		
 		storeMap.put("storeVo", storeVo);
 		
-		//거리 - storeinfo에 같이 잡아
+		//거리 - storeinfo에 같이 잡아 > 또 까먹었네 stat에서 열어야하니까 추천할때만 거리 보여주기로 했자너.. 바보야
 		
 		//나와 이곳 : visit (방문횟수/최근 방문날짜 그룹)
 		if(authUser != null) {
@@ -81,9 +81,19 @@ public class StoreService {
 		
 		//최근 리뷰 사진(null 가능이라 따로 최근 3개? - 이거는 리뷰 작성부터.............)
 		
-		
-		
 		return storeMap;
+	}
+	
+	
+	/* 가게와의 거리 표기 */
+	public int storeDistance(int storeNo, GPSVo gpsVo) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("storeNo", storeNo);
+		map.put("gpsVo", gpsVo);
+		
+		int distance = storeDao.storeDistance(map);
+		
+		return distance;
 	}
 	
 }

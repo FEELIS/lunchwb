@@ -39,17 +39,19 @@ public class StoreController {
 		logger.info("storeInfo...storeNo={}", storeNo);
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		GPSVo gpsVo = (GPSVo)session.getAttribute("curr_location");
-		Map<String, Object> storeMap = storeService.storeInfo(storeNo, authUser, gpsVo);
+		Map<String, Object> storeMap = storeService.storeInfo(storeNo, authUser);
 		
 		return storeMap;
 	}
 	
 	@ResponseBody
 	@PostMapping("store/distance")
-	public int storeDistance(@RequestBody GPSVo gpsVo) {
-		logger.info("storeDistance...GPSVo={}", gpsVo);
-		return 2;	
+	public int storeDistance(@RequestBody int storeNo, HttpSession session) {
+		logger.info("storeDistance...GPSVo={}", storeNo);
+		
+		GPSVo gpsVo = (GPSVo)session.getAttribute("curr_location");
+		int distance = storeService.storeDistance(storeNo, gpsVo);
+		return distance;	
 	}
 	
 	

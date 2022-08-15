@@ -365,12 +365,19 @@
                '</div>';
             // 이전달이나 다음달이면 라벨제거   
             if (disabled == false) {
+<<<<<<< HEAD
                str += '<div class="visited"' +
                'data-vdate="' + 
                day +
                '"></div>' +
                //'<div class="event bg-success show-menu">중식/중화요리</div>' +
                '<div class="event bg-success show-menu">흑룡강</div>'
+=======
+               str += '<div id="vday'+ (day.getDate()-1) +'" class="visited"' +
+               'data-vdate="' + 
+               day +
+               '"></div>'
+>>>>>>> 6b138e802aac4a817e151d62e4de13e5ad8ff206
                
             }   
                
@@ -396,6 +403,7 @@
    
    // 날짜 강조
    function addEvent(monthData,currentDate) {
+<<<<<<< HEAD
       
       var selectedElement = document.getElementsByClassName('visited');
       
@@ -404,6 +412,10 @@
       }
       
       
+=======
+	   
+      var selectedElement = document.getElementsByClassName('visited');
+>>>>>>> 6b138e802aac4a817e151d62e4de13e5ad8ff206
         
       var userNo = '${authUser.userNo}';
       var selectMonth = currentDate.getFullYear() + settings.monthYearSeparator +(currentDate.getMonth()+1);
@@ -421,6 +433,7 @@
             
             dataType : "json",
             success : function(vstList) {
+<<<<<<< HEAD
                console.log(vstList);
                
                console.log(vstList[1].visitedDate);
@@ -441,6 +454,52 @@
                      
                   });
                }
+=======
+           	   var j = 0;
+               
+               for (var i = 0; i < selectedElement.length; i++) {
+            	   var thisdate = selectedElement[i].dataset.vdate;
+            	   
+            	   thisdate = thisdate.substring(4,15)
+           		   var str = '';
+            	   if (vstList[j].visitedDate === thisdate) {
+            		   str += '<div class="event ';
+            		   if (vstList[j].groupNo === 1) {
+            			    str +='bg-success ';
+            			}else if(vstList[j].groupNo === 2){
+            				str +='bg-warning '; 
+						}else if(vstList[j].groupNo === 3){
+   							str +='bg-danger '; 
+						}
+            		   
+            		   str += 'show-menu">'+ vstList[j].menu1stCateName +"/"+ vstList[j].menuName +'</div>';
+            		   str += '<div class="event ';
+            		   if (vstList[j].groupNo === 1) {
+           			    	str +='bg-success ';
+           			    
+           				}else if(vstList[j].groupNo === 2){
+           					str +='bg-warning ';
+           				
+						}else if(vstList[j].groupNo === 3){
+  							str +='bg-danger ';
+  							
+						}
+           		   
+            		   str += 'show-menu">'+ vstList[j].storeName +'</div>';
+            		   
+            		   $("#vday"+i).after(str);
+   						
+						j++;
+            		   
+					}
+					
+					if (vstList.length <= j) {
+						break;
+					}
+				
+				}
+               
+>>>>>>> 6b138e802aac4a817e151d62e4de13e5ad8ff206
              
             },
             error : function(XHR, status, error) {
