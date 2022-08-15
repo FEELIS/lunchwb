@@ -30,7 +30,7 @@
 			       ,score
 			FROM (SELECT s.store_no, f.menu_2nd_cate_name, s.store_name, s.store_road_address, b.rating_bujang, s.store_opening_hours, s.store_breaktime
 			             ,ROUND(SQRT(POWER(ABS(s.store_x-#{curr_location.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(s.store_y-#{curr_location.gpsY})*6400000*2*3.14/360, 2)), 0) distance
-			             ,(NVL(v.cnt, 0)/10 + r.rating_naver * 50 + NVL(b.rating_bujang, 0) * 50) score
+			             ,(NVL(v.cnt, 0)/10 + (r.rating_naver-4) * 100 + NVL(b.rating_bujang, 0) * 50) score
 			      FROM   store s, rating_others r, food_2nd_category f
 			             ,(SELECT store_no, COUNT(*) cnt 
 			               FROM visited 
@@ -43,6 +43,71 @@
 			      AND    s.store_no = b.store_no(+)
 			      AND    s.store_no = v.store_no(+)
 			      AND    s.menu_2nd_cate_no = f.menu_2nd_cate_no
+	    ]]>
+		
+		<foreach collection="filter_excluded" item="cate_1st" separator="">
+	              AND    f.menu_1st_cate_no != #{cate_1st}
+		</foreach>
+		
+		<foreach collection="basket" item="storedItem" separator="">
+	              AND    s.store_no != #{storedItem.storeNo}
+		</foreach>
+			  
+		<![CDATA[
+		         AND    ((r.rating_naver >= 4.3 AND r.rating_kakao >= 3) OR (r.rating_naver >= 4.5 AND r.rating_kakao = 0)) 
+			     ORDER BY score DESC)
+		    WHERE  distance <= 1000
+		    AND    ROWNUM <= 50
+		    ORDER BY DBMS_RANDOM.value
+		]]>
+	</select>
+	
+	
+	<!-- 로그인 회원 장바구니 아이템 추천 -->
+	<select id="groupStoreRecommend" parameterType="java.util.Map" resultType="StoreVo">
+		<![CDATA[
+			SELECT store_no storeNo
+			       ,menu_2nd_cate_name menu2ndCateName
+			       ,store_name storeName
+			       ,store_road_address storeRoadAddress
+			       ,rating_bujang ratingBujang
+			       ,store_opening_hours storeOpeningHours
+                   ,store_breaktime storeBreaktime
+			       ,distance
+			       ,score
+			FROM (SELECT s.store_no, f.menu_2nd_cate_name, s.store_name, s.store_road_address, b.rating_bujang, s.store_opening_hours, s.store_breaktime
+			             ,ROUND(SQRT(POWER(ABS(s.store_x-#{curr_location.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(s.store_y-#{curr_location.gpsY})*6400000*2*3.14/360, 2)), 0) distance
+			             ,(NVL(v.cnt, 0)/10 + (r.rating_naver-4) * 100 + NVL(b.rating_bujang, 0) * 50 + NVL(gv.group_cnt, 0) * 2 + NVL(gr.group_rating, 0) - NVL(rv.visit, 0) * 10000) score
+			      FROM   store s, rating_others r, food_2nd_category f
+			             ,(SELECT store_no, COUNT(*) cnt 
+			               FROM   visited 
+			               GROUP BY store_no) v
+			             ,(SELECT store_no, AVG(user_score) rating_bujang
+			               FROM   review, visited 
+			               WHERE  review.visited_no = visited.visited_no 
+			               GROUP BY visited.store_no) b
+			             ,(SELECT store_no, COUNT(*) group_cnt
+			               FROM   visited
+			               WHERE  group_no = #{groupNo}
+			               GROUP BY store_no) gv
+			             ,(SELECT v.store_no store_no, AVG(r.user_score) group_rating
+			               FROM   review r, (SELECT visited_no, store_no
+			                                 FROM   visited
+			                                 WHERE  group_no = #{groupNo}) v
+			               WHERE  v.visited_no = r.visited_no
+			               GROUP BY store_no) gr
+			             ,(SELECT store_no, COUNT(*) visit
+			               FROM   visited
+			               WHERE  group_no = #{groupNo}
+			               AND    visited_date >= SYSDATE - 2
+			               GROUP BY store_no) rv                     
+			      WHERE  s.store_no = r.store_no
+			      AND    s.store_no = b.store_no(+)
+			      AND    s.store_no = v.store_no(+)
+			      AND    s.menu_2nd_cate_no = f.menu_2nd_cate_no
+			      AND    s.store_no = gv.store_no(+)
+			      AND    s.store_no = gr.store_no(+)
+			      AND    s.store_no = rv.store_no(+)
 	    ]]>
 		
 		<foreach collection="filter_excluded" item="cate_1st" separator="">
