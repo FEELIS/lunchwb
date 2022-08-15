@@ -18,7 +18,7 @@
 	
 	
 	<!-- 비로그인 회원 장바구니 아이템 추천 -->
-	<select id="guestStoreRecommend" parameterType="java.util.Map" resultType="StoreVo">
+	<select id="guestStoreRecommend" parameterType="Map" resultType="StoreVo">
 		<![CDATA[
 			SELECT store_no storeNo
 			       ,menu_2nd_cate_name menu2ndCateName
@@ -65,7 +65,7 @@
 	
 	
 	<!-- 로그인 회원 장바구니 아이템 추천 -->
-	<select id="groupStoreRecommend" parameterType="java.util.Map" resultType="StoreVo">
+	<select id="groupStoreRecommend" parameterType="Map" resultType="StoreVo">
 		<![CDATA[
 			SELECT store_no storeNo
 			       ,menu_2nd_cate_name menu2ndCateName
@@ -154,7 +154,7 @@
 	</select>	
 	
 	<!-- 가게와의 거리 -->
-	<select id="storeDistance" parameterType="java.util.Map" resultType="int">
+	<select id="storeDistance" parameterType="Map" resultType="int">
 		SELECT ROUND(SQRT(POWER(ABS(store_x-#{gpsVo.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(store_y-#{gpsVo.gpsY})*6400000*2*3.14/360, 2)), 0) distance
 		FROM store
 		WHERE store_no = #{storeNo}
