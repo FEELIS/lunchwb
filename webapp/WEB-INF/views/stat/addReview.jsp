@@ -21,7 +21,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
 
 
-<title>따로갔어요~</title>
+<title>따로갔어요~ 등록폼</title>
 </head>
 <body>
 	<div id="wrapper">

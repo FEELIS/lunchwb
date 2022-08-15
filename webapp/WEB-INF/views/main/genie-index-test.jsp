@@ -87,6 +87,7 @@
 <c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
 
 <script type="text/javascript">
+	indexJSP = true
 
 	// 위치재설정 버튼 클릭 시
 	$("#location-change-btn").on("click", function(){
@@ -142,7 +143,9 @@
 		console.log("완료?")
 		
 		alert("현재 위치가 변경되었습니다.")
-		location.replace("${pageContext.request.contextPath}/")
+		$("#curr-location-address").text($("#modal-curr-location").text())
+		$("#modal-location-change").modal("hide")
+		//location.replace("${pageContext.request.contextPath}/")
 	})
 	
 </script>

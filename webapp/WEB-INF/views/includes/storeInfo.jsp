@@ -25,7 +25,7 @@
                 </div>
                 <div class="store-info">
                     <div class="d-inline-block store-info-left">
-                        <div><span>서울특별시 관악구 낙성대로 22-1</span><span class="fw-bold text-primary">(64m)</span></div>
+                        <div><span>서울특별시 관악구 낙성대로 22-1</span><span id="modalStoreDistance"class="fw-bold text-primary"></span></div>
                         <div><span class="fw-bold text-primary">여기갈래요 213회</span><span> / 40대 그룹 선호 가게</span></div>
                     </div>
                     <div class="text-end d-inline-block store-info-right">
@@ -269,22 +269,45 @@
     </div>
 </div>
 
-
+<button id="test-storeInfo" type="button" data-storeno="284">실험용</button>
 <script type="text/javascript">
 
 /* 바구니에서 - 가게 정보 보기 클릭 */
 /* 메인페이지로 옮겨놓기 + 다른가게 눌렀을 때도*/
+/* k : 1 바구니(추천) 경우 거리 표시
+k : 0 기록(비추천) 경우 거리 표시 제외 */
+
 $("#basket-table").on("click", ".basket-table-store-name", function(){
-	var storeNo = $(this).data("storeno")
-	console.log(storeNo+"번 가게 정보 보기)
+	//var storeNo = $(this).data("storeno")
+	console.log(storeNo+"번 가게 정보 보기")
 	storeInfo_open(storeNo, 1)
 })
 
-function storeInfo_open(storeNo, k){
-	var gpsX = ${curr_location.gpsX}
-	var gpsY = ${curr_location.gpsY}
+/* 실험용 */
+$("#test-storeInfo").on("click", function(){
+	var storeNo = $(this).data("storeno")
+	console.log(storeNo+"번 가게 정보 보기")
+	storeInfoOpen(storeNo, 1)
+})
 
-	console.log("가게: "+storeVo)
+
+
+function storeInfoOpen(storeNo, k){
+	console.log("가게: "+storeNo)
+	
+	storeBasicInfo(storeNo)
+	
+	//추천 때만 나와의 거리를 보여줌
+	if(k==1){
+		modalStoreDistance(storeNo)
+	}
+
+	
+	$("#modal-store").modal("show")
+}
+
+
+function storeBasicInfo(storeNo){
 	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/store/info",
@@ -302,39 +325,28 @@ function storeInfo_open(storeNo, k){
 		}
 	 
 	})
-	
-	//추천 때만 나와의 거리를 보여줌
-	if(k==1){
-		var gpsVo = {
-			gpsX: gpsX,
-			gpsY: gpsY
-		}
-		
-		console.log("현재위치: "+gpsVo)
-		
-		$.ajax({
+}
+
+function modalStoreDistance(storeNo) {
+	console.log("modalStoreDistance No : " + storeNo)
+	$.ajax({
 		url : "${pageContext.request.contextPath}/store/distance",
 		type : "post",
 		contentType : "application/json",
 		data : JSON.stringify(storeNo),
 		dataType : "json",
 		
-		success : function(storeMap){
-			
+		success : function(distance){
+			console.log("distance"+distance)
+			$("#modalStoreDistance").text("("+distance+"m)")
 			
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
 		}
-	 
+ 
 	})
-			
-	}
-
-	
-	$("#modal-store").modal("show")
 }
-
 
 
 </script>

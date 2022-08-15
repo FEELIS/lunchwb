@@ -22,11 +22,9 @@ public class StoreDao {
 	}
 	
 	
-	/* 가게 영업 시간 */
-	/* 삭제 예정
-	public Map<String, String> storeTime(int storeNo) {
-		Map<String, String> map = sqlSession.selectOne("store.storeTime", storeNo);
-		return map;
+	/* 가게와의 거리 */
+	public int storeDistance(Map<String, Object> map) {
+		int distance = sqlSession.selectOne("store.storeDistance", map);
+		return distance;
 	}
-	*/
 }

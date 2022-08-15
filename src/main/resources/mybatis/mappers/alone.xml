@@ -20,11 +20,5 @@
 		<result column="store_old_address" property="storeOldAddress" />
 	</resultMap>
 
-	<select id="aloneList" parameterType="int" resultMap="resultMapAloneVo">
-		<![CDATA[
-			
-			
-		]]>
-	</select>
 
 </mapper>

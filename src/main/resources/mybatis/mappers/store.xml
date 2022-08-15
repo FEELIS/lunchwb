@@ -9,8 +9,8 @@
 		<result column="store_name" property="storeName" />
 		<result column="store_road_address" property="storeRoadAddress" />
 		<result column="store_old_address" property="storeOldAddress" />
-		<!-- <result column="store_opening_hours" property="storeOpeningHours" /> -->
-		<!-- <result column="store_breaktime" property="storeBreaktime" /> -->
+		<result column="store_opening_hours" property="storeOpeningHours" />
+		<result column="store_breaktime" property="storeBreaktime" />
 		<result column="visit_count" property="visitCnt" />
 		<result column="rating_bujang" property="ratingBujang" />
 	</resultMap>
@@ -63,6 +63,7 @@
 	</select>
 	
 	
+	<!-- 가게기본정보 -->
 	<select id="basicStoreInfo" parameterType="int" resultMap="StoreVo">
 		SELECT  s.store_no
 		        , store_name
@@ -85,4 +86,13 @@
 		WHERE s.menu_2nd_cate_no = f.menu_2nd_cate_no
 		AND s.store_no = #{storeNo}
 	</select>	
+	
+	<!-- 가게와의 거리 -->
+	<select id="storeDistance" parameterType="java.util.Map" resultType="int">
+		SELECT ROUND(SQRT(POWER(ABS(store_x-#{gpsVo.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(store_y-#{gpsVo.gpsY})*6400000*2*3.14/360, 2)), 0) distance
+		FROM store
+		WHERE store_no = #{storeNo}
+	</select>
+	
+	
 </mapper>
