@@ -30,7 +30,7 @@
 					,review_content
 					,user_score
 					,visited_date
-					,visit_count
+					,visited_count
 			FROM(SELECT ROWNUM rn
 						,review_no
 						,user_name
@@ -40,7 +40,7 @@
 						,review_content
 						,user_score
 						,visited_date
-						,visit_count
+						,visited_count
 				 FROM(SELECT r.review_no
 							 ,REPLACE(u.user_name, SUBSTR(u.user_name, 2, LENGTH(u.user_name)), '**') user_name
 							 ,wct.avg_age
@@ -49,9 +49,9 @@
 							 ,r.review_content
 							 ,r.user_score
 							 ,TO_CHAR(v.visited_date, 'YY.MM.DD') visited_date
-							 ,vsc.visit_count
+							 ,vsc.visited_count
 					  FROM review r, visited v, users u, menu m
-						   ,(SELECT COUNT(vt.visited_no) visit_count
+						   ,(SELECT COUNT(vt.visited_no) visited_count
 						     		,vt.visited_no
 						     FROM(SELECT v.visited_no
 							      FROM visited v, visited t
