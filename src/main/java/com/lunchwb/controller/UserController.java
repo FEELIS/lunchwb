@@ -399,10 +399,22 @@ public class UserController {
 		UserVo loginUser = (UserVo) session.getAttribute("authUser");
 
 		if (loginUser != null) {
-			return "redirect:/lunchwb";
+			return "redirect:./";
 		} else {
 			return "user/findPW";
 		}
+	}
+	
+	@PostMapping("findPW")
+	public String findPWPost(@ModelAttribute UserVo userVo) throws Exception{
+		String result = userService.findPw(userVo);
+		
+		if(result.equals("success")) {
+			return "redirect:./login";
+		}else {
+			return "redirect:./";
+		}
+		
 	}
 	
 	

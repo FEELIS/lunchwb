@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 
 <!DOCTYPE html>
@@ -23,7 +24,7 @@
 
 <body>
     <nav class="navbar navbar-light navbar-expand bg-white shadow d-xxl-flex justify-content-xxl-end mb-4 topbar static-top no-side-bar-header">
-        <div class="container join-login-page"><span><img data-bss-hover-animate="pulse" id="bujang-logo-blue" class="no-drag" width="159" height="38" src="../../assets/img/bujang-logo%20blue.png" href="header+aside+footer.html"></span>
+        <div class="container join-login-page"><span><img data-bss-hover-animate="pulse" id="bujang-logo-blue" class="no-drag" width="159" height="38" src="${pageContext.request.contextPath}/assets/img/bujang-logo%20blue.png" href="header+aside+footer.html"></span>
             <div></div>
             <ul class="navbar-nav d-xxl-flex align-items-xxl-center">
                 <li class="nav-item dropdown no-arrow" id="user-alert"><a class="dropdown-toggle nav-link nav-link" aria-expanded="false" data-bs-toggle="dropdown"><span class="badge bg-danger badge-counter">3</span><i class="fas fa-bell fa-fw"></i></a>
@@ -67,19 +68,18 @@
                         <div class="row">
                             <div class="col-lg-6 col-xxl-12">
                                 <div class="p-5">
-                                    <div class="text-center"><img class="login_logo" src="{pageContext.request.contextPath}/assets/img/bujang-logo%20blue.png">
+                                    <div class="text-center"><img class="login_logo" src="${pageContext.request.contextPath}/assets/img/bujang-logo%20blue.png">
                                         <div class="text-center">
                                             <h4 class="text-dark mb-4 h4">비밀번호 찾기</h4>
                                         </div>
                                     </div>
                                     <div class="text-center"></div>
-                                    <form method="post" action="${pageContext.request.contextPath}/login" class="user">
+                                    <form method="post" action="${pageContext.request.contextPath}/findPW" class="user">
                                         <div class="mb-3">
-                                            <div><span class="check-text">입력하신 이메일로 임시 비밀번호를 발급합니다.</span></div><input class="form-control form-control-user" type="email" id="InputLoginEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="email">
+                                            <div><span class="check-text">입력하신 이메일로 임시 비밀번호를 발급합니다.</span></div><input class="form-control form-control-user" type="email" id="InputLoginEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="userEmail">
                                         </div>
                                         <div class="mb-3"></div>
                                         <div class="mb-3">
-                                            <div class="custom-control custom-checkbox small"></div>
                                         </div><button class="btn btn-primary d-block btn-user w-100" id="btn-login" type="submit">임시 비밀번호 발급받기</button>
                                         <hr>
                                     </form>

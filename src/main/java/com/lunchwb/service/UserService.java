@@ -270,14 +270,14 @@ public class UserService {
 	public void sendEmail(UserVo userVo, String div) throws Exception {
 		// Mail Server 설정
 		String charSet = "utf-8";
-		String hostSMTP = "smtp.gmail.com"; //네이버 이용시 smtp.naver.com
+		String hostSMTP = "smtp.gmail.com"; //구글 이용시 smtp.gmail.com 네이버 이용시 smtp.naver.com
 		String hostSMTPid = "lunchwb@gmail.com";
-		String hostSMTPpwd = "qnwkdsladyrldy1!";
+		String hostSMTPpwd = "gnzwzjrgdidbwxjm";
 
 		// 보내는 사람 EMail, 제목, 내용
 		String fromEmail = "lunchwb@gmail.com";
 		String fromName = "부장님요기요";
-		String subject = "";
+		String subject = "부장님 요기요 임시 비밀번호 입니다.";
 		String msg = "";
 
 		if(div.equals("findpw")) {
@@ -295,12 +295,12 @@ public class UserService {
 			HtmlEmail email = new HtmlEmail();
 			email.setDebug(true);
 			email.setCharset(charSet);
-			email.setSSL(true);
+			email.setSSLOnConnect(true);
 			email.setHostName(hostSMTP);
-			email.setSmtpPort(465); //네이버 이용시 587
+			email.setSmtpPort(465); //네이버 이용시 587 구글 이용시 465
 
 			email.setAuthentication(hostSMTPid, hostSMTPpwd);
-			email.setTLS(true);
+			email.setStartTLSEnabled(true);
 			email.addTo(mail, charSet);
 			email.setFrom(fromEmail, fromName, charSet);
 			email.setSubject(subject);
@@ -311,33 +311,29 @@ public class UserService {
 		}
 	}
 
-	/*
+	
 	//비밀번호찾기
-	public void findPw(HttpServletResponse response, UserVo userVo) throws Exception {
-		response.setContentType("text/html;charset=utf-8");
-		UserVo ck = userDao.readMember(userVo.getUserEmail());
-		PrintWriter out = response.getWriter();
+	public String findPw(UserVo userVo) throws Exception {
+		UserVo ck = userDao.userCheck(userVo.getUserEmail());
 		
 		// 가입된 이메일이 아니면
-		if(!userVo.getUserEmail().equals(ck.getUserEmail())) {
-			out.print("등록되지 않은 이메일입니다.");
-			out.close();
+		if(ck == null) {
+			return "fail";
 		}else {
 			// 임시 비밀번호 생성
-			String pw = "";
+			String userPassword = "";
 			for (int i = 0; i < 12; i++) {
-				pw += (char) ((Math.random() * 26) + 97);
+				userPassword += (char) ((Math.random() * 26) + 97);
 			}
-			userVo.setPw(pw);
+			userVo.setUserPassword(userPassword);
 			// 비밀번호 변경
 			userDao.updatePw(userVo);
 			// 비밀번호 변경 메일 발송
 			sendEmail(userVo, "findpw");
-
-			out.print("이메일로 임시 비밀번호를 발송하였습니다.");
-			out.close();
+			
+			return "success";
 		}
 	}
-	*/
+	
 
 }

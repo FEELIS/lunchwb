@@ -35,6 +35,11 @@ public class UserDao {
 		return count;
 	}
 	
+	public int updatePw(UserVo userVo) {
+		int count = sqlSession.update("user.updatePw", userVo);
+		return count;
+	}
+	
 	/* 자동로그인 */
 	public void autoLogin(Map<String, Object> map) {
 		sqlSession.update("user.autoLogin", map);
