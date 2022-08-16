@@ -316,8 +316,9 @@ k : 0 기록(비추천) 경우 거리 표시 제외 */
 
 /* 메인-가게바구니에서 조회할 때 */
 $("#basket-table").on("click", ".basket-table-store-name", function(){
-	var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
-	
+	if (indexJSP) {
+        var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
+	}
 	console.log(storeNo+"번 가게 정보 보기")
 	storeInfo_open(storeNo, 1)
 })
