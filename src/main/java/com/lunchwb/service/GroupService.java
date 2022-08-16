@@ -235,13 +235,13 @@ public class GroupService {
 	public GroupVo invtMember(GroupVo groupVo) {
 		groupDao.addMember(groupVo);
 		int memberNo = groupVo.getGroupMemberNo();
-		GroupVo memberVo = groupDao.memberInfo(memberNo);
 		
 		//보스 변경
 		if(groupVo.getBossCheck() == 1) {
 			groupDao.deleteBoss(groupVo.getGroupNo());
 		}
 		
+		GroupVo memberVo = groupDao.memberInfo(memberNo);
 		return memberVo;
 	}
 	
@@ -265,7 +265,6 @@ public class GroupService {
 		//groupVo : groupNo, bossCheck 있음
 		//유령회원 번호 가져오기
 		int userNo = userVo.getUserNo();
-		System.out.println(userNo);
 		
 		//groupVo 정보 추가
 		groupVo.setUserNo(userNo);
