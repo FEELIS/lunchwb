@@ -22,6 +22,11 @@ public class VisitedVo {
 	//private String visitedDate;
 	private String selectMonth;
 	
+	//////////////////// group_member table //////////////////// 
+	// 그룹 순서용
+	private int groupOrder;
+	
+	
 	//생성자
 	public VisitedVo() {
 	}
@@ -33,18 +38,18 @@ public class VisitedVo {
 	}
 
 	// 달력 출력용
-	public VisitedVo(int groupNo, String visitedDate, String menu1stCateName, String groupName, String storeName,
-			String menuName) {
-		this.groupNo = groupNo;
+	public VisitedVo(String visitedDate, String menu1stCateName, String groupName, String storeName,
+			String menuName, int groupOrder) {
 		this.visitedDate = visitedDate;
 		this.menu1stCateName = menu1stCateName;
 		this.groupName = groupName;
 		this.storeName = storeName;
 		this.menuName = menuName;
+		this.groupOrder = groupOrder;
 	}
 
 	public VisitedVo(int visitedNo, int userNo, int groupNo, int storeNo, int menuNo, String visitedDate, int visitCount,
-			String menu1stCateName, String groupName, String storeName, String menuName, String selectMonth) {
+			String menu1stCateName, String groupName, String storeName, String menuName, String selectMonth, int groupOrder) {
 		this.visitedNo = visitedNo;
 		this.userNo = userNo;
 		this.groupNo = groupNo;
@@ -57,6 +62,7 @@ public class VisitedVo {
 		this.storeName = storeName;
 		this.menuName = menuName;
 		this.selectMonth = selectMonth;
+		this.groupOrder = groupOrder;
 	}
 
 	public int getVisitedNo() {
@@ -155,14 +161,24 @@ public class VisitedVo {
 		this.selectMonth = selectMonth;
 	}
 
-	
+	public int getGroupOrder() {
+		return groupOrder;
+	}
+
+	public void setGroupOrder(int groupOrder) {
+		this.groupOrder = groupOrder;
+	}
+
 	@Override
 	public String toString() {
 		return "VisitedVo [visitedNo=" + visitedNo + ", userNo=" + userNo + ", groupNo=" + groupNo + ", storeNo="
 				+ storeNo + ", menuNo=" + menuNo + ", visitedDate=" + visitedDate + ", visitCount=" + visitCount
 				+ ", menu1stCateName=" + menu1stCateName + ", groupName=" + groupName + ", storeName=" + storeName
-				+ ", menuName=" + menuName + ", selectMonth=" + selectMonth + "]";
+				+ ", menuName=" + menuName + ", selectMonth=" + selectMonth + ", groupOrder=" + groupOrder + "]";
 	}
+	
+	
+	
 
 
 };

@@ -13,5 +13,9 @@
 			<result column="store_no" property="storeNo" />
 		</resultMap>
 		
+		<insert id="reviewReport" parameterType="ReportVo">
+			INSERT INTO report
+			VALUES (seq_report_no.NEXTVAL, #{reportCateNo}, #{reviewNo}, #{userNo}, 0)
+		</insert>
 		
 </mapper>

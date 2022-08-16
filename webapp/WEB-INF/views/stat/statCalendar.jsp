@@ -464,23 +464,23 @@
            		   var str = '';
             	   if (vstList[j].visitedDate === thisdate) {
             		   str += '<div class="event ';
-            		   if (vstList[j].groupNo === 1) {
+            		   if (vstList[j].groupOrder === 1) {
             			    str +='bg-success ';
-            			}else if(vstList[j].groupNo === 2){
+            			}else if(vstList[j].groupOrder === 2){
             				str +='bg-warning '; 
-						}else if(vstList[j].groupNo === 3){
+						}else if(vstList[j].groupOrder === 3){
    							str +='bg-danger '; 
 						}
             		   
             		   str += 'show-menu">'+ vstList[j].menu1stCateName +"/"+ vstList[j].menuName +'</div>';
             		   str += '<div class="event ';
-            		   if (vstList[j].groupNo === 1) {
+            		   if (vstList[j].groupOrder === 1) {
            			    	str +='bg-success ';
            			    
-           				}else if(vstList[j].groupNo === 2){
+           				}else if(vstList[j].groupOrder === 2){
            					str +='bg-warning ';
            				
-						}else if(vstList[j].groupNo === 3){
+						}else if(vstList[j].groupOrder === 3){
   							str +='bg-danger ';
   							
 						}

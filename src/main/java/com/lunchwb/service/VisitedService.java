@@ -2,6 +2,8 @@ package com.lunchwb.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +15,8 @@ public class VisitedService {
 	
 	@Autowired
 	private VisitedDao vstDao;
+	
+	private static final Logger logger = LoggerFactory.getLogger(VisitedService.class);
 	
 	// ================== 달력에 가게라벨 띄우기 ==================
 	public List<VisitedVo> showCalendar(VisitedVo vstVo){
@@ -38,6 +42,7 @@ public class VisitedService {
 		
 		// 오라클 sql문으로 visited 테이블 조회
 		List<VisitedVo> calendarList = vstDao.getCalendar(vstVo);
+		
 		
 		
 		return calendarList;

@@ -15,6 +15,7 @@ public class ReportDao {
 	
 	/* 리뷰 신고 */
 	public int reviewReport(ReportVo reportVo) {
-		return 1;
+		int count = sqlSession.insert("report.reviewReport", reportVo);
+		return count;
 	}
 }

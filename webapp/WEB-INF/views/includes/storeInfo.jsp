@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div>
-                    <div class="store-about">
+                    <div id="store-about">
                         <div class="d-inline-block store-imgs">
                             <div class="d-inline-block img-area height-full width-full"><span class="d-inline-block"><!-- <img src="" /> --></span></div>
                             <div class="text-center img-paging-icon">
@@ -45,18 +45,18 @@
                     <div id="all-menu" class="text-start"><span class="fw-bold text-info d-inline-block" style="color: rgb(54, 185, 204);">#양자강에서 최근 한달 동안 다른 사람들이 선택한 메뉴를 볼 수 있어요 &gt;&gt;</span><button id="modal-see-menu" class="btn" type="button" data-bs-target="#modal-all-menu" data-bs-toggle="modal">메뉴 보러가기 <i class="icon ion-android-arrow-dropright-circle"></i></button></div>
                     <div class="other-stores">
                         <div class="text-primary other-store-state">
-                        	<span class="d-inline-block">중식/중화요리 다른 가게</span>
+                        	<span class="d-inline-block"></span>
                         </div>
                         <div class="text-start d-lg-flex justify-content-lg-center">
                         	<span class="d-inline-block">
 		                        <button class="btn other-store-btn other-store-1" type="button">
 		                        	흑룡강
 		                        	<span class="fw-bold text-warning d-block">
-		                        		<i class="fa fa-star"></i>
-		                        		<i class="fa fa-star"></i>
-		                        		<i class="fa fa-star"></i>
-		                        		<i class="fa fa-star-half-o"></i>
-		                        		<i class="fa fa-star-o"></i>'
+		                        		<i class="fas fa-star"></i>
+		                        		<i class="fas fa-star"></i>
+		                        		<i class="fas fa-star"></i>
+		                        		<i class="fas fa-star-half-alt"></i>
+		                        		<i class="far fa-star"></i>
 		                        	</span>
 		                        </button>
 		                    </span>
@@ -64,11 +64,11 @@
 		                    	<button class="btn other-store-btn other-store-2" type="button">
 		                    		홍콩반점
 		                    		<span class="fw-bold text-warning d-block">
-			                    		<i class="typcn typcn-star-full-outline"></i>
-			                    		<i class="typcn typcn-star-full-outline"></i>
-			                    		<i class="typcn typcn-star-full-outline"></i>
-			                    		<i class="typcn typcn-star-half-outline"></i>
-			                    		<i class="typcn typcn-star-outline"></i>
+			                    		<i class="fas fa-star"></i>
+		                        		<i class="fas fa-star"></i>
+		                        		<i class="fas fa-star"></i>
+		                        		<i class="fas fa-star-half-alt"></i>
+		                        		<i class="far fa-star"></i>
 		                    		</span>
 		                    	</button>
 		                    </span>
@@ -76,11 +76,11 @@
 		                    	<button class="btn link-light other-store-btn other-store-3" type="button">
 		                    		락궁
 		                    		<span class="fw-bold text-warning d-block">
-		                    			<i class="typcn typcn-star-full-outline"></i>
-		                    			<i class="typcn typcn-star-full-outline"></i>
-		                    			<i class="typcn typcn-star-full-outline"></i>
-		                    			<i class="typcn typcn-star-half-outline"></i>
-		                    			<i class="typcn typcn-star-outline"></i>
+		                    			<i class="fas fa-star"></i>
+		                        		<i class="fas fa-star"></i>
+		                        		<i class="fas fa-star"></i>
+		                        		<i class="fas fa-star-half-alt"></i>
+		                        		<i class="far fa-star"></i>
 		                    		</span>
 		                    	</button>
 		                    </span>
@@ -386,8 +386,10 @@ function modalStoreDistance(storeNo) {
 		
 		success : function(distance){
 			console.log("distance: "+distance)
-			$(".modalStoreDistance").text(" ("+distance+"m)")
 			
+			if(distance>0){
+				$(".modalStoreDistance").text(" ("+distance+"m)")
+			}
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
@@ -404,10 +406,10 @@ function modalStoreStar(starScore, k){
 	
 	var str = ''
 	for(var i=0; i<5; i++){
-		if(starScore >= (i+0.25) && starScore < (i+0.75) ){
-			str += '				<i class="fas fa-star-half-alt"></i>'
-		}else if(starScore >= (i+0.75)){
+		if(starScore >= (i+0.75)){
 			str += '				<i class="fas fa-star"></i>'
+		}else if(starScore >= (i+0.25) && starScore < (i+0.75) ){
+			str += '				<i class="fas fa-star-half-alt"></i>'
 		}else{
 			str += '				<i class="far fa-star"></i>'
 		}
@@ -461,7 +463,7 @@ function modalStoreReivew(storeReview){
 	str += '<div class="store-reviews">'
 	str += '	<div class="d-inline-block store-review-left">'
 	str += '		<span class="fw-bolder d-block">'
-	str += '			' + storeReview.userName + ' (' + storeReview.aveAge + ' / ' + storeReview.withCount + '인 / ' + storeReview.menuName + ')'
+	str += '			' + storeReview.userName + ' (' + storeReview.avgAge + ' / ' + storeReview.withCount + '인 / ' + storeReview.menuName + ')'
 	str += '		</span>'
 	str += '		<span class="d-block">' + storeReview.reviewContent + '</span>'
 	str += '	</div>'
@@ -478,21 +480,26 @@ function modalStoreReivew(storeReview){
 	}
 	
 	str += '			</span>'
-	str += '		<div class="dropdown d-inline-block">'
-	str += '			<a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기'
-	str += '				<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">'
-	str += '					<path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>'
-	str += '				</svg>'
-	str += '			</a>'
-	str += '			<div class="dropdown-menu dropdown-menu-end text-start">'
-	str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="1">광고/홍보글</a>'
-	str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="2">욕설/비방</a>'
-	str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="3">잘못된메뉴</a>'
-	str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="4">관련없는내용</a>'
-	str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="5">개인정보유출</a>'
-	str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="6">음산/선정성</a>'
-	str += '			</div>'
 	str += '		</div>'
+	
+	if("${!empty authUser}" == true){
+		str += '		<div class="d-inline-block">'
+		str += '			<a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기'
+		str += '				<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">'
+		str += '					<path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>'
+		str += '				</svg>'
+		str += '			</a>'
+		str += '			<div class="dropdown-menu dropdown-menu-end text-start">'
+		str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="1">광고/홍보글</a>'
+		str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="2">욕설/비방</a>'
+		str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="3">잘못된메뉴</a>'
+		str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="4">관련없는내용</a>'
+		str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="5">개인정보유출</a>'
+		str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="6">음란/선정성</a>'
+		str += '			</div>'
+		str += '		</div>'
+	}
+	
 	str += '		<div><span>' + storeReview.visitedDate + ' (' + storeReview.visitedCount + '번째 방문) </span></div>'
 	str += '	</div>'
 	str += '</div>'
@@ -513,6 +520,45 @@ function modalStoreMoreReivews(){
 	
 	$("#modal-store .review-area").append(str)
 }
+
+
+$("#store-about").on("click", ".dropdown-item", function(){
+	var reviewNo = $(this).data("reviewno")
+	var reportCateNo = $(this).data("reporttype")
+	console.log("리뷰 신고 : " + reviewNo + ", 타입: " + reportCateNo)
+	
+	if(confirm("리뷰를 신고하시겠습니까?") == false){
+		return false
+	}
+	
+	var reportVo = {
+			reviewNo: reviewNo,
+			reportCateNo: reportCateNo
+	}
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/store/review/report",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(reportVo),
+		dataType : "json",
+		
+		success : function(result){
+			console.log("report result: " + result)
+			
+			if(result == "success"){
+				alert("신고해주신 리뷰는 관리자 검토 후 조치가 진행됩니다")
+			}else{
+				alert("다시 시도해주세요")
+			}
+			
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+ 
+	})
+})
 
 
 </script>
