@@ -16,7 +16,7 @@
 <nav id="basket-aside" class="navbar navbar-light bg-white text-center d-xxl-flex align-items-start justify-content-xxl-center sidebar accordion p-0">
     <div class="container-fluid d-flex flex-column p-0">
         <div id="bujang-logo-wrap">
-        	<a href=""><img data-bss-hover-animate="pulse" id="bujang-logo-blue" class="no-drag" src="assets/img/bujang-logo%20blue.png"></a>
+        	<a href="${pageContext.request.contextPath}/"><img data-bss-hover-animate="pulse" id="bujang-logo-blue" class="no-drag" src="assets/img/bujang-logo%20blue.png"></a>
         </div>
         
         <div id="comment-box">
@@ -161,6 +161,7 @@
 	// ----------------- 님들이 쓸만한 함수 --------------------------------------
 	// 장바구니에서 항목 삭제할 때 : deleteSessionBasketGroup(deleteStoreNo)
 	// 장바구니에 항목 추가할 때: addItemToBasket(storeNo)
+	// 랜덤 선택 클릭 시 항목: 맨 밑에 둠
 	
 	let indexJSP = false
 	
@@ -643,6 +644,13 @@
 	// 다른 그룹 클릭
 	$("#basket-groups").on("click", ".basket-normal-group", async function(){
 		if (String(curr_basket_group) != $(this).attr("data-groupNo")) {
+			if (!indexJSP) {
+				var voteGroupChange = confirm("그룹을 변경하면 진행 사항이 초기화됩니다. 변경하시겠습니까?")
+				if(!voteGroupChange) {
+					return false
+				}
+			}
+			
 			$("[data-groupNo=" + String(curr_basket_group) + "]").removeClass("basket-selected-group")
 			$(this).addClass("basket-selected-group")
 			
@@ -653,6 +661,10 @@
 			
 			// 장바구니 교체 작업
 			await changeGroupBasket()
+			
+			if (!indexJSP) {
+				location.replace("${pageContext.request.contextPath}/")
+			}
 		}
 	})	
 	
@@ -687,9 +699,20 @@
 	
 	// 다른 가게 추천받기 버튼 클릭
 	$("#basket-another-stores-btn").on("click", async function(){
+		if (!indexJSP) {
+			var realRecommend = confirm("메인으로 이동하시겠습니까? 현재 진행상황은 저장되지 않습니다.")
+			if (!realRecommend) {
+				return false
+			}
+		}
+		
 		if (basket[curr_basket_group].length >= 15) {
 			alert("가게 추천은 15개까지만 가능합니다")
 			return
+		}
+		
+		if (!indexJSP) {
+			location.replace("${pageContext.request.contextPath}/")
 		}
 
 		console.log(typeof(basket))
@@ -851,21 +874,52 @@
 	
 	// 투표하기 클릭
 	$("#basket-vote-btn").on("click", function(){
+		if (!indexJSP) {
+			var voteReal = confirm("페이지를 이동하시겠습니까? 현재 진행상황은 저장되지 않습니다.")
+			if (!voteReal) {
+				return false
+			}
+		}
+		
 		var cnt = 0
 		for (var i = 0; i < basket[curr_basket_group].length; i++) {
 			if (basket[curr_basket_group][i].stored) {
 				cnt += 1
-				addToBasket(basket[curr_basket_group][i])
 			}
 		}
 		
 		if (cnt < 2) {
 			alert("오늘의 점심 후보가 2개 이상일 때 투표를 진행할 수 있습니다.")
-			return false
+			return
 		}
 		
 		location.replace("${pageContext.request.contextPath}/vote")
 	})
+	
+	
+	// 랜덤 선택 클릭
+	$("#basket-random-btn").on("click", function(){
+		if (!indexJSP) {
+			var voteReal = confirm("페이지를 이동하시겠습니까? 현재 진행상황은 저장되지 않습니다.")
+			if (!voteReal) {
+				return false
+			}
+		}
+	
+		var cnt = 0
+			for (var i = 0; i < basket[curr_basket_group].length; i++) {
+				if (basket[curr_basket_group][i].stored) {
+					cnt += 1
+				}
+			}
+		
+		if (cnt < 2) {
+			alert("오늘의 점심 후보가 2개 이상일 때 이용할 수 있습니다.")
+			return
+		}
+		
+		alert("깜짝이야")
+	})	
 	
 	
 	
