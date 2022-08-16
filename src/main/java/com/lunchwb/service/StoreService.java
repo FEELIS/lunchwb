@@ -83,8 +83,8 @@ public class StoreService {
 			storeMap.put("visitedVo", visitedVo);
 		}
 		
-		//////////////// 최근 리뷰 3건 ///////////////////////////////////
-		List<ReviewVo> reviewList = reviewDao.recentReviews(storeNo);
+		//////////////// 전체 리뷰 ///////////////////////////////////
+		List<ReviewVo> reviewList = reviewDao.storeReviews(storeNo);
 		storeMap.put("reviewList", reviewList);
 		
 		//최근 리뷰 사진(null 가능이라 따로 최근 3개? - 이거는 리뷰 작성부터.............)

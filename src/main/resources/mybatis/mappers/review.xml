@@ -20,28 +20,9 @@
 		<result column="visited_count" property="visitedCount" />
 	</resultMap>
 
-	<select id="recentReviews" parameterType="int" resultMap="ReviewVo">
+	<select id="storeReviews" parameterType="int" resultMap="ReviewVo">
 		<![CDATA[
-			SELECT  review_no
-					,user_name
-					,avg_age
-					,with_count
-					,menu_name
-					,review_content
-					,user_score
-					,visited_date
-					,visited_count
-			FROM(SELECT ROWNUM rn
-						,review_no
-						,user_name
-						,avg_age
-						,with_count
-						,menu_name
-						,review_content
-						,user_score
-						,visited_date
-						,visited_count
-				 FROM(SELECT r.review_no
+				      SELECT r.review_no
 							 ,REPLACE(u.user_name, SUBSTR(u.user_name, 2, LENGTH(u.user_name)), '**') user_name
 							 ,wct.avg_age
 							 ,wct.with_count
@@ -85,9 +66,7 @@
 					  AND v.store_no = wct.store_no
 					  AND v.visited_date = wct.visited_date
 					  AND r.review_reported = 0
-					  ORDER BY r.review_no DESC))
-			WHERE rn >= 1
-			AND rn <= 3	
+					  ORDER BY r.review_no DESC
 		]]>
 	</select>
 
