@@ -100,6 +100,7 @@
 #groupmem-list-table, .store-list-table {
   height: 250px;
   text-align: center;
+  font-size: 14px;
 }
 
 #groupmem-list, #groupmem-invt ,#new-group, #group-blacklist {
