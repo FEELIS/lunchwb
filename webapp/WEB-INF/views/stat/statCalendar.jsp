@@ -282,15 +282,24 @@
          "</h1>" +
          (settings.enableMonthChange
          ? '<button class="next-button">' + settings.nextButton + "</button>"
-         : "") +
-         "</div>"
+         : "");
          
+         str += '<form action="../stat/addAlone" method="get">';
+         str += '<button class="btn btn-primary">리뷰하러가기';
+         str += '</button>';
+         str += '</form>';
+         
+         
+         
+         str += '</div>';
          str +=
          '<ol class="day-names list-unstyled week' +
          (settings.startOnSunday ? " start-on-sunday" : "") +
          '" data-week-no="' +
          0 +
          '">';
+         
+         
          
          for (var weekDay in dayMap) {
          if (dayMap.hasOwnProperty(weekDay)) {

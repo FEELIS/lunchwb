@@ -12,14 +12,15 @@
 <link href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/notification.css" rel="stylesheet" type="text/css">
 <link href="${pageContext.request.contextPath}/assets/css/yogiyo.css" rel="stylesheet" type="text/css">
-
+<link href="${pageContext.request.contextPath}/assets/css/alone.css" rel="stylesheet" type="text/css">
 
 <!-- fonts -->
-<link href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css"
+	rel="stylesheet" type="text/css">
 
 <!-- js -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
-
+<script type="text/javascript"
+	src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
 
 <title>따로갔어요~ 등록폼</title>
 </head>
@@ -36,9 +37,9 @@
 				<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 				<!-- /header -->
 				<div>
-					<div class="container-fluid ">
+					<div id="main-content" class="container-fluid card mt-2 mb-2">
 						<h1>리뷰남기기</h1>
-						<hr />
+						<div class="card mb-4">
 						<form id="contactForm-1" action="javascript:void(0);" method="get">
 							<input class="form-control" type="hidden" name="Introduction"
 								value="This email was sent from www.awebsite.com" /> <input class="form-control"
@@ -51,26 +52,30 @@
 							</div>
 							<div class="row">
 								<div class="col-3">
+								
 									<img src="../../assets/img/assets/img/ramen.jpeg">
+									
+									
 								</div>
 								<div id="message-1" class="col-12 col-md-6">
 									<h2 class="h4">
-										<i class="fa fa-envelope"></i>치킨집<small><small class="required-input">
-												분식/라면,치킨</small></small>
+										<i class="fa fa-envelope"></i>치킨집
+										<small>
+											<small class="required-input">분식/라면,치킨</small>
+										</small>
 									</h2>
 									<div class="form-group mb-3">
-										<label class="form-label" for="from-name">서울특별시 관악구 3333로 222길 12-5</label><span
-											class="required-input">*</span>
+										<label class="form-label" for="from-name">서울특별시 관악구 3333로 222길 12-5</label>
+										<span class="required-input">*</span>
 										<div class="input-group">
-											<span class="input-group-text"> <i class="fa fa-user-o"></i>
-											</span> <input id="from-name-1" class="form-control" type="text" name="name" required
-												placeholder="최정필" />
+											<span class="input-group-text"> <i class="fa fa-user"></i>
+											</span> <input id="from-name-1" class="form-control" type="text" name="name" readonly="readonly" required placeholder="${authUser.userEmail}" />
 										</div>
 									</div>
 									<div class="form-group mb-3">
 										<label class="form-label" for="from-file">이미지를 선택해주세요</label><span class="required-input">*</span>
 										<div class="input-group">
-											<span class="input-group-text"><i class="fa fa-file-o"></i></span><input id="from-file-1"
+											<span class="input-group-text"><i class="fa fa-image"></i></span><input id="from-file-1"
 												class="form-control-file" type="file" name="file" required />
 										</div>
 									</div>
@@ -80,8 +85,7 @@
 												<label class="form-label" for="from-calltime">별점</label>
 												<div class="input-group">
 													<div class="input-group-prepend">
-														<span class="input-group-text"><i class="fa fa-star"></i></span>
-													</div>
+														<span class="input-group-text"><i class="fa fa-star"></i>
 													<select id="from-calltime-1" class="form-select" name="call time">
 														<optgroup label="주고싶은 별점을 선택하세요">
 															<option value="0">☆☆☆☆☆</option>
@@ -92,6 +96,8 @@
 															<option value="5">★★★★★</option>
 														</optgroup>
 													</select>
+														</span>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -100,7 +106,7 @@
 												<label class="form-label" for="from-calltime">함께한 그룹</label>
 												<div class="input-group">
 													<div class="input-group-prepend">
-														<span class="input-group-text"><i class="fa fa-user-o"></i></span>
+														<span class="input-group-text"><i class="fa fa-users"></i></span>
 													</div>
 													<select id="from-calltime-1" class="form-select" name="call time">
 														<optgroup label="그룹을 선택해주세요">
@@ -136,6 +142,7 @@
 								</div>
 							</div>
 						</form>
+						</div> <!-- class="card" 끝 -->
 					</div>
 				</div>
 
