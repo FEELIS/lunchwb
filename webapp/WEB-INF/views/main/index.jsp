@@ -15,6 +15,10 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/basket-aside.css">
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/customModal.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/storeInfo.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
+
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 
