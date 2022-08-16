@@ -88,7 +88,8 @@
                                         <a class="btn btn-primary d-block btn-naver btn-user w-100 mb-2 " role="button" href="${naverUrl}">네이버 아이디로 로그인</a>
                                         <a class="btn btn-primary d-block btn-kakao btn-user w-100 mb-2 " role="button" 
                                         	href="https://kauth.kakao.com/oauth/authorize?client_id=76831635e5a5685d3617238b00847def&redirect_uri=http://localhost:8088/lunchwb/kakaoLoginCallback&response_type=code">카카오 아이디로 로그인</a>
-                                        <a class="btn btn-primary d-block btn-google btn-user w-100 mb-2 " role="button">구글 아이디로 로그인</a>
+                                        <a class="btn btn-primary d-block btn-google btn-user w-100 mb-2 " role="button" 
+                                        	href = "https://accounts.google.com/o/oauth2/v2/auth?client_id=438267358505-j3dkkelfosq3bi7mo6th93ecq413ftpb.apps.googleusercontent.com&redirect_uri=http://localhost:8088/lunchwb/googleLoginCallback&response_type=code&scope=email%20profile%20openid&access_type=offline">구글 아이디로 로그인</a>
                                         <hr>
                                     </form>
                                     <div class="text-center">
