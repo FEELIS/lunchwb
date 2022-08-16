@@ -89,8 +89,7 @@
 			                		</c:if>
 			                	</c:forEach>
 			                	
-			                	<c:set var="URI" value="${pageContext.request.requestURI}" />
-			                	<c:if test="${basketCnt == 0 and URI == '/WEB-INF/view/main/index.jsp'}">
+			                	<c:if test="${basketCnt == 0}">
 			                		<tr id="no-basket-items">
                                 		<td id="basket-no-items" class="no-drag" colspan="2">점심 후보를 추가해주세요</td>
                             		</tr>
@@ -197,9 +196,9 @@
 	// 장바구니 클릭 시 모달 팝업
 	$("#basket-table").on("click", ".basket-table-store-name", function(){
 		var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
-		console.log(storeNo)
+		console.log(storeNo + "번 가게 정보 보기")
 		
-		$("#modal-store").modal("show")
+		storeInfoOpen(storeNo, 1)
 	})
 		
 	
