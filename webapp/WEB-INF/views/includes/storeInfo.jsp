@@ -160,6 +160,7 @@
 </div>
 
 
+<!-- 최근 메뉴창 -->
 <div id="modal-all-menu" class="modal visible" role="dialog" tabindex="-1" style="min-width: 798px;">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content" style="width: 798px;">
@@ -188,19 +189,24 @@
                     </div>
                 </div>
                 <div id="latest-menu-area">
-                    <div class="text-start"><button class="btn back-store-info" type="button" data-bs-target="#modal-store" data-bs-toggle="modal"><i class="icon ion-android-arrow-dropleft-circle"></i> 이전으로 돌아가기</button></div>
+                    <div class="text-start">
+                    	<button class="btn back-store-info" type="button" data-bs-target="#modal-store" data-bs-toggle="modal">
+                    		<i class="icon ion-android-arrow-dropleft-circle"></i> 이전으로 돌아가기
+                    	</button>
+                    </div>
                     <div id="store-latest-menu" class="text-center">
-                        <p class="fs-6 fw-bold text-start text-info"><strong><span style="color: rgb(54, 185, 204);">#최근 한달 동안 다른 사람들이 리뷰를 남긴 메뉴/ 선택 횟수 &gt;&gt;</span></strong><br /></p><span class="latest-menu">짜장(<span class="modal-review-num">51</span>회)</span><span class="latest-menu">짜장면(<span class="modal-review-num">51</span>회)</span><span class="latest-menu">쟁반짜장(<span class="modal-review-num">51</span>회)</span><span class="latest-menu">쟁반짜장(<span class="modal-review-num">51</span>회)</span><span class="latest-menu">깐쇼새우(<span class="modal-review-num">51</span>회)</span><span class="latest-menu">고추잡채밥(<span class="modal-review-num">51</span>회)</span><span class="latest-menu">짜장면(<span class="modal-review-num">51</span>회)</span><span class="latest-menu">짜장면(<span class="modal-review-num">51</span>회)</span><span class="latest-menu">짜장면(<span class="modal-review-num">51</span>회)</span><span class="latest-menu">짜장면(<span class="modal-review-num">51</span>회)</span><span class="latest-menu">짜장면(<span class="modal-review-num">51</span>회)</span><span class="latest-menu">짜장면(<span class="modal-review-num">51</span>회)</span><span class="latest-menu">짜장면(<span class="modal-review-num">1</span>회)</span><span class="latest-menu">짜장면(<span class="modal-review-num">51</span>회)</span><span class="latest-menu">짜장면(<span class="modal-review-num">51</span>회)</span>
                     </div>
                 </div>
                 <div class="other-stores">
-                    <div class="text-primary other-store-state"><span class="d-inline-block">중식/중화요리 다른 가게</span></div>
+                    <div class="text-primary other-store-state"><span class="d-inline-block"></span></div>
                     <div class="text-start d-lg-flex justify-content-lg-center"><span class="d-inline-block"><button class="btn other-store-btn other-store-1" type="button">흑룡강<span class="fw-bold text-warning d-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-half-outline"></i><i class="typcn typcn-star-outline"></i></span></button></span><span class="d-inline-block"><button class="btn other-store-btn other-store-2" type="button">홍콩반점<span class="fw-bold text-warning d-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-half-outline"></i><i class="typcn typcn-star-outline"></i></span></button></span><span class="d-inline-block"><button id="other-store-6" class="btn link-light other-store-btn other-store-3" type="button">락궁<span class="fw-bold text-warning d-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-half-outline"></i><i class="typcn typcn-star-outline"></i></span></button></span></div>
                 </div>
             </div>
             <div class="modal-footer-custom">
                 <p class="modalStoreWithMe"></p>
-                <button class="btn btn-primary" type="button">여기갈래요</button>
+                <c:if test="${!empty authUser}">
+	                <button class="btn btn-primary" type="button">여기갈래요</button>
+	            </c:if>
                 <button class="btn btn-light" type="button">점심후보추가</button>
             </div>
         </div>
@@ -280,7 +286,8 @@ function storeBasicInfo(storeNo){
 			for(var i=0; i<3; i++){
 				modalStoreReivew(storeMap.reviewList[i], 1)
 			}
-			modalStoreMoreReivews(storeNo)
+			
+			modalStoreMoreReivews()
 			
 			$(".other-store-state span").text(storeMap.storeVo.menu2ndCateName + " 카테고리 다른 가게")
 			
@@ -294,6 +301,11 @@ function storeBasicInfo(storeNo){
 			$("#modal-reviews #store-all-review").text("")
 			for(var i=0; i<storeMap.reviewList.length; i++){
 				modalStoreReivew(storeMap.reviewList[i], 2)
+			}
+			
+			modalStoreSentence()
+			for(var i=0; i<storeMap.menuList.length; i++){
+				modalStoreAllMenu(storeMap.menuList[i])
 			}
 
 		},
@@ -440,11 +452,11 @@ function modalStoreReivew(storeReview, k){
 
 
 /* 리뷰더보기 버튼 */
-function modalStoreMoreReivews(storeNo){
+function modalStoreMoreReivews(){
 	
 	var str = ''
 	str += '<div id="more-reviews" class="text-end">'
-	str += '	<button id="modal-review-more" class="btn btn-sm" type="button" data-bs-target="#modal-reviews" data-bs-toggle="modal" data-storeno = "' + storeNo + '">'
+	str += '	<button id="modal-review-more" class="btn btn-sm" type="button" data-bs-target="#modal-reviews" data-bs-toggle="modal">'
 	str += '		리뷰더보기<i class="icon ion-android-arrow-dropright-circle"></i>'
 	str += '	</button>'
 	str += '</div>'
@@ -495,7 +507,28 @@ $("#store-about").on("click", ".dropdown-item", function(){
 })
 
 
+/* 최근 메뉴 */
+function modalStoreSentence(){
+	
+	var str = ''
+	str += '<p class="fs-6 fw-bold text-start text-info">'
+	str += '	<strong>'
+	str += '		<span style="color: rgb(54, 185, 204);">'
+	str += '			#최근 한달 동안 다른 사람들이 리뷰를 남긴 메뉴/ 선택 횟수 &gt;&gt;'
+	str += '		</span>'
+	str += '	</strong><br />'
+	str += '</p>'
+	
+	$("#modal-all-menu #store-latest-menu").html(str)
+}
 
+
+/* 최근 메뉴 리스트 */
+function modalStoreAllMenu(menuVo){
+	var str = '<span class="latest-menu">' + menuVo.menuName + '(<span>' + menuVo.menuCount + '</span>회)</span>'
+	$("#modal-all-menu #store-latest-menu").append(str)
+	
+}
 
 </script>
 
