@@ -645,7 +645,7 @@
 	$("#basket-groups").on("click", ".basket-normal-group", async function(){
 		if (String(curr_basket_group) != $(this).attr("data-groupNo")) {
 			if (!indexJSP) {
-				var voteGroupChange = confirm("그룹을 변경하면 진행 사항이 초기화됩니다. 변경하시겠습니까?")
+				var voteGroupChange = confirm("그룹을 변경하면 진행상황이 초기화됩니다. 변경하시겠습니까?")
 				if(!voteGroupChange) {
 					return false
 				}
@@ -663,7 +663,11 @@
 			await changeGroupBasket()
 			
 			if (!indexJSP) {
-				location.replace("${pageContext.request.contextPath}/")
+				if (countBasketItems(curr_basket_group) < 2) {
+					location.replace("${pageContext.request.contextPath}/")
+				} else {
+					location.replace("${pageContext.request.contextPath}/vote")
+				}
 			}
 		}
 	})	
@@ -753,6 +757,14 @@
 	
 	// 장바구니 삭제 버튼 클릭 시
 	$("#basket-table").on("click", ".basket-del-btn", async function(){
+		if (!indexJSP) {
+			var deleteReal = confirm("페이지를 이동해서 장바구니를 수정하시겠습니까? 지금까지의 진행상황은 저장되지 않습니다.")
+			if (!deleteReal) {
+				return false
+			} else {
+				location.replace("${pageContext.request.contextPath}/")
+			}
+		}
 		var deleteStoreNo = parseInt($(this).closest(".basket-table-row").attr("data-storeNo"))
 		console.log(deleteStoreNo)
 		
@@ -779,14 +791,7 @@
 				
 				$("[data-storeNo=" + deleteStoreNo + "]").remove()
 				
-				var cnt = 0
-				for (var i = 0; i < basket[curr_basket_group].length; i++) {
-					if (basket[curr_basket_group][i].stored) {
-						cnt += 1
-					}
-				}
-
-				if (cnt == 0) {
+				if (countBasketItems(curr_basket_group) == 0) {
 					basketNoItem()
 				}
 			},
@@ -875,20 +880,13 @@
 	// 투표하기 클릭
 	$("#basket-vote-btn").on("click", function(){
 		if (!indexJSP) {
-			var voteReal = confirm("페이지를 이동하시겠습니까? 현재 진행상황은 저장되지 않습니다.")
+			var voteReal = confirm("페이지를 이동하시겠습니까? 지금까지의 진행상황은 저장되지 않습니다.")
 			if (!voteReal) {
 				return false
 			}
 		}
-		
-		var cnt = 0
-		for (var i = 0; i < basket[curr_basket_group].length; i++) {
-			if (basket[curr_basket_group][i].stored) {
-				cnt += 1
-			}
-		}
-		
-		if (cnt < 2) {
+				
+		if (countBasketItems(curr_basket_group) < 2) {
 			alert("오늘의 점심 후보가 2개 이상일 때 투표를 진행할 수 있습니다.")
 			return
 		}
@@ -900,20 +898,13 @@
 	// 랜덤 선택 클릭
 	$("#basket-random-btn").on("click", function(){
 		if (!indexJSP) {
-			var voteReal = confirm("페이지를 이동하시겠습니까? 현재 진행상황은 저장되지 않습니다.")
+			var voteReal = confirm("페이지를 이동하시겠습니까? 지금까지의 진행상황은 저장되지 않습니다.")
 			if (!voteReal) {
 				return false
 			}
 		}
 	
-		var cnt = 0
-			for (var i = 0; i < basket[curr_basket_group].length; i++) {
-				if (basket[curr_basket_group][i].stored) {
-					cnt += 1
-				}
-			}
-		
-		if (cnt < 2) {
+		if (countBasketItems(curr_basket_group) < 2) {
 			alert("오늘의 점심 후보가 2개 이상일 때 이용할 수 있습니다.")
 			return
 		}
@@ -921,6 +912,18 @@
 		alert("깜짝이야")
 	})	
 	
+	
+	// 장바구니 저장된 가게 개수 세기
+	function countBasketItems(groupNo) {
+		var cnt = 0
+		
+		for (var i = 0; i < basket[curr_basket_group].length; i++) {
+			if (basket[curr_basket_group][i].stored) {
+				cnt += 1
+			}
+		}
+		return cnt
+	}
 	
 	
 	// sleep

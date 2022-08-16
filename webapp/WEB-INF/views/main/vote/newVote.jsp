@@ -58,9 +58,9 @@
                                 <div id="vote-add-people">
 	                                <span class="eidt-vote-title">인원 추가</span>
 	                                <span id="vote-new-member-toggle">
-	                                	<i class="fas fa-minus-circle"></i>
+	                                	<i id="vote-member-minus" class="fas fa-minus-circle"></i>
 	                                	<span id="vote-new-member-num">1</span><span>명</span>
-	                                	<i class="fas fa-plus-circle"></i>
+	                                	<i id="vote-member-plus" class="fas fa-plus-circle"></i>
 	                                </span>
 	                                
 	                                <button class="btn btn-primary" id="vote-new-member-add-btn" type="button">추가하기</button>
