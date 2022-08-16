@@ -58,8 +58,8 @@
             		<c:if test="${fn:length(stores)==0}">
             			<div class='d-inline-flex justify-content-center align-items-center' id='no-store'>
                     		<div>
-                    			<span class='d-block justify-content-center' id='no-store-alert-1'>주변에 추천 가능한 가게가 없어요</span>
-                    			<span class='d-flex justify-content-center' id='no-store-alert-2'>현재 위치나 필터를 확인해주세요</span>
+                    			<span class='d-block justify-content-center no-drag' id='no-store-alert-1'>주변에 추천 가능한 가게가 없어요</span>
+                    			<span class='d-flex justify-content-center no-drag' id='no-store-alert-2'>현재 위치나 필터를 확인해주세요</span>
                     		</div>
                 		</div>
             		</c:if>		
@@ -76,20 +76,20 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header" style="border-bottom-color: rgb(255,255,255);">
-                    <h4 class="modal-title">현재 위치 설정</h4>
+                    <h4 class="modal-title no-drag">현재 위치 설정</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             
             <div class="modal-body">
-                <div><span>출발 위치를 선택해주세요.</span>
+                <div><span class="no-drag">출발 위치를 선택해주세요.</span>
                     <div id="modal-curr-location-box">
-                    	<span class="emphasize-blue">현재 설정 위치:&nbsp;</span>
-                    	<span id="modal-curr-location">${curr_location.address}</span>
+                    	<span class="emphasize-blue no-drag">현재 설정 위치:&nbsp;</span>
+                    	<span id="modal-curr-location" class="no-drag">${curr_location.address}</span>
                     	<button class="btn btn-primary float-end" id="modal-curr-location-btn" type="button">현위치</button>
                     </div>
-                    <div id="write-location-box">
-                    	<span class="d-inline-block">직접 입력하기:</span>
-                    	<input type="text" class="location-search-bar">
+                    <div id="write-location-box" class="no-drag">
+                    	<span class="d-inline-block no-drag">직접 입력하기:</span>
+                    	<input type="text" class="location-search-bar" readonly>
                     	<button class="btn btn-primary align-items-center location-search-bar" type="button"><i class="fas fa-search"></i></button>
                     </div>
                 </div>
@@ -122,6 +122,9 @@
 		
 		$("#modal-curr-location").text(curr_address)
 		$("#modal-location-change").modal("show")
+		$("#modal-location-change").modal( {
+			backdrop: 'static'
+		})
 	})
 	
 	
@@ -211,6 +214,7 @@
 			)
 		}
 	}
+
 	
 </script>
 

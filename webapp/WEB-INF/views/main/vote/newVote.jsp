@@ -37,17 +37,17 @@
             <div id="header-1">
                 <c:import url="/WEB-INF/views/includes/header.jsp" />
             </div>
-            
+                        		
             <div class="container" id="container">
                 <div id="main-content">
-                    <div class="vote-container-title"><span>투표 만들기</span></div>
+                    <div class="vote-container-title"><span class="no-drag">투표 만들기</span></div>
                     
                     <div id="edit-vote-area" class="card-body no-drag">
                         <div id="edit-vote-header">
-                        	<span id="edit-vote-group-name">개발 1팀</span>
+                        	<span id="edit-vote-group-name">정필1팀</span>                        	
                         	<span id="edit-vote-group-nums">
-                        		<span>(총 인원</span>
-                        		<span id="edit-vote-group-num" class="emphasize-blue">&nbsp;6</span>
+                        		<span>(총 인원&nbsp;</span>
+                        		<span id="edit-vote-group-num" class="emphasize-blue">6</span>
                         		<span>명)</span>
                         	</span>
                         </div>
@@ -194,5 +194,46 @@
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
 
+<script type="text/javascript">
+
+	////////// 투표 인원 변경 //////////////////////////////////////////////////////////////////////	
+	// 인원추가 - 버튼 토글
+	$("#vote-member-minus").on("click", function(){
+		var voteAddNum = parseInt($("#vote-new-member-num").text())
+		
+		if (voteAddNum > 1) {
+			voteAddNum -= 1
+			$("#vote-new-member-num").text(voteAddNum)
+		}
+	})
+	
+	// 인원추가 + 버튼 토글
+	$("#vote-member-plus").on("click", function(){
+		var voteAddNum = parseInt($("#vote-new-member-num").text())
+		
+		if (voteAddNum + parseInt($("#edit-vote-group-num").text()) < 15) {
+			voteAddNum += 1
+			$("#vote-new-member-num").text(voteAddNum)
+			
+		} else {
+			alert("투표 총 인원은 15명을 초과할 수 없습니다.")
+		}
+	})	
+	
+	
+	// 추가하기 버튼 클릭
+	$("#vote-new-member-add-btn").on("click", function(){
+		var voteAddNum = parseInt($("#vote-new-member-num").text())
+		var totNum = parseInt($("#edit-vote-group-num").text())
+		totNum += voteAddNum
+		
+		// 투표할 인원 div 추가
+		
+		$("#edit-vote-group-num").text(totNum)
+		$("#vote-new-member-num").text(1)
+	})
+</script>
+
 </body>
+
 </html>

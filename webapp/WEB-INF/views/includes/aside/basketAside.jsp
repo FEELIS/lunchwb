@@ -137,25 +137,25 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header text-primary modal-header-custom">
-            	<span>제외하고 싶은 음식은 체크를 해제해주세요&nbsp;<i class="fas fa-check"></i></span>
-            	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            	<span class="no-drag">제외하고 싶은 음식은 체크를 해제해주세요&nbsp;<i class="fas fa-check"></i></span>
+            	<button type="button" class="btn-close no-drag" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             
-            <div class="modal-body text-center text-dark" style="font-size: 14px;">
+            <div class="modal-body text-center text-dark no-drag" style="font-size: 14px;">
                 <div class="text-start" id="modal-recFilter-btn-area">
                 	<button class="btn btn-primary" id="modal-recFilter-addAll" type="button">전체선택</button>
                 	<button class="btn btn-primary" id="modal-recFilter-delAll" type="button">전체해제</button>
                 </div>
             
                 <div class="row">
-                    <div class="col" style="border-right: 1px solid voar(--bs-gray-200);">
+                    <div class="col no-drag" style="border-right: 1px solid voar(--bs-gray-200);">
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">뷔페</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label" for="formCheck-2">아시아음식</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-3">양식</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-4"><label class="form-check-label" for="formCheck-4">일식</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-5"><label class="form-check-label" for="formCheck-5">한식</label></div>
                     </div>
-                    <div class="col" style="border-right: 1px solid voar(--bs-gray-200);">
+                    <div class="col no-drag" style="border-right: 1px solid voar(--bs-gray-200);">
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-6"><label class="form-check-label" for="formCheck-6">패스트푸드</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-7"><label class="form-check-label" for="formCheck-7">패밀리레스토랑</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-8"><label class="form-check-label" for="formCheck-8">치킨</label></div>
@@ -180,7 +180,7 @@
 
 <script type="text/javascript">
 	
-	// ----------------- 님들이 쓸만한 함수 --------------------------------------
+	//////////////// 님들이 쓸만한 함수 ////////////////////////////////////
 	// 장바구니에서 항목 삭제할 때 : deleteSessionBasketGroup(deleteStoreNo)
 	// 장바구니에 항목 추가할 때: addItemToBasket(storeNo)
 	// 랜덤 선택 클릭 시 항목: 맨 밑에 둠
@@ -202,7 +202,8 @@
 		}
 			
 	
-	// 페이지 로드 시
+	//////////// 페이지 로드 시 ////////////////////////////////////////////////////////////
+	
 	$(document).ready(
 		async function(){
 			await callGPS() // 현재 위치 확인
@@ -214,7 +215,9 @@
 			}
 	})
 
-		
+	
+	///// gps //////////////////////////////////////////////////////////////////////////////////
+	
 	// 페이지 로딩 초기 gps 확인 함수
 	async function callGPS() {
 		sleep(300)
@@ -331,6 +334,8 @@
 	}
 	
 
+	///// 장바구니 필터 /////////////////////////////////////////////////////////////////////////////////
+	
 	// 필터 확인 함수
 	async function callFilter() {
 		if (filter_excluded == "") { // 세션에 필터가 없다면 만들어서 저장
@@ -451,7 +456,9 @@
 		$("#modal-recFilter").modal("hide")
 	})
 	
-		
+	
+	///// 사용자 //////////////////////////////////////////////////////////////////////////////
+	
 	// 페이지 로딩 초기 사용자 확인 + 장바구니 확인
 	async function callUser() {
 		console.log("callUser() 시작")
@@ -497,95 +504,9 @@
 		console.log(basket)
 		console.log("callUser() 끝")
 	}
-	
 		
-	// 비회원 장바구니 생성
-	async function makeGuestBasket() {
-		$.ajax({
-			url : "${pageContext.request.contextPath}/basket/guestMakeBasket",		
-			type : "post",
-			contentType : "application/json",
-			async : false,
-			dataType : "json",
-			success : function(result){	
-				basket = result
-				console.log(basket)
-				
-				if (result[0].length != 0) {							
-					for (var i = 0; i < 3; i++) {
-						addToBasket(basket[0][i])
-					}
-					console.log("장바구니 생성 완료")
-					
-				} else {
-					alert("현재 위치에서 추천 가능한 가게가 없습니다.")
-					
-					noStore()
-					basketNoItem()					
-				}
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
-			}
-		})
-		console.log("makeGuestBasket() 끝")
-	}
 	
-	
-	// 회원 장바구니 생성
-	async function makeGroupBasket() {
-		$.ajax({
-			url : "${pageContext.request.contextPath}/basket/groupMakeBasket",		
-			type : "post",
-			contentType : "application/json",
-			async : false,
-			data : JSON.stringify(basket_group),
-			dataType : "json",
-			success : function(result){	
-				basket = result
-				console.log(basket)
-				
-				if (result[curr_basket_group].length != 0) {							
-					for (var i = 0; i < 3; i++) {
-						addToBasket(basket[curr_basket_group][i])
-						
-					}
-					console.log("장바구니 생성 완료")
-					
-				} else {
-					alert("현재 위치에서 추천 가능한 가게가 없습니다.")
-					
-					noStore()
-					basketNoItem()					
-				}
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
-			}
-		})
-		console.log("makeGuestBasket() 끝")
-	}
-	
-	
-	// 장바구니 불러오기
-	async function loadBasket() {
-		$.ajax({
-			url : "${pageContext.request.contextPath}/basket/loadBasket",		
-			type : "post",
-			async : false,
-			success : function(result){				
-				basket = result
-				
-				console.log("장바구니를 불러왔습니다")
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
-			}
-		})
-		
-		console.log("loadBasket() 끝")
-	}
-	
+	/////// 그룹 ////////////////////////////////////////////////////////////////////////////////////
 	
 	// 장바구니 그룹 목록 불러오기
 	async function getBasketGroups() {
@@ -680,7 +601,98 @@
 		console.log("setSessionBasketGroup() 끝")
 	}
 	
+	
+	
+	/////// 장바구니 ///////////////////////////////////////////////////////////////////////////////////////
+	
+	// 비회원 장바구니 생성
+	async function makeGuestBasket() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/basket/guestMakeBasket",		
+			type : "post",
+			contentType : "application/json",
+			async : false,
+			dataType : "json",
+			success : function(result){	
+				basket = result
+				console.log(basket)
+				
+				if (result[0].length != 0) {							
+					for (var i = 0; i < 3; i++) {
+						addToBasket(basket[0][i])
+					}
+					console.log("장바구니 생성 완료")
+					
+				} else {
+					alert("현재 위치에서 추천 가능한 가게가 없습니다.")
+					
+					noStore()
+					basketNoItem()					
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+		console.log("makeGuestBasket() 끝")
+	}
+	
+	
+	// 회원 장바구니 생성
+	async function makeGroupBasket() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/basket/groupMakeBasket",		
+			type : "post",
+			contentType : "application/json",
+			async : false,
+			data : JSON.stringify(basket_group),
+			dataType : "json",
+			success : function(result){	
+				basket = result
+				console.log(basket)
+				
+				if (result[curr_basket_group].length != 0) {							
+					for (var i = 0; i < 3; i++) {
+						addToBasket(basket[curr_basket_group][i])
+						
+					}
+					console.log("장바구니 생성 완료")
+					
+				} else {
+					alert("현재 위치에서 추천 가능한 가게가 없습니다.")
+					
+					noStore()
+					basketNoItem()					
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+		console.log("makeGuestBasket() 끝")
+	}
+	
+	
+	// 장바구니 불러오기
+	async function loadBasket() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/basket/loadBasket",		
+			type : "post",
+			async : false,
+			success : function(result){				
+				basket = result
+				
+				console.log("장바구니를 불러왔습니다")
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
 		
+		console.log("loadBasket() 끝")
+	}
+	
+	
 	// 장바구니 추가하기 메소드
 	function addToBasket(store) {
 		$("#basket-table-table").append(
@@ -860,6 +872,21 @@
 	}
 	
 	
+	// 장바구니 저장된 가게 개수 세기
+	function countBasketItems(groupNo) {
+		var cnt = 0
+		
+		for (var i = 0; i < basket[curr_basket_group].length; i++) {
+			if (basket[curr_basket_group][i].stored) {
+				cnt += 1
+			}
+		}
+		return cnt
+	}
+		
+	
+	////// 투표하기 / 랜덤선택 ////////////////////////////////////////////////////////////////////////////
+	
 	// 투표하기 클릭
 	$("#basket-vote-btn").on("click", function(){
 		if (!indexJSP) {
@@ -895,19 +922,6 @@
 	})	
 	
 	
-	// 장바구니 저장된 가게 개수 세기
-	function countBasketItems(groupNo) {
-		var cnt = 0
-		
-		for (var i = 0; i < basket[curr_basket_group].length; i++) {
-			if (basket[curr_basket_group][i].stored) {
-				cnt += 1
-			}
-		}
-		return cnt
-	}
-	
-	
 	// sleep
 	async function sleep(ms) {
 		let start = Date.now(), now = start
@@ -915,7 +929,6 @@
 	        now = Date.now()
 	    }
 	}
-	
 	
 </script>
 

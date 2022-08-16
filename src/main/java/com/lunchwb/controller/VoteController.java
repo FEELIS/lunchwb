@@ -1,5 +1,7 @@
 package com.lunchwb.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +21,11 @@ public class VoteController {
 
 	
 	@RequestMapping("")
-	public String newVote() {
+	public String newVote(HttpSession session) {
 		logger.info("새 투표 생성 페이지 이동");
+		
+		Integer groupNo = (Integer)session.getAttribute("curr_basket_group");
+		
 		
 		return "main/vote/newVote";
 	}
