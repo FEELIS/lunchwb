@@ -237,6 +237,11 @@ public class GroupService {
 		int memberNo = groupVo.getGroupMemberNo();
 		GroupVo memberVo = groupDao.memberInfo(memberNo);
 		
+		//보스 변경
+		if(groupVo.getBossCheck() == 1) {
+			groupDao.deleteBoss(groupVo.getGroupNo());
+		}
+		
 		return memberVo;
 	}
 	
