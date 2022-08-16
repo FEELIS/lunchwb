@@ -222,8 +222,10 @@ $("#modal-group-order-change").on("click", ".btn-primary", function(){
 			
 			if(result != "success"){
 				alert("그룹 순서 변경에 실패했습니다")
+				return false
 			}
-			
+
+			alert("그룹 순서 변경이 완료되었습니다")
 			return true
 		},
 		error : function(XHR, status, error) {

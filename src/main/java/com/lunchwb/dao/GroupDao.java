@@ -56,7 +56,7 @@ public class GroupDao {
 		return count;
 	}
 	
-	/******************** 그룹 정보 변경(이름/리더) ***************************************/
+	/*************** 그룹 정보 변경(이름/리더/그룹 비활성화(멤버 전원 탈퇴)) *******************/
 	public int groupChange(GroupVo groupVo) {
 		int count = sqlSession.update("group.groupChange", groupVo);
 		return count;
@@ -91,9 +91,9 @@ public class GroupDao {
 		return memberInfo;
 	}
 	
-	/******************** 그룹 멤버 강퇴 ***********************************************/
-	public int outMember(GroupVo groupVo) {
-		int count = sqlSession.delete("group.outMember", groupVo);
+	/******************** 그룹 멤버 강퇴 / 탈퇴 ***********************************************/
+	public int outGroup(GroupVo groupVo) {
+		int count = sqlSession.delete("group.outGroup", groupVo);
 		return count;
 	}
 	
