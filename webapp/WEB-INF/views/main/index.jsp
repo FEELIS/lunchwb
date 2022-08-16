@@ -193,6 +193,21 @@
 		})
 	}
 	
+	
+	// 주변에 가게가 하나도 없을 때 창
+	function noStore() {
+		if (indexJSP) {
+			$("#container").append(
+				  "<div class='d-inline-flex justify-content-center align-items-center' id='no-store'>"
+	            + 	"<div>"
+	            +   	"<span class='d-block justify-content-center' id='no-store-alert-1'>주변에 추천 가능한 가게가 없어요</span>"
+	            +       "<span class='d-flex justify-content-center' id='no-store-alert-2'>현재 위치나 필터를 확인해주세요</span>"
+	            +   "</div>"
+	            + "</div>"
+			)
+		}
+	}
+	
 </script>
 
 </html>

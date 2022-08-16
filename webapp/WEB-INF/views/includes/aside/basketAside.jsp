@@ -23,7 +23,7 @@
         	<span id="eat-what" class="d-inline-block">오늘 점심 뭐 먹지?</span>
         	<span id="prefer-data" class="d-inline-block">
         	<!--  
-        		<span class="d-inline-block emphasize-blue">막냉이</span>
+        		<span class="d-inline-block emphasize-blue">${authUser.userName}</span>
         		<span class="d-inline-block">님은 패스트푸드를 좋아하시니까!</span>
         	-->
         		<span class="d-inline-block">오늘도 점심은 부장님요기요</span>
@@ -89,7 +89,8 @@
 			                		</c:if>
 			                	</c:forEach>
 			                	
-			                	<c:if test="${basketCnt == 0}">
+			                	<c:set var="URI" value="${pageContext.request.requestURI}" />
+			                	<c:if test="${basketCnt == 0 and URI == '/WEB-INF/view/main/index.jsp'}">
 			                		<tr id="no-basket-items">
                                 		<td id="basket-no-items" class="no-drag" colspan="2">점심 후보를 추가해주세요</td>
                             		</tr>
@@ -813,24 +814,14 @@
 		
 		console.log("basketNoItem() 끝")
 	}
-	
-	
-	// 주변에 가게가 하나도 없을 때 창
-	function noStore() {
-		$("#container").append(
-			  "<div class='d-inline-flex justify-content-center align-items-center' id='no-store'>"
-            + 	"<div>"
-            +   	"<span class='d-block justify-content-center' id='no-store-alert-1'>주변에 추천 가능한 가게가 없어요</span>"
-            +       "<span class='d-flex justify-content-center' id='no-store-alert-2'>현재 위치나 필터를 확인해주세요</span>"
-            +   "</div>"
-            + "</div>"
-		)
-	}
-	
+		
 	
 	// 장바구니에 항목 추가하기
 	function addItemToBasket(storeNo) {
-		// 만약 이미 가게 3개 이상 추가되었으면 alert
+		if (countBasketItems(curr_basket_group) >= 3) {
+			alert("점심 후보는 최대 3개까지 추가 가능합니다.")
+			return false
+		}
 		
 		var add_obj = {"storeNo": storeNo}
 
@@ -908,7 +899,6 @@
 			alert("오늘의 점심 후보가 2개 이상일 때 이용할 수 있습니다.")
 			return
 		}
-		
 		alert("깜짝이야")
 	})	
 	

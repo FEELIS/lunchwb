@@ -42,7 +42,7 @@
                 <div id="main-content">
                     <div class="vote-container-title"><span>투표 만들기</span></div>
                     
-                    <div id="edit-vote-area" class="card-body">
+                    <div id="edit-vote-area" class="card-body no-drag">
                         <div id="edit-vote-header">
                         	<span id="edit-vote-group-name">개발 1팀</span>
                         	<span id="edit-vote-group-nums">
