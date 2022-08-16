@@ -316,7 +316,9 @@ public class GroupService {
 	
 	
 	/******************** 그룹 탈퇴 ****************************************************/
-	public void leaveGroup(int groupNo, int userNo, int groupLeader) {
+	public int leaveGroup(UserVo authUser, int groupNo, int groupLeader) {
+		int userNo = authUser.getUserNo();
+		
 		GroupVo groupVo = new GroupVo();
 		groupVo.setUserNo(userNo);
 		groupVo.setGroupNo(groupNo);
@@ -326,10 +328,13 @@ public class GroupService {
 			groupVo.setGroupLeader(0);
 			groupDao.groupChange(groupVo);
 		}
+	
+		groupDao.outGroup(groupVo);
+		groupDao.autoOrder(groupVo);
+	
+		int groupCount = groupDao.groupCount(userNo); 
 		
-			groupDao.outGroup(groupVo);
-			groupDao.autoOrder(groupVo);
-		
+		return groupCount;
 	}
 	
 	

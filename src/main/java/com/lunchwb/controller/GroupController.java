@@ -222,11 +222,29 @@ public class GroupController {
 	
 	/******************** 그룹 탈퇴 ***************************************************/
 	@GetMapping("group/leave")
-	public String leaveGroup(@RequestParam(name="groupNo", defaultValue="0") int groupNo, @RequestParam(name="userNo")int userNo
-							 , @RequestParam(name="groupLeader", defaultValue="0") int groupLeader) {
+	public String leaveGroup(HttpSession session, @RequestParam(name="no", defaultValue="0") int groupNo, 
+							 @RequestParam(name="lead", defaultValue="0") int groupLeader) {
 		logger.info("GroupController > leaveGroup()");
 		
-		groupService.leaveGroup(groupNo, userNo, groupLeader);
+		UserVo authUser = (UserVo)session.getAttribute("authUser");	
+		int groupCount = groupService.leaveGroup(authUser, groupNo, groupLeader);
+		
+		/////////////// Basket ///////////////////////////
+		List<GroupVo> basketGroup = (List<GroupVo>)session.getAttribute("basketGroup");
+
+		basketGroup = basketService.basketGroupDel(basketGroup, groupNo);
+		session.setAttribute("basketGroup", basketGroup);
+		
+		if(groupCount > 0) {
+			Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
+			basket = basketService.deleteBasketGroup(basket, groupNo);
+
+			session.setAttribute("basket", basket); 
+		}else {
+			if (session.getAttribute("basket") != null) {
+			    session.removeAttribute("basket");
+			}
+		}
 		
 		return "redirect:./list";
 	}

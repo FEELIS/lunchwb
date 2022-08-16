@@ -269,7 +269,7 @@
                 </div>
             </div>
             <div class="modal-footer-custom">
-           		<a href="${pageContext.request.contextPath}/group/leave?groupNo=${map.groupNo}&userNo=${authUser.userNo}&groupLeader=${map.groupLeader}"><button class="btn btn-primary" type="submit">확인</button></a>
+           		<a href="${pageContext.request.contextPath}/group/leave?no=${map.groupNo}&lead=${map.groupLeader}"><button class="btn btn-primary" type="submit">확인</button></a>
             	<button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button>
             </div>
         </div>
