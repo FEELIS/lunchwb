@@ -110,7 +110,7 @@
 		UPDATE groups
 		SET 
 			<choose>
-				<when test="groupLeader > 0">
+				<when test="groupName == null || groupName == ''">
 					group_leader = #{groupLeader}
 				</when>
 				<otherwise>
@@ -189,8 +189,8 @@
 	</select>
 	
 	
-	<!-- 그룹 강퇴시키기 -->
-	<delete id="outMember" parameterType="GroupVo">
+	<!-- 그룹 강퇴 / 탈퇴-->
+	<delete id="outGroup" parameterType="GroupVo">
 		DELETE FROM group_member
 		WHERE user_no = #{userNo}
 		AND group_no = #{groupNo}
