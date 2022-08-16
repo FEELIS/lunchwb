@@ -150,7 +150,7 @@
     </div>
 </div>
 
-<!--<c:import url="/WEB-INF/views/includes/storeInfo.jsp" />-->
+<c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e74b599be710b798192fd5221284718a&libraries=services"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -193,12 +193,12 @@
 
 	
 	// 장바구니 클릭 시 모달 팝업
-	//$("#basket-table").on("click", ".basket-table-store-name", function(){
-	//	var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
-	//	console.log(storeNo)
+	$("#basket-table").on("click", ".basket-table-store-name", function(){
+		var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
+		console.log(storeNo)
 		
-	//	$("#modal-store").modal("show")
-	//})
+		$("#modal-store").modal("show")
+	})
 		
 	
 	// 페이지 로딩 초기 gps 확인 함수
