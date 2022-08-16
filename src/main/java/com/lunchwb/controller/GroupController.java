@@ -1,6 +1,7 @@
 package com.lunchwb.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -17,8 +18,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lunchwb.service.BasketService;
 import com.lunchwb.service.GroupService;
+import com.lunchwb.vo.GPSVo;
 import com.lunchwb.vo.GroupVo;
+import com.lunchwb.vo.StoreVo;
 import com.lunchwb.vo.UserVo;
 
 @Controller
@@ -26,6 +30,8 @@ public class GroupController {
 	
 	@Autowired
 	private GroupService groupService;
+	@Autowired
+	private BasketService basketService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 	
@@ -83,8 +89,35 @@ public class GroupController {
 		logger.info("GroupController > addGroup()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		int groupNo = groupService.addGroup(authUser, groupVo);
-	
+		HashMap<String, Object> map = groupService.addGroup(authUser, groupVo);
+
+		GroupVo gpVo = (GroupVo)map.get("gpVo");
+		int groupNo = gpVo.getGroupNo();
+		
+		///////// Basket /////////////////////
+		List<GroupVo> basketGroup = (List<GroupVo>)session.getAttribute("basketGroup");
+		basketGroup = basketService.basketGroupAdd(basketGroup, groupVo);
+
+		session.setAttribute("basketGroup", basketGroup);
+		
+		int groupCount = (Integer)map.get("groupCount");
+		
+		if(groupCount > 1) {
+			GPSVo curr_location = (GPSVo)session.getAttribute("curr_location");
+			List<Integer> filter_excluded = (List<Integer>)session.getAttribute("filter_excluded");
+			Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
+
+			basket = basketService.addBasketGroup(basket, groupNo);
+			basket.put(groupNo, basketService.addItemsToBasket(basket.get(groupNo), groupNo, curr_location, filter_excluded, true, true));
+
+			session.setAttribute("basket", basket);
+
+		}else {
+			if (session.getAttribute("basket") != null) {
+			    session.removeAttribute("basket");
+			}
+		}
+
 		return "redirect:./list?no="+ groupNo;
 	}
 

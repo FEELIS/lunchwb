@@ -107,4 +107,10 @@ public class GroupDao {
 		List<GroupVo> basketGroup = sqlSession.selectList("group.selectBasketGroup", userNo);
 		return basketGroup;
 	}
+	
+	/******************** 추가된 그룹 정보 ***********************************************/
+	public GroupVo addedGroup(int groupNo) {
+		GroupVo groupVo = sqlSession.selectOne("group.addedGroup", groupNo);
+		return groupVo;
+	}
 }

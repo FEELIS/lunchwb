@@ -94,8 +94,9 @@ public class GroupService {
 	
 	
 	/******************** 그룹 생성 ***********************************************/
-	public int addGroup(UserVo authUser, GroupVo groupVo) {
+	public HashMap<String, Object> addGroup(UserVo authUser, GroupVo groupVo) {
 		//그룹 최대 4개 보유 가능 > 4개 이후 생성 못함 (새 그룹 추가 버튼이 보이지 않음 - 혹시 주소접근은 새 그룹 추가 페이지 접근시 막을 것)
+		HashMap<String, Object> map = new HashMap<>();
 		
 		int userNo = authUser.getUserNo();
 		
@@ -119,7 +120,17 @@ public class GroupService {
 		//그룹 멤버 추가
 		groupDao.addMember(groupVo);
 		
-		return groupNo;
+		
+		////////////Basket////////////////////////////////
+		//바스켓에서 필요한 추가된 그룹 정보 불러오기
+		GroupVo gpVo = groupDao.addedGroup(groupNo);
+		map.put("gpVo", gpVo);
+		
+		//이제 막 시작한 유저야?(새 그룹이 첫번째 그룹)
+		int groupCount = groupDao.groupCount(userNo);
+		map.put("groupCount", groupCount);
+		
+		return map;
 	}
 	
 	

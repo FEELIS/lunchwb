@@ -214,5 +214,15 @@
 		AND    m.user_no = #{userNo}
 		ORDER BY m.group_order ASC
 	</select>
+	
+	
+	<!-- 그룹 이름 넘버가 같이 필요해?-->
+	<!-- 추가된 그룹 정보 -->
+	<select id="addedGroup" parameterType="int" resultMap="GroupVo">
+		SELECT  group_no, 
+				group_name
+		FROM groups
+		WHERE group_no = #{groupNo} 
+	</select>
 
 </mapper>
