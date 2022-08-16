@@ -26,17 +26,13 @@ public class GroupVo {
 	//그룹 순서 변경 +
 	private int order;
 	
-	// 세션에 저장할 것이에요 현재 장바구니 선택 그룹
-	private boolean currBasketGroup;
-	
 	
 	public GroupVo() {
 	}
 	
 	
 	public GroupVo(int groupNo, int groupLeader, String groupName, int groupMemberNo, int userNo, int bossCheck,
-			String userName, int userBirthYear, String userAge, String userSex, int groupOrder, int order,
-			boolean currBasketGroup) {
+			String userName, int userBirthYear, String userAge, String userSex, int groupOrder, int order) {
 		this.groupNo = groupNo;
 		this.groupLeader = groupLeader;
 		this.groupName = groupName;
@@ -49,7 +45,6 @@ public class GroupVo {
 		this.userSex = userSex;
 		this.groupOrder = groupOrder;
 		this.order = order;
-		this.currBasketGroup = currBasketGroup;
 	}
 
 
@@ -149,14 +144,6 @@ public class GroupVo {
 		this.order = order;
 	}
 	
-	public boolean isCurrBasketGroup() {
-		return currBasketGroup;
-	}
-
-	public void setCurrBasketGroup(boolean currBasketGroup) {
-		this.currBasketGroup = currBasketGroup;
-	}
-
 
 	@Override
 	public String toString() {
