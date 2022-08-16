@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<!-- 가게 정보 보기 -->
 <div id="modal-store" class="modal visible" role="dialog" tabindex="-1" style="min-width: 800px;">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content" style="width: 798px;">
@@ -42,7 +43,14 @@
 	                        	<!-- 최근 리뷰 영역 -->
                         </div>
                     </div>
-                    <div id="all-menu" class="text-start"><span class="fw-bold text-info d-inline-block" style="color: rgb(54, 185, 204);">#양자강에서 최근 한달 동안 다른 사람들이 선택한 메뉴를 볼 수 있어요 &gt;&gt;</span><button id="modal-see-menu" class="btn" type="button" data-bs-target="#modal-all-menu" data-bs-toggle="modal">메뉴 보러가기 <i class="icon ion-android-arrow-dropright-circle"></i></button></div>
+                    <div id="all-menu" class="text-start">
+                    	<span class="fw-bold text-info d-inline-block" style="color: rgb(54, 185, 204);">
+                    		#양자강에서 최근 한달 동안 다른 사람들이 선택한 메뉴를 볼 수 있어요 &gt;&gt;
+                    	</span>
+                    	<button id="modal-see-menu" class="btn" type="button" data-bs-target="#modal-all-menu" data-bs-toggle="modal">
+                    		메뉴 보러가기 <i class="icon ion-android-arrow-dropright-circle"></i>
+                    	</button>
+                    </div>
                     <div class="other-stores">
                         <div class="text-primary other-store-state">
                         	<span class="d-inline-block"></span>
@@ -90,7 +98,9 @@
             </div>
             <div class="modal-footer-custom">
                 <p class="modalStoreWithMe"></p>
-                <button class="btn btn-primary" type="button">여기갈래요</button>
+                <c:if test="${! empty authUser}">
+	                <button class="btn btn-primary" type="button">여기갈래요</button>
+	            </c:if>
                 <button class="btn btn-light" type="button">점심후보추가</button>
             </div>
         </div>
@@ -98,6 +108,8 @@
 </div>
 
 
+
+<!-- 모든 리뷰 보기 -->
 <div id="modal-reviews" class="modal visible" role="dialog" tabindex="-1" style="min-width: 798px;">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content" style="width: 798px;">
@@ -133,126 +145,14 @@
                     	</button>
                     </div>
                     <div id="store-all-review">
-                        <div class="store-reviews">
-                            <div class="d-inline-block store-review-left">
-                            <span class="fw-bolder d-block">
-                            	이지희 (20대 그룹 / 3인 / 냉면)
-                            </span>
-                            <span class="d-block">가나카타파하가바사아자차카타파하가나다라마바사아자</span>
-                        	</div>
-                        	<div class="text-end d-inline-block store-review-right">
-                                <div class="d-block">
-                                	<span class="d-inline-block">
-                                		<i class="typcn typcn-star-full-outline"></i>
-                                		<i class="typcn typcn-star-full-outline"></i>
-                                		<i class="typcn typcn-star-full-outline"></i>
-                                		<i class="typcn typcn-star-full-outline"></i>
-                                		<i class="typcn typcn-star-full-outline"></i>
-                                	</span>
-                                    <div class="dropdown d-inline-block">
-                                    	<a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기
-                                    	<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                                                <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>
-                                            </svg></a>
-                                        <div class="dropdown-menu dropdown-menu-end text-start"><a class="dropdown-item" href="#">광고<br /></a><a class="dropdown-item" href="#">욕설</a><a class="dropdown-item" href="#">잘못된 메뉴</a></div>
-                                    </div>
-                                </div>
-                                <div><span>22.07.14 (105번째 방문) </span></div>
-                            </div>
-                        </div>
-                        <div class="store-reviews">
-                            <div class="d-inline-block store-review-left"><span class="fw-bolder d-block">이지희 (20대 그룹 / 3인<strong> / 냉면</strong>)</span><span class="d-block">가나카타파하가바사아자차카타파냉면 존맛이에여 와아</span></div>
-                            <div class="text-end d-inline-block store-review-right">
-                                <div><span class="d-inline-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i></span><button class="btn review-report" type="button">신고하기 <svg class="bi bi-megaphone-fill text-danger d-inline-block modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                                            <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>
-                                        </svg></button></div>
-                                <div><span>22.07.14 (105번째 방문) </span></div>
-                            </div>
-                        </div>
-                        <div class="store-reviews">
-                            <div class="d-inline-block store-review-left"><span class="fw-bolder d-block">이지희 (20대 그룹 / 3인 / 냉면)</span><span class="d-block">가나카타파하가바사아자차카타파냉면 존맛이에여 와아</span></div>
-                            <div class="text-end d-inline-block store-review-right">
-                                <div><span class="d-inline-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i></span>
-                                    <div class="dropdown d-inline-block"><a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                                                <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>
-                                            </svg></a>
-                                        <div class="dropdown-menu dropdown-menu-end text-start"><a class="dropdown-item" href="#">광고<br /></a><a class="dropdown-item" href="#">욕설</a><a class="dropdown-item" href="#">잘못된 메뉴</a></div>
-                                    </div>
-                                </div>
-                                <div><span>22.07.14 (105번째 방문) </span></div>
-                            </div>
-                        </div>
-                        <div class="store-reviews">
-                            <div class="d-inline-block store-review-left"><span class="fw-bolder d-block">이지희 (20대 그룹 / 3인 / 냉면)</span><span class="d-block">가나카타파하가바사아자차카타파냉면 존맛이에여 와아</span></div>
-                            <div class="text-end d-inline-block store-review-right">
-                                <div><span class="d-inline-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i></span>
-                                    <div class="dropdown d-inline-block"><a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                                                <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>
-                                            </svg></a>
-                                        <div class="dropdown-menu dropdown-menu-end text-start"><a class="dropdown-item" href="#">광고<br /></a><a class="dropdown-item" href="#">욕설</a><a class="dropdown-item" href="#">잘못된 메뉴</a></div>
-                                    </div>
-                                </div>
-                                <div><span>22.07.14 (105번째 방문) </span></div>
-                            </div>
-                        </div>
-                        <div class="store-reviews">
-                            <div class="d-inline-block store-review-left"><span class="fw-bolder d-block">이지희 (20대 그룹 / 3인 / 냉면)</span><span class="d-block">가나카타파하가바사아자차카타파냉면 존맛이에여 와아</span></div>
-                            <div class="text-end d-inline-block store-review-right">
-                                <div><span class="d-inline-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i></span>
-                                    <div class="dropdown d-inline-block"><a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                                                <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>
-                                            </svg></a>
-                                        <div class="dropdown-menu dropdown-menu-end text-start"><a class="dropdown-item" href="#">광고<br /></a><a class="dropdown-item" href="#">욕설</a><a class="dropdown-item" href="#">잘못된 메뉴</a></div>
-                                    </div>
-                                </div>
-                                <div><span>22.07.14 (105번째 방문) </span></div>
-                            </div>
-                        </div>
-                        <div class="store-reviews">
-                            <div class="d-inline-block store-review-left"><span class="fw-bolder d-block">이지희 (20대 그룹 / 3인 / 쟁반짜장)</span><span class="d-block">가나카타파하가바사아자차카타파 이야아아아아아아아아아아아아아아아아아 </span></div>
-                            <div class="text-end d-inline-block store-review-right">
-                                <div><span class="d-inline-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i></span>
-                                    <div class="dropdown d-inline-block"><a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                                                <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>
-                                            </svg></a>
-                                        <div class="dropdown-menu dropdown-menu-end text-start"><a class="dropdown-item" href="#">광고<br /></a><a class="dropdown-item" href="#">욕설</a><a class="dropdown-item" href="#">잘못된 메뉴</a></div>
-                                    </div>
-                                </div>
-                                <div><span>22.07.14 (105번째 방문) </span></div>
-                            </div>
-                        </div>
-                        <div class="store-reviews">
-                            <div class="d-inline-block store-review-left"><span class="fw-bolder d-block">이지희 (20대 그룹 / 3인 / 양장피)</span><span class="d-block">가나카타파하가바사아자차카타파 이야아아아아아아아아아아아아아아아아아 </span></div>
-                            <div class="text-end d-inline-block store-review-right">
-                                <div><span class="d-inline-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i></span>
-                                    <div class="dropdown d-inline-block"><a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                                                <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>
-                                            </svg></a>
-                                        <div class="dropdown-menu dropdown-menu-end text-start"><a class="dropdown-item" href="#">광고<br /></a><a class="dropdown-item" href="#">욕설</a><a class="dropdown-item" href="#">잘못된 메뉴</a></div>
-                                    </div>
-                                </div>
-                                <div><span>22.07.14 (105번째 방문) </span></div>
-                            </div>
-                        </div>
-                        <div class="store-reviews">
-                            <div class="d-inline-block store-review-left"><span class="fw-bolder d-block">이지희 (20대 그룹 / 3인 / 탕수육)</span><span class="d-block">가나카타파하가바사아자차카타파 이야아아아아아아아아아아아아아아아아아 </span></div>
-                            <div class="text-end d-inline-block store-review-right">
-                                <div><span class="d-inline-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i></span>
-                                    <div class="dropdown d-inline-block"><a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
-                                                <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>
-                                            </svg></a>
-                                        <div class="dropdown-menu dropdown-menu-end text-start"><a class="dropdown-item" href="#">광고<br /></a><a class="dropdown-item" href="#">욕설</a><a class="dropdown-item" href="#">잘못된 메뉴</a></div>
-                                    </div>
-                                </div>
-                                <div><span>22.07.14 (105번째 방문) </span></div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer-custom">
                 <p class="modalStoreWithMe"></p>
-                <button class="btn btn-primary" type="button">여기갈래요</button>
+                <c:if test="${!empty authUser}">
+                	<button class="btn btn-primary" type="button">여기갈래요</button>
+                </c:if>
                 <button class="btn btn-light" type="button">점심후보추가</button>
             </div>
         </div>
@@ -325,7 +225,7 @@ $("#basket-table").on("click", ".basket-table-store-name", function(){
 
 /* 실험용 */
 $("#test-storeInfo").on("click", function(){
-	var storeNo = $(this).data("storeno").")
+	var storeNo = $(this).data("storeno")
 	console.log(storeNo+"번 가게 정보 보기")
 	storeInfoOpen(storeNo, 1)
 })
@@ -375,20 +275,26 @@ function storeBasicInfo(storeNo){
 			modalStoreTime(storeMap.storeVo.openingHours, 1)
 			modalStoreTime(storeMap.storeVo.breaktime, 2)
 			
+			//k = 1 가게 정보창
 			$("#modal-store .review-area").text("")
-			for(var i=0; i<storeMap.reviewList.length; i++){
-				modalStoreReivew(storeMap.reviewList[i])
+			for(var i=0; i<3; i++){
+				modalStoreReivew(storeMap.reviewList[i], 1)
 			}
 			modalStoreMoreReivews(storeNo)
 			
 			$(".other-store-state span").text(storeMap.storeVo.menu2ndCateName + " 카테고리 다른 가게")
 			
-			if(storeMap.visitedVo.visitedDate == null || storeMap.visitedVo.visitedDate == ""){
+			if(storeMap.visitedVo == null){
 				$(".modalStoreWithMe").text("아직 방문기록이 없어요. 이번에 가보는건 어떨가요?")
 			}else{
 				$(".modalStoreWithMe").text("나의 방문 횟수: " + storeMap.visitedVo.visitCount + "회(최근 방문일 " + storeMap.visitedVo.visitedDate + ", " + storeMap.visitedVo.groupName + ")")
 			}
 			
+			//k = 2 전체 리뷰창
+			$("#modal-reviews #store-all-review").text("")
+			for(var i=0; i<storeMap.reviewList.length; i++){
+				modalStoreReivew(storeMap.reviewList[i], 2)
+			}
 
 		},
 		error : function(XHR, status, error) {
@@ -481,8 +387,8 @@ function modalStoreTime(storeTime, opt){
 }
 
 
-/* 최근 리뷰 최대 3건 */
-function modalStoreReivew(storeReview){
+/* 가게 리뷰 */
+function modalStoreReivew(storeReview, k){
 	console.log("review : " + storeReview.reviewNo)
 	
 	var str = ''
@@ -525,7 +431,11 @@ function modalStoreReivew(storeReview){
 	str += '	</div>'
 	str += '</div>'
 	
-	$("#modal-store .review-area").append(str)
+	if(k == 1){
+		$("#modal-store .review-area").append(str)
+	}else if(k == 2){
+		$("#modal-reviews #store-all-review").append(str)
+	}
 }
 
 
@@ -534,7 +444,7 @@ function modalStoreMoreReivews(storeNo){
 	
 	var str = ''
 	str += '<div id="more-reviews" class="text-end">'
-	str += '	<button id="modal-review-more" class="btn btn-sm" type="button" data-storeno = "' + storeNo + '">'
+	str += '	<button id="modal-review-more" class="btn btn-sm" type="button" data-bs-target="#modal-reviews" data-bs-toggle="modal" data-storeno = "' + storeNo + '">'
 	str += '		리뷰더보기<i class="icon ion-android-arrow-dropright-circle"></i>'
 	str += '	</button>'
 	str += '</div>'
@@ -584,30 +494,6 @@ $("#store-about").on("click", ".dropdown-item", function(){
 	})
 })
 
-
-/* 리뷰 전체보기 클릭*/
-$("#modal-review-more").on("click", function(){
-	console.log("왜 안돼?")
-	var storeNo = $(this).data("storeno")
-	console.log(storeNo + "번 가게 리뷰 전체보기")
-	storeAllReview(storeNo)
-})
-	
-	/*
-	var str = ''
-	str += '<div>'
-	str += '	<button class="btn back-store-info" type="button" data-bs-target="#modal-store" data-bs-toggle="modal">'
-	str += '		<i class="icon ion-android-arrow-dropleft-circle"/>'	
-	str += '		이전으로 돌아가기'
-	str += '	</button>'
-	str += '</div>'
-	
-	$("#modal-reviews .review-area").html("")
-	$("#modal-reviews .review-area").html(str)
-	for(var i=0; i<storeMap.reviewList.length; i++){
-		modalStoreReivew(storeMap.reviewList[i])
-	}
-	*/
 
 
 
