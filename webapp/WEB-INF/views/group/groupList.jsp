@@ -437,7 +437,7 @@ function invt(groupVo){
 			
 			alert("멤버가 추가되었습니다")
 			
-			$("[name = 'userEmail']").val()
+			$("[name = 'userEmail']").val("")
 			$(".form-check-input").prop("checked", false)
 			
 			var memberCount = $("#memberCount").text()
@@ -463,6 +463,10 @@ $("#groupmem-add button").on("click", function(){
 	if(userName == null || userName == ""){
 		alert("이름을 입력해주세요")
 		return false
+	}
+	
+	if(userName.length < 2){
+		alert("이름을 두 글자 이상 입력해주세요")
 	}
 
 	var userBirthYear = $("#groupmem-add [name ='userBirthYear']").val()
@@ -527,7 +531,8 @@ $("#groupmem-add button").on("click", function(){
 })
 
 
-function render(memberVo){
+/* 테이블 추가 */
+function render(memberVo, k){
 	console.log("render()")
 	
 	var str = ''
@@ -635,6 +640,8 @@ $("#memberListArea").on("click", ".groupmem-delete", function(){
 			if(result == "success"){
 				alert("삭제되었습니다")
 				$("#member-"+userNo).remove()
+				var memberCount = $("#memberCount").text()
+				$("#memberCount").text(Number(memberCount)-1)
 			}else{
 				alert("삭제가 되지 않았습니다")
 			}
