@@ -233,14 +233,14 @@ public class GroupService {
 	
 	/******************** 회원 그룹 멤버 추가 ********************************************/
 	public GroupVo invtMember(GroupVo groupVo) {
-		groupDao.addMember(groupVo);
-		int memberNo = groupVo.getGroupMemberNo();
-		
 		//보스 변경
 		if(groupVo.getBossCheck() == 1) {
 			groupDao.deleteBoss(groupVo.getGroupNo());
 		}
 		
+		//멤버 추가
+		groupDao.addMember(groupVo);
+		int memberNo = groupVo.getGroupMemberNo();
 		GroupVo memberVo = groupDao.memberInfo(memberNo);
 		return memberVo;
 	}
