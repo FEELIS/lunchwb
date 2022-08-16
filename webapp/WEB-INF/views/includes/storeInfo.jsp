@@ -126,13 +126,32 @@
                     </div>
                 </div>
                 <div class="d-inline-block review-area">
-                    <div><button class="btn back-store-info" type="button" data-bs-target="#modal-store" data-bs-toggle="modal"><i class="icon ion-android-arrow-dropleft-circle"></i> 이전으로 돌아가기</button></div>
+                    <div>
+                    	<button class="btn back-store-info" type="button" data-bs-target="#modal-store" data-bs-toggle="modal">
+                    		<i class="icon ion-android-arrow-dropleft-circle"></i>
+                    		 이전으로 돌아가기
+                    	</button>
+                    </div>
                     <div id="store-all-review">
                         <div class="store-reviews">
-                            <div class="d-inline-block store-review-left"><span class="fw-bolder d-block">이지희 (20대 그룹 / 3인 / 냉면)</span><span class="d-block">가나카타파하가바사아자차카타파하가나다라마바사아자</span></div>
-                            <div class="text-end d-inline-block store-review-right">
-                                <div class="d-block"><span class="d-inline-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i></span>
-                                    <div class="dropdown d-inline-block"><a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
+                            <div class="d-inline-block store-review-left">
+                            <span class="fw-bolder d-block">
+                            	이지희 (20대 그룹 / 3인 / 냉면)
+                            </span>
+                            <span class="d-block">가나카타파하가바사아자차카타파하가나다라마바사아자</span>
+                        	</div>
+                        	<div class="text-end d-inline-block store-review-right">
+                                <div class="d-block">
+                                	<span class="d-inline-block">
+                                		<i class="typcn typcn-star-full-outline"></i>
+                                		<i class="typcn typcn-star-full-outline"></i>
+                                		<i class="typcn typcn-star-full-outline"></i>
+                                		<i class="typcn typcn-star-full-outline"></i>
+                                		<i class="typcn typcn-star-full-outline"></i>
+                                	</span>
+                                    <div class="dropdown d-inline-block">
+                                    	<a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기
+                                    	<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">
                                                 <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>
                                             </svg></a>
                                         <div class="dropdown-menu dropdown-menu-end text-start"><a class="dropdown-item" href="#">광고<br /></a><a class="dropdown-item" href="#">욕설</a><a class="dropdown-item" href="#">잘못된 메뉴</a></div>
@@ -297,17 +316,19 @@ k : 0 기록(비추천) 경우 거리 표시 제외 */
 
 /* 메인-가게바구니에서 조회할 때 */
 $("#basket-table").on("click", ".basket-table-store-name", function(){
-	//var storeNo = $(this).data("storeno")
+	var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
+	
 	console.log(storeNo+"번 가게 정보 보기")
 	storeInfo_open(storeNo, 1)
 })
 
 /* 실험용 */
 $("#test-storeInfo").on("click", function(){
-	var storeNo = $(this).data("storeno")
+	var storeNo = $(this).data("storeno").")
 	console.log(storeNo+"번 가게 정보 보기")
 	storeInfoOpen(storeNo, 1)
 })
+
 
 
 /* 가게정보 모달 오픈 */
@@ -357,11 +378,15 @@ function storeBasicInfo(storeNo){
 			for(var i=0; i<storeMap.reviewList.length; i++){
 				modalStoreReivew(storeMap.reviewList[i])
 			}
-			modalStoreMoreReivews()
+			modalStoreMoreReivews(storeNo)
 			
 			$(".other-store-state span").text(storeMap.storeVo.menu2ndCateName + " 카테고리 다른 가게")
 			
-			$(".modalStoreWithMe").text("나의 방문 횟수: " + storeMap.visitedVo.visitCount + "회(최근 방문일 " + storeMap.visitedVo.visitedDate + ", " + storeMap.visitedVo.groupName + ")")
+			if(storeMap.visitedVo.visitedDate == null || storeMap.visitedVo.visitedDate == ""){
+				$(".modalStoreWithMe").text("아직 방문기록이 없어요. 이번에 가보는건 어떨가요?")
+			}else{
+				$(".modalStoreWithMe").text("나의 방문 횟수: " + storeMap.visitedVo.visitCount + "회(최근 방문일 " + storeMap.visitedVo.visitedDate + ", " + storeMap.visitedVo.groupName + ")")
+			}
 			
 
 		},
@@ -468,37 +493,32 @@ function modalStoreReivew(storeReview){
 	str += '		<span class="d-block">' + storeReview.reviewContent + '</span>'
 	str += '	</div>'
 	str += '	<div class="text-end d-inline-block store-review-right">'
-	str += '		<div class="d-block">'
-	str += '			<span class="d-inline-block">'
+	str += '		<span class="d-inline-block">'
 	
 	for(var i=0; i<5; i++){
 		if(storeReview.userScore > i){
-			str += '				<i class="fas fa-star"></i>'
+			str += '			<i class="fas fa-star"></i>'
 		}else{
-			str += '				<i class="far fa-star"></i>'
+			str += '			<i class="far fa-star"></i>'
 		}
 	}
 	
-	str += '			</span>'
+	str += '		</span>'
+	str += '		<div class="d-inline-block">'
+	str += '			<a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기'
+	str += '				<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">'
+	str += '					<path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>'
+	str += '				</svg>'
+	str += '			</a>'
+	str += '			<div class="dropdown-menu dropdown-menu-end text-start">'
+	str += '				<a class="dropdown-item" href="#" data-reviewno="'+storeReview.reviewNo+'" data-reporttype="1">광고/홍보글</a>'
+	str += '				<a class="dropdown-item" href="#" data-reviewno="'+storeReview.reviewNo+'" data-reporttype="2">욕설/비방</a>'
+	str += '				<a class="dropdown-item" href="#" data-reviewno="'+storeReview.reviewNo+'" data-reporttype="3">잘못된메뉴</a>'
+	str += '				<a class="dropdown-item" href="#" data-reviewno="'+storeReview.reviewNo+'" data-reporttype="4">관련없는내용</a>'
+	str += '				<a class="dropdown-item" href="#" data-reviewno="'+storeReview.reviewNo+'" data-reporttype="5">개인정보유출</a>'
+	str += '				<a class="dropdown-item" href="#" data-reviewno="'+storeReview.reviewNo+'" data-reporttype="6">음란/선정성</a>'
+	str += '			</div>'
 	str += '		</div>'
-	
-	if("${!empty authUser}" == true){
-		str += '		<div class="d-inline-block">'
-		str += '			<a class="btn float-none review-report" aria-expanded="false" data-bs-toggle="dropdown" role="button">신고하기'
-		str += '				<svg class="bi bi-megaphone-fill text-danger modal-review-report-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="currentColor" viewBox="0 0 16 16">'
-		str += '					<path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-11zm-1 .724c-2.067.95-4.539 1.481-7 1.656v6.237a25.222 25.222 0 0 1 1.088.085c2.053.204 4.038.668 5.912 1.56V3.224zm-8 7.841V4.934c-.68.027-1.399.043-2.008.053A2.02 2.02 0 0 0 0 7v2c0 1.106.896 1.996 1.994 2.009a68.14 68.14 0 0 1 .496.008 64 64 0 0 1 1.51.048zm1.39 1.081c.285.021.569.047.85.078l.253 1.69a1 1 0 0 1-.983 1.187h-.548a1 1 0 0 1-.916-.599l-1.314-2.48a65.81 65.81 0 0 1 1.692.064c.327.017.65.037.966.06z"></path>'
-		str += '				</svg>'
-		str += '			</a>'
-		str += '			<div class="dropdown-menu dropdown-menu-end text-start">'
-		str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="1">광고/홍보글</a>'
-		str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="2">욕설/비방</a>'
-		str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="3">잘못된메뉴</a>'
-		str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="4">관련없는내용</a>'
-		str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="5">개인정보유출</a>'
-		str += '				<a class="dropdown-item" href="#" data-reviewno"'+storeReview.reviewNo+'" data-reporttype="6">음란/선정성</a>'
-		str += '			</div>'
-		str += '		</div>'
-	}
 	
 	str += '		<div><span>' + storeReview.visitedDate + ' (' + storeReview.visitedCount + '번째 방문) </span></div>'
 	str += '	</div>'
@@ -508,12 +528,12 @@ function modalStoreReivew(storeReview){
 }
 
 
-/* 리뷰더보기 */
-function modalStoreMoreReivews(){
+/* 리뷰더보기 버튼 */
+function modalStoreMoreReivews(storeNo){
 	
 	var str = ''
 	str += '<div id="more-reviews" class="text-end">'
-	str += '	<button id="modal-review-more" class="btn btn-sm" type="button" data-bs-target="#modal-reviews" data-bs-toggle="modal">'
+	str += '	<button id="modal-review-more" class="btn btn-sm" type="button" data-storeno = "' + storeNo + '">'
 	str += '		리뷰더보기<i class="icon ion-android-arrow-dropright-circle"></i>'
 	str += '	</button>'
 	str += '</div>'
@@ -522,6 +542,7 @@ function modalStoreMoreReivews(){
 }
 
 
+/* 리뷰 신고 */
 $("#store-about").on("click", ".dropdown-item", function(){
 	var reviewNo = $(this).data("reviewno")
 	var reportCateNo = $(this).data("reporttype")
@@ -548,8 +569,10 @@ $("#store-about").on("click", ".dropdown-item", function(){
 			
 			if(result == "success"){
 				alert("신고해주신 리뷰는 관리자 검토 후 조치가 진행됩니다")
-			}else{
+			}else if(result == "fail"){
 				alert("다시 시도해주세요")
+			}else{
+				alert("로그인 후 시도해주세요")
 			}
 			
 		},
@@ -559,6 +582,32 @@ $("#store-about").on("click", ".dropdown-item", function(){
  
 	})
 })
+
+
+/* 리뷰 전체보기 클릭*/
+$("#modal-review-more").on("click", function(){
+	console.log("왜 안돼?")
+	var storeNo = $(this).data("storeno")
+	console.log(storeNo + "번 가게 리뷰 전체보기")
+	storeAllReview(storeNo)
+})
+	
+	/*
+	var str = ''
+	str += '<div>'
+	str += '	<button class="btn back-store-info" type="button" data-bs-target="#modal-store" data-bs-toggle="modal">'
+	str += '		<i class="icon ion-android-arrow-dropleft-circle"/>'	
+	str += '		이전으로 돌아가기'
+	str += '	</button>'
+	str += '</div>'
+	
+	$("#modal-reviews .review-area").html("")
+	$("#modal-reviews .review-area").html(str)
+	for(var i=0; i<storeMap.reviewList.length; i++){
+		modalStoreReivew(storeMap.reviewList[i])
+	}
+	*/
+
 
 
 </script>
