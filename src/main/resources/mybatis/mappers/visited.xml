@@ -15,32 +15,35 @@
 		<result column="menu_name" property="menuName" />
 		<result column="select_month" property="selectMonth" />
 		<result column="visit_count" property="visitCount" />
+		<result column="group_order" property="groupOrder" />
 	</resultMap>
 	
    
    <!-- 달력 가게정보 띄우기 -->
    <select id="calendar" parameterType="VisitedVo" resultMap="resultMapVisitedVo">
-         select g.group_no, 
-               	to_char(v.visited_date,'Mon DD YYYY','NLS_DATE_LANGUAGE=ENGLISH')visited_date, 
+         select to_char(v.visited_date,'Mon DD YYYY','NLS_DATE_LANGUAGE=ENGLISH')visited_date, 
                 f1.menu_1st_cate_name, 
                 g.group_name, 
                 s.store_name, 
-                m.menu_name 
+                m.menu_name, 
+                gm.group_order 
          from visited v, 
               users u, 
               food_1st_category f1, 
               food_2nd_category f2, 
               menu m, 
               store s,  
-              groups g 
+              groups g ,
+              group_member gm 
          where f1.menu_1st_cate_no = f2.menu_1st_cate_no 
-                and f2.menu_2nd_cate_no = m.menu_2nd_cate_no 
-                and m.menu_no = v.menu_no 
-                and g.group_no = v.group_no 
-                and u.user_no = v.user_no 
-                and v.store_no = s.store_no 
-                and to_char(v.visited_date,'YYMM')=to_char(to_date(${selectMonth},'YYMM'),'YYMM') 
-                and v.user_no = #{userNo} 
+               and f2.menu_2nd_cate_no = m.menu_2nd_cate_no 
+               and m.menu_no = v.menu_no 
+               and g.group_no = v.group_no 
+               and gm.group_no = v.group_no 
+               and u.user_no = v.user_no 
+               and v.store_no = s.store_no 
+               and to_char(v.visited_date,'YYMM')=to_char(to_date(${selectMonth},'YYMM'),'YYMM') 
+               and v.user_no = #{userNo} 
          order by v.visited_date asc
    </select>
 	
