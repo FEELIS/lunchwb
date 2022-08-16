@@ -73,8 +73,12 @@ public class StoreController {
 	public String reviewReport(@RequestBody ReportVo reportVo, HttpSession session) {
 		logger.info("storeDistance...reportVo={}", reportVo);
 		
+		String result = "not login";
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		String result = storeService.reviewReport(reportVo, authUser);
+		
+		if(authUser != null) {
+			result = storeService.reviewReport(reportVo, authUser);
+		}
 		
 		return result;
 	}
