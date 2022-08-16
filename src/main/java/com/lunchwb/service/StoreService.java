@@ -9,10 +9,12 @@ import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lunchwb.dao.ReportDao;
 import com.lunchwb.dao.ReviewDao;
 import com.lunchwb.dao.StoreDao;
 import com.lunchwb.dao.VisitedDao;
 import com.lunchwb.vo.GPSVo;
+import com.lunchwb.vo.ReportVo;
 import com.lunchwb.vo.ReviewVo;
 import com.lunchwb.vo.StoreVo;
 import com.lunchwb.vo.UserVo;
@@ -27,13 +29,15 @@ public class StoreService {
 	private VisitedDao visitedDao; 
 	@Autowired
 	private ReviewDao reviewDao; 
+	@Autowired
+	private ReportDao reportDao;
 	
 	
 	/* 가게 정보 받아오기 */
 	public Map<String, Object> storeInfo(int storeNo, UserVo authUser){
 		Map<String, Object> storeMap = new HashMap<>();
 		
-		//기본정보
+		///////// 기본 정보 //////////////////////////////////////
 		StoreVo storeVo = storeDao.basicStoreInfo(storeNo);
 		
 		//영업시간
@@ -64,7 +68,10 @@ public class StoreService {
 		
 		storeMap.put("storeVo", storeVo);
 		
-		//나와 이곳 : visit (방문횟수/최근 방문날짜 그룹)
+		//////// 가게 선호 정보 ////////////////////////////////////////////
+		
+		
+		/////// 나와 이곳 : visit (방문횟수/최근 방문날짜 그룹) /////////////////
 		if(authUser != null) {
 			int userNo = authUser.getUserNo();
 			
@@ -77,7 +84,7 @@ public class StoreService {
 			System.out.println("visitedVo: " + visitedVo);
 		}
 		
-		//최근 리뷰 3건
+		//////////////// 최근 리뷰 3건 ///////////////////////////////////
 		List<ReviewVo> reviewList = reviewDao.recentReviews(storeNo);
 		storeMap.put("reviewList", reviewList);
 		
@@ -98,4 +105,19 @@ public class StoreService {
 		return distance;
 	}
 	
+	
+	/* 리뷰 신고 */
+	public String reviewReport(ReportVo reportVo, UserVo authUser) {
+		String result = "fail";
+
+		int userNo = authUser.getUserNo();
+		reportVo.setUserNo(userNo);
+		
+		int count = reportDao.reviewReport(reportVo);
+		if(count > 0) {
+			result = "success";
+		}
+		
+		return result;
+	}
 }

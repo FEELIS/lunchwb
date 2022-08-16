@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lunchwb.service.StoreService;
 import com.lunchwb.vo.GPSVo;
+import com.lunchwb.vo.ReportVo;
 import com.lunchwb.vo.UserVo;
 
 @Controller
@@ -44,12 +45,19 @@ public class StoreController {
 		return storeMap;
 	}
 	
+	
+	/* 가게와 나의 거리 */
 	@ResponseBody
 	@PostMapping("store/distance")
 	public int storeDistance(@RequestBody int storeNo, HttpSession session) {
 		logger.info("storeDistance...storeNo={}", storeNo);
 		
 		GPSVo gpsVo = (GPSVo)session.getAttribute("curr_location");
+		
+		if(gpsVo == null) {
+			return 0;
+		}
+		
 		logger.info("gpsVo={}", gpsVo);
 		
 		int distance = storeService.storeDistance(storeNo, gpsVo);
@@ -59,5 +67,16 @@ public class StoreController {
 	}
 	
 	
+	/* 리뷰 신고 */
+	@ResponseBody
+	@PostMapping("store/review/report")
+	public String reviewReport(@RequestBody ReportVo reportVo, HttpSession session) {
+		logger.info("storeDistance...reportVo={}", reportVo);
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		String result = storeService.reviewReport(reportVo, authUser);
+		
+		return result;
+	}
 
 }
