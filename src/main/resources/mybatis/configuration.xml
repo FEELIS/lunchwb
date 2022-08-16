@@ -12,7 +12,7 @@
    		<typeAlias alias="VisitedVo" type="com.lunchwb.vo.VisitedVo"/>
    		<typeAlias alias="GPSVo" type="com.lunchwb.vo.GPSVo"/>
    		<typeAlias alias="ReportVo" type="com.lunchwb.vo.ReportVo"/>
-   		<typeAlias alias="ReportVo" type="com.lunchwb.vo.VoteVo"/>
+   		<typeAlias alias="VoteVo" type="com.lunchwb.vo.VoteVo"/>
    		<typeAlias alias="Map" type="java.util.Map"/>
     </typeAliases>
 
