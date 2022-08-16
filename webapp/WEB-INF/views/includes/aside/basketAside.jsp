@@ -716,7 +716,7 @@
 		}
 
 		console.log(typeof(basket))
-		console.log(basket[0])
+		console.log(basket[curr_basket_group])
 		
 		await addMoreStore()
 		

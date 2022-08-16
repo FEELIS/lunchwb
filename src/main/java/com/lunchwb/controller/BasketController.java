@@ -99,7 +99,7 @@ public class BasketController {
 	}
 	
 	
-	// 비로그인 회원+그룹 없는 회원 다른 가게 추천받기
+	// 다른 가게 추천받기
 	@ResponseBody
 	@PostMapping("/addMoreStore")
 	public Map<Integer, List<StoreVo>> addMoreStore(HttpSession session) {

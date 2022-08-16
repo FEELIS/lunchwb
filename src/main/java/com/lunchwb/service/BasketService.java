@@ -44,15 +44,30 @@ public class BasketService {
 	}
 	
 	// 회원 새 장바구니 만들기
-		public Map<Integer, List<StoreVo>> makeNewbasket(List<Integer> basketGroup) {
-			Map<Integer, List<StoreVo>> basket = new HashMap<>();	
-			
-			for (Integer groupNo: basketGroup) {
-				basket.put(groupNo, new ArrayList<>());
-			}
-			
-			return basket;
+	public Map<Integer, List<StoreVo>> makeNewbasket(List<Integer> basketGroup) {
+		Map<Integer, List<StoreVo>> basket = new HashMap<>();	
+		
+		for (Integer groupNo: basketGroup) {
+			basket.put(groupNo, new ArrayList<>());
 		}
+		
+		return basket;
+	}
+	
+	// 회원 장바구니 그룹 추가
+	public Map<Integer, List<StoreVo>> addBasketGroup(Map<Integer, List<StoreVo>> basket, Integer groupNo) {		
+		basket.put(groupNo, new ArrayList<>());
+				
+		return basket;
+	}
+	
+	
+	// 회원 장바구니 그룹 제거
+	public Map<Integer, List<StoreVo>> deleteBasketGroup(Map<Integer, List<StoreVo>> basket, Integer groupNo) {
+		basket.remove(groupNo);
+		
+		return basket;
+	}
 	
 	
 	// 장바구니에 아이템 3개 추가하기
@@ -67,7 +82,7 @@ public class BasketService {
 		List<StoreVo> basketItem = null;
 		if (user) {
 			if (groupNo == 0) {
-				// 바꿔야함
+				// 이후에 알고리즘 추가
 				basketItem = basketDao.guestStoreRecommend(basketInput);
 				
 			} else {
