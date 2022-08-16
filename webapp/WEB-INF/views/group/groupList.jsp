@@ -112,7 +112,7 @@
                                     <tbody id="memberListArea" class="text-dark">
 										<c:forEach items="${map.memberList}" var="memberVo" varStatus="status">
 											<tr id="member-${memberVo.userNo}" <c:if test="${memberVo.userNo == authUser.userNo}">class="fw-bold"</c:if>>
-												<td style="width: 10%;">
+												<td class="group-bujang" style="width: 10%;">
 													<c:if test="${memberVo.bossCheck == 1}">
 	                                           			<img src="${pageContext.request.contextPath}/assets/img/bujang.png" width="24px" />
 	                                           		</c:if>
@@ -268,7 +268,10 @@
                     <p class="modal-group-p">탈퇴하시겠습니까?<br /></p>
                 </div>
             </div>
-            <div class="modal-footer-custom"><button class="btn btn-primary" type="button">확인</button><button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button></div>
+            <div class="modal-footer-custom">
+           		<a href="${pageContext.request.contextPath}/group/leave?groupNo=${map.groupNo}&userNo=${authUser.userNo}&groupLeader=${map.groupLeader}"><button class="btn btn-primary" type="submit">확인</button></a>
+            	<button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button>
+            </div>
         </div>
     </div>
 </div>
@@ -302,10 +305,6 @@
     </div>
 </div>
    
-  
-        
-
-</body>
 
 <script type="text/javascript">
 
@@ -444,6 +443,10 @@ function invt(groupVo){
 			$("#memberCount").text(Number(memberCount)+1)
 			console.log(memberCount)
 			
+			if(memberVo.bossCheck == 1){
+				$(".group-bujang").html("")
+			}
+			
 			render(memberVo)
 			
 		}, 
@@ -519,6 +522,10 @@ $("#groupmem-add button").on("click", function(){
 			$("#memberCount").text(Number(memberCount)+1)
 			console.log(memberCount)
 			
+			if(memberVo.bossCheck == 1){
+				$(".group-bujang").html("")
+			}
+			
 			render(memberVo)
 			
 		}, 
@@ -537,7 +544,7 @@ function render(memberVo, k){
 	
 	var str = ''
 		str += '<tr id="member-' + memberVo.userNo + '">'
-		str += '	<td style="width: 10%;">'
+		str += '	<td class="group-bujang" style="width: 10%;">'
 	
 	if(memberVo.bossCheck == 1){
 		str += '		<img src="${pageContext.request.contextPath}/assets/img/bujang.png" width="24px" />'
@@ -597,11 +604,9 @@ $("#modal-group-name-change .btn-primary").on("click", function(){
 			
 			if(result = success){
 				alert("그룹 이름이 변경되었습니다")
-			}else{
-				alert("그룹 이름 변경에 실패했습니다")
+				return true
 			}
 			
-			return true
 		}, 
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
@@ -698,6 +703,11 @@ $("#modal-group-leader-pass .btn-primary").on("click", function(){
 	})
 })
 
+
+
+
 </script>
+
+</body>
 
 </html>
