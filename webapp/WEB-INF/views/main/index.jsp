@@ -143,58 +143,54 @@
 	
 	
 	// 모달 닫힐 때 페이지 로드
-	$("#modal-gps-submit").on("click", async function(){
+	$("#modal-gps-submit").on("click", function(){
 		if ($("#curr-location-address").text() != $("#modal-curr-location").text()) {
 			var gpsChangeOK = confirm("현재 위치 변경 시 현재 저장한 점심 후보가 초기화됩니다. 정말로 변경하시겠습니까?")
-			console.log(1)
+
 			if (!gpsChangeOK) {
 				return false
 			}
 			
-			async function getXY(address) {
-				console.log(2)
-				var geocoder = new kakao.maps.services.Geocoder()
-				
-				let addressChange = address => {
-					return new Promise((resolve, reject) => {
-						geocoder.addressSearch(address, (result, status) => {
-							if (status === kakao.maps.services.Status.OK) {
-								console.log(3)
-								console.log(gpsVo)
-								gpsVo.gpsX = result[0].x
-							    gpsVo.gpsY = result[0].y
-						        gpsVo.address = $("#modal-curr-location").text()
-						        console.log(gpsVo)
-						        resolve(gpsVo)
-							} else {
-								reject("error")
-							}
-						})
-					})
-				}
-			}
-			
-			await getXY($("#modal-curr-location").text())
-			console.log(4)
-			console.log(gpsVo)
-			console.log(4.2)
-			await setGPS(gpsVo)
+			var geocoder = new kakao.maps.services.Geocoder()
+			   geocoder.addressSearch($("#modal-curr-location").text(), async function(result, status) {
 
-			if (userNo == "") {			
-				await makeGuestBasket()
-				
-			} else {
-				await makeGroupBasket()
-			}
-			console.log(5)
+			   if (status === kakao.maps.services.Status.OK) {
+				    gpsVo.gpsX = result[0].x
+				    gpsVo.gpsY = result[0].y
+			        gpsVo.address = $("#modal-curr-location").text()
+			        
+			        await setGPS(gpsVo)
+				    await clearBasket()
+			   	  } 
+			});  
+			
+			$("#modal-location-change").modal("hide")
 			sleep(100)
 			alert("현재 위치가 변경되었습니다.")
-			//location.replace("${pageContext.request.contextPath}/")
+			
+			sleep(100)
+			location.replace("${pageContext.request.contextPath}/")
 			
 		} else {
 			$("#modal-location-change").modal("hide")
 		}
 	})
+	
+	
+	// 장바구니 비우기
+	async function clearBasket() {
+		$.ajax({
+			url : "${pageContext.request.contextPath}/basket/clearBasket",		
+			type : "post",
+			async : false,
+			success : function() {
+				console.log("장바구니 비우기 완료")
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+	}
 	
 </script>
 

@@ -87,6 +87,18 @@ public class BasketController {
 	}
 	
 	
+	// 장바구니 비우기
+	@ResponseBody
+	@PostMapping("/clearBasket")
+	public void clearBasket(HttpSession session) {
+		logger.info("장바구니 비우기");
+		
+		if (session.getAttribute("basket") != null) {
+			session.removeAttribute("basket");
+		}
+	}
+	
+	
 	// 비로그인 회원+그룹 없는 회원 다른 가게 추천받기
 	@ResponseBody
 	@PostMapping("/addMoreStore")
