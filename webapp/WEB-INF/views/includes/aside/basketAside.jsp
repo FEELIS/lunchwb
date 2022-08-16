@@ -849,6 +849,26 @@
 	}
 	
 	
+	// 투표하기 클릭
+	$("#basket-vote-btn").on("click", function(){
+		var cnt = 0
+		for (var i = 0; i < basket[curr_basket_group].length; i++) {
+			if (basket[curr_basket_group][i].stored) {
+				cnt += 1
+				addToBasket(basket[curr_basket_group][i])
+			}
+		}
+		
+		if (cnt < 2) {
+			alert("오늘의 점심 후보가 2개 이상일 때 투표를 진행할 수 있습니다.")
+			return false
+		}
+		
+		location.replace("${pageContext.request.contextPath}/vote")
+	})
+	
+	
+	
 	// sleep
 	async function sleep(ms) {
 		let start = Date.now(), now = start
