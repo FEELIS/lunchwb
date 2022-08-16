@@ -43,13 +43,13 @@
 	font-size: 10px;
 }
 
-#modal-store .store-about .store-imgs .img-area {
+#modal-store #store-about .store-imgs .img-area {
   margin-top: 0px;
   padding-right: 16px;
   text-align: center;
 }
 
-#modal-store .store-about .store-imgs .img-area span {
+#modal-store #store-about .store-imgs .img-area span {
   width: 172px;
   height: 192px;
   border: 1px;
@@ -57,27 +57,27 @@
   border-color: #e3e6f0;
 }
 
-#modal-store .store-about .store-imgs .width-full img {
+#modal-store #store-about .store-imgs .width-full img {
   overflow: hidden;
   width: 100%;
 }
 
-#modal-store .store-about .store-imgs .height-full img {
+#modal-store #store-about .store-imgs .height-full img {
   overflow: hidden;
   height: 100%;
 }
 
-#modal-store .store-about .store-imgs .img-paging-icon {
+#modal-store #store-about .store-imgs .img-paging-icon {
   padding-top: 1px;
   padding-right: 20px;
 }
 
-#modal-store .store-about .review-area {
+#modal-store #store-about .review-area {
   width: 542px;
   vertical-align: top;
 }
 
-#modal-store .store-about .review-area .store-reviews {
+#modal-store #store-about .review-area .store-reviews {
   margin-bottom: 12px;
   padding: 5px;
   height: 74px;
@@ -86,28 +86,28 @@
   border-radius: 0px !important;
 }
 
-#modal-store .store-about .review-area .store-reviews .store-review-left {
+#modal-store #store-about .review-area .store-reviews .store-review-left {
   width: 343px;
   margin-left: 5px;
 }
 
-#modal-store .store-about .review-area .store-reviews .store-review-right {
+#modal-store #store-about .review-area .store-reviews .store-review-right {
   width: 180px;
   vertical-align: top;
 }
 
-#modal-store .store-about .review-area .store-reviews .store-review-right i {
+#modal-store #store-about .review-area .store-reviews .store-review-right i {
   font-size: 10px;
 }
 
-#modal-store .store-about .review-area .store-reviews .store-review-right .review-report {
+#modal-store #store-about .review-area .store-reviews .store-review-right .review-report {
   margin-top: -1px;
   margin-left: 5px;
   padding: 0px;
   font-size: 12px;
 }
 
-#modal-store .store-about .review-area #more-reviews #modal-review-more {
+#modal-store #store-about .review-area #more-reviews #modal-review-more {
   height: 22px;
   padding: 0px 0px 0px 5px;
 }
@@ -195,7 +195,7 @@
   padding: 8px 2px 0px 12px;
 }
 
-.modal-store-title .dropdown-toggle {
+#modal-reviews .modal-store-title .dropdown-toggle {
   width: 300px;
 }
 
@@ -252,7 +252,7 @@
   vertical-align: top;
 }
 
-#modal-reviews .store-about .review-area .store-reviews .store-review-right i {
+#modal-reviews .review-area .store-reviews .store-review-right i {
   font-size: 10px;
 }
 
