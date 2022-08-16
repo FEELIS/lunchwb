@@ -12,6 +12,7 @@ public class VisitedVo {
 	
 	///////////집계용//////
 	private int visitCount;
+	private int menuCount;
 	
 	//////////////////// 달력용 //////////////////// 
 	private String menu1stCateName;
@@ -48,7 +49,7 @@ public class VisitedVo {
 		this.groupOrder = groupOrder;
 	}
 
-	public VisitedVo(int visitedNo, int userNo, int groupNo, int storeNo, int menuNo, String visitedDate, int visitCount,
+	public VisitedVo(int visitedNo, int userNo, int groupNo, int storeNo, int menuNo, String visitedDate, int visitCount, int menuCount,
 			String menu1stCateName, String groupName, String storeName, String menuName, String selectMonth, int groupOrder) {
 		this.visitedNo = visitedNo;
 		this.userNo = userNo;
@@ -57,6 +58,7 @@ public class VisitedVo {
 		this.menuNo = menuNo;
 		this.visitedDate = visitedDate;
 		this.visitCount = visitCount;
+		this.menuCount = menuCount;
 		this.menu1stCateName = menu1stCateName;
 		this.groupName = groupName;
 		this.storeName = storeName;
@@ -124,6 +126,14 @@ public class VisitedVo {
 	public void setVisitCount(int visitCount) {
 		this.visitCount = visitCount;
 	}
+	
+	public int getMenuCount() {
+		return menuCount;
+	}
+
+	public void setMenuCount(int menuCount) {
+		this.menuCount = menuCount;
+	}
 
 	public void setMenu1stCateName(String menu1stCateName) {
 		this.menu1stCateName = menu1stCateName;
@@ -173,12 +183,10 @@ public class VisitedVo {
 	public String toString() {
 		return "VisitedVo [visitedNo=" + visitedNo + ", userNo=" + userNo + ", groupNo=" + groupNo + ", storeNo="
 				+ storeNo + ", menuNo=" + menuNo + ", visitedDate=" + visitedDate + ", visitCount=" + visitCount
-				+ ", menu1stCateName=" + menu1stCateName + ", groupName=" + groupName + ", storeName=" + storeName
-				+ ", menuName=" + menuName + ", selectMonth=" + selectMonth + ", groupOrder=" + groupOrder + "]";
+				+ ", menuCount=" + menuCount + ", menu1stCateName=" + menu1stCateName + ", groupName=" + groupName
+				+ ", storeName=" + storeName + ", menuName=" + menuName + ", selectMonth=" + selectMonth
+				+ ", groupOrder=" + groupOrder + "]";
 	}
-	
-	
-	
 
 
 };

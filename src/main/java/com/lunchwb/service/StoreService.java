@@ -89,6 +89,10 @@ public class StoreService {
 		
 		//최근 리뷰 사진(null 가능이라 따로 최근 3개? - 이거는 리뷰 작성부터.............)
 		
+		////////////// 최근 한달 선택된 메뉴 ///////////////////////////
+		VisitedVo visitedVo = visitedDao.recentMenu(storeNo);
+		storeMap.put("visitedVo", visitedVo);
+		
 		return storeMap;
 	}
 	

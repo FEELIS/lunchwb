@@ -15,6 +15,7 @@
 		<result column="menu_name" property="menuName" />
 		<result column="select_month" property="selectMonth" />
 		<result column="visit_count" property="visitCount" />
+		<result column="menu_count" property="menuCount" />
 		<result column="group_order" property="groupOrder" />
 	</resultMap>
 	
@@ -65,6 +66,18 @@
 		                    	  WHERE store_no = #{storeNo}
 		                    	  AND user_no = #{userNo})
 			  AND v.group_no = g.group_no) 
+	</select>
+	
+	<select id="recentMenu" parameterType="int" resultMap="resultMapVisitedVo">
+		SELECT  COUNT(menu_name) menu_count
+				, menu_name
+		FROM (	SELECT m.menu_name
+				FROM visited v, menu m
+				WHERE visited_date > TO_CHAR(SYSDATE-30, 'YYYY-MM-DD')
+				AND v.menu_no IS NOT NULL
+				AND store_no = #{storeNo}
+				AND v.menu_no = m.menu_no	)
+		GROUP BY menu_name
 	</select>
 
 </mapper>
