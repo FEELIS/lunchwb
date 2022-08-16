@@ -28,7 +28,7 @@ public class BasketService {
 	
 	// 초기 로드 시 장바구니 그룹 선택
 	public List<GroupVo> getBasketGroup(int userNo) {
-		List<GroupVo> basketGroup = null;
+		List<GroupVo> basketGroup = new ArrayList<>();
 		basketGroup = groupDao.selectBasketGroup(userNo);
 		
 		return basketGroup;
@@ -44,15 +44,16 @@ public class BasketService {
 	}
 	
 	// 회원 새 장바구니 만들기
-	public Map<Integer, List<StoreVo>> makeNewbasket(List<Integer> basketGroup) {
+	public Map<Integer, List<StoreVo>> makeNewbasket(List<GroupVo> basketGroup) {
 		Map<Integer, List<StoreVo>> basket = new HashMap<>();	
 		
-		for (Integer groupNo: basketGroup) {
-			basket.put(groupNo, new ArrayList<>());
+		for (GroupVo group: basketGroup) {
+			basket.put(group.getGroupNo(), new ArrayList<>());
 		}
 		
 		return basket;
 	}
+	
 	
 	// 회원 장바구니 그룹 추가
 	public Map<Integer, List<StoreVo>> addBasketGroup(Map<Integer, List<StoreVo>> basket, Integer groupNo) {		
@@ -171,5 +172,26 @@ public class BasketService {
 		}
 
 		return basketItems;
+	}
+	
+	
+	// 세션 장바구니 그룹에 그룹 추가
+	public List<GroupVo> basketGroupAdd(List<GroupVo> basketGroup, GroupVo newGroup) {
+		basketGroup.add(newGroup);
+		
+		return basketGroup;
+	}
+	
+	
+	// 세션 장바구니 그룹에 그룹 제거
+	public List<GroupVo> basketGroupDel(List<GroupVo> basketGroup, Integer groupNo) {
+		for (GroupVo group: basketGroup) {
+			if (group.getGroupNo() == groupNo) {
+				basketGroup.remove(group);
+				break;
+			}
+		}
+		
+		return basketGroup;
 	}
 }

@@ -43,6 +43,30 @@ public class BasketController {
 	}
 	
 	
+	// 현재 장바구니 그룹 세션 저장
+	@ResponseBody
+	@PostMapping("/setSessionBasketGroup")
+	public boolean setSessionBasketGroup(@RequestBody Map<String, Object> basket_group, HttpSession session) {
+		logger.info("세션 장바구니 그룹 저장");
+		boolean result = true;
+		
+		if (basket_group == null) {
+			result = false;
+		}
+		
+		Integer currBasketGroup = (Integer)basket_group.get("curr_basket_group");
+		
+		if (session.getAttribute("curr_basket_group") != null) {
+			session.removeAttribute("curr_basket_group");
+		}
+		session.setAttribute("curr_basket_group", currBasketGroup);
+		logger.info("현재 장바구니 그룹: " + currBasketGroup);
+		
+		return result;
+		
+	}
+	
+	
 	// 페이지 로드시 장바구니 불러오기
 	@ResponseBody
 	@PostMapping("/loadBasket")
@@ -84,17 +108,34 @@ public class BasketController {
 		
 		return basket;
 	}
-	
-	
-	// 장바구니 비우기
-	@ResponseBody
-	@PostMapping("/clearBasket")
-	public void clearBasket(HttpSession session) {
-		logger.info("장바구니 비우기");
 		
+	
+	// 로그인 회원 장바구니 생성 + 초기 3개 항목 담기
+	@ResponseBody
+	@PostMapping("/groupMakeBasket")
+	public Map<Integer, List<StoreVo>> groupMakeBasket(@RequestBody List<GroupVo> basketGroup, HttpSession session) {
+		logger.info("로그인 회원 장바구니 생성");
+		
+		GPSVo curr_location = (GPSVo)session.getAttribute("curr_location");
+		logger.info(curr_location.toString());
+		
+		List<Integer> filter_excluded = (List<Integer>)session.getAttribute("filter_excluded");
+		logger.info(filter_excluded.toString());
+				
+		Map<Integer, List<StoreVo>> basket = basketService.makeNewbasket(basketGroup);	
+		
+		for (GroupVo group: basketGroup) {
+			Integer groupNo = group.getGroupNo();
+			basket.put(groupNo, basketService.addItemsToBasket(basket.get(groupNo), groupNo, curr_location, filter_excluded, true, true));	
+		}
+
 		if (session.getAttribute("basket") != null) {
 			session.removeAttribute("basket");
 		}
+		session.setAttribute("basket", basket);
+		logger.info(basket.toString());
+		
+		return basket;
 	}
 	
 	
@@ -129,114 +170,6 @@ public class BasketController {
 		return basket;
 	}
 		
-	
-	// 로그인 회원 장바구니 생성 + 초기 3개 항목 담기
-	@ResponseBody
-	@PostMapping("/groupMakeBasket")
-	public Map<Integer, List<StoreVo>> groupMakeBasket(@RequestBody List<Integer> basketGroup, HttpSession session) {
-		logger.info("로그인 회원 장바구니 생성");
-		
-		GPSVo curr_location = (GPSVo)session.getAttribute("curr_location");
-		logger.info(curr_location.toString());
-		
-		List<Integer> filter_excluded = (List<Integer>)session.getAttribute("filter_excluded");
-		logger.info(filter_excluded.toString());
-		
-		if (basketGroup.size() == 0) basketGroup.add(0);
-		
-		Map<Integer, List<StoreVo>> basket = basketService.makeNewbasket(basketGroup);	
-		
-		for (Integer groupNo: basketGroup) {
-			basket.put(groupNo, basketService.addItemsToBasket(basket.get(groupNo), groupNo, curr_location, filter_excluded, true, true));	
-		}
-
-		if (session.getAttribute("basket") != null) {
-			session.removeAttribute("basket");
-		}
-		session.setAttribute("basket", basket);
-		logger.info(basket.toString());
-		
-		return basket;
-	}
-
-	
-	// GPS 위치 세션에 저장
-	@ResponseBody
-	@PostMapping("/setGPS")
-	public boolean setGPS(@RequestBody GPSVo gpsVo, HttpSession session) {
-		logger.info("GPS 설정하기");
-				
-		Boolean result;
-		
-		if (gpsVo == null) {
-			result = false;
-			
-		} else {
-			logger.info("gpsVo: " + gpsVo.toString());
-			result = true;
-		}
-		
-		if (session.getAttribute("curr_location") != null) {
-			session.removeAttribute("curr_location");
-		}
-		session.setAttribute("curr_location", gpsVo);
-		
-		return result;
-	}
-	
-	
-	// 현재 장바구니 그룹 세션 저장
-	@ResponseBody
-	@PostMapping("/setSessionBasketGroup")
-	public boolean setSessionBasketGroup(@RequestBody Map<String, Object> basket_group, HttpSession session) {
-		logger.info("세션 장바구니 그룹 저장");
-		boolean result = true;
-		
-		if (basket_group == null) {
-			result = false;
-		}
-		
-		Integer currBasketGroup = (Integer)basket_group.get("curr_basket_group");
-		
-		if (session.getAttribute("curr_basket_group") != null) {
-			session.removeAttribute("curr_basket_group");
-		}
-		session.setAttribute("curr_basket_group", currBasketGroup);
-		logger.info("현재 장바구니 그룹: " + currBasketGroup);
-		
-		return result;
-		
-	}
-	
-	
-	// 세션에 필터 없을 때 필터 생성
-	@ResponseBody
-	@PostMapping("/makeFilterSession")
-	public boolean makeFilterSession(HttpSession session) {
-		logger.info("세션 필터 생성");
-		List<Integer> filter_excluded = new ArrayList<>();
-		
-		session.setAttribute("filter_excluded", filter_excluded);
-		
-		return true;
-	}
-	
-	
-	// 필터 모달에서 저장 버튼 눌렀을 때 > 세션에 값 저장
-	@ResponseBody
-	@PostMapping("/saveFilterSession")
-	public boolean saveFilterSession(@RequestBody List<Integer> filter_excluded, HttpSession session) {
-		logger.info("세션 필터 저장");
-		logger.info("filter_excluded: " + filter_excluded.toString());
-		
-		if (session.getAttribute("filter_excluded") != null) {
-			session.removeAttribute("filter_excluded");
-		}
-		session.setAttribute("filter_excluded", filter_excluded);
-		
-		return true;
-	}
-	
 	
 	// 장바구니에서 항목 삭제 > 세션 반영
 	@ResponseBody
@@ -279,5 +212,71 @@ public class BasketController {
 		logger.info(basket.toString());
 		
 		return basket;
+	}
+	
+	
+	// 장바구니 비우기
+	@ResponseBody
+	@PostMapping("/clearBasket")
+	public void clearBasket(HttpSession session) {
+		logger.info("장바구니 비우기");
+		
+		if (session.getAttribute("basket") != null) {
+			session.removeAttribute("basket");
+		}
+	}
+	
+	
+	// GPS 위치 세션에 저장
+	@ResponseBody
+	@PostMapping("/setGPS")
+	public boolean setGPS(@RequestBody GPSVo gpsVo, HttpSession session) {
+		logger.info("GPS 설정하기");
+				
+		Boolean result;
+		
+		if (gpsVo == null) {
+			result = false;
+			
+		} else {
+			logger.info("gpsVo: " + gpsVo.toString());
+			result = true;
+		}
+		
+		if (session.getAttribute("curr_location") != null) {
+			session.removeAttribute("curr_location");
+		}
+		session.setAttribute("curr_location", gpsVo);
+		
+		return result;
+	}
+	
+	
+	// 세션에 필터 없을 때 필터 생성
+	@ResponseBody
+	@PostMapping("/makeFilterSession")
+	public boolean makeFilterSession(HttpSession session) {
+		logger.info("세션 필터 생성");
+		List<Integer> filter_excluded = new ArrayList<>();
+		
+		session.setAttribute("filter_excluded", filter_excluded);
+		
+		return true;
+	}
+	
+	
+	// 필터 모달에서 저장 버튼 눌렀을 때 > 세션에 값 저장
+	@ResponseBody
+	@PostMapping("/saveFilterSession")
+	public boolean saveFilterSession(@RequestBody List<Integer> filter_excluded, HttpSession session) {
+		logger.info("세션 필터 저장");
+		logger.info("filter_excluded: " + filter_excluded.toString());
+		
+		if (session.getAttribute("filter_excluded") != null) {
+			session.removeAttribute("filter_excluded");
+		}
+		session.setAttribute("filter_excluded", filter_excluded);
+		
+		return true;
 	}
 }
