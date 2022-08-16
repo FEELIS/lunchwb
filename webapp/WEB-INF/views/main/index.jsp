@@ -45,10 +45,10 @@
             <c:import url="/WEB-INF/views/includes/header.jsp" />
         </div>
         
-        <div class="flex-nowrap" id="curr-location">
-        	<span style="margin-right: 5px;"><i class="fas fa-crosshairs"></i>&nbsp;현위치:</span>
+        <div class="flex-nowrap no-drag" id="curr-location">
+        	<span style="margin-right: 5px;" class="no-drag"><i class="fas fa-crosshairs no-drag"></i>&nbsp;현위치:</span>
         	<span id="curr-location-address">${curr_location.address}</span>
-        	<button class="btn btn-primary" id="location-change-btn" type="button">위치재설정</button>
+        	<button class="btn btn-primary no-drag" id="location-change-btn" type="button">위치재설정</button>
         </div>
         
         <c:if test="${!empty(curr_location)}">

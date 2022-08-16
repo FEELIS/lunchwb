@@ -16,28 +16,28 @@
 <nav id="basket-aside" class="navbar navbar-light bg-white text-center d-xxl-flex align-items-start justify-content-xxl-center sidebar accordion p-0">
     <div class="container-fluid d-flex flex-column p-0">
         <div id="bujang-logo-wrap">
-        	<a href="${pageContext.request.contextPath}/"><img data-bss-hover-animate="pulse" id="bujang-logo-blue" class="no-drag" src="assets/img/bujang-logo%20blue.png"></a>
+        	<a href="${pageContext.request.contextPath}/" class="no-drag"><img data-bss-hover-animate="pulse" id="bujang-logo-blue" class="no-drag" src="assets/img/bujang-logo%20blue.png"></a>
         </div>
         
         <div id="comment-box">
-        	<span id="eat-what" class="d-inline-block">오늘 점심 뭐 먹지?</span>
-        	<span id="prefer-data" class="d-inline-block">
+        	<span id="eat-what" class="d-inline-block no-drag">오늘 점심 뭐 먹지?</span>
+        	<span id="prefer-data" class="d-inline-block no-drag">
         	<!--  
         		<span class="d-inline-block emphasize-blue">${authUser.userName}</span>
         		<span class="d-inline-block">님은 패스트푸드를 좋아하시니까!</span>
         	-->
-        		<span class="d-inline-block">오늘도 점심은 부장님요기요</span>
+        		<span class="d-inline-block no-drag">오늘도 점심은 부장님요기요</span>
         	</span>
         </div>
         
         <c:if test="${empty(authUser)}">
          <div id="basket-aside-login-area">
-         	<span class="d-inline-block" id="login-jebal">로그인을 하면 취향에 맞는 식당을 추천해드려요</span>
-         	<a href="${pageContext.request.contextPath}/login"><span class="d-inline-block" id="basket-login-btn">로그인하기</span></a>
+         	<span class="d-inline-block no-drag" id="login-jebal">로그인을 하면 취향에 맞는 식당을 추천해드려요</span>
+         	<a href="${pageContext.request.contextPath}/login"><span class="d-inline-block no-drag" id="basket-login-btn">로그인하기</span></a>
          
-             <div id="basket-login-controll">
-             	<a href="${pageContext.request.contextPath}/join"><span class="d-inline-block" id="basket-join-link">회원가입</span></a>
-             	<a href="${pageContext.request.contextPath}/findPW"><span class="d-inline-block" id="basket-findpw-link">비밀번호 찾기</span></a>
+             <div id="basket-login-controll" class="no-drag">
+             	<a href="${pageContext.request.contextPath}/join" class="no-drag"><span class="d-inline-block no-drag" id="basket-join-link">회원가입</span></a>
+             	<a href="${pageContext.request.contextPath}/findPW" class="no-drag"><span class="d-inline-block no-drag" id="basket-findpw-link">비밀번호 찾기</span></a>
              </div>
          </div>
         </c:if>
@@ -45,7 +45,7 @@
         <div id="basket-aside-content" class="full-box">
         	<c:if test="${!empty(authUser)}">
              <div class="text-start d-flex basket-aside-title" id="basket-title-group">
-             	<span class="d-inline-block">나의 그룹</span>
+             	<span class="d-inline-block no-drag">나의 그룹</span>
              </div>
              
              <div class="d-flex" id="basket-groups">
@@ -54,13 +54,13 @@
             </c:if>
             
             <div class="text-start d-flex basket-aside-title" id="basket-title-lunch-candidates">
-            	<span class="d-inline-block">오늘의 점심 후보</span>
+            	<span class="d-inline-block no-drag">오늘의 점심 후보</span>
             </div>
             
             <div class="table-responsive" id="basket-table">
                 <table class="table" id="basket-table-table">
 	                <tr>
-	                    <td id="basket-table-button-area" colspan="2">
+	                    <td id="basket-table-button-area" colspan="2" class="no-drag">
 	                    	<i class="fas fa-filter" id="basket-filter-btn"></i>
 	                    	<button class="btn btn-primary d-inline-block" id="basket-another-stores-btn" type="button">다른 가게 추천 받기</button>
 	                    </td>
@@ -101,7 +101,7 @@
             </div>
             
 
-            <div id="basket-button-area">
+            <div id="basket-button-area" class="no-drag">
             	<c:if test="${!empty(authUser)}">
             		<button class="btn btn-primary" id="basket-vote-btn" type="button">투표하기</button>
             	</c:if>
@@ -164,7 +164,7 @@
 	// 랜덤 선택 클릭 시 항목: 맨 밑에 둠
 	
 	let indexJSP = false
-	
+
 	const userNo = "${authUser.userNo}"
 	let basket = "${basket}"
 		
