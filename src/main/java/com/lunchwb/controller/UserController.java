@@ -38,6 +38,7 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.lunchwb.api.GoogleOAuthRequest;
 import com.lunchwb.api.GoogleOAuthResponse;
 import com.lunchwb.api.NaverLoginBo;
+import com.lunchwb.service.BasketService;
 import com.lunchwb.service.UserService;
 import com.lunchwb.vo.UserVo;
 
@@ -48,6 +49,8 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	NaverLoginBo naverLoginBo;
+	@Autowired
+	private BasketService basketService;
 	@Autowired
 	@Qualifier("bcryptPasswordEncoder")
 	private PasswordEncoder pwEncoder;
@@ -98,6 +101,8 @@ public class UserController {
 		if (session.getAttribute("basket") != null) {
 			session.removeAttribute("basket");
 		}
+		
+		session.setAttribute("basketGroup", basketService.getBasketGroup(authUser.getUserNo())); 
 
 		return returnURL;
 	}
@@ -114,8 +119,7 @@ public class UserController {
 		String apiResult = naverLoginBo.getUserProfile(oauthToken);
 		ObjectMapper objectMapper = new ObjectMapper();
 
-		Map<String, Object> apiJson = (Map<String, Object>) objectMapper.readValue(apiResult, Map.class)
-				.get("response");
+		Map<String, Object> apiJson = (Map<String, Object>) objectMapper.readValue(apiResult, Map.class).get("response");
 		System.out.println("apiJson =>" + apiJson);
 
 		UserVo snsConnectionCheck = userService.snsConnectionCheck(apiJson.get("email"));
@@ -125,21 +129,21 @@ public class UserController {
 			model.addAttribute("snsLogin", apiJson.get("id"));
 			return "user/joinFormSNS";
 		} else if (snsConnectionCheck.getSnsLogin() == null && snsConnectionCheck.getUserEmail() != null) { // 이메일 가입
-																											// 되어있고 네이버
-																											// 연동 안되어
-																											// 있을시
 			userService.setSNSConnection(apiJson);
 			UserVo loginCheck = userService.snsLogin(apiJson);
 			session.setAttribute("authUser", loginCheck);
+			session.setAttribute("basketGroup", basketService.getBasketGroup(loginCheck.getUserNo())); 
 		} else { // 모두 연동 되어있을시
 			UserVo loginCheck = userService.snsLogin(apiJson);
 			session.setAttribute("authUser", loginCheck);
+			session.setAttribute("basketGroup", basketService.getBasketGroup(loginCheck.getUserNo()));
 		}
 
 		if (session.getAttribute("basket") != null) {
 			session.removeAttribute("basket");
 		}
-
+		
+		
 		return "redirect:./";
 	}
 
@@ -173,15 +177,19 @@ public class UserController {
 			UserVo loginCheck = userService.snsLogin(userInfo);
 			session.setAttribute("authUser", loginCheck);
 			session.setAttribute("access_Token", access_Token);
+			session.setAttribute("basketGroup", basketService.getBasketGroup(loginCheck.getUserNo()));
 		} else { // 모두 연동 되어있을시
 			UserVo loginCheck = userService.snsLogin(userInfo);
 			session.setAttribute("authUser", loginCheck);
 			session.setAttribute("access_Token", access_Token);
+			session.setAttribute("basketGroup", basketService.getBasketGroup(loginCheck.getUserNo()));
 		}
 
 		if (session.getAttribute("basket") != null) {
 			session.removeAttribute("basket");
 		}
+		
+		
 
 		return "redirect:./";
 	}
@@ -253,9 +261,11 @@ public class UserController {
 			userService.setSNSConnection(userInfo); // 카카오에서 보내주는 ID 업데이트.
 			UserVo loginCheck = userService.snsLogin(userInfo);
 			session.setAttribute("authUser", loginCheck);
+			session.setAttribute("basketGroup", basketService.getBasketGroup(loginCheck.getUserNo()));
 		} else { // 모두 연동 되어있을시
 			UserVo loginCheck = userService.snsLogin(userInfo);
 			session.setAttribute("authUser", loginCheck);
+			session.setAttribute("basketGroup", basketService.getBasketGroup(loginCheck.getUserNo()));
 		}
 
 		if (session.getAttribute("basket") != null) {
@@ -280,13 +290,19 @@ public class UserController {
 		if (registerCheck != null && registerCheck > 0) { // 회원가입이 되었다면 바로 로그인.
 			UserVo loginCheck = userService.snsLogin(paramMap);
 			session.setAttribute("authUser", loginCheck);
-
+			session.setAttribute("basketGroup", basketService.getBasketGroup(loginCheck.getUserNo()));
 			if (access_Token != null) { // 카카오 회원이라면 토큰값을 세션에 넣어줍니다.
 				session.setAttribute("access_Token", access_Token);
 			}
-
+			
 		} else {
 		}
+		
+		if (session.getAttribute("basket") != null) {
+			session.removeAttribute("basket");
+		}
+		
+		
 		return "redirect:./";
 	}
 
