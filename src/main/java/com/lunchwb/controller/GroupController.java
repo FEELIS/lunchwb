@@ -46,7 +46,7 @@ public class GroupController {
 		}
 		
 		/*
-		//내 그룹이 아님(가져온 멤버목록이 없음)
+		//내 그룹이 아님(가져온 멤버목록이 없음) - 내가 있으면 0 일 수가 없어요
 		if((String)map.get("memberCount") == null) {
 			return "error/403";
 		}
@@ -187,14 +187,25 @@ public class GroupController {
 	}
 	
 	
+	/******************** 그룹 탈퇴 ***************************************************/
+	@GetMapping("group/leave")
+	public String leaveGroup(@RequestParam(name="groupNo", defaultValue="0") int groupNo, @RequestParam(name="userNo")int userNo
+							 , @RequestParam(name="groupLeader", defaultValue="0") int groupLeader) {
+		logger.info("GroupController > leaveGroup()");
+		
+		groupService.leaveGroup(groupNo, userNo, groupLeader);
+		
+		return "redirect:./list";
+	}
+	
+	
 	/******************** 그룹장 위임 ***************************************************/
 	@ResponseBody
 	@PostMapping("group/leaderChange")
-	public String leaderChange(@RequestBody GroupVo groupVo, HttpSession session) {
+	public String leaderChange(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > leaderchange()");
 		
-		UserVo authUser = (UserVo)session.getAttribute("authUser");	
-		String result = groupService.leaderChange(groupVo, authUser);
+		String result = groupService.leaderChange(groupVo);
 		
 		return result;
 	}

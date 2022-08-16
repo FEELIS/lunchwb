@@ -285,7 +285,7 @@ public class GroupService {
 		String result = "fail";
 		//int userNo = groupVo.getUserNo();
 		///////////////////// 그룹 멤버에서 삭제 //////////////////////////
-		int count = groupDao.outMember(groupVo);
+		int count = groupDao.outGroup(groupVo);
 		
 		if(count > 0) {
 			result = "success";
@@ -304,8 +304,26 @@ public class GroupService {
 	}
 	
 	
+	/******************** 그룹 탈퇴 ****************************************************/
+	public void leaveGroup(int groupNo, int userNo, int groupLeader) {
+		GroupVo groupVo = new GroupVo();
+		groupVo.setUserNo(userNo);
+		groupVo.setGroupNo(groupNo);
+		
+		//내가 그룹장이었나요? > 그룹 비활성화 group - leader no = 0
+		if(userNo == groupLeader) {
+			groupVo.setGroupLeader(0);
+			groupDao.groupChange(groupVo);
+		}
+		
+			groupDao.outGroup(groupVo);
+			groupDao.autoOrder(groupVo);
+		
+	}
+	
+	
 	/******************** 그룹장 위임 ****************************************************/
-	public String leaderChange(GroupVo groupVo, UserVo authUser) {
+	public String leaderChange(GroupVo groupVo) {
 		String result = "fail";
 		
 		int count = groupDao.groupChange(groupVo);
