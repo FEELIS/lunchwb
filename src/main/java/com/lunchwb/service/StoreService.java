@@ -81,7 +81,6 @@ public class StoreService {
 			
 			visitedVo = visitedDao.recentVisit(visitedVo);
 			storeMap.put("visitedVo", visitedVo);
-			System.out.println("visitedVo: " + visitedVo);
 		}
 		
 		//////////////// 최근 리뷰 3건 ///////////////////////////////////
