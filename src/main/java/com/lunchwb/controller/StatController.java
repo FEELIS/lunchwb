@@ -78,6 +78,30 @@ public class StatController {
 		
 		return "stat/reviewList";
 	};
+	// =============== 따로갔어요폼 ===============
+	@GetMapping("/addAlone")
+	public String addAloneForm() {
+		logger.info("StatController > addAloneForm()");
+		
+		
+		
+		
+		
+		
+		return "stat/addReview";
+	};
+	
+	@PostMapping("/addAlone")
+	public String addAlone() {
+		logger.info("StatController > addAlone()");
+		
+		
+		
+		
+		
+		
+		return "stat/reviewList";
+	};
 	
 	
 	
