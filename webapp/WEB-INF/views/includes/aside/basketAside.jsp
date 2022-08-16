@@ -195,10 +195,12 @@
 	
 	// 장바구니 클릭 시 모달 팝업
 	$("#basket-table").on("click", ".basket-table-store-name", function(){
-		var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
-		console.log(storeNo + "번 가게 정보 보기")
-		
-		storeInfoOpen(storeNo, 1)
+		if (indexJSP) {
+			var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
+			console.log(storeNo + "번 가게 정보 보기")
+			
+			storeInfoOpen(storeNo, 1)
+		}
 	})
 		
 	
