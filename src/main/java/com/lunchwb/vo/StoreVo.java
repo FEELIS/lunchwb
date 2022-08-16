@@ -33,7 +33,6 @@ public class StoreVo {
 	private int distance;
 	private int score;
 	private boolean stored;
-	private String groupName;
 	
 	//////////// review table /////////////////////
 	private float ratingBujang;
@@ -268,14 +267,6 @@ public class StoreVo {
 		this.breaktime = breaktime;
 	}
 
-	public String getGroupName() {
-		return groupName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
-	
 
 	///// toString //////////////////////////////////////////////////////////////
 

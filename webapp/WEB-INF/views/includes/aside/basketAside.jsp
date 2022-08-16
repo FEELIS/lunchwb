@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 
 <!DOCTYPE html>
@@ -50,6 +51,27 @@
              
              <div class="d-flex" id="basket-groups">
              	<!--  회원이 속한 그룹이 올 자리  -->
+             	<c:if test="${!empty(basketGroup)}">
+					<c:forEach var="myGroup" items="${basketGroup}">
+						<c:if test="${myGroup.groupNo == curr_basket_group}">
+							<div class="basket-group basket-selected-group basket-normal-group no-drag" data-groupNo="${myGroup.groupNo}">
+								<span>${myGroup.groupName}</span>
+								<i class="fas fa-user-circle"></i>
+							</div>	
+						</c:if>
+						
+						<c:if test="${myGroup.groupNo != curr_basket_group}">
+							<div class="basket-group basket-normal-group no-drag" data-groupNo="${myGroup.groupNo}">
+								<span>${myGroup.groupName}</span>
+								<i class="fas fa-user-circle"></i>
+							</div>	
+						</c:if>
+					</c:forEach>
+					
+					<c:if test="${fn:length(basketGroup) < 4}">
+						<div class="basket-group no-drag basket-group-add"><span>그룹추가</span><i class="fas fa-user-plus"></i></div>	
+					</c:if>
+             	</c:if>
              </div>
             </c:if>
             
@@ -165,27 +187,27 @@
 	
 	let indexJSP = false
 
-	const userNo = "${authUser.userNo}"
-	let basket = "${basket}"
+	const userNo = "${authUser.userNo}" // 회원정보
+	let basket = "${basket}" // 장바구니
 		
-	let basket_group = []
-	let curr_basket_group = 0
+	let basket_group = [] // 현재 그룹 리스트
+	let curr_basket_group = 0 // 현재 선태 그룹
 	
-	let filter_excluded = "${filter_excluded}"
+	let filter_excluded = "${filter_excluded}" // 제외된 메뉴 카테고리
 		
-	let gpsVo = {
-			gpsX : "${curr_location.gpsX}",
-			gpsY : "${curr_location.gpsY}",
-			address : "${curr_location.address}"
+	let gpsVo = { // 현재 위치
+			gpsX : "${curr_location.gpsX}", // 경도
+			gpsY : "${curr_location.gpsY}", // 위도
+			address : "${curr_location.address}" // 주소(일단 지번으로)
 		}
 			
 	
 	// 페이지 로드 시
 	$(document).ready(
 		async function(){
-			await callGPS()
-			await callFilter()		
-			await callUser()
+			await callGPS() // 현재 위치 확인
+			await callFilter() // 메뉴 제외 필터 확인
+			await callUser() // 사용자 그룹 정보 + 장바구니 확인
 			
 			if (indexJSP) {
 				// 지도 로딩
@@ -199,6 +221,7 @@
 		console.log(gpsVo.gpsX)
 		console.log(gpsVo.gpsY)
 		
+		// 세션에 저장된 gps 정보가 없다면
 		if (gpsVo.gpsX == "" || gpsVo.gpsX == 0.0) {
 			// geolocation으로 현재 좌표 알아내기
 			await curr_location()
@@ -222,7 +245,7 @@
 		document.cookie="safeCookie2=foo";
 		document.cookie="crossCookie=bar; SameSite=None; Secure";
 		
-		var options = {enableHighAccuracy: true}
+		var options = {enableHighAccuracy: true} // geoocation 위치 정확도
 		
 		let getPosition = async function(options) {
 			return new Promise(function (resolve, reject) {
@@ -233,12 +256,12 @@
 		await getPosition()
 			.then((position) => {
 				console.log("geolocation")
-		    	var gpsX = position.coords.longitude
-		    	var gpsY = position.coords.latitude
+		    	var gpsX = position.coords.longitude // 경도 저장
+		    	var gpsY = position.coords.latitude // 위도 저장
 		    	gpsVo.gpsX = parseFloat(gpsX)
 		    	gpsVo.gpsY = parseFloat(gpsY)
 			})
-			.catch((error) => {
+			.catch((error) => { // 현재 위치 confirm 거절한 경우
 				alert("GPS 사용을 허용해주세요")
 			})
 				
@@ -252,7 +275,7 @@
 	}
 	
 	
-	// 좌표 > 주소 변환 api
+	// 좌표 > 주소 변환 카카오 api
 	async function getAddr(lat, lng) {
 		console.log("getAddr() 시작")
 		let geocoder = new kakao.maps.services.Geocoder()
@@ -261,10 +284,10 @@
 			return new Promise((resolve, reject) => {
 				geocoder.coord2Address(lng, lat, (result, status) => {
 					if (status === kakao.maps.services.Status.OK) {
-						gpsVo.address = result[0].address.address_name
+						gpsVo.address = result[0].address.address_name // 주소 획득
 						console.log(gpsVo.address)
 											
-						if (!$('#modal-location-change').is(':visible')) {
+						if (!$('#modal-location-change').is(':visible')) { // 위치 변경 모달 열려있다면
 							$("#curr-location-address").text(result[0].address.address_name)
 							
 						} else {
@@ -310,10 +333,10 @@
 
 	// 필터 확인 함수
 	async function callFilter() {
-		if (filter_excluded == "") {
+		if (filter_excluded == "") { // 세션에 필터가 없다면 만들어서 저장
 			await makeFilterSession()
 						
-		} else {
+		} else { // 세션에 필터가 있다면 list로 변환
 			var temp1 = "${filter_excluded}"
 			var temp2 = temp1.substring(1, temp1.length-1)
 			filter_excluded = temp2.split(",")	
@@ -351,7 +374,7 @@
 	}
 	
 	
-	// 장바구니 필터 클릭 시
+	// 장바구니 필터 클릭 시(모달 체크박스 준비)
 	$("#basket-filter-btn").on("click", function(){
 		for (var i = 1; i <= 10; i++) {
 			var curr = "#formCheck-" + String(i)
@@ -384,7 +407,7 @@
 	})
 	
 	
-	// 장바구니 필터 적용
+	// 장바구니 필터 적용 > 세션 저장
 	$("#modal-filter-submit").on("click", function() {
 		let temp_filter = filter_excluded
 		filter_excluded = []
@@ -441,29 +464,33 @@
 			}
 			
 			if (basket == "") {				
-				await makeGuestBasket()
+				await makeGuestBasket() // 장바구니 생성
 				
 			} else {
-				await loadBasket()
+				await loadBasket() // 장바구니 불러오기
 				
 			}
 			
 		} else {
 			console.log(userNo + "번 회원")
 			
+			// curr_basket_group 세션 값이 있다면
 			if ("${curr_basket_group}" != "" && "${curr_basket_group}" != "0") {
 				curr_basket_group = parseInt("${curr_basket_group}")
-		
 			} 
+			// baksetGroup 가져오기
 			await getBasketGroups()
 			
+			console.log(basket_group)
 			console.log("장바구니 그룹: " + curr_basket_group)
-						
+									
 			if (basket == "") {
-				await makeGroupBasket()
+				$("[data-groupNo=" + String(curr_basket_group) + "]").addClass("basket-selected-group")
+				
+				await makeGroupBasket() // 장바구니 생성
 				
 			} else {
-				await loadBasket()
+				await loadBasket() // 장바구니 불러오기
 			}
 		}
 		
@@ -471,7 +498,7 @@
 		console.log("callUser() 끝")
 	}
 	
-	
+		
 	// 비회원 장바구니 생성
 	async function makeGuestBasket() {
 		$.ajax({
@@ -540,34 +567,6 @@
 	}
 	
 	
-	// 세션에 현재 선택된 장바구니 그룹 저장
-	async function setSessionBasketGroup() {
-		var data_group = {"curr_basket_group": curr_basket_group}
-		
-		$.ajax({
-			url : "${pageContext.request.contextPath}/basket/setSessionBasketGroup",		
-			type : "post",
-			contentType : "application/json",
-			data : JSON.stringify(data_group),
-			dataType : "json",
-			async : false,
-			success : function(result){				
-				if (result) {
-					console.log("현재 그룹: " + curr_basket_group + " - 세션 저장 완료")
-					
-				} else {
-					console.log("현재 그룹 세션 저장 실패")
-				}
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
-			}
-		})
-		
-		console.log("setSessionBasketGroup() 끝")
-	}
-	
-	
 	// 장바구니 불러오기
 	async function loadBasket() {
 		$.ajax({
@@ -599,10 +598,9 @@
 			dataType : "json",
 			success : async function(basketGroup){
 				for (var i = 0; i < basketGroup.length; i++) {
-					addBasketGroup(basketGroup[i])
-					basket_group.push(basketGroup[i].groupNo)
+					basket_group.push(basketGroup[i])
 					
-					if (curr_basket_group == 0) {
+					if (curr_basket_group == 0) { // 저장된 값 없으면 제일 앞에 그룹이 curr_basket_group
 						if (i == 0) {
 							curr_basket_group = basketGroup[i].groupNo
 						}
@@ -612,15 +610,6 @@
 				console.log(curr_basket_group)
 				if ("${curr_basket_group}" != String(curr_basket_group)) {
 					await setSessionBasketGroup()
-				}
-				
-				$("[data-groupNo=" + String(curr_basket_group) + "]").addClass("basket-selected-group")
-				
-				if (basketGroup.length < 4) {
-					$("#basket-groups").append(
-						"<div class='basket-group no-drag basket-group-add'><span>그룹추가</span><i class='fas fa-user-plus'></i></div>"
-					)
-					console.log("그룹 추가하기 추가")
 				}
 			},
 			error : function(XHR, status, error) {
@@ -634,8 +623,8 @@
 	
 	// 다른 그룹 클릭
 	$("#basket-groups").on("click", ".basket-normal-group", async function(){
-		if (String(curr_basket_group) != $(this).attr("data-groupNo")) {
-			if (!indexJSP) {
+		if (String(curr_basket_group) != $(this).attr("data-groupNo")) { // 현재 선택 그룹과 다른 그룹인 경우에만
+			if (!indexJSP) { 
 				var voteGroupChange = confirm("그룹을 변경하면 진행상황이 초기화됩니다. 변경하시겠습니까?")
 				if(!voteGroupChange) {
 					return false
@@ -664,18 +653,31 @@
 	})	
 	
 	
-	// 그룹 추가 버튼 클릭
-	$("#basket-groups").on("click", ".basket-group-add", function(){
-		location.replace("${pageContext.request.contextPath}/group/add")
-	})
-	
-	
-	// 장바구니 그룹 탭 생성 메소드
-	function addBasketGroup(basketGroup) {
-		$("#basket-groups").append(
-			"<div class='basket-group basket-normal-group no-drag' data-groupNo='" + basketGroup.groupNo + "'><span>" + basketGroup.groupName + "</span><i class='fas fa-user-circle'></i></div>"
-		)
-		console.log("그룹 탭 추가")
+	// 세션에 현재 선택한 curr_basket_group 저장
+	async function setSessionBasketGroup() {
+		var data_group = {"curr_basket_group": curr_basket_group}
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/basket/setSessionBasketGroup",		
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(data_group),
+			dataType : "json",
+			async : false,
+			success : function(result){				
+				if (result) {
+					console.log("현재 그룹: " + curr_basket_group + " - 세션 저장 완료")
+					
+				} else {
+					console.log("현재 그룹 세션 저장 실패")
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+		
+		console.log("setSessionBasketGroup() 끝")
 	}
 	
 		
@@ -710,7 +712,6 @@
 			location.replace("${pageContext.request.contextPath}/")
 		}
 
-		console.log(typeof(basket))
 		console.log(basket[curr_basket_group])
 		
 		await addMoreStore()
@@ -719,7 +720,7 @@
 	})
 	
 	
-	// 그룹 없을 때 장바구니 추가 가게 선택
+	// 장바구니 추가 가게 추천
 	async function addMoreStore() {	
 		var temp = basket[curr_basket_group].length
 		
@@ -752,10 +753,12 @@
 			var deleteReal = confirm("페이지를 이동해서 장바구니를 수정하시겠습니까? 지금까지의 진행상황은 저장되지 않습니다.")
 			if (!deleteReal) {
 				return false
+				
 			} else {
 				location.replace("${pageContext.request.contextPath}/")
 			}
 		}
+		
 		var deleteStoreNo = parseInt($(this).closest(".basket-table-row").attr("data-storeNo"))
 		console.log(deleteStoreNo)
 		
@@ -854,7 +857,6 @@
 		if (cnt == 0) {
 			basketNoItem()
 		}
-		
 	}
 	
 	
