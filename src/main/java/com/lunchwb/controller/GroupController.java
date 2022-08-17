@@ -71,12 +71,10 @@ public class GroupController {
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		Map<String, Object> map = groupService.addGroupForm(authUser);
 		
-		//그룹 최대 개수 보유(4개) > 잘못된 접근
-		/*
-		if((Integer)map.get("groupCount") == 4) {
-			return "error/403";
+		//그룹 최대 개수 보유(4개) : 잘못된 접근이지만 그냥 list로 보내버릴래요
+		if((Integer)map.get("groupCount") >= 4) {
+			return "redirect:./list";
 		}
-		*/
 		
 		model.addAttribute("map", map);
 		
