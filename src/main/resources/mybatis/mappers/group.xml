@@ -229,11 +229,14 @@
 	
 	<!-- 투표 만들기(그룹 멤버 불러오기) -->
 	<select id="selectVoteMember" parameterType="int" resultMap="GroupVo">
-		SELECT group_member_no
-		       ,NVL(user_no, 0) user_no
-		       ,boss_check
-		FROM   group_member
-		WHERE  group_no = #{groupNo}
+		SELECT g.group_member_no
+		       ,NVL(g.user_no, 0) user_no
+		       ,g.boss_check
+		       ,u.user_name
+		       ,u.user_grade
+		FROM   group_member g, users u
+		WHERE  g.user_no = u.user_no
+		AND    group_no = #{groupNo}
 		ORDER BY DECODE (boss_check, 1, 1), group_member_no ASC
 	</select>
 
