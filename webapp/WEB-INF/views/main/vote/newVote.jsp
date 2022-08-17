@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <!DOCTYPE html>
 <html>
@@ -44,10 +45,10 @@
                     
                     <div id="edit-vote-area" class="card-body no-drag">
                         <div id="edit-vote-header">
-                        	<span id="edit-vote-group-name">정필1팀</span>                        	
+                        	<span id="edit-vote-group-name">${groupName}</span>                        	
                         	<span id="edit-vote-group-nums">
                         		<span>(총 인원&nbsp;</span>
-                        		<span id="edit-vote-group-num" class="emphasize-blue">6</span>
+                        		<span id="edit-vote-group-num" class="emphasize-blue">${fn:length(voteMember)}</span>
                         		<span>명)</span>
                         	</span>
                         </div>
@@ -68,31 +69,42 @@
                             </div>
                             
                             <div class="d-flex d-xxl-flex flex-row flex-grow-0 flex-wrap justify-content-xxl-start" id="edit-vote-people-area">
-                            	<span class="d-flex d-xxl-flex flex-wrap vote-people-bujang vote-people">
-                            		<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
-                            			<i class="fas fa-minus-circle"></i>
-                            		</span>
-                            		<span class="vote-people-body-wrap">
-                            			<span class="text-center d-xxl-flex justify-content-xxl-center align-items-xxl-center vote-people-body">
-                            				<i class="fas fa-crown vote-bujang-crown"></i>
-                            				<span class="vote-people-name">이지희</span>
-                            				<i class="fas fa-crown"></i>
+                            	<!--  투표 참여할 인원들 표시  -->
+                            	<c:forEach var="member" items="${voteMember}">
+                            		<c:if test="${member.bossCheck==1}">
+                            			<span class="d-flex d-xxl-flex flex-wrap vote-people-bujang vote-people" data-group-member-no="${member.groupMemberNo}" data-user-no="${member.userNo}">
+                            				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
+                            					<i class="fas fa-minus-circle"></i>
+                            				</span>
+                            				<span class="vote-people-body-wrap">
+                            					<span class="text-center d-xxl-flex justify-content-xxl-center align-items-xxl-center vote-people-body">
+                            						<i class="fas fa-crown vote-bujang-crown"></i>
+                            						<span class="vote-people-name">${member.userName}</span>
+                            						<i class="fas fa-crown"></i>
+                            					</span>
+                            				</span>
                             			</span>
-                            		</span>
-                            	</span>
+                            		</c:if>
+                            		
+                            		<c:if test="${member.bossCheck==0}">
+                            			<span class="d-flex d-xxl-flex flex-wrap vote-people" data-group-member-no="${member.groupMemberNo}" data-user-no="${member.userNo}">
+                            				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
+                            					<i class="fas fa-minus-circle"></i>
+                            				</span>
+                            				<span class="vote-people-body-wrap">
+                            					<span class="text-center d-xxl-flex justify-content-xxl-center align-items-xxl-center vote-people-body">
+                            						<i class="fas fa-crown"></i>
+                            						<span class="vote-people-name">${member.userName}</span>
+                            						<i class="fas fa-crown"></i>
+                            					</span>
+                            				</span>
+                            			</span>
+                            		</c:if>
+                            		
+                            	</c:forEach>
                             	
-                            	<span class="d-flex d-xxl-flex flex-wrap vote-people">
-                            		<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
-                            			<i class="fas fa-minus-circle"></i>
-                            		</span>
-                            		<span class="vote-people-body-wrap">
-                            			<span class="text-center d-xxl-flex justify-content-xxl-center align-items-xxl-center vote-people-body">
-                            				<i class="fas fa-crown"></i>
-                            				<span class="vote-people-name">김준호</span>
-                            				<i class="fas fa-crown"></i>
-                            			</span>
-                            		</span>
-                            	</span>
+                            	
+                            	
                             	
                             	<span class="d-flex d-xxl-flex flex-wrap vote-people vote-people-deleted">
                             		<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
@@ -188,13 +200,21 @@
                     </div>
                 </div>
             </div>
-            
             <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
-            
-        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+        </div>
+        
+        <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
-
+	
 <script type="text/javascript">
+
+	let birdName = ["가마우지", "갈매기", "개개비", "거위", "고니", "곤줄박이", "기러기", "까마귀", "까치", 
+		"꼬리치레", "꾀꼬리", "꿩", "나무발발이", "논병아리", "느시", "닭", "독수리", "동고비", "두견", "두루미",
+		"따오기", "딱따구리", "뜸부기", "마도요", "말똥가리", "매", "메추라기", "메추라기", "밀화부리", "발구지",
+		"병아리", "부엉이", "비둘기", "뻐꾸기", "새홀리기", "솔개", "아비", "양진이", "어치", "오리", "오목눈이",
+		"올빼미", "왜가리", "원앙", "제비", "조롱이", "종다리", "지빠귀", "직박구리", "찌르레기", "할미새사촌", "해오라기"]
+	
+	console.log("개수 " + birdName.length)
 
 	////////// 투표 인원 변경 //////////////////////////////////////////////////////////////////////	
 	// 인원추가 - 버튼 토글
@@ -227,10 +247,16 @@
 		var totNum = parseInt($("#edit-vote-group-num").text())
 		totNum += voteAddNum
 		
+		$("#vote-new-member-num").text(1)
+		
+		if (totNum > 15) {
+			alert("투표 총 인원은 15명을 초과할 수 없습니다.")
+			return false
+		}
+		
 		// 투표할 인원 div 추가
 		
 		$("#edit-vote-group-num").text(totNum)
-		$("#vote-new-member-num").text(1)
 	})
 </script>
 
