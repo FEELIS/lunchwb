@@ -169,10 +169,7 @@ public class UserController {
 			model.addAttribute("access_Token", access_Token); // 회원가입 후 로그인이 바로 진행되기 때문에 로그아웃을 위해 토큰을 같이 넘겨줌.
 			return "user/joinFormSNS";
 
-		} else if (snsConnectionCheck.getSnsLogin() == null && snsConnectionCheck.getUserEmail() != null) { // 이메일 가입
-																											// 되어있고 카카오
-																											// 연동 안되어
-																											// 있을시
+		} else if (snsConnectionCheck.getSnsLogin() == null && snsConnectionCheck.getUserEmail() != null) { // 이메일 가입 되어있고 카카오 연동 안되어 있을시
 			userService.setSNSConnection(userInfo); // 카카오에서 보내주는 ID 업데이트.
 			UserVo loginCheck = userService.snsLogin(userInfo);
 			session.setAttribute("authUser", loginCheck);
