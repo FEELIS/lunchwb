@@ -44,8 +44,20 @@ public class TestController {
 	@GetMapping("/test")
 	public String test() {
 		logger.info("test()");
-		return "main/test";
+		return "main/random/randomTest";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 	//////////////////////////////////////////////////////////////////////////
