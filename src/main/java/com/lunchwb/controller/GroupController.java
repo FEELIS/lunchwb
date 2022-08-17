@@ -25,6 +25,7 @@ import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.StoreVo;
 import com.lunchwb.vo.UserVo;
 
+@RequestMapping("/group")
 @Controller
 public class GroupController {
 	
@@ -37,7 +38,7 @@ public class GroupController {
 	
 	
 	/********************* 그룹원 리스트 페이지 ********************************************/
-	@RequestMapping("/group/list")
+	@RequestMapping("/list")
 	public String groupList(Model model, HttpSession session, @RequestParam(name="no", defaultValue="0") int groupNo) {
 		logger.info("GroupController > groupList()");
 		
@@ -63,7 +64,7 @@ public class GroupController {
 	
 	
 	/******************** 그룹 추가 페이지 ***********************************************/
-	@GetMapping("group/add")
+	@GetMapping("/add")
 	public String addGroupForm(Model model, HttpSession session) {
 		logger.info("GroupController > addGroupForm()");
 		
@@ -84,7 +85,7 @@ public class GroupController {
 	
 	
 	/******************** 그룹 생성 ***********************************************/
-	@PostMapping("group/add")
+	@PostMapping("/add")
 	public String addGroup(HttpSession session, GroupVo groupVo) {
 		logger.info("GroupController > addGroup()");
 		
@@ -124,7 +125,7 @@ public class GroupController {
 	
 	/******************** 그룹 순서 변경 ********************************************/
 	@ResponseBody
-	@PostMapping("group/changeOrder")
+	@PostMapping("/changeOrder")
 	public String changeOrder(@RequestBody HashMap<String, Integer> gpOrder, HttpSession session) {
 		logger.info("GroupController > changeOrder()");
 		
@@ -138,7 +139,7 @@ public class GroupController {
 	
 	/******************** 그룹 보스 유무 ********************************************/
 	@ResponseBody
-	@PostMapping("group/nameChange")
+	@PostMapping("/nameChange")
 	public String nameChange(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > nameChange()");
 		
@@ -150,7 +151,7 @@ public class GroupController {
 	
 	/******************** 그룹 보스 유무 ********************************************/
 	@ResponseBody
-	@PostMapping("group/beBoss")
+	@PostMapping("/beBoss")
 	public String beBoss(@RequestBody int groupNo) {
 		logger.info("GroupController > beBoss()");
 		
@@ -162,7 +163,7 @@ public class GroupController {
 
 	/******************** 초대할 유저 존재 확인 ***************************************/
 	@ResponseBody
-	@PostMapping("group/userCheck")
+	@PostMapping("/userCheck")
 	public Map<String, Object> userCheck(@RequestBody String userEmail, HttpSession session) {
 		logger.info("GroupController > userCheck()");
 		
@@ -175,7 +176,7 @@ public class GroupController {
 	
 	/******************** 회원 그룹 멤버 여부 *******************************************/
 	@ResponseBody
-	@PostMapping("group/memberCheck")
+	@PostMapping("/memberCheck")
 	public String memberCheck(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > memberCheck()");
 		
@@ -187,7 +188,7 @@ public class GroupController {
 	
 	/******************** 회원 그룹 멤버 추가 *******************************************/
 	@ResponseBody
-	@PostMapping("group/invtMember") public GroupVo invtMember(@RequestBody GroupVo groupVo) {
+	@PostMapping("/invtMember") public GroupVo invtMember(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > invtMember()");
 		
 		GroupVo memberVo = groupService.invtMember(groupVo);
@@ -198,7 +199,7 @@ public class GroupController {
 	
 	/******************** 유령회원 그룹 멤버 추가 *****************************************/
 	@ResponseBody
-	@PostMapping("group/addMember")
+	@PostMapping("/addMember")
 	public GroupVo addMember(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > addMember()");
 		
@@ -210,7 +211,7 @@ public class GroupController {
 	
 	/******************** 그룹 멤버 내보내기(강퇴) *****************************************/
 	@ResponseBody
-	@PostMapping("group/outMember")
+	@PostMapping("/outMember")
 	public String outMember(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > outMember()");
 		
@@ -221,7 +222,7 @@ public class GroupController {
 	
 	
 	/******************** 그룹 탈퇴 ***************************************************/
-	@GetMapping("group/leave")
+	@GetMapping("/leave")
 	public String leaveGroup(HttpSession session, @RequestParam(name="no", defaultValue="0") int groupNo, 
 							 @RequestParam(name="lead", defaultValue="0") int groupLeader) {
 		logger.info("GroupController > leaveGroup()");
@@ -252,7 +253,7 @@ public class GroupController {
 	
 	/******************** 그룹장 위임 ***************************************************/
 	@ResponseBody
-	@PostMapping("group/leaderChange")
+	@PostMapping("/leaderChange")
 	public String leaderChange(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > leaderchange()");
 		
@@ -264,7 +265,7 @@ public class GroupController {
 	
 	
 	/******************** 그룹 블랙리스트 페이지 *******************************************/
-	@GetMapping("group/blacklist")
+	@GetMapping("/blacklist")
 	public String blacklist(Model model, HttpSession session, @RequestParam(name="no", defaultValue="0") int groupNo) {
 		logger.info("GroupController > blacklist()");
 		

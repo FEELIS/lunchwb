@@ -32,7 +32,6 @@ public class StoreController {
 		return "/main/genie-index-test";
 	}
 	
-	
 	/* 모달 - 가게 정보 받기 */
 	@ResponseBody
 	@PostMapping("store/info")
