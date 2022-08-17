@@ -1,5 +1,6 @@
 package com.lunchwb.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.lunchwb.dao.VisitedDao;
+import com.lunchwb.vo.UserVo;
 import com.lunchwb.vo.VisitedVo;
 
 @Service
@@ -47,6 +49,21 @@ public class VisitedService {
 		
 		return calendarList;
 	};
+	
+	
+	
+	/********************* 여기갈래요 후 리뷰 작성 메인페이지 ***************************/
+	public HashMap<String, Object> visitedMain(UserVo authUser) {
+		HashMap<String, Object> visitedMap = new HashMap<>();
+		
+		int userNo = authUser.getUserNo();
+		
+		//오늘 내가 다녀온 곳의 정보
+		VisitedVo visitedVo = vstDao.todayStoreInfo(userNo);
+		visitedMap.put("visitedVo", visitedVo);
+		
+		return visitedMap;
+	}
 
 
 }

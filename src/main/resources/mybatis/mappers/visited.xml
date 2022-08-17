@@ -11,12 +11,15 @@
 		<result column="menu_no" property="menuNo" />
 		<result column="visited_date" property="visitedDate" />
 		<result column="menu_1st_cate_Name" property="menu1stCateName" />
+		<result column="menu_3st_cate_Name" property="menu2stCateName" />
 		<result column="store_name" property="storeName" />
 		<result column="menu_name" property="menuName" />
 		<result column="select_month" property="selectMonth" />
 		<result column="visit_count" property="visitCount" />
 		<result column="menu_count" property="menuCount" />
 		<result column="group_order" property="groupOrder" />
+		<result column="store_road_address" property="storeRoadAddress" />
+		<result column="rating_bujang" property="ratingBujang" />
 	</resultMap>
 	
    
@@ -68,6 +71,7 @@
 			  AND v.group_no = g.group_no) 
 	</select>
 	
+	
 	<select id="recentMenu" parameterType="int" resultMap="resultMapVisitedVo">
 		SELECT  COUNT(menu_name) menu_count
 				, menu_name
@@ -79,5 +83,33 @@
 				AND v.menu_no = m.menu_no	)
 		GROUP BY menu_name
 	</select>
+
+
+	<select id="todayStoreInfo" parameterType="int" resultMap="resultMapVisitedVo">
+		SELECT  s.store_no
+		        , g.group_name
+		        , s.store_name
+		        , f.menu_2nd_cate_name
+		        , s.store_road_address
+		        , rating_bujang
+		FROM store s, groups g, food_2nd_category f
+			 , (SELECT group_no
+			           , store_no
+			     FROM visited
+			     WHERE TO_CHAR(visited_date, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+			     AND user_no = #{userNo}) i
+			 , (SELECT ROUND(AVG(user_score), 2) rating_bujang
+			         FROM review r, visited v
+			         WHERE v.visited_no = r.visited_no
+			         AND v.user_no = r.user_no
+			         AND v.store_no = (  SELECT store_no
+			                             FROM visited v
+			                             WHERE TO_CHAR(visited_date, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+			                             AND user_no = #{userNo}  ))
+		WHERE i.group_no = g.group_no
+		AND i.store_no = s.store_no
+		AND s.menu_2nd_cate_no = f.menu_2nd_cate_no
+	</select>
+
 
 </mapper>
