@@ -42,6 +42,8 @@
             <div id="main-content" class="container-fluid">
                <div class="d-sm-flex justify-content-between align-items-center mb-4">
                   <h3 class="text-dark mb-0">캘린더</h3>
+                  <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="${pageContext.request.contextPath}/stat/addAlone">
+                  <i class="fa fa-pen fa-sm text-white-50"></i>&nbsp;따로 갔다왔어요</a>
                </div>
                
                <div class="calendar card mb-4">
@@ -283,14 +285,7 @@
          (settings.enableMonthChange
          ? '<button class="next-button">' + settings.nextButton + "</button>"
          : "");
-         
-         str += '<form action="../stat/addAlone" method="get">';
-         str += '<button class="btn btn-primary">리뷰하러가기';
-         str += '</button>';
-         str += '</form>';
-         
-         
-         
+
          str += '</div>';
          str +=
          '<ol class="day-names list-unstyled week' +
