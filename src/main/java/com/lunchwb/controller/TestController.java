@@ -47,7 +47,11 @@ public class TestController {
 		return "main/random/randomTest";
 	}
 	
-	
+	@GetMapping("/rouletteTest")
+	public String rouletteTest() {
+		logger.info("test()");
+		return "main/random/randomRoulette";
+	}
 	
 	
 	
