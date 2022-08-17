@@ -142,7 +142,7 @@
 							<div class="card shadow mb-4">
 								<div class="card-header d-flex justify-content-between align-items-center"
 									style="-bs-primary: #4e73df; - -bs-primary-rgb: 78, 115, 223;">
-									<h6 class="text-primary fw-bold m-0">Earnings Overview</h6>
+									<h6 class="text-primary fw-bold m-0">지난 한달간 음식별 여기갈래요 횟수</h6>
 									<div class="dropdown no-arrow">
 										<button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false"
 											data-bs-toggle="dropdown" type="button">
@@ -158,11 +158,43 @@
 									</div>
 								</div>
 								<div class="card-body">
-								    <div class="chart-area"><canvas data-bss-chart=
-								    "{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;
-								    :[&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;
-								    ],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Earnings&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;0&quot;,&quot;10000&quot;,&quot;5000&quot;,&quot;15000&quot;,&quot;10000&quot;,&quot;20000&quot;,&quot;15000&quot;,&quot;25000&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgba(78, 115, 223, 1)&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}]}}}"></canvas></div>
-                                
+								    <div class="chart-area">
+									    <canvas data-bss-chart=
+										    "{&quot;type&quot;:&quot;bar&quot;
+										    ,&quot;data&quot;:{&quot;labels&quot;
+										    :[&quot;한식&quot;,&quot;일식&quot;,&quot;중식&quot;,&quot;양식&quot;,&quot;패스트푸드&quot;,&quot;분식&quot;,&quot;아시아음식&quot;,&quot;뷔페&quot;]
+										    ,&quot;datasets&quot;
+										    :[{&quot;label&quot;:&quot;식사횟수&quot;
+										    ,&quot;empty&quot;:true,&quot;data&quot;
+										    :[&quot;31&quot;
+										    ,&quot;8&quot;
+										    ,&quot;16&quot;
+										    ,&quot;12&quot;
+										    ,&quot;6&quot;
+										    ,&quot;12&quot;
+										    ,&quot;4&quot;
+										    ,&quot;3&quot;]
+										    ,&quot;backgroundColor&quot;
+										    :&quot;rgba(255, 99, 132, 0.5)&quot;
+										    ,&quot;borderColor&quot;
+										    :&quot;rgba(255, 99, 132, 1)&quot;}]},
+										    &quot;options&quot;
+										    
+										    :{&quot;maintainAspectRatio&quot;:false,
+										    &quot;legend&quot;:{&quot;display&quot;
+										    :false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}
+										    ,&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;
+										    :{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;
+										    ,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;
+										    :false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;
+										    :[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;
+										    :&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;
+										    :[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;
+										    :&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;
+										    :[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;
+										    :&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}]}}}">
+									    </canvas>
+								    </div>
 								</div>
 							</div>
 						</div>
@@ -170,7 +202,7 @@
 							<div class="card shadow mb-4">
 								<div class="card-header d-flex justify-content-between align-items-center"
 									style="-bs-primary: #147a25; - -bs-primary-rgb: 20, 122, 37;">
-									<h6 class="text-primary fw-bold m-0">Revenue Sources</h6>
+									<h6 class="text-primary fw-bold m-0">그룹별 식사횟수</h6>
 									<div class="dropdown no-arrow">
 										<button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false"
 											data-bs-toggle="dropdown" type="button">
@@ -185,15 +217,164 @@
 										</div>
 									</div>
 								</div>
-								<div class="card-body">
+								<div id="doughnut" class="card-body">
 									<div class="chart-area">
-										<canvas data-bss-chart="{&quot;type&quot;:&quot;doughnut&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Direct&quot;,&quot;Social&quot;,&quot;Referral&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;&quot;,&quot;backgroundColor&quot;:[&quot;#4e73df&quot;,&quot;#1cc88a&quot;,&quot;#36b9cc&quot;],&quot;borderColor&quot;:[&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;],&quot;data&quot;:[&quot;50&quot;,&quot;30&quot;,&quot;15&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}}">
+										<canvas data-bss-chart=
+										"{&quot;type&quot;
+										:&quot;doughnut&quot;
+										,&quot;data&quot;
+										
+										<%-- 각 영역 마우스 올리면 보이는 그룹이름 --%>
+										:{&quot;labels&quot;
+										:[&quot;소방기계&quot;,&quot;소방전기&quot;,&quot;BIM팀&quot;]
+										,&quot;datasets&quot;
+										
+										<%-- 각 영역 색깔 --%>
+										:[{&quot;label&quot;:&quot;&quot;,&quot;backgroundColor&quot;
+										:[&quot;#4e73df&quot;,&quot;#1cc88a&quot;,&quot;#36b9cc&quot;]
+										<%-- 도넛그래프 외곽선 색깔 --%>
+										,&quot;borderColor&quot;
+										:[&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;]
+										
+										<%-- 그룹간 식사횟수 --%>
+										,&quot;data&quot;:[&quot;57&quot;,&quot;26&quot;,&quot;9&quot;]}
+										]},&quot;options&quot;
+										:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;
+										:{&quot;display&quot;:false,&quot;labels&quot;
+										:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}}">
 										</canvas>
 									</div>
 									<div class="text-center small mt-4">
-										<span class="me-2"><i class="fas fa-circle text-primary"></i>&nbsp;Direct</span><span
-											class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;Social</span><span
-											class="me-2"><i class="fas fa-circle text-info"></i>&nbsp;Refferal</span>
+									
+									<!-- group_name -->
+										<span class="me-2"><i class="fas fa-circle text-primary"></i>&nbsp;소방기계</span><span
+											class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;소방전기</span><span
+											class="me-2"><i class="fas fa-circle text-info"></i>&nbsp;BIM팀</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+						<div class="row">
+						<div class="col-lg-7 col-xl-8">
+							<div class="card shadow mb-4">
+								<div class="card-header d-flex justify-content-between align-items-center"
+									style="-bs-primary: #4e73df; - -bs-primary-rgb: 78, 115, 223;">
+									<h6 class="text-primary fw-bold m-0">지난 6개월간 '한식' 여기갈래요 수</h6>
+									<div class="dropdown no-arrow">
+										<button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false"
+											data-bs-toggle="dropdown" type="button">
+											<i class="fas fa-ellipsis-v text-gray-400"></i>
+										</button>
+										<div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
+											<p class="text-center dropdown-header">dropdown header:</p>
+											<a class="dropdown-item" href="#">&nbsp;Action</a>
+											<a class="dropdown-item" href="#">&nbsp;Another action</a>
+											<div class="dropdown-divider"></div>
+											<a class="dropdown-item" href="#">&nbsp;Something else here</a>
+										</div>
+									</div>
+								</div>
+								<div class="card-body">
+								    <div class="chart-area">
+									    <canvas data-bss-chart=
+										    "{&quot;type&quot;:&quot;line&quot;
+										    ,&quot;data&quot;:{&quot;labels&quot;
+										    :[&quot;2월&quot;
+										    ,&quot;3월&quot;
+										    ,&quot;4월&quot;
+										    ,&quot;5월&quot;
+										    ,&quot;6월&quot;
+										    ,&quot;7월&quot;]
+										    ,&quot;datasets&quot;
+										    :[{&quot;label&quot;
+										    :&quot;Earnings&quot;
+										    ,&quot;fill&quot;
+										    :true,&quot;data&quot;
+										    :[&quot;15432&quot;
+										    ,&quot;14739&quot;
+										    ,&quot;6825&quot;
+										    ,&quot;19321&quot;
+										    ,&quot;12832&quot;
+										    ,&quot;18231&quot;]
+										    ,&quot;backgroundColor&quot;
+										    :&quot;rgba(78, 115, 223, 0.05)&quot;
+										    ,&quot;borderColor&quot;
+										    :&quot;rgba(78, 115, 223, 1)&quot;}]},
+										    &quot;options&quot;
+										    
+										    :{&quot;maintainAspectRatio&quot;:false,
+										    &quot;legend&quot;:{&quot;display&quot;
+										    :false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}
+										    ,&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;
+										    :{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;
+										    ,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;
+										    :false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;
+										    :[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;
+										    :&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;
+										    :[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;
+										    :&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;
+										    :[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;
+										    :&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}]}}}">
+									    </canvas>
+								    </div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-5 col-xl-4">
+							<div class="card shadow mb-4">
+								<div class="card-header d-flex justify-content-between align-items-center"
+									style="-bs-primary: #147a25; - -bs-primary-rgb: 20, 122, 37;">
+									<h6 class="text-primary fw-bold m-0">연령별 '한식' 선호도</h6>
+									<div class="dropdown no-arrow">
+										<button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false"
+											data-bs-toggle="dropdown" type="button">
+											<i class="fas fa-ellipsis-v text-gray-400"></i>
+										</button>
+										<div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
+											<p class="text-center dropdown-header">dropdown header:</p>
+											<a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another
+												action</a>
+											<div class="dropdown-divider"></div>
+											<a class="dropdown-item" href="#">&nbsp;Something else here</a>
+										</div>
+									</div>
+								</div>
+								<div id="doughnut" class="card-body">
+									<div class="chart-area">
+										<canvas data-bss-chart=
+										"{&quot;type&quot;
+										:&quot;pie&quot;
+										,&quot;data&quot;
+										
+										<%-- 각 영역 마우스 올리면 보이는 그룹이름 --%>
+										:{&quot;labels&quot;
+										:[&quot;20대 이하&quot;,&quot;30대&quot;,&quot;40대&quot;,&quot;50대&quot;,&quot;60대 이상&quot;]
+										,&quot;datasets&quot;
+										
+										<%-- 각 영역 색깔 --%>
+										:[{&quot;label&quot;:&quot;&quot;,&quot;backgroundColor&quot;
+										:[&quot;#4e73df&quot;,&quot;#1cc88a&quot;,&quot;#36b9cc&quot;,&quot;#f6c23e&quot;,&quot;#e74a3b&quot;]
+										<%-- 도넛그래프 외곽선 색깔 --%>
+										,&quot;borderColor&quot;
+										:[&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;]
+										
+										<%-- 그룹간 식사횟수 --%>
+										,&quot;data&quot;:[&quot;974&quot;,&quot;1531&quot;,&quot;1231&quot;,&quot;1682&quot;,&quot;453&quot;]}
+										]},&quot;options&quot;
+										:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;
+										:{&quot;display&quot;:false,&quot;labels&quot;
+										:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}}">
+										</canvas>
+									</div>
+									<div class="text-center small mt-4">
+									
+									<!-- group_name -->
+										<span class="me-2"><i class="fas fa-circle text-primary"></i>&nbsp;20대 이하</span>
+										<span class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;30대</span>
+										<span class="me-2"><i class="fas fa-circle text-info"></i>&nbsp;40대</span>
+										<span class="me-2"><i class="fas fa-circle text-warning"></i>&nbsp;50대</span>
+										<span class="me-2"><i class="fas fa-circle text-danger"></i>&nbsp;60대 이상</span>
 									</div>
 								</div>
 							</div>
@@ -367,8 +548,6 @@
 			</div>
 			<!-- content -->
 
-
-
 			<!-- footer -->
 			<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 			<!-- /footer -->
@@ -377,7 +556,94 @@
 	</div>
 	<!-- wrapper -->
 	
-
-	
 </body>
+<!-- <script type="text/javascript">
+	$(document).ready(function() {
+		console.log("jquery로 데이터 받기");
+		fetchList();
+	});
+	
+	//====================================== 그래프 목록 ======================================
+	function fetchList() {
+		var id = '${blogVo.id}';
+		console.log(id);
+		
+		// = 없으면 오류
+		var cateVo = {
+			id: id
+		};
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/cateList",
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(cateVo),
+			
+			dataType : "json",
+			success : function(cateList) {
+				/*성공시 처리해야될 코드 작성*/
+				console.log(cateList);
+				//화면에 data + html을 그린다.
+				for (var i = 0; i < cateList.length; i++) {
+					render(cateList[i], "down");
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+		// ajax 
+	};
+	function render(cateVo, opt) {
+		console.log('render()');
+		var str = '';
+		
+		
+		
+		
+		
+		
+		str+= '<div class="chart-area">';
+		str+= '<canvas data-bss-chart=';
+		str+= '"{&quot;type&quot;';
+		str+= ':&quot;doughnut&quot;';
+		str+= ',&quot;data&quot;';
+		// 각 영역 마우스 올리면 보이는 그룹이름
+		str+= '	:{&quot;labels&quot;';
+		str+= '	:[&quot;소방기계&quot;,&quot;Social&quot;,&quot;Referral&quot;]';
+		str+= '	,&quot;datasets&quot;';
+		
+		// 각 영역 색깔
+		str+= '	:[{&quot;label&quot;:&quot;&quot;,&quot;backgroundColor&quot;';
+		str+= '	:[&quot;#4e73df&quot;,&quot;#1cc88a&quot;,&quot;#36b9cc&quot;]';
+		
+		// 도넛그래프 외곽선 색깔
+		str+= '	,&quot;borderColor&quot;';
+		str+= '	:[&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;]';
+
+		// 그룹간 식사횟수
+		str+= '	,&quot;data&quot;:[&quot;50&quot;,&quot;30&quot;,&quot;15&quot;]}';
+		str+= '	]},&quot;options&quot;';
+		str+= '	:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;';
+		str+= '	:{&quot;display&quot;:false,&quot;labels&quot;';
+		str+= '	:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}}">';
+		str+= '	</canvas>';
+		str+= '</div>';
+
+		
+		
+		
+		
+		//리스트 순서
+		if (opt == "up") {
+			$("#cateList").prepend(str);
+		} else if (opt == "down") {
+			$("#cateList").append(str);
+		} else {
+			console.log("opt오류");
+		}
+	};
+
+
+</script> -->
 </html>
