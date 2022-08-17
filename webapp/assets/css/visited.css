@@ -25,7 +25,7 @@
 
 #visited-aside {
   min-width: 300px;
-  color: var(--bs-gray-700);
+  color: #000000;
   background-color: var(--bs-light) !important;
 }
 
@@ -37,6 +37,7 @@
 .visited-aside-blue {
   text-align: center;
   color: white;
+  font-weight: bold;
   background: var(--bs-blue);
   padding-top: 10px;
   padding-bottom: 10px;
@@ -49,11 +50,10 @@
   width: 300px;
   font-size: 18px;
   font-weight: 600;
-  color: var(--bs-gray-600);
 }
 
 .visited-aside-status span {
-  color: var(--bs-gray-dark);
+  color: #000000;
   font-weight: bold;
   font-size: 19px;
 }
@@ -109,7 +109,7 @@
 #visited-star-point i {
   margin: 0px;
   color: #f6c23e;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 #visited-star-point span {
@@ -237,7 +237,7 @@
 #today-review .card-body #today-star-icon {
   margin: 0px 0px 3.5px 25px;
   padding: 0px;
-  font-size: 19px;
+  font-size: 16px;
   font-weight: bold;
 }
 
