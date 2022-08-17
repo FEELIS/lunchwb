@@ -226,7 +226,7 @@ $("#basket-table").on("click", ".basket-table-store-name", function(){
         var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
 	}
 	console.log(storeNo+"번 가게 정보 보기")
-	storeInfo_open(storeNo, 1)
+	storeInfoOpen(storeNo, 1)
 })
 
 /* 실험용 */
