@@ -14,6 +14,11 @@ public class VisitedVo {
 	private int visitCount;
 	private int menuCount;
 	
+	///////// 리뷰용 ////////
+	private String menu2ndCateName;
+	private String storeRoadAddress;
+	private int ratingBujang;
+	
 	//////////////////// 달력용 //////////////////// 
 	private String menu1stCateName;
 	//private int groupNo;
@@ -49,8 +54,10 @@ public class VisitedVo {
 		this.groupOrder = groupOrder;
 	}
 
-	public VisitedVo(int visitedNo, int userNo, int groupNo, int storeNo, int menuNo, String visitedDate, int visitCount, int menuCount,
-			String menu1stCateName, String groupName, String storeName, String menuName, String selectMonth, int groupOrder) {
+	public VisitedVo(int visitedNo, int userNo, int groupNo, int storeNo, int menuNo, String visitedDate,
+			int visitCount, int menuCount, String menu2ndCateName, String storeRoadAddress, int ratingBujang,
+			String menu1stCateName, String groupName, String storeName, String menuName, String selectMonth,
+			int groupOrder) {
 		this.visitedNo = visitedNo;
 		this.userNo = userNo;
 		this.groupNo = groupNo;
@@ -59,6 +66,9 @@ public class VisitedVo {
 		this.visitedDate = visitedDate;
 		this.visitCount = visitCount;
 		this.menuCount = menuCount;
+		this.menu2ndCateName = menu2ndCateName;
+		this.storeRoadAddress = storeRoadAddress;
+		this.ratingBujang = ratingBujang;
 		this.menu1stCateName = menu1stCateName;
 		this.groupName = groupName;
 		this.storeName = storeName;
@@ -135,6 +145,30 @@ public class VisitedVo {
 		this.menuCount = menuCount;
 	}
 
+	public String getMenu2ndCateName() {
+		return menu2ndCateName;
+	}
+
+	public void setMenu2ndCateName(String menu2ndCateName) {
+		this.menu2ndCateName = menu2ndCateName;
+	}
+
+	public String getStoreRoadAddress() {
+		return storeRoadAddress;
+	}
+
+	public void setStoreRoadAddress(String storeRoadAddress) {
+		this.storeRoadAddress = storeRoadAddress;
+	}
+
+	public int getRatingBujang() {
+		return ratingBujang;
+	}
+
+	public void setRatingBujang(int ratingBujang) {
+		this.ratingBujang = ratingBujang;
+	}
+
 	public void setMenu1stCateName(String menu1stCateName) {
 		this.menu1stCateName = menu1stCateName;
 	}
@@ -183,10 +217,10 @@ public class VisitedVo {
 	public String toString() {
 		return "VisitedVo [visitedNo=" + visitedNo + ", userNo=" + userNo + ", groupNo=" + groupNo + ", storeNo="
 				+ storeNo + ", menuNo=" + menuNo + ", visitedDate=" + visitedDate + ", visitCount=" + visitCount
-				+ ", menuCount=" + menuCount + ", menu1stCateName=" + menu1stCateName + ", groupName=" + groupName
-				+ ", storeName=" + storeName + ", menuName=" + menuName + ", selectMonth=" + selectMonth
-				+ ", groupOrder=" + groupOrder + "]";
+				+ ", menuCount=" + menuCount + ", menu2ndCateName=" + menu2ndCateName + ", storeRoadAddress="
+				+ storeRoadAddress + ", ratingBujang=" + ratingBujang + ", menu1stCateName=" + menu1stCateName
+				+ ", groupName=" + groupName + ", storeName=" + storeName + ", menuName=" + menuName + ", selectMonth="
+				+ selectMonth + ", groupOrder=" + groupOrder + "]";
 	}
-
 
 };
