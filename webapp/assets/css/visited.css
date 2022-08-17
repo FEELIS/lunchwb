@@ -224,6 +224,10 @@
   padding: 30px 30px 15px 30px;
 }
 
+#today-review .card-body .today-review-line {
+  height: 58px;
+}
+
 #today-review .card-body .circles {
   vertical-align: middle;
 }
@@ -235,7 +239,7 @@
 }
 
 #today-review .card-body #today-star-icon {
-  margin: 0px 0px 3.5px 25px;
+  margin: 0px 0px 3.5px 18px;
   padding: 0px;
   font-size: 16px;
   font-weight: bold;
@@ -243,7 +247,7 @@
 
 #today-review select {
   height: 24px;
-  margin: 0px 0px 10px 25px;
+  margin: 0px 0px 10px 18px;
   color: rgb(133,135,150);
   border-color: var(--bs-gray-500);
 }
@@ -257,8 +261,8 @@
 }
 
 #today-review img {
-  width: 130.5px;
-  height: 174px;
+  width: 160px;
+  height: 213px;
 }
 
 #today-review input[type="file"] {

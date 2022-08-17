@@ -37,5 +37,10 @@ public class VisitedDao {
 		return menuList;
 	}
 	
+	public VisitedVo todayStoreInfo(int userNo) {
+		VisitedVo visitedVo = sqlSession.selectOne("visited.todayStoreInfo", userNo);
+		return visitedVo;
+	}
+	
 
 }
