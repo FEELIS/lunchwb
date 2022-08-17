@@ -502,17 +502,17 @@
 				await loadBasket() // 장바구니 불러오기
 				
 				console.log(groupChanged)
-				if (groupChanged) {
-					console.log("박치네")
-					console.log(basket)
-					console.log(curr_basket_group)
-					console.log(basket[curr_basket_group])
+				if (groupChanged && curr_basket_group != 0) {
 					for (var i = 0; i < basket[curr_basket_group].length; i++) {
-						addToBasket(basket[curr_basket_group][i])
+						if (basket[curr_basket_group][i].stored) {
+							addToBasket(basket[curr_basket_group][i])
+						}
 					}
 				}
 			}
 		}
+		
+		// 지도 핀처리
 		
 		console.log(basket)
 		console.log("callUser() 끝")
