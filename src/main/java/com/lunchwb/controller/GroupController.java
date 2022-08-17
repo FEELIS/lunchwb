@@ -117,6 +117,7 @@ public class GroupController {
 			if (session.getAttribute("basket") != null) {
 			    session.removeAttribute("basket");
 			}
+			session.setAttribute("curr-basket-group", groupNo);
 		}
 
 		return "redirect:./list?no="+ groupNo;
@@ -232,6 +233,10 @@ public class GroupController {
 		
 		/////////////// Basket ///////////////////////////
 		List<GroupVo> basketGroup = (List<GroupVo>)session.getAttribute("basketGroup");
+		
+		if (session.getAttribute("curr-basket-group") != null) {
+		    session.removeAttribute("curr-basket-group");
+		}
 
 		basketGroup = basketService.basketGroupDel(basketGroup, groupNo);
 		session.setAttribute("basketGroup", basketGroup);
