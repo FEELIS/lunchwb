@@ -206,23 +206,35 @@
 	</update>
 	
 	
+	<!--    정원     -->
 	<!-- index.jsp에서 그룹 선택 -->
 	<select id="selectBasketGroup" parameterType="int" resultMap="GroupVo">
-		SELECT g.group_no groupNo, g.group_name groupName
+		SELECT g.group_no, g.group_name
 		FROM   groups g, group_member m
 		WHERE  g.group_no = m.group_no
 		AND    m.user_no = #{userNo}
 		ORDER BY m.group_order ASC
 	</select>
 	
-	
-	<!-- 그룹 이름 넘버가 같이 필요해?-->
+				
+	<!-- 그룹 이름 넘버가 같이 필요해? -->
 	<!-- 추가된 그룹 정보 -->
 	<select id="addedGroup" parameterType="int" resultMap="GroupVo">
-		SELECT  group_no, 
+		SELECT  group_no,
 				group_name
-		FROM groups
-		WHERE group_no = #{groupNo} 
+		FROM    groups
+		WHERE   group_no = #{groupNo} 
+	</select>
+	
+	
+	<!-- 투표 만들기(그룹 멤버 불러오기) -->
+	<select id="selectVoteMember" parameterType="int" resultMap="GroupVo">
+		SELECT group_member_no
+		       ,NVL(user_no, 0) user_no
+		       ,boss_check
+		FROM   group_member
+		WHERE  group_no = #{groupNo}
+		ORDER BY DECODE (boss_check, 1, 1), group_member_no ASC
 	</select>
 
 </mapper>

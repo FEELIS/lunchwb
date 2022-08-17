@@ -113,4 +113,9 @@ public class GroupDao {
 		GroupVo groupVo = sqlSession.selectOne("group.addedGroup", groupNo);
 		return groupVo;
 	}
+	
+	/******************** 투표하기 그룹 멤버 불러오기 *****************************************/
+	public List<GroupVo> selectVoteMember(int groupNo) {
+		return sqlSession.selectList("group.selectVoteMember", groupNo);
+	}
 }
