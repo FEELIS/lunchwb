@@ -86,7 +86,7 @@ $("#addGroupForm").on("submit", function(){
 		return false
 	}
 	
-	return false
+	return true
 })
 
 </script>
