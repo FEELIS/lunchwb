@@ -67,11 +67,11 @@
 							</div>	
 						</c:if>
 					</c:forEach>
-					
-					<c:if test="${fn:length(basketGroup) < 4}">
-						<div class="basket-group no-drag basket-group-add"><span>그룹추가</span><i class="fas fa-user-plus"></i></div>	
-					</c:if>
              	</c:if>
+
+             	<c:if test="${empty(basketGroup) or fn:length(basketGroup) < 4}">
+						<div class="basket-group no-drag basket-group-add"><span>그룹추가</span><i class="fas fa-user-plus"></i></div>	
+				</c:if>
              </div>
             </c:if>
             
@@ -485,9 +485,11 @@
 			if ("${curr_basket_group}" != "" && "${curr_basket_group}" != "0") {
 				curr_basket_group = parseInt("${curr_basket_group}")
 			} 
-			// baksetGroup 가져오기
-			await getBasketGroups()
 			
+			let groupChanged = false
+			// baksetGroup 가져오기
+			groupChanged = await getBasketGroups()
+						
 			console.log(basket_group)
 			console.log("장바구니 그룹: " + curr_basket_group)
 									
@@ -498,6 +500,17 @@
 				
 			} else {
 				await loadBasket() // 장바구니 불러오기
+				
+				console.log(groupChanged)
+				if (groupChanged) {
+					console.log("박치네")
+					console.log(basket)
+					console.log(curr_basket_group)
+					console.log(basket[curr_basket_group])
+					for (var i = 0; i < basket[curr_basket_group].length; i++) {
+						addToBasket(basket[curr_basket_group][i])
+					}
+				}
 			}
 		}
 		
@@ -510,6 +523,8 @@
 	
 	// 장바구니 그룹 목록 불러오기
 	async function getBasketGroups() {
+		var change = true
+		
 		$.ajax({
 			url : "${pageContext.request.contextPath}/basket/getBasketGroup",		
 			type : "post",
@@ -517,15 +532,21 @@
 			contentType : "application/json",
 			data : JSON.stringify(userNo),
 			dataType : "json",
-			success : async function(basketGroup){
+			success : async function(basketGroup){				
 				for (var i = 0; i < basketGroup.length; i++) {
 					basket_group.push(basketGroup[i])
 					
-					if (curr_basket_group == 0) { // 저장된 값 없으면 제일 앞에 그룹이 curr_basket_group
-						if (i == 0) {
-							curr_basket_group = basketGroup[i].groupNo
-						}
-					} 
+					if (basketGroup[i].groupNo == curr_basket_group) {
+						change = false
+					}
+				}
+				
+				if (basket_group.length == 0) {
+					curr_basket_group = 0
+					
+				} else if (change) {
+					curr_basket_group = basketGroup[0].groupNo	
+					$("[data-groupNo=" + String(curr_basket_group) + "]").addClass("basket-selected-group")
 				}
 				
 				console.log(curr_basket_group)
@@ -539,6 +560,8 @@
 		})
 		
 		console.log("getBasketGroups() 끝")
+		
+		return change
 	}
 	
 	
@@ -602,6 +625,11 @@
 	}
 	
 	
+	// 그룹추가 클릭
+	$("#basket-groups").on("click", ".basket-group-add", function(){
+		location.replace("${pageContext.request.contextPath}/group/add")
+	})
+		
 	
 	/////// 장바구니 ///////////////////////////////////////////////////////////////////////////////////////
 	

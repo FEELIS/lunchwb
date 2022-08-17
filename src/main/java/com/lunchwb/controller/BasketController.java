@@ -121,7 +121,14 @@ public class BasketController {
 		
 		List<Integer> filter_excluded = (List<Integer>)session.getAttribute("filter_excluded");
 		logger.info(filter_excluded.toString());
-				
+		
+		if (basketGroup.size() == 0) {
+			GroupVo noGroup = new GroupVo();
+			noGroup.setGroupNo(0);
+			
+			basketGroup.add(noGroup);
+		}
+		
 		Map<Integer, List<StoreVo>> basket = basketService.makeNewbasket(basketGroup);	
 		
 		for (GroupVo group: basketGroup) {
