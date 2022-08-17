@@ -238,6 +238,15 @@ $("#test-storeInfo").on("click", function(){
 
 
 
+/* 리뷰 메인 가게정보에서 조회할 때 */
+$("#visited-store-name").on("click", function({
+	var storeNo = $(this).data("storeno")
+	console.log(storeNo+"번 가게 정보 보기")
+	storeInfoOpen(storeNo, 0)
+}))
+
+
+
 /* 가게정보 모달 오픈 */
 function storeInfoOpen(storeNo, k){
 	console.log("가게: "+storeNo)

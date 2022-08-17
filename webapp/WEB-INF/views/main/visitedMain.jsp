@@ -70,8 +70,8 @@
             </div>
             
             <div id="visited-store-info">
-            	<button id="visited-store-name" class="btn btn-primary" type="button">
-            		양자강<span id="visited-store-cate">| 중식/중화요리</span>
+            	<button id="visited-store-name" class="btn btn-primary" type="button" data-storeno="${visitedMap.visitedVo.storeNo}">
+            		${visitedMap.visitedVo.storeName}<span id="visited-store-cate">| ${visitedMap.visitedVo.menu2stCateName}</span>
             	</button>
                 <div id="visited-star-point">
                 	<i class="fas fa-star"></i>
@@ -208,44 +208,48 @@
                                     <div class="col-xxl-7">
                                         
                                         <div>
-                                            <div class="d-inline">
+                                            <div class="d-inline today-review-line">
                                             	<span class="d-inline-block circles">
                                             		<span class="d-inline-block me-2 bg-secondary icon-circle"></span>
                                             	</span>
-                                            	<span class="fw-bolder d-inline-block">가게는 어떠셨나요?</span>
+                                            	<span class="fw-bolder d-inline-block">
+                                            		가게는 어떠셨나요?
+                                            	</span>
+	                                     		<span id="today-star-icon" class="text-warning">
+		                                     		<i class="far fa-star"></i>
+		                                     		<i class="far fa-star"></i>
+		                                     		<i class="far fa-star"></i>
+		                                     		<i class="far fa-star"></i>
+		                                     		<i class="far fa-star"></i>
+	                                     		</span>
                                             </div>
                                      		
-                                     		<span id="today-star-icon" class="text-warning d-block">
-	                                     		<i class="far fa-star"></i>
-	                                     		<i class="far fa-star"></i>
-	                                     		<i class="far fa-star"></i>
-	                                     		<i class="far fa-star"></i>
-	                                     		<i class="far fa-star"></i>
-                                     		</span>
                                         </div>
                                         
                                         <div>
                                             
-                                            <div class="d-block">
+                                            <div class="d-block today-review-line">
                                             	<span class="d-inline-block circles">
                                             		<span class="d-inline-block me-2 bg-secondary icon-circle"></span>
                                             	</span>
                                             	
-                                            	<span class="fw-bolder d-inline-block">메뉴를 선택해주세요 </span>
+                                            	<span class="fw-bolder d-inline-block">
+                                            		메뉴를 선택해주세요 
+		                                            <select id="today-menu" name="menu">
+		                                                <optgroup label="중식/중화요리">
+	                                                    <option value="black-noodle">짜장면</option>
+	                                                    <option value="">짬뽕</option>
+	                                                    <option value="">쟁반짜장</option>
+	                                                    <option value="">짜장밥</option>
+	                                                    <option value="">짬뽕밥</option>
+	                                                    <option value="">볶음밥</option>
+	                                                    <option value="">탕수육</option>
+	                                                    <option value="">양장피</option>
+		                                                </optgroup>
+		                                            </select>
+                                            	</span>
+
                                             </div>
-                                            
-                                            <select id="today-menu" name="menu">
-                                                <optgroup label="중식/중화요리">
-                                                    <option value="black-noodle">짜장면</option>
-                                                    <option value="">짬뽕</option>
-                                                    <option value="">쟁반짜장</option>
-                                                    <option value="">짜장밥</option>
-                                                    <option value="">짬뽕밥</option>
-                                                    <option value="">볶음밥</option>
-                                                    <option value="">탕수육</option>
-                                                    <option value="">양장피</option>
-                                                </optgroup>
-                                            </select>
                                             
                                         </div>
                                         
@@ -289,6 +293,10 @@
     <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     
 </div>
+
+
+<!--  가게 정보 모달 삽입 --> 
+<c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
 
     
 </body>
