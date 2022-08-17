@@ -17,10 +17,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&amp;display=swap">
    
-<script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
-<script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
+<script type="text/javascript"src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript"src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
+<script type="text/javascript"src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
 </head>
 
 <body id="page-top">
@@ -70,12 +70,11 @@
     
 </div>
 
-</body>
-
 <script type="text/javascript">
 
 $("#addGroupForm").on("submit", function(){
 	var groupName = $("#addGroupForm [name = 'groupName']").val()
+	console.log(groupName)
 	
 	if(groupName == null || groupName == ""){
 		alert("그룹 이름을 입력해주세요")
@@ -87,9 +86,12 @@ $("#addGroupForm").on("submit", function(){
 		return false
 	}
 	
-	return true
+	return false
 })
 
 </script>
+
+</body>
+
 
 </html>
