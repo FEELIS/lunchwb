@@ -250,16 +250,10 @@
 	                                            
 	                                            <div>
 		                                            <select id="today-menu" name="menu">
-		                                                <optgroup label="중식/중화요리">
-	                                                    <option value="black-noodle">짜장면</option>
-	                                                    <option value="">짬뽕</option>
-	                                                    <option value="">쟁반짜장</option>
-	                                                    <option value="">짜장밥</option>
-	                                                    <option value="">짬뽕밥</option>
-	                                                    <option value="">볶음밥</option>
-	                                                    <option value="">탕수육</option>
-	                                                    <option value="">양장피</option>
-		                                                </optgroup>
+	                                                    <option class="fw-bold" selected disabled>${visitedMap.visitedVo.menu2ndCateName}</option>
+	                                                    <c:forEach items="${visitedMap.menuList}" var="menuVo">
+	                                                    	<option value="${menuVo.menuNo}">${menuVo.menuName}</option>
+	                                                    </c:forEach>
 		                                            </select>
 		                                        </div>
 

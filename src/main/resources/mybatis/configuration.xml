@@ -13,6 +13,7 @@
    		<typeAlias alias="GPSVo" type="com.lunchwb.vo.GPSVo"/>
    		<typeAlias alias="ReportVo" type="com.lunchwb.vo.ReportVo"/>
    		<typeAlias alias="VoteVo" type="com.lunchwb.vo.VoteVo"/>
+   		<typeAlias alias="MenuVo" type="com.lunchwb.vo.MenuVo"/>
    		<typeAlias alias="Map" type="java.util.Map"/>
     </typeAliases>
 
@@ -27,5 +28,6 @@
         <mapper resource="mybatis/mappers/basket.xml" />
         <mapper resource="mybatis/mappers/report.xml" />
         <mapper resource="mybatis/mappers/vote.xml" />
+        <mapper resource="mybatis/mappers/menu.xml" />
     </mappers>
 </configuration>
