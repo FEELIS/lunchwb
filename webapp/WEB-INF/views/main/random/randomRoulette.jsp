@@ -112,8 +112,6 @@
 </body>
 
 <script type="text/javascript">
-	indexJSP = true
-	
 
 	// 위치재설정 버튼 클릭 시
 	$("#location-change-btn").on("click", function(){
@@ -220,29 +218,55 @@
 			)
 		}
 	}
-	
+	let countbas;
+	let theWheel;
 	// 룰렛
 	// Create new wheel object specifying the parameters at creation time.
-    let theWheel = new Winwheel({
-    	
-        'numSegments'  : 3,     // Specify number of segments.
-        'outerRadius'  : 212,   // Set outer radius so wheel fits inside the background.
-        'textFontSize' : 28,    // Set font size as desired.
-        'segments'     :        // Define segments including colour and text.
-        [ 
-	        	{'fillStyle' : '#eae56f', 'text' : '버거킹'},
-	            {'fillStyle' : '#89f26e', 'text' : '서브웨이'},
-	            {'fillStyle' : '#7de6ef', 'text' : '오늘뭐먹지'},
-           
-        ],
-        'animation' :           // Specify the animation to use.
-        {
-            'type'     : 'spinToStop',
-            'duration' : 5,     // Duration in seconds.
-            'spins'    : 8,     // Number of complete spins.
-            'callbackFinished' : alertPrize
-        }
-    });
+    $(document).ready(function(){
+      countbas = countBasketItems(curr_basket_group);
+      
+      if(countbas == 3){
+    	  theWheel = new Winwheel({
+              
+              'numSegments'  : countbas,     // Specify number of segments.
+              'outerRadius'  : 212,   // Set outer radius so wheel fits inside the background.
+              'textFontSize' : 28,    // Set font size as desired.
+              'segments'     :        // Define segments including colour and text.
+              [ 
+                    {'fillStyle' : '#eae56f', 'text' : basket[curr_basket_group][0].storeName},
+                    {'fillStyle' : '#89f26e', 'text' : basket[curr_basket_group][1].storeName},
+                    {'fillStyle' : '#7de6ef', 'text' : basket[curr_basket_group][2].storeName}
+              ],
+              'animation' :           // Specify the animation to use.
+              {
+                  'type'     : 'spinToStop',
+                  'duration' : 5,     // Duration in seconds.
+                  'spins'    : 8,     // Number of complete spins.
+                  'callbackFinished' : alertPrize
+              }
+           });
+      }else if (countbas == 2){
+    	  theWheel = new Winwheel({
+              
+              'numSegments'  : countbas,     // Specify number of segments.
+              'outerRadius'  : 212,   // Set outer radius so wheel fits inside the background.
+              'textFontSize' : 28,    // Set font size as desired.
+              'segments'     :        // Define segments including colour and text.
+              [ 
+                    {'fillStyle' : '#eae56f', 'text' : basket[curr_basket_group][0].storeName},
+                    {'fillStyle' : '#89f26e', 'text' : basket[curr_basket_group][1].storeName}
+              ],
+              'animation' :           // Specify the animation to use.
+              {
+                  'type'     : 'spinToStop',
+                  'duration' : 5,     // Duration in seconds.
+                  'spins'    : 8,     // Number of complete spins.
+                  'callbackFinished' : alertPrize
+              }
+           });
+      }
+      
+   })
 
     // Vars used by the code in this page to do power controls.
     let wheelSpinning = false;
@@ -252,12 +276,11 @@
     // -------------------------------------------------------
     function startSpin()
     {	
-    	
         // Ensure that spinning can't be clicked again while already running.
         if (wheelSpinning == false) {
             // Based on the power level selected adjust the number of spins for the wheel, the more times is has
             // to rotate with the duration of the animation the quicker the wheel spins.
-            theWheel.animation.spins = 8;
+            //theWheel.animation.spins = 8;
 
             // Disable the spin button so can't click again while wheel is spinning.
             document.getElementById('spin_button').src       = "${pageContext.request.contextPath}/assets/img/rouletteOff.png";
