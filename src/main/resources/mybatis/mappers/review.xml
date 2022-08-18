@@ -70,7 +70,7 @@
 		]]>
 	</select>
 	
-	<select id="recentReview-2" parameterType="int" resultMap="ReviewVo">
+	<select id="recentReview" parameterType="int" resultMap="ReviewVo">
 		<![CDATA[
 			SELECT  review_no
 					,user_name
