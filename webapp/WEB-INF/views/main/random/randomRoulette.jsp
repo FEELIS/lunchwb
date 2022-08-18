@@ -113,6 +113,7 @@
 
 <script type="text/javascript">
 	indexJSP = true
+	
 
 	// 위치재설정 버튼 클릭 시
 	$("#location-change-btn").on("click", function(){
@@ -222,17 +223,16 @@
 	
 	// 룰렛
 	// Create new wheel object specifying the parameters at creation time.
-	
-	
     let theWheel = new Winwheel({
+    	
         'numSegments'  : 3,     // Specify number of segments.
         'outerRadius'  : 212,   // Set outer radius so wheel fits inside the background.
         'textFontSize' : 28,    // Set font size as desired.
         'segments'     :        // Define segments including colour and text.
         [ 
-	        	{'fillStyle' : '#eae56f', 'text' : '바스켓배열을어떻게불어와야할까요'},
-	            {'fillStyle' : '#89f26e', 'text' : '바스켓배열을어떻게불어와야할까요'},
-	            {'fillStyle' : '#7de6ef', 'text' : 'b'},
+	        	{'fillStyle' : '#eae56f', 'text' : '버거킹'},
+	            {'fillStyle' : '#89f26e', 'text' : '서브웨이'},
+	            {'fillStyle' : '#7de6ef', 'text' : '오늘뭐먹지'},
            
         ],
         'animation' :           // Specify the animation to use.
@@ -251,7 +251,8 @@
     // Click handler for spin button.
     // -------------------------------------------------------
     function startSpin()
-    {
+    {	
+    	
         // Ensure that spinning can't be clicked again while already running.
         if (wheelSpinning == false) {
             // Based on the power level selected adjust the number of spins for the wheel, the more times is has
@@ -294,7 +295,7 @@
     function alertPrize(indicatedSegment)
     {
         // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
-        alert("You have won " + indicatedSegment.text);
+        alert("You have won " + indicatedSegment.text + userNo);
     }
 	
 </script>

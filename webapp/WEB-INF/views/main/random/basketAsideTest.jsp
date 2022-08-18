@@ -931,10 +931,8 @@
 		
 		location.replace("${pageContext.request.contextPath}/vote")
 	})
-	var randomStore;
-	var randomStoreNo;
-	var randomStoreName;
-	let countStore = countBasketItems(curr_basket_group);
+	
+	;
 	
 	// 랜덤 선택 클릭
 	$("#basket-random-btn").on("click", function(){
@@ -949,9 +947,10 @@
 			alert("오늘의 점심 후보가 2개 이상일 때 이용할 수 있습니다.")
 			return
 		}
-		randomStore = Math.floor(Math.random()*(countBasketItems(curr_basket_group)))
-		randomStoreNo = basket[curr_basket_group][randomStore].storeNo
-		randomStoreName = basket[curr_basket_group][randomStore].storeName
+		
+		var randomStore = Math.floor(Math.random()*(countBasketItems(curr_basket_group)))
+		var randomStoreNo = basket[curr_basket_group][randomStore].storeNo
+		var randomStoreName = basket[curr_basket_group][randomStore].storeName
 		
 		console.log("방문 가게 no = " + randomStoreNo)
 		console.log("방문 가게 이름 = " + randomStoreName)
