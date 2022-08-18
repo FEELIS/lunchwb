@@ -14,6 +14,7 @@ public class UserVo {
 	private String userSex;
 	private String userJoinDate;
 	private String userGrade;
+	private String userState;
 	
 	
 	/* 자동 로그인 */
@@ -30,8 +31,8 @@ public class UserVo {
 	}
 
 	public UserVo(int userNo, String userEmail, String userPassword, String userName, int userBirthYear, String userSex,
-			String userJoinDate, String userGrade, String sessionId, Date limitDate, boolean autoLogin,
-			String snsLogin) {
+			String userJoinDate, String userGrade, String userState, String sessionId, Date limitDate,
+			boolean autoLogin, String snsLogin) {
 		super();
 		this.userNo = userNo;
 		this.userEmail = userEmail;
@@ -41,143 +42,125 @@ public class UserVo {
 		this.userSex = userSex;
 		this.userJoinDate = userJoinDate;
 		this.userGrade = userGrade;
+		this.userState = userState;
 		this.sessionId = sessionId;
 		this.limitDate = limitDate;
 		this.autoLogin = autoLogin;
 		this.snsLogin = snsLogin;
 	}
-
 
 	public int getUserNo() {
 		return userNo;
 	}
 
-
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
-
 
 	public String getUserEmail() {
 		return userEmail;
 	}
 
-
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
-
 
 	public String getUserPassword() {
 		return userPassword;
 	}
 
-
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
-
 
 	public String getUserName() {
 		return userName;
 	}
 
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
 
 	public int getUserBirthYear() {
 		return userBirthYear;
 	}
 
-
 	public void setUserBirthYear(int userBirthYear) {
 		this.userBirthYear = userBirthYear;
 	}
-
 
 	public String getUserSex() {
 		return userSex;
 	}
 
-
 	public void setUserSex(String userSex) {
 		this.userSex = userSex;
 	}
-
 
 	public String getUserJoinDate() {
 		return userJoinDate;
 	}
 
-
 	public void setUserJoinDate(String userJoinDate) {
 		this.userJoinDate = userJoinDate;
 	}
-
 
 	public String getUserGrade() {
 		return userGrade;
 	}
 
-
 	public void setUserGrade(String userGrade) {
 		this.userGrade = userGrade;
 	}
 
+	public String getUserState() {
+		return userState;
+	}
+
+	public void setUserState(String userState) {
+		this.userState = userState;
+	}
 
 	public String getSessionId() {
 		return sessionId;
 	}
 
-
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
 	}
-
 
 	public Date getLimitDate() {
 		return limitDate;
 	}
 
-
 	public void setLimitDate(Date limitDate) {
 		this.limitDate = limitDate;
 	}
-
 
 	public boolean isAutoLogin() {
 		return autoLogin;
 	}
 
-
 	public void setAutoLogin(boolean autoLogin) {
 		this.autoLogin = autoLogin;
 	}
-
 
 	public String getSnsLogin() {
 		return snsLogin;
 	}
 
-
 	public void setSnsLogin(String snsLogin) {
 		this.snsLogin = snsLogin;
 	}
-
 
 	@Override
 	public String toString() {
 		return "UserVo [userNo=" + userNo + ", userEmail=" + userEmail + ", userPassword=" + userPassword
 				+ ", userName=" + userName + ", userBirthYear=" + userBirthYear + ", userSex=" + userSex
-				+ ", userJoinDate=" + userJoinDate + ", userGrade=" + userGrade + ", sessionId=" + sessionId
-				+ ", limitDate=" + limitDate + ", autoLogin=" + autoLogin + ", snsLogin=" + snsLogin + "]";
+				+ ", userJoinDate=" + userJoinDate + ", userGrade=" + userGrade + ", userState=" + userState
+				+ ", sessionId=" + sessionId + ", limitDate=" + limitDate + ", autoLogin=" + autoLogin + ", snsLogin="
+				+ snsLogin + "]";
 	}
-	
-	
-	
-	
+
 	
 }

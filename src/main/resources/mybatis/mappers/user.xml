@@ -14,6 +14,7 @@
 			        ,user_email userEmail
 			        ,user_name userName
 			        ,user_grade userGrade
+			        ,user_state userState
 			from users
 			where user_email = #{userEmail}
 		]]>
@@ -132,6 +133,7 @@
 			        ,user_email userEmail
 			        ,user_name userName
 			        ,user_grade userGrade
+			        ,user_state userState
 			from users
 			where user_email = #{email}
 			and sns_login = #{id}
@@ -180,6 +182,7 @@
 			        ,user_email userEmail
 			        ,user_name userName
 			        ,user_grade userGrade
+			        ,user_state userState
 			from users
 			where user_email = #{userEmail}
 			and sns_login = #{snsLogin}
