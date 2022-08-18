@@ -11,7 +11,7 @@
 		<result column="menu_no" property="menuNo" />
 		<result column="visited_date" property="visitedDate" />
 		<result column="menu_1st_cate_Name" property="menu1stCateName" />
-		<result column="menu_3st_cate_Name" property="menu2stCateName" />
+		<result column="menu_2nd_cate_Name" property="menu2ndCateName" />
 		<result column="store_name" property="storeName" />
 		<result column="menu_name" property="menuName" />
 		<result column="select_month" property="selectMonth" />
