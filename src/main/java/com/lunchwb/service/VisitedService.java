@@ -72,6 +72,14 @@ public class VisitedService {
 		List<ReviewVo> reviewList = reviewDao.recentReview(storeNo); 
 		visitedMap.put("reviewList", reviewList);
 		
+		//나의 방문 정보
+		VisitedVo vstVo = new VisitedVo();
+		vstVo.setUserNo(userNo);
+		vstVo.setStoreNo(storeNo);
+		
+		VisitedVo relVo = vstDao.storeAndMe(vstVo);
+		visitedMap.put("relVo", relVo);
+		
 		return visitedMap;
 	}
 

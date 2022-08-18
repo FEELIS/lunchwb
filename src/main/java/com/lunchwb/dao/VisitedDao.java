@@ -42,5 +42,10 @@ public class VisitedDao {
 		return visitedVo;
 	}
 	
+	public VisitedVo storeAndMe(VisitedVo visitedVo) {
+		VisitedVo relVo = sqlSession.selectOne("visited.storeAndMe", visitedVo);
+		return relVo;
+	}
+	
 
 }

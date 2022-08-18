@@ -20,6 +20,7 @@
 		<result column="group_order" property="groupOrder" />
 		<result column="store_road_address" property="storeRoadAddress" />
 		<result column="rating_bujang" property="ratingBujang" />
+		<result column="last_visit" property="lastVisit" />
 	</resultMap>
 	
    
@@ -109,6 +110,40 @@
 		WHERE i.group_no = g.group_no
 		AND i.store_no = s.store_no
 		AND s.menu_2nd_cate_no = f.menu_2nd_cate_no
+	</select>
+	
+	
+	<select id="storeAndMe" parameterType="VisitedVo" resultMap="resultMapVisitedVo">
+		SELECT  visited_date
+		        , visit_count
+		        , last_visit
+		        , group_name
+		FROM (  SELECT visited_date
+		        FROM(SELECT  ROWNUM rn
+		                     , visited_date
+		             FROM ( SELECT TO_CHAR(visited_date, 'YYYY')||'년 '||TO_CHAR(visited_date, 'MM')||'월 '||TO_CHAR(visited_date, 'DD')||'일'  visited_date
+		                    FROM visited
+		                    WHERE user_no = 9
+		                    AND store_no = 284
+		                    ORDER BY visited_no ASC))
+		        WHERE rn = 1  )
+		     ,( SELECT COUNT(visited_no) visit_count
+		        FROM visited
+		        WHERE user_no = 9
+		        AND store_no = 284 )  
+		     ,( SELECT  last_visit
+		                , group_name
+		        FROM(   SELECT  ROWNUM rn
+		                        , last_visit
+		                        , group_name
+		                FROM(SELECT TO_DATE(SYSDATE) - visited_date last_visit
+		                            , group_name
+		                            FROM visited v, groups g
+		                            WHERE v.group_no = g.group_no
+		                            AND v.user_no = 9
+		                            AND v.store_no = 284
+		                            ORDER BY visited_no DESC    ))
+		        WHERE rn = 2)
 	</select>
 
 

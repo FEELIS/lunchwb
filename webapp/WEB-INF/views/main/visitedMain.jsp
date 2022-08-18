@@ -138,7 +138,7 @@
                             
                             <div class="card-header py-3">
                                 <p class="text-primary m-0 fw-bold">
-                                	<span class="visited-store-blue">양자강</span>과 나의 인연
+                                	<span class="visited-store-blue">나와 ${visitedMap.visitedVo.storeName}의 인연</span>
                                 </p>
                             </div>
                             
@@ -155,8 +155,8 @@
                                         
                                         <tbody>
                                             <tr>
-                                                <td>2022년 07월 20일<br /></td>
-                                                <td>103번째</td>
+                                                <td>${visitedMap.relVo.visitedDate}<br /></td>
+                                                <td>${visitedMap.relVo.visitCount}번째</td>
                                             </tr>
                                         </tbody>
                                         
@@ -175,8 +175,26 @@
                                         
                                         <tbody>
                                             <tr>
-                                                <td>11일</td>
-                                                <td>동기모임</td>
+                                                <td>
+                                                	<c:choose>
+                                                		<c:when test="${visitedMap.relVo.lastVisit == null || visitedMap.relVo.lastVisit == '' }">
+                                                			-
+                                                		</c:when>
+                                                		<c:otherwise>
+                                                			${visitedMap.relVo.lastVisit}일
+                                                		</c:otherwise>
+                                                	</c:choose>
+                                                </td>
+                                                <td>
+                                                	<c:choose>
+                                                		<c:when test="${visitedMap.relVo.lastVisit == null || visitedMap.relVo.lastVisit == '' }">
+                                                			-
+                                                		</c:when>
+                                                		<c:otherwise>
+                                                			${visitedMap.relVo.groupName}
+                                                		</c:otherwise>
+                                                	</c:choose>
+                                                </td>
                                             </tr>
                                         </tbody>
                                         
