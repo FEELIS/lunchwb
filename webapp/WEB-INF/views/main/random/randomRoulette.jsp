@@ -55,7 +55,7 @@
         	<button class="btn btn-primary no-drag" id="location-change-btn" type="button">위치재설정</button>
         </div>
         
-       <div align="center">
+       <div style="margin-top: 100px;" align="center">
             <table cellpadding="0" cellspacing="0" border="0">
                 <tr>
                     <td>
@@ -63,8 +63,8 @@
                             <img id="spin_button" src="${pageContext.request.contextPath}/assets/img/rouletteOn.png" alt="Spin" onClick="startSpin();" />
                         </div>
                     </td>
-                    <td width="438" height="582" class="the_wheel" align="center" valign="center">
-                        <canvas id="canvas" width="434" height="434">
+                    <td width="620" height="500" class="the_wheel" align="center" valign="center">
+                        <canvas id="canvas" width="620" height="800">
                             <p style="{color: white}" align="center">Sorry, your browser doesn't support canvas. Please try another.</p>
                         </canvas>
                     </td>
@@ -220,22 +220,69 @@
 	}
 	let countbas;
 	let theWheel;
+	
+	
 	// 룰렛
 	// Create new wheel object specifying the parameters at creation time.
-    $(document).ready(function(){
+	
+	setTimeout(() => {
+		countbas = countBasketItems(curr_basket_group);
+	      
+	      if(countbas == 3){
+	    	  theWheel = new Winwheel({
+	              
+	              'numSegments'  : countbas,     // Specify number of segments.
+	              'outerRadius'  : 305,   // Set outer radius so wheel fits inside the background.
+	              'textFontSize' : 18,    // Set font size as desired.
+	              'segments'     :        // Define segments including colour and text.
+	              [ 
+	                    {'fillStyle' : '#36b9cc', 'text' : basket[curr_basket_group][0].storeName},
+	                    {'fillStyle' : '#f6c23e', 'text' : basket[curr_basket_group][1].storeName},
+	                    {'fillStyle' : '#1cc88a', 'text' : basket[curr_basket_group][2].storeName}
+	              ],
+	              'animation' :           // Specify the animation to use.
+	              {
+	                  'type'     : 'spinToStop',
+	                  'duration' : 5,     // Duration in seconds.
+	                  'spins'    : 8,     // Number of complete spins.
+	                  'callbackFinished' : alertPrize
+	              }
+	           });
+	      }else if (countbas == 2){
+	    	  theWheel = new Winwheel({
+	              
+	              'numSegments'  : countbas,     // Specify number of segments.
+	              'outerRadius'  : 305,   // Set outer radius so wheel fits inside the background.
+	              'textFontSize' : 18,    // Set font size as desired.
+	              'segments'     :        // Define segments including colour and text.
+	              [ 
+	                    {'fillStyle' : '#36b9cc', 'text' : basket[curr_basket_group][0].storeName},
+	                    {'fillStyle' : '#f6c23e', 'text' : basket[curr_basket_group][1].storeName}
+	              ],
+	              'animation' :           // Specify the animation to use.
+	              {
+	                  'type'     : 'spinToStop',
+	                  'duration' : 5,     // Duration in seconds.
+	                  'spins'    : 8,     // Number of complete spins.
+	                  'callbackFinished' : alertPrize
+	              }
+	           });
+	      }
+	}, 400);
+   /*  $(document).ready(function(){
       countbas = countBasketItems(curr_basket_group);
       
       if(countbas == 3){
     	  theWheel = new Winwheel({
               
               'numSegments'  : countbas,     // Specify number of segments.
-              'outerRadius'  : 212,   // Set outer radius so wheel fits inside the background.
-              'textFontSize' : 28,    // Set font size as desired.
+              'outerRadius'  : 305,   // Set outer radius so wheel fits inside the background.
+              'textFontSize' : 18,    // Set font size as desired.
               'segments'     :        // Define segments including colour and text.
               [ 
-                    {'fillStyle' : '#eae56f', 'text' : basket[curr_basket_group][0].storeName},
-                    {'fillStyle' : '#89f26e', 'text' : basket[curr_basket_group][1].storeName},
-                    {'fillStyle' : '#7de6ef', 'text' : basket[curr_basket_group][2].storeName}
+                    {'fillStyle' : '#36b9cc', 'text' : basket[curr_basket_group][0].storeName},
+                    {'fillStyle' : '#f6c23e', 'text' : basket[curr_basket_group][1].storeName},
+                    {'fillStyle' : '#1cc88a', 'text' : basket[curr_basket_group][2].storeName}
               ],
               'animation' :           // Specify the animation to use.
               {
@@ -249,12 +296,12 @@
     	  theWheel = new Winwheel({
               
               'numSegments'  : countbas,     // Specify number of segments.
-              'outerRadius'  : 212,   // Set outer radius so wheel fits inside the background.
-              'textFontSize' : 28,    // Set font size as desired.
+              'outerRadius'  : 305,   // Set outer radius so wheel fits inside the background.
+              'textFontSize' : 18,    // Set font size as desired.
               'segments'     :        // Define segments including colour and text.
               [ 
-                    {'fillStyle' : '#eae56f', 'text' : basket[curr_basket_group][0].storeName},
-                    {'fillStyle' : '#89f26e', 'text' : basket[curr_basket_group][1].storeName}
+                    {'fillStyle' : '#36b9cc', 'text' : basket[curr_basket_group][0].storeName},
+                    {'fillStyle' : '#f6c23e', 'text' : basket[curr_basket_group][1].storeName}
               ],
               'animation' :           // Specify the animation to use.
               {
@@ -266,7 +313,7 @@
            });
       }
       
-   })
+   }) */
 
     // Vars used by the code in this page to do power controls.
     let wheelSpinning = false;
@@ -318,7 +365,7 @@
     function alertPrize(indicatedSegment)
     {
         // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
-        alert("You have won " + indicatedSegment.text + userNo);
+        alert("오늘 방문할 가게는 [" + indicatedSegment.text +"] 입니다.");
     }
 	
 </script>
