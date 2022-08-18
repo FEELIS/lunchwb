@@ -17,7 +17,7 @@ public class VisitedVo {
 	///////// 리뷰용 ////////
 	private String menu2ndCateName;
 	private String storeRoadAddress;
-	private int ratingBujang;
+	private float ratingBujang;
 	
 	//////////////////// 달력용 //////////////////// 
 	private String menu1stCateName;
@@ -55,7 +55,7 @@ public class VisitedVo {
 	}
 
 	public VisitedVo(int visitedNo, int userNo, int groupNo, int storeNo, int menuNo, String visitedDate,
-			int visitCount, int menuCount, String menu2ndCateName, String storeRoadAddress, int ratingBujang,
+			int visitCount, int menuCount, String menu2ndCateName, String storeRoadAddress, float ratingBujang,
 			String menu1stCateName, String groupName, String storeName, String menuName, String selectMonth,
 			int groupOrder) {
 		this.visitedNo = visitedNo;
@@ -161,11 +161,11 @@ public class VisitedVo {
 		this.storeRoadAddress = storeRoadAddress;
 	}
 
-	public int getRatingBujang() {
+	public float getRatingBujang() {
 		return ratingBujang;
 	}
 
-	public void setRatingBujang(int ratingBujang) {
+	public void setRatingBujang(float ratingBujang) {
 		this.ratingBujang = ratingBujang;
 	}
 
