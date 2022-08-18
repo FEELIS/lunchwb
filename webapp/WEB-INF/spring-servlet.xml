@@ -68,6 +68,7 @@
          <mvc:interceptor>
         	<mvc:mapping path="/stat/**" />
         	<mvc:mapping path="/group/**" />
+        	<mvc:mapping path="/genie/review" />
         	<bean class="com.lunchwb.interceptor.AuthenticationInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
