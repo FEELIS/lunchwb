@@ -19,6 +19,7 @@ public class GroupVo {
 	private int userBirthYear;
 	private String userAge;
 	private String userSex;
+	private int userGrade;
 	
 	///////group_member table +//////
 	private int groupOrder;
@@ -29,10 +30,11 @@ public class GroupVo {
 	
 	public GroupVo() {
 	}
-	
+
 	
 	public GroupVo(int groupNo, int groupLeader, String groupName, int groupMemberNo, int userNo, int bossCheck,
-			String userName, int userBirthYear, String userAge, String userSex, int groupOrder, int order) {
+			String userName, int userBirthYear, String userAge, String userSex, int userGrade, int groupOrder,
+			int order) {
 		this.groupNo = groupNo;
 		this.groupLeader = groupLeader;
 		this.groupName = groupName;
@@ -43,6 +45,7 @@ public class GroupVo {
 		this.userBirthYear = userBirthYear;
 		this.userAge = userAge;
 		this.userSex = userSex;
+		this.userGrade = userGrade;
 		this.groupOrder = groupOrder;
 		this.order = order;
 	}
@@ -142,17 +145,23 @@ public class GroupVo {
 	
 	public void setOrder(int order) {
 		this.order = order;
+	}	
+
+	public int getUserGrade() {
+		return userGrade;
 	}
-	
+
+	public void setUserGrade(int userGrade) {
+		this.userGrade = userGrade;
+	}
+
 
 	@Override
 	public String toString() {
 		return "GroupVo [groupNo=" + groupNo + ", groupLeader=" + groupLeader + ", groupName=" + groupName
-				+ ", groupMemberNo=" + groupMemberNo + ", userNo=" + userNo 
-				+ ", bossCheck=" + bossCheck + ", userName=" + userName + ", userBirthYear=" + userBirthYear
-				+ ", userAge=" + userAge + ", userSex=" + userSex + ", groupOrder=" + groupOrder 
-				+ ", order=" + order + "]";
+				+ ", groupMemberNo=" + groupMemberNo + ", userNo=" + userNo + ", bossCheck=" + bossCheck + ", userName="
+				+ userName + ", userBirthYear=" + userBirthYear + ", userAge=" + userAge + ", userSex=" + userSex
+				+ ", userGrade=" + userGrade + ", groupOrder=" + groupOrder + ", order=" + order + "]";
 	}
-
 	
 }
