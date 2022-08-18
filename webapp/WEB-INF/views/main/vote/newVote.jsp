@@ -71,12 +71,19 @@
                             
                             <div class="d-flex d-xxl-flex flex-row flex-grow-0 flex-wrap justify-content-xxl-start" id="edit-vote-people-area">
                             
-                            	<!--  투표 참여할 인원들 표시  -->                            	
+                            	<!--  투표 참여할 인원들 표시  -->   
+                            	<c:set var="memberNo" value="0" />
+                            	                         	
                             	<c:forEach var="member" items="${voteMember}">
+                            		<c:set var="memberNo" value="${memberNo+1}" />
+                            		
                             		<c:if test="${member.bossCheck==1}">
-                            			<span class="d-flex d-xxl-flex flex-wrap vote-people-bujang vote-people" data-group-member-no="${member.groupMemberNo}" data-user-no="${member.userNo}">
+                            			
+                            			<span class="d-flex d-xxl-flex flex-wrap vote-people-bujang vote-people" data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${memberNo}">
                             				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
-                            					<i class="fas fa-minus-circle vote-member-not-today"></i>
+                            					<c:if test="${member.userNo != authUser.userNo}">
+                            						<i class="fas fa-minus-circle vote-member-not-today"></i>
+                            					</c:if>
                             				</span>
                             				<span class="vote-people-body-wrap">
                             					<span class="text-center d-flex d-xxl-flex justify-content-center align-items-center vote-people-body">
@@ -89,9 +96,11 @@
                             		</c:if>
                             		
                             		<c:if test="${member.bossCheck==0}">
-                            			<span class="d-flex d-xxl-flex flex-wrap vote-people" data-group-member-no="${member.groupMemberNo}" data-user-no="${member.userNo}">
+                            			<span class="d-flex d-xxl-flex flex-wrap vote-people" data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${memberNo}">
                             				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
-                            					<i class="fas fa-minus-circle vote-member-not-today"></i>
+                            					<c:if test="${member.userNo != authUser.userNo}">
+                            						<i class="fas fa-minus-circle vote-member-not-today"></i>
+                            					</c:if>
                             				</span>
                             				<span class="vote-people-body-wrap">
                             					<span class="text-center d-flex d-xxl-flex justify-content-center align-items-center vote-people-body">
@@ -143,6 +152,7 @@
 	let currentMin
 	let tempTime
 	let tempMin
+	let totVote = parseInt($("#edit-vote-group-num").text())
 		
 	let birdName = ["가마우지", "갈매기", "개개비", "거위", "고니", "곤줄박이", "기러기", "까마귀", "까치", 
 		"꼬리치레", "꾀꼬리", "꿩", "나무발발이", "논병아리", "느시", "닭", "독수리", "동고비", "두견", "두루미",
@@ -226,13 +236,14 @@
 		}
 		
 		// 투표할 추가 인원 div 추가
-		for (var i = 0; i < voteAddNum; i++) {			
+		for (var i = 0; i < voteAddNum; i++) {		
+			totVote += 1
 			var tempidx = Math.floor(Math.random() * birdName.length)
 			var tempName = birdName[tempidx]
 			birdName.splice(tempidx, 1)
 			
 			$("#edit-vote-people-area").append(
-				  "<span class='d-flex d-xxl-flex flex-wrap vote-people'>"
+				  "<span class='d-flex d-xxl-flex flex-wrap vote-people' data-vote-member-no='" + totVote + "'>"
         		+ 	"<span class='text-end d-xl-flex d-xxl-flex justify-content-xl-end align-items-xl-center justify-content-xxl-end vote-people-header'>"
     			+ 		"<i class='fas fa-pen d-inline-block vote-people-edit-name-btn'></i>"
     			+ 		"<i class='fas fa-times-circle d-inline-block vote-people-del-btn'></i>"
@@ -439,6 +450,112 @@
 	
 	
 	///////////////////// 투표 생성하기 //////////////////////////////////////////////////////////
+	
+	// 투표 만들기 버튼 클릭
+	
+	$("#make-vote-btn").on("click", function(){	
+		// 투표 정리 시각 데이터 
+		let voteEndDate = new Date()
+		voteEndDate.setHours($("#vote-end-hour").val())
+		voteEndDate.setMinutes($("#vote-end-min").val())
+		console.log(voteEndDate)
+		
+		if (voteEndDate <= new Date()) {
+			alert("투표 마감 시각은 현재 시각 이후여야합니다.")
+			
+			return false
+		}
+		
+		voteEndDate = JSON.stringify(voteEndDate)
+		
+		// 투표 멤버 불러오기
+		let voteMember = [] 
+		var cnt = 0
+		
+		for (var i = 1; i < totVote; i++) {
+			var currMem = {}
+			var currDiv = $("[data-vote-member-no=" + i + "]")
+			
+			var currName = currDiv.find(".vote-people-name").text()
+			
+			if (currName.length > 0) {
+				if (currDiv.hasClass("vote-people-deleted")) {
+					continue
+				}
+				cnt += 1
+				currMem["userName"] = currName
+				
+				var memberNo = parseInt(currDiv.attr("data-user-no"))
+				if (memberNo > 0) {
+					currMem["userNo"] = memberNo
+					currMem["userGrade"] = parseInt(currDiv.attr("data-user-grade"))
+					if (userNo == memberNo) {
+						currMem["voteMadeUser"] = true
+					}
+				}
+				voteMember.push(currMem)
+			}
+		}
+		
+		if (cnt < 2) {
+			alert("최소 두 명 이상이 존재해야 투표를 진행할 수 있습니다.")
+			
+			return false
+		}
+		voteMember = JSON.stringify(voteMember)
+		console.log(voteMember)
+		
+		
+		// 장바구니 데이터 정리
+		var curr_basket = []
+		for (var i = 0; i < basket[curr_basket_group].length; i++) {
+			if (basket[curr_basket_group][i].stored) {
+				curr_basket.push(JSON.stringify(basket[curr_basket_group][i]))
+			}
+		}
+		curr_basket = JSON.stringify(curr_basket)
+		console.log(curr_basket)
+		
+		
+		let voteData = {
+			voteEndDate : voteEndDate,
+			voteMember : voteMember,
+			currBasket : curr_basket
+		}
+		
+		// form으로 묶어서 전송
+		function postVoteData(path, params, method) {
+			method = method || "post"
+			
+			let form = document.createElement("form")
+			document.charset = "utf-8"
+			
+			form.setAttribute("method", method)
+			form.setAttribute("action", path)
+
+			for (var key in params) {
+				var hiddenField = document.createElement("input")
+				
+				hiddenField.setAttribute("type", "hidden")
+				hiddenField.setAttribute("name", key)
+				hiddenField.setAttribute("value", params[key])
+				
+				form.appendChild(hiddenField)
+			}
+		
+			document.body.appendChild(form)
+			form.submit()
+		}
+		
+		postVoteData("${pageContext.request.contextPath}/vote/makeVote", voteData)
+	})
+	
+	
+	
+	
+	
+	
+	
 	
 </script>
 

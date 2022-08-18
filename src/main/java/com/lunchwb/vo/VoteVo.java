@@ -1,12 +1,17 @@
 package com.lunchwb.vo;
 
+import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class VoteVo {
 	
 	//////////////////// vote table ////////////////////
 	private int voteNo;
 	private int voteMadeUser;
 	private int groupNo;
-	private String voteEndTime;
+	@JsonFormat(pattern = "HH:mm")
+	private Date voteEndTime;
 	private String voteItems;
 	private String voteResults;
 	
@@ -51,11 +56,11 @@ public class VoteVo {
 		this.groupNo = groupNo;
 	}
 
-	public String getVoteEndTime() {
+	public Date getVoteEndTime() {
 		return voteEndTime;
 	}
 
-	public void setVoteEndTime(String voteEndTime) {
+	public void setVoteEndTime(Date voteEndTime) {
 		this.voteEndTime = voteEndTime;
 	}
 
