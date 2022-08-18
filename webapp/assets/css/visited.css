@@ -1,11 +1,9 @@
-/* visitedMain_page */
-
 /*********************************** 배경 - Map *****************************/
 #content {
   width: 100%;
   height: 100%;
   position: relative;
-  background: url(map.png) no-repeat center !important;
+  background: url(/assets/css/img/map.png) no-repeat center !important;
   background-size: cover !important;
  
 }
