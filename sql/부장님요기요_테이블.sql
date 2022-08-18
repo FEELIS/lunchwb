@@ -220,7 +220,8 @@ CREATE TABLE users (
  user_grade varchar2(50) DEFAULT 1 NOT null, 
  session_id varchar2(100) default 'none' not null, 
  limit_date timestamp null, 
- sns_login VARCHAR2(200) null
+ sns_login VARCHAR2(200) null,
+ user_state number(20) DEFAULT 0 NOT null
 );
 
 --===== 문의하기 =====
@@ -318,8 +319,7 @@ CREATE TABLE food_2nd_category (
 CREATE TABLE menu (
  menu_no number(20) NOT NULL, 
  menu_2nd_cate_no number(20) NOT NULL, 
- menu_name varchar2(200) NOT null,  
- menu_etc varchar2(200) null
+ menu_name varchar2(200) NOT null
 );
 
 --======================= 투표 테이블=======================
