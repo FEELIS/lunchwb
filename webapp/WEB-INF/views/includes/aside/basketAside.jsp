@@ -904,8 +904,8 @@
 	function countBasketItems(groupNo) {
 		var cnt = 0
 		
-		for (var i = 0; i < basket[curr_basket_group].length; i++) {
-			if (basket[curr_basket_group][i].stored) {
+		for (var i = 0; i < basket[groupNo].length; i++) {
+			if (basket[groupNo][i].stored) {
 				cnt += 1
 			}
 		}

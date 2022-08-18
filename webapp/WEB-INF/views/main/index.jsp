@@ -111,6 +111,7 @@
 
 	// 위치재설정 버튼 클릭 시
 	$("#location-change-btn").on("click", function(){
+		console.log(countBasketItems(curr_basket_group))
 		var curr_address = ""
 		
 		if (gpsVo.address == "") {
@@ -214,6 +215,7 @@
 			)
 		}
 	}
+	
 
 	
 </script>
