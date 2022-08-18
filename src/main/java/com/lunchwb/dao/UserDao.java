@@ -118,27 +118,27 @@ public class UserDao {
 
    /* 정원 */
    /* userState 0으로 변경 */
-   public int updateState0(List<Integer> voteMembers) {
+   public int updateState0(List<UserVo> voteMembers) {
 	   return sqlSession.update("user.updateState0", voteMembers);
    }
    
    /* userState 1로 변경 */
-   public int updateState1(List<Integer> voteMembers) {
+   public int updateState1(List<UserVo> voteMembers) {
 	   return sqlSession.update("user.updateState1", voteMembers);
    }
    
    /* userState 2로 변경 */
-   public int updateState2(List<Integer> voteMembers) {
+   public int updateState2(List<UserVo> voteMembers) {
 	   return sqlSession.update("user.updateState2", voteMembers);
    }
    
    /* userState 3으로 변경 */
-   public int updateState3(List<Integer> voteMembers) {
+   public int updateState3(List<UserVo> voteMembers) {
 	   return sqlSession.update("user.updateState3", voteMembers);
    }
    
    /* userState 4로 변경 */
-   public int updateState4(List<Integer> voteMembers) {
+   public int updateState4(List<UserVo> voteMembers) {
 	   return sqlSession.update("user.updateState0", voteMembers);
    }
 }
