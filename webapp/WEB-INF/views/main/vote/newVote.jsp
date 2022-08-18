@@ -79,7 +79,7 @@
                             					<i class="fas fa-minus-circle vote-member-not-today"></i>
                             				</span>
                             				<span class="vote-people-body-wrap">
-                            					<span class="text-center d-xxl-flex justify-content-xxl-center align-items-xxl-center vote-people-body">
+                            					<span class="text-center d-flex d-xxl-flex justify-content-center align-items-center vote-people-body">
                             						<i class="fas fa-crown vote-bujang-crown"></i>
                             						<span class="vote-people-name">${member.userName}</span>
                             						<i class="fas fa-crown"></i>
@@ -94,7 +94,7 @@
                             					<i class="fas fa-minus-circle vote-member-not-today"></i>
                             				</span>
                             				<span class="vote-people-body-wrap">
-                            					<span class="text-center d-xxl-flex justify-content-xxl-center align-items-xxl-center vote-people-body">
+                            					<span class="text-center d-flex d-xxl-flex justify-content-center align-items-center vote-people-body">
                             						<i class="fas fa-crown"></i>
                             						<span class="vote-people-name">${member.userName}</span>
                             						<i class="fas fa-crown"></i>
@@ -238,7 +238,7 @@
     			+ 		"<i class='fas fa-times-circle d-inline-block vote-people-del-btn'></i>"
     			+ 	"</span>"
     			+ 	"<span class='vote-people-body-wrap'>"
-    			+		"<span class='text-center d-xxl-flex justify-content-xxl-center align-items-xxl-center vote-people-body'>"
+    			+		"<span class='text-center d-flex d-xxl-flex justify-content-center align-items-center vote-people-body'>"
     			+	 		"<i class='fas fa-crown foo'></i>"
     			+ 			"<span class='vote-people-name'>" + tempName + "</span>"
     			+		 	"<i class='fas fa-crown'></i>"
