@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/vote.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&amp;display=swap">
@@ -70,13 +71,10 @@
                             
                             <div class="d-flex d-xxl-flex flex-row flex-grow-0 flex-wrap justify-content-xxl-start" id="edit-vote-people-area">
                             
-                            	<!--  투표 참여할 인원들 표시  -->
-                            	<c:set var="memberNo" value="0" />
-                            	
+                            	<!--  투표 참여할 인원들 표시  -->                            	
                             	<c:forEach var="member" items="${voteMember}">
-                            		<c:set var="memberNo" value="${memberNo+1}" />
                             		<c:if test="${member.bossCheck==1}">
-                            			<span class="d-flex d-xxl-flex flex-wrap vote-people-bujang vote-people" data-group-member-no="${member.groupMemberNo}" data-user-no="${member.userNo}" data-vote-member-no="${memberNo}">
+                            			<span class="d-flex d-xxl-flex flex-wrap vote-people-bujang vote-people" data-group-member-no="${member.groupMemberNo}" data-user-no="${member.userNo}">
                             				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
                             					<i class="fas fa-minus-circle vote-member-not-today"></i>
                             				</span>
@@ -91,7 +89,7 @@
                             		</c:if>
                             		
                             		<c:if test="${member.bossCheck==0}">
-                            			<span class="d-flex d-xxl-flex flex-wrap vote-people" data-group-member-no="${member.groupMemberNo}" data-user-no="${member.userNo}" data-vote-member-no="${memberNo}">
+                            			<span class="d-flex d-xxl-flex flex-wrap vote-people" data-group-member-no="${member.groupMemberNo}" data-user-no="${member.userNo}">
                             				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
                             					<i class="fas fa-minus-circle vote-member-not-today"></i>
                             				</span>
@@ -103,8 +101,7 @@
                             					</span>
                             				</span>
                             			</span>
-                            		</c:if>
-                            		
+                            		</c:if>                    
                             	</c:forEach>
 
                             </div>
@@ -146,7 +143,6 @@
 	let currentMin
 	let tempTime
 	let tempMin
-	let totVoteNum = $("#edit-vote-group-num").text()
 		
 	let birdName = ["가마우지", "갈매기", "개개비", "거위", "고니", "곤줄박이", "기러기", "까마귀", "까치", 
 		"꼬리치레", "꾀꼬리", "꿩", "나무발발이", "논병아리", "느시", "닭", "독수리", "동고비", "두견", "두루미",
@@ -154,13 +150,43 @@
 		"병아리", "부엉이", "비둘기", "뻐꾸기", "새홀리기", "솔개", "아비", "양진이", "어치", "오리", "오목눈이",
 		"올빼미", "왜가리", "원앙", "제비", "조롱이", "종다리", "지빠귀", "직박구리", "찌르레기", "할미새사촌", "해오라기"]
 	
-
+	
 	$(document).ready(function() {
 		getTime()
 		$("#vote-end-hour").val(currentTime)
 		$("#vote-end-min").val(currentMin)
 	})
-		
+	
+	
+	
+	////////// 새로고침 방지 ///////////////////////////////////////////////////////////////
+	
+	document.onkeydown = noEvent
+	
+	// 부장 로고 클릭 시
+	$("#bujang-logo-blue").on("click", function(){
+		var confirmRefresh = confirm("페이지 이동 시 진행상황이 저장되지 않습니다. 메인으로 이동하시겠습니까?")
+		if (!confirmRefresh) {		
+			return false
+		}
+	})
+	
+	// F5 버튼 눌렀을 때
+	function noEvent() {
+		if (event.keyCode == 116) {
+			var confirmRefresh = confirm("페이지 이동 시 진행상황이 저장되지 않습니다. 새로고침하시겠습니까?")
+			if (!confirmRefresh) {
+				event.keyCode = 2
+				
+				return false
+			}
+		} else if (event.ctrlKey && (event.keyCode == 78 || event.keyCode == 82)) {
+			return false
+			
+		}
+	}		
+	
+	
 	////////// 투표 인원 변경 //////////////////////////////////////////////////////////////////////	
 	
 	// 인원추가 - 버튼 토글
@@ -177,12 +203,12 @@
 	$("#vote-member-plus").on("click", function(){
 		var voteAddNum = parseInt($("#vote-new-member-num").text())
 		
-		if (voteAddNum + parseInt($("#edit-vote-group-num").text()) < 15) {
+		if (voteAddNum + parseInt($("#edit-vote-group-num").text()) < 30) {
 			voteAddNum += 1
 			$("#vote-new-member-num").text(voteAddNum)
 			
 		} else {
-			alert("투표 총 인원은 15명을 초과할 수 없습니다.")
+			alert("투표 총 인원은 30명을 초과할 수 없습니다.")
 		}
 	})	
 	
@@ -194,18 +220,19 @@
 				
 		$("#vote-new-member-num").text(1)
 		
-		if (totNum + voteAddNum > 15) {
-			alert("투표 총 인원은 15명을 초과할 수 없습니다.")
+		if (totNum + voteAddNum > 30) {
+			alert("투표 총 인원은 30명을 초과할 수 없습니다.")
 			return false
 		}
 		
 		// 투표할 추가 인원 div 추가
-		for (var i = 0; i < voteAddNum; i++) {
-			var tempName = birdName[Math.floor(Math.random() * 52)]
-			birdName = birdName.splice(tempName)
+		for (var i = 0; i < voteAddNum; i++) {			
+			var tempidx = Math.floor(Math.random() * birdName.length)
+			var tempName = birdName[tempidx]
+			birdName.splice(tempidx, 1)
 			
 			$("#edit-vote-people-area").append(
-				  "<span class='d-flex d-xxl-flex flex-wrap vote-people' data-vote-member-no='" + totVoteNum+i + "'>"
+				  "<span class='d-flex d-xxl-flex flex-wrap vote-people'>"
         		+ 	"<span class='text-end d-xl-flex d-xxl-flex justify-content-xl-end align-items-xl-center justify-content-xxl-end vote-people-header'>"
     			+ 		"<i class='fas fa-pen d-inline-block vote-people-edit-name-btn'></i>"
     			+ 		"<i class='fas fa-times-circle d-inline-block vote-people-del-btn'></i>"
@@ -222,7 +249,6 @@
 		}
 		
 		totNum += voteAddNum
-		totVoteNum += voteAddNum
 		$("#edit-vote-group-num").text(totNum)
 	})
 	
@@ -232,7 +258,8 @@
 	
 	// 기존 그룹 멤버 투표 제외하기
 	$("#edit-vote-people-area").on("click", ".vote-member-not-today", function(){
-		alert($(this).closest(".vote-people").find(".vote-people-name").text() + "님은 오늘 점심 따로갈래요 😢")
+		//alert($(this).closest(".vote-people").find(".vote-people-name").text() + "님은 오늘 점심 따로갈래요 😢")
+		
 		$(this).closest(".vote-people").addClass("vote-people-deleted")
 		$(this).removeClass("fas fa-minus-circle vote-member-not-today")
 		$(this).addClass("fas fa-plus-circle vote-member-re-add")
@@ -249,6 +276,11 @@
 	
 	// 새이름 멤버 삭제
 	$("#edit-vote-people-area").on("click", ".vote-people-del-btn", function(){
+		var confirmDelBird = confirm($(this).closest(".vote-people").find(".vote-people-name").text() + "님을 투표에서 제외하시겠습니까?")
+		if (!confirmDelBird) {
+			return
+		}
+		
 		$(this).closest(".vote-people").remove()
 		
 		var totNum = parseInt($("#edit-vote-group-num").text())
@@ -258,16 +290,50 @@
 	
 	// 새이름 멤버 수정
 	$("#edit-vote-people-area").on("click", ".vote-people-edit-name-btn", function(){
-		$(this).removeClass("fa-pen vote-people-edit-name-btn")
+		$(this).removeClass("fas fa-pen vote-people-edit-name-btn")
 		$(this).addClass("fas fa-check-circle vote-people-edit-confirm")
+		$(this).closest(".vote-people").find(".vote-people-del-btn").remove()
 		
 		var spanBirdName = $(this).closest(".vote-people").find(".vote-people-name")
 		var birdName = spanBirdName.text()
 		spanBirdName.html(
-			"<input type='text' value='" + birdName + "'>"
+			"<input class='change-birdname-ipt' type='text' value='" + birdName + "'>"
 		)
 	})
 	
+	
+	// 새이름 멤버 수정(확정 버튼 클릭)
+	$("#edit-vote-people-area").on("click", ".vote-people-edit-confirm", function(){
+		changeBirdName($(this))
+	})
+	
+	
+	// 새이름 멤버 수정(엔터)
+	$("#edit-vote-people-area").on("keyup", ".change-birdname-ipt", function(key){
+		if (key.keyCode == 13) {
+			changeBirdName($(this).closest(".vote-people").find(".vote-people-edit-confirm"))
+		}
+	})
+	
+	
+	// 새이름 멤버 수정 함수
+	function changeBirdName(btn) {
+		var spanName = btn.closest(".vote-people").find(".vote-people-name")
+		var changedName = spanName.find("input").val()
+		
+		if (changedName.length < 1) {
+			alert("적어도 한 글자 이상 입력해주세요")
+			
+			return
+		}
+		
+		spanName.html(changedName)
+				
+		btn.removeClass("fas fa-check-circle vote-people-edit-confirm")
+		btn.addClass("fas fa-pen vote-people-edit-name-btn")
+		btn.closest(".vote-people-header").append("<i class='fas fa-times-circle d-inline-block vote-people-del-btn'></i>")
+	}
+		
 	
 	////////// 투표 마감 시각 관련 /////////////////////////////////////////////////////////////////////////////
 	
@@ -372,7 +438,7 @@
 	})
 	
 	
-	// 투표 생성하기
+	///////////////////// 투표 생성하기 //////////////////////////////////////////////////////////
 	
 </script>
 
