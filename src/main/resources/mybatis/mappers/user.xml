@@ -223,4 +223,77 @@
 		DELETE FROM users
 		WHERE user_no = #{userNo} 
    	</delete>
+   	
+   	
+   	
+   	<!--  정원  -->
+   	<!--  기본 상태로 변경  -->
+   	<update id="updateState0" parameterType="int">
+   		<![CDATA[
+	   		UPDATE users
+	   		SET    user_state = 0
+	   		WHERE  0 = 0
+	   	]]>
+	   		   	
+	   	<foreach collection="voteMembers" item="user" separator="">
+	   	    AND   user_no = #{user.userNo}
+	   	</foreach>
+   	</update>
+   	
+   	
+   	<!--  투표 중으로 상태 변경  -->
+   	<update id="updateState1" parameterType="List">
+   		<![CDATA[
+	   		UPDATE users
+	   		SET    user_state = 1
+	   		WHERE  0 = 0
+	   	]]>
+	   		   	
+	   	<foreach collection="voteMembers" item="user" separator="">
+	   	    AND   user_no = #{user.userNo}
+	   	</foreach>
+   	</update>
+   	
+
+   	<!--  투표 완료, 기다리는 중으로 상태 변경  -->
+   	<update id="updateState2" parameterType="List">
+   		<![CDATA[
+	   		UPDATE users
+	   		SET    user_state = 2
+	   		WHERE  0 = 0
+	   	]]>
+	   		   	
+	   	<foreach collection="voteMembers" item="user" separator="">
+	   	    AND   user_no = #{user.userNo}
+	   	</foreach>
+   	</update>
+   	
+   	
+   	<!--  투표 종료로 상태 변경  -->
+   	<update id="updateState3" parameterType="List">
+   		<![CDATA[
+	   		UPDATE users
+	   		SET    user_state = 3
+	   		WHERE  0 = 0
+	   	]]>
+	   		   	
+	   	<foreach collection="voteMembers" item="user" separator="">
+	   	    AND   user_no = #{user.userNo}
+	   	</foreach>
+   	</update>
+   	
+   	
+   	<!--  방문 완료로 상태 변경  -->
+   	<update id="updateState4" parameterType="List">
+   		<![CDATA[
+	   		UPDATE users
+	   		SET    user_state = 4
+	   		WHERE  0 = 0
+	   	]]>
+	   		   	
+	   	<foreach collection="voteMembers" item="user" separator="">
+	   	    AND   user_no = #{user.userNo}
+	   	</foreach>
+   	</update>
+   	
 </mapper>

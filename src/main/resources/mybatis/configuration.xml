@@ -15,6 +15,7 @@
    		<typeAlias alias="VoteVo" type="com.lunchwb.vo.VoteVo"/>
    		<typeAlias alias="MenuVo" type="com.lunchwb.vo.MenuVo"/>
    		<typeAlias alias="Map" type="java.util.Map"/>
+   		<typeAlias alias="List" type="java.util.List"/>
     </typeAliases>
 
     <mappers>
