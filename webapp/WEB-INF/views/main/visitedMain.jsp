@@ -58,7 +58,7 @@
                     		<svg id="my-lunch-group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -64 640 640" width="1em" height="1em" fill="currentColor">
                                 <path d="M224 256c70.7 0 128-57.31 128-128S294.7 0 224 0C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3c-95.73 0-173.3 77.6-173.3 173.3C0 496.5 15.52 512 34.66 512H413.3C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304zM479.1 320h-73.85C451.2 357.7 480 414.1 480 477.3C480 490.1 476.2 501.9 470 512h138C625.7 512 640 497.6 640 479.1C640 391.6 568.4 320 479.1 320zM432 256C493.9 256 544 205.9 544 144S493.9 32 432 32c-25.11 0-48.04 8.555-66.72 22.51C376.8 76.63 384 101.4 384 128c0 35.52-11.93 68.14-31.59 94.71C372.7 243.2 400.8 256 432 256z"></path>
                             </svg>
-                            동기모임
+                            ${visitedMap.visitedVo.groupName}
                         </span>
                     </div>
                 </div>
@@ -71,45 +71,37 @@
             
             <div id="visited-store-info">
             	<button id="visited-store-name" class="btn btn-primary" type="button" data-storeno="${visitedMap.visitedVo.storeNo}">
-            		${visitedMap.visitedVo.storeName}<span id="visited-store-cate">| ${visitedMap.visitedVo.menu2stCateName}</span>
+            		${visitedMap.visitedVo.storeName}<span id="visited-store-cate">| ${visitedMap.visitedVo.menu2ndCateName}</span>
             	</button>
-                <div id="visited-star-point">
-                	<i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="fas fa-star"></i>
-                    <i class="far fa-star"></i>
-                	<span class="visited-store-blue">3.3/5</span>
-                </div>
-                <p id="visited-store-address" class="visited-store-p">서울특별시 관악구 낙성대로 22-1<br /></p>
+                <div id="visited-star-point"></div>
+                <p id="visited-store-address" class="visited-store-p"> ${visitedMap.visitedVo.storeRoadAddress}<br /></p>
             </div>
             
             <div id="visited-review-area">
                 <p>이 가게의 최근 리뷰 (2건)</p>
                 
-                <div class="visited-reviews">
-                    
-                    <div>
-                    	<span class="visited-review-user">이지희(20대 그룹/3인)</span>
-	                    <span class="visited-review-star">
-		                    <i class="far fa-star"></i>
-		                    <i class="far fa-star"></i>
-		                    <i class="far fa-star"></i>
-		                    <i class="far fa-star"></i>
-		                    <i class="far fa-star"></i>
-	                    </span>
-                    </div>
-                    <div>
-                    	<span class="modal-review-content">냉면 냉면 냉면 손이 너무 시려 냉면 냉면 냉면 사이즈 체크좀 하자 안녕</span>
-                    </div>
-                </div>
-                
-                <div class="visited-reviews">
-                    <div><span class="visited-review-user">이지희(20대 그룹/3인)</span>
-                    <span class="visited-review-star">
-                    </span></div>
-                    <div><span class="modal-review-content">냉면 냉면 냉면 손이 너무 시려 냉면 냉면 냉면 사이즈 체크좀 하자 안녕</span></div>
-                </div>
+                <c:forEach items="${visitedMap.reviewList}" var="reviewVo" varStatus="status">
+	                <div class="visited-reviews">
+	                    <div>
+	                    	<span class="visited-review-user">${reviewVo.userName}(${reviewVo.avgAge}/${reviewVo.withCount}인)</span>
+		                    <span class="visited-review-star">
+			                    <c:forEach var="i" begin="0" end="4">
+			                    	<c:choose>
+				                    	<c:when test="${reviewVo.userScore > i}">
+					                    	<i class="fas fa-star"></i>
+					                    </c:when>
+					                    <c:otherwise>
+					                    	<i class="far fa-star"></i>
+					                    </c:otherwise>
+				                    </c:choose>
+			                    </c:forEach>
+		                    </span>
+	                    </div>
+	                    <div>
+	                    	<span class="modal-review-content">${reviewVo.reviewContent}</span>
+	                    </div>
+	                </div>
+                </c:forEach>
                 
             </div>
             
@@ -215,14 +207,15 @@
                                             	<span class="fw-bolder d-inline-block">
                                             		가게는 어떠셨나요?
                                             	</span>
-	                                     		<span id="today-star-icon" class="text-warning">
-		                                     		<i class="far fa-star"></i>
-		                                     		<i class="far fa-star"></i>
-		                                     		<i class="far fa-star"></i>
-		                                     		<i class="far fa-star"></i>
-		                                     		<i class="far fa-star"></i>
-	                                     		</span>
                                             </div>
+                                            
+                                     		<div id="today-star-icon" class="text-warning">
+	                                     		<i class="far fa-star"></i>
+	                                     		<i class="far fa-star"></i>
+	                                     		<i class="far fa-star"></i>
+	                                     		<i class="far fa-star"></i>
+	                                     		<i class="far fa-star"></i>
+                                     		</div>
                                      		
                                         </div>
                                         
@@ -235,6 +228,9 @@
                                             	
                                             	<span class="fw-bolder d-inline-block">
                                             		메뉴를 선택해주세요 
+                                            	</span>
+	                                            
+	                                            <div>
 		                                            <select id="today-menu" name="menu">
 		                                                <optgroup label="중식/중화요리">
 	                                                    <option value="black-noodle">짜장면</option>
@@ -247,7 +243,7 @@
 	                                                    <option value="">양장피</option>
 		                                                </optgroup>
 		                                            </select>
-                                            	</span>
+		                                        </div>
 
                                             </div>
                                             
@@ -268,7 +264,7 @@
                                     </div>
                                     
                                     <div class="col text-end">
-                                    	<img src="map.png" style="width: 174px;height: 130.5px;" />
+                                    	<!-- <img src="map.png" style="width: 174px;height: 130.5px;" /> -->
                                     </div>
                                     
                                 </div>
@@ -298,6 +294,37 @@
 <!--  가게 정보 모달 삽입 --> 
 <c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
 
+<script type="text/javascript">
+
+const visitedVo = "${visitedMap.visitedVo}" 
+console.log(visitedVo)
+
+$(document).ready(function(){
+	drawStoreStar()
+})
+
+
+function drawStoreStar(){
+	var starScore = "${visitedMap.visitedVo.ratingBujang}"
+	
+	var str = ''
+	for(var i=0; i<5; i++){
+		if(starScore >= (i+0.75)){
+			str += '				<i class="fas fa-star"></i>'
+		}else if(starScore >= (i+0.25) && starScore < (i+0.75) ){
+			str += '				<i class="fas fa-star-half-alt"></i>'
+		}else{
+			str += '				<i class="far fa-star"></i>'
+		}
+	}
+	str += '<span class="visited-store-blue">' + starScore + '/5</span>'
+	
+	$("#visited-star-point").html(str)
+}
+
+
+
+</script>
     
 </body>
 </html>

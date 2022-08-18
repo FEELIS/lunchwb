@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lunchwb.dao.ReviewDao;
 import com.lunchwb.dao.VisitedDao;
+import com.lunchwb.vo.ReviewVo;
 import com.lunchwb.vo.UserVo;
 import com.lunchwb.vo.VisitedVo;
 
@@ -17,6 +19,9 @@ public class VisitedService {
 	
 	@Autowired
 	private VisitedDao vstDao;
+	
+	@Autowired
+	private ReviewDao reviewDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(VisitedService.class);
 	
@@ -61,6 +66,11 @@ public class VisitedService {
 		//오늘 내가 다녀온 곳의 정보
 		VisitedVo visitedVo = vstDao.todayStoreInfo(userNo);
 		visitedMap.put("visitedVo", visitedVo);
+		
+		//가게 최근 리뷰 2건
+		int storeNo = visitedVo.getStoreNo();
+		List<ReviewVo> reviewList = reviewDao.recentReview(storeNo); 
+		visitedMap.put("reviewList", reviewList);
 		
 		return visitedMap;
 	}

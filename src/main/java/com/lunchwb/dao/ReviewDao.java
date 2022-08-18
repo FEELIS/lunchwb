@@ -19,5 +19,10 @@ public class ReviewDao {
 		List<ReviewVo> reviewList = sqlSession.selectList("review.storeReviews", storeNo);
 		return reviewList;
 	}
+	
+	public List<ReviewVo> recentReview(int storeNo){
+		List<ReviewVo> reviewList = sqlSession.selectList("review.recentReview", storeNo);
+		return reviewList;
+	}
 
 }
