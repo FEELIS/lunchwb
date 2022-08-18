@@ -8,8 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lunchwb.dao.MenuDao;
 import com.lunchwb.dao.ReviewDao;
 import com.lunchwb.dao.VisitedDao;
+import com.lunchwb.vo.MenuVo;
 import com.lunchwb.vo.ReviewVo;
 import com.lunchwb.vo.UserVo;
 import com.lunchwb.vo.VisitedVo;
@@ -19,9 +21,10 @@ public class VisitedService {
 	
 	@Autowired
 	private VisitedDao vstDao;
-	
 	@Autowired
 	private ReviewDao reviewDao;
+	@Autowired
+	private MenuDao menuDao;
 	
 	private static final Logger logger = LoggerFactory.getLogger(VisitedService.class);
 	
@@ -79,6 +82,10 @@ public class VisitedService {
 		
 		VisitedVo relVo = vstDao.storeAndMe(vstVo);
 		visitedMap.put("relVo", relVo);
+		
+		//리뷰 메뉴리스트
+		List<MenuVo> menuList = menuDao.menuList(storeNo);
+		visitedMap.put("menuList", menuList);
 		
 		return visitedMap;
 	}
