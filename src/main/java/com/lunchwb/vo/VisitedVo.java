@@ -14,11 +14,13 @@ public class VisitedVo {
 	private int visitCount;
 	private int menuCount;
 	
+	
 	///////// 리뷰용 ////////
 	private String menu2ndCateName;
 	private String storeRoadAddress;
 	private float ratingBujang;
-	
+	private int lastVisit;
+		
 	//////////////////// 달력용 //////////////////// 
 	private String menu1stCateName;
 	//private int groupNo;
@@ -56,8 +58,8 @@ public class VisitedVo {
 
 	public VisitedVo(int visitedNo, int userNo, int groupNo, int storeNo, int menuNo, String visitedDate,
 			int visitCount, int menuCount, String menu2ndCateName, String storeRoadAddress, float ratingBujang,
-			String menu1stCateName, String groupName, String storeName, String menuName, String selectMonth,
-			int groupOrder) {
+			int lastVisit, String menu1stCateName, String groupName, String storeName, String menuName,
+			String selectMonth, int groupOrder) {
 		this.visitedNo = visitedNo;
 		this.userNo = userNo;
 		this.groupNo = groupNo;
@@ -69,6 +71,7 @@ public class VisitedVo {
 		this.menu2ndCateName = menu2ndCateName;
 		this.storeRoadAddress = storeRoadAddress;
 		this.ratingBujang = ratingBujang;
+		this.lastVisit = lastVisit;
 		this.menu1stCateName = menu1stCateName;
 		this.groupName = groupName;
 		this.storeName = storeName;
@@ -169,6 +172,14 @@ public class VisitedVo {
 		this.ratingBujang = ratingBujang;
 	}
 
+	public int getLastVisit() {
+		return lastVisit;
+	}
+
+	public void setLastVisit(int lastVisit) {
+		this.lastVisit = lastVisit;
+	}
+
 	public void setMenu1stCateName(String menu1stCateName) {
 		this.menu1stCateName = menu1stCateName;
 	}
@@ -218,9 +229,9 @@ public class VisitedVo {
 		return "VisitedVo [visitedNo=" + visitedNo + ", userNo=" + userNo + ", groupNo=" + groupNo + ", storeNo="
 				+ storeNo + ", menuNo=" + menuNo + ", visitedDate=" + visitedDate + ", visitCount=" + visitCount
 				+ ", menuCount=" + menuCount + ", menu2ndCateName=" + menu2ndCateName + ", storeRoadAddress="
-				+ storeRoadAddress + ", ratingBujang=" + ratingBujang + ", menu1stCateName=" + menu1stCateName
-				+ ", groupName=" + groupName + ", storeName=" + storeName + ", menuName=" + menuName + ", selectMonth="
-				+ selectMonth + ", groupOrder=" + groupOrder + "]";
+				+ storeRoadAddress + ", ratingBujang=" + ratingBujang + ", lastVisit=" + lastVisit
+				+ ", menu1stCateName=" + menu1stCateName + ", groupName=" + groupName + ", storeName=" + storeName
+				+ ", menuName=" + menuName + ", selectMonth=" + selectMonth + ", groupOrder=" + groupOrder + "]";
 	}
 
 };
