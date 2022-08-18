@@ -570,6 +570,7 @@
 		if (String(curr_basket_group) != $(this).attr("data-groupNo")) { // 현재 선택 그룹과 다른 그룹인 경우에만
 			if (!indexJSP) { 
 				var voteGroupChange = confirm("그룹을 변경하면 진행상황이 초기화됩니다. 변경하시겠습니까?")
+				
 				if(!voteGroupChange) {
 					return false
 				}
@@ -590,7 +591,10 @@
 				if (countBasketItems(curr_basket_group) < 2) {
 					location.replace("${pageContext.request.contextPath}/")
 				} else {
-					location.replace("${pageContext.request.contextPath}/vote")
+					var url = document.location.href
+					url = url.substr(url.indexOf("/lunchwb/")+9)
+					
+					location.replace("${pageContext.request.contextPath}/" + url)
 				}
 			}
 		}

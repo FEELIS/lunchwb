@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lunchwb.service.VoteService;
@@ -51,5 +52,11 @@ public class VoteController {
 		}
 				
 		return "main/vote/newVote";
+	}
+	
+	
+	@PostMapping("/makeVote")
+	public String makeVote() {
+		return "";
 	}
 }
