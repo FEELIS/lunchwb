@@ -390,7 +390,8 @@ function drawStoreStar(){
 
 
 function drawReviewStar(){
-	if("${visitedMap.reviewVo}" != null){
+	var review = "${visitedMap.reviewVo}"
+	if(review != null && review != ""){
 		var userScore = "${visitedMap.reviewVo.userScore}"
 		for(var i=0; i<5; i++){
 			if(userScore > i){
@@ -441,7 +442,14 @@ $("#today-review").on("submit", function(){
 		return false
 	}
 	
-	return false
+	var score = $("[name = 'userScore']").val()
+	if(score == 0){
+		if(confirm("별점이 0점으로 기록됩니다.") == false){
+			return false
+		}
+	}
+	
+	return true
 	
 })
 
