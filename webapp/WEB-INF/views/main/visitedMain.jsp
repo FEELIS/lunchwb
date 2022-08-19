@@ -227,7 +227,7 @@
                                             	</span>
                                             </div>
                                             
-                                     		<div id="today-star-icon" class="text-warning">	
+                                     		<div id="today-star-icon" class="text-warning no-drag">	
                                      			<input type="hidden" name="userScore" value="7"/>
 	                                     		<i id = "star-1" class="far fa-star starScore" data-score = "1" data-stt="off"></i>
 	                                     		<i id = "star-2" class="far fa-star starScore" data-score = "2" data-stt="off"></i>
@@ -275,7 +275,7 @@
                                        </div>
 	                                       
 		                                <div id="review-image-area" class="col text-end">
-		                                    	<img src="${pageContext.request.contextPath}/assets/img/bujang-logo blue.png" style="height: 130.5px;" />
+		                                    	<img src="${pageContext.request.contextPath}/assets/img/bujang-logo blue.png" style="weight: 174px; height: 130.5px;" />
 		                                </div>
 		                                
 	                                </div>
@@ -338,19 +338,19 @@ function drawStoreStar(){
 
 
 $("#today-star-icon").on("click", ".starScore", function(){
-	console.log("별 클릭")
 	var score = $(this).attr("data-score")
 	var state = $(this).attr("data-stt")
+	console.log(score + "번 별 클릭, 상태: " + state)
 	
 	if(state == "off"){
-		for(int i=1; i<=score; i++){
-			document.getElementById("star-"+i).className = "fas fa-star"
+		for(var i=1; i<=score; i++){
+			document.getElementById("star-"+i).className = "fas fa-star starScore"
 			$("#star-"+i).attr("data-stt", "on")
 		}
 		
 	}else if(state == "on"){
-		for(int i=score; i<=5; i++){
-			document.getElementById("star-"+i).className = "far fa-star"
+		for(var i=score; i<=5; i++){
+			document.getElementById("star-"+i).className = "far fa-star starScore"
 				$("#star-"+i).attr("data-stt", "off")
 		}
 	}
