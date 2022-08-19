@@ -2,4 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="vote">
+
+	<!-- 비회원 투표 상태 존재 확인 -->
+	<select id="selectGuestVoteState" parameterType="int" resultType="Integer">
+		<![CDATA[
+			SELECT vote_state
+			FROM   vote
+			WHERE  vote_no = #{voteNo}
+		]]>
+	</select>
+	
+	<!-- 회원 참여 투표 존재 확인 -->
+	<select id="selectMemberVoteState" parameterType="int" resultType="Integer">
+		<![CDATA[
+			SELECT vote_state
+			FROM   vote_members, vote
+			WHERE  vote_members.vote_no = vote.vote_no
+			AND    user_no = #{userNo}
+		]]>
+	</select>
 </mapper>

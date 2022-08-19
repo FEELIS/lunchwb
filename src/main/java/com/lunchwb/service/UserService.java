@@ -21,6 +21,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.lunchwb.dao.UserDao;
+import com.lunchwb.dao.VoteDao;
 import com.lunchwb.vo.UserVo;
 
 @Service
@@ -28,6 +29,8 @@ public class UserService {
 
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private VoteDao voteDao;
 	@Autowired
 	@Qualifier("bcryptPasswordEncoder")
 	private PasswordEncoder pwEncoder;
@@ -342,5 +345,59 @@ public class UserService {
 		}
 	}
 	
+	
+	// main controller에서 authUser 다시 확인
+	public int checkUserState(int userNo) {
+		return userDao.selectUserState(userNo);
+	}
 
+	
+	// main controller에서 userState 확인 (오류 날 듯)
+	public int mainState(int userState, Integer userNo, Integer voteNo) {
+		if (userNo == null) {
+			if (voteNo != null) {
+				Integer state = voteDao.selectGuestVoteState(voteNo);
+				
+				if (state == null) {
+					userState = 404;
+					
+				} else {
+					userState = state;
+				}
+			} 
+		} else {
+			Integer state = voteDao.selectMemberVoteState(userNo);
+			
+			if (voteNo != null) {
+				if (state == null) {
+					userState = 403;
+				}
+			} else {
+				if (state != null) {
+					userState = state;
+				}
+			}
+		}
+		return userState;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

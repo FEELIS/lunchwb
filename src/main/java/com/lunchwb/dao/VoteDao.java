@@ -1,5 +1,7 @@
 package com.lunchwb.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -8,5 +10,14 @@ import org.springframework.stereotype.Repository;
 public class VoteDao {
 
 	@Autowired
-	private SqlSession sqlsession;
+	private SqlSession sqlSession;
+	
+	
+	public Integer selectGuestVoteState(int voteNo) {
+		return sqlSession.selectOne("vote.selectGuestVoteState", voteNo);
+	}
+	
+	public Integer selectMemberVoteState(int userNo) {
+		return sqlSession.selectOne("vote.selectMemberVoteState", userNo);
+	}
 }

@@ -20,5 +20,10 @@ public class VoteService {
 	public List<GroupVo> getVoteMember(int groupNo) {
 		return groupDao.selectVoteMember(groupNo);
 	}
+	
+	
+	public void makeVote(int userNo) {
+		
+	}
 
 }

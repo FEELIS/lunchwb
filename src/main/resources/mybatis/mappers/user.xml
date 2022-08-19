@@ -348,7 +348,7 @@
    	
    	
    	<!--  userState 다시 불러오기  -->
-   	<select id="selectUserState" parameterType="int" resultType="UserVo">
+   	<select id="selectUserState" parameterType="int" resultType="int">
 		<![CDATA[
 			SELECT user_state userState
 			FROM   users
