@@ -21,8 +21,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/liveReload.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/chart.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/chart-init.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/chart.min.js"></script>
+<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/chart-init.js"></script> --%>
 
 	
 
@@ -159,43 +159,12 @@
 								</div>
 								<div class="card-body">
 								    <div class="chart-area">
-									    <canvas data-bss-chart=
-										    "{&quot;type&quot;:&quot;bar&quot;
-										    ,&quot;data&quot;:{&quot;labels&quot;
-										    :[&quot;한식&quot;,&quot;일식&quot;,&quot;중식&quot;,&quot;양식&quot;,&quot;패스트푸드&quot;,&quot;분식&quot;,&quot;아시아음식&quot;,&quot;뷔페&quot;]
-										    ,&quot;datasets&quot;
-										    :[{&quot;label&quot;:&quot;식사횟수&quot;
-										    ,&quot;empty&quot;:true,&quot;data&quot;
-										    :[&quot;31&quot;
-										    ,&quot;8&quot;
-										    ,&quot;16&quot;
-										    ,&quot;12&quot;
-										    ,&quot;6&quot;
-										    ,&quot;12&quot;
-										    ,&quot;4&quot;
-										    ,&quot;3&quot;]
-										    ,&quot;backgroundColor&quot;
-										    :&quot;rgba(255, 99, 132, 0.5)&quot;
-										    ,&quot;borderColor&quot;
-										    :&quot;rgba(255, 99, 132, 1)&quot;}]},
-										    &quot;options&quot;
-										    
-										    :{&quot;maintainAspectRatio&quot;:false,
-										    &quot;legend&quot;:{&quot;display&quot;
-										    :false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}
-										    ,&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;
-										    :{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;
-										    ,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;
-										    :false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;
-										    :[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;
-										    :&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;
-										    :[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;
-										    :&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;
-										    :[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;
-										    :&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}]}}}">
+									    <canvas data-bss-chart="">
 									    </canvas>
 								    </div>
 								</div>
+								
+								
 							</div>
 						</div>
 						<div class="col-lg-5 col-xl-4">
@@ -219,29 +188,7 @@
 								</div>
 								<div id="doughnut" class="card-body">
 									<div class="chart-area">
-										<canvas data-bss-chart=
-										"{&quot;type&quot;
-										:&quot;doughnut&quot;
-										,&quot;data&quot;
-										
-										<%-- 각 영역 마우스 올리면 보이는 그룹이름 --%>
-										:{&quot;labels&quot;
-										:[&quot;소방기계&quot;,&quot;소방전기&quot;,&quot;BIM팀&quot;]
-										,&quot;datasets&quot;
-										
-										<%-- 각 영역 색깔 --%>
-										:[{&quot;label&quot;:&quot;&quot;,&quot;backgroundColor&quot;
-										:[&quot;#4e73df&quot;,&quot;#1cc88a&quot;,&quot;#36b9cc&quot;]
-										<%-- 도넛그래프 외곽선 색깔 --%>
-										,&quot;borderColor&quot;
-										:[&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;]
-										
-										<%-- 그룹간 식사횟수 --%>
-										,&quot;data&quot;:[&quot;57&quot;,&quot;26&quot;,&quot;9&quot;]}
-										]},&quot;options&quot;
-										:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;
-										:{&quot;display&quot;:false,&quot;labels&quot;
-										:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}}">
+										<canvas data-bss-chart="">
 										</canvas>
 									</div>
 									<div class="text-center small mt-4">
@@ -260,7 +207,7 @@
 							<div class="card shadow mb-4">
 								<div class="card-header d-flex justify-content-between align-items-center"
 									style="-bs-primary: #4e73df; - -bs-primary-rgb: 78, 115, 223;">
-									<h6 class="text-primary fw-bold m-0">지난 6개월간 '한식' 여기갈래요 수</h6>
+									<h6 id="lineMenu" class="text-primary fw-bold m-0">지난 6개월간 '한식' 여기갈래요 수</h6>
 									<div class="dropdown no-arrow">
 										<button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false"
 											data-bs-toggle="dropdown" type="button">
@@ -277,45 +224,7 @@
 								</div>
 								<div class="card-body">
 								    <div class="chart-area">
-									    <canvas data-bss-chart=
-										    "{&quot;type&quot;:&quot;line&quot;
-										    ,&quot;data&quot;:{&quot;labels&quot;
-										    :[&quot;2월&quot;
-										    ,&quot;3월&quot;
-										    ,&quot;4월&quot;
-										    ,&quot;5월&quot;
-										    ,&quot;6월&quot;
-										    ,&quot;7월&quot;]
-										    ,&quot;datasets&quot;
-										    :[{&quot;label&quot;
-										    :&quot;Earnings&quot;
-										    ,&quot;fill&quot;
-										    :true,&quot;data&quot;
-										    :[&quot;15432&quot;
-										    ,&quot;14739&quot;
-										    ,&quot;6825&quot;
-										    ,&quot;19321&quot;
-										    ,&quot;12832&quot;
-										    ,&quot;18231&quot;]
-										    ,&quot;backgroundColor&quot;
-										    :&quot;rgba(78, 115, 223, 0.05)&quot;
-										    ,&quot;borderColor&quot;
-										    :&quot;rgba(78, 115, 223, 1)&quot;}]},
-										    &quot;options&quot;
-										    
-										    :{&quot;maintainAspectRatio&quot;:false,
-										    &quot;legend&quot;:{&quot;display&quot;
-										    :false,&quot;labels&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}
-										    ,&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;},&quot;scales&quot;
-										    :{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;
-										    ,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;
-										    :false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;
-										    :[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;
-										    :&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;
-										    :[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;
-										    :&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;
-										    :[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;
-										    :&quot;#858796&quot;,&quot;fontStyle&quot;:&quot;normal&quot;,&quot;padding&quot;:20}}]}}}">
+									    <canvas data-bss-chart="">
 									    </canvas>
 								    </div>
 								</div>
@@ -325,7 +234,7 @@
 							<div class="card shadow mb-4">
 								<div class="card-header d-flex justify-content-between align-items-center"
 									style="-bs-primary: #147a25; - -bs-primary-rgb: 20, 122, 37;">
-									<h6 class="text-primary fw-bold m-0">연령별 '한식' 선호도</h6>
+									<h6 id="pieMenu" class="text-primary fw-bold m-0">연령별 '한식' 선호도</h6>
 									<div class="dropdown no-arrow">
 										<button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false"
 											data-bs-toggle="dropdown" type="button">
@@ -342,35 +251,13 @@
 								</div>
 								<div id="doughnut" class="card-body">
 									<div class="chart-area">
-										<canvas data-bss-chart=
-										"{&quot;type&quot;
-										:&quot;pie&quot;
-										,&quot;data&quot;
-										
-										<%-- 각 영역 마우스 올리면 보이는 그룹이름 --%>
-										:{&quot;labels&quot;
-										:[&quot;20대 이하&quot;,&quot;30대&quot;,&quot;40대&quot;,&quot;50대&quot;,&quot;60대 이상&quot;]
-										,&quot;datasets&quot;
-										
-										<%-- 각 영역 색깔 --%>
-										:[{&quot;label&quot;:&quot;&quot;,&quot;backgroundColor&quot;
-										:[&quot;#4e73df&quot;,&quot;#1cc88a&quot;,&quot;#36b9cc&quot;,&quot;#f6c23e&quot;,&quot;#e74a3b&quot;]
-										<%-- 도넛그래프 외곽선 색깔 --%>
-										,&quot;borderColor&quot;
-										:[&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;]
-										
-										<%-- 그룹간 식사횟수 --%>
-										,&quot;data&quot;:[&quot;974&quot;,&quot;1531&quot;,&quot;1231&quot;,&quot;1682&quot;,&quot;453&quot;]}
-										]},&quot;options&quot;
-										:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;
-										:{&quot;display&quot;:false,&quot;labels&quot;
-										:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}}">
+										<canvas data-bss-chart="">
 										</canvas>
 									</div>
 									<div class="text-center small mt-4">
 									
 									<!-- group_name -->
-										<span class="me-2"><i class="fas fa-circle text-primary"></i>&nbsp;20대 이하</span>
+										<span class="me-2"><i class="fas fa-circle text-primary"></i>&nbsp;20대</span>
 										<span class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;30대</span>
 										<span class="me-2"><i class="fas fa-circle text-info"></i>&nbsp;40대</span>
 										<span class="me-2"><i class="fas fa-circle text-warning"></i>&nbsp;50대</span>
@@ -557,93 +444,282 @@
 	<!-- wrapper -->
 	
 </body>
-<!-- <script type="text/javascript">
-	$(document).ready(function() {
-		console.log("jquery로 데이터 받기");
-		fetchList();
-	});
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function() {
+
+	var charts = document.querySelectorAll('[data-bss-chart]');
 	
-	//====================================== 그래프 목록 ======================================
-	function fetchList() {
-		var id = '${blogVo.id}';
-		console.log(id);
+	// 지난 한달간 음식별 여기갈래요 횟수
+	var bar = barGraph();
+	var str ='';
+	var i =0;
+	
+	for (var chart of charts) {
+		//chart.chart = new Chart(chart, JSON.parse(chart.dataset.bssChart));
+		console.log("chart"+chart)
+		console.log("charts"+charts)
 		
-		// = 없으면 오류
-		var cateVo = {
-			id: id
-		};
-		
-		$.ajax({
-			url : "${pageContext.request.contextPath}/cateList",
-			type : "post",
-			contentType : "application/json",
-			data : JSON.stringify(cateVo),
+		chart.chart = new Chart(chart, JSON.parse(chart.dataset.bssChart=bar[i]));
+		console.log(chart.chart);
+		i++;
+	}
+
+}, false);
+
+function barGraph() {
+	
+	var strArray=[];
+	var menu = ['뷔페','아시아음식','양식','일식','한식','패스트푸드','패밀리레스토랑','치킨','분식','중식'];
+	
+	var menu1stCateName = menu[2]; 
+	
+	var statVo = {
+		menu1stCateName: menu1stCateName		
 			
-			dataType : "json",
-			success : function(cateList) {
-				/*성공시 처리해야될 코드 작성*/
-				console.log(cateList);
-				//화면에 data + html을 그린다.
-				for (var i = 0; i < cateList.length; i++) {
-					render(cateList[i], "down");
-				}
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
-			}
-		})
-		// ajax 
 	};
-	function render(cateVo, opt) {
-		console.log('render()');
-		var str = '';
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/stat/getStatChart",
+		type : "post",
+		contentType : "application/json",
+		async: false,
+		data : JSON.stringify(statVo),
 		
-		
-		
-		
-		
-		
-		str+= '<div class="chart-area">';
-		str+= '<canvas data-bss-chart=';
-		str+= '"{&quot;type&quot;';
-		str+= ':&quot;doughnut&quot;';
-		str+= ',&quot;data&quot;';
-		// 각 영역 마우스 올리면 보이는 그룹이름
-		str+= '	:{&quot;labels&quot;';
-		str+= '	:[&quot;소방기계&quot;,&quot;Social&quot;,&quot;Referral&quot;]';
-		str+= '	,&quot;datasets&quot;';
-		
-		// 각 영역 색깔
-		str+= '	:[{&quot;label&quot;:&quot;&quot;,&quot;backgroundColor&quot;';
-		str+= '	:[&quot;#4e73df&quot;,&quot;#1cc88a&quot;,&quot;#36b9cc&quot;]';
-		
-		// 도넛그래프 외곽선 색깔
-		str+= '	,&quot;borderColor&quot;';
-		str+= '	:[&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;]';
-
-		// 그룹간 식사횟수
-		str+= '	,&quot;data&quot;:[&quot;50&quot;,&quot;30&quot;,&quot;15&quot;]}';
-		str+= '	]},&quot;options&quot;';
-		str+= '	:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;';
-		str+= '	:{&quot;display&quot;:false,&quot;labels&quot;';
-		str+= '	:{&quot;fontStyle&quot;:&quot;normal&quot;}},&quot;title&quot;:{&quot;fontStyle&quot;:&quot;normal&quot;}}}">';
-		str+= '	</canvas>';
-		str+= '</div>';
-
-		
-		
-		
-		
-		//리스트 순서
-		if (opt == "up") {
-			$("#cateList").prepend(str);
-		} else if (opt == "down") {
-			$("#cateList").append(str);
-		} else {
-			console.log("opt오류");
+		dataType : "json",
+		success : function(chartMap) {
+			/*성공시 처리해야될 코드 작성*/
+			console.log(chartMap);
+			var bar = renderToBar(chartMap);
+			var doughnut = renderToDoughnut(chartMap);
+			var line = renderToLine(chartMap);
+			var pie = renderToPie(chartMap);
+			
+			strArray.push(bar);
+			strArray.push(doughnut);
+			strArray.push(line);
+			strArray.push(pie);
+			
+			$('#lineMenu').innerText('지난 6개월간 '+ statVo.menu1stCateName +' 여기갈래요 수');
+			$('#pieMenu').innerText('연령별 '+ statVo.menu1stCateName +' 선호도');
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
 		}
-	};
+	});
+	// ajax 
+	return strArray;
+}
+
+function renderToBar(statVo) {
+	var str = '';
+	
+	str += '{' +
+		    '"type": "bar",'+
+		    '"data": {'+
+		    	'"labels": ['+
+		    	statVo.barLabels+
+		    	'],'+
+		    	'"datasets": [{'+
+		    	'"label": "식사횟수",'+
+		    	'"empty": true,'+
+		    	'"data": ['+
+		    	statVo.barData+'],'+
+	    		'"backgroundColor": "rgba(255, 99, 132, 0.5)",'+
+	    		'"borderColor": "rgba(255, 99, 132, 1)"'+
+	    		'}]'+
+		    '},'+
+		    	'"options": {'+
+		    	'"maintainAspectRatio": false,'+
+					'"legend": {'+
+		    		'"display": false,'+
+		    		'"labels": {'+
+		    		'"fontStyle": "normal"'+
+		    		'}'+
+	    		'},'+
+		    	'"title": {'+
+		    	'"fontStyle": "normal"'+
+		    	'},'+
+		    	'"scales": {'+
+		    	'"xAxes": [{'+
+		    		'"display": true,' +
+		    		'"ticks": {"beginAtZero": true' +
+		   		'},'+
+		    	'"gridLines": {'+
+		    	'"color": "rgb(234, 236, 244)",'+
+		    	'"zeroLineColor": "rgb(234, 236, 244)",'+
+		    	'"drawBorder": false,'+
+		    	'"drawTicks": false,'+
+		    	'"borderDash": ["2"],'+
+		    	'"zeroLineBorderDash": ["2"],'+
+		    	'"drawOnChartArea": false'+
+	    	'},'+
+		    '"ticks": {'+
+		    '"fontColor": "#858796",'+
+		    '"fontStyle": "normal",'+
+		    '"padding": 20'+
+		    '}'+
+		    '}],'+
+		    '"yAxes": [{'+
+		    '"gridLines": {'+
+		    '"color": "rgb(234, 236, 244)",'+
+		    '"zeroLineColor": "rgb(234, 236, 244)",'+
+		    '"drawBorder": false,'+
+		    '"drawTicks": false,'+
+		    '"borderDash": ["2"],'+
+		    '"zeroLineBorderDash": ["2"]'+
+		    '},'+
+		    '"ticks": {'+
+		    '"fontColor": "#858796",'+
+		    '"fontStyle": "normal",'+
+		    '"padding": 20'+
+		    '}'+
+		    '}]'+
+		    '}'+
+		    '}'+
+		'}';
+		
+		return str;
+};
 
 
-</script> -->
+
+function renderToDoughnut() {
+	var str = '';
+	
+	str +=
+		'{'+
+		'"type": "doughnut",'+
+		'"data": {'+
+			'"labels": ["소방기계", "소방전기", "BIM팀"],'+
+			'"datasets": [{'+
+				'"label": "",'+
+				'"backgroundColor": ["#4e73df", "#1cc88a", "#36b9cc"],'+
+				'"borderColor": ["#ffffff", "#ffffff", "#ffffff"],'+
+				'"data": ["57", "26", "9"]'+
+			'}]'+
+		'},'+
+		'"options": {'+
+			'"maintainAspectRatio": false,'+
+			'"legend": {'+
+				'"display": false,'+
+				'"labels": {'+
+					'"fontStyle": "normal"'+
+					'}'+
+				'},'+
+				'"title": {'+
+					'"fontStyle": "normal"'+
+				'}'+
+			'}'+
+		'}';
+		
+	return str;
+};
+
+function renderToLine(statVo) {
+	
+	var str = '';
+	
+	str +='{'+
+		    '"type": "line",'+
+		    '"data": {'+
+		        '"labels": ['+
+		        	statVo.lineLabels +
+		        	'],'+
+		        '"datasets": [{'+
+		            '"label": "Earnings",'+
+		            '"fill": true,'+
+		            '"data": ['+
+		            statVo.lineData+
+		            	'],'+
+		            '"backgroundColor": "rgba(78, 115, 223, 0.05)",'+
+		            '"borderColor": "rgba(78, 115, 223, 1)"'+
+		        '}]'+
+		    '},'+
+		    '"options": {'+
+		        '"maintainAspectRatio": false,'+
+		        '"legend": {'+
+		            '"display": false,'+
+		            '"labels": {'+
+		                '"fontStyle": "normal"'+
+		            '}'+
+		        '},'+
+		        '"title": {'+
+		            '"fontStyle": "normal"'+
+		        '},'+
+		        '"scales": {'+
+		            '"xAxes": [{'+
+		                '"gridLines": {'+
+		                    '"color": "rgb(234, 236, 244)",'+
+		                    '"zeroLineColor": "rgb(234, 236, 244)",'+
+		                    '"drawBorder": false,'+
+		                    '"drawTicks": false,'+
+		                    '"borderDash": ["2"],'+
+		                    '"zeroLineBorderDash": ["2"],'+
+		                    '"drawOnChartArea": false'+
+		                '},'+
+		                '"ticks": {'+
+		                    '"fontColor": "#858796",'+
+		                    '"fontStyle": "normal",'+
+		                    '"padding": 20'+
+		                '}'+
+		            '}],'+
+		            '"yAxes": [{'+
+		                '"gridLines": {'+
+		                    '"color": "rgb(234, 236, 244)",'+
+		                    '"zeroLineColor": "rgb(234, 236, 244)",'+
+		                    '"drawBorder": false,'+
+		                    '"drawTicks": false,'+
+		                    '"borderDash": ["2"],'+
+		                    '"zeroLineBorderDash": ["2"]'+
+		                '},'+
+		                '"ticks": {'+
+		                    '"fontColor": "#858796",'+
+		                    '"fontStyle": "normal",'+
+		                    '"padding": 20'+
+		                '}'+
+		            '}]'+
+		        '}'+
+		    '}'+
+		'}';
+		
+	return str;
+};
+function renderToPie(statVo) {
+	
+	
+	var str = '';
+	
+	str +='{'+
+		    '"type": "pie",'+
+		    '"data": {'+
+		        '"labels": ['+
+		        	statVo.pieLabels+
+		        	'],'+
+		        '"datasets": [{'+
+		            '"label": "",'+
+		            '"backgroundColor": ["#4e73df", "#1cc88a", "#36b9cc", "#f6c23e", "#e74a3b"],'+
+		            '"borderColor": ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"],'+
+		            '"data": ['+
+		            statVo.pieData+
+		            	']'+
+		        '}]'+
+		    '},'+
+		    '"options": {'+
+		        '"maintainAspectRatio": false,'+
+		        '"legend": {'+
+		            '"display": false,'+
+		            '"labels": {'+
+		                '"fontStyle": "normal"'+
+		            '}'+
+		        '},'+
+		        '"title": {'+
+		            '"fontStyle": "normal"'+
+		        '}'+
+		    '}'+
+		'}';
+		
+	return str;
+};
+
+</script>
 </html>
