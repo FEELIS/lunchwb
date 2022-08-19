@@ -1,11 +1,13 @@
 package com.lunchwb.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lunchwb.service.StatService;
 import com.lunchwb.service.VisitedService;
+import com.lunchwb.vo.StatVo;
 import com.lunchwb.vo.VisitedVo;
 
 @Controller
@@ -22,6 +26,11 @@ public class StatController {
 	
 	@Autowired
 	private VisitedService vstService;
+	
+	@Autowired
+	private StatService statService;
+	
+
 	
 	private static final Logger logger = LoggerFactory.getLogger(StatController.class);
 
@@ -121,9 +130,18 @@ public class StatController {
 		
 		
 		
-		
-		
 		return "stat/statChart";
+	};
+	
+	@ResponseBody
+	@RequestMapping(value = "/getStatChart", method = {RequestMethod.GET,RequestMethod.POST})
+	public Map<String,List<String>> getStatChart(@RequestBody StatVo statVo){
+		logger.info("StatController > getStatChart()");
+		Map<String,List<String>> chartMap = statService.getStatChart(statVo.getMenu1stCateName());
+		logger.info(chartMap.toString());
+		
+		
+		return chartMap;
 	};
 	
 	
