@@ -330,7 +330,8 @@ CREATE TABLE vote (
  group_no number(20) NOT NULL,
  vote_end_time DATE NOT NULL,
  vote_items varchar2(1000) null,
- vote_results varchar2(1000) NULL
+ vote_results varchar2(1000) NULL,
+ vote_state number(20) DEFAULT 1 NOT NULL
 );
 
 --===== 투표하는 그룹 =====
@@ -338,7 +339,8 @@ CREATE TABLE vote_members (
  vote_member_no number(20) NOT NULL,
  vote_no number(20) NOT NULL,
  user_no number(20) NOT NULL,
- user_name varchar2(200) NOT NULL
+ user_name varchar2(200) NOT NULL,
+ vote_voted number(20) DEFAULT 0 NOT NULL
 );
 
 
