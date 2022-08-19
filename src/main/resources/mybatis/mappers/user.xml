@@ -346,4 +346,14 @@
 	   	</foreach>
    	</update>
    	
+   	
+   	<!--  userState 다시 불러오기  -->
+   	<select id="selectUserState" parameterType="int" resultType="UserVo">
+		<![CDATA[
+			SELECT user_state userState
+			FROM   users
+			WHERE  user_no = #{userNo}
+		]]>
+	</select>	
+   	
 </mapper>

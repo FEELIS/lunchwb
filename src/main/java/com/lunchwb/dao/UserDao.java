@@ -148,27 +148,32 @@ public class UserDao {
    /* 하나씩 바꾸는 경우 */
    /* 한 번에 바꾸는 경우 */
    /* userState 0으로 변경 */
-   public int updateState0(Integer userNo) {
+   public int updateState0(int userNo) {
 	   return sqlSession.update("user.updateState0", userNo);
    }
    
    /* userState 1로 변경 */
-   public int updateState1(Integer userNo) {
+   public int updateState1(int userNo) {
 	   return sqlSession.update("user.updateState1", userNo);
    }
    
    /* userState 2로 변경 */
-   public int updateState2(Integer userNo) {
+   public int updateState2(int userNo) {
 	   return sqlSession.update("user.updateState2", userNo);
    }
    
    /* userState 3으로 변경 */
-   public int updateState3(Integer userNo) {
+   public int updateState3(int userNo) {
 	   return sqlSession.update("user.updateState3", userNo);
    }
    
    /* userState 4로 변경 */
-   public int updateState4(Integer userNo) {
+   public int updateState4(int userNo) {
 	   return sqlSession.update("user.updateState4", userNo);
+   }
+   
+   /* userState 불러오기 */
+   public int selectUserState(int userNo) {
+	   return sqlSession.selectOne("user.selectUserState", userNo);
    }
 }
