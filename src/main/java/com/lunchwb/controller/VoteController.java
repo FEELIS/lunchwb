@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -39,7 +38,7 @@ public class VoteController {
 		UserVo loginUser = (UserVo)session.getAttribute("authUser");
 		
 		if (loginUser == null || groupNo == null || groupNo == 0 || basket.get(groupNo).size() < 2) {
-			return "redirect:./";
+			return "redirect:/";
 		}
 		
 		List<GroupVo> voteMember = voteService.getVoteMember(groupNo);
@@ -58,9 +57,13 @@ public class VoteController {
 	
 	
 	@PostMapping("/makeVote")
-	public String makeVote(@RequestParam("voteEndDate") String voteEndDate) {
+	public String makeVote(@RequestParam("voteEndDate") String voteEndDate
+						   , HttpSession session) {
 		logger.info(voteEndDate);
 		
-		return "redirect:../";
+		UserVo loginUser = (UserVo)session.getAttribute("authUser");
+		voteService.makeVote(loginUser.getUserNo());
+		
+		return "redirect:/";
 	}
 }
