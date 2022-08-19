@@ -109,5 +109,9 @@
 -- users테이블 user_state칼럼 추가
 -- menu테이블 menu_etc삭제
 
+-- 2022.08.19 15:24 =====================
+-- vote_members테이블에서 group_member_no 칼럼명 user_no로 변경 후 group_member_no에서 받아오던 fk를 users테이블의 user_no의 fk로 수정
+
+
 
 
