@@ -40,10 +40,12 @@
 
 
 <div class="d-flex flex-column" id="content-wrapper" style="position: relative;">
-    <div class="container" id="container" style="max-width: 1920px;height: auto;margin: 0;padding: 0;">
-        <div id="header-1">
+	<div id="header-1">
             <c:import url="/WEB-INF/views/includes/header.jsp" />
-        </div>
+    </div>
+    
+    <div class="container" id="container" style="height: auto;margin: 0;padding: 0;">
+        
         
         <div class="flex-nowrap no-drag" id="curr-location">
         	<span style="margin-right: 5px;" class="no-drag"><i class="fas fa-crosshairs no-drag"></i>&nbsp;현위치:</span>

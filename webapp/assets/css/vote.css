@@ -1,22 +1,26 @@
+#wrapper {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
 #vote-map-wrapper {
-  position: static;
+  width: 100%;
+  margin: 0; 
+  padding: 0;
 }
 
 #vote-result-content-wrapper {
-  position: static;
+  position: relative;
 }
 
 #container {
-  max-width: 1920px;
   margin: 0;
   padding: 0;
-  min-width: 400px;
-  width: 100%;
   padding-bottom: 50px;
 }
 
 #waiting-container {
-  max-width: 1920px;
   margin: 0;
   padding: 0;
   min-width: 1094px;

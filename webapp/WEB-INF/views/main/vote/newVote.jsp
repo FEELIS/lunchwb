@@ -145,6 +145,7 @@
         
         <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	
 <script type="text/javascript">
 	let currentDate
@@ -161,12 +162,22 @@
 		"올빼미", "왜가리", "원앙", "제비", "조롱이", "종다리", "지빠귀", "직박구리", "찌르레기", "할미새사촌", "해오라기"]
 	
 	
-	$(document).ready(function() {
+	$(document).ready(async function() {
 		getTime()
 		$("#vote-end-hour").val(currentTime)
 		$("#vote-end-min").val(currentMin)
+		
+		await getIpClient()
 	})
 	
+	async function getIpClient() {
+	  try {
+	    const response = await axios.get('https://api.ipify.org?format=json');
+	    console.log(response["data"]["ip"]);
+	  } catch (error) {
+	    console.error(error);
+	  }
+	}
 	
 	
 	////////// 새로고침 방지 ///////////////////////////////////////////////////////////////
@@ -344,7 +355,7 @@
 		btn.addClass("fas fa-pen vote-people-edit-name-btn")
 		btn.closest(".vote-people-header").append("<i class='fas fa-times-circle d-inline-block vote-people-del-btn'></i>")
 	}
-		
+	
 	
 	////////// 투표 마감 시각 관련 /////////////////////////////////////////////////////////////////////////////
 	

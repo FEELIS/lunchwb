@@ -13,10 +13,11 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Bold-BS4-Responsive-Pricing-Table-Snippet.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style-jw.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/vote-aside.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/vote.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&amp;display=swap">
@@ -29,16 +30,18 @@
 </head>
 
 <body>
-
+ 
 <div id="wrapper">
-    <c:import url="/WEB-INF/views/includes/aside/voteAside.jsp" />
+<c:import url="/WEB-INF/views/includes/aside/voteAside.jsp" />
     
-    <div class="d-flex flex-column" id="vote-map-wrapper">
-        <div id="header-1">
-            <c:import url="/WEB-INF/views/includes/header.jsp" />
-        </div>
+    <div class="d-flex flex-column" id="vote-map-wrapper">        
+    	<div id="header-1">
+	            <c:import url="/WEB-INF/views/includes/header.jsp" />
+	    </div>
         
         <div class="container" id="container">
+	        
+	        
             <div class="d-flex d-xxl-flex justify-content-center" id="map-btn-area">
             	<button class="btn btn-danger d-inline-flex d-xxl-flex justify-content-center align-items-center" id="vote-kakao-btn" type="button">
             		<i class="fas fa-comment"></i>

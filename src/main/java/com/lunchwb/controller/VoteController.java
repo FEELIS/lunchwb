@@ -65,9 +65,10 @@ public class VoteController {
 						   , HttpSession session, Model model) {
 		
 		UserVo loginUser = (UserVo)session.getAttribute("authUser");
+		int groupNo = (Integer)session.getAttribute("curr_basket_group");
 		
 		if (loginUser != null) {
-			voteService.makeVote(loginUser.getUserNo(), voteEndDate, voteMember, currBasket);
+			voteService.makeVote(loginUser.getUserNo(), voteEndDate, voteMember, currBasket, groupNo);
 		}
 		
 		return "redirect:/";

@@ -1,6 +1,5 @@
 package com.lunchwb.dao;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -120,33 +119,42 @@ public class UserDao {
    /* 정원 */
    /* 한 번에 바꾸는 경우 */
    /* userState 0으로 변경 */
-   public int updateState0(List<UserVo> voteMembers) {
-	   return sqlSession.update("user.updateStateAll0", voteMembers);
+   public void updateState0(List<UserVo> voteMembers) {
+	   for (UserVo user: voteMembers) {
+		   sqlSession.update("user.updateState0", user.getUserNo());
+	   }
    }
    
    /* userState 1로 변경 */
-   public int updateState1(List<UserVo> voteMembers) {
-	   return sqlSession.update("user.updateStateAll1", voteMembers);
+   public void updateState1(List<UserVo> voteMembers) {
+	   for (UserVo user: voteMembers) {
+		   sqlSession.update("user.updateState1", user.getUserNo());
+	   }
    }
    
    /* userState 2로 변경 */
-   public int updateState2(List<UserVo> voteMembers) {
-	   return sqlSession.update("user.updateStateAll2", voteMembers);
+   public void updateState2(List<UserVo> voteMembers) {
+	   for (UserVo user: voteMembers) {
+		   sqlSession.update("user.updateState2", user.getUserNo());
+	   }
    }
    
    /* userState 3으로 변경 */
-   public int updateState3(List<UserVo> voteMembers) {
-	   return sqlSession.update("user.updateStateAll3", voteMembers);
+   public void updateState3(List<UserVo> voteMembers) {
+	   for (UserVo user: voteMembers) {
+		   sqlSession.update("user.updateState3", user.getUserNo());
+	   }
    }
    
    /* userState 4로 변경 */
-   public int updateState4(List<UserVo> voteMembers) {
-	   return sqlSession.update("user.updateStateAll4", voteMembers);
+   public void updateState4(List<UserVo> voteMembers) {
+	   for (UserVo user: voteMembers) {
+		   sqlSession.update("user.updateState4", user.getUserNo());
+	   }
    }
    
    
    /* 하나씩 바꾸는 경우 */
-   /* 한 번에 바꾸는 경우 */
    /* userState 0으로 변경 */
    public int updateState0(int userNo) {
 	   return sqlSession.update("user.updateState0", userNo);

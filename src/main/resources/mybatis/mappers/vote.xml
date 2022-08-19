@@ -9,8 +9,10 @@
 			SELECT vote_state
 			FROM   vote
 			WHERE  vote_no = #{voteNo}
+			AND    vote_state != 4
 		]]>
 	</select>
+	
 	
 	<!-- 회원 참여 투표 존재 확인 -->
 	<select id="selectMemberVoteState" parameterType="int" resultType="Integer">
@@ -21,4 +23,31 @@
 			AND    user_no = #{userNo}
 		]]>
 	</select>
+	
+
+	<!--  투표 생성하기  -->
+	<insert id="insertNewVote" parameterType="VoteVo">
+		<selectKey keyProperty="voteNo" resultType="int" order="BEFORE">
+			SELECT seq_vote_no.nextval * 1000000 + LPAD(ROUND(DBMS_RANDOM.VALUE(0, 999999)),6,0) voteNo
+            FROM   dual
+		</selectKey>
+		
+		<![CDATA[
+			INSERT INTO vote
+			VALUES (#{voteNo}, #{userNo}, #{groupNo}, #{voteEndTime}, #{voteItems}, #{voteResults}, 1)
+		]]>
+	</insert>
+	
+	
+	<insert id="insertVoteMember" parameterType="Map">
+		INSERT INTO vote_members (vote_member_no, vote_no, user_no, user_name, vote_voted)
+		SELECT seq_vote_member_no.nextval, A.*
+		FROM (
+		<foreach item="member" collection="voteMember" separator="UNION ALL ">
+			SELECT #{voteNo} AS vote_no, #{member.userNo} AS user_no, #{member.userName} AS user_name, 0 AS vote_voted
+			FROM dual
+		</foreach>
+		) A
+
+	</insert>
 </mapper>

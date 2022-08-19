@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/alert.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
 
-<nav id="header" class="navbar navbar-light navbar-expand bg-white shadow d-xxl-flex justify-content-xxl-end mb-4 topbar static-top">
+<nav id="header" class="navbar navbar-light navbar-expand-xl bg-white shadow d-xxl-flex justify-content-xxl-end mb-4 topbar static-top">
     <div class="container">
         <div></div>
         

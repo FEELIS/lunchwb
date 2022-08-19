@@ -18,7 +18,7 @@ public class VoteVo {
 	// private int voteNo; (vote table fk)
 	private int userNo;
 	private String userName;
-	private int voteMemberState;
+	private int voteVoted;
 	
 	
 	///////////// 기타 /////////////////////////////////
@@ -105,7 +105,6 @@ public class VoteVo {
 		this.voteState = voteState;
 	}
 
-
 	public int getUserNo() {
 		return userNo;
 	}
@@ -113,15 +112,15 @@ public class VoteVo {
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
-
-	public int getVoteMemberState() {
-		return voteMemberState;
-	}
-
-	public void setVoteMemberState(int voteMemberState) {
-		this.voteMemberState = voteMemberState;
-	}
 	
+	public int getVoteVoted() {
+		return voteVoted;
+	}
+
+	public void setVoteVoted(int voteVoted) {
+		this.voteVoted = voteVoted;
+	}
+
 	public int getUserGrade() {
 		return userGrade;
 	}
@@ -129,15 +128,17 @@ public class VoteVo {
 	public void setUserGrade(int userGrade) {
 		this.userGrade = userGrade;
 	}
+	
 
-	///// toString //////////////////////////////////////////
+	///////////// toString //////////////////////////////////////////
 
+	
 	@Override
 	public String toString() {
 		return "VoteVo [voteNo=" + voteNo + ", voteMadeUser=" + voteMadeUser + ", groupNo=" + groupNo + ", voteEndTime="
 				+ voteEndTime + ", voteItems=" + voteItems + ", voteResults=" + voteResults + ", voteState=" + voteState
-				+ ", voteMemberNo=" + voteMemberNo + ", userNo=" + userNo + ", userName=" + userName
-				+ ", voteMemberState=" + voteMemberState + ", userGrade=" + userGrade + "]";
-	}	
-			
+				+ ", voteMemberNo=" + voteMemberNo + ", userNo=" + userNo + ", userName=" + userName + ", voteVoted="
+				+ voteVoted + ", userGrade=" + userGrade + "]";
+	}
+
 }
