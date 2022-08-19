@@ -1,5 +1,7 @@
 package com.lunchwb.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class ReviewVo {
 	
 	//////////////////// review table ////////////////////
@@ -8,6 +10,7 @@ public class ReviewVo {
 	private int visitedNo;
 	private String reviewContent;
 	private int userScore;
+	private MultipartFile file;
 	private String reviewFilePath;
 	private int reviewReported;
 	
@@ -32,15 +35,17 @@ public class ReviewVo {
 	
 	public ReviewVo() {
 	}
-	
-	public ReviewVo(int reviewNo, int userNo, int visitedNo, String reviewContent, int userScore, String reviewFilePath,
-			int reviewReported, int storeNo, String userName, String menuName, String visitedDate, int menuNo, String avgAge,
-			int withCount, int visitedCount) {
+
+	public ReviewVo(int reviewNo, int userNo, int visitedNo, String reviewContent, int userScore, MultipartFile file,
+			String reviewFilePath, int reviewReported, int storeNo, String userName, String menuName,
+			String visitedDate, int menuNo, String avgAge, int withCount, int visitedCount) {
+		super();
 		this.reviewNo = reviewNo;
 		this.userNo = userNo;
 		this.visitedNo = visitedNo;
 		this.reviewContent = reviewContent;
 		this.userScore = userScore;
+		this.file = file;
 		this.reviewFilePath = reviewFilePath;
 		this.reviewReported = reviewReported;
 		this.storeNo = storeNo;
@@ -52,7 +57,6 @@ public class ReviewVo {
 		this.withCount = withCount;
 		this.visitedCount = visitedCount;
 	}
-	
 
 	public int getReviewNo() {
 		return reviewNo;
@@ -92,6 +96,14 @@ public class ReviewVo {
 
 	public void setUserScore(int userScore) {
 		this.userScore = userScore;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 
 	public String getReviewFilePath() {
@@ -177,10 +189,9 @@ public class ReviewVo {
 	@Override
 	public String toString() {
 		return "ReviewVo [reviewNo=" + reviewNo + ", userNo=" + userNo + ", visitedNo=" + visitedNo + ", reviewContent="
-				+ reviewContent + ", userScore=" + userScore + ", reviewFilePath=" + reviewFilePath
+				+ reviewContent + ", userScore=" + userScore + ", file=" + file + ", reviewFilePath=" + reviewFilePath
 				+ ", reviewReported=" + reviewReported + ", storeNo=" + storeNo + ", userName=" + userName
 				+ ", menuName=" + menuName + ", visitedDate=" + visitedDate + ", menuNo=" + menuNo + ", avgAge="
 				+ avgAge + ", withCount=" + withCount + ", visitedCount=" + visitedCount + "]";
 	}
-
 }
