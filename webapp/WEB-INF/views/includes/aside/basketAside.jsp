@@ -950,6 +950,13 @@
 			alert("오늘의 점심 후보가 2개 이상일 때 이용할 수 있습니다.")
 			return
 		}
+		
+		var checkGroup = confirm("현재 선택하신 그룹이 [" + basket_group[curr_basket_group].groupName + "] 맞습니까?");
+		
+		if(!checkGroup) {
+			return false
+		}
+		
 		var randomStore = Math.floor(Math.random()*(countBasketItems(curr_basket_group)))
 		var randomStoreNo = basket[curr_basket_group][randomStore].storeNo
 		var randomStoreName = basket[curr_basket_group][randomStore].storeName
@@ -965,7 +972,7 @@
 			storeName : randomStoreName
 		}
 		
-		$.ajax({
+		/* $.ajax({
 			url : "${pageContext.request.contextPath}/randomResult",		
 			type : "post",
 			contentType : "application/json",
@@ -979,7 +986,7 @@
 			error : function(XHR, status, error) {
 				console.error(status + " : " + error);
 			}
-		})
+		}) */
 		
 		
 	})	
