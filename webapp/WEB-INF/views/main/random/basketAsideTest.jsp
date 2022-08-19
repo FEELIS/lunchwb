@@ -192,6 +192,7 @@
 		
 	let basket_group = [] // 현재 그룹 리스트
 	let curr_basket_group = 0 // 현재 선태 그룹
+	let curr_basket_group_name = ""
 	
 	let filter_excluded = "${filter_excluded}" // 제외된 메뉴 카테고리
 		
@@ -543,9 +544,10 @@
 				
 				if (basket_group.length == 0) {
 					curr_basket_group = 0
-					
+					curr_basket_group_name = "뭘까요"
 				} else if (change) {
 					curr_basket_group = basketGroup[0].groupNo	
+					curr_basket_group_name = "뭘까요오"
 					$("[data-groupNo=" + String(curr_basket_group) + "]").addClass("basket-selected-group")
 				}
 				
@@ -948,6 +950,18 @@
 			return
 		}
 		
+		var checkGroup = confirm("현재 선택하신 그룹이 [" + basket_group[curr_basket_group].groupName + "] 맞습니까?");
+		
+		console.log("그룹리스트")
+		console.log(basket_group)
+		console.log("그룹이름")
+		console.log(basket_group[curr_basket_group].groupName)
+		console.log("그룹이름2")
+		
+		if(!checkGroup) {
+			return false
+		}
+		
 		var randomStore = Math.floor(Math.random()*(countBasketItems(curr_basket_group)))
 		var randomStoreNo = basket[curr_basket_group][randomStore].storeNo
 		var randomStoreName = basket[curr_basket_group][randomStore].storeName
@@ -956,6 +970,28 @@
 		console.log("방문 가게 이름 = " + randomStoreName)
 		
 		alert("오늘 방문할 가게는 [" + randomStoreName + "] 입니다.")
+		
+		
+		var storeInfo ={
+			storeNo : randomStoreNo,
+			storeName : randomStoreName
+		}
+		
+		/* $.ajax({
+			url : "${pageContext.request.contextPath}/randomResult",		
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(storeInfo),
+			dataType : "json",
+			//async : false,
+			success : function(result){				
+				
+				console.log(result)
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		}) */
 	})	
 	
 	
