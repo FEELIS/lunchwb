@@ -29,5 +29,9 @@ public class ReviewDao {
 		ReviewVo reviewVo = sqlSession.selectOne("review.todayReview", userNo);
 		return reviewVo;
 	}
+	
+	public void addReview(ReviewVo reviewVo) {
+		sqlSession.insert("review.addReview", reviewVo);
+	}
 
 }

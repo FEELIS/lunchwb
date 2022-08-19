@@ -88,6 +88,7 @@
 
 	<select id="todayStoreInfo" parameterType="int" resultMap="resultMapVisitedVo">
 		SELECT  s.store_no
+				, i.visited_no
 				, g.group_no
 		        , g.group_name
 		        , s.store_name
@@ -97,6 +98,7 @@
 		FROM store s, groups g, food_2nd_category f
 			 , (SELECT group_no
 			           , store_no
+			           , visited_no
 			     FROM visited
 			     WHERE TO_CHAR(visited_date, 'YYYY-MM-DD') = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
 			     AND user_no = #{userNo}) i
@@ -145,6 +147,13 @@
 		                            AND v.store_no = #{storeNo}
 		                            ORDER BY visited_no DESC    ))
 		        WHERE rn = 2)
+	</select>
+	
+	
+	<select id="todayMenu" parameterType="VisitedVo">
+		UPDATE visited
+		SET menu_no = #{menuNo}
+		WHERE visited_no = #{visitedNo}
 	</select>
 
 </mapper>

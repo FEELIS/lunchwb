@@ -218,6 +218,7 @@
 	                            	<c:choose>
 	                            		<c:when test="${visitedMap.reviewVo == null}">
 			                            	리뷰 남기기
+			                            	<input type="hidden" name="visitedNo" value="${visitedMap.visitedVo.visitedNo}"/>
 	                            		</c:when>
 	                            		<c:otherwise>
 											오늘 작성한 리뷰
@@ -227,7 +228,7 @@
                             </div>
                             
                             <div class="card-body" style="background: #ffffff;">
-								<form id = "review-submit" action = "${pageContext.request.contextPath}/review/add" method="post" enctype="multilpart/form-data">
+								<form id = "review-submit" action = "${pageContext.request.contextPath}/visited/review/upload" method="post" enctype="multilpart/form-data">
 	                                <div class="row">
                                     	<div class="col-xxl-7">
                                         
@@ -310,7 +311,7 @@
                                             
                                             <div>
                                             	<c:if test="${visitedMap.reviewVo == null}">
-                                            		<input type="file" />
+                                            		<input type="file" name="file"/>
                                             	</c:if>
                                             </div>
                                         </div>

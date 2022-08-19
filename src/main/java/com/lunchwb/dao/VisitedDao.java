@@ -47,5 +47,9 @@ public class VisitedDao {
 		return relVo;
 	}
 	
+	public void todayMenu(VisitedVo visitedVo) {
+		sqlSession.update("visited.todayMenu", visitedVo);
+	}
+	
 
 }

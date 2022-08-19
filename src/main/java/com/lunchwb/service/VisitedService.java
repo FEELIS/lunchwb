@@ -2,11 +2,13 @@ package com.lunchwb.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lunchwb.dao.GroupDao;
 import com.lunchwb.dao.MenuDao;
@@ -104,6 +106,30 @@ public class VisitedService {
 	}
 	
 	
+	/********************* 오늘 다녀온 가게 리뷰 작성 ***************************/
+	public void addReview(UserVo authUser, ReviewVo reviewVo) {
+		//////////////////// visited > 메뉴 기록 /////////////////////////////
+		VisitedVo visitedVo = new VisitedVo();
+		visitedVo.setVisitedNo(reviewVo.getVisitedNo());
+		visitedVo.setMenuNo(reviewVo.getMenuNo());
+		
+		vstDao.todayMenu(visitedVo);
+		
+		//////////////////// 리뷰 사진 파일 정리 > 경로 /////////////////////////
+		reviewVo.setUserNo(authUser.getUserNo());
+		MultipartFile file = reviewVo.getFile();
+		
+		//다음에 저장 경로 교체 하기
+		String saveDir = "C:\\javaStudy\\upload";
+		String orgName = file.getOriginalFilename();
+		String exName = orgName.substring(orgName.lastIndexOf("."));
+		String saveName = System.currentTimeMillis()+UUID.randomUUID().toString()+exName;
+		String filePath = saveDir + "\\" + saveName;
+		
+		reviewVo.setReviewFilePath(filePath);
+		reviewDao.addReview(reviewVo);
+	}
+
 
 
 }

@@ -10,10 +10,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lunchwb.service.VisitedService;
+import com.lunchwb.vo.ReviewVo;
 import com.lunchwb.vo.UserVo;
 
+@RequestMapping("/visited")
 @Controller
 public class VisitedController {
 	
@@ -24,7 +28,7 @@ public class VisitedController {
 	
 	/* 실험용메인2 - 리뷰 작성페이지*/
 	/* 나중에 도메인 /review or /visited 로 바꿀 예정 */
-	@GetMapping("/visited")
+	@GetMapping("/")
 	public String visitedMain(Model model, HttpSession session) {
 		logger.info("VisitedController > visitedMain()");
 		
@@ -44,6 +48,15 @@ public class VisitedController {
 	
 	
 	/* 리뷰 작성 */
+	@PostMapping("/review/upload")
+	public String addReview(HttpSession session, ReviewVo reviewVo) {
+		logger.info("VisitedController > addReview()");
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		visitedService.addReview(authUser, reviewVo);
+		
+		return "redirect:/";
+	}
 	
 	
 
