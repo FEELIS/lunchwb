@@ -14,7 +14,10 @@ public class UserVo {
 	private String userSex;
 	private String userJoinDate;
 	private String userGrade;
-	private String userState;
+	
+	
+	/* 투표 전(기본) 0 / 투표 중 1 / 나는 투표 했지만 투표 결과가 안나옴 2 / 투표 종료(결과 나옴) 3 / 방문 완료 4 */ 
+	private int userState;
 	
 	
 	/* 자동 로그인 */
@@ -31,8 +34,8 @@ public class UserVo {
 	}
 
 	public UserVo(int userNo, String userEmail, String userPassword, String userName, int userBirthYear, String userSex,
-			String userJoinDate, String userGrade, String userState, String sessionId, Date limitDate,
-			boolean autoLogin, String snsLogin) {
+			String userJoinDate, String userGrade, int userState, String sessionId, Date limitDate, boolean autoLogin,
+			String snsLogin) {
 		super();
 		this.userNo = userNo;
 		this.userEmail = userEmail;
@@ -113,11 +116,11 @@ public class UserVo {
 		this.userGrade = userGrade;
 	}
 
-	public String getUserState() {
+	public int getUserState() {
 		return userState;
 	}
 
-	public void setUserState(String userState) {
+	public void setUserState(int userState) {
 		this.userState = userState;
 	}
 
@@ -161,6 +164,8 @@ public class UserVo {
 				+ ", sessionId=" + sessionId + ", limitDate=" + limitDate + ", autoLogin=" + autoLogin + ", snsLogin="
 				+ snsLogin + "]";
 	}
+
+	
 
 	
 }

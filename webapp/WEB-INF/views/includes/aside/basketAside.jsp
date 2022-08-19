@@ -958,6 +958,30 @@
 		console.log("방문 가게 이름 = " + randomStoreName)
 		
 		alert("오늘 방문할 가게는 [" + randomStoreName + "] 입니다.")
+		
+		
+		var storeInfo ={
+			storeNo : randomStoreNo,
+			storeName : randomStoreName
+		}
+		
+		$.ajax({
+			url : "${pageContext.request.contextPath}/randomResult",		
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(storeInfo),
+			dataType : "json",
+			//async : false,
+			success : function(result){				
+				
+				console.log(result)
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		})
+		
+		
 	})	
 	
 	
