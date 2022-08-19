@@ -204,7 +204,7 @@
                             
                         </div>
                     </div>
-                    
+
                     
                     <div class="col">
                         <div id="today-review" class="card shadow flex-nowrap">
@@ -214,10 +214,10 @@
                             </div>
                             
                             <div class="card-body" style="background: #ffffff;">
-                                <div class="row">
-                                    <div class="col-xxl-7">
+								<form id = "review-submit" action = "${pageContext.request.contextPath}/review/add" method="post" enctype="multilpart/form-data">
+	                                <div class="row">
+                                    	<div class="col-xxl-7">
                                         
-                                        <div>
                                             <div class="d-inline today-review-line">
                                             	<span class="d-inline-block circles">
                                             		<span class="d-inline-block me-2 bg-secondary icon-circle"></span>
@@ -227,15 +227,14 @@
                                             	</span>
                                             </div>
                                             
-                                     		<div id="today-star-icon" class="text-warning">
-	                                     		<i class="far fa-star"></i>
-	                                     		<i class="far fa-star"></i>
-	                                     		<i class="far fa-star"></i>
-	                                     		<i class="far fa-star"></i>
-	                                     		<i class="far fa-star"></i>
+                                     		<div id="today-star-icon" class="text-warning">	
+                                     			<input type="hidden" name="userScore" value="7"/>
+	                                     		<i id = "star-1" class="far fa-star starScore" data-score = "1" data-stt="off"></i>
+	                                     		<i id = "star-2" class="far fa-star starScore" data-score = "2" data-stt="off"></i>
+	                                     		<i id = "star-3" class="far fa-star starScore" data-score = "3" data-stt="off"></i>
+	                                     		<i id = "star-4" class="far fa-star starScore" data-score = "4" data-stt="off"></i>
+	                                     		<i id = "star-5" class="far fa-star starScore" data-score = "5" data-stt="off"></i>
                                      		</div>
-                                     		
-                                        </div>
                                         
                                         <div>
                                             
@@ -272,26 +271,29 @@
                                             
                                             <div><input type="file" /></div>
                                         </div>
-                                        
-                                    </div>
-                                    
-                                    <div class="col text-end">
-                                    	<!-- <img src="map.png" style="width: 174px;height: 130.5px;" /> -->
-                                    </div>
-                                    
-                                </div>
-                                
-                                <div>
-                                	<textarea id="today-review-content" name="reviewContent" placeholder="내용을 입력해주세요"></textarea>
-                                </div>
-                                
-                                <div class="text-center">
-                                	<button class="btn btn-primary btn-today" type="button">리뷰 등록</button>
-                                </div>
+                                     		
+                                       </div>
+	                                       
+		                                <div id="review-image-area" class="col text-end">
+		                                    	<img src="${pageContext.request.contextPath}/assets/img/bujang-logo blue.png" style="height: 130.5px;" />
+		                                </div>
+		                                
+	                                </div>
+
+		                            <div>
+		                            	<textarea id="today-review-content" name="reviewContent" placeholder="내용을 입력해주세요"></textarea>
+		                            </div>
+		                           
+		                            <div class="text-center">
+		                           		<button class="btn btn-primary btn-today" type="button">리뷰 등록</button>
+		                           	</div>
+
+                                </form>
                                 
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -333,6 +335,27 @@ function drawStoreStar(){
 	
 	$("#visited-star-point").html(str)
 }
+
+
+$("#today-star-icon").on("click", ".starScore", function(){
+	console.log("별 클릭")
+	var score = $(this).attr("data-score")
+	var state = $(this).attr("data-stt")
+	
+	if(state == "off"){
+		for(int i=1; i<=score; i++){
+			document.getElementById("star-"+i).className = "fas fa-star"
+			$("#star-"+i).attr("data-stt", "on")
+		}
+		
+	}else if(state == "on"){
+		for(int i=score; i<=5; i++){
+			document.getElementById("star-"+i).className = "far fa-star"
+				$("#star-"+i).attr("data-stt", "off")
+		}
+	}
+	
+})
 
 
 

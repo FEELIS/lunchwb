@@ -3,7 +3,7 @@
   width: 100%;
   height: 100%;
   position: relative;
-  background: url(/assets/css/img/map.png) no-repeat center !important;
+  background: url(/lunchwb/assets/css/img/map.PNG) no-repeat center !important;
   background-size: cover !important;
  
 }
@@ -259,13 +259,13 @@
 #today-review .text-end {
   width: 34%;
 }
+ 
+/* #today-review img {
+  width: 213px;
+  height: 160px;
+} */
 
-#today-review img {
-  width: 160px;
-  height: 213px;
-}
-
-#today-review input[type="file"] {
+ #today-review input[type="file"] {
   width: 200px;
   margin-bottom: 10px;
   margin-left: 25px;

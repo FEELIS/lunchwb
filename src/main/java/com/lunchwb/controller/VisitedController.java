@@ -23,12 +23,18 @@ public class VisitedController {
 	private static final Logger logger = LoggerFactory.getLogger(StoreController.class);
 	
 	/* 실험용메인2 - 리뷰 작성페이지*/
-	@GetMapping("/genie/review")
+	/* 나중에 도메인 /review or /visited 로 바꿀 예정 */
+	@GetMapping("/visited")
 	public String visitedMain(Model model, HttpSession session) {
 		logger.info("VisitedController > visitedMain()");
 		
-		//여기 온 것 자체가 이미 여기갈래요를 했다고 생각할거에요
+		//여기 온 것 자체가 이미 여기갈래요를 했다고 생각할거지만 주소로 들어온다면
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		if(authUser.getUserState() < 4 ) {
+			return "redirect: /";
+		}
+		
 		HashMap<String, Object> visitedMap = visitedService.visitedMain(authUser);	
 		
 		model.addAttribute("visitedMap", visitedMap);

@@ -238,6 +238,7 @@ $("#test-storeInfo").on("click", function(){
 
 
 
+/* 가게 고정 */
 /* 리뷰 메인 가게정보에서 조회할 때 */
 $("#visited-store-name").on("click", function(){
 	var storeNo = $(this).data("storeno")

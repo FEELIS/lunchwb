@@ -22,6 +22,7 @@ public class ReviewVo {
 	
 	// visited table
 	private String visitedDate;
+	private int menuNo;
 	
 	// Informaion of reviews of store
 	private String avgAge;
@@ -33,7 +34,7 @@ public class ReviewVo {
 	}
 	
 	public ReviewVo(int reviewNo, int userNo, int visitedNo, String reviewContent, int userScore, String reviewFilePath,
-			int reviewReported, int storeNo, String userName, String menuName, String visitedDate, String avgAge,
+			int reviewReported, int storeNo, String userName, String menuName, String visitedDate, int menuNo, String avgAge,
 			int withCount, int visitedCount) {
 		this.reviewNo = reviewNo;
 		this.userNo = userNo;
@@ -46,6 +47,7 @@ public class ReviewVo {
 		this.userName = userName;
 		this.menuName = menuName;
 		this.visitedDate = visitedDate;
+		this.menuNo = menuNo;
 		this.avgAge = avgAge;
 		this.withCount = withCount;
 		this.visitedCount = visitedCount;
@@ -144,6 +146,14 @@ public class ReviewVo {
 		return avgAge;
 	}
 
+	public int getMenuNo() {
+		return menuNo;
+	}
+
+	public void setMenuNo(int menuNo) {
+		this.menuNo = menuNo;
+	}
+
 	public void setAvgAge(String avgAge) {
 		this.avgAge = avgAge;
 	}
@@ -164,14 +174,13 @@ public class ReviewVo {
 		this.visitedCount = visitedCount;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "ReviewVo [reviewNo=" + reviewNo + ", userNo=" + userNo + ", visitedNo=" + visitedNo + ", reviewContent="
 				+ reviewContent + ", userScore=" + userScore + ", reviewFilePath=" + reviewFilePath
 				+ ", reviewReported=" + reviewReported + ", storeNo=" + storeNo + ", userName=" + userName
-				+ ", menuName=" + menuName + ", visitedDate=" + visitedDate + ", avgAge=" + avgAge + ", withCount="
-				+ withCount + ", visitedCount=" + visitedCount + "]";
+				+ ", menuName=" + menuName + ", visitedDate=" + visitedDate + ", menuNo=" + menuNo + ", avgAge="
+				+ avgAge + ", withCount=" + withCount + ", visitedCount=" + visitedCount + "]";
 	}
 
 }

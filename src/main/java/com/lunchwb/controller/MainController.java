@@ -1,5 +1,7 @@
 package com.lunchwb.controller;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -62,7 +64,7 @@ public class MainController {
 				return "main/vote/voteResult";
 				
 			case 4:
-				return "main/visitedMain";
+				return "redirect:/visited";
 				
 			case 403:
 				return "error/403";
