@@ -272,12 +272,16 @@
   font-size: 14px;
 }
 
-.card-body textarea {
+.card-body #today-review-content {
   width: 100%;
   margin-top: 5px;
   margin-bottom: 5px;
   border-color: var(--bs-gray-500);
   font-size: 16px;
+}
+
+#btn-add-review {
+  height: 38px
 }
 
 .btn-today {
