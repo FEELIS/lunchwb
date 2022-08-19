@@ -1,5 +1,6 @@
 package com.lunchwb.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ public class VoteController {
 	private static final Logger logger = LoggerFactory.getLogger(VoteController.class);
 
 	
+	@SuppressWarnings("unchecked")
 	@RequestMapping("")
 	public String newVote(Model model, HttpSession session) {
 		logger.info("새 투표 생성 페이지 이동");
@@ -57,12 +59,16 @@ public class VoteController {
 	
 	
 	@PostMapping("/makeVote")
-	public String makeVote(@RequestParam("voteEndDate") String voteEndDate
-						   , HttpSession session) {
-		logger.info(voteEndDate);
+	public String makeVote(@RequestParam("voteEndDate") Date voteEndDate
+						   , @RequestParam("voteMember") String voteMember
+						   , @RequestParam("currBasket") int[] currBasket
+						   , HttpSession session, Model model) {
 		
 		UserVo loginUser = (UserVo)session.getAttribute("authUser");
-		voteService.makeVote(loginUser.getUserNo());
+		
+		if (loginUser != null) {
+			voteService.makeVote(loginUser.getUserNo(), voteEndDate, voteMember, currBasket);
+		}
 		
 		return "redirect:/";
 	}

@@ -2,26 +2,27 @@ package com.lunchwb.vo;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 public class VoteVo {
 	
 	//////////////////// vote table ////////////////////
 	private int voteNo;
 	private int voteMadeUser;
 	private int groupNo;
-	@JsonFormat(pattern = "HH:mm")
 	private Date voteEndTime;
 	private String voteItems;
 	private String voteResults;
-	
+	private int voteState;
 	
 	//////////////////// vote_members table ////////////////////
 	private int voteMemberNo;
 	// private int voteNo; (vote table fk)
-	private int groupMemberNo;
+	private int userNo;
 	private String userName;
+	private int voteMemberState;
 	
+	
+	///////////// 기타 /////////////////////////////////
+	private int userGrade;
 	
 	////////// 생성자 ////////////////////////////////////////
 	
@@ -88,14 +89,6 @@ public class VoteVo {
 		this.voteMemberNo = voteMemberNo;
 	}
 
-	public int getGroupMemberNo() {
-		return groupMemberNo;
-	}
-
-	public void setGroupMemberNo(int groupMemberNo) {
-		this.groupMemberNo = groupMemberNo;
-	}
-
 	public String getUserName() {
 		return userName;
 	}
@@ -103,9 +96,48 @@ public class VoteVo {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
-		
-	///// toString //////////////////////////////////////////
-	
 
+	public int getVoteState() {
+		return voteState;
+	}
+
+	public void setVoteState(int voteState) {
+		this.voteState = voteState;
+	}
+
+
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
+
+	public int getVoteMemberState() {
+		return voteMemberState;
+	}
+
+	public void setVoteMemberState(int voteMemberState) {
+		this.voteMemberState = voteMemberState;
+	}
+	
+	public int getUserGrade() {
+		return userGrade;
+	}
+
+	public void setUserGrade(int userGrade) {
+		this.userGrade = userGrade;
+	}
+
+	///// toString //////////////////////////////////////////
+
+	@Override
+	public String toString() {
+		return "VoteVo [voteNo=" + voteNo + ", voteMadeUser=" + voteMadeUser + ", groupNo=" + groupNo + ", voteEndTime="
+				+ voteEndTime + ", voteItems=" + voteItems + ", voteResults=" + voteResults + ", voteState=" + voteState
+				+ ", voteMemberNo=" + voteMemberNo + ", userNo=" + userNo + ", userName=" + userName
+				+ ", voteMemberState=" + voteMemberState + ", userGrade=" + userGrade + "]";
+	}	
+			
 }

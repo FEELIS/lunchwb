@@ -466,7 +466,6 @@
 			return false
 		}
 		
-		voteEndDate = JSON.stringify(voteEndDate)
 		
 		// 투표 멤버 불러오기
 		let voteMember = [] 
@@ -502,24 +501,23 @@
 			
 			return false
 		}
-		voteMember = JSON.stringify(voteMember)
-		console.log(voteMember)
+		voteMem = JSON.stringify({"mem" : voteMember})
+		console.log(voteMem)
 		
 		
 		// 장바구니 데이터 정리
 		var curr_basket = []
 		for (var i = 0; i < basket[curr_basket_group].length; i++) {
 			if (basket[curr_basket_group][i].stored) {
-				curr_basket.push(JSON.stringify(basket[curr_basket_group][i]))
+				curr_basket.push(basket[curr_basket_group][i].storeNo)
 			}
 		}
-		curr_basket = JSON.stringify(curr_basket)
 		console.log(curr_basket)
 		
 		
 		let voteData = {
 			voteEndDate : voteEndDate,
-			voteMember : voteMember,
+			voteMember : voteMem,
 			currBasket : curr_basket
 		}
 		
@@ -548,13 +546,7 @@
 		}
 		
 		postVoteData("${pageContext.request.contextPath}/vote/makeVote", voteData)
-	})
-	
-	
-	
-	
-	
-	
+	})	
 	
 	
 </script>

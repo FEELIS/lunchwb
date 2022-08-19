@@ -53,16 +53,16 @@ public class MainController {
 		
 		switch (userState) {
 			case 1:
-				//return "main/vote/voteProgress";
+				return "main/vote/voteProgress";
 				
 			case 2:
-				// return "main/vote/watingVote";
+				return "main/vote/watingVote";
 				
 			case 3:
-				// return "main/vote/voteResult";
+				return "main/vote/voteResult";
 				
 			case 4:
-				// return "main/visitedMain";
+				return "main/visitedMain";
 				
 			case 403:
 				return "error/403";
