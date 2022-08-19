@@ -115,30 +115,60 @@ public class UserDao {
    public void groupOut(int userNo) {
 	   sqlSession.delete("user.groupOut", userNo);
    }
+   
 
    /* 정원 */
+   /* 한 번에 바꾸는 경우 */
    /* userState 0으로 변경 */
    public int updateState0(List<UserVo> voteMembers) {
-	   return sqlSession.update("user.updateState0", voteMembers);
+	   return sqlSession.update("user.updateStateAll0", voteMembers);
    }
    
    /* userState 1로 변경 */
    public int updateState1(List<UserVo> voteMembers) {
-	   return sqlSession.update("user.updateState1", voteMembers);
+	   return sqlSession.update("user.updateStateAll1", voteMembers);
    }
    
    /* userState 2로 변경 */
    public int updateState2(List<UserVo> voteMembers) {
-	   return sqlSession.update("user.updateState2", voteMembers);
+	   return sqlSession.update("user.updateStateAll2", voteMembers);
    }
    
    /* userState 3으로 변경 */
    public int updateState3(List<UserVo> voteMembers) {
-	   return sqlSession.update("user.updateState3", voteMembers);
+	   return sqlSession.update("user.updateStateAll3", voteMembers);
    }
    
    /* userState 4로 변경 */
    public int updateState4(List<UserVo> voteMembers) {
-	   return sqlSession.update("user.updateState0", voteMembers);
+	   return sqlSession.update("user.updateStateAll4", voteMembers);
+   }
+   
+   
+   /* 하나씩 바꾸는 경우 */
+   /* 한 번에 바꾸는 경우 */
+   /* userState 0으로 변경 */
+   public int updateState0(Integer userNo) {
+	   return sqlSession.update("user.updateState0", userNo);
+   }
+   
+   /* userState 1로 변경 */
+   public int updateState1(Integer userNo) {
+	   return sqlSession.update("user.updateState1", userNo);
+   }
+   
+   /* userState 2로 변경 */
+   public int updateState2(Integer userNo) {
+	   return sqlSession.update("user.updateState2", userNo);
+   }
+   
+   /* userState 3으로 변경 */
+   public int updateState3(Integer userNo) {
+	   return sqlSession.update("user.updateState3", userNo);
+   }
+   
+   /* userState 4로 변경 */
+   public int updateState4(Integer userNo) {
+	   return sqlSession.update("user.updateState4", userNo);
    }
 }
