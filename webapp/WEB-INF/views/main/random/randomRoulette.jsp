@@ -244,7 +244,7 @@
 	              {
 	                  'type'     : 'spinToStop',
 	                  'duration' : 5,     // Duration in seconds.
-	                  'spins'    : 8,     // Number of complete spins.
+	                  'spins'    : 10,     // Number of complete spins.
 	                  'callbackFinished' : alertPrize
 	              }
 	           });
@@ -263,7 +263,7 @@
 	              {
 	                  'type'     : 'spinToStop',
 	                  'duration' : 5,     // Duration in seconds.
-	                  'spins'    : 8,     // Number of complete spins.
+	                  'spins'    : 10,     // Number of complete spins.
 	                  'callbackFinished' : alertPrize
 	              }
 	           });
