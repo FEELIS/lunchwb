@@ -88,6 +88,7 @@
 
 	<select id="todayStoreInfo" parameterType="int" resultMap="resultMapVisitedVo">
 		SELECT  s.store_no
+				, g.group_no
 		        , g.group_name
 		        , s.store_name
 		        , f.menu_2nd_cate_name

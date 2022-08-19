@@ -8,10 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lunchwb.service.UserService;
+import com.lunchwb.service.VisitedService;
 import com.lunchwb.vo.UserVo;
 
 
@@ -20,12 +22,14 @@ public class MainController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private VisitedService visitedService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	
 	/* ----- 메인 접근 --------------------------------------------*/
 	@RequestMapping(value = {"/", "/{voteNo}"})
-	public String main(@PathVariable(required = false) Integer voteNo, HttpSession session) {
+	public String main(@PathVariable(required = false) Integer voteNo, HttpSession session, Model model) {
 		logger.info("MainController");
 		
 		int userState = 0;
@@ -64,7 +68,9 @@ public class MainController {
 				return "main/vote/voteResult";
 				
 			case 4:
-				return "redirect:/visited";
+				HashMap<String, Object> visitedMap = visitedService.visitedMain((UserVo)session.getAttribute("authUser"));	
+				model.addAttribute("visitedMap", visitedMap);
+				return "main/visitedMain";
 				
 			case 403:
 				return "error/403";

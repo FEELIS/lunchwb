@@ -108,9 +108,10 @@
             <p class="visited-p">오늘이 가기 전에 리뷰를 남겨주세요!</p>
             <button id="btn-visited-cancel" class="btn btn-light link-danger border rounded-pill border-danger" type="button">방문 취소</button>
             
-            <p class="visited-p">혹시 그룹 취향이 아니었나요?</p>
-            <button id="btn-visited-blacklist" class="btn btn-light link-dark border rounded-pill border-dark" type="button">블랙리스트 추가</button>
-        
+            <c:if test="${authUser.userNo == visitedMap.groupLeader}">
+	            <p class="visited-p">혹시 그룹 취향이 아니었나요?</p>
+	            <button id="btn-visited-blacklist" class="btn btn-light link-dark border rounded-pill border-dark" type="button">블랙리스트 추가</button>
+ 			</c:if>       
         </div>
     </nav>
     
@@ -228,7 +229,7 @@
                                             </div>
                                             
                                      		<div id="today-star-icon" class="text-warning no-drag">	
-                                     			<input type="hidden" name="userScore" value="7"/>
+                                     			<input type="hidden" name="userScore" value="0"/>
 	                                     		<i id = "star-1" class="far fa-star starScore" data-score = "1" data-stt="off"></i>
 	                                     		<i id = "star-2" class="far fa-star starScore" data-score = "2" data-stt="off"></i>
 	                                     		<i id = "star-3" class="far fa-star starScore" data-score = "3" data-stt="off"></i>
@@ -248,7 +249,7 @@
                                             	</span>
 	                                            
 	                                            <div>
-		                                            <select id="today-menu" name="menu">
+		                                            <select id="today-menu" name="menuNo">
 	                                                    <option class="fw-bold" selected disabled>${visitedMap.visitedVo.menu2ndCateName}</option>
 	                                                    <c:forEach items="${visitedMap.menuList}" var="menuVo">
 	                                                    	<option value="${menuVo.menuNo}">${menuVo.menuName}</option>
@@ -275,7 +276,7 @@
                                        </div>
 	                                       
 		                                <div id="review-image-area" class="col text-end">
-		                                    	<img src="${pageContext.request.contextPath}/assets/img/bujang-logo blue.png" style="weight: 174px; height: 130.5px;" />
+		                                    	<img src="${pageContext.request.contextPath}/assets/img/bujang-logo blue.png" style="width: 130.5px; height: 174px;" />
 		                                </div>
 		                                
 	                                </div>
@@ -285,7 +286,7 @@
 		                            </div>
 		                           
 		                            <div class="text-center">
-		                           		<button class="btn btn-primary btn-today" type="button">리뷰 등록</button>
+		                           		<button class="btn btn-primary btn-today" type="submit">리뷰 등록</button>
 		                           	</div>
 
                                 </form>
@@ -343,17 +344,39 @@ $("#today-star-icon").on("click", ".starScore", function(){
 	console.log(score + "번 별 클릭, 상태: " + state)
 	
 	if(state == "off"){
+		$("#today-star-icon [name='userScore']").val(score)
 		for(var i=1; i<=score; i++){
 			document.getElementById("star-"+i).className = "fas fa-star starScore"
 			$("#star-"+i).attr("data-stt", "on")
 		}
 		
 	}else if(state == "on"){
+		$("#today-star-icon [name='userScore']").val(score-1)
 		for(var i=score; i<=5; i++){
 			document.getElementById("star-"+i).className = "far fa-star starScore"
 				$("#star-"+i).attr("data-stt", "off")
 		}
 	}
+	
+})
+
+
+$("#today-review").on("submit", function(){
+	console.log("리뷰 작성")
+
+	var menuNo = $("[name = 'menuNo']").val()
+	if(menuNo == null){
+		alert("메뉴를 선택해주세요")
+		return false
+	}
+	
+	var content = $("[name = 'reviewContent']").val()
+	if(content == null || content == ""){
+		alert("내용을 입력해주세요")
+		return false
+	}
+	
+	return false
 	
 })
 

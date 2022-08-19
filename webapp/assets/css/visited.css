@@ -260,10 +260,10 @@
   width: 34%;
 }
  
-/* #today-review img {
-  width: 213px;
-  height: 160px;
-} */
+#today-review img {
+  width: 130.5px;
+  height: 174px;
+}
 
  #today-review input[type="file"] {
   width: 200px;
