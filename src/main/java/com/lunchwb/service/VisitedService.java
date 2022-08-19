@@ -90,12 +90,20 @@ public class VisitedService {
 		VisitedVo relVo = vstDao.storeAndMe(vstVo);
 		visitedMap.put("relVo", relVo);
 		
+		//오늘 리뷰를 했나?
+		ReviewVo reviewVo = reviewDao.todayReview(userNo);
+		if(reviewVo != null) {
+			visitedMap.put("reviewVo", reviewVo);
+		}
+		
 		//리뷰 메뉴리스트
 		List<MenuVo> menuList = menuDao.menuList(storeNo);
 		visitedMap.put("menuList", menuList);
 		
 		return visitedMap;
 	}
+	
+	
 
 
 }

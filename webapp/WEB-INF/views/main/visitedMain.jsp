@@ -105,13 +105,16 @@
                 
             </div>
             
-            <p class="visited-p">오늘이 가기 전에 리뷰를 남겨주세요!</p>
-            <button id="btn-visited-cancel" class="btn btn-light link-danger border rounded-pill border-danger" type="button">방문 취소</button>
+            <c:if test="${visitedMap.reviewVo == null}">
+	            <p class="visited-p">오늘이 가기 전에 리뷰를 남겨주세요!</p>
+	            <button id="btn-visited-cancel" class="btn btn-light link-danger border rounded-pill border-danger" type="button">방문 취소</button>
+            </c:if>
             
             <c:if test="${authUser.userNo == visitedMap.groupLeader}">
 	            <p class="visited-p">혹시 그룹 취향이 아니었나요?</p>
 	            <button id="btn-visited-blacklist" class="btn btn-light link-dark border rounded-pill border-dark" type="button">블랙리스트 추가</button>
  			</c:if>       
+ 			
         </div>
     </nav>
     
@@ -211,7 +214,16 @@
                         <div id="today-review" class="card shadow flex-nowrap">
                             
                             <div class="card-header py-3">
-                                <p class="text-primary m-0 fw-bold">리뷰 남기기</p>
+                            	<p class="text-primary m-0 fw-bold">
+	                            	<c:choose>
+	                            		<c:when test="${visitedMap.reviewVo == null}">
+			                            	리뷰 남기기
+	                            		</c:when>
+	                            		<c:otherwise>
+											오늘 작성한 리뷰
+	                            		</c:otherwise>
+	                            	</c:choose>
+                            	</p>
                             </div>
                             
                             <div class="card-body" style="background: #ffffff;">
@@ -224,17 +236,26 @@
                                             		<span class="d-inline-block me-2 bg-secondary icon-circle"></span>
                                             	</span>
                                             	<span class="fw-bolder d-inline-block">
-                                            		가게는 어떠셨나요?
+                                            		<c:choose>
+					                            		<c:when test="${visitedMap.reviewVo == null}">
+							                            	가게는 어떠셨나요?
+					                            		</c:when>
+					                            		<c:otherwise>
+															내가 준 별점
+					                            		</c:otherwise>
+					                            	</c:choose>
                                             	</span>
                                             </div>
                                             
                                      		<div id="today-star-icon" class="text-warning no-drag">	
-                                     			<input type="hidden" name="userScore" value="0"/>
-	                                     		<i id = "star-1" class="far fa-star starScore" data-score = "1" data-stt="off"></i>
-	                                     		<i id = "star-2" class="far fa-star starScore" data-score = "2" data-stt="off"></i>
-	                                     		<i id = "star-3" class="far fa-star starScore" data-score = "3" data-stt="off"></i>
-	                                     		<i id = "star-4" class="far fa-star starScore" data-score = "4" data-stt="off"></i>
-	                                     		<i id = "star-5" class="far fa-star starScore" data-score = "5" data-stt="off"></i>
+			                            		<c:if test="${visitedMap.reviewVo == null}">
+	                                     			<input type="hidden" name="userScore" value="0"/>
+		                                     		<i id = "star-1" class="far fa-star starScore" data-score = "1" data-stt="off"></i>
+		                                     		<i id = "star-2" class="far fa-star starScore" data-score = "2" data-stt="off"></i>
+		                                     		<i id = "star-3" class="far fa-star starScore" data-score = "3" data-stt="off"></i>
+		                                     		<i id = "star-4" class="far fa-star starScore" data-score = "4" data-stt="off"></i>
+		                                     		<i id = "star-5" class="far fa-star starScore" data-score = "5" data-stt="off"></i>
+			                            		</c:if>
                                      		</div>
                                         
                                         <div>
@@ -243,19 +264,30 @@
                                             	<span class="d-inline-block circles">
                                             		<span class="d-inline-block me-2 bg-secondary icon-circle"></span>
                                             	</span>
-                                            	
-                                            	<span class="fw-bolder d-inline-block">
-                                            		메뉴를 선택해주세요 
-                                            	</span>
-	                                            
-	                                            <div>
-		                                            <select id="today-menu" name="menuNo">
-	                                                    <option class="fw-bold" selected disabled>${visitedMap.visitedVo.menu2ndCateName}</option>
-	                                                    <c:forEach items="${visitedMap.menuList}" var="menuVo">
-	                                                    	<option value="${menuVo.menuNo}">${menuVo.menuName}</option>
-	                                                    </c:forEach>
-		                                            </select>
-		                                        </div>
+                                            		<c:choose>
+					                            		<c:when test="${visitedMap.reviewVo == null}">
+			                                            	<span class="fw-bolder d-inline-block">
+			                                            		메뉴를 선택해주세요 
+			                                            	</span>
+				                                            
+				                                            <div>
+					                                            <select id="today-menu" name="menuNo">
+				                                                    <option class="fw-bold" selected disabled>${visitedMap.visitedVo.menu2ndCateName}</option>
+				                                                    <c:forEach items="${visitedMap.menuList}" var="menuVo">
+				                                                    	<option value="${menuVo.menuNo}">${menuVo.menuName}</option>
+				                                                    </c:forEach>
+					                                            </select>
+					                                        </div>
+					                            		</c:when>
+					                            		<c:otherwise>
+			                                            	<span class="fw-bolder d-inline-block">
+			                                            		오늘 먹은 메뉴
+			                                            	</span>
+			                                            	<div>
+			                                            		<span id="today-menu">${visitedMap.reviewVo.menuName}</span>
+			                                            	</div>
+					                            		</c:otherwise>
+					                            	</c:choose>                                            	
 
                                             </div>
                                             
@@ -264,13 +296,23 @@
                                         <div>
                                             <div class="d-block">
                                             	<span class="d-inline-block circles">
-                                            		<span class="d-inline-block me-2 bg-secondary icon-circle"></span>
+                                            		<c:if test="${visitedMap.reviewVo == null}">
+	                                            		<span class="d-inline-block me-2 bg-secondary icon-circle"></span>
+                                            		</c:if>
                                             	</span>
                                             	
-                                            	<span class="fs-6 fw-bolder d-inline-block">사진을 업로드 해주세요(선택) :</span>
+                                            	<span class="fs-6 fw-bolder d-inline-block">
+                                            		<c:if test="${visitedMap.reviewVo == null}">
+		                                            	사진을 업로드 해주세요(선택) :
+                                            		</c:if>
+                                            	</span>
                                             </div>
                                             
-                                            <div><input type="file" /></div>
+                                            <div>
+                                            	<c:if test="${visitedMap.reviewVo == null}">
+                                            		<input type="file" />
+                                            	</c:if>
+                                            </div>
                                         </div>
                                      		
                                        </div>
@@ -282,11 +324,20 @@
 	                                </div>
 
 		                            <div>
-		                            	<textarea id="today-review-content" name="reviewContent" placeholder="내용을 입력해주세요"></textarea>
+		                            	<c:choose>
+			                            	<c:when test="${visitedMap.reviewVo == null}">
+			                            		<textarea id="today-review-content" name="reviewContent" placeholder="내용을 입력해주세요"></textarea>
+			                            	</c:when>
+			                            	<c:otherwise>
+			                            		<span id="today-review-content">${visitedMap.reviewVo.reviewContent}</span>
+			                            	</c:otherwise>
+			                            </c:choose>
 		                            </div>
 		                           
-		                            <div class="text-center">
-		                           		<button class="btn btn-primary btn-today" type="submit">리뷰 등록</button>
+		                            <div id="btn-add-review" class="text-center">
+		                            	<c:if test="${visitedMap.reviewVo == null}">
+		                           			<button class="btn btn-primary btn-today" type="submit">리뷰 등록</button>
+		                           		</c:if>
 		                           	</div>
 
                                 </form>
@@ -305,7 +356,6 @@
     
 </div>
 
-
 <!--  가게 정보 모달 삽입 --> 
 <c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
 
@@ -316,6 +366,7 @@ console.log(visitedVo)
 
 $(document).ready(function(){
 	drawStoreStar()
+	drawReviewStar()
 })
 
 
@@ -335,6 +386,20 @@ function drawStoreStar(){
 	str += '<span class="visited-store-blue">' + starScore + '/5</span>'
 	
 	$("#visited-star-point").html(str)
+}
+
+
+function drawReviewStar(){
+	if("${visitedMap.reviewVo}" != null){
+		var userScore = "${visitedMap.reviewVo.userScore}"
+		for(var i=0; i<5; i++){
+			if(userScore > i){
+				$("#today-star-icon").append('<i class="fas fa-star"></i>')
+			}else{
+				$("#today-star-icon").append('<i class="far fa-star"></i>')
+			}
+		}
+	}
 }
 
 

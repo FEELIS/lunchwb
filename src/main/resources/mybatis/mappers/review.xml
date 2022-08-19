@@ -140,5 +140,17 @@
 			AND rn <= 2
 		]]>
 	</select>
+	
+	<select id="todayReview" parameterType="int" resultMap = "ReviewVo">
+		SELECT  user_score
+		        , menu_name
+		        , review_file_path
+		        , review_content
+		FROM review r, visited v, menu m
+		WHERE r.visited_no = v.visited_no
+		AND r.user_no = #{userNo}
+		AND v.visited_date = TO_DATE(SYSDATE)
+		AND v.menu_no = m.menu_no	
+	</select>
 
 </mapper>
