@@ -951,10 +951,37 @@
 			return
 		}
 		
-		var checkGroup = confirm("현재 선택하신 그룹이 [" + basket_group[curr_basket_group].groupName + "] 맞습니까?");
+		var checkGroup
 		
-		if(!checkGroup) {
-			return false
+		// curr_basket_group의 값이 0일 경우 그룹이 하나도 없을 것.
+		// 그룹이 하나도 없다면 로그인/비로그인 유저 모두 그룹 명 체크를 할 필요가 없음.
+		if(basket_group.length > 0){
+			
+			$.ajax({
+				url : "${pageContext.request.contextPath}/getGroupName",		
+				type : "post",
+				contentType : "application/json",
+				data : JSON.stringify(curr_basket_group),
+				dataType : "json",
+				async : false,
+				success : function(result){				
+					
+					console.log(result)
+					
+					checkGroup = confirm("현재 선택하신 그룹이 [" + result + "] 맞습니까?");
+					
+					if(!checkGroup) {
+						return false
+					}
+					
+				},
+				error : function(XHR, status, error) {
+					console.error(status + " : " + error);
+				}
+			})
+			
+			
+			
 		}
 		
 		var randomStore = Math.floor(Math.random()*(countBasketItems(curr_basket_group)))

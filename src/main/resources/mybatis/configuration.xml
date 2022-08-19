@@ -32,5 +32,6 @@
         <mapper resource="mybatis/mappers/report.xml" />
         <mapper resource="mybatis/mappers/vote.xml" />
         <mapper resource="mybatis/mappers/menu.xml" />
+        <mapper resource="mybatis/mappers/test.xml" />
     </mappers>
 </configuration>
