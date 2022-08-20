@@ -381,7 +381,7 @@ CREATE TABLE review (
  visited_no number(20) NOT NULL,
  review_content varchar2(4000) NULL,
  user_score number(20) DEFAULT 0 NOT NULL,
- review_file_path varchar2(500) NULL,
+ review_file_name varchar2(500) NULL,
  review_reported number(10) DEFAULT 0 NOT null
 );
 
