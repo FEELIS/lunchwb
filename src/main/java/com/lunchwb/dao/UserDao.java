@@ -110,11 +110,6 @@ public class UserDao {
       return userVo;
    }
    
-   /* 유령회원 제거 */
-   public void groupOut(int userNo) {
-	   sqlSession.delete("user.groupOut", userNo);
-   }
-   
 
    /* 정원 */
    /* 한 번에 바꾸는 경우 */
