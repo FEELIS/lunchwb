@@ -228,7 +228,8 @@
                             </div>
                             
                             <div class="card-body" style="background: #ffffff;">
-								<form id = "review-submit" action = "${pageContext.request.contextPath}/visited/review/upload" method="post" enctype="multilpart/form-data">
+                             <!-- enctype="multilpart/form-data" -->
+								<form id = "review-submit" action = "${pageContext.request.contextPath}/visited/review/upload" method="post">
 	                                <div class="row">
                                     	<div class="col-xxl-7">
                                         
@@ -311,7 +312,7 @@
                                             
                                             <div>
                                             	<c:if test="${visitedMap.reviewVo == null}">
-                                            		<input type="file" name="file"/>
+                                            		<input id="uploadImg" type="file" name="file" onchange="prev_img(this)"/>
                                             	</c:if>
                                             </div>
                                         </div>
@@ -319,7 +320,7 @@
                                        </div>
 	                                       
 		                                <div id="review-image-area" class="col text-end">
-		                                    	<img src="${pageContext.request.contextPath}/assets/img/bujang-logo blue.png" style="width: 130.5px; height: 174px;" />
+		                                    	<img id="img-preview" src="" style="width: 130.5px; height: 174px;" />
 		                                </div>
 		                                
 	                                </div>
@@ -426,6 +427,18 @@ $("#today-star-icon").on("click", ".starScore", function(){
 	}
 	
 })
+
+
+function prev_img(input) {
+	if(input.files && input.files[0]) {
+		const reader = new FileReader()
+		reader.onload = e => {
+			const previewImage = document.getElementById("img-preview")
+			previewImage.src = e.target.result
+		}
+		reader.readAsDataURL(input.files[0])
+	}
+}
 
 
 $("#today-review").on("submit", function(){

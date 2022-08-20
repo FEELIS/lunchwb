@@ -12,6 +12,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lunchwb.service.VisitedService;
 import com.lunchwb.vo.ReviewVo;
@@ -48,12 +51,24 @@ public class VisitedController {
 	
 	
 	/* 리뷰 작성 */
-	@PostMapping("/review/upload")
+	@PostMapping("/review/add")
 	public String addReview(HttpSession session, ReviewVo reviewVo) {
 		logger.info("VisitedController > addReview()");
 		
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		visitedService.addReview(authUser, reviewVo);
+		
+		return "redirect:/";
+	}
+	
+	
+	/* 리뷰 파일 추가 */
+	//폼데이타로 즉시 받아야하는데
+	@ResponseBody
+	@PostMapping("/review/file/upload")
+	public String fileUpload(Model model, @RequestParam MultipartFile file) {
+		logger.info("VisitedController > fileUpload()");
+		
+		String saveName = visitedService.fileUpload(file);
+		model.addAttribute("saveName", saveName);
 		
 		return "redirect:/";
 	}

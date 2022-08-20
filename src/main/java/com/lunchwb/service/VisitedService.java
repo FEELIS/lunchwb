@@ -1,5 +1,9 @@
 package com.lunchwb.service;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -106,6 +110,31 @@ public class VisitedService {
 	}
 	
 	
+	/********************** 사진 파일 미리보기 *********************************/
+	public String fileUpload(MultipartFile file) {
+		
+		String saveDir = "C:\\javaStudy\\upload";
+		String orgName = file.getOriginalFilename();
+		String exName = orgName.substring(orgName.lastIndexOf("."));
+		String saveName = System.currentTimeMillis()+UUID.randomUUID().toString()+exName;
+		String filePath = saveDir + "\\" + saveName;
+		
+		try {
+			byte[] fileData = file.getBytes();
+			OutputStream os = new FileOutputStream(filePath);
+			BufferedOutputStream bos = new BufferedOutputStream(os);
+			
+			bos.write(fileData);
+			bos.close();
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return saveName;
+	}
+	
+	
 	/********************* 오늘 다녀온 가게 리뷰 작성 ***************************/
 	public void addReview(UserVo authUser, ReviewVo reviewVo) {
 		//////////////////// visited > 메뉴 기록 /////////////////////////////
@@ -126,8 +155,9 @@ public class VisitedService {
 		String saveName = System.currentTimeMillis()+UUID.randomUUID().toString()+exName;
 		String filePath = saveDir + "\\" + saveName;
 		
-		reviewVo.setReviewFilePath(filePath);
+		reviewVo.setReviewFileName(saveName);
 		reviewDao.addReview(reviewVo);
+		
 	}
 
 

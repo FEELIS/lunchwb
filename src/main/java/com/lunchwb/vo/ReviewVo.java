@@ -11,7 +11,7 @@ public class ReviewVo {
 	private String reviewContent;
 	private int userScore;
 	private MultipartFile file;
-	private String reviewFilePath;
+	private String reviewFileName;
 	private int reviewReported;
 	
 	// store table //
@@ -37,7 +37,7 @@ public class ReviewVo {
 	}
 
 	public ReviewVo(int reviewNo, int userNo, int visitedNo, String reviewContent, int userScore, MultipartFile file,
-			String reviewFilePath, int reviewReported, int storeNo, String userName, String menuName,
+			String reviewFileName, int reviewReported, int storeNo, String userName, String menuName,
 			String visitedDate, int menuNo, String avgAge, int withCount, int visitedCount) {
 		super();
 		this.reviewNo = reviewNo;
@@ -46,7 +46,7 @@ public class ReviewVo {
 		this.reviewContent = reviewContent;
 		this.userScore = userScore;
 		this.file = file;
-		this.reviewFilePath = reviewFilePath;
+		this.reviewFileName = reviewFileName;
 		this.reviewReported = reviewReported;
 		this.storeNo = storeNo;
 		this.userName = userName;
@@ -106,12 +106,12 @@ public class ReviewVo {
 		this.file = file;
 	}
 
-	public String getReviewFilePath() {
-		return reviewFilePath;
+	public String getReviewFileName() {
+		return reviewFileName;
 	}
 
-	public void setReviewFilePath(String reviewFilePath) {
-		this.reviewFilePath = reviewFilePath;
+	public void setReviewFileName(String reviewFileName) {
+		this.reviewFileName = reviewFileName;
 	}
 
 	public int getReviewReported() {
@@ -189,7 +189,7 @@ public class ReviewVo {
 	@Override
 	public String toString() {
 		return "ReviewVo [reviewNo=" + reviewNo + ", userNo=" + userNo + ", visitedNo=" + visitedNo + ", reviewContent="
-				+ reviewContent + ", userScore=" + userScore + ", file=" + file + ", reviewFilePath=" + reviewFilePath
+				+ reviewContent + ", userScore=" + userScore + ", file=" + file + ", reviewFileName=" + reviewFileName
 				+ ", reviewReported=" + reviewReported + ", storeNo=" + storeNo + ", userName=" + userName
 				+ ", menuName=" + menuName + ", visitedDate=" + visitedDate + ", menuNo=" + menuNo + ", avgAge="
 				+ avgAge + ", withCount=" + withCount + ", visitedCount=" + visitedCount + "]";
