@@ -208,7 +208,7 @@
 	<!-- 이지희 -->
 	  <insert id="addGpMember" parameterType="UserVo" useGeneratedKeys="true" keyColumn="user_no" keyProperty="userNo">
          INSERT INTO USERS
-         VALUES (SEQ_USER_NO.NEXTVAL, '', '', #{userName}, #{userBirthYear}, #{userSex}, '', 0, 'none', '', '')
+         VALUES (SEQ_USER_NO.NEXTVAL, '', '', #{userName}, #{userBirthYear}, #{userSex}, '', 0, 'none', '', '', 0)
       </insert>
    
    	<select id="userCheck" parameterType="String" resultType="com.lunchwb.vo.UserVo">
@@ -217,13 +217,6 @@
          FROM users
          WHERE user_email = #{userEmail}
    	</select>
-   	
-   	<!-- 유령회원탈퇴(강퇴) -->
-   	<delete id="groupOut" parameterType="int">
-		DELETE FROM users
-		WHERE user_no = #{userNo} 
-   	</delete>
-   	
    	
    	
    	<!--  정원  -->
