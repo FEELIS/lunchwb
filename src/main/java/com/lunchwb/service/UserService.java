@@ -353,7 +353,9 @@ public class UserService {
 
 	
 	// main controller에서 userState 확인 (오류 날 듯)
-	public int mainState(int userState, Integer userNo, Integer voteNo) {
+	public Integer[] mainState(int userState, Integer userNo, Integer voteNo) {
+		Integer[] stateInfo = new Integer[2];
+		
 		if (userNo == null) {
 			if (voteNo != null) {
 				Integer state = voteDao.selectGuestVoteState(voteNo);
@@ -362,26 +364,30 @@ public class UserService {
 					userState = 404;
 					
 				} else {
-					// ip 확인도 해야함.. 한번에 못할까?
-
+					// ip 확인도 해야함.. 한번에 못할까? 그거에 따라서 바뀜..
 					userState = state;
 				}
 			} 
 			
 		} else {
-			Integer state = voteDao.selectMemberVoteState(userNo);
+			userState = userDao.selectUserState(userNo); 
+			Integer currVoteNo = voteDao.selectMemberVoteNo(userNo);
 			
 			if (voteNo != null) {
-				if (state == null) {
+				if (voteNo != currVoteNo) {
 					userState = 403;
 				}
-			} else {
-				if (state != null) {
-					userState = state;
+				
+			} else {				
+				if (userState > 0) {
+					voteNo = currVoteNo;
 				}
 			}
 		}
-		return userState;
+		stateInfo[0] = userState;
+		stateInfo[1] = voteNo;
+		
+		return stateInfo;
 	}
 	
 }

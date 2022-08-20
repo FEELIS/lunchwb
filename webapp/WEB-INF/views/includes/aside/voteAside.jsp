@@ -10,25 +10,28 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 </head>
-<nav class="navbar navbar-light bg-white text-center d-xxl-flex align-items-start justify-content-xxl-center sidebar accordion p-0" id="vote-aside">
+
+<body>
+
+<nav id="vote-aside" class="navbar navbar-light bg-white text-center d-xxl-flex align-items-start justify-content-xxl-center sidebar accordion p-0">
 	<div class="container-fluid d-flex flex-column p-0">
 		<div id="bujang-logo-wrap">
         	<a href="${pageContext.request.contextPath}/" class="no-drag"><img data-bss-hover-animate="pulse" id="bujang-logo-blue" class="no-drag" src="${pageContext.request.contextPath}/assets/img/bujang-logo%20blue.png"></a>
         </div>
         
-        <div id="vote-countdown-box">
-	        <div id="countdown-voting-group">
+        <div id="vote-countdown-box" class="no-drag">
+	        <div id="countdown-voting-group" class="justify-content-center align-items-center align-content-center">
 	        	<span class="d-inline-block only-bold">정필1팀</span>
 	        	<span class="d-inline-block">&nbsp;점심 투표</span>
 	        </div>
 	        
 	        <div id="vote-countdown-times">
-	            <div class="d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center" id="vote-countdown-end-time">
-	            	<span class="d-xxl-flex countdown-label">종료 시각</span>
+	            <div class="d-xxl-flex justify-content-center align-items-center  align-content-center justify-content-xxl-center align-items-xxl-center" id="vote-countdown-end-time">
+	            	<span class="countdown-label">종료 시각</span>
 	            	<span class="countdown-time">11시 45분</span>
 	            </div>
-	            <div class="d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center" id="vote-countdown-remain-time">
-	            	<span class="d-xxl-flex countdown-label">남은 시간</span>
+	            <div class="d-xxl-flex justify-content-center align-items-center align-content-center justify-content-xxl-center align-items-xxl-center" id="vote-countdown-remain-time">
+	            	<span class="countdown-label">남은 시간</span>
 	            	<span class="countdown-time">00:11:27</span>
 	            </div>
 	        </div>
@@ -36,7 +39,7 @@
 	    
 	    <div id="vote-select-name-area">
 	        <div id="label-select-name"><span class="no-drag">이름을 선택해주세요</span></div>
-	        <div class="d-xxl-flex flex-wrap justify-content-xxl-start" id="vote-select-names">
+	        <div id="vote-select-names" class="d-flex d-xxl-flex flex-wrap justify-content-xxl-start">
 	        	<button class="btn btn-primary disabled text-center vote-voted-name" type="button" disabled="disabled">이지희</button>
 	        	<button class="btn btn-primary text-center vote-select-name-btn vote-selected-name" type="button">김준호</button>
 	        	<button class="btn btn-primary disabled text-center vote-voted-name" type="button" disabled="disabled">최정필2</button>
@@ -46,10 +49,10 @@
 	    </div>
 	    
 	    <div style="width: 100%;">
-	        <div class="text-start d-flex basket-aside-title"><span class="d-inline-block">오늘의 점심 후보</span></div>
+	        <div class="text-start d-flex basket-aside-title"><span class="d-inline-block no-drag">오늘의 점심 후보</span></div>
 	        
-	        <div class="table-responsive" id="basket-table">
-	            <table class="table" id="basket-table">
+	        <div class="table-responsive no-drag" id="basket-table">
+	            <table class="table no-drag" id="basket-table">
                     <tr>
                         <td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
                             <div class="basket-table-store-info">
@@ -58,7 +61,7 @@
                             </div>
                         </td>
                         <td class="basket-vote-btn-cell">
-                        	<button class="btn btn-primary vote-vote-btn" type="button">투표하기</button>
+                        	<button class="btn btn-primary vote-vote-btn align-items-center" type="button">투표하기</button>
                         </td>
                     </tr>
                     <tr>
@@ -69,7 +72,7 @@
                             </div>
                         </td>
                         <td class="basket-vote-btn-cell">
-                        	<button class="btn btn-primary vote-vote-btn" type="button">투표하기</button>
+                        	<button class="btn btn-primary vote-vote-btn align-items-center" type="button">투표하기</button>
                         </td>
                     </tr>
                     <tr>
@@ -80,13 +83,13 @@
                             </div>
                         </td>
                         <td class="basket-vote-btn-cell">
-                        	<button class="btn btn-primary vote-vote-btn" type="button">투표하기</button>
+                        	<button class="btn btn-primary vote-vote-btn align-items-center" type="button">투표하기</button>
                         </td>
                     </tr>
 	            </table>
 	        </div>
 	      
-	        <div class="d-xxl-flex justify-content-center align-items-center" id="vote-leader-btn-area">
+	        <div id="vote-leader-btn-area" class="d-xxl-flex justify-content-center align-items-center">
 	        	<button class="btn btn-danger d-flex d-xxl-flex justify-content-center align-items-center align-content-center" id="vote-leader-modify-btn" type="button">투표 수정하기</button>
 	        	<button class="btn btn-danger d-flex d-xxl-flex justify-content-center align-items-center align-content-center" id="vote-leader-cancel-btn" type="button" data-bs-target="#vote-link-modal" data-bs-toggle="modal">투표 취소하기</button>
 	        </div>
@@ -98,7 +101,21 @@
 	</div>
 </nav>
 
-<body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script type="text/javascript">
+
+	// 클라이언트 ip 불러오기
+	async function getIpClient() {
+	  try {
+	    const response = await axios.get('https://api.ipify.org?format=json');
+	    console.log(response["data"]["ip"]);
+	  } catch (error) {
+	    console.error(error);
+	  }
+	}
+</script>
 
 </body>
+
 </html>

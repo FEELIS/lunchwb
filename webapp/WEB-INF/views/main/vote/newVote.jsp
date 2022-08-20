@@ -145,7 +145,7 @@
         
         <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 	
 <script type="text/javascript">
 	let currentDate
@@ -169,15 +169,6 @@
 		
 		await getIpClient()
 	})
-	
-	async function getIpClient() {
-	  try {
-	    const response = await axios.get('https://api.ipify.org?format=json');
-	    console.log(response["data"]["ip"]);
-	  } catch (error) {
-	    console.error(error);
-	  }
-	}
 	
 	
 	////////// 새로고침 방지 ///////////////////////////////////////////////////////////////
@@ -495,13 +486,11 @@
 				cnt += 1
 				currMem["userName"] = currName
 				
-				var memberNo = parseInt(currDiv.attr("data-user-no"))
-				if (memberNo > 0) {
-					currMem["userNo"] = memberNo
-					currMem["userGrade"] = parseInt(currDiv.attr("data-user-grade"))
-					if (userNo == memberNo) {
-						currMem["voteMadeUser"] = true
-					}
+				var userGrade = parseInt(currDiv.attr("data-user-grade"))
+				
+				if (userGrade > 0) {
+					currMem["userNo"] = parseInt(currDiv.attr("data-user-no"))
+					currMem["userGrade"] = userGrade
 				}
 				voteMember.push(currMem)
 			}
@@ -520,16 +509,16 @@
 		var curr_basket = []
 		for (var i = 0; i < basket[curr_basket_group].length; i++) {
 			if (basket[curr_basket_group][i].stored) {
-				curr_basket.push(basket[curr_basket_group][i].storeNo)
+				curr_basket.push(basket[curr_basket_group][i])
 			}
 		}
 		console.log(curr_basket)
-		
+		currBasket = JSON.stringify(curr_basket)
 		
 		let voteData = {
 			voteEndDate : voteEndDate,
 			voteMember : voteMem,
-			currBasket : curr_basket
+			currBasket : currBasket
 		}
 		
 		// form으로 묶어서 전송

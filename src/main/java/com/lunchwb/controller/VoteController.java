@@ -61,7 +61,7 @@ public class VoteController {
 	@PostMapping("/makeVote")
 	public String makeVote(@RequestParam("voteEndDate") Date voteEndDate
 						   , @RequestParam("voteMember") String voteMember
-						   , @RequestParam("currBasket") int[] currBasket
+						   , @RequestParam("currBasket") String currBasket
 						   , HttpSession session, Model model) {
 		
 		UserVo loginUser = (UserVo)session.getAttribute("authUser");

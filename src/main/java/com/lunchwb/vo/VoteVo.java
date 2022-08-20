@@ -1,6 +1,7 @@
 package com.lunchwb.vo;
 
 import java.util.Date;
+import java.util.List;
 
 public class VoteVo {
 	
@@ -23,6 +24,8 @@ public class VoteVo {
 	
 	///////////// 기타 /////////////////////////////////
 	private int userGrade;
+	private List<StoreVo> voteStoreInfo;
+	private List<Integer> voteResultList;
 	
 	////////// 생성자 ////////////////////////////////////////
 	
@@ -129,9 +132,24 @@ public class VoteVo {
 		this.userGrade = userGrade;
 	}
 	
+	public List<StoreVo> getVoteStoreInfo() {
+		return voteStoreInfo;
+	}
 
+	public void setVoteStoreInfo(List<StoreVo> voteStoreInfo) {
+		this.voteStoreInfo = voteStoreInfo;
+	}
+	
+	public List<Integer> getVoteResultList() {
+		return voteResultList;
+	}
+
+	public void setVoteResultList(List<Integer> voteResultList) {
+		this.voteResultList = voteResultList;
+	}
+	
+	
 	///////////// toString //////////////////////////////////////////
-
 	
 	@Override
 	public String toString() {

@@ -20,6 +20,8 @@ import com.lunchwb.vo.StoreVo;
 import com.lunchwb.vo.UserVo;
 import com.lunchwb.vo.VoteVo;
 
+import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
+
 @Service
 public class VoteService {
 	
@@ -35,11 +37,11 @@ public class VoteService {
 	}
 	
 	
-	public void makeVote(int userNo, Date voteEndTime, String voteMember, int[] currBasket, int groupNo) {
+	public void makeVote(int userNo, Date voteEndTime, String voteMember, String currBasket, int groupNo) {
 		System.out.println("**********************************************************************************************************************************************************");
 		System.out.println("[투표 생성 데이터 정리하기]");
 		System.out.println(voteEndTime.toString());
-		System.out.println(Arrays.toString(currBasket));
+		System.out.println(currBasket);
 		
 		List<UserVo> voteMem = new ArrayList<>();
 		List<UserVo> memberMem = new ArrayList<>();
@@ -62,7 +64,6 @@ public class VoteService {
 				
 				if (userGrade == 1) memberMem.add(member);
 			}
-			
 			voteMem.add(member);
 		}		
 		
@@ -75,11 +76,10 @@ public class VoteService {
 		voteItems.setGroupNo(groupNo);
 		voteItems.setVoteEndTime(voteEndTime);
 		
-		JSONArray basketArray = new JSONArray();
+		JSONArray basketArray = new JSONArray(currBasket);
 		JSONArray resultArray = new JSONArray();
 		
-		for (int i = 0; i < currBasket.length; i++) {
-			basketArray.put(currBasket[i]);
+		for (int i = 0; i < basketArray.length(); i++) {
 			resultArray.put(0);
 		}
 		
@@ -105,4 +105,63 @@ public class VoteService {
 		System.out.println("**********************************************************************************************************************************************************");
 	}
 
-}
+	
+	// voteAside 필요한 파라미터 불러오기
+	public Map<String, Object> getVoteAsideData(int voteNo) {
+		Map<String, Object> voteData = new HashMap<>();
+		
+		// 끝나는 시각,  가게 정보들, 투표 만든 사람 정보는 투표 정본데 투표 정보? /// 투표 참여자 정보들, voteVo 가져와서 해체하고 /// userVo ㄴㄴ voteMemberVo인가 맞아
+		List<VoteVo> voteVo = voteDao.selectVoteInfo(voteNo);
+		
+		// 끝나는 시각, 가게 정보, 투표 만든 사람
+		VoteVo voteInfo = new VoteVo();
+		voteInfo.setVoteNo(voteNo);
+		voteInfo.setVoteEndTime(voteVo.get(0).getVoteEndTime());
+		voteInfo.setVoteMadeUser(voteVo.get(0).getVoteMadeUser());
+		
+		
+		// 장바구니 담긴 가게 정보
+		System.out.println("==================== 장바구니 간다 =====================================");
+		System.out.println("==================== 장바구니 간다 =====================================");
+		System.out.println("==================== 장바구니 간다 =====================================");
+		System.out.println("==================== 장바구니 간다 =====================================");
+
+		
+		JSONArray storeInfo = new JSONArray(voteVo.get(0).getVoteItems());
+		JSONArray voteStatus = new JSONArray(voteVo.get(0).getVoteResults());
+		System.out.println(storeInfo.toString());
+		
+		List<StoreVo> voteStoreInfo = new ArrayList<>();
+		List<Integer> voteResult = new ArrayList<>();
+		
+		for (int i = 0; i < storeInfo.length(); i++) {
+			// 장바구니 정보 파싱
+			StoreVo store = new StoreVo();
+			JSONObject jstore = (JSONObject)storeInfo.getJSONObject(i);
+			System.out.println(jstore.toString());
+			
+			store.setStoreName(jstore.getString("storeName"));
+			store.setStoreNo(jstore.getInt("storeNo"));
+			store.setDistance(jstore.getInt("distance"));
+			store.setMenu2ndCateName(jstore.getString("menu2ndCateName"));
+			
+			System.out.println(store.toString());
+			voteStoreInfo.add(store);
+			
+			// vote_result 파싱
+			voteResult.add(voteStatus.getInt(i));
+		}
+		
+		voteInfo.setVoteResultList(voteResult);
+		System.out.println(voteResult.toString());
+			
+		System.out.println("==================== 장바구니 간다 =====================================");
+		System.out.println("==================== 장바구니 간다 =====================================");
+		System.out.println("==================== 장바구니 간다 =====================================");
+		System.out.println("==================== 장바구니 간다 =====================================");
+
+		
+		return voteData;
+	}
+ 
+ }

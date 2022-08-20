@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lunchwb.service.UserService;
 import com.lunchwb.service.VisitedService;
+import com.lunchwb.service.VoteService;
 import com.lunchwb.vo.UserVo;
 
 
@@ -24,6 +25,8 @@ public class MainController {
 	private UserService userService;
 	@Autowired
 	private VisitedService visitedService;
+	@Autowired
+	private VoteService voteService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(MainController.class);
 	
@@ -54,11 +57,14 @@ public class MainController {
 		}
 		
 		// 어느 페이지 로드할 지 결정
-		userState = userService.mainState(userState, userNo, voteNo);
+		Integer[] stateInfo = userService.mainState(userState, userNo, voteNo);
+		userState = stateInfo[0];
+		voteNo = stateInfo[1];
 		logger.info("userState: " + userState);
 		
 		switch (userState) {
 			case 1:
+				voteService.getVoteAsideData(voteNo);
 				return "main/vote/voteProgress";
 				
 			case 2:

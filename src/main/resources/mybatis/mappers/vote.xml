@@ -14,13 +14,14 @@
 	</select>
 	
 	
-	<!-- 회원 참여 투표 존재 확인 -->
-	<select id="selectMemberVoteState" parameterType="int" resultType="Integer">
+	<!-- 회원 참여 투표 존재 확인 --> 
+	<select id="selectMemberVoteNo" parameterType="int" resultType="Integer">
 		<![CDATA[
-			SELECT vote_state
+			SELECT vote.vote_no
 			FROM   vote_members, vote
 			WHERE  vote_members.vote_no = vote.vote_no
 			AND    user_no = #{userNo}
+			AND    vote_state != 4
 		]]>
 	</select>
 	
@@ -48,6 +49,25 @@
 			FROM dual
 		</foreach>
 		) A
-
 	</insert>
+	
+	
+	<!--  basketAside 로딩 전 정보 가져오기    -->
+	<select id="selectVoteInfo" parameterType="int" resultType="VoteVo">
+		<![CDATA[
+			SELECT v.vote_no voteNo
+			       ,vote_made_user voteMadeUser
+			       ,vote_end_time voteEndTime
+			       ,vote_items voteItems
+			       ,vote_results voteResults
+			       ,vote_member_no voteMemberNo
+			       ,user_no userNo
+			       ,user_name userName
+			       ,vote_voted voteVoted
+			FROM   vote v, vote_members
+			WHERE  v.vote_no = vote_members.vote_no
+			AND    v.vote_no = #{voteNo}
+		]]>
+	</select>
+	
 </mapper>

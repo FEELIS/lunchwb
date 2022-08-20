@@ -1,5 +1,6 @@
 package com.lunchwb.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -22,8 +23,8 @@ public class VoteDao {
 	
 	
 	// 로그인 한 사용자 투표중인지 확인
-	public Integer selectMemberVoteState(int userNo) {
-		return sqlSession.selectOne("vote.selectMemberVoteState", userNo);
+	public Integer selectMemberVoteNo(int userNo) {
+		return sqlSession.selectOne("vote.selectMemberVoteNo", userNo);
 	}
 	
 	
@@ -38,6 +39,12 @@ public class VoteDao {
 	// 투표 멤버 insert
 	public int insertVoteMember(Map<String, Object> voteMems) {
 		return sqlSession.insert("vote.insertVoteMember", voteMems);
+	}
+	
+	
+	// voteAside 정보 가져오기
+	public List<VoteVo> selectVoteInfo(int voteNo) {
+		return sqlSession.selectList("vote.selectVoteInfo", voteNo);
 	}
 	
 }

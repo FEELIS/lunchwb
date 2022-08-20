@@ -41,7 +41,6 @@
         
         <div class="container" id="container">
 	        
-	        
             <div class="d-flex d-xxl-flex justify-content-center" id="map-btn-area">
             	<button class="btn btn-danger d-inline-flex d-xxl-flex justify-content-center align-items-center" id="vote-kakao-btn" type="button">
             		<i class="fas fa-comment"></i>
