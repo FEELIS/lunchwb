@@ -118,6 +118,7 @@ public class VoteService {
 		// 끝나는 시각, 가게 정보, 투표 만든 사람
 		VoteVo voteInfo = new VoteVo();
 		voteInfo.setVoteNo(voteNo);
+		voteInfo.setGroupName(voteVo.get(0).getGroupName());
 		voteInfo.setVoteEndTime(voteVo.get(0).getVoteEndTime());
 		voteInfo.setVoteMadeUser(voteVo.get(0).getVoteMadeUser());
 		
@@ -168,18 +169,7 @@ public class VoteService {
 		voteData.put("voteInfo", voteInfo);
 		voteData.put("voteBasket", voteStoreInfo);
 		voteData.put("voteMember", voteMember);
-		
-		System.out.println("=============여기보세요====================");
-		System.out.println("=============여기보세요====================");
-		System.out.println("=============여기보세요====================");
-		System.out.println("=============여기보세요====================");
 
-		for (Entry<String, Object> entrySet : voteData.entrySet()) {
-			System.out.println(entrySet.getKey());
-		}
-		System.out.println(voteInfo.toString());
-		System.out.println(voteStoreInfo.toString());
-		System.out.println(voteMember.toString());
 		
 		return voteData;
 	}

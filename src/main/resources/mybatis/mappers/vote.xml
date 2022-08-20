@@ -64,8 +64,10 @@
 			       ,user_no userNo
 			       ,user_name userName
 			       ,vote_voted voteVoted
-			FROM   vote v, vote_members
+			       ,group_name groupName
+			FROM   vote v, vote_members, groups g
 			WHERE  v.vote_no = vote_members.vote_no
+			AND    v.group_no = g.group_no
 			AND    v.vote_no = #{voteNo}
 		]]>
 	</select>

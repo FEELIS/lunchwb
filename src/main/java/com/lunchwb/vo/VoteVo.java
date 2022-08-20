@@ -29,6 +29,7 @@ public class VoteVo {
 	private Integer userGrade;
 	private List<StoreVo> voteStoreInfo;
 	private List<Integer> voteResultList;
+	private String groupName;
 	
 	////////// 생성자 ////////////////////////////////////////////
 	
@@ -158,15 +159,24 @@ public class VoteVo {
 		this.userGrade = userGrade;
 	}
 	
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+	
 	
 	///////////// toString //////////////////////////////////////////
-	
+
 	@Override
 	public String toString() {
 		return "VoteVo [voteNo=" + voteNo + ", voteMadeUser=" + voteMadeUser + ", groupNo=" + groupNo + ", voteEndTime="
 				+ voteEndTime + ", voteItems=" + voteItems + ", voteResults=" + voteResults + ", voteState=" + voteState
 				+ ", voteMemberNo=" + voteMemberNo + ", userNo=" + userNo + ", userName=" + userName + ", voteVoted="
-				+ voteVoted + ", userGrade=" + userGrade + "]";
+				+ voteVoted + ", userGrade=" + userGrade + ", voteStoreInfo=" + voteStoreInfo + ", voteResultList="
+				+ voteResultList + ", groupName=" + groupName + "]";
 	}
 
 }
