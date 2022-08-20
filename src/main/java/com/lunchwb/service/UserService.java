@@ -362,9 +362,12 @@ public class UserService {
 					userState = 404;
 					
 				} else {
+					// ip 확인도 해야함.. 한번에 못할까?
+
 					userState = state;
 				}
 			} 
+			
 		} else {
 			Integer state = voteDao.selectMemberVoteState(userNo);
 			
