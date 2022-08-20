@@ -72,6 +72,9 @@ public class MainController {
 		Integer[] stateInfo = userService.mainState(userState, userNo, voteNo, clientIp);
 		userState = stateInfo[0];
 		voteNo = stateInfo[1];
+		
+		model.addAttribute("clientIp", clientIp);
+		model.addAttribute("userState", userState);
 		logger.info("userState: " + userState);
 		
 		Map<String, Object> voteAsideData;
@@ -80,21 +83,18 @@ public class MainController {
 			case 1:
 				voteAsideData = voteService.getVoteAsideData(voteNo);
 				model.addAllAttributes(voteAsideData);
-				model.addAttribute("clientIp", clientIp);
 				
 				return "main/vote/voteProgress";
 				
 			case 2:
 				voteAsideData = voteService.getVoteAsideData(voteNo);
 				model.addAllAttributes(voteAsideData);
-				model.addAttribute("clientIp", clientIp);
 				
 				return "main/vote/watingVote";
 				
 			case 3:
 				voteAsideData = voteService.getVoteAsideData(voteNo);
 				model.addAllAttributes(voteAsideData);
-				model.addAttribute("clientIp", clientIp);
 				
 				return "main/vote/voteResult";
 				
