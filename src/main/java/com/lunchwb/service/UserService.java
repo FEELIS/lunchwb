@@ -374,7 +374,7 @@ public class UserService {
 					System.out.println(map.toString());
 					
 					Integer guestState = voteDao.selectGuestVoted(map);
-					if (guestState != null && guestState > 0) userState = 2;
+					//if (guestState != null && guestState > 0) userState = 2;
 				}
 			} 
 			
