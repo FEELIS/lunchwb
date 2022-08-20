@@ -9,4 +9,15 @@
 		WHERE  group_no = #{groupNo}
 	</select>
 	
+	
+	<update id="updateRandomState3" parameterType="int">
+		update users
+		set user_state = 3
+		where user_no in (select u.user_no
+                    from users u, group_member g
+                    where u.user_no = g.user_no
+                    and g.group_no = #{groupNo})	
+	</update>
+
+	
 </mapper>

@@ -16,4 +16,9 @@ public class TestDao {
 		GroupVo groupName = sqlSession.selectOne("test.getGroupName", groupNo);
 		return groupName;
 	}
+	
+	public int updateRandomState3(int groupNo) {
+		int count = sqlSession.update("test.updateRandomState3", groupNo);
+		return count;
+	}
 }

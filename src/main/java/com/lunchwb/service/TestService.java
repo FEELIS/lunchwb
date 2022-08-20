@@ -16,5 +16,17 @@ public class TestService {
 		GroupVo groupName = testDao.getGroupName(groupNo);
 		return groupName;
 	}
+	
+	public String updateRandomState3(int groupNo) {
+		String result = "";
+		int count = testDao.updateRandomState3(groupNo);
+		
+		if (count > 1) {
+			result = "success";
+		}else {
+			result = "fail";
+		}
+		return result;
+	}
 
 }

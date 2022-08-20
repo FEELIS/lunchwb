@@ -50,12 +50,17 @@ public class RandomController {
 	
 	@ResponseBody
 	@RequestMapping("/randomResult")
-	public void randomResult(@RequestBody HashMap<String, Object> storeInfo, HttpSession session) {
-		logger.info("/roulette");
+	public String randomResult(@RequestBody String groupNo, HttpSession session) {
+		logger.info("/randomResult");
 		
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		int intGroupNo = Integer.parseInt(groupNo);
+		System.out.println(intGroupNo);
 		
-		System.out.println("storeInfo = " + storeInfo);
+		String result = testService.updateRandomState3(intGroupNo);
+		System.out.println("groupNo = " + groupNo);
+		System.out.println("result = " + result);
+		
+		return result;
 	}
 	
 }

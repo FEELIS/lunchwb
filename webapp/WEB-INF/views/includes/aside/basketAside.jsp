@@ -951,6 +951,10 @@
 			return
 		}
 		
+		var randomStore = Math.floor(Math.random()*(countBasketItems(curr_basket_group)))
+		var randomStoreNo = basket[curr_basket_group][randomStore].storeNo
+		var randomStoreName = basket[curr_basket_group][randomStore].storeName
+		
 		var checkGroup
 		
 		// curr_basket_group의 값이 0일 경우 그룹이 하나도 없을 것.
@@ -974,46 +978,40 @@
 						return false
 					}
 					
+					alert("오늘 방문할 가게는 [" + randomStoreName + "] 입니다.")
+					
+					 $.ajax({
+						url : "${pageContext.request.contextPath}/randomResult",		
+						type : "post",
+						contentType : "application/json",
+						data : JSON.stringify(curr_basket_group),
+						dataType : "json",
+						async : false,
+						success : function(result){				
+							
+							console.log(result)
+						},
+						error : function(XHR, status, error) {
+							console.error(status + " : " + error);
+						}
+					})
+					
 				},
 				error : function(XHR, status, error) {
 					console.error(status + " : " + error);
 				}
 			})
 			
-			
-			
+		}else{
+			alert("오늘 방문할 가게는 [" + randomStoreName + "] 입니다.")
 		}
 		
-		var randomStore = Math.floor(Math.random()*(countBasketItems(curr_basket_group)))
-		var randomStoreNo = basket[curr_basket_group][randomStore].storeNo
-		var randomStoreName = basket[curr_basket_group][randomStore].storeName
+		
 		
 		console.log("방문 가게 no = " + randomStoreNo)
 		console.log("방문 가게 이름 = " + randomStoreName)
 		
-		alert("오늘 방문할 가게는 [" + randomStoreName + "] 입니다.")
 		
-		
-		var storeInfo ={
-			storeNo : randomStoreNo,
-			storeName : randomStoreName
-		}
-		
-		/* $.ajax({
-			url : "${pageContext.request.contextPath}/randomResult",		
-			type : "post",
-			contentType : "application/json",
-			data : JSON.stringify(storeInfo),
-			dataType : "json",
-			//async : false,
-			success : function(result){				
-				
-				console.log(result)
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
-			}
-		}) */
 		
 		
 	})	
