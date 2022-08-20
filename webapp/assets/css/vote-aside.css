@@ -82,9 +82,10 @@
 }
 
 #vote-select-name-area #vote-select-names {
+  min-width: 300px;
   padding-top: 10px;
   padding-bottom: 5px;
-  padding-left: 7px;
+  padding-left: 5px;
   padding-right: 0;
 }
 

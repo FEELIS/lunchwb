@@ -342,10 +342,10 @@
 }
 
 #vote-make-finish #vote-edit-return-btn:hover {
-  background: var(--bs-gray-200);
+  background: rgb(205, 215, 241);
 }
 
-#vote-aside #vote-leader-btn {
+#vote-aside #vote-leader-btn-area {
   display: flex;
   min-width: 300px;
 }
@@ -367,7 +367,7 @@
 }
 
 #vote-aside #vote-leader-btn-area #vote-leader-modify-btn:hover {
-  background: var(--bs-gray-200);
+  background: rgb(205, 215, 241);
 }
 
 #vote-aside #vote-leader-btn-area #vote-leader-cancel-btn {
@@ -410,7 +410,7 @@
 }
 
 #vote-aside #vote-member-btn-area #vote-member-escape-btn:hover {
-  background: var(--bs-gray-200);
+  background: rgb(250, 210, 207);
 }
 
 #vote-map-wrapper {
