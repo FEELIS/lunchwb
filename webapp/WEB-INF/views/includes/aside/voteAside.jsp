@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -21,18 +21,21 @@
         
         <div id="vote-countdown-box" class="no-drag">
 	        <div id="countdown-voting-group" class="justify-content-center align-items-center align-content-center">
-	        	<span class="d-inline-block only-bold">정필1팀</span>
+	        	<span class="d-inline-block only-bold">${voteInfo.groupName}</span>
 	        	<span class="d-inline-block">&nbsp;점심 투표</span>
 	        </div>
 	        
 	        <div id="vote-countdown-times">
 	            <div class="d-xxl-flex justify-content-center align-items-center  align-content-center justify-content-xxl-center align-items-xxl-center" id="vote-countdown-end-time">
 	            	<span class="countdown-label">종료 시각</span>
-	            	<span class="countdown-time">11시 45분</span>
+	            	<span class="countdown-time">
+	            		<fmt:formatDate value="${voteInfo.voteEndTime}" pattern="HH"/>시 
+	            		<fmt:formatDate value="${voteInfo.voteEndTime}" pattern="mm"/>분
+	            	</span>
 	            </div>
 	            <div class="d-xxl-flex justify-content-center align-items-center align-content-center justify-content-xxl-center align-items-xxl-center" id="vote-countdown-remain-time">
 	            	<span class="countdown-label">남은 시간</span>
-	            	<span class="countdown-time">00:11:27</span>
+	            	<span id="countdown-time" class="countdown-time">00:11:27</span>
 	            </div>
 	        </div>
 	    </div>
@@ -40,8 +43,17 @@
 	    <div id="vote-select-name-area">
 	        <div id="label-select-name"><span class="no-drag">이름을 선택해주세요</span></div>
 	        <div id="vote-select-names" class="d-flex d-xxl-flex flex-wrap justify-content-xxl-start">
+	        	<!--  투표 인원 영역  -->
+	        	<c:forEach items="${voteMember}" var="member">
+	        		<c:if test="${!empty(authUser)}">
+	        			<c:if test="${!empty(member.userNo) and authUser.userNo == member.userNo}">
+	        				<button class="btn btn-primary text-center vote-select-name-btn vote-selected-name" type="button" data-vote-member-no="${member.voteMemberNo}" data-user-no="${data-user-no}">${member.userName}</button>
+	        			</c:if>
+	        		</c:if>
+	        		<button class="btn btn-primary text-center vote-select-name-btn" type="button">${member.userName}</button>
+	        	</c:forEach>
 	        	<button class="btn btn-primary disabled text-center vote-voted-name" type="button" disabled="disabled">이지희</button>
-	        	<button class="btn btn-primary text-center vote-select-name-btn vote-selected-name" type="button">김준호</button>
+	        	
 	        	<button class="btn btn-primary disabled text-center vote-voted-name" type="button" disabled="disabled">최정필2</button>
 	        	<button class="btn btn-primary text-center vote-select-name-btn" type="button">뻐꾸기</button>
 	        	<button class="btn btn-primary text-center vote-select-name-btn" type="button">도요새</button>
@@ -104,6 +116,9 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script type="text/javascript">
+	console.log("${voteInfo}")
+	console.log("${voteBasket}")
+	console.log("${voteMember}")
 
 	// 클라이언트 ip 불러오기
 	async function getIpClient() {

@@ -47,4 +47,10 @@ public class VoteDao {
 		return sqlSession.selectList("vote.selectVoteInfo", voteNo);
 	}
 	
+	
+	// guest 동일ip 투표 여부 확인
+	public Integer selectGuestVoted(Map<String, Object> map) {
+		return sqlSession.selectOne("vote.selectGuestVoted", map);
+	}
+	
 }

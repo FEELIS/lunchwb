@@ -60,11 +60,12 @@
 			       ,vote_end_time voteEndTime
 			       ,vote_items voteItems
 			       ,vote_results voteResults
+			       ,vote_state voteState
+			       ,group_name groupName
 			       ,vote_member_no voteMemberNo
 			       ,user_no userNo
 			       ,user_name userName
 			       ,vote_voted voteVoted
-			       ,group_name groupName
 			FROM   vote v, vote_members, groups g
 			WHERE  v.vote_no = vote_members.vote_no
 			AND    v.group_no = g.group_no
@@ -72,4 +73,14 @@
 		]]>
 	</select>
 	
+	
+	<!--  guest 투표 여부 확인  -->
+	<select id="selectGuestVoted" parameterType="Map" resultType="Integer">
+		<![CDATA[
+			SELECT vote_voted voteVoted
+			FROM   vote_members
+			WHERE  vote_ip = #{clientIp}
+			AND    vote_no = #{voteNo}
+		]]>
+	</select>
 </mapper>

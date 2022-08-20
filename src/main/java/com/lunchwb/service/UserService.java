@@ -352,8 +352,8 @@ public class UserService {
 	}
 
 	
-	// main controller에서 userState 확인 (오류 날 듯)
-	public Integer[] mainState(int userState, Integer userNo, Integer voteNo) {
+	// main controller에서 userState 확인 (계속 수정중)
+	public Integer[] mainState(int userState, Integer userNo, Integer voteNo, String clientIp) {
 		Integer[] stateInfo = new Integer[2];
 		
 		if (userNo == null) {
@@ -364,13 +364,21 @@ public class UserService {
 					userState = 404;
 					
 				} else {
-					// ip 확인도 해야함.. 한번에 못할까? 그거에 따라서 바뀜..
 					userState = state;
+					
+					Map<String, Object> map = new HashMap<>();
+					map.put("clientIp", clientIp);
+					map.put("voteNo", voteNo);
+					System.out.println(clientIp);
+					System.out.println(voteNo);
+					System.out.println(map.toString());
+					
+					Integer guestState = voteDao.selectGuestVoted(map);
+					if (guestState != null && guestState > 0) userState = 2;
 				}
 			} 
 			
 		} else {
-			userState = userDao.selectUserState(userNo); 
 			Integer currVoteNo = voteDao.selectMemberVoteNo(userNo);
 			
 			if (voteNo != null) {
