@@ -204,10 +204,12 @@
             </div>
             <div class="modal-footer-custom">
                 <p class="modalStoreWithMe"></p>
-                <c:if test="${!empty authUser}">
-	                <button class="btn btn-primary" type="button">여기갈래요</button>
-	            </c:if>
-                <button class="btn btn-light" type="button">점심후보추가</button>
+                <div id="store-button-area">
+	                <c:if test="${!empty authUser && authUser.userState == 0}">
+		                <button class="btn btn-primary" type="button">여기갈래요</button>
+		            </c:if>
+	                <button class="btn btn-light" type="button">점심후보추가</button>
+	            </div>
             </div>
         </div>
     </div>
@@ -317,6 +319,8 @@ function storeBasicInfo(storeNo){
 			for(var i=0; i<storeMap.menuList.length; i++){
 				modalStoreAllMenu(storeMap.menuList[i])
 			}
+			
+			
 
 		},
 		error : function(XHR, status, error) {
@@ -537,8 +541,10 @@ function modalStoreSentence(){
 function modalStoreAllMenu(menuVo){
 	var str = '<span class="latest-menu">' + menuVo.menuName + '(<span>' + menuVo.menuCount + '</span>회)</span>'
 	$("#modal-all-menu #store-latest-menu").append(str)
-	
 }
+
+
+
 
 </script>
 
