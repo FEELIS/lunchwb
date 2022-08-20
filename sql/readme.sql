@@ -119,6 +119,10 @@
 -- 2022.08.20 19:10 =====================
 -- review테이블 review_file_path칼럼 review_file_name으로 칼럼명 변경
 
+-- 2022.08.20 20:20 =====================
+-- vote_members테이블 vote_ip칼럼추가 (vote_ip varchar2(500) null)
+-- vote_members테이블 user_no fk 제거
+
 
 
 
