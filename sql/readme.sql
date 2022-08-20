@@ -116,6 +116,9 @@
 -- vote테이블 vote_state number(20) DEFAULT 1 NOT NULL 로 칼럼추가
 -- vote_members테이블 vote_voted number(20) DEFAULT 0 NOT NULL 칼럼추가
 
+-- 2022.08.20 19:10 =====================
+-- review테이블 review_file_path칼럼 review_file_name으로 칼럼명 변경
+
 
 
 
