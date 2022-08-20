@@ -36,6 +36,7 @@ input {
 
 #check-email {
   display: inline-block;
+  font-size: 12px !important;
   width: 100px;
   height: 35px;
   border-radius: 5rem;
@@ -67,7 +68,7 @@ input {
 }
 
 .join-login-page {
-  max-width: 1920px;
+  max-width: 100%;
 }
 
 .bujang-header-logo {
@@ -148,4 +149,12 @@ input {
 	min-width:380px;
 	width:380px;
 	min-height: 35px;
+}
+
+.fix-480{
+	width:480px;
+}
+
+.fix-380{
+	width:380px;
 }
