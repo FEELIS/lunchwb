@@ -1,6 +1,7 @@
 package com.lunchwb.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -62,15 +63,25 @@ public class MainController {
 		voteNo = stateInfo[1];
 		logger.info("userState: " + userState);
 		
+		Map<String, Object> voteAsideData;
+		
 		switch (userState) {
 			case 1:
-				voteService.getVoteAsideData(voteNo);
+				voteAsideData = voteService.getVoteAsideData(voteNo);
+				model.addAllAttributes(voteAsideData);
+				
 				return "main/vote/voteProgress";
 				
 			case 2:
+				voteAsideData = voteService.getVoteAsideData(voteNo);
+				model.addAllAttributes(voteAsideData);
+				
 				return "main/vote/watingVote";
 				
 			case 3:
+				voteAsideData = voteService.getVoteAsideData(voteNo);
+				model.addAllAttributes(voteAsideData);
+				
 				return "main/vote/voteResult";
 				
 			case 4:

@@ -1,11 +1,11 @@
 package com.lunchwb.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -20,7 +20,6 @@ import com.lunchwb.vo.StoreVo;
 import com.lunchwb.vo.UserVo;
 import com.lunchwb.vo.VoteVo;
 
-import ch.qos.logback.core.recovery.ResilientSyslogOutputStream;
 
 @Service
 public class VoteService {
@@ -102,9 +101,12 @@ public class VoteService {
 		System.out.println("**********************************[회원들 user_state 변경하기]**********************************");
 		userDao.updateState1(memberMem);
 		
+		// 스케쥴러 추가
+		
 		System.out.println("**********************************************************************************************************************************************************");
 	}
 
+	
 	
 	// voteAside 필요한 파라미터 불러오기
 	public Map<String, Object> getVoteAsideData(int voteNo) {
@@ -120,16 +122,9 @@ public class VoteService {
 		voteInfo.setVoteMadeUser(voteVo.get(0).getVoteMadeUser());
 		
 		
-		// 장바구니 담긴 가게 정보
-		System.out.println("==================== 장바구니 간다 =====================================");
-		System.out.println("==================== 장바구니 간다 =====================================");
-		System.out.println("==================== 장바구니 간다 =====================================");
-		System.out.println("==================== 장바구니 간다 =====================================");
-
-		
+		// 장바구니 담긴 가게 정보		
 		JSONArray storeInfo = new JSONArray(voteVo.get(0).getVoteItems());
 		JSONArray voteStatus = new JSONArray(voteVo.get(0).getVoteResults());
-		System.out.println(storeInfo.toString());
 		
 		List<StoreVo> voteStoreInfo = new ArrayList<>();
 		List<Integer> voteResult = new ArrayList<>();
@@ -138,28 +133,53 @@ public class VoteService {
 			// 장바구니 정보 파싱
 			StoreVo store = new StoreVo();
 			JSONObject jstore = (JSONObject)storeInfo.getJSONObject(i);
-			System.out.println(jstore.toString());
 			
 			store.setStoreName(jstore.getString("storeName"));
 			store.setStoreNo(jstore.getInt("storeNo"));
 			store.setDistance(jstore.getInt("distance"));
 			store.setMenu2ndCateName(jstore.getString("menu2ndCateName"));
 			
-			System.out.println(store.toString());
 			voteStoreInfo.add(store);
+			
 			
 			// vote_result 파싱
 			voteResult.add(voteStatus.getInt(i));
 		}
 		
 		voteInfo.setVoteResultList(voteResult);
-		System.out.println(voteResult.toString());
+		
+		
+		// vote member 데이터 정리
+		List<VoteVo> voteMember = new ArrayList<>();
+		
+		for (VoteVo member: voteVo) {
+			VoteVo mem = new VoteVo();
 			
-		System.out.println("==================== 장바구니 간다 =====================================");
-		System.out.println("==================== 장바구니 간다 =====================================");
-		System.out.println("==================== 장바구니 간다 =====================================");
-		System.out.println("==================== 장바구니 간다 =====================================");
+			mem.setVoteMemberNo(member.getVoteMemberNo());
+			mem.setUserNo(member.getUserNo());
+			mem.setUserName(member.getUserName());
+			mem.setVoteVoted(member.getVoteVoted());
+			
+			voteMember.add(mem);
+		}
+		
+		
+		// model에 추가할 Map에 데이터 넣기
+		voteData.put("voteInfo", voteInfo);
+		voteData.put("voteBasket", voteStoreInfo);
+		voteData.put("voteMember", voteMember);
+		
+		System.out.println("=============여기보세요====================");
+		System.out.println("=============여기보세요====================");
+		System.out.println("=============여기보세요====================");
+		System.out.println("=============여기보세요====================");
 
+		for (Entry<String, Object> entrySet : voteData.entrySet()) {
+			System.out.println(entrySet.getKey());
+		}
+		System.out.println(voteInfo.toString());
+		System.out.println(voteStoreInfo.toString());
+		System.out.println(voteMember.toString());
 		
 		return voteData;
 	}
