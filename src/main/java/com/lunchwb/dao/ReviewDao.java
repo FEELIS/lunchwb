@@ -30,8 +30,9 @@ public class ReviewDao {
 		return reviewVo;
 	}
 	
-	public void addReview(ReviewVo reviewVo) {
-		sqlSession.insert("review.addReview", reviewVo);
+	public int addReview(ReviewVo reviewVo) {
+		int count = sqlSession.insert("review.addReview", reviewVo);
+		return count;
 	}
 
 }

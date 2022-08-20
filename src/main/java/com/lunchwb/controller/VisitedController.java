@@ -52,23 +52,23 @@ public class VisitedController {
 	
 	/* 리뷰 작성 */
 	@PostMapping("/review/add")
-	public String addReview(HttpSession session, ReviewVo reviewVo) {
+	public boolean addReview(HttpSession session, ReviewVo reviewVo) {
 		logger.info("VisitedController > addReview()");
 		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		boolean result = visitedService.addReview(authUser, reviewVo);
 		
-		return "redirect:/";
+		return result;
 	}
 	
 	
 	/* 리뷰 파일 추가 */
-	//폼데이타로 즉시 받아야하는데
-	@ResponseBody
 	@PostMapping("/review/file/upload")
-	public String fileUpload(Model model, @RequestParam MultipartFile file) {
+	public String fileUpload(@RequestParam MultipartFile file, HttpSession session) {
 		logger.info("VisitedController > fileUpload()");
 		
-		String saveName = visitedService.fileUpload(file);
-		model.addAttribute("saveName", saveName);
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		visitedService.fileUpload(authUser, file);
 		
 		return "redirect:/";
 	}

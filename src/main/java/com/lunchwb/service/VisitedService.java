@@ -110,8 +110,31 @@ public class VisitedService {
 	}
 	
 	
-	/********************** 사진 파일 미리보기 *********************************/
-	public String fileUpload(MultipartFile file) {
+	/********************* 오늘 다녀온 가게 리뷰 작성 ***************************/
+	public boolean addReview(UserVo authUser, ReviewVo reviewVo) {
+		boolean result = false;
+		
+		//////////////////// visited > 메뉴 기록 /////////////////////////////
+		VisitedVo visitedVo = new VisitedVo();
+		visitedVo.setVisitedNo(reviewVo.getVisitedNo());
+		visitedVo.setMenuNo(reviewVo.getMenuNo());
+		
+		vstDao.todayMenu(visitedVo);
+		
+		///////////////// 리뷰 저장(파일 제외) ////////////////////////////////
+		reviewVo.setUserNo(authUser.getUserNo());
+		int count = reviewDao.addReview(reviewVo);
+		
+		if(count > 0) {
+			result = true;
+		}
+		
+		return result;
+	}
+	
+	
+	/********************** 리뷰 사진 파일 업로드  *********************************/
+	public String fileUpload(UserVo authUser, MultipartFile file) {
 		
 		String saveDir = "C:\\javaStudy\\upload";
 		String orgName = file.getOriginalFilename();
@@ -134,31 +157,7 @@ public class VisitedService {
 		return saveName;
 	}
 	
-	
-	/********************* 오늘 다녀온 가게 리뷰 작성 ***************************/
-	public void addReview(UserVo authUser, ReviewVo reviewVo) {
-		//////////////////// visited > 메뉴 기록 /////////////////////////////
-		VisitedVo visitedVo = new VisitedVo();
-		visitedVo.setVisitedNo(reviewVo.getVisitedNo());
-		visitedVo.setMenuNo(reviewVo.getMenuNo());
-		
-		vstDao.todayMenu(visitedVo);
-		
-		//////////////////// 리뷰 사진 파일 정리 > 경로 /////////////////////////
-		reviewVo.setUserNo(authUser.getUserNo());
-		MultipartFile file = reviewVo.getFile();
-		
-		//다음에 저장 경로 교체 하기
-		String saveDir = "C:\\javaStudy\\upload";
-		String orgName = file.getOriginalFilename();
-		String exName = orgName.substring(orgName.lastIndexOf("."));
-		String saveName = System.currentTimeMillis()+UUID.randomUUID().toString()+exName;
-		String filePath = saveDir + "\\" + saveName;
-		
-		reviewVo.setReviewFileName(saveName);
-		reviewDao.addReview(reviewVo);
-		
-	}
+
 
 
 
