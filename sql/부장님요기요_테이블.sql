@@ -85,9 +85,6 @@ drop constraint notification_user_no;
 
 
 --=============== 투표 테이블 ==================================
---===== 투표하는 그룹 =====
-alter table vote_members 
-drop constraint vote_members_user_no;
 alter table vote_members 
 drop constraint vote_members_vote_no;
 
@@ -340,7 +337,8 @@ CREATE TABLE vote_members (
  vote_no number(20) NOT NULL,
  user_no number(20) NOT NULL,
  user_name varchar2(200) NOT NULL,
- vote_voted number(20) DEFAULT 0 NOT NULL
+ vote_voted number(20) DEFAULT 0 NOT NULL, 
+ vote_ip varchar2(500) null
 );
 
 
@@ -516,9 +514,6 @@ add constraint vote_group_no FOREIGN KEY (group_no) REFERENCES groups(group_no) 
 --===== 투표하는 그룹 =====
 ALTER TABLE vote_members 
 add constraint vote_members_vote_no FOREIGN KEY (vote_no) REFERENCES vote(vote_no) ON DELETE CASCADE;
-ALTER TABLE vote_members 
-add constraint vote_members_user_no FOREIGN KEY (user_no) REFERENCES users(user_no) ON DELETE CASCADE;
-
 
 
 --=============== 알림 테이블 ========================================
