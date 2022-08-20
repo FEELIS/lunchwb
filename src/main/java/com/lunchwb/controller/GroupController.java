@@ -52,12 +52,10 @@ public class GroupController {
 			return "group/addGroup";
 		}
 		
-		/*
 		//내 그룹이 아님(가져온 멤버목록이 없음) - 내가 있으면 0 일 수가 없어요
 		if((String)map.get("memberCount") == null) {
 			return "error/403";
 		}
-		*/
 			
 		return "group/groupList";
 	}
@@ -271,6 +269,20 @@ public class GroupController {
 	@GetMapping("/blacklist")
 	public String blacklist(Model model, HttpSession session, @RequestParam(name="no", defaultValue="0") int groupNo) {
 		logger.info("GroupController > blacklist()");
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		Map<String, Object> map = groupService.blacklist(authUser, groupNo);
+		
+		model.addAttribute("map", map);
+		
+		//내 그룹 없음
+		if((Integer)map.get("groupCount") == 0) {
+			return "group/addGroup";
+		}
+		
+		if((String)map.get("groupName") == null) {
+			return "error/403";
+		}
 		
 		
 		return "group/blacklist";

@@ -7,8 +7,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.lunchwb.dao.BlackDao;
 import com.lunchwb.dao.GroupDao;
 import com.lunchwb.dao.UserDao;
+import com.lunchwb.vo.BlacklistVo;
 import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.UserVo;
 
@@ -17,6 +19,8 @@ public class GroupService {
 	
 	@Autowired
 	private GroupDao groupDao;
+	@Autowired
+	private BlackDao blackDao;
 	@Autowired
 	private UserDao userDao;
 	
@@ -349,6 +353,60 @@ public class GroupService {
 		}
 		
 		return result;
+	}
+	
+	
+	/******************** 블랙리스트 페이지 ****************************************************/
+	public Map<String, Object> blacklist(UserVo authUser, int groupNo) {
+		Map<String, Object> map = new HashMap<>();
+		
+		/////////////////// 유저 그룹 리스트  /////////////////////////////
+		int userNo = authUser.getUserNo();
+		List<GroupVo> groupList = groupDao.userGroups(userNo);
+		map.put("groupList", groupList);
+		
+		//그룹 개수
+		//그룹이 없으면 그룹 생성페이지로 전송
+		int groupCount = groupList.size();
+		map.put("groupCount", groupCount);
+		
+		if(groupCount != 0) {
+			
+			if(groupNo == 0) {
+				groupNo = groupList.get(0).getGroupNo();
+			}
+			
+			//그룹 이름
+			GroupVo groupVo = new GroupVo();
+			groupVo.setUserNo(userNo);
+			groupVo.setGroupNo(groupNo);
+			
+			
+			String groupName = groupDao.selectedGpName(groupVo);
+			
+			//주소접근 > 내 그룹이 아니면 에러
+			if(groupName != null && groupName != "") {
+				
+				//그룹 이름
+				map.put("groupName", groupName);
+				map.put("groupNo", groupNo);
+				
+				//블랙리스트
+				List<BlacklistVo> blacklist = blackDao.blacklist(groupNo);
+				map.put("blacklist", blacklist);
+				
+				//블랙 개수
+				int blackCount = blacklist.size();
+				map.put("blackCount", blackCount);
+				
+				//그룹 리더 
+				int leader = groupDao.groupLeader(groupNo);
+				map.put("leader", leader);
+			}
+		}
+		
+		return map;
+		
 	}
 
 }

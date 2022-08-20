@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="blacklist">
+
+	<resultMap id="BlackVo" type="com.lunchwb.vo.BlacklistVo">
+		<result column="black_no" property="blackNo" />
+		<result column="store_no" property="storeNo" />
+		<result column="group_no" property="groupNo" />
+		<result column="reg_date" property="regDate" />
+		<result column="store_name" property="storeName" />
+		<result column="menu_2nd_cate_name" property="menu2ndCateName" />
+		<result column="store_road_address" property="storeRoadAddress" />
+	</resultMap>	
+
+
+	<select id="blacklist" parameterType="int" resultMap="GroupVo">
+		SELECT  black_no
+		        , b.store_no
+		        , store_name
+		        , menu_2nd_cate_name
+		        , store_road_address
+		FROM blacklist b, store s, food_2nd_category f
+		WHERE b.store_no = s.store_no
+		AND s.menu_2nd_cate_no = f.menu_2nd_cate_no
+		ORDER BY black_no ASC
+	</select>
+	
+</mapper>
