@@ -278,5 +278,22 @@
 			WHERE  user_no = #{userNo}
 		]]>
 	</select>	
+	
+	
+	<!--  투표 생성 전: 참여 못하는 회원 불러오기  -->
+	<select id="selectImpossibleMember" parameterType="List" resultType="String">
+		<![CDATA[
+			SELECT user_name userName
+			FROM   users
+			WHERE  user_state != 0
+			AND   (1 != 1
+		]]>
+		<foreach item="userNo" collection="list">
+		           OR user_no = #{userNo}
+		</foreach>
+		<![CDATA[
+		          )
+		]]>
+	</select>
    	
 </mapper>

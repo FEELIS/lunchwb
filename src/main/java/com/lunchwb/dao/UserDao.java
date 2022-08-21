@@ -179,4 +179,9 @@ public class UserDao {
    public int selectUserState(int userNo) {
 	   return sqlSession.selectOne("user.selectUserState", userNo);
    }
+   
+   /* 투표 참여 못하는 사용자 불러오기 */
+   public List<String> selectImpossibleMember(List<Integer> checkVoteMember) {
+	   return sqlSession.selectList("vote.selectImpossibleMember", checkVoteMember);
+   }
 }
