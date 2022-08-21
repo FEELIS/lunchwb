@@ -67,8 +67,6 @@ public class GroupController {
 		
 		//내 그룹이 아님(가져온 멤버목록이 없음) - 내가 있으면 0 일 수가 없어요
 		
-		if((Integer)map.get("memberCount") == 0) { return "error/403"; }
-		 	
 		return "group/groupList";
 	}
 	
