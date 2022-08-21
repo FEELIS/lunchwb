@@ -24,6 +24,20 @@ public class GroupService {
 	@Autowired
 	private UserDao userDao;
 	
+	
+	/******************** 그룹 없으면 userAside에서 블랙리스트 가림 **************************/
+	public boolean isThereGroup(int userNo) {
+		boolean result = false;
+		
+		int count = groupDao.groupCount(userNo);
+		if(count > 0) {
+			result = true;
+		}
+
+		return result;
+	}
+	
+	
 	/******************** 그룹 리스트 페이지 ********************************************/
 	public Map<String, Object> groupList(UserVo authUser, int groupNo) {
 		Map<String, Object> map = new HashMap<>();
