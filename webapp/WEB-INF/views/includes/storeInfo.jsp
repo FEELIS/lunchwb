@@ -57,7 +57,7 @@
                         </div>
                         <div class="text-start d-lg-flex justify-content-lg-center">
                         	<span class="d-inline-block">
-		                        <button class="btn other-store-btn other-store-1" type="button">
+		                        <button class="btn other-store-btn other-store-1" type="button" data-no="247">
 		                        	흑룡강
 		                        	<span class="fw-bold text-warning d-block">
 		                        		<i class="fas fa-star"></i>
@@ -69,7 +69,7 @@
 		                        </button>
 		                    </span>
 		                    <span class="d-inline-block">
-		                    	<button class="btn other-store-btn other-store-2" type="button">
+		                    	<button class="btn other-store-btn other-store-2" type="button" data-no="246">
 		                    		홍콩반점
 		                    		<span class="fw-bold text-warning d-block">
 			                    		<i class="fas fa-star"></i>
@@ -81,7 +81,7 @@
 		                    	</button>
 		                    </span>
 		                    <span class="d-inline-block">
-		                    	<button class="btn link-light other-store-btn other-store-3" type="button">
+		                    	<button class="btn link-light other-store-btn other-store-3" type="button" data-no="246">
 		                    		락궁
 		                    		<span class="fw-bold text-warning d-block">
 		                    			<i class="fas fa-star"></i>
@@ -250,8 +250,14 @@ $("#visited-store-name").on("click", function(){
 
 /* 모달에서 > 다시 다른 가게 정보 조회(버튼) */
 $("#modal-store .other-store-btn").on("click", function(){
-	console.log("다른 가게 조회")
-	
+	var storeNo = $(this).attr("data-no")
+	console.log(storeNo+"번 가게 정보 보기")
+	//세션에 주소가 있으면 거리를 재고 아님 말고
+	if("${curr_location}" != null){
+		storeInfoOpen(storeNo, 1)
+	}else{
+		storeInfoOpen(storeNo, 0)
+	}
 })
 
  
