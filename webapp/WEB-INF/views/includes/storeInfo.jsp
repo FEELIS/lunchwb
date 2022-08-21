@@ -239,7 +239,6 @@ $("#test-storeInfo").on("click", function(){
 })
 
 
-
 /* 가게 고정 */
 /* 리뷰 메인 가게정보에서 조회할 때 */
 $("#visited-store-name").on("click", function(){
@@ -249,7 +248,15 @@ $("#visited-store-name").on("click", function(){
 })
 
 
+/* 모달에서 > 다시 다른 가게 정보 조회(버튼) */
+$("#modal-store .other-store-btn").on("click", function(){
+	console.log("다른 가게 조회")
+	
+})
 
+ 
+ 
+ 
 /* 가게정보 모달 오픈 */
 function storeInfoOpen(storeNo, k){
 	console.log("가게: "+storeNo)
@@ -550,7 +557,7 @@ function modalStoreAllMenu(menuVo){
 /* 가게 정보 모달  다른 가게 + footer 버튼 */
 function modalSortOfStore(storeNo, k){
 	//버튼 영역 초기화
-	$(".store-button-area").html()
+	$(".store-button-area").html("")
 	
 	switch(k){
 		case 0:
