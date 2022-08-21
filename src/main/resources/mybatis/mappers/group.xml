@@ -213,7 +213,7 @@
 		FROM group_member m, users u
 		WHERE group_no = #{groupNo}
 		AND m.user_no = u.user_no
-		AND user_email IN NOT NULL
+		AND user_email IS NOT NULL
 	</select>
 	
 	
