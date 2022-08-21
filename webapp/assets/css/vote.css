@@ -20,10 +20,15 @@
   padding-bottom: 50px;
 }
 
-#waiting-container {
+#vote-map-wrapper #container {
   margin: 0;
   padding: 0;
-  min-width: 1094px;
+}
+
+#waiting-container {
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 #main-content {
@@ -414,22 +419,16 @@
   background: rgb(250, 210, 207);
 }
 
-#vote-map-wrapper {
-  position: relative;
-}
-
-#vote-map-wrapper #container {
-  max-width: 1920px;
-  height: auto;
-  margin: 0;
-  padding: 0;
-  min-width: 1094px;
-}
-
-#vote-map-wrapper #container #map-btn-area {
+#map-btn-area {
   position: absolute;
   margin-top: 13px;
   margin-left: 21px;
+}
+
+#wating-btn-area {
+  position: absolute;
+  margin-top: 40px;
+  margin-left: 50px;
 }
 
 #vote-kakao-btn {
@@ -578,20 +577,10 @@
   background: var(--bs-gray-200);
 }
 
-#waiting-vote-link-area {
-  position: absolute;
-  margin-top: 23px;
-  margin-left: 62px;
-}
-
 #modal-recFilter .modal-body {
   font-size: 14px;
 }
 
-#waiting-container #waiting-vote-link-area {
-  margin-top: 51px;
-  margin-left: 67px;
-}
 
 #waiting-container #waiting-vote-area {
   background: #ffffff;
@@ -604,10 +593,10 @@
   max-width: 1600px;
   box-shadow: 1px 1px 15px 3px #e6e6e6;
   margin-left: 30px;
-  max-height: 1080px;
   min-height: 600px;
-  width: 1539px;
-  height: 748px;
+  width: 95%;
+  min-height: 700px;
+  height: auto;
   margin-bottom: 88px;
   margin-top: 20px;
 }
