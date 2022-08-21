@@ -71,11 +71,14 @@ public class VoteController {
 		String voteEndDate = voteData.get("voteEndDate");
 		String voteMember = voteData.get("voteMember");
 		String currBasket = voteData.get("currBasket");
-
+		
+		System.out.println(voteEndDate);
 		if (voteEndDate.contains(".")) {
 			voteEndDate = voteEndDate.substring(0, voteEndDate.indexOf("."));
 		}
-		Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(voteEndDate);
+		
+		@SuppressWarnings("deprecation")
+		Date date = new Date(voteEndDate);
 
 		UserVo loginUser = (UserVo)session.getAttribute("authUser");
 		int groupNo = (Integer)session.getAttribute("curr_basket_group");

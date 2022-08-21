@@ -493,6 +493,7 @@ $("#make-vote-btn").on("click", function(){
 		return false
 	}
 	
+	voteEndDate = String(voteEndDate)
 	
 	// 투표 멤버 불러오기
 	let voteMember = [] 
