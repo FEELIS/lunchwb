@@ -76,14 +76,14 @@ public class VisitedService {
 	
 	//그룹원 전체대상 > 참여하지 않은 그룹원은 알아서 방문취소를 누르도록 ㅎ
 	/******************************* 여기갈래요 결정 ********************************/
-	public void visitDecision(int storeNo, int groupNo) {
+	public void decideVisit(int storeNo, int groupNo) {
 		List<GroupVo> visitMemberList = groupDao.visitMember(groupNo);
 		
 		for(int i=0; i<visitMemberList.size(); i++) {
 			int userNo = visitMemberList.get(i).getUserNo();
 			//오늘 방문 저장
 			VisitedVo visitedVo = new VisitedVo(userNo, groupNo, storeNo);
-			vstDao.visitDecision(visitedVo);
+			vstDao.decideVisit(visitedVo);
 			//방문 결정 상태 변경
 			userDao.updateState4(userNo);
 		}

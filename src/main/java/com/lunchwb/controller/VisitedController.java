@@ -29,13 +29,25 @@ public class VisitedController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(StoreController.class);
 	
+	
+	/* 방문 결정 */
 	@GetMapping("decision/{storeNo}/{groupNo}")
-	public String visitDecision(@PathVariable("storeNo") int storeNo, @PathVariable("groupNo") int groupNo) {
-		visitedService.visitDecision(storeNo, groupNo);
+	public String decideVisit(@PathVariable("storeNo") int storeNo, @PathVariable("groupNo") int groupNo) {
+		logger.info("VisitedController > decideVisit()");
+		visitedService.decideVisit(storeNo, groupNo);
 		return "redirect:/";
 	}
 	
 	
+	/* 방문 취소 */
+	@GetMapping("cancel/{visitedNo}/{groupNo}")
+	public String cancelVisit(@PathVariable("visitedNo") int visitedNo, @PathVariable("groupNo") int groupNo) {
+		logger.info("VisitedController > decideVisit()");
+		return "redirect:/";
+	}
+	
+	
+	/* 방문 결정 후 메인 */
 	@GetMapping("/")
 	public String visitedMain(Model model, HttpSession session) {
 		logger.info("VisitedController > visitedMain()");

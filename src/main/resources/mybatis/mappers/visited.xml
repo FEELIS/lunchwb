@@ -54,7 +54,7 @@
 	
 	
 	<!-- 지니 -->
-	<insert id="visitDecision" parameterType="VisitedVo">
+	<insert id="decideVisit" parameterType="VisitedVo">
 		INSERT INTO visited
 		VALUES(seq_visited_no.NEXTVAL, #{userNo}, #{groupNo}, #{storeNo}, '', TO_DATE(SYSDATE))
 	</insert>
