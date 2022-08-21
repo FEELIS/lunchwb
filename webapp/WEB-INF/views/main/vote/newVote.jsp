@@ -102,7 +102,7 @@
                         				<span class="vote-people-body-wrap">
                         					<span class="text-center d-flex d-xxl-flex justify-content-center align-items-center vote-people-body">
                         						<i class="fas fa-crown"></i>
-                        						<span class="vote-people-name">${member.userName}</span>
+                        						<span class="vote-people-name" data-user-name="${member.userName}">${member.userName}</span>
                         						<i class="fas fa-crown"></i>
                         					</span>
                         				</span>
@@ -560,8 +560,8 @@ $("#make-vote-btn").on("click", function(){
 				var cantTr = $("[data-user-name=" + result[i] + "]").closest(".vote-people")
 				
 				cantTr.addClass("vote-people-deleted")
-				cantTr.find(".vote-people-header").removeClass("fas fa-minus-circle vote-member-not-today")
-				cantTr.find(".vote-people-header").addClass("fas fa-plus-circle vote-member-re-add")
+				cantTr.find(".vote-people-header i").removeClass("fas fa-minus-circle vote-member-not-today")
+				cantTr.find(".vote-people-header i").addClass("fas fa-plus-circle vote-member-re-add")
 			}
 			
 			if (alertMember != "") {
