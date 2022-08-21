@@ -487,7 +487,7 @@ $("#btn-visited-cancel").on("click", function(){
 	
 	var userNo = "${authUser.userNo}"
 	var groupLeader = "${visitedMap.groupLeader}"
-	if(userNo == groupLeader &&){
+	if(userNo == groupLeader){
 		if(confirm("정말로 방문을 취소하시겠습니까?")){
 			if(confirm("그룹 전체 방문을 취소하시겠습니까?")){
 				document.getElementById("visited-cancel-link").href = "${pageContext.request.contextPath}/visited/cancel/${visitedMap.visitedVo.visitedNo}?groupNo=${visitedMap.visitedVo.groupNo}"

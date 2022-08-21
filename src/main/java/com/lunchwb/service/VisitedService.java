@@ -75,7 +75,7 @@ public class VisitedService {
 	
 	
 	//THIS IS 즉각적으로 결정했을 경우 (투표 no)
-	//그룹원 전체대상 > 참여하지 않은 그룹원은 알아서 방문취소를 누르도록 ㅎ :그러면 안될건데 어쩌지
+	//그룹원 전체대상 > 참여하지 않은 그룹원은 알아서 방문취소를 누르도록 ㅎ :그러면 안될건데 어쩌지 다시해야됨 이미 다른데서 방문 결정했으면 충돌일어남
 	/******************************* 여기갈래요 결정 ********************************/
 	public void decideVisit(int storeNo, int groupNo) {
 		List<GroupVo> visitMemberList = groupDao.visitMember(groupNo);
@@ -106,13 +106,12 @@ public class VisitedService {
 			List<Integer> visitedMemberList = groupDao.visitedMember(groupNo);
 			List<UserVo> members = new ArrayList<>();
 			
-			for(int i: visitedMemberList) {
+			for(int i=0; i<visitedMemberList.size(); i++) {
 				UserVo userVo = new UserVo();
-				userVo.setUserNo(i);
+				userVo.setUserNo(visitedMemberList.get(i));
 				members.add(userVo);
+				userDao.updateState0(members);
 			}
-			
-			userDao.updateState0(members);
 			
 		}else {
 			// 개인 취소

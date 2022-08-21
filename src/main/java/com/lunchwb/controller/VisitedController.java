@@ -40,7 +40,7 @@ public class VisitedController {
 	
 	
 	/* 방문 취소 */
-	@GetMapping("cancel/{visitedNo}/{groupNo}")
+	@GetMapping("cancel/{visitedNo}")
 	public String cancelVisit(@PathVariable("visitedNo") int visitedNo, @RequestParam(name="groupNo", defaultValue="0") int groupNo, HttpSession session) {
 		logger.info("VisitedController > decideVisit()");
 		
