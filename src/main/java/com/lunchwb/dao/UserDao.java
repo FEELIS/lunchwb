@@ -182,6 +182,6 @@ public class UserDao {
    
    /* 투표 참여 못하는 사용자 불러오기 */
    public List<String> selectImpossibleMember(List<Integer> checkVoteMember) {
-	   return sqlSession.selectList("vote.selectImpossibleMember", checkVoteMember);
+	   return sqlSession.selectList("user.selectImpossibleMember", checkVoteMember);
    }
 }

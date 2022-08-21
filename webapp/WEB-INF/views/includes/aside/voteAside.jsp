@@ -113,6 +113,9 @@
 let voteEndTime = "${voteInfo.voteEndTime}";
 let clientIp;
 
+console.log("${voteInfo}")
+console.log("${voteBasket}")
+console.log("${voteMember}")
 
 $(document).ready(
 	async function(){

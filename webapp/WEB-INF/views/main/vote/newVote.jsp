@@ -76,7 +76,6 @@
                         		<c:set var="memberNo" value="${memberNo+1}" />
                         		
                         		<c:if test="${member.bossCheck==1}">
-                        			
                         			<span class="d-flex d-xxl-flex flex-wrap vote-people-bujang vote-people" data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${memberNo}">
                         				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
                         					<c:if test="${member.userNo != authUser.userNo}">
@@ -86,7 +85,7 @@
                         				<span class="vote-people-body-wrap">
                         					<span class="text-center d-flex d-xxl-flex justify-content-center align-items-center vote-people-body">
                         						<i class="fas fa-crown vote-bujang-crown"></i>
-                        						<span class="vote-people-name">${member.userName}</span>
+                        						<span class="vote-people-name" data-user-name="${member.userName}">${member.userName}</span>
                         						<i class="fas fa-crown"></i>
                         					</span>
                         				</span>
@@ -497,26 +496,31 @@ $("#make-vote-btn").on("click", function(){
 	
 	// 투표 멤버 불러오기
 	let voteMember = [] 
+	let checkMember = []
 	var cnt = 0
 	
-	for (var i = 1; i < totVote; i++) {
+	for (var i = 1; i <= totVote; i++) {
 		var currMem = {}
 		var currDiv = $("[data-vote-member-no=" + i + "]")
 		
 		var currName = currDiv.find(".vote-people-name").text()
 		
 		if (currName.length > 0) {
+			
 			if (currDiv.hasClass("vote-people-deleted")) {
 				continue
 			}
 			cnt += 1
 			currMem["userName"] = currName
-			
+						
 			var userGrade = parseInt(currDiv.attr("data-user-grade"))
 			
 			if (userGrade > 0) {
-				currMem["userNo"] = parseInt(currDiv.attr("data-user-no"))
+				var userNo =  parseInt(currDiv.attr("data-user-no"))
+						
+				currMem["userNo"] = userNo
 				currMem["userGrade"] = userGrade
+				checkMember.push(userNo)
 			}
 			voteMember.push(currMem)
 		}
@@ -527,9 +531,54 @@ $("#make-vote-btn").on("click", function(){
 		
 		return false
 	}
+	
 	voteMem = JSON.stringify({"mem" : voteMember})
 	console.log(voteMem)
 	
+	
+	// 투표 참여중인 회원 있는지 확인
+	let stopVoteMake = false
+	
+	$.ajax({
+		type : "POST",
+		url : "${pageContext.request.contextPath}/vote/checkVoteMem",
+		contentType : "application/json",
+		async : false,
+		data : JSON.stringify(checkMember),
+		dataType : 'json',
+		
+		success : function(result) {
+			var alertMember = ""
+			
+			for (var i = 0; i < result.length; i++) {
+				if (i != result.length-1) {
+					alertMember += result[i] + "님, "
+				} else {
+					alertMember += result[i]
+				}
+				
+				var cantTr = $("[data-user-name=" + result[i] + "]").closest(".vote-people")
+				
+				cantTr.addClass("vote-people-deleted")
+				cantTr.find(".vote-people-header").removeClass("fas fa-minus-circle vote-member-not-today")
+				cantTr.find(".vote-people-header").addClass("fas fa-plus-circle vote-member-re-add")
+			}
+			
+			if (alertMember != "") {
+				alert(alertMember + "님은 이미 다른 투표에 참여중입니다.")
+				
+				stopVoteMake = true
+			}
+		},
+		error: function(xhr, status, error){
+			console.log("오류 발생" + error);
+		}
+	})
+	
+	if (stopVoteMake) {
+		return false
+	}
+		
 	
 	// 장바구니 데이터 정리
 	var curr_basket = []
@@ -558,7 +607,6 @@ $("#make-vote-btn").on("click", function(){
 		dataType : 'json',
 		
 		success : function(voteNo) {
-			console.log("여기3")
 			if (voteNo == 0) {
 				alert("투표 생성 실패")
 				
@@ -568,14 +616,21 @@ $("#make-vote-btn").on("click", function(){
 			}
 		},
 		error: function(xhr, status, error){
-			alert("오류 발생" + error);
+			console.log("오류 발생" + error);
 		}
 	})
 })
 
 
-//복사 클릭 시 클립보드에 url 복사
-$("#vote-url-copy-btn").on("click", function(){
+// 복사 클릭 시 클립보드에 url 복사
+$("#vote-url-copy-btn").on("click", async function(){
+	await saveClipBoard()
+	location.replace("${pageContext.request.contextPath}/")
+})
+	
+	
+// 클립보드 저장 function 
+async function saveClipBoard() {
 	var content = $("#vote-url-input").val();
 
     navigator.clipboard.writeText(content)
@@ -585,8 +640,8 @@ $("#vote-url-copy-btn").on("click", function(){
         .catch(err => {
         console.log("클립보드 복사 실패");
     })
-})
-	
+}
+
 
 // 투표 생성 모달 닫힐 때
 $("#vote-link-modal").on("hide.bs.modal", function(){

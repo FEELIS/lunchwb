@@ -1,6 +1,7 @@
 package com.lunchwb.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -29,12 +30,24 @@ public class VoteService {
 	private GroupDao groupDao;
 	@Autowired
 	private UserDao userDao;
+
 	
 	public List<GroupVo> getVoteMember(int groupNo) {
 		return groupDao.selectVoteMember(groupNo);
 	}
 	
 	
+	// 투표 참여 못하는 회원 목록 불러오기
+	public List<String> checkVoteMember(int[] checkMember) {
+		List<Integer> checkMem = new ArrayList<>();
+		for (int no: checkMember) checkMem.add(no);
+		System.out.println(checkMem.toString());
+		
+		return userDao.selectImpossibleMember(checkMem);
+	}
+	
+	
+	// 투표 생성하기
 	public int makeVote(int userNo, Date voteEndTime, String voteMember, String currBasket, int groupNo) {
 		System.out.println("**********************************************************************************************************************************************************");
 		System.out.println("[투표 생성 데이터 정리하기]");
@@ -113,7 +126,6 @@ public class VoteService {
 	public Map<String, Object> getVoteAsideData(int voteNo) {
 		Map<String, Object> voteData = new HashMap<>();
 		
-		// 끝나는 시각,  가게 정보들, 투표 만든 사람 정보는 투표 정본데 투표 정보? /// 투표 참여자 정보들, voteVo 가져와서 해체하고 /// userVo ㄴㄴ voteMemberVo인가 맞아
 		List<VoteVo> voteVo = voteDao.selectVoteInfo(voteNo);
 		
 		// 끝나는 시각, 가게 정보, 투표 만든 사람

@@ -38,7 +38,7 @@ public class VoteController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("")
 	public String newVote(Model model, HttpSession session) {
-		logger.info("새 투표 생성 페이지 이동");
+		logger.info("투표 생성 페이지로 이동");
 		
 		Integer groupNo = (Integer)session.getAttribute("curr_basket_group");
 		Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
@@ -67,6 +67,7 @@ public class VoteController {
 	@ResponseBody
 	@PostMapping("/makeVote")
 	public int makeVote(@RequestBody Map<String, String> voteData, HttpSession session) throws ParseException {
+		logger.info("새 투표 생성하기");
 		String voteEndDate = voteData.get("voteEndDate");
 		String voteMember = voteData.get("voteMember");
 		String currBasket = voteData.get("currBasket");
@@ -85,5 +86,15 @@ public class VoteController {
 		}
 		
 		return voteNo;
+	}
+	
+	
+	// 투표 참여중인 회원인지 확인
+	@ResponseBody
+	@PostMapping("/checkVoteMem")
+	public List<String> checkVoteMem(@RequestBody int[] checkVoteMem) {
+		logger.info("투표 참여 불가능 회원 확인");
+		
+		return voteService.checkVoteMember(checkVoteMem);
 	}
 }
