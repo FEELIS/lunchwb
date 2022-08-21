@@ -29,6 +29,8 @@ public class VisitedController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(StoreController.class);
 	
+	@PostMapping()
+	
 	@GetMapping("/")
 	public String visitedMain(Model model, HttpSession session) {
 		logger.info("VisitedController > visitedMain()");

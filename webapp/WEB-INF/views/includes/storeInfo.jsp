@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!-- 가게 정보 보기 -->
-<div id="modal-store" class="modal visible no-drag" role="dialog" tabindex="-1" style="min-width: 800px;">
+<div id="modal-store" class="modal visible no-drag modal-stores" role="dialog" tabindex="-1" style="min-width: 800px;">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content" style="width: 798px;">
             <div class="modal-header"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
@@ -58,7 +58,7 @@
                         <div class="text-start d-lg-flex justify-content-lg-center">
                         	<span class="d-inline-block">
 		                        <button class="btn other-store-btn other-store-1" type="button" data-no="247">
-		                        	흑룡강
+		                        	명품청기와감자탕
 		                        	<span class="fw-bold text-warning d-block">
 		                        		<i class="fas fa-star"></i>
 		                        		<i class="fas fa-star"></i>
@@ -70,7 +70,7 @@
 		                    </span>
 		                    <span class="d-inline-block">
 		                    	<button class="btn other-store-btn other-store-2" type="button" data-no="246">
-		                    		홍콩반점
+		                    		다사랑분식
 		                    		<span class="fw-bold text-warning d-block">
 			                    		<i class="fas fa-star"></i>
 		                        		<i class="fas fa-star"></i>
@@ -81,8 +81,8 @@
 		                    	</button>
 		                    </span>
 		                    <span class="d-inline-block">
-		                    	<button class="btn link-light other-store-btn other-store-3" type="button" data-no="246">
-		                    		락궁
+		                    	<button class="btn link-light other-store-btn other-store-3" type="button" data-no="245">
+		                    		주궁
 		                    		<span class="fw-bold text-warning d-block">
 		                    			<i class="fas fa-star"></i>
 		                        		<i class="fas fa-star"></i>
@@ -108,7 +108,7 @@
 
 
 <!-- 모든 리뷰 보기 -->
-<div id="modal-reviews" class="modal visible" role="dialog" tabindex="-1" style="min-width: 798px;">
+<div id="modal-reviews" class="modal visible no-drag modal-stores" role="dialog" tabindex="-1" style="min-width: 798px;">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content" style="width: 798px;">
             <div class="modal-header"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
@@ -149,10 +149,6 @@
             <div class="modal-footer-custom">
                 <p class="modalStoreWithMe"></p>
                 <div class="store-button-area">
-	                <c:if test="${!empty authUser}">
-	                	<button class="btn btn-primary" type="button">여기갈래요</button>
-	                </c:if>
-	                <button class="btn btn-light" type="button">점심후보추가</button>
                 </div>
             </div>
         </div>
@@ -161,7 +157,7 @@
 
 
 <!-- 최근 메뉴창 -->
-<div id="modal-all-menu" class="modal visible" role="dialog" tabindex="-1" style="min-width: 798px;">
+<div id="modal-all-menu" class="modal visible no-drag modal-stores" role="dialog" tabindex="-1" style="min-width: 798px;">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content" style="width: 798px;">
             <div class="modal-header"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
@@ -205,10 +201,6 @@
             <div class="modal-footer-custom">
                 <p class="modalStoreWithMe"></p>
                 <div class="store-button-area">
-	                <c:if test="${!empty authUser && authUser.userState == 0}">
-		                <button class="btn btn-primary" type="button">여기갈래요</button>
-		            </c:if>
-	                <button class="btn btn-light" type="button">점심후보추가</button>
 	            </div>
             </div>
         </div>
@@ -624,10 +616,10 @@ function modalSortOfStore(storeNo, k){
 
 
 //장바구니 점심 후보 추가
-$("#modal-store .btn-add-store-basket").on("click", function(){
+$(".btn-add-store-basket", ).on("click", function(){
 	var storeNo = $(this).attr("data-storeNo")
 	addItemToBasket(storeNo)
-	$("#modal-store").modal("hide")
+	$(".modal-stores").modal("hide")
 })
 
 
@@ -635,6 +627,7 @@ $("#modal-store .btn-add-store-basket").on("click", function(){
 $("#modal-store .btn-delete-store-basket").on("click", function(){
 	var storeNo = $(this).attr("data-storeNo")
 	deleteSessionBasketGroup(storeNo)
+	$(".modal-stores").modal("hide")
 })
 
 
