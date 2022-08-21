@@ -569,12 +569,11 @@ function modalSortOfStore(storeNo, k){
 		case 0:
 		// k=1 : 리뷰메인
 			//조회하는 가게 = 다녀온 가게
-			if(storeNo == visitedVo.visitedNo){
-				$(".store-button-area").append('<button class="btn btn-primary btn-visit-cancle" type="button">방문취소</button>')
-			//다녀온 가게가 아니면 블랙버튼만
-			}else{
-				$(".store-button-area").append('<button class="btn btn-primary btn-add-black" type="button">블랙리스트추가</button>')
+			if(storeNo == "${visitedMap.visitedVo.storeNo}"){
+				$(".store-button-area").append('<button class="btn btn-primary btn-visit-cancle" type="button" data-storeNo="'+storeNo+'">방문취소</button>')
 			}
+			//다녀온 가게가 아니면 블랙버튼만(조회 자체가 블랙 아닌것만 됨)
+			$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'">블랙추가</button>')
 		
 			break
 		
@@ -582,7 +581,12 @@ function modalSortOfStore(storeNo, k){
 		// k=1 : 바구니/지도
 			// 그룹? 비로그인 또는 그룹이 없으면 여기갈래요 불가 > 
 			if("${curr_basket_group}" != "" && "${curr_basket_group}" != "0"){
-				$(".store-button-area").append('<button class="btn btn-primary btn-decision-this" type="button">여기갈래요</button>')
+				var groupNo = "${curr_basket_group}"
+				var str = '' 
+				str += '<a href="${pageContext.request.contextPath}/visited/decision/'+storeNo+'/'+groupNo+'">'
+				str += '	<button class="btn btn-primary btn-decision-this" type="button">여기갈래요</button>'
+				str += '</a>'
+				$(".store-button-area").append(str)
 			}
 			// 바구니? ${basket.curr_basket_group}: 선택된 가게 리스트
 			var basketListForStoreInfo = "${basket.curr_basket_group}"
@@ -594,9 +598,9 @@ function modalSortOfStore(storeNo, k){
 				if(listStoreNo = storeNo){
 					//장바구니에 있는 가게
 					if(basketListForStoreInfo[i].stored){
-						$(".store-button-area").append('<button class="btn btn-light btn-delete-store-basket" type="button">점심후보제외</button>')
+						$(".store-button-area").append('<button class="btn btn-light btn-delete-store-basket" type="button" data-storeNo="'+storeNo+'">점심후보제외</button>')
 					}else{
-						$(".store-button-area").append('<button class="btn btn-light btn-add-store-basket" type="button">점심후보추가</button>')
+						$(".store-button-area").append('<button class="btn btn-light btn-add-store-basket" type="button" data-storeNo="'+storeNo+'">점심후보추가</button>')
 					}
 				}
 			}
@@ -616,10 +620,52 @@ function modalSortOfStore(storeNo, k){
 			console.log("가게 조회 종류 오류")
 			break
 	}
-	
 }
 
 
+//장바구니 점심 후보 추가
+$("#modal-store .btn-add-store-basket").on("click", function(){
+	var storeNo = $(this).attr("data-storeNo")
+	addItemToBasket(storeNo)
+	$("#modal-store").modal("hide")
+})
 
+
+//장바구니 점심 후보 삭제
+$("#modal-store .btn-delete-store-basket").on("click", function(){
+	var storeNo = $(this).attr("data-storeNo")
+	deleteSessionBasketGroup(storeNo)
+})
+
+
+/* 
+//여기갈래요 버튼 클릭
+$("#modal-store .btn-decision-this").on("click", function(){
+	var storeNo = $(this).attr("data-storeNo")
+	decideTogo(storeNo)
+})
+
+
+//방문결정
+function decideTogo(storeNo){
+	console.log(storeNo + "번 가게 방문 결정")
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/visited/decision",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(storeNo),
+		dataType : "json",
+		
+		success : function(storeMap){
+			
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	 
+	})
+}
+ */
 </script>
 
