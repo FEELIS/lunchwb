@@ -38,6 +38,19 @@ public class GroupController {
 	
 	
 	/********************* 그룹원 리스트 페이지 ********************************************/
+	@ResponseBody
+	@PostMapping("/isThere")
+	public boolean isThereGroup(@RequestBody int userNo) {
+		logger.info("GroupController > isThereGroup()");
+		
+		boolean result = groupService.isThereGroup(userNo);
+		
+		return result;
+	}
+
+	
+	
+	/********************* 그룹원 리스트 페이지 ********************************************/
 	@RequestMapping("/list")
 	public String groupList(Model model, HttpSession session, @RequestParam(name="no", defaultValue="0") int groupNo) {
 		logger.info("GroupController > groupList()");
