@@ -288,9 +288,9 @@
   font-size: 16px;
 }
 
-.card-body #btn-add-review #today-review-content {
-  text-align: left !important;
+.card-body .today-review-content {
   margin-left: 25px;
+  font-size: 16px;
 }
 
 #btn-add-review {

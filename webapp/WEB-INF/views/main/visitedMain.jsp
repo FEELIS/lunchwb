@@ -401,21 +401,17 @@
 													<span class="fs-6 fw-bolder d-inline-block">
 														리뷰 내용
 													</span>
+													<div class="today-review-content" class="">${visitedMap.reviewVo.reviewContent}</div>
 												</c:otherwise>
 											</c:choose>
 										</div>
 
 										<div id="btn-add-review" class="text-center">
-											<c:choose>
-												<c:when test="${visitedMap.reviewVo == null}">
-													<button class="btn btn-primary btn-today" type="submit">
-														리뷰 등록
-													</button>
-												</c:when>
-												<c:otherwise>
-													<span id="today-review-content" class="">${visitedMap.reviewVo.reviewContent}</span>
-												</c:otherwise>
-											</c:choose>
+											<c:if test="${visitedMap.reviewVo == null}">
+												<button class="btn btn-primary btn-today" type="submit">
+													리뷰 등록
+												</button>
+											</c:if>
 										</div>
 									</form>
 
@@ -535,6 +531,11 @@ $("#review-submit").on("submit", function(){
 		return false
 	}
 	
+	if(reviewContent.length > 40){
+		alert("리뷰 내용은 40자 이하로 입력해주세요")
+		return false
+	}
+	
 	var userScore = $("[name = 'userScore']").val()
 	if(userScore == 0){
 		if(confirm("별점이 0점으로 기록됩니다.") == false){
@@ -543,22 +544,6 @@ $("#review-submit").on("submit", function(){
 	}
 	
 	return true
-	/* 
-	var visitedNo = $("[name = 'visitedNo']").val()
-	
-	const imageInput = $("#imageInput")[0]
-	const formData = new FormData()
-	if(imageInput.files.length != 0){
-		formData.append("image", imageInput.files[0])
-	}
-	
-	var reviewVo = {
-		visitedNo : visitedNo
-		menuNo : menuNo,
-		reviewContent : reviewContent,
-		userScore : userScore
-	}
- */	
 })
 
 
