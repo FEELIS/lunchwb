@@ -1,19 +1,23 @@
 package com.lunchwb.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lunchwb.service.VoteService;
 import com.lunchwb.vo.GroupVo;
@@ -30,6 +34,7 @@ public class VoteController {
 	private static final Logger logger = LoggerFactory.getLogger(VoteController.class);
 
 	
+	// 새 투표 생성하기 페이지로 이동
 	@SuppressWarnings("unchecked")
 	@RequestMapping("")
 	public String newVote(Model model, HttpSession session) {
@@ -58,19 +63,27 @@ public class VoteController {
 	}
 	
 	
+	// 투표 만들기
+	@ResponseBody
 	@PostMapping("/makeVote")
-	public String makeVote(@RequestParam("voteEndDate") Date voteEndDate
-						   , @RequestParam("voteMember") String voteMember
-						   , @RequestParam("currBasket") String currBasket
-						   , HttpSession session, Model model) {
-		
+	public int makeVote(@RequestBody Map<String, String> voteData, HttpSession session) throws ParseException {
+		String voteEndDate = voteData.get("voteEndDate");
+		String voteMember = voteData.get("voteMember");
+		String currBasket = voteData.get("currBasket");
+
+		if (voteEndDate.contains(".")) {
+			voteEndDate = voteEndDate.substring(0, voteEndDate.indexOf("."));
+		}
+		Date date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(voteEndDate);
+
 		UserVo loginUser = (UserVo)session.getAttribute("authUser");
 		int groupNo = (Integer)session.getAttribute("curr_basket_group");
+		int voteNo = 0;
 		
 		if (loginUser != null) {
-			voteService.makeVote(loginUser.getUserNo(), voteEndDate, voteMember, currBasket, groupNo);
+			voteNo = voteService.makeVote(loginUser.getUserNo(), date, voteMember, currBasket, groupNo);
 		}
 		
-		return "redirect:/";
+		return voteNo;
 	}
 }

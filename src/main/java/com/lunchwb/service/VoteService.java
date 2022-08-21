@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -36,7 +35,7 @@ public class VoteService {
 	}
 	
 	
-	public void makeVote(int userNo, Date voteEndTime, String voteMember, String currBasket, int groupNo) {
+	public int makeVote(int userNo, Date voteEndTime, String voteMember, String currBasket, int groupNo) {
 		System.out.println("**********************************************************************************************************************************************************");
 		System.out.println("[투표 생성 데이터 정리하기]");
 		System.out.println(voteEndTime.toString());
@@ -104,6 +103,8 @@ public class VoteService {
 		// 스케쥴러 추가
 		
 		System.out.println("**********************************************************************************************************************************************************");
+	
+		return voteNo;
 	}
 
 	

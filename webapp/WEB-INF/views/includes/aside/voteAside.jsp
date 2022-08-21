@@ -35,7 +35,7 @@
 	            </div>
 	            <div class="d-xxl-flex justify-content-center align-items-center align-content-center justify-content-xxl-center align-items-xxl-center" id="vote-countdown-remain-time">
 	            	<span class="countdown-label">남은 시간</span>
-	            	<span id="countdown-time" class="countdown-time"></span>
+	            	<span id="countdown-time" class="countdown-time">00:00:00</span>
 	            </div>
 	        </div>
 	    </div>
@@ -93,7 +93,7 @@
 	      	<c:if test="${authUser.userNo == voteInfo.voteMadeUser}">
 		        <div id="vote-leader-btn-area" class="d-xxl-flex justify-content-center align-items-center">
 		        	<button id="vote-leader-modify-btn" class="btn btn-danger d-flex d-xxl-flex justify-content-center align-items-center align-content-center" type="button">투표 수정하기</button>
-		        	<button id="vote-leader-cancel-btn" class="btn btn-danger d-flex d-xxl-flex justify-content-center align-items-center align-content-center" type="button" data-bs-target="#vote-link-modal" data-bs-toggle="modal">투표 취소하기</button>
+		        	<button id="vote-leader-cancel-btn" class="btn btn-danger d-flex d-xxl-flex justify-content-center align-items-center align-content-center" type="button">투표 취소하기</button>
 		        </div>
 	        </c:if>
 	        
@@ -109,90 +109,92 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script type="text/javascript">
-	let voteEndTime = "${voteInfo.voteEndTime}";
-	let clientIp;
-	
-	
-	$(document).ready(
-		async function(){
-			voteEndTime = changeTimeFormat(voteEndTime)
-			countDownTimer(voteEndTime)
 
-			clientIp = await getIpClient()
-			
-	})
+let voteEndTime = "${voteInfo.voteEndTime}";
+let clientIp;
 
 
-	// 클라이언트 ip 불러오기
-	async function getIpClient() {
-	  try {
-	    const response = await axios.get('https://api.ipify.org?format=json');
-	    console.log("clientIp: " + response["data"]["ip"]);
-	    
-	    return response["data"]["ip"]
-	    
-	  } catch (error) {
-	    console.error(error);
-	  }
-	}
-	
-	
-	// 카운트 다운 만들기
-	const countDownTimer = function(voteEndTime) {
-		var second = 1000;
-		var minute = second * 60
-		var hour = minute * 60
-		var day = hour * 24
-		var timer
+$(document).ready(
+	async function(){
+		voteEndTime = changeTimeFormat(voteEndTime)
+		countDownTimer(voteEndTime)
+
+		clientIp = await getIpClient()
 		
-		function showRemaining() {
-			var now = new Date();
-			var distDt = voteEndTime - now
+})
 
-			if (distDt < 0) {
-				clearInterval(timer);
-				$("#countdown-time").text("00:00:00")
-				
-				return
-			}
 
-			var hours = Math.floor((distDt % day) / hour)
-			var minutes = Math.floor((distDt % hour) / minute)
-			var seconds = Math.floor((distDt % minute) / second)
+// 클라이언트 ip 불러오기
+async function getIpClient() {
+  try {
+    const response = await axios.get('https://api.ipify.org?format=json');
+    console.log("clientIp: " + response["data"]["ip"]);
+    
+    return response["data"]["ip"]
+    
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-			$("#countdown-time").text(lpad(hours, 2, "0") + ":" + lpad(minutes, 2, "0") + ":" + lpad(seconds, 2, "0"))
+
+// 카운트 다운 만들기
+const countDownTimer = function(voteEndTime) {
+	var second = 1000;
+	var minute = second * 60
+	var hour = minute * 60
+	var day = hour * 24
+	var timer
+	
+	function showRemaining() {
+		var now = new Date();
+		var distDt = voteEndTime - now
+
+		if (distDt < 0) {
+			clearInterval(timer);
+			$("#countdown-time").text("00:00:00")
+			
+			return
 		}
 
-		timer = setInterval(showRemaining, 1000)
+		var hours = Math.floor((distDt % day) / hour)
+		var minutes = Math.floor((distDt % hour) / minute)
+		var seconds = Math.floor((distDt % minute) / second)
+
+		$("#countdown-time").text(lpad(hours, 2, "0") + ":" + lpad(minutes, 2, "0") + ":" + lpad(seconds, 2, "0"))
 	}
 
+	timer = setInterval(showRemaining, 1000)
+}
+
+
+// 자바 시간 자바스크립트로 변환
+function changeTimeFormat(time) {
+	var timeSplit = time.split(" ")
+	var newTime = new Date(timeSplit[1] + " " + timeSplit[2] + ", " + timeSplit[5] + " " + timeSplit[3])
+	console.log(newTime)
+	
+	return newTime
+}
+
+
+// 두자리수 변환
+function lpad(str, padLen, padStr) {
+    if (padStr.length > padLen) {
+        return str
+    }
+    str += ""
+    padStr += ""
+    
+    while (str.length < padLen) {
+        str = padStr + str
+    }
+    str = str.length >= padLen ? str.substring(0, padLen) : str
+    		
+    return str
+}
 	
 	
-	
-	// 자바 시간 자바스크립트로 변환
-	function changeTimeFormat(time) {
-		var timeSplit = time.split(" ")
-		var newTime = new Date(timeSplit[1] + " " + timeSplit[2] + ", " + timeSplit[5] + " " + timeSplit[3])
-		console.log(newTime)
-		
-		return newTime
-	}
-	
-	// 두자리수 변환
-	function lpad(str, padLen, padStr) {
-	    if (padStr.length > padLen) {
-	        return str
-	    }
-	    str += ""
-	    padStr += ""
-	    
-	    while (str.length < padLen) {
-	        str = padStr + str
-	    }
-	    str = str.length >= padLen ? str.substring(0, padLen) : str
-	    		
-	    return str
-	}
 </script>
 
 </body>

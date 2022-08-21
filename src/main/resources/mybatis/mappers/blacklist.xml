@@ -14,7 +14,7 @@
 	</resultMap>	
 
 
-	<select id="blacklist" parameterType="int" resultMap="GroupVo">
+	<select id="blacklist" parameterType="int" resultMap="BlackVo">
 		SELECT  black_no
 		        , b.store_no
 		        , store_name

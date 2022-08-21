@@ -31,524 +31,554 @@
 
 <body>
 
-    <div id="wrapper">
-        
-        <c:import url="/WEB-INF/views/includes/aside/basketAside.jsp" />
-        
-        <div class="d-flex flex-column" id="content-wrapper">
-            <div id="header-1">
-                <c:import url="/WEB-INF/views/includes/header.jsp" />
-            </div>
-                        		
-            <div class="container" id="container">
-                <div id="main-content">
-                    <div class="vote-container-title"><span class="no-drag">투표 만들기</span></div>
-                    
-                    <div id="edit-vote-area" class="card-body no-drag">
-                        <div id="edit-vote-header">
-                        	<span id="edit-vote-group-name">${groupName}</span>                        	
-                        	<span id="edit-vote-group-nums">
-                        		<span>(총 인원&nbsp;</span>
-                        		<span id="edit-vote-group-num" class="emphasize-blue">${fn:length(voteMember)}</span>
-                        		<span>명)</span>
-                        	</span>
-                        </div>
-                        <hr>
-                        
-                        <div id="edit-vote-member">
-                            <div id="edit-vote-add-people-area">
-                                <div id="vote-add-people">
-	                                <span class="eidt-vote-title">인원 추가</span>
-	                                <span id="vote-new-member-toggle">
-	                                	<i id="vote-member-minus" class="fas fa-minus-circle"></i>
-	                                	<span id="vote-new-member-num">1</span><span>명</span>
-	                                	<i id="vote-member-plus" class="fas fa-plus-circle"></i>
-	                                </span>
-	                                
-	                                <button class="btn btn-primary" id="vote-new-member-add-btn" type="button">추가하기</button>
-                                </div>
-                            </div>
-                            
-                            <div class="d-flex d-xxl-flex flex-row flex-grow-0 flex-wrap justify-content-xxl-start" id="edit-vote-people-area">
-                            
-                            	<!--  투표 참여할 인원들 표시  -->   
-                            	<c:set var="memberNo" value="0" />
-                            	                         	
-                            	<c:forEach var="member" items="${voteMember}">
-                            		<c:set var="memberNo" value="${memberNo+1}" />
-                            		
-                            		<c:if test="${member.bossCheck==1}">
-                            			
-                            			<span class="d-flex d-xxl-flex flex-wrap vote-people-bujang vote-people" data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${memberNo}">
-                            				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
-                            					<c:if test="${member.userNo != authUser.userNo}">
-                            						<i class="fas fa-minus-circle vote-member-not-today"></i>
-                            					</c:if>
-                            				</span>
-                            				<span class="vote-people-body-wrap">
-                            					<span class="text-center d-flex d-xxl-flex justify-content-center align-items-center vote-people-body">
-                            						<i class="fas fa-crown vote-bujang-crown"></i>
-                            						<span class="vote-people-name">${member.userName}</span>
-                            						<i class="fas fa-crown"></i>
-                            					</span>
-                            				</span>
-                            			</span>
-                            		</c:if>
-                            		
-                            		<c:if test="${member.bossCheck==0}">
-                            			<span class="d-flex d-xxl-flex flex-wrap vote-people" data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${memberNo}">
-                            				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
-                            					<c:if test="${member.userNo != authUser.userNo}">
-                            						<i class="fas fa-minus-circle vote-member-not-today"></i>
-                            					</c:if>
-                            				</span>
-                            				<span class="vote-people-body-wrap">
-                            					<span class="text-center d-flex d-xxl-flex justify-content-center align-items-center vote-people-body">
-                            						<i class="fas fa-crown"></i>
-                            						<span class="vote-people-name">${member.userName}</span>
-                            						<i class="fas fa-crown"></i>
-                            					</span>
-                            				</span>
-                            			</span>
-                            		</c:if>                    
-                            	</c:forEach>
+<div id="wrapper"> 
+	<c:import url="/WEB-INF/views/includes/aside/basketAside.jsp" />
+    
+    <div class="d-flex flex-column" id="content-wrapper">
+        <c:import url="/WEB-INF/views/includes/header.jsp" />
 
-                            </div>
-                        </div>
-                        <hr>
-                        
-                        <div id="vote-end-time">
-                            <div>
-                            	<span class="eidt-vote-title">투표 마감 시각</span>
-                            	<input type="number" id="vote-end-hour" min="00" max="23" step="1" value="" name="end-vote-hour">
-                            	<span>시</span>
-                            	<input type="number" id="vote-end-min" min="00" max="59" step="1" value="" name="end-vote-min">
-                            	<span>분 까지</span>
-                            </div>
-                            
-                            <div id="vote-time-button-area">
-                            	<span>투표 마감 시각</span>
-                            	<button class="btn btn-primary vote-add-time-btn" id="vote-add-10m" type="button">+10분</button>
-                            	<button class="btn btn-primary vote-add-time-btn" id="vote-add-30m" type="button">+30분</button>
-                            	<button class="btn btn-primary vote-add-time-btn" id="vote-add-1hr" type="button">+1시간</button>
-                            	<button class="btn btn-primary" id="vote-reset-btn" type="button">초기화</button>
-                            </div>
-                        </div>
-                        <hr>
-                        
-                        <div class="text-center" id="vote-make-finish"><button class="btn btn-primary text-center" id="make-vote-btn" type="button">투표 만들기</button></div>
+        <div class="container" id="container">
+            <div id="main-content">
+                <div class="vote-container-title"><span class="no-drag">투표 만들기</span></div>
+                
+                <div id="edit-vote-area" class="card-body no-drag">
+                    <div id="edit-vote-header">
+                    	<span id="edit-vote-group-name">${groupName}</span>                        	
+                    	<span id="edit-vote-group-nums">
+                    		<span>(총 인원&nbsp;</span>
+                    		<span id="edit-vote-group-num" class="emphasize-blue">${fn:length(voteMember)}</span>
+                    		<span>명)</span>
+                    	</span>
                     </div>
+                    
+                    <hr>
+                    
+                    <div id="edit-vote-member">
+                        <div id="edit-vote-add-people-area">
+                            <div id="vote-add-people">
+                             <span class="eidt-vote-title">인원 추가</span>
+                             <span id="vote-new-member-toggle">
+                             	<i id="vote-member-minus" class="fas fa-minus-circle"></i>
+                             	<span id="vote-new-member-num">1</span><span>명</span>
+                             	<i id="vote-member-plus" class="fas fa-plus-circle"></i>
+                             </span>
+                             
+                             <button class="btn btn-primary" id="vote-new-member-add-btn" type="button">추가하기</button>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex d-xxl-flex flex-row flex-grow-0 flex-wrap justify-content-xxl-start" id="edit-vote-people-area">
+                        
+                        	<!--  투표 참여할 인원들 표시  -->   
+                        	<c:set var="memberNo" value="0" />
+                        	                         	
+                        	<c:forEach var="member" items="${voteMember}">
+                        		<c:set var="memberNo" value="${memberNo+1}" />
+                        		
+                        		<c:if test="${member.bossCheck==1}">
+                        			
+                        			<span class="d-flex d-xxl-flex flex-wrap vote-people-bujang vote-people" data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${memberNo}">
+                        				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
+                        					<c:if test="${member.userNo != authUser.userNo}">
+                        						<i class="fas fa-minus-circle vote-member-not-today"></i>
+                        					</c:if>
+                        				</span>
+                        				<span class="vote-people-body-wrap">
+                        					<span class="text-center d-flex d-xxl-flex justify-content-center align-items-center vote-people-body">
+                        						<i class="fas fa-crown vote-bujang-crown"></i>
+                        						<span class="vote-people-name">${member.userName}</span>
+                        						<i class="fas fa-crown"></i>
+                        					</span>
+                        				</span>
+                        			</span>
+                        		</c:if>
+                        		
+                        		<c:if test="${member.bossCheck==0}">
+                        			<span class="d-flex d-xxl-flex flex-wrap vote-people" data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${memberNo}">
+                        				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
+                        					<c:if test="${member.userNo != authUser.userNo}">
+                        						<i class="fas fa-minus-circle vote-member-not-today"></i>
+                        					</c:if>
+                        				</span>
+                        				<span class="vote-people-body-wrap">
+                        					<span class="text-center d-flex d-xxl-flex justify-content-center align-items-center vote-people-body">
+                        						<i class="fas fa-crown"></i>
+                        						<span class="vote-people-name">${member.userName}</span>
+                        						<i class="fas fa-crown"></i>
+                        					</span>
+                        				</span>
+                        			</span>
+                        		</c:if>                    
+                        	</c:forEach>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div id="vote-end-time">
+                        <div>
+                        	<span class="eidt-vote-title">투표 마감 시각</span>
+                        	<input type="number" id="vote-end-hour" min="00" max="23" step="1" value="" name="end-vote-hour">
+                        	<span>시</span>
+                        	<input type="number" id="vote-end-min" min="00" max="59" step="1" value="" name="end-vote-min">
+                        	<span>분 까지</span>
+                        </div>
+                        
+                        <div id="vote-time-button-area">
+                        	<span>투표 마감 시각</span>
+                        	<button class="btn btn-primary vote-add-time-btn" id="vote-add-10m" type="button">+10분</button>
+                        	<button class="btn btn-primary vote-add-time-btn" id="vote-add-30m" type="button">+30분</button>
+                        	<button class="btn btn-primary vote-add-time-btn" id="vote-add-1hr" type="button">+1시간</button>
+                        	<button class="btn btn-primary" id="vote-reset-btn" type="button">초기화</button>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="text-center" id="vote-make-finish"><button class="btn btn-primary text-center" id="make-vote-btn" type="button">투표 만들기</button></div>
                 </div>
             </div>
-            <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
         </div>
-        
-        <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+        <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     </div>
-
+    
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    
+    <div class="modal fade" role="dialog" tabindex="-1" id="vote-link-modal">
+	    <div class="modal-dialog modal-dialog-centered" role="document">
+	        <div class="modal-content">
+	            <div class="modal-header d-xxl-flex" id="vote-link-modal-header">
+	                <h4 class="modal-title d-xxl-flex" id="vote-link-modal-header-title">투표가 성공적으로 생성되었습니다!</h4>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            
+	            <div class="modal-body d-flex justify-content-center justify-content-xxl-center" id="vote-link-modal-body">
+	                <div class="justify-content-center">
+	                    <p class="text-center">같이 밥을 먹을 그룹원들에게 투표를 공유할 수 있습니다<br></p>
+	                    <div class="d-flex justify-content-center">
+	                    	<button class="btn btn-danger d-inline-flex d-xxl-flex justify-content-center align-items-center" id="vote-kakao-btn" type="button">
+	                    		<i class="fas fa-comment"></i>
+	                    		<span>공유하기</span>
+	                    	</button>
+	                    	<span class="d-inline-flex flex-shrink-0 justify-content-center flex-nowrap align-items-xxl-center" id="vote-url-copy-box">
+	                    		<i class="fas fa-link d-inline-flex d-xxl-flex flex-shrink-0 justify-content-start align-items-center justify-content-xl-start align-items-xl-center justify-content-xxl-start align-items-xxl-center no-drag"></i>
+	                    		<input id="vote-url-input-1" class="d-inline-flex d-xxl-flex flex-shrink-0 align-items-xxl-center" type="text" value="">
+	                    		<button class="btn btn-primary d-inline-flex d-xxl-flex flex-shrink-0 justify-content-center align-items-center align-content-center align-items-xl-center justify-content-xxl-center align-items-xxl-center" id="vote-url-copy-btn-1" type="button">복사</button>
+	                    	</span>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
+	
+</div>
 	
 <script type="text/javascript">
-	let currentDate
-	let currentTime
-	let currentMin
-	let tempTime
-	let tempMin
-	let totVote = parseInt($("#edit-vote-group-num").text())
-		
-	let birdName = ["가마우지", "갈매기", "개개비", "거위", "고니", "곤줄박이", "기러기", "까마귀", "까치", 
-		"꼬리치레", "꾀꼬리", "꿩", "나무발발이", "논병아리", "느시", "닭", "독수리", "동고비", "두견", "두루미",
-		"따오기", "딱따구리", "뜸부기", "마도요", "말똥가리", "매", "메추라기", "메추라기", "밀화부리", "발구지",
-		"병아리", "부엉이", "비둘기", "뻐꾸기", "새홀리기", "솔개", "아비", "양진이", "어치", "오리", "오목눈이",
-		"올빼미", "왜가리", "원앙", "제비", "조롱이", "종다리", "지빠귀", "직박구리", "찌르레기", "할미새사촌", "해오라기"]
-	
-	
-	$(document).ready(async function() {
-		getTime()
-		$("#vote-end-hour").val(currentTime)
-		$("#vote-end-min").val(currentMin)
-		
-		await getIpClient()
-	})
-	
-	
-	////////// 새로고침 방지 ///////////////////////////////////////////////////////////////
-	
-	document.onkeydown = noEvent
-	
-	// 부장 로고 클릭 시
-	$("#bujang-logo-blue").on("click", function(){
-		var confirmRefresh = confirm("페이지 이동 시 진행상황이 저장되지 않습니다. 메인으로 이동하시겠습니까?")
-		if (!confirmRefresh) {		
-			return false
-		}
-	})
-	
-	// F5 버튼 눌렀을 때
-	function noEvent() {
-		if (event.keyCode == 116) {
-			var confirmRefresh = confirm("페이지 이동 시 진행상황이 저장되지 않습니다. 새로고침하시겠습니까?")
-			if (!confirmRefresh) {
-				event.keyCode = 2
-				
-				return false
-			}
-		} else if (event.ctrlKey && (event.keyCode == 78 || event.keyCode == 82)) {
-			return false
-			
-		}
-	}		
-	
-	
-	////////// 투표 인원 변경 //////////////////////////////////////////////////////////////////////	
-	
-	// 인원추가 - 버튼 토글
-	$("#vote-member-minus").on("click", function(){
-		var voteAddNum = parseInt($("#vote-new-member-num").text())
-		
-		if (voteAddNum > 1) {
-			voteAddNum -= 1
-			$("#vote-new-member-num").text(voteAddNum)
-		}
-	})
-	
-	// 인원추가 + 버튼 토글
-	$("#vote-member-plus").on("click", function(){
-		var voteAddNum = parseInt($("#vote-new-member-num").text())
-		
-		if (voteAddNum + parseInt($("#edit-vote-group-num").text()) < 30) {
-			voteAddNum += 1
-			$("#vote-new-member-num").text(voteAddNum)
-			
-		} else {
-			alert("투표 총 인원은 30명을 초과할 수 없습니다.")
-		}
-	})	
-	
-	
-	// 추가하기 버튼 클릭
-	$("#vote-new-member-add-btn").on("click", function(){
-		var voteAddNum = parseInt($("#vote-new-member-num").text())
-		var totNum = parseInt($("#edit-vote-group-num").text())
-				
-		$("#vote-new-member-num").text(1)
-		
-		if (totNum + voteAddNum > 30) {
-			alert("투표 총 인원은 30명을 초과할 수 없습니다.")
-			return false
-		}
-		
-		// 투표할 추가 인원 div 추가
-		for (var i = 0; i < voteAddNum; i++) {		
-			totVote += 1
-			var tempidx = Math.floor(Math.random() * birdName.length)
-			var tempName = birdName[tempidx]
-			birdName.splice(tempidx, 1)
-			
-			$("#edit-vote-people-area").append(
-				  "<span class='d-flex d-xxl-flex flex-wrap vote-people' data-vote-member-no='" + totVote + "'>"
-        		+ 	"<span class='text-end d-xl-flex d-xxl-flex justify-content-xl-end align-items-xl-center justify-content-xxl-end vote-people-header'>"
-    			+ 		"<i class='fas fa-pen d-inline-block vote-people-edit-name-btn'></i>"
-    			+ 		"<i class='fas fa-times-circle d-inline-block vote-people-del-btn'></i>"
-    			+ 	"</span>"
-    			+ 	"<span class='vote-people-body-wrap'>"
-    			+		"<span class='text-center d-flex d-xxl-flex justify-content-center align-items-center vote-people-body'>"
-    			+	 		"<i class='fas fa-crown foo'></i>"
-    			+ 			"<span class='vote-people-name'>" + tempName + "</span>"
-    			+		 	"<i class='fas fa-crown'></i>"
-    			+ 		"</span>"
-    			+ 	"</span>"
-    			+ "</span>"
-			)
-		}
-		
-		totNum += voteAddNum
-		$("#edit-vote-group-num").text(totNum)
-	})
-	
-	
-	
-	///////////// 투표 인원 수정 /////////////////////////////////////////////////////////////////////////////////////////////
-	
-	// 기존 그룹 멤버 투표 제외하기
-	$("#edit-vote-people-area").on("click", ".vote-member-not-today", function(){
-		//alert($(this).closest(".vote-people").find(".vote-people-name").text() + "님은 오늘 점심 따로갈래요 😢")
-		
-		$(this).closest(".vote-people").addClass("vote-people-deleted")
-		$(this).removeClass("fas fa-minus-circle vote-member-not-today")
-		$(this).addClass("fas fa-plus-circle vote-member-re-add")
-	})
-	
-	
-	// 제외된 기존 그룹 멤버 다시 추가
-	$("#edit-vote-people-area").on("click", ".vote-member-re-add", function(){
-		$(this).closest(".vote-people").removeClass("vote-people-deleted")
-		$(this).removeClass("fas fa-plus-circle vote-member-re-add")
-		$(this).addClass("fas fa-minus-circle vote-member-not-today")
-	})
-	
-	
-	// 새이름 멤버 삭제
-	$("#edit-vote-people-area").on("click", ".vote-people-del-btn", function(){
-		var confirmDelBird = confirm($(this).closest(".vote-people").find(".vote-people-name").text() + "님을 투표에서 제외하시겠습니까?")
-		if (!confirmDelBird) {
-			return
-		}
-		
-		$(this).closest(".vote-people").remove()
-		
-		var totNum = parseInt($("#edit-vote-group-num").text())
-		$("#edit-vote-group-num").text(totNum-1)
-	})
-	
-	
-	// 새이름 멤버 수정
-	$("#edit-vote-people-area").on("click", ".vote-people-edit-name-btn", function(){
-		$(this).removeClass("fas fa-pen vote-people-edit-name-btn")
-		$(this).addClass("fas fa-check-circle vote-people-edit-confirm")
-		$(this).closest(".vote-people").find(".vote-people-del-btn").remove()
-		
-		var spanBirdName = $(this).closest(".vote-people").find(".vote-people-name")
-		var birdName = spanBirdName.text()
-		spanBirdName.html(
-			"<input class='change-birdname-ipt' type='text' value='" + birdName + "'>"
-		)
-	})
-	
-	
-	// 새이름 멤버 수정(확정 버튼 클릭)
-	$("#edit-vote-people-area").on("click", ".vote-people-edit-confirm", function(){
-		changeBirdName($(this))
-	})
-	
-	
-	// 새이름 멤버 수정(엔터)
-	$("#edit-vote-people-area").on("keyup", ".change-birdname-ipt", function(key){
-		if (key.keyCode == 13) {
-			changeBirdName($(this).closest(".vote-people").find(".vote-people-edit-confirm"))
-		}
-	})
-	
-	
-	// 새이름 멤버 수정 함수
-	function changeBirdName(btn) {
-		var spanName = btn.closest(".vote-people").find(".vote-people-name")
-		var changedName = spanName.find("input").val()
-		
-		if (changedName.length < 1) {
-			alert("적어도 한 글자 이상 입력해주세요")
-			
-			return
-		}
-		
-		spanName.html(changedName)
-				
-		btn.removeClass("fas fa-check-circle vote-people-edit-confirm")
-		btn.addClass("fas fa-pen vote-people-edit-name-btn")
-		btn.closest(".vote-people-header").append("<i class='fas fa-times-circle d-inline-block vote-people-del-btn'></i>")
-	}
-	
-	
-	////////// 투표 마감 시각 관련 /////////////////////////////////////////////////////////////////////////////
-	
-	// 현재 시각 가져오기
-	function getTime() {
-		currentDate = new Date()
-		currentTime = String(currentDate.getHours())
-		currentMin = String(currentDate.getMinutes())
-		
-		show_two_nums()
-	}
-	
-	
-	// 시간 계산
-	function calculateTime(plusMin) {
-		tempTime = parseInt(currentTime)
-		tempMin = parseInt(currentMin) + plusMin
-		
-		if (tempMin > 59) {			
-			tempMin -= 60
-			tempTime += 1
-		}
-		
-		if (tempTime > 23) {
-			alert("투표 마감 시각은 오늘 자정을 넘어갈 수 없습니다")
-			return
-			
-		} else {
-			currentTime = String(tempTime)
-			currentMin = String(tempMin)
-			show_two_nums()
-			
-			$("#vote-end-hour").val(currentTime)
-			$("#vote-end-min").val(currentMin)
-		}
-	}
-		
-	
-	// 두자리 수 유지
-	function show_two_nums() {
-		currentTime = currentTime.padStart(2, "0")
-		currentMin = currentMin.padStart(2, "0")
-	}
-	
-	
-	// input에서 변화 감지 (**수정 필요)
-	$("#vote-end-hour").on("change", function(){
-		tempTime = String($("#vote-end-hour").val())
-		
-		if (tempTime > 23) {
-			alert("0 ~ 23 사이의 숫자만 입력 가능합니다.")
-			$("#vote-end-hour").val(currentTime)
-			
-			return
-		}
-		
-		currentTime = tempTime
-		show_two_nums()
-		$("#vote-end-hour").val(currentTime)
-	})
-	
-	$("#vote-end-min").on("change", function(){
-		tempMin = String($("#vote-end-min").val())
-		
-		if (tempMin > 59) {
-			alert("0 ~ 59 사이의 숫자만 입력 가능합니다.")
-			$("#vote-end-min").val(currentMin)
-			
-			return
-		}
-		
-		currentMin = tempMin
-		show_two_nums()
-		$("#vote-end-min").val(currentMin)
-	})
-	
-	
-	// +10분 클릭
-	$("#vote-add-10m").on("click", function(){
-		calculateTime(10)
-	})
-	
-	
-	// +30분 클릭
-	$("#vote-add-30m").on("click", function(){
-		calculateTime(30)
-	})
-	
-	
-	// +1시간 클릭
-	$("#vote-add-1hr").on("click", function(){
-		calculateTime(60)
-	})
-	
-	
-	// 초기화 클릭
-	$("#vote-reset-btn").on("click", function(){
-		getTime()
-		
-		$("#vote-end-hour").val(currentTime)
-		$("#vote-end-min").val(currentMin)
-	})
-	
-	
-	///////////////////// 투표 생성하기 //////////////////////////////////////////////////////////
-	
-	// 투표 만들기 버튼 클릭
-	
-	$("#make-vote-btn").on("click", function(){	
-		// 투표 정리 시각 데이터 
-		let voteEndDate = new Date()
-		voteEndDate.setHours($("#vote-end-hour").val())
-		voteEndDate.setMinutes($("#vote-end-min").val())
-		console.log(voteEndDate)
-		
-		if (voteEndDate <= new Date()) {
-			alert("투표 마감 시각은 현재 시각 이후여야합니다.")
-			
-			return false
-		}
-		
-		
-		// 투표 멤버 불러오기
-		let voteMember = [] 
-		var cnt = 0
-		
-		for (var i = 1; i < totVote; i++) {
-			var currMem = {}
-			var currDiv = $("[data-vote-member-no=" + i + "]")
-			
-			var currName = currDiv.find(".vote-people-name").text()
-			
-			if (currName.length > 0) {
-				if (currDiv.hasClass("vote-people-deleted")) {
-					continue
-				}
-				cnt += 1
-				currMem["userName"] = currName
-				
-				var userGrade = parseInt(currDiv.attr("data-user-grade"))
-				
-				if (userGrade > 0) {
-					currMem["userNo"] = parseInt(currDiv.attr("data-user-no"))
-					currMem["userGrade"] = userGrade
-				}
-				voteMember.push(currMem)
-			}
-		}
-		
-		if (cnt < 2) {
-			alert("최소 두 명 이상이 존재해야 투표를 진행할 수 있습니다.")
-			
-			return false
-		}
-		voteMem = JSON.stringify({"mem" : voteMember})
-		console.log(voteMem)
-		
-		
-		// 장바구니 데이터 정리
-		var curr_basket = []
-		for (var i = 0; i < basket[curr_basket_group].length; i++) {
-			if (basket[curr_basket_group][i].stored) {
-				curr_basket.push(basket[curr_basket_group][i])
-			}
-		}
-		console.log(curr_basket)
-		currBasket = JSON.stringify(curr_basket)
-		
-		let voteData = {
-			voteEndDate : voteEndDate,
-			voteMember : voteMem,
-			currBasket : currBasket
-		}
-		
-		// form으로 묶어서 전송
-		function postVoteData(path, params, method) {
-			method = method || "post"
-			
-			let form = document.createElement("form")
-			document.charset = "utf-8"
-			
-			form.setAttribute("method", method)
-			form.setAttribute("action", path)
 
-			for (var key in params) {
-				var hiddenField = document.createElement("input")
-				
-				hiddenField.setAttribute("type", "hidden")
-				hiddenField.setAttribute("name", key)
-				hiddenField.setAttribute("value", params[key])
-				
-				form.appendChild(hiddenField)
-			}
-		
-			document.body.appendChild(form)
-			form.submit()
+let currentDate
+let currentTime
+let currentMin
+let tempTime
+let tempMin
+let totVote = parseInt($("#edit-vote-group-num").text())
+	
+let birdName = ["가마우지", "갈매기", "개개비", "거위", "고니", "곤줄박이", "기러기", "까마귀", "까치", 
+	"꼬리치레", "꾀꼬리", "꿩", "나무발발이", "논병아리", "느시", "닭", "독수리", "동고비", "두견", "두루미",
+	"따오기", "딱따구리", "뜸부기", "마도요", "말똥가리", "매", "메추라기", "메추라기", "밀화부리", "발구지",
+	"병아리", "부엉이", "비둘기", "뻐꾸기", "새홀리기", "솔개", "아비", "양진이", "어치", "오리", "오목눈이",
+	"올빼미", "왜가리", "원앙", "제비", "조롱이", "종다리", "지빠귀", "직박구리", "찌르레기", "할미새사촌", "해오라기"]
+
+
+$(document).ready(async function() {
+	getTime()
+	$("#vote-end-hour").val(currentTime)
+	$("#vote-end-min").val(currentMin)
+})
+
+
+////////// 새로고침 방지 ///////////////////////////////////////////////////////////////
+
+document.onkeydown = noEvent
+
+// 부장 로고 클릭 시
+$("#bujang-logo-blue").on("click", function(){
+	var confirmRefresh = confirm("페이지 이동 시 진행상황이 저장되지 않습니다. 메인으로 이동하시겠습니까?")
+	if (!confirmRefresh) {		
+		return false
+	}
+})
+
+// F5 버튼 눌렀을 때
+function noEvent() {
+	if (event.keyCode == 116) {
+		var confirmRefresh = confirm("페이지 이동 시 진행상황이 저장되지 않습니다. 새로고침하시겠습니까?")
+		if (!confirmRefresh) {
+			event.keyCode = 2
+			
+			return false
 		}
+	} else if (event.ctrlKey && (event.keyCode == 78 || event.keyCode == 82)) {
+		return false
 		
-		postVoteData("${pageContext.request.contextPath}/vote/makeVote", voteData)
-	})	
+	}
+}		
+
+
+////////// 투표 인원 변경 //////////////////////////////////////////////////////////////////////	
+
+// 인원추가 - 버튼 토글
+$("#vote-member-minus").on("click", function(){
+	var voteAddNum = parseInt($("#vote-new-member-num").text())
+	
+	if (voteAddNum > 1) {
+		voteAddNum -= 1
+		$("#vote-new-member-num").text(voteAddNum)
+	}
+})
+
+// 인원추가 + 버튼 토글
+$("#vote-member-plus").on("click", function(){
+	var voteAddNum = parseInt($("#vote-new-member-num").text())
+	
+	if (voteAddNum + parseInt($("#edit-vote-group-num").text()) < 30) {
+		voteAddNum += 1
+		$("#vote-new-member-num").text(voteAddNum)
+		
+	} else {
+		alert("투표 총 인원은 30명을 초과할 수 없습니다.")
+	}
+})	
+
+
+// 추가하기 버튼 클릭
+$("#vote-new-member-add-btn").on("click", function(){
+	var voteAddNum = parseInt($("#vote-new-member-num").text())
+	var totNum = parseInt($("#edit-vote-group-num").text())
+			
+	$("#vote-new-member-num").text(1)
+	
+	if (totNum + voteAddNum > 30) {
+		alert("투표 총 인원은 30명을 초과할 수 없습니다.")
+		return false
+	}
+	
+	// 투표할 추가 인원 div 추가
+	for (var i = 0; i < voteAddNum; i++) {		
+		totVote += 1
+		var tempidx = Math.floor(Math.random() * birdName.length)
+		var tempName = birdName[tempidx]
+		birdName.splice(tempidx, 1)
+		
+		$("#edit-vote-people-area").append(
+			  "<span class='d-flex d-xxl-flex flex-wrap vote-people' data-vote-member-no='" + totVote + "'>"
+       		+ 	"<span class='text-end d-xl-flex d-xxl-flex justify-content-xl-end align-items-xl-center justify-content-xxl-end vote-people-header'>"
+   			+ 		"<i class='fas fa-pen d-inline-block vote-people-edit-name-btn'></i>"
+   			+ 		"<i class='fas fa-times-circle d-inline-block vote-people-del-btn'></i>"
+   			+ 	"</span>"
+   			+ 	"<span class='vote-people-body-wrap'>"
+   			+		"<span class='text-center d-flex d-xxl-flex justify-content-center align-items-center vote-people-body'>"
+   			+	 		"<i class='fas fa-crown foo'></i>"
+   			+ 			"<span class='vote-people-name'>" + tempName + "</span>"
+   			+		 	"<i class='fas fa-crown'></i>"
+   			+ 		"</span>"
+   			+ 	"</span>"
+   			+ "</span>"
+		)
+	}
+	
+	totNum += voteAddNum
+	$("#edit-vote-group-num").text(totNum)
+})
+
+
+
+///////////// 투표 인원 수정 /////////////////////////////////////////////////////////////////////////////////////////////
+
+// 기존 그룹 멤버 투표 제외하기
+$("#edit-vote-people-area").on("click", ".vote-member-not-today", function(){
+	//alert($(this).closest(".vote-people").find(".vote-people-name").text() + "님은 오늘 점심 따로갈래요 😢")
+	
+	$(this).closest(".vote-people").addClass("vote-people-deleted")
+	$(this).removeClass("fas fa-minus-circle vote-member-not-today")
+	$(this).addClass("fas fa-plus-circle vote-member-re-add")
+})
+
+
+// 제외된 기존 그룹 멤버 다시 추가
+$("#edit-vote-people-area").on("click", ".vote-member-re-add", function(){
+	$(this).closest(".vote-people").removeClass("vote-people-deleted")
+	$(this).removeClass("fas fa-plus-circle vote-member-re-add")
+	$(this).addClass("fas fa-minus-circle vote-member-not-today")
+})
+
+
+// 새이름 멤버 삭제
+$("#edit-vote-people-area").on("click", ".vote-people-del-btn", function(){
+	var confirmDelBird = confirm($(this).closest(".vote-people").find(".vote-people-name").text() + "님을 투표에서 제외하시겠습니까?")
+	if (!confirmDelBird) {
+		return
+	}
+	
+	$(this).closest(".vote-people").remove()
+	
+	var totNum = parseInt($("#edit-vote-group-num").text())
+	$("#edit-vote-group-num").text(totNum-1)
+})
+
+
+// 새이름 멤버 수정
+$("#edit-vote-people-area").on("click", ".vote-people-edit-name-btn", function(){
+	$(this).removeClass("fas fa-pen vote-people-edit-name-btn")
+	$(this).addClass("fas fa-check-circle vote-people-edit-confirm")
+	$(this).closest(".vote-people").find(".vote-people-del-btn").remove()
+	
+	var spanBirdName = $(this).closest(".vote-people").find(".vote-people-name")
+	var birdName = spanBirdName.text()
+	spanBirdName.html(
+		"<input class='change-birdname-ipt' type='text' value='" + birdName + "'>"
+	)
+})
+
+
+// 새이름 멤버 수정(확정 버튼 클릭)
+$("#edit-vote-people-area").on("click", ".vote-people-edit-confirm", function(){
+	changeBirdName($(this))
+})
+
+
+// 새이름 멤버 수정(엔터)
+$("#edit-vote-people-area").on("keyup", ".change-birdname-ipt", function(key){
+	if (key.keyCode == 13) {
+		changeBirdName($(this).closest(".vote-people").find(".vote-people-edit-confirm"))
+	}
+})
+
+
+// 새이름 멤버 수정 함수
+function changeBirdName(btn) {
+	var spanName = btn.closest(".vote-people").find(".vote-people-name")
+	var changedName = spanName.find("input").val()
+	
+	if (changedName.length < 1) {
+		alert("적어도 한 글자 이상 입력해주세요")
+		
+		return
+	}
+	
+	spanName.html(changedName)
+			
+	btn.removeClass("fas fa-check-circle vote-people-edit-confirm")
+	btn.addClass("fas fa-pen vote-people-edit-name-btn")
+	btn.closest(".vote-people-header").append("<i class='fas fa-times-circle d-inline-block vote-people-del-btn'></i>")
+}
+
+
+////////// 투표 마감 시각 관련 /////////////////////////////////////////////////////////////////////////////
+
+// 현재 시각 가져오기
+function getTime() {
+	currentDate = new Date()
+	currentTime = String(currentDate.getHours())
+	currentMin = String(currentDate.getMinutes())
+	
+	show_two_nums()
+}
+
+
+// 시간 계산
+function calculateTime(plusMin) {
+	tempTime = parseInt(currentTime)
+	tempMin = parseInt(currentMin) + plusMin
+	
+	if (tempMin > 59) {			
+		tempMin -= 60
+		tempTime += 1
+	}
+	
+	if (tempTime > 23) {
+		alert("투표 마감 시각은 오늘 자정을 넘어갈 수 없습니다")
+		return
+		
+	} else {
+		currentTime = String(tempTime)
+		currentMin = String(tempMin)
+		show_two_nums()
+		
+		$("#vote-end-hour").val(currentTime)
+		$("#vote-end-min").val(currentMin)
+	}
+}
+	
+
+// 두자리 수 유지
+function show_two_nums() {
+	currentTime = currentTime.padStart(2, "0")
+	currentMin = currentMin.padStart(2, "0")
+}
+
+
+// input에서 변화 감지 (**수정 필요)
+$("#vote-end-hour").on("change", function(){
+	tempTime = String($("#vote-end-hour").val())
+	
+	if (tempTime > 23) {
+		alert("0 ~ 23 사이의 숫자만 입력 가능합니다.")
+		$("#vote-end-hour").val(currentTime)
+		
+		return
+	}
+	
+	currentTime = tempTime
+	show_two_nums()
+	$("#vote-end-hour").val(currentTime)
+})
+
+$("#vote-end-min").on("change", function(){
+	tempMin = String($("#vote-end-min").val())
+	
+	if (tempMin > 59) {
+		alert("0 ~ 59 사이의 숫자만 입력 가능합니다.")
+		$("#vote-end-min").val(currentMin)
+		
+		return
+	}
+	
+	currentMin = tempMin
+	show_two_nums()
+	$("#vote-end-min").val(currentMin)
+})
+
+
+// +10분 클릭
+$("#vote-add-10m").on("click", function(){
+	calculateTime(10)
+})
+
+
+// +30분 클릭
+$("#vote-add-30m").on("click", function(){
+	calculateTime(30)
+})
+
+
+// +1시간 클릭
+$("#vote-add-1hr").on("click", function(){
+	calculateTime(60)
+})
+
+
+// 초기화 클릭
+$("#vote-reset-btn").on("click", function(){
+	getTime()
+	
+	$("#vote-end-hour").val(currentTime)
+	$("#vote-end-min").val(currentMin)
+})
+
+
+///////////////////// 투표 생성하기 //////////////////////////////////////////////////////////
+
+// 투표 만들기 버튼 클릭
+
+$("#make-vote-btn").on("click", function(){	
+	// 투표 정리 시각 데이터 
+	let voteEndDate = new Date()
+	voteEndDate.setHours($("#vote-end-hour").val())
+	voteEndDate.setMinutes($("#vote-end-min").val())
+	console.log(voteEndDate)
+	
+	if (voteEndDate <= new Date()) {
+		alert("투표 마감 시각은 현재 시각 이후여야합니다.")
+		
+		return false
+	}
 	
 	
+	// 투표 멤버 불러오기
+	let voteMember = [] 
+	var cnt = 0
+	
+	for (var i = 1; i < totVote; i++) {
+		var currMem = {}
+		var currDiv = $("[data-vote-member-no=" + i + "]")
+		
+		var currName = currDiv.find(".vote-people-name").text()
+		
+		if (currName.length > 0) {
+			if (currDiv.hasClass("vote-people-deleted")) {
+				continue
+			}
+			cnt += 1
+			currMem["userName"] = currName
+			
+			var userGrade = parseInt(currDiv.attr("data-user-grade"))
+			
+			if (userGrade > 0) {
+				currMem["userNo"] = parseInt(currDiv.attr("data-user-no"))
+				currMem["userGrade"] = userGrade
+			}
+			voteMember.push(currMem)
+		}
+	}
+	
+	if (cnt < 2) {
+		alert("최소 두 명 이상이 존재해야 투표를 진행할 수 있습니다.")
+		
+		return false
+	}
+	voteMem = JSON.stringify({"mem" : voteMember})
+	console.log(voteMem)
+	
+	
+	// 장바구니 데이터 정리
+	var curr_basket = []
+	for (var i = 0; i < basket[curr_basket_group].length; i++) {
+		if (basket[curr_basket_group][i].stored) {
+			curr_basket.push(basket[curr_basket_group][i])
+		}
+	}
+	console.log(curr_basket)
+	currBasket = JSON.stringify(curr_basket)
+	
+	
+	// ajax로 데이터 전송		
+	let voteData = {
+		voteEndDate : voteEndDate,
+		voteMember : voteMem,
+		currBasket : currBasket
+	}
+	
+	$.ajax({
+		type : "POST",
+		url : "${pageContext.request.contextPath}/vote/makeVote",
+		contentType : "application/json",
+		async : false,
+		data : JSON.stringify(voteData),
+		dataType : 'json',
+		
+		success : function(voteNo) {
+			console.log("여기3")
+			if (voteNo == 0) {
+				alert("투표 생성 실패")
+				
+			} else {
+				$("#vote-url-input-1").val("http://localhost:8088/" + voteNo)
+				$("#vote-link-modal").modal("show")
+			}
+		},
+		error: function(xhr, status, error){
+			alert("오류 발생" + error);
+		}
+	})
+})
+	
+
+// 투표 생성 모달 닫힐 때
+$("#vote-link-modal").on("hide.bs.modal", function(){
+	location.replace("${pageContext.request.contextPath}/")
+})
+
 </script>
 
 </body>
