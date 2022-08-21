@@ -10,10 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lunchwb.service.VisitedService;
@@ -29,8 +29,6 @@ public class VisitedController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(StoreController.class);
 	
-	/* 실험용메인2 - 리뷰 작성페이지*/
-	/* 나중에 도메인 /review or /visited 로 바꿀 예정 */
 	@GetMapping("/")
 	public String visitedMain(Model model, HttpSession session) {
 		logger.info("VisitedController > visitedMain()");
@@ -51,14 +49,14 @@ public class VisitedController {
 	
 	
 	/* 리뷰 작성 */
-	@PostMapping("/review/add")
-	public boolean addReview(HttpSession session, ReviewVo reviewVo) {
+	@PostMapping("/{visitedNo}/review/add")
+	public String addReview(@PathVariable("visitedNo") int visitedNo, HttpSession session, ReviewVo reviewVo) {
 		logger.info("VisitedController > addReview()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		boolean result = visitedService.addReview(authUser, reviewVo);
+		visitedService.addReview(visitedNo, authUser, reviewVo);
 		
-		return result;
+		return "redirect:/";
 	}
 	
 	

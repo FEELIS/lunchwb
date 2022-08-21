@@ -111,25 +111,42 @@ public class VisitedService {
 	
 	
 	/********************* 오늘 다녀온 가게 리뷰 작성 ***************************/
-	public boolean addReview(UserVo authUser, ReviewVo reviewVo) {
-		boolean result = false;
-		
+	public void addReview(int visitedNo, UserVo authUser, ReviewVo reviewVo) {
 		//////////////////// visited > 메뉴 기록 /////////////////////////////
 		VisitedVo visitedVo = new VisitedVo();
-		visitedVo.setVisitedNo(reviewVo.getVisitedNo());
+		visitedVo.setVisitedNo(visitedNo);
 		visitedVo.setMenuNo(reviewVo.getMenuNo());
 		
 		vstDao.todayMenu(visitedVo);
 		
-		///////////////// 리뷰 저장(파일 제외) ////////////////////////////////
+		///////////////// 리뷰 저장 ////////////////////////////////
 		reviewVo.setUserNo(authUser.getUserNo());
-		int count = reviewDao.addReview(reviewVo);
+		//리뷰 사진 파일
+		MultipartFile file = reviewVo.getFile();
 		
-		if(count > 0) {
-			result = true;
+		if(!file.isEmpty()) {
+			String saveDir = "C:\\javaStudy\\upload";
+			String orgName = file.getOriginalFilename();
+			String exName = orgName.substring(orgName.lastIndexOf("."));
+			String saveName = System.currentTimeMillis()+UUID.randomUUID().toString()+exName;
+			String filePath = saveDir + "\\" + saveName;
+			
+			reviewVo.setReviewFileName(saveName);
+			
+			try {
+				byte[] fileData = file.getBytes();
+				OutputStream os = new FileOutputStream(filePath);
+				BufferedOutputStream bos = new BufferedOutputStream(os);
+				
+				bos.write(fileData);
+				bos.close();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
-		
-		return result;
+		//리뷰 작성
+		reviewDao.addReview(reviewVo);
 	}
 	
 	

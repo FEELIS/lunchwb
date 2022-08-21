@@ -220,6 +220,7 @@
 }
 
 #today-review .card-body {
+  height: 332.03px;
   padding: 30px 30px 15px 30px;
 }
 
@@ -245,7 +246,7 @@
   font-weight: bold;
 }
 
-#today-review select {
+#today-review #today-menu {
   height: 24px;
   margin: 0px 0px 10px 25px;
   color: rgb(133,135,150);
@@ -272,12 +273,24 @@
   font-size: 14px;
 }
 
+#today-review #noFile {
+  width: 200px;
+  margin-bottom: 10px;
+  margin-left: 25px;
+  font-size: 14px;
+}
+
 .card-body #today-review-content {
   width: 100%;
   margin-top: 5px;
   margin-bottom: 5px;
   border-color: var(--bs-gray-500);
   font-size: 16px;
+}
+
+.card-body #btn-add-review #today-review-content {
+  text-align: left;
+  margin-left: 25px;
 }
 
 #btn-add-review {

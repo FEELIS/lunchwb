@@ -157,7 +157,16 @@
 	
 	<insert id="addReview" parameterType="ReviewVo">
 		INSERT INTO review
-		VALUES (seq_review_no.NEXTVAL, #{userNo}, #{visitedNo}, #{reviewContent}, #{userScore}, ''	, 0)
+		VALUES (seq_review_no.NEXTVAL, #{userNo}, #{visitedNo}, #{reviewContent}, #{userScore}, 
+			<choose>
+				<when test="reviewFileName == null || reviewFileName ==''">
+					''
+				</when>
+				<otherwise>
+					#{reviewFileName}
+				</otherwise>
+			</choose>
+			, 0)
 	</insert>
 
 </mapper>

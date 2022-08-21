@@ -52,8 +52,7 @@
 <body>
 
 	<div id="wrapper">
-		<nav id="visited-aside"
-			class="navbar navbar-light bg-white text-center d-xxl-flex align-items-start justify-content-xxl-center sidebar accordion p-0">
+		<nav id="visited-aside" class="navbar navbar-light bg-white text-center d-xxl-flex align-items-start justify-content-xxl-center sidebar accordion p-0 no-drag">
 
 			<div class="container-fluid d-flex flex-column p-0">
 
@@ -154,8 +153,7 @@
 		</nav>
 
 
-		<div id="content-wrapper" class="d-flex flex-column"
-			style="position: relative;">
+		<div id="content-wrapper" class="d-flex flex-column no-drag" style="position: relative;">
 
 			<div id="content" class="border rounded">
 
@@ -264,8 +262,6 @@
 										<c:choose>
 											<c:when test="${visitedMap.reviewVo == null}">
 			                            	리뷰 남기기
-			                            	<input type="hidden" name="visitedNo"
-													value="${visitedMap.visitedVo.visitedNo}" />
 											</c:when>
 											<c:otherwise>
 											오늘 작성한 리뷰
@@ -276,22 +272,24 @@
 
 								<div class="card-body" style="background: #ffffff;">
 									<!-- enctype="multilpart/form-data" -->
-									<form id="file-submit"
-										action="${pageContext.request.contextPath}/visited/review/file/upload"
+									<form id="review-submit"
+										action="${pageContext.request.contextPath}/visited/${visitedMap.visitedVo.visitedNo}/review/add"
 										method="post" enctype="multipart/form-data">
 
 										<div class="row">
 											<div class="col-xxl-7">
 												<div class="d-inline today-review-line">
-													<span class="d-inline-block circles"> <span
-														class="d-inline-block me-2 bg-secondary icon-circle"></span>
-													</span> <span class="fw-bolder d-inline-block"> <c:choose>
+													<span class="d-inline-block circles">
+														<span class="d-inline-block me-2 bg-secondary icon-circle"></span>
+													</span>
+													<span class="fw-bolder d-inline-block no-drag">
+														<c:choose>
 															<c:when test="${visitedMap.reviewVo == null}">
-							                            	가게는 어떠셨나요?
-					                            		</c:when>
+							                            		가게는 어떠셨나요?
+					                            			</c:when>
 															<c:otherwise>
 															내가 준 별점
-					                            		</c:otherwise>
+					                            			</c:otherwise>
 														</c:choose>
 													</span>
 												</div>
@@ -314,13 +312,14 @@
 
 												<div>
 													<div class="d-block today-review-line">
-														<span class="d-inline-block circles"> <span
-															class="d-inline-block me-2 bg-secondary icon-circle"></span>
+														<span class="d-inline-block circles">
+															<span class="d-inline-block me-2 bg-secondary icon-circle"></span>
 														</span>
 														<c:choose>
 															<c:when test="${visitedMap.reviewVo == null}">
-																<span class="fw-bolder d-inline-block"> 메뉴를
-																	선택해주세요  </span>
+																<span class="fw-bolder d-inline-block"> 
+																	메뉴를 선택해주세요
+																</span>
 
 																<div>
 																	<select id="today-menu" name="menuNo">
@@ -332,7 +331,8 @@
 																</div>
 															</c:when>
 															<c:otherwise>
-																<span class="fw-bolder d-inline-block"> 오늘 먹은 메뉴
+																<span class="fw-bolder d-inline-block"> 
+																	오늘 먹은 메뉴
 																</span>
 																<div>
 																	<span id="today-menu">${visitedMap.reviewVo.menuName}</span>
@@ -344,32 +344,46 @@
 
 												<div>
 													<div class="d-block">
-														<span class="d-inline-block circles"> <c:if
-																test="${visitedMap.reviewVo == null}">
-																<span
-																	class="d-inline-block me-2 bg-secondary icon-circle"></span>
-															</c:if>
-														</span> <span class="fs-6 fw-bolder d-inline-block"> <c:if
-																test="${visitedMap.reviewVo == null}">
-		                                            	사진을 업로드 해주세요(선택) :
-	                                           		</c:if>
+														<span class="d-inline-block circles">
+															<span class="d-inline-block me-2 bg-secondary icon-circle"></span>
+														</span>
+														<span class="fs-6 fw-bolder d-inline-block">
+															<c:choose>
+																<c:when test="${visitedMap.reviewVo == null}">
+			                                            			사진을 업로드 해주세요(선택) :
+		                                           				</c:when>
+		                                           				<c:otherwise>
+		                                           					리뷰 사진
+		                                           				</c:otherwise>
+	                                           				</c:choose>
 														</span>
 													</div>
 
 													<div>
-														<c:if test="${visitedMap.reviewVo == null}">
-															<input id="uploadImg" type="file" name="file"
-																onchange="prev_img(this)" />
-														</c:if>
+														<c:choose>
+															<c:when test="${visitedMap.reviewVo == null}">
+																<input id="uploadImg" type="file" name="file" onchange="prev_img(this)" />
+															</c:when>
+															<c:when test="${visitedMap.reviewVo.reviewFileName == null || visitedMap.reviewVo.reviewFileName == ''}">
+																<span id="noFile">업로드 된 사진 없음</span>
+															</c:when>
+														</c:choose>
 													</div>
 												</div>
 
 											</div>
 
 											<div id="review-image-area" class="col text-end">
-												<img id="img-preview" class="no-drag"
-													src="${pageContext.request.contextPath}/assets/img/imgarea.png"
-													style="width: 130.5px; height: 174px;" />
+												<c:choose>
+													<c:when test="${visitedMap.reviewVo == null || visitedMap.reviewVo.reviewFileName == null || visitedMap.reviewVo.reviewFileName == ''}">
+														<img id="img-preview" class="no-drag"
+															src="${pageContext.request.contextPath}/assets/img/imgarea.png"
+															style="width: 130.5px; height: 174px;" />
+													</c:when>
+													<c:otherwise>
+														<img id="proImg" src="${pageContext.request.contextPath}/upload/${visitedMap.reviewVo.reviewFileName}">
+													</c:otherwise>
+												</c:choose>
 											</div>
 
 										</div>
@@ -381,16 +395,27 @@
 														placeholder="내용을 입력해주세요"></textarea>
 												</c:when>
 												<c:otherwise>
-													<span id="today-review-content">${visitedMap.reviewVo.reviewContent}</span>
+													<span class="d-inline-block circles">
+															<span class="d-inline-block me-2 bg-secondary icon-circle"></span>
+													</span>
+													<span class="fs-6 fw-bolder d-inline-block">
+														리뷰 내용
+													</span>
 												</c:otherwise>
 											</c:choose>
 										</div>
 
 										<div id="btn-add-review" class="text-center">
-											<c:if test="${visitedMap.reviewVo == null}">
-												<button class="btn btn-primary btn-today" type="submit">리뷰
-													등록</button>
-											</c:if>
+											<c:choose>
+												<c:when test="${visitedMap.reviewVo == null}">
+													<button class="btn btn-primary btn-today" type="submit">
+														리뷰 등록
+													</button>
+												</c:when>
+												<c:otherwise>
+													<span id="today-review-content" class="">${visitedMap.reviewVo.reviewContent}</span>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</form>
 
@@ -495,7 +520,7 @@ function prev_img(input) {
 }
 
 
-$("#btn-add-review button").on("click", function(){
+$("#review-submit").on("submit", function(){
 	console.log("리뷰 등록 버튼 클릭")
 
 	var menuNo = $("[name = 'menuNo']").val()
@@ -517,6 +542,8 @@ $("#btn-add-review button").on("click", function(){
 		}
 	}
 	
+	return true
+	/* 
 	var visitedNo = $("[name = 'visitedNo']").val()
 	
 	const imageInput = $("#imageInput")[0]
@@ -531,31 +558,7 @@ $("#btn-add-review button").on("click", function(){
 		reviewContent : reviewContent,
 		userScore : userScore
 	}
-	
-	
-	$.ajax({
-		url : "${pageContext.request.contextPath}/review/add",
-		type : "post",
-		contentType : "application/json",
-		data : JSON.stringify(reviewVo),
-		dataType : "json",
-		
-		success : function(result){
-			console.log("result: "+result)
-			
-			if(result){
-				return true
-			}else{
-				alert("리뷰 등록에 실패했습니다")
-				return false
-			}
-		},
-		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
-		}
- 
-	})
-	
+ */	
 })
 
 
