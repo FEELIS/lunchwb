@@ -40,9 +40,7 @@
 
 
 <div class="d-flex flex-column" id="content-wrapper" style="position: relative;">
-	<div id="header-1">
-            <c:import url="/WEB-INF/views/includes/header.jsp" />
-    </div>
+	<c:import url="/WEB-INF/views/includes/header.jsp" />
     
     <div class="container" id="container" style="height: auto;margin: 0;padding: 0;">
         
