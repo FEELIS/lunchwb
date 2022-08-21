@@ -97,8 +97,10 @@
 				<div id="visited-store-info">
 					<button id="visited-store-name" class="btn btn-primary"
 						type="button" data-storeno="${visitedMap.visitedVo.storeNo}">
-						${visitedMap.visitedVo.storeName}<span id="visited-store-cate">|
-							${visitedMap.visitedVo.menu2ndCateName}</span>
+						${visitedMap.visitedVo.storeName}
+						<span id="visited-store-cate">|
+							${visitedMap.visitedVo.menu2ndCateName}
+						</span>
 					</button>
 					<div id="visited-star-point"></div>
 					<p id="visited-store-address" class="visited-store-p">
@@ -139,14 +141,16 @@
 					<p class="visited-p">오늘이 가기 전에 리뷰를 남겨주세요!</p>
 					<button id="btn-visited-cancel"
 						class="btn btn-light link-danger border rounded-pill border-danger"
-						type="button">방문 취소</button>
+						type="button">방문 취소
+					</button>
 				</c:if>
 
 				<c:if test="${authUser.userNo == visitedMap.groupLeader}">
 					<p class="visited-p">혹시 그룹 취향이 아니었나요?</p>
 					<button id="btn-visited-blacklist"
 						class="btn btn-light link-dark border rounded-pill border-dark"
-						type="button">블랙리스트 추가</button>
+						type="button">블랙리스트 추가
+					</button>
 				</c:if>
 
 			</div>
@@ -164,8 +168,8 @@
 					<div id="today" class="card shadow">
 						<div class="card-body">
 							<p class="d-inline-block" style="width: 483px;">
-								<span style="color: rgb(255, 255, 255);"></span> <i
-									class="far fa-edit"></i> 오늘의 식사는 어떠셨나요?
+								<span style="color: rgb(255, 255, 255);"></span> 
+								<i class="far fa-edit"></i> 오늘의 식사는 어떠셨나요?
 							</p>
 						</div>
 					</div>
@@ -177,8 +181,9 @@
 
 								<div class="card-header py-3">
 									<p class="text-primary m-0 fw-bold">
-										<span class="visited-store-blue">나와
-											${visitedMap.visitedVo.storeName}의 인연</span>
+										<span class="visited-store-blue">
+											나와 ${visitedMap.visitedVo.storeName}의 인연
+										</span>
 									</p>
 								</div>
 
@@ -189,12 +194,14 @@
 
 											<thead>
 												<tr>
-													<th style="width: 50%;"><span
-														class="d-inline-block me-2 bg-success icon-circle"></span>언제
-														처음 방문했을까?</th>
-													<th style="width: 50%;"><span
-														class="d-inline-block me-2 bg-warning icon-circle"></span>오늘이
-														몇번째 방문일까?</th>
+													<th style="width: 50%;">
+														<span class="d-inline-block me-2 bg-success icon-circle"></span>
+														언제 처음 방문했을까?
+													</th>
+													<th style="width: 50%;">
+														<span class="d-inline-block me-2 bg-warning icon-circle"></span>
+														오늘이 몇번째 방문일까?
+													</th>
 												</tr>
 											</thead>
 
@@ -214,35 +221,40 @@
 
 											<thead>
 												<tr>
-													<th style="width: 50%;"><span
-														class="d-inline-block me-2 bg-primary icon-circle"></span><strong>며칠만에
-															방문했을까?</strong><br /></th>
-													<th style="width: 50%;"><span
-														class="d-inline-block me-2 bg-danger icon-circle"></span> 지난번에
-														누구와 먹었지?</th>
+													<th style="width: 50%;">
+														<span class="d-inline-block me-2 bg-primary icon-circle"></span>
+														<strong>며칠만에 방문했을까?</strong>
+													</th>
+													<th style="width: 50%;">
+														<span class="d-inline-block me-2 bg-danger icon-circle"></span>
+														지난번에 누구와 먹었지?
+													</th>
 												</tr>
 											</thead>
 
 											<tbody>
 												<tr>
-													<td><c:choose>
-															<c:when
-																test="${visitedMap.relVo.lastVisit == null || visitedMap.relVo.lastVisit == '' }">
-                                                			-
-                                                		</c:when>
+													<td>
+														<c:choose>
+															<c:when test="${visitedMap.relVo.lastVisit == null || visitedMap.relVo.lastVisit == '' }">
+                                                				-
+                                                			</c:when>
 															<c:otherwise>
-                                                			${visitedMap.relVo.lastVisit}일
-                                                		</c:otherwise>
-														</c:choose></td>
-													<td><c:choose>
-															<c:when
-																test="${visitedMap.relVo.lastVisit == null || visitedMap.relVo.lastVisit == '' }">
-                                                			-
-                                                		</c:when>
+                                                				${visitedMap.relVo.lastVisit}일
+                                                			</c:otherwise>
+														</c:choose>
+													</td>
+													
+													<td>
+														<c:choose>
+															<c:when test="${visitedMap.relVo.lastVisit == null || visitedMap.relVo.lastVisit == '' }">
+                                                				-
+                                                			</c:when>
 															<c:otherwise>
-                                                			${visitedMap.relVo.groupName}
-                                                		</c:otherwise>
-														</c:choose></td>
+                                                				${visitedMap.relVo.groupName}
+                                                			</c:otherwise>
+														</c:choose>
+													</td>
 												</tr>
 											</tbody>
 
@@ -261,17 +273,16 @@
 									<p class="text-primary m-0 fw-bold">
 										<c:choose>
 											<c:when test="${visitedMap.reviewVo == null}">
-			                            	리뷰 남기기
+			                            		리뷰 남기기
 											</c:when>
 											<c:otherwise>
-											오늘 작성한 리뷰
+												오늘 작성한 리뷰
 	                            		</c:otherwise>
 										</c:choose>
 									</p>
 								</div>
 
 								<div class="card-body" style="background: #ffffff;">
-									<!-- enctype="multilpart/form-data" -->
 									<form id="review-submit"
 										action="${pageContext.request.contextPath}/visited/${visitedMap.visitedVo.visitedNo}/review/add"
 										method="post" enctype="multipart/form-data">
@@ -367,6 +378,9 @@
 															<c:when test="${visitedMap.reviewVo.reviewFileName == null || visitedMap.reviewVo.reviewFileName == ''}">
 																<span id="noFile">업로드 된 사진 없음</span>
 															</c:when>
+															<c:otherwise>
+																<span id="noFile">이미지 미리보기 >></span>
+															</c:otherwise>
 														</c:choose>
 													</div>
 												</div>
