@@ -98,10 +98,8 @@
             </div>
             <div class="modal-footer-custom">
                 <p class="modalStoreWithMe"></p>
-                <c:if test="${! empty authUser}">
-	                <button class="btn btn-primary" type="button">여기갈래요</button>
-	            </c:if>
-                <button class="btn btn-light" type="button">점심후보추가</button>
+                <div class="store-button-area">
+            	</div>
             </div>
         </div>
     </div>
@@ -150,10 +148,12 @@
             </div>
             <div class="modal-footer-custom">
                 <p class="modalStoreWithMe"></p>
-                <c:if test="${!empty authUser}">
-                	<button class="btn btn-primary" type="button">여기갈래요</button>
-                </c:if>
-                <button class="btn btn-light" type="button">점심후보추가</button>
+                <div class="store-button-area">
+	                <c:if test="${!empty authUser}">
+	                	<button class="btn btn-primary" type="button">여기갈래요</button>
+	                </c:if>
+	                <button class="btn btn-light" type="button">점심후보추가</button>
+                </div>
             </div>
         </div>
     </div>
@@ -204,7 +204,7 @@
             </div>
             <div class="modal-footer-custom">
                 <p class="modalStoreWithMe"></p>
-                <div id="store-button-area">
+                <div class="store-button-area">
 	                <c:if test="${!empty authUser && authUser.userState == 0}">
 		                <button class="btn btn-primary" type="button">여기갈래요</button>
 		            </c:if>
@@ -265,7 +265,7 @@ function storeInfoOpen(storeNo, k){
 	//k=0 > 리뷰메인 : 내가 다녀온 장소 방문취소 (다녀온 곳 아니면 버튼 x) / 블랙리스트 추가(이미 블랙 > 블랙리스트 제외)   
 	//k=2 > 그동안의 기록 : 블랙리스트 추가 or 제외
 	//k=3 > 블랙리스트 가게 조회 : 블랙리스트 추가 or 제외
-	modalStoreButton(storeNo, k)
+	modalSortOfStore(storeNo, k)
 	
 	$("#modal-store").modal("show")
 }
@@ -547,8 +547,62 @@ function modalStoreAllMenu(menuVo){
 }
 
 
-/* 가게 정보 모달 footer 버튼 */
-function modalStoreButton(storeNo, k){
+/* 가게 정보 모달  다른 가게 + footer 버튼 */
+function modalSortOfStore(storeNo, k){
+	//버튼 영역 초기화
+	$(".store-button-area").html()
+	
+	switch(k){
+		case 0:
+		// k=1 : 리뷰메인
+			//조회하는 가게 = 다녀온 가게
+			if(storeNo == visitedVo.visitedNo){
+				$(".store-button-area").append('<button class="btn btn-primary btn-visit-cancle" type="button">방문취소</button>')
+			//다녀온 가게가 아니면 블랙버튼만
+			}else{
+				$(".store-button-area").append('<button class="btn btn-primary btn-add-black" type="button">블랙리스트추가</button>')
+			}
+		
+			break
+		
+		case 1:
+		// k=1 : 바구니/지도
+			// 그룹? 비로그인 또는 그룹이 없으면 여기갈래요 불가 > 
+			if("${curr_basket_group}" != "" && "${curr_basket_group}" != "0"){
+				$(".store-button-area").append('<button class="btn btn-primary btn-decision-this" type="button">여기갈래요</button>')
+			}
+			// 바구니? ${basket.curr_basket_group}: 선택된 가게 리스트
+			var basketListForStoreInfo = "${basket.curr_basket_group}"
+			console.log(basketListForStoreInfo)
+			
+			for(var i=0; i<basketListForStoreInfo.length; i++){
+				var listStoreNo = basketListForStoreInfo[i].storeNo
+				//지금 모달을 여는 가게
+				if(listStoreNo = storeNo){
+					//장바구니에 있는 가게
+					if(basketListForStoreInfo[i].stored){
+						$(".store-button-area").append('<button class="btn btn-light btn-delete-store-basket" type="button">점심후보제외</button>')
+					}else{
+						$(".store-button-area").append('<button class="btn btn-light btn-add-store-basket" type="button">점심후보추가</button>')
+					}
+				}
+			}
+			
+			break
+			
+		case 2:
+		//stat에서 조회 > 나중에 추가
+			break
+			
+		case 3:
+		// 블랙리스트에서 조회 > 나중에 추가
+			
+			break
+		
+		default :
+			console.log("가게 조회 종류 오류")
+			break
+	}
 	
 }
 

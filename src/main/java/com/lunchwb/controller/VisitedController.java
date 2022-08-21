@@ -59,18 +59,5 @@ public class VisitedController {
 		return "redirect:/";
 	}
 	
-	
-	/* 리뷰 파일 추가 */
-	@PostMapping("/review/file/upload")
-	public String fileUpload(@RequestParam MultipartFile file, HttpSession session) {
-		logger.info("VisitedController > fileUpload()");
-		
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		visitedService.fileUpload(authUser, file);
-		
-		return "redirect:/";
-	}
-	
-	
 
 }

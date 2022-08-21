@@ -149,33 +149,5 @@ public class VisitedService {
 		reviewDao.addReview(reviewVo);
 	}
 	
-	
-	/********************** 리뷰 사진 파일 업로드  *********************************/
-	public String fileUpload(UserVo authUser, MultipartFile file) {
-		
-		String saveDir = "C:\\javaStudy\\upload";
-		String orgName = file.getOriginalFilename();
-		String exName = orgName.substring(orgName.lastIndexOf("."));
-		String saveName = System.currentTimeMillis()+UUID.randomUUID().toString()+exName;
-		String filePath = saveDir + "\\" + saveName;
-		
-		try {
-			byte[] fileData = file.getBytes();
-			OutputStream os = new FileOutputStream(filePath);
-			BufferedOutputStream bos = new BufferedOutputStream(os);
-			
-			bos.write(fileData);
-			bos.close();
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return saveName;
-	}
-	
-
-
-
 
 }
