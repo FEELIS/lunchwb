@@ -9,7 +9,7 @@
 		<result column="visited_no" property="visited_no" />
 		<result column="review_content" property="reviewContent" />
 		<result column="user_score" property="userScore" />
-		<result column="review_file_path" property="reviewFilePath" />
+		<result column="review_file_name" property="reviewFileName" />
 		<result column="review_reported" property="reviewReported" />
 		<result column="store_no" property="storeNo" />
 		<result column="user_name" property="userName" />
