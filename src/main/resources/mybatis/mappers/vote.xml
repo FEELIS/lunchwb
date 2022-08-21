@@ -77,10 +77,41 @@
 	<!--  guest 투표 여부 확인  -->
 	<select id="selectGuestVoted" parameterType="Map" resultType="Integer">
 		<![CDATA[
-			SELECT vote_voted voteVoted
+			SELECT vote_voted
 			FROM   vote_members
 			WHERE  vote_ip = #{clientIp}
 			AND    vote_no = #{voteNo}
 		]]>
 	</select>
+	
+	
+	<!--  투표 결과만 가져오기  -->
+	<select id="selectVoteResults" parameterType="int" resultType="string">
+		<![CDATA[
+			SELECT vote_results
+			FROM   vote
+			WHERE  vote_no = #{voteNo}
+		]]>
+	</select>
+	
+	
+	<!--  투표 결과 업데이트  -->
+	<update id="updateVoteResults" parameterType="VoteVo">
+		<![CDATA[
+			UPDATE vote
+			SET    vote_results = #{voteResults}
+			WHERE  vote_no = #{voteNo}
+		]]>
+	</update>
+	
+	
+	<!--  voteVoted 업데이트  -->
+	<update id="updateVoteVoted" parameterType="VoteVo">
+		<![CDATA[
+			UPDATE vote_members
+			SET    vote_voted = #{voteVoted}
+			WHERE  vote_member_no = #{voteMemberNo}
+		]]>
+	</update>
+	
 </mapper>

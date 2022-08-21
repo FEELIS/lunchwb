@@ -36,9 +36,7 @@
 <c:import url="/WEB-INF/views/includes/aside/voteAside.jsp" />
     
     <div class="d-flex flex-column" id="vote-map-wrapper">        
-    	<div id="header-1">
-	            <c:import url="/WEB-INF/views/includes/header.jsp" />
-	    </div>
+	    <c:import url="/WEB-INF/views/includes/header.jsp" />
         
         <div class="container" id="container">
 	        

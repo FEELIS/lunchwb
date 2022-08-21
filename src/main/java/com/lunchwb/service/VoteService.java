@@ -11,6 +11,8 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lunchwb.dao.GroupDao;
 import com.lunchwb.dao.UserDao;
 import com.lunchwb.dao.VoteDao;
@@ -188,6 +190,39 @@ public class VoteService {
 
 		
 		return voteData;
+	}
+	
+	
+	// 투표하기
+	public String submitVote(VoteVo myVote) throws JsonProcessingException {
+		// 투표 업데이트
+		int voteIdx = myVote.getVoteIdx();
+		int voteNo = myVote.getVoteNo();
+		
+		JSONArray jArray = new JSONArray(voteDao.selectVoteResults(voteNo));
+		int[] voteResults = new int[jArray.length()];
+		
+		for (int i = 0; i < jArray.length(); i++) {
+			voteResults[i] = jArray.getInt(i);
+			
+			if (i == voteIdx) voteResults[i]++;
+		}
+		
+		
+		ObjectMapper mapper = new ObjectMapper();
+		myVote.setVoteResults(mapper.writeValueAsString(voteResults));
+		
+		voteDao.updateVoteResults(myVote);
+				
+		// userState, voteVoted 업데이트
+		if (myVote.getUserNo() != null) {
+			voteDao.updateVoteVoted(myVote);
+			userDao.updateState2(myVote.getUserNo());
+		}
+		
+		// 비회원 추가해야함
+		
+		return "redirect:/";
 	}
  
  }
