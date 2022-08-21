@@ -100,10 +100,11 @@ public class VisitedService {
 		VisitedVo visitedVo = vstDao.todayStoreInfo(userNo);
 		visitedMap.put("visitedVo", visitedVo);
 		
-		//가게 최근 리뷰 2건
+		//가게 최근 리뷰 2건(최대)
 		int storeNo = visitedVo.getStoreNo();
 		List<ReviewVo> reviewList = reviewDao.recentReview(storeNo); 
 		visitedMap.put("reviewList", reviewList);
+		visitedMap.put("reviewCount", reviewList.size());
 		
 		//그룹장 여부 체크
 		int groupLeader = groupDao.groupLeader(visitedVo.getGroupNo());

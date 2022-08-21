@@ -95,12 +95,13 @@
 				</div>
 
 				<div id="visited-store-info">
-					<button id="visited-store-name" class="btn btn-primary"
-						type="button" data-storeno="${visitedMap.visitedVo.storeNo}">
+					<button id="visited-store-name" class="btn btn-primary" type="button" data-storeno="${visitedMap.visitedVo.storeNo}">
 						${visitedMap.visitedVo.storeName}
-						<span id="visited-store-cate">|
-							${visitedMap.visitedVo.menu2ndCateName}
-						</span>
+						<div>
+							<span id="visited-store-cate">
+								${visitedMap.visitedVo.menu2ndCateName}
+							</span>
+						</div>
 					</button>
 					<div id="visited-star-point"></div>
 					<p id="visited-store-address" class="visited-store-p">
@@ -109,7 +110,9 @@
 				</div>
 
 				<div id="visited-review-area">
-					<p>이 가게의 최근 리뷰 (2건)</p>
+					<p>
+						이 가게의 최근 리뷰 (${visitedMap.reviewCount}건)
+					</p>
 
 					<c:forEach items="${visitedMap.reviewList}" var="reviewVo"
 						varStatus="status">
@@ -139,17 +142,17 @@
 
 				<c:if test="${visitedMap.reviewVo == null}">
 					<p class="visited-p">오늘이 가기 전에 리뷰를 남겨주세요!</p>
-					<button id="btn-visited-cancel"
-						class="btn btn-light link-danger border rounded-pill border-danger"
-						type="button">방문 취소
-					</button>
+					<a id="visited-cancel-link" href="${pageContext.request.contextPath}/visited/cancel/${visitedMap.visitedVo.visitedNo}">
+						<button id="btn-visited-cancel" class="btn btn-light link-danger border rounded-pill border-danger" type="button">
+							방문 취소
+						</button>
+					</a>
 				</c:if>
 
 				<c:if test="${authUser.userNo == visitedMap.groupLeader}">
 					<p class="visited-p">혹시 그룹 취향이 아니었나요?</p>
-					<button id="btn-visited-blacklist"
-						class="btn btn-light link-dark border rounded-pill border-dark"
-						type="button">블랙리스트 추가
+					<button id="btn-visited-blacklist" class="btn btn-light link-dark border rounded-pill border-dark" type="button">
+						블랙리스트 추가
 					</button>
 				</c:if>
 
@@ -449,8 +452,10 @@
 
 <script type="text/javascript">
 
-const visitedVo = "${visitedMap.visitedVo}" 
+const visitedVo = "${visitedMap.visitedVo}"
+const myVisit = "${visitedMap.relVo}"
 console.log(visitedVo)
+console.log(myVisit)
 
 $(document).ready(function(){
 	drawStoreStar()
@@ -475,6 +480,35 @@ function drawStoreStar(){
 	
 	$("#visited-star-point").html(str)
 }
+
+
+$("#btn-visited-cancel").on("click", function(){
+	console.log("방문 취소 버튼 클릭")
+	
+	var userNo = "${authUser.userNo}"
+	var groupLeader = "${visitedMap.groupLeader}"
+	if(userNo == groupLeader){
+		if(confirm("정말로 방문을 취소하시겠습니까?")){
+			if(confirm("그룹 전체 방문을 취소하시겠습니까?")){
+				document.getElementById("visited-cancel-link").href = "${pageContext.request.contextPath}/visited/cancel/${visitedMap.visitedVo.visitedNo}/${visitedMap.visitedVo.groupNo}"
+				return true
+			}
+			
+		}else{
+			return false
+		} 
+		
+	}else if(confirm("정말로 방문을 취소하시겠습니까?")){
+		return true
+		
+	}else{
+		
+		return false
+	}
+	
+	return false
+})
+
 
 
 function drawReviewStar(){

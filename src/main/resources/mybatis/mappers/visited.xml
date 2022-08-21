@@ -124,35 +124,45 @@
 	
 	<select id="storeAndMe" parameterType="VisitedVo" resultMap="resultMapVisitedVo">
 		SELECT  visited_date
-		        , visit_count
-		        , last_visit
-		        , group_name
-		FROM (  SELECT visited_date
+		        , cv.visit_count
+		        , vtr.last_visit
+		        , vtr.group_name
+		FROM (  SELECT  visited_date
+						, user_no
 		        FROM(SELECT  ROWNUM rn
 		                     , visited_date
-		             FROM ( SELECT TO_CHAR(visited_date, 'YYYY')||'년 '||TO_CHAR(visited_date, 'MM')||'월 '||TO_CHAR(visited_date, 'DD')||'일'  visited_date
-		                    FROM visited
+		                     , user_no
+		             FROM ( SELECT  TO_CHAR(visited_date, 'YYYY')||'년 '||TO_CHAR(visited_date, 'MM')||'월 '||TO_CHAR(visited_date, 'DD')||'일'  visited_date
+		             				, user_no
+		                    FROM visited 
 		                    WHERE user_no = #{userNo}
 		                    AND store_no = #{storeNo}
-		                    ORDER BY visited_no ASC))
-		        WHERE rn = 1  )
-		     ,( SELECT COUNT(visited_no) visit_count
-		        FROM visited
-		        WHERE user_no = #{userNo}
-		        AND store_no = #{storeNo} )  
+		                    ORDER BY visited_no ASC)) vd
+		        WHERE vd.rn = 1  ) vdt
+		     ,( SELECT  COUNT(visited_no) visit_count
+		     			, v.user_no
+		        FROM visited v
+		        GROUP BY user_no, store_no
+		        HAVING user_no = #{userNo}
+		        AND store_no = #{storeNo} ) cv
 		     ,( SELECT  last_visit
 		                , group_name
+		                , vt.user_no
 		        FROM(   SELECT  ROWNUM rn
 		                        , last_visit
 		                        , group_name
+		                        , user_no
 		                FROM(SELECT TO_DATE(SYSDATE) - visited_date last_visit
 		                            , group_name
+		                            , user_no
 		                            FROM visited v, groups g
 		                            WHERE v.group_no = g.group_no
 		                            AND v.user_no = #{userNo}
 		                            AND v.store_no = #{storeNo}
-		                            ORDER BY visited_no DESC    ))
-		        WHERE rn = 2)
+		                            ORDER BY visited_no DESC    )) vt
+		        WHERE rn = 2) vtr
+		WHERE vtr.user_no (+) = vdt.user_no
+		AND cv.user_no (+) = vdt.user_no
 	</select>
 	
 	
