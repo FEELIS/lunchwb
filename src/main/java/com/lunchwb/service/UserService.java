@@ -353,7 +353,7 @@ public class UserService {
 
 	
 	// main controller에서 userState 확인 (계속 수정중)
-	public Integer[] mainState(int userState, Integer userNo, Integer voteNo, String clientIp) {
+	public Integer[] mainState(int userState, Integer userNo, Integer voteNo) {
 		Integer[] stateInfo = new Integer[2];
 		
 		if (userNo == null) {
@@ -367,14 +367,9 @@ public class UserService {
 					userState = state;
 					
 					Map<String, Object> map = new HashMap<>();
-					map.put("clientIp", clientIp);
 					map.put("voteNo", voteNo);
-					System.out.println(clientIp);
 					System.out.println(voteNo);
 					System.out.println(map.toString());
-					
-					Integer guestState = voteDao.selectGuestVoted(map);
-					//if (guestState != null && guestState > 0) userState = 2;
 				}
 			} 
 			
