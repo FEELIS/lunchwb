@@ -1,10 +1,7 @@
 package com.lunchwb.controller;
 
-import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,12 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.lunchwb.service.UserService;
 import com.lunchwb.service.VisitedService;
@@ -46,6 +40,7 @@ public class MainController {
 	public String main(@PathVariable(required = false) Integer voteNo, 
 				       @RequestParam(required = false) VoteVo reload,
 				       HttpSession session, HttpServletRequest request, Model model) throws UnknownHostException {
+		
 		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("MainController");
 		System.out.println("**********************************************************************************************************************************************************");

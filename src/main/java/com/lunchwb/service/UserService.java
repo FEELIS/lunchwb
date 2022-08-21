@@ -24,6 +24,7 @@ import com.lunchwb.dao.UserDao;
 import com.lunchwb.dao.VoteDao;
 import com.lunchwb.vo.UserVo;
 
+
 @Service
 public class UserService {
 
@@ -375,9 +376,9 @@ public class UserService {
 			
 		} else {
 			Integer currVoteNo = voteDao.selectMemberVoteNo(userNo);
-			
+
 			if (voteNo != null) {
-				if (voteNo != currVoteNo) {
+				if (!voteNo.equals(currVoteNo)) {
 					userState = 403;
 				}
 				
