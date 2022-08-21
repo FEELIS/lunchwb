@@ -92,66 +92,116 @@
 <c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
 
 <script type="text/javascript">
-	indexJSP = true
 
-	// 위치재설정 버튼 클릭 시
-	$("#location-change-btn").on("click", function(){
-		var curr_address = ""
+indexJSP = true
+
+// 위치재설정 버튼 클릭 시
+$("#location-change-btn").on("click", function(){
+	console.log(countBasketItems(curr_basket_group))
+	var curr_address = ""
+	
+	if (gpsVo.address == "") {
+		curr_address = "현재 위치를 설정해주세요"
 		
-		if (gpsVo.address == "") {
-			curr_address = "현재 위치를 설정해주세요"
-		} else {
-			curr_address = gpsVo.address
+	} else {
+		curr_address = gpsVo.address
+	}
+	
+	$("#modal-curr-location").text(curr_address)
+	$("#modal-location-change").modal("show")
+	$("#modal-location-change").modal( {
+		backdrop: 'static'
+	})
+})
+
+
+// 현위치로 재설정
+$("#modal-curr-location-btn").on("click", function(){
+	curr_location()
+})
+
+
+// 주소 검색하기
+$(".location-search-bar").on("click", function(){			
+	DaumPostcode()
+})
+
+
+// 주소 api
+   function DaumPostcode() {
+      new daum.Postcode({
+          oncomplete: function(data) {
+              $("#modal-curr-location").text(data.jibunAddress)
+          }
+      }).open()
+   }
+
+
+// 모달 닫힐 때 페이지 로드
+$("#modal-gps-submit").on("click", function(){
+	if ($("#curr-location-address").text() != $("#modal-curr-location").text()) {
+		var gpsChangeOK = confirm("현재 위치 변경 시 현재 저장한 점심 후보가 초기화됩니다. 정말로 변경하시겠습니까?")
+
+		if (!gpsChangeOK) {
+			return false
 		}
 		
-		$("#modal-curr-location").text(curr_address)
-		$("#modal-location-change").modal("show")
-	})
-	
-	
-	// 현위치로 재설정
-	$("#modal-curr-location-btn").on("click", function(){
-		curr_location()
-	})
-	
-	
-	// 주소 검색하기
-	$(".location-search-bar").on("click", function(){			
-		DaumPostcode()
-	})
-	
-	
-	// 주소 api
-    function DaumPostcode() {
-       new daum.Postcode({
-           oncomplete: function(data) {
-               $("#modal-curr-location").text(data.jibunAddress)
-           }
-       }).open()
-    }
-	
-	
-	// 모달 닫힐 때 페이지 로드
-	$("#modal-gps-submit").on("click", function(){
 		var geocoder = new kakao.maps.services.Geocoder()
-   		
-		   geocoder.addressSearch($("#modal-curr-location").text(), function(result, status) {
-			
+		   geocoder.addressSearch($("#modal-curr-location").text(), async function(result, status) {
+
 		   if (status === kakao.maps.services.Status.OK) {
 			    gpsVo.gpsX = result[0].x
 			    gpsVo.gpsY = result[0].y
 		        gpsVo.address = $("#modal-curr-location").text()
 		        
-		        setGPS(gpsVo)
+		        await setGPS(gpsVo)
+			    await clearBasket()
 		   	  } 
 		});  
-		console.log("완료?")
 		
-		alert("현재 위치가 변경되었습니다.")
-		$("#curr-location-address").text($("#modal-curr-location").text())
 		$("#modal-location-change").modal("hide")
-		//location.replace("${pageContext.request.contextPath}/")
+		sleep(100)
+		alert("현재 위치가 변경되었습니다.")
+		
+		sleep(100)
+		location.replace("${pageContext.request.contextPath}/")
+		
+	} else {
+		$("#modal-location-change").modal("hide")
+	}
+})
+
+
+// 장바구니 비우기
+async function clearBasket() {
+	$.ajax({
+		url : "${pageContext.request.contextPath}/basket/clearBasket",		
+		type : "post",
+		async : false,
+		success : function() {
+			console.log("장바구니 비우기 완료")
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
 	})
+}
+
+
+// 주변에 가게가 하나도 없을 때 창
+function noStore() {
+	if (indexJSP) {
+		$("#container").append(
+			  "<div class='d-inline-flex justify-content-center align-items-center' id='no-store'>"
+            + 	"<div>"
+            +   	"<span class='d-block justify-content-center' id='no-store-alert-1'>주변에 추천 가능한 가게가 없어요</span>"
+            +       "<span class='d-flex justify-content-center' id='no-store-alert-2'>현재 위치나 필터를 확인해주세요</span>"
+            +   "</div>"
+            + "</div>"
+		)
+	}
+}
+
 	
 </script>
 
