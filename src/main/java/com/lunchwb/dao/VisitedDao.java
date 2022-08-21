@@ -31,6 +31,10 @@ public class VisitedDao {
 		sqlSession.insert("visited.decideVisit", visitedVo);
 	}
 	
+	public void cancelVisit(VisitedVo visitedVo) {
+		sqlSession.delete("visited.cancelVisit", visitedVo);
+	}
+	
 	public VisitedVo recentVisit(VisitedVo visitedVo) {
 		visitedVo = sqlSession.selectOne("visited.recentVisit", visitedVo);
 		return visitedVo;

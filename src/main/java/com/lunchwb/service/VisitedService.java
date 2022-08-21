@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -73,8 +74,8 @@ public class VisitedService {
 	};
 	
 	
-	
-	//그룹원 전체대상 > 참여하지 않은 그룹원은 알아서 방문취소를 누르도록 ㅎ
+	//THIS IS 즉각적으로 결정했을 경우 (투표 no)
+	//그룹원 전체대상 > 참여하지 않은 그룹원은 알아서 방문취소를 누르도록 ㅎ :그러면 안될건데 어쩌지
 	/******************************* 여기갈래요 결정 ********************************/
 	public void decideVisit(int storeNo, int groupNo) {
 		List<GroupVo> visitMemberList = groupDao.visitMember(groupNo);
@@ -86,6 +87,37 @@ public class VisitedService {
 			vstDao.decideVisit(visitedVo);
 			//방문 결정 상태 변경
 			userDao.updateState4(userNo);
+		}
+	}
+	
+	
+	/**************************** 여기갈래요 취소(당일만) ******************************/
+	public void cancelVisit(UserVo authUser, int visitedNo, int groupNo) {
+		//방문 취소
+		VisitedVo visitedVo = new VisitedVo();
+		visitedVo.setVisitedNo(visitedNo);
+		visitedVo.setGroupNo(groupNo);
+		
+		vstDao.cancelVisit(visitedVo);
+		
+		//상태변경
+		if(groupNo > 0) {
+			// 단체 취소 >같이 방문했던 그룹 멤버
+			List<Integer> visitedMemberList = groupDao.visitedMember(groupNo);
+			List<UserVo> members = new ArrayList<>();
+			
+			for(int i: visitedMemberList) {
+				UserVo userVo = new UserVo();
+				userVo.setUserNo(i);
+				members.add(userVo);
+			}
+			
+			userDao.updateState0(members);
+			
+		}else {
+			// 개인 취소
+			int userNo = authUser.getUserNo();
+			userDao.updateState0(userNo);
 		}
 	}
 	
