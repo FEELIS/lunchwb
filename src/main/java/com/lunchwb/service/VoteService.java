@@ -118,6 +118,7 @@ public class VoteService {
 		// 끝나는 시각, 가게 정보, 투표 만든 사람
 		VoteVo voteInfo = new VoteVo();
 		voteInfo.setVoteNo(voteNo);
+		voteInfo.setVoteState(voteVo.get(0).getVoteState());
 		voteInfo.setGroupName(voteVo.get(0).getGroupName());
 		voteInfo.setVoteEndTime(voteVo.get(0).getVoteEndTime());
 		voteInfo.setVoteMadeUser(voteVo.get(0).getVoteMadeUser());

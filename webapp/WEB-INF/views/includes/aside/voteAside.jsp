@@ -35,7 +35,7 @@
 	            </div>
 	            <div class="d-xxl-flex justify-content-center align-items-center align-content-center justify-content-xxl-center align-items-xxl-center" id="vote-countdown-remain-time">
 	            	<span class="countdown-label">남은 시간</span>
-	            	<span id="countdown-time" class="countdown-time">00:11:27</span>
+	            	<span id="countdown-time" class="countdown-time"></span>
 	            </div>
 	        </div>
 	    </div>
@@ -65,50 +65,43 @@
 	        
 	        <div class="table-responsive no-drag" id="basket-table">
 	            <table class="table no-drag" id="basket-table">
-                    <tr>
-                        <td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
-                            <div class="basket-table-store-info">
-                            	<span class="text-start basket-table-store-name">써브웨이 서울대점</span>
-                            	<span class="text-start basket-table-store-detail">샌드위치 / 251m</span>
-                            </div>
-                        </td>
-                        <td class="basket-vote-btn-cell">
-                        	<button class="btn btn-primary vote-vote-btn align-items-center" type="button">투표하기</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
-                            <div class="basket-table-store-info">	
-                            	<span class="text-start basket-table-store-name">맥도날드 신림점</span>
-                            	<span class="text-start basket-table-store-detail">햄버거 / 320m</span>
-                            </div>
-                        </td>
-                        <td class="basket-vote-btn-cell">
-                        	<button class="btn btn-primary vote-vote-btn align-items-center" type="button">투표하기</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
-                            <div class="basket-table-store-info">
-                            	<span class="text-start basket-table-store-name">양자강</span>
-                            	<span class="text-start basket-table-store-detail">중국요리 / 520m</span>
-                            </div>
-                        </td>
-                        <td class="basket-vote-btn-cell">
-                        	<button class="btn btn-primary vote-vote-btn align-items-center" type="button">투표하기</button>
-                        </td>
-                    </tr>
+	            	<!--  투표 가게 목록 올 곳 -->
+	            	<c:set var="voteCnt" value="0" />
+	            	<c:forEach items="${voteBasket}" var="store">
+	            		<c:set var="voteCnt" value="${voteCnt+1}" />
+	            		<c:if test="${userState == 1}">
+	            			<tr class="vote-table-row" data-vote-cnt="${voteCnt}">
+                        		<td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
+                            		<div class="basket-table-store-info">
+                            			<span class="text-start basket-table-store-name">${store.storeName}</span>
+                            			<span class="text-start basket-table-store-detail">${store.menu2ndCateName}&nbsp;/&nbsp;${store.distance}m</span>
+                            		</div>
+                        		</td>
+                        		<td class="basket-vote-btn-cell">
+                        			<button class="btn btn-primary vote-vote-btn align-items-center" type="button">투표하기</button>
+                        		</td>
+                    		</tr>
+	            		</c:if>
+	            		
+	            		<c:if test="${userState > 1}">
+	            		</c:if>
+	            	</c:forEach>
+
 	            </table>
 	        </div>
 	      
-	        <div id="vote-leader-btn-area" class="d-xxl-flex justify-content-center align-items-center">
-	        	<button class="btn btn-danger d-flex d-xxl-flex justify-content-center align-items-center align-content-center" id="vote-leader-modify-btn" type="button">투표 수정하기</button>
-	        	<button class="btn btn-danger d-flex d-xxl-flex justify-content-center align-items-center align-content-center" id="vote-leader-cancel-btn" type="button" data-bs-target="#vote-link-modal" data-bs-toggle="modal">투표 취소하기</button>
-	        </div>
+	      	<c:if test="${authUser.userNo == voteInfo.voteMadeUser}">
+		        <div id="vote-leader-btn-area" class="d-xxl-flex justify-content-center align-items-center">
+		        	<button id="vote-leader-modify-btn" class="btn btn-danger d-flex d-xxl-flex justify-content-center align-items-center align-content-center" type="button">투표 수정하기</button>
+		        	<button id="vote-leader-cancel-btn" class="btn btn-danger d-flex d-xxl-flex justify-content-center align-items-center align-content-center" type="button" data-bs-target="#vote-link-modal" data-bs-toggle="modal">투표 취소하기</button>
+		        </div>
+	        </c:if>
 	        
-	        <div class="justify-content-center align-items-center" id="vote-member-btn-area">
-	        	<button class="btn btn-danger d-flex d-xxl-flex justify-content-center align-items-center align-content-center justify-content-xxl-center align-items-xxl-start" id="vote-member-escape-btn" type="button">다른 사람들이랑 먹을래요</button>
-	        </div>
+	        <c:if test="${!empty(authUser) and authUser.userNo != voteInfo.voteMadeUser}">
+		        <div id="vote-member-btn-area" class="justify-content-center align-items-center">
+		        	<button id="vote-member-escape-btn" class="btn btn-danger d-flex d-xxl-flex justify-content-center align-items-center align-content-center justify-content-xxl-center align-items-xxl-start" type="button">다른 사람들이랑 먹을래요</button>
+		        </div>
+	        </c:if>
 	    </div>
 	</div>
 </nav>
@@ -116,18 +109,89 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script type="text/javascript">
-	console.log("${voteInfo}")
-	console.log("${voteBasket}")
-	console.log("${voteMember}")
+	let voteEndTime = "${voteInfo.voteEndTime}";
+	let clientIp;
+	
+	
+	$(document).ready(
+		async function(){
+			voteEndTime = changeTimeFormat(voteEndTime)
+			countDownTimer(voteEndTime)
+
+			clientIp = await getIpClient()
+			
+	})
+
 
 	// 클라이언트 ip 불러오기
 	async function getIpClient() {
 	  try {
 	    const response = await axios.get('https://api.ipify.org?format=json');
-	    console.log(response["data"]["ip"]);
+	    console.log("clientIp: " + response["data"]["ip"]);
+	    
+	    return response["data"]["ip"]
+	    
 	  } catch (error) {
 	    console.error(error);
 	  }
+	}
+	
+	
+	// 카운트 다운 만들기
+	const countDownTimer = function(voteEndTime) {
+		var second = 1000;
+		var minute = second * 60
+		var hour = minute * 60
+		var day = hour * 24
+		var timer
+		
+		function showRemaining() {
+			var now = new Date();
+			var distDt = voteEndTime - now
+
+			if (distDt < 0) {
+				clearInterval(timer);
+				$("#countdown-time").text("00:00:00")
+				
+				return
+			}
+
+			var hours = Math.floor((distDt % day) / hour)
+			var minutes = Math.floor((distDt % hour) / minute)
+			var seconds = Math.floor((distDt % minute) / second)
+
+			$("#countdown-time").text(lpad(hours, 2, "0") + ":" + lpad(minutes, 2, "0") + ":" + lpad(seconds, 2, "0"))
+		}
+
+		timer = setInterval(showRemaining, 1000)
+	}
+
+	
+	
+	
+	// 자바 시간 자바스크립트로 변환
+	function changeTimeFormat(time) {
+		var timeSplit = time.split(" ")
+		var newTime = new Date(timeSplit[1] + " " + timeSplit[2] + ", " + timeSplit[5] + " " + timeSplit[3])
+		console.log(newTime)
+		
+		return newTime
+	}
+	
+	// 두자리수 변환
+	function lpad(str, padLen, padStr) {
+	    if (padStr.length > padLen) {
+	        return str
+	    }
+	    str += ""
+	    padStr += ""
+	    
+	    while (str.length < padLen) {
+	        str = padStr + str
+	    }
+	    str = str.length >= padLen ? str.substring(0, padLen) : str
+	    		
+	    return str
 	}
 </script>
 

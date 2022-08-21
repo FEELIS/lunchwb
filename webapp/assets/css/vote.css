@@ -348,6 +348,7 @@
 #vote-aside #vote-leader-btn-area {
   display: flex;
   min-width: 300px;
+  margin-bottom: 10px;
 }
 
 #vote-aside #vote-leader-btn-area #vote-leader-modify-btn {
@@ -570,6 +571,7 @@
   overflow: hidden;
   font-size: 14px;
   border-radius: 10px;
+  padding: 4px 4px;
 }
 
 #vote-revote-area #vote-revote-btn:hover {
