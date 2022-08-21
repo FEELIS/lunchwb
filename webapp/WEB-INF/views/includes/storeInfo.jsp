@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!-- 가게 정보 보기 -->
-<div id="modal-store" class="modal visible" role="dialog" tabindex="-1" style="min-width: 800px;">
+<div id="modal-store" class="modal visible no-drag" role="dialog" tabindex="-1" style="min-width: 800px;">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content" style="width: 798px;">
             <div class="modal-header"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
@@ -224,7 +224,7 @@ k : 0 기록(비추천) 경우 거리 표시 제외 */
 
 /* 메인-가게바구니에서 조회할 때 */
 $("#basket-table").on("click", ".basket-table-store-name", function(){
-	if (indexJSP) {
+	if (typeof indexJSP === 'undefined' || indexJSP) {
         var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
 		console.log(storeNo+"번 가게 정보 보기")
 		storeInfoOpen(storeNo, 1)
@@ -260,7 +260,12 @@ function storeInfoOpen(storeNo, k){
 	if(k==1){
 		modalStoreDistance(storeNo)
 	}
-
+	
+	//k=1 > 장바구니 : 여기갈래요 / 장바구니에 있으면 점심후보추가 or 없으면 점심후보제외
+	//k=0 > 리뷰메인 : 내가 다녀온 장소 방문취소 (다녀온 곳 아니면 버튼 x) / 블랙리스트 추가(이미 블랙 > 블랙리스트 제외)   
+	//k=2 > 그동안의 기록 : 블랙리스트 추가 or 제외
+	//k=3 > 블랙리스트 가게 조회 : 블랙리스트 추가 or 제외
+	modalStoreButton(storeNo, k)
 	
 	$("#modal-store").modal("show")
 }
@@ -320,8 +325,6 @@ function storeBasicInfo(storeNo){
 				modalStoreAllMenu(storeMap.menuList[i])
 			}
 			
-			
-
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
@@ -543,6 +546,11 @@ function modalStoreAllMenu(menuVo){
 	$("#modal-all-menu #store-latest-menu").append(str)
 }
 
+
+/* 가게 정보 모달 footer 버튼 */
+function modalStoreButton(storeNo, k){
+	
+}
 
 
 
