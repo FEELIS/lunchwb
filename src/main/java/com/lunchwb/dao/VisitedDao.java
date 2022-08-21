@@ -28,7 +28,7 @@ public class VisitedDao {
 	
 	/* 지니 */
 	public void visitDecision(VisitedVo visitedVo) {
-		sqlSession.insert("visitedVo.visitDecision", visitedVo);
+		sqlSession.insert("visited.visitDecision", visitedVo);
 	}
 	
 	public VisitedVo recentVisit(VisitedVo visitedVo) {

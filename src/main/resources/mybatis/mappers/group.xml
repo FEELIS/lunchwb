@@ -208,7 +208,7 @@
 	
 	
 	<!-- 방문 결정 그룹 멤버 번호 조회 -->
-	<select id="visitMember" parameterType="int" resultType="int">
+	<select id="visitMember" parameterType="int" resultMap="GroupVo">
 		SELECT user_no
 		FROM group_member
 		WHERE group_no = #{groupNo}

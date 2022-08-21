@@ -102,8 +102,8 @@ public class GroupDao {
 	}
 	
 	/******************** 방문 결정 그룹 멤버 ***********************************************/
-	public List<Integer> visitMember(int groupNo) {
-		List<Integer> visitMemberList = sqlSession.selectList("group.visitMember", groupNo);
+	public List<GroupVo> visitMember(int groupNo) {
+		List<GroupVo> visitMemberList = sqlSession.selectList("group.visitMember", groupNo);
 		return visitMemberList;
 	}
 	

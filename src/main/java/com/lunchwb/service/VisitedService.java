@@ -17,7 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.lunchwb.dao.GroupDao;
 import com.lunchwb.dao.MenuDao;
 import com.lunchwb.dao.ReviewDao;
+import com.lunchwb.dao.UserDao;
 import com.lunchwb.dao.VisitedDao;
+import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.MenuVo;
 import com.lunchwb.vo.ReviewVo;
 import com.lunchwb.vo.UserVo;
@@ -34,6 +36,9 @@ public class VisitedService {
 	private MenuDao menuDao;
 	@Autowired
 	private GroupDao groupDao;
+	@Autowired
+	private UserDao userDao;
+	
 	
 	private static final Logger logger = LoggerFactory.getLogger(VisitedService.class);
 	
@@ -72,12 +77,15 @@ public class VisitedService {
 	//그룹원 전체대상 > 참여하지 않은 그룹원은 알아서 방문취소를 누르도록 ㅎ
 	/******************************* 여기갈래요 결정 ********************************/
 	public void visitDecision(int storeNo, int groupNo) {
-		List<Integer> visitMemberList = groupDao.visitMember(groupNo);
+		List<GroupVo> visitMemberList = groupDao.visitMember(groupNo);
 		
 		for(int i=0; i<visitMemberList.size(); i++) {
-			int userNo = visitMemberList.get(i);
+			int userNo = visitMemberList.get(i).getUserNo();
+			//오늘 방문 저장
 			VisitedVo visitedVo = new VisitedVo(userNo, groupNo, storeNo);
 			vstDao.visitDecision(visitedVo);
+			//방문 결정 상태 변경
+			userDao.updateState4(userNo);
 		}
 	}
 	

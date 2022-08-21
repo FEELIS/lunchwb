@@ -96,6 +96,11 @@ public class GroupController {
 		logger.info("GroupController > addGroup()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		if(authUser == null) {
+			return "redirect:/login";
+		}
+		
 		HashMap<String, Object> map = groupService.addGroup(authUser, groupVo);
 
 		GroupVo gpVo = (GroupVo)map.get("gpVo");
