@@ -1,7 +1,6 @@
 package com.lunchwb.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -117,6 +116,7 @@ public class VoteService {
 		
 		System.out.println("**********************************************************************************************************************************************************");
 	
+		
 		return voteNo;
 	}
 
@@ -178,7 +178,7 @@ public class VoteService {
 			voteMember.add(mem);
 		}
 		
-		
+
 		// model에 추가할 Map에 데이터 넣기
 		voteData.put("voteInfo", voteInfo);
 		voteData.put("voteBasket", voteStoreInfo);

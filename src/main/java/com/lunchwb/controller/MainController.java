@@ -40,8 +40,10 @@ public class MainController {
 	/* ----- 메인 접근 --------------------------------------------*/
 	@RequestMapping(value = {"/", "/{voteNo}"})
 	public String main(@PathVariable(required = false) Integer voteNo, HttpSession session, HttpServletRequest request, Model model) throws UnknownHostException {
+		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("MainController");
-		
+		System.out.println("**********************************************************************************************************************************************************");
+
 		// 클라이언트 ip 호출
 		String clientIp = getClientIp(request);
 		logger.info("클라이언트 IP: " + clientIp);

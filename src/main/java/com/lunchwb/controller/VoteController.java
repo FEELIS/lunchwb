@@ -1,14 +1,12 @@
 package com.lunchwb.controller;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +36,10 @@ public class VoteController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("")
 	public String newVote(Model model, HttpSession session) {
+		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("투표 생성 페이지로 이동");
-		
+		System.out.println("**********************************************************************************************************************************************************");
+
 		Integer groupNo = (Integer)session.getAttribute("curr_basket_group");
 		Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
 		UserVo loginUser = (UserVo)session.getAttribute("authUser");
@@ -67,12 +67,14 @@ public class VoteController {
 	@ResponseBody
 	@PostMapping("/makeVote")
 	public int makeVote(@RequestBody Map<String, String> voteData, HttpSession session) throws ParseException {
+		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("새 투표 생성하기");
+		System.out.println("**********************************************************************************************************************************************************");
+
 		String voteEndDate = voteData.get("voteEndDate");
 		String voteMember = voteData.get("voteMember");
 		String currBasket = voteData.get("currBasket");
 		
-		System.out.println(voteEndDate);
 		if (voteEndDate.contains(".")) {
 			voteEndDate = voteEndDate.substring(0, voteEndDate.indexOf("."));
 		}
@@ -96,7 +98,9 @@ public class VoteController {
 	@ResponseBody
 	@PostMapping("/checkVoteMem")
 	public List<String> checkVoteMem(@RequestBody int[] checkVoteMem) {
+		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("투표 참여 불가능 회원 확인");
+		System.out.println("**********************************************************************************************************************************************************");
 		
 		return voteService.checkVoteMember(checkVoteMem);
 	}
