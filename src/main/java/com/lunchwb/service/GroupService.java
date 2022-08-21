@@ -416,6 +416,9 @@ public class GroupService {
 				//그룹 리더 
 				int leader = groupDao.groupLeader(groupNo);
 				map.put("leader", leader);
+				
+				//그룹 어사이드 링크 구분
+				map.put("black", true);
 			}
 		}
 		

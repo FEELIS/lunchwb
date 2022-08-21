@@ -1,24 +1,27 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 <title>부장님요기요: 블랙리스트</title>
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/assets/css/group.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/assets/css/customModal.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/customModal.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/group.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/alert.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&amp;display=swap">
+	
+<script type="text/javascript"src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript"src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
+<script type="text/javascript"src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
 </head>
 
 <body id="page-top">
@@ -212,28 +215,16 @@
 						</div>
 					</div>
 				</div>
-				<footer id="footer" class="bg-white sticky-footer"
-					style="background-color: #ffffff;">
-					<div class="container my-auto">
-						<div class="text-center my-auto copyright">
-							<span>Copyright © FEELIS 2022<br />https://github.com/FEELIS <br /></span>
-						</div>
-					</div>
-				</footer>
+				<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
 			</div>
 		</div>
-		<a class="border rounded d-inline scroll-to-top" href="#page-top"><i
-			class="fas fa-angle-up"></i></a>
+	<a class="border rounded d-inline scroll-to-top" href="#page-top">
+		<i class="fas fa-angle-up"></i>
+	</a>
 	</div>
 
 
 
-	<script
-		src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
-	<script
-		src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
-	<script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 
 </body>
 </html>

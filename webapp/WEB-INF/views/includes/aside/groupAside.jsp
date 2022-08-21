@@ -16,9 +16,16 @@
         <c:forEach items="${map.groupList}" var="groupVo">	
 	        <li class="nav-item">
 	        	<a class="nav-link group-nav-menu 
-	        		<c:if test='${groupVo.groupNo == map.groupNo}'> group-nav-active </c:if>" 
-	        		href="${pageContext.request.contextPath}/group/list?no=${groupVo.groupNo}">
-	        		${groupVo.groupName}<br />
+	        		<c:if test='${groupVo.groupNo == map.groupNo}'> group-nav-active </c:if>"
+	        		<c:choose>
+	        			<c:when test="${map.black == true}">
+	        				href="${pageContext.request.contextPath}/group/blacklist?no=${groupVo.groupNo}"
+	        			</c:when>
+	        			<c:otherwise>
+			        		href="${pageContext.request.contextPath}/group/list?no=${groupVo.groupNo}"
+	        			</c:otherwise>
+	        		</c:choose> 
+	        		>${groupVo.groupName}<br />
 	        	</a>
 	        </li>
         </c:forEach>
@@ -66,8 +73,16 @@
             	</c:forEach>
             </div>
             <div class="modal-footer-custom">
-            	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"><button class="btn btn-primary" type="submit">변경</button></a>
-            	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"><button class="btn btn-light" type="button">취소</button></a>
+            	<c:choose>
+	            	<c:when test="${map.black == true}">
+		            	<a href="${pageContext.request.contextPath}/group/blacklist?no=${map.groupNo}"><button class="btn btn-primary" type="submit">변경</button></a>
+		            	<a href="${pageContext.request.contextPath}/group/blacklist?no=${map.groupNo}"><button class="btn btn-light" type="button">취소</button></a>
+	            	</c:when>
+	            	<c:otherwise>
+		            	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"><button class="btn btn-primary" type="submit">변경</button></a>
+		            	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"><button class="btn btn-light" type="button">취소</button></a>
+	            	</c:otherwise>
+            	</c:choose>
             </div>
         </div>
     </div>

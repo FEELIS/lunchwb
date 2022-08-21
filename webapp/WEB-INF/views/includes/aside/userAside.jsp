@@ -26,7 +26,7 @@
 				<a class="nav-link nav-menu" href="${pageContext.request.contextPath}/group/list">그룹목록</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link nav-menu black" href="${pageContext.request.contextPath}/group/blacklist">블랙리스트</a>
+				<a id="black" class="nav-link nav-menu" href="${pageContext.request.contextPath}/group/blacklist">블랙리스트</a>
 			</li>
 
 			<li class="nav-item">
@@ -85,7 +85,7 @@ function isThereGroup(){
 			
 			//그룹있음
 			if(result == false){
-				$(".black").remove()
+				$("#black").remove()
 			}
 		},
 		error : function(XHR, status, error) {

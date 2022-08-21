@@ -64,11 +64,13 @@
 .group-title-btn, .btn-groupmem-invt, .btn-store-search {
   padding: 2px 12px 2px 12px !important;
   height: 30px;
-  font-size: 14px !important;
+  font-size: 16px !important;
   vertical-align: middle;
 }
 
-
+.btn-groupmem-invt .card-body, .btn-store-search .card-body{
+  font-size: 14px !important;
+} 
 
 /*********************************** group-content *****************************/
 #group-name {
