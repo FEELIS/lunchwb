@@ -9,6 +9,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/customModal.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/storeInfo.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
+
 </head>
 
 <body>
@@ -44,19 +49,28 @@
 	        <div id="label-select-name"><span class="no-drag">이름을 선택해주세요</span></div>
 	        <div id="vote-select-names" class="d-flex d-xxl-flex flex-wrap justify-content-xxl-start">
 	        	<!--  투표 인원 영역  -->
-	        	<c:forEach items="${voteMember}" var="member">
-	        		<c:if test="${!empty(authUser)}">
-	        			<c:if test="${!empty(member.userNo) and authUser.userNo == member.userNo}">
-	        				<button class="btn btn-primary text-center vote-select-name-btn vote-selected-name" type="button" data-vote-member-no="${member.voteMemberNo}" data-user-no="${data-user-no}">${member.userName}</button>
-	        			</c:if>
-	        		</c:if>
-	        		<button class="btn btn-primary text-center vote-select-name-btn" type="button">${member.userName}</button>
-	        	</c:forEach>
-	        	<button class="btn btn-primary disabled text-center vote-voted-name" type="button" disabled="disabled">이지희</button>
 	        	
-	        	<button class="btn btn-primary disabled text-center vote-voted-name" type="button" disabled="disabled">최정필2</button>
-	        	<button class="btn btn-primary text-center vote-select-name-btn" type="button">뻐꾸기</button>
-	        	<button class="btn btn-primary text-center vote-select-name-btn" type="button">도요새</button>
+	        	<!--  userState == 1  -->
+	        	<c:if test="${userState == 1}">
+	        		<!--  로그인 한 경우  -->
+		        	<c:forEach items="${voteMember}" var="member">
+	        			<c:if test="${!empty(authUser) and authUser.userNo == member.userNo}">
+	        				<button class="btn btn-primary text-center vote-select-name-btn vote-selected-name" type="button" disabled="disabled" data-vote-member-no="${member.voteMemberNo}" data-user-no="${member.userNo}">${member.userName}</button>
+	        			</c:if>
+	        			
+	        			<c:if test="${((empty(authUser) and member.userNo != 0) or (!empty(authUser) and authUser.userNo != member.userNo)) and member.voteVoted == 0}">
+		        			<button class="btn btn-primary text-center vote-select-name-btn" type="button" disabled="disabled" data-vote-member-no="${member.voteMemberNo}" data-user-no="${data-user-no}">${member.userName}</button>
+		        		</c:if>
+		        		
+		        		<c:if test="${empty(authUser) and member.voteVoted == 0 and member.userNo == 0}">
+		        			<button class="btn btn-primary text-center vote-select-name-btn can-click-name" type="button" data-vote-member-no="${member.voteMemberNo}" data-user-no="${data-user-no}">${member.userName}</button>
+		        		</c:if>
+		        		
+		        		<c:if test="${member.voteVoted != 0}">
+		        			<button class="btn btn-primary text-center vote-select-name-btn vote-voted-name" type="button" disabled="disabled" data-vote-member-no="${member.voteMemberNo}" data-user-no="${data-user-no}">${member.userName}</button>
+		        		</c:if>
+		        	</c:forEach>
+	        	</c:if>	        	
 	        </div>
 	    </div>
 	    
@@ -64,13 +78,13 @@
 	        <div class="text-start d-flex basket-aside-title"><span class="d-inline-block no-drag">오늘의 점심 후보</span></div>
 	        
 	        <div class="table-responsive no-drag" id="basket-table">
-	            <table class="table no-drag" id="basket-table">
+	            <table class="table no-drag" id="basket-table-table">
 	            	<!--  투표 가게 목록 올 곳 -->
 	            	<c:set var="voteCnt" value="0" />
 	            	<c:forEach items="${voteBasket}" var="store">
 	            		<c:set var="voteCnt" value="${voteCnt+1}" />
 	            		<c:if test="${userState == 1}">
-	            			<tr class="vote-table-row" data-vote-cnt="${voteCnt}">
+	            			<tr class="vote-table-row" data-vote-cnt="${voteCnt}" data-store-no="${store.storeNo}">
                         		<td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
                             		<div class="basket-table-store-info">
                             			<span class="text-start basket-table-store-name">${store.storeName}</span>
@@ -106,26 +120,44 @@
 	</div>
 </nav>
 
+<c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
+
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script type="text/javascript">
 
 let voteEndTime = "${voteInfo.voteEndTime}";
 let clientIp;
+let selected;
 
 console.log("${voteInfo}")
 console.log("${voteBasket}")
 console.log("${voteMember}")
 
-$(document).ready(
-	async function(){
-		voteEndTime = changeTimeFormat(voteEndTime)
-		countDownTimer(voteEndTime)
+// 로그인 안했으면 ip 확인 > guestInfo 형태로 데이터 가져오기
+if ("${authUser}" == "") { 
+	$(document).ready(
+		async function(){
+			voteEndTime = changeTimeFormat(voteEndTime)
+			countDownTimer(voteEndTime)
+	
+			clientIp = await getIpClient()
+			// userState, voteno 불러오기
+	
+	})
+	
+} else {
+	selected = {
+			voteMemberNo : $(".vote-selected-name").attr("data-vote-member-no"),
+			userNo : $(".vote-selected-name").attr("data-user-no"),
+			userName : $(".vote-selected-name").text(),
+			voteVoted : 0
+	} 
+	
+	console.log(selected)
+}
 
-		clientIp = await getIpClient()
-		
-})
-
+////////// ip check 관련 ////////////////////////////////////////////////////////////////////
 
 // 클라이언트 ip 불러오기
 async function getIpClient() {
@@ -140,6 +172,24 @@ async function getIpClient() {
   }
 }
 
+
+// guest 투표 참여했는 지 확인
+
+
+/////////// 게스트가 자기 이름 클릭했을 때 //////////////////////////////////////////
+$(".can-click-name").on("click", function(){
+	alert("으악")
+})
+
+
+///////// 투표하기 클릭 //////////////////////////////////////////////////////////
+$(".vote-vote-btn").on("click", function(){
+	if (selected == null) {
+		alert("투표에 참가할 이름을 먼저 선택해주세요")
+	}
+})
+
+////////// 카운트다운 타이머 관련 /////////////////////////////////////////////////
 
 // 카운트 다운 만들기
 const countDownTimer = function(voteEndTime) {

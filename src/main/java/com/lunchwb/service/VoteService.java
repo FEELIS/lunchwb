@@ -149,7 +149,9 @@ public class VoteService {
 			StoreVo store = new StoreVo();
 			JSONObject jstore = (JSONObject)storeInfo.getJSONObject(i);
 			
-			store.setStoreName(jstore.getString("storeName"));
+			String storeName = jstore.getString("storeName");
+			if (storeName.length() >= 13) storeName = storeName.substring(0, 13);
+			store.setStoreName(storeName);
 			store.setStoreNo(jstore.getInt("storeNo"));
 			store.setDistance(jstore.getInt("distance"));
 			store.setMenu2ndCateName(jstore.getString("menu2ndCateName"));

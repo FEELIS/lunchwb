@@ -113,13 +113,12 @@
 }
 
 #vote-select-names .vote-voted-name {
-  cursor: initial;
   width: 92px;
   min-width: 92px;
   max-width: 92px;
   color: rgb(255,255,255);
-  background: var(--bs-gray-600);
-  border-color: var(--bs-gray-600);
+  background: var(--bs-gray-900);
+  border-color: var(--bs-gray-900);
   margin-right: 5px;
   padding-right: 0;
   padding-left: 0;

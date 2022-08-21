@@ -63,10 +63,6 @@
 
 <script type="text/javascript">
 
-$(document).ready(function(){
-			
-})
-
 
 //복사 클릭 시 클립보드에 url 복사
 $("#vote-url-copy-btn").on("click", function(){
