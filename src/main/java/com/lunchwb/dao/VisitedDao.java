@@ -24,9 +24,13 @@ public class VisitedDao {
 	};
 	
 	// ================================ 달력 끝 ================================
-	
+
 	
 	/* 지니 */
+	public void visitDecision(VisitedVo visitedVo) {
+		sqlSession.insert("visitedVo.visitDecision", visitedVo);
+	}
+	
 	public VisitedVo recentVisit(VisitedVo visitedVo) {
 		visitedVo = sqlSession.selectOne("visited.recentVisit", visitedVo);
 		return visitedVo;

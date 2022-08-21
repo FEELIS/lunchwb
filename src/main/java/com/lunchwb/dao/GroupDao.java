@@ -6,7 +6,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.lunchwb.vo.BlacklistVo;
 import com.lunchwb.vo.GroupVo;
 
 @Repository
@@ -80,7 +79,6 @@ public class GroupDao {
 		return count;
 	}
 	
-	
 	/******************** 그룹 멤버 추가 ***********************************************/
 	public void addMember(GroupVo groupVo) {
 		sqlSession.insert("group.addMember", groupVo);
@@ -101,6 +99,12 @@ public class GroupDao {
 	/******************** 그룹 순서 조정(선택 변경x) **************************************/
 	public void autoOrder(GroupVo groupVo) {
 		sqlSession.update("group.autoOrder", groupVo);
+	}
+	
+	/******************** 방문 결정 그룹 멤버 ***********************************************/
+	public List<Integer> visitMember(int groupNo) {
+		List<Integer> visitMemberList = sqlSession.selectList("group.visitMember", groupNo);
+		return visitMemberList;
 	}
 	
 	/******************** 장바구니 그룹 선택 ***********************************************/

@@ -45,6 +45,12 @@ public class VisitedVo {
 		this.selectMonth = selectMonth;
 	}
 
+	public VisitedVo(int userNo, int groupNo, int storeNo) {
+		this.userNo = userNo;
+		this.groupNo = groupNo;
+		this.storeNo = storeNo;
+	}
+	
 	// 달력 출력용
 	public VisitedVo(String visitedDate, String menu1stCateName, String groupName, String storeName,
 			String menuName, int groupOrder) {

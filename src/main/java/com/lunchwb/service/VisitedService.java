@@ -69,6 +69,19 @@ public class VisitedService {
 	
 	
 	
+	//그룹원 전체대상 > 참여하지 않은 그룹원은 알아서 방문취소를 누르도록 ㅎ
+	/******************************* 여기갈래요 결정 ********************************/
+	public void visitDecision(int storeNo, int groupNo) {
+		List<Integer> visitMemberList = groupDao.visitMember(groupNo);
+		
+		for(int i=0; i<visitMemberList.size(); i++) {
+			int userNo = visitMemberList.get(i);
+			VisitedVo visitedVo = new VisitedVo(userNo, groupNo, storeNo);
+			vstDao.visitDecision(visitedVo);
+		}
+	}
+	
+	
 	/********************* 여기갈래요 후 리뷰 작성 메인페이지 ***************************/
 	public HashMap<String, Object> visitedMain(UserVo authUser) {
 		HashMap<String, Object> visitedMap = new HashMap<>();

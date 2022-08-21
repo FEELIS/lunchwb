@@ -207,6 +207,14 @@
 	</update>
 	
 	
+	<!-- 방문 결정 그룹 멤버 번호 조회 -->
+	<select id="visitMember" parameterType="int" resultType="int">
+		SELECT user_no
+		FROM group_member
+		WHERE group_no = #{groupNo}
+	</select>
+	
+	
 	<!--    정원     -->
 	<!-- index.jsp에서 그룹 선택 -->
 	<select id="selectBasketGroup" parameterType="int" resultMap="GroupVo">

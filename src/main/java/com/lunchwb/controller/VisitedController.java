@@ -29,7 +29,12 @@ public class VisitedController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(StoreController.class);
 	
-	@PostMapping()
+	@PostMapping("decision/{storeNo}/{groupNo}")
+	public String visitDecision(@PathVariable("storeNo") int storeNo, @PathVariable("groupNo") int groupNo) {
+		visitedService.visitDecision(storeNo, groupNo);
+		return "redirect:/";
+	}
+	
 	
 	@GetMapping("/")
 	public String visitedMain(Model model, HttpSession session) {

@@ -54,6 +54,12 @@
 	
 	
 	<!-- 지니 -->
+	<insert id="visitDecision" parameterType="VisitedVo">
+		INSERT INTO visited
+		VALUES(seq_visited_no.NEXTVAL, #{userNo}, #{groupNo}, #{storeNo}, '', TO_DATE(SYSDATE))
+	</insert>
+	
+	
 	<select id="recentVisit" parameterType="VisitedVo" resultMap="resultMapVisitedVo">
 		SELECT  visit_count
 				, visited_date
