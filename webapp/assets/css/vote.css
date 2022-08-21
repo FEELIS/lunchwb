@@ -433,7 +433,7 @@
 }
 
 #vote-kakao-btn {
-  margin-right: 10px;
+  margin-right: 20px;
   color: var(--bs-red);
   font-weight: bold;
   background: #f9e000;
@@ -484,8 +484,8 @@
 }
 
 #vote-url-copy-box input {
-  width: 250px;
-  min-width: 250px;
+  width: 280px;
+  min-width: 280px;
   height: 35px;
   font-size: 12px;
   padding-left: 10px;

@@ -162,8 +162,8 @@
 	                    	</button>
 	                    	<span class="d-inline-flex flex-shrink-0 justify-content-center flex-nowrap align-items-xxl-center" id="vote-url-copy-box">
 	                    		<i class="fas fa-link d-inline-flex d-xxl-flex flex-shrink-0 justify-content-start align-items-center justify-content-xl-start align-items-xl-center justify-content-xxl-start align-items-xxl-center no-drag"></i>
-	                    		<input id="vote-url-input-1" class="d-inline-flex d-xxl-flex flex-shrink-0 align-items-xxl-center" type="text" value="">
-	                    		<button class="btn btn-primary d-inline-flex d-xxl-flex flex-shrink-0 justify-content-center align-items-center align-content-center align-items-xl-center justify-content-xxl-center align-items-xxl-center" id="vote-url-copy-btn-1" type="button">복사</button>
+	                    		<input id="vote-url-input" class="d-inline-flex d-xxl-flex flex-shrink-0 align-items-xxl-center" type="text" value="">
+	                    		<button id="vote-url-copy-btn" class="btn btn-primary d-inline-flex d-xxl-flex flex-shrink-0 justify-content-center align-items-center align-content-center align-items-xl-center justify-content-xxl-center align-items-xxl-center" type="button">복사</button>
 	                    	</span>
 	                    </div>
 	                </div>
@@ -563,7 +563,7 @@ $("#make-vote-btn").on("click", function(){
 				alert("투표 생성 실패")
 				
 			} else {
-				$("#vote-url-input-1").val("http://localhost:8088/" + voteNo)
+				$("#vote-url-input").val("http://localhost:8088/" + voteNo)
 				$("#vote-link-modal").modal("show")
 			}
 		},
@@ -571,6 +571,20 @@ $("#make-vote-btn").on("click", function(){
 			alert("오류 발생" + error);
 		}
 	})
+})
+
+
+//복사 클릭 시 클립보드에 url 복사
+$("#vote-url-copy-btn").on("click", function(){
+	var content = $("#vote-url-input").val();
+
+    navigator.clipboard.writeText(content)
+        .then(() => {
+        alert("클립보드에 복사되었습니다.")
+    })
+        .catch(err => {
+        console.log("클립보드 복사 실패");
+    })
 })
 	
 
