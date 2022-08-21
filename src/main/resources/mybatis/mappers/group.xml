@@ -207,11 +207,13 @@
 	</update>
 	
 	
-	<!-- 방문 결정 그룹 멤버 번호 조회 -->
+	<!-- 방문 결정 그룹 멤버 번호 조회(회원만 cause for 상태변경) -->
 	<select id="visitMember" parameterType="int" resultMap="GroupVo">
-		SELECT user_no
-		FROM group_member
+		SELECT u.user_no
+		FROM group_member m, users u
 		WHERE group_no = #{groupNo}
+		AND m.user_no = u.user_no
+		AND user_email IN NOT NULL
 	</select>
 	
 	
