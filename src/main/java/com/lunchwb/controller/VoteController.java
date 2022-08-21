@@ -12,15 +12,18 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.lunchwb.service.VoteService;
 import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.StoreVo;
 import com.lunchwb.vo.UserVo;
+import com.lunchwb.vo.VoteVo;
 
 @RequestMapping("/vote")
 @Controller
@@ -103,5 +106,19 @@ public class VoteController {
 		System.out.println("**********************************************************************************************************************************************************");
 		
 		return voteService.checkVoteMember(checkVoteMem);
+	}
+	
+	
+	// 투표하기
+	@PostMapping("/submitVote")
+	public String submitVote(@ModelAttribute VoteVo myVote) throws JsonProcessingException {
+		System.out.println("**********************************************************************************************************************************************************");
+		logger.info("투표하기");
+		System.out.println("**********************************************************************************************************************************************************");
+
+		logger.info(myVote.toString());
+		voteService.submitVote(myVote);
+		
+		return "redirect:/";
 	}
 }

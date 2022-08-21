@@ -53,4 +53,22 @@ public class VoteDao {
 		return sqlSession.selectOne("vote.selectGuestVoted", map);
 	}
 	
+	
+	// 투표 현황 불러오기
+	public String selectVoteResults(int voteNo) {
+		return sqlSession.selectOne("vote.selectVoteResults", voteNo);
+	}
+	
+	
+	// 투표 결과 업데이트
+	public void updateVoteResults(VoteVo voteResults) {
+		sqlSession.update("vote.updateVoteResults", voteResults);
+	}
+	
+	
+	// voteVoted 업데이트
+	public void updateVoteVoted(VoteVo myVote) {
+		sqlSession.update("vote.updateVoteVoted", myVote);
+	}
+	
 }

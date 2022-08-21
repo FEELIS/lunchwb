@@ -80,11 +80,11 @@
 	        <div class="table-responsive no-drag" id="basket-table">
 	            <table class="table no-drag" id="basket-table-table">
 	            	<!--  투표 가게 목록 올 곳 -->
-	            	<c:set var="voteCnt" value="0" />
+	            	<c:set var="voteIdx" value="-1" />
 	            	<c:forEach items="${voteBasket}" var="store">
-	            		<c:set var="voteCnt" value="${voteCnt+1}" />
+	            		<c:set var="voteIdx" value="${voteIdx+1}" />
 	            		<c:if test="${userState == 1}">
-	            			<tr class="vote-table-row" data-vote-cnt="${voteCnt}" data-store-no="${store.storeNo}">
+	            			<tr class="vote-table-row" data-vote-idx="${voteIdx}" data-store-no="${store.storeNo}">
                         		<td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
                             		<div class="basket-table-store-info">
                             			<span class="text-start basket-table-store-name">${store.storeName}</span>
@@ -128,34 +128,31 @@
 
 let voteEndTime = "${voteInfo.voteEndTime}";
 let clientIp;
-let selected;
+let selected = {
+	voteNo : parseInt("${voteInfo.voteNo}"),
+	voteIdx : -1,
+	voteVoted : 0
+}
 
-console.log("${voteInfo}")
-console.log("${voteBasket}")
-console.log("${voteMember}")
 
 // 로그인 안했으면 ip 확인 > guestInfo 형태로 데이터 가져오기
-if ("${authUser}" == "") { 
-	$(document).ready(
-		async function(){
-			voteEndTime = changeTimeFormat(voteEndTime)
-			countDownTimer(voteEndTime)
+
+$(document).ready(async function(){
+	voteEndTime = changeTimeFormat(voteEndTime)
+	countDownTimer(voteEndTime)
+
+	if ("${authUser}" == "") { 
+	clientIp = await getIpClient()
+	// userState, voteno 불러오기
+	} else {
+		selected["userNo"] = $(".vote-selected-name").attr("data-user-no")
+		selected["voteMemberNo"] = $(".vote-selected-name").attr("data-vote-member-no")
+
+		console.log(selected)
+	}
+})
 	
-			clientIp = await getIpClient()
-			// userState, voteno 불러오기
-	
-	})
-	
-} else {
-	selected = {
-			voteMemberNo : $(".vote-selected-name").attr("data-vote-member-no"),
-			userNo : $(".vote-selected-name").attr("data-user-no"),
-			userName : $(".vote-selected-name").text(),
-			voteVoted : 0
-	} 
-	
-	console.log(selected)
-}
+
 
 ////////// ip check 관련 ////////////////////////////////////////////////////////////////////
 
@@ -184,10 +181,51 @@ $(".can-click-name").on("click", function(){
 
 ///////// 투표하기 클릭 //////////////////////////////////////////////////////////
 $(".vote-vote-btn").on("click", function(){
+	if (new Date() >= voteEndTime) {
+		alert("이미 종료된 투표입니다")
+		location.replace("${pageContext.request.contextPath}/")
+		
+		return false
+	}
+
 	if (selected == null) {
 		alert("투표에 참가할 이름을 먼저 선택해주세요")
+		
+		return false
+	} 
+	
+	var voteRow = $(this).closest(".vote-table-row")
+	selected["voteIdx"] = parseInt(voteRow.attr("data-vote-idx"))
+	selected["voteVoted"] = parseInt(voteRow.attr("data-store-no"))
+	
+	console.log(selected)
+
+	// form으로 묶어서 전송
+	function postVoteData(path, params, method) {
+		method = method || "post"
+		
+		let form = document.createElement("form")
+		document.charset = "utf-8"
+		
+		form.setAttribute("method", method)
+		form.setAttribute("action", path)
+		for (var key in params) {
+			var hiddenField = document.createElement("input")
+			
+			hiddenField.setAttribute("type", "hidden")
+			hiddenField.setAttribute("name", key)
+			hiddenField.setAttribute("value", params[key])
+			
+			form.appendChild(hiddenField)
+		}
+	
+		document.body.appendChild(form)
+		form.submit()
 	}
+	
+	postVoteData("${pageContext.request.contextPath}/vote/submitVote", selected)
 })
+
 
 ////////// 카운트다운 타이머 관련 /////////////////////////////////////////////////
 

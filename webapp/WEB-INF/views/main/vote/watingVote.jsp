@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <!DOCTYPE html>
 <html>
@@ -31,16 +30,15 @@
 </head>
 
 <body>
- 
 <div id="wrapper">
-<c:import url="/WEB-INF/views/includes/aside/voteAside.jsp" />
+    <c:import url="/WEB-INF/views/includes/aside/voteAside.jsp" />
     
-    <div class="d-flex flex-column" id="vote-map-wrapper">        
-	    <c:import url="/WEB-INF/views/includes/header.jsp" />
+    <div id="content-wrapper" class="d-flex flex-column">
+    	<c:import url="/WEB-INF/views/includes/header.jsp" />
+         
+        <div class="container" id="waiting-container">
         
-        <div class="container" id="container">
-	        
-            <div class="d-flex d-xxl-flex justify-content-center" id="map-btn-area">
+        	<div class="d-flex d-xxl-flex justify-content-center" id="wating-btn-area">
             	<button class="btn btn-danger d-inline-flex d-xxl-flex justify-content-center align-items-center" id="vote-kakao-btn" type="button">
             		<i class="fas fa-comment"></i>
             		<span>공유하기</span>
@@ -52,31 +50,26 @@
             		<button id="vote-url-copy-btn" class="btn btn-primary d-inline-flex d-xxl-flex flex-shrink-0 justify-content-center align-items-center align-content-center align-items-xl-center justify-content-xxl-center align-items-xxl-center" type="button">복사</button>
             	</span>
             </div>
-        </div>
-    </div>
-    
-    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
         
+            <div id="waiting-vote-area" class="d-flex d-xxl-flex justify-content-center align-items-center align-content-center flex-nowrap justify-content-xxl-center align-items-xxl-center card-body">
+                <div>
+                    <div class="d-inline-flex d-xxl-flex justify-content-center align-items-center flex-wrap justify-content-xxl-center align-items-xxl-center">
+                    	<span class="d-xxl-flex">아직 투표가 진행중입니다.</span>
+                    </div>
+                    
+                    <div class="d-xxl-flex flex-wrap justify-content-xxl-center">
+                        <div class="progress">
+                            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">60%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
 
-<script type="text/javascript">
-
-
-//복사 클릭 시 클립보드에 url 복사
-$("#vote-url-copy-btn").on("click", function(){
-	var content = $("#vote-url-input").val();
-
-    navigator.clipboard.writeText(content)
-        .then(() => {
-        alert("클립보드에 복사되었습니다.")
-    })
-        .catch(err => {
-        console.log("클립보드 복사 실패");
-    })
-})
-
-
-</script>
 
 </body>
 

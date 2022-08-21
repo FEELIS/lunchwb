@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -25,6 +26,7 @@ import com.lunchwb.service.UserService;
 import com.lunchwb.service.VisitedService;
 import com.lunchwb.service.VoteService;
 import com.lunchwb.vo.UserVo;
+import com.lunchwb.vo.VoteVo;
 
 
 @Controller
@@ -41,7 +43,9 @@ public class MainController {
 	
 	/* ----- 메인 접근 --------------------------------------------*/
 	@RequestMapping(value = {"/", "/{voteNo}"})
-	public String main(@PathVariable(required = false) Integer voteNo, HttpSession session, HttpServletRequest request, Model model) throws UnknownHostException {
+	public String main(@PathVariable(required = false) Integer voteNo, 
+				       @RequestParam(required = false) VoteVo reload,
+				       HttpSession session, HttpServletRequest request, Model model) throws UnknownHostException {
 		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("MainController");
 		System.out.println("**********************************************************************************************************************************************************");

@@ -30,6 +30,7 @@ public class VoteVo {
 	private List<StoreVo> voteStoreInfo;
 	private List<Integer> voteResultList;
 	private String groupName;
+	private int voteIdx;
 	
 	////////// 생성자 ////////////////////////////////////////////
 	
@@ -111,14 +112,6 @@ public class VoteVo {
 		this.voteState = voteState;
 	}
 
-	public int getUserNo() {
-		return userNo;
-	}
-
-	public void setUserNo(int userNo) {
-		this.userNo = userNo;
-	}
-	
 	public int getVoteVoted() {
 		return voteVoted;
 	}
@@ -166,6 +159,18 @@ public class VoteVo {
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
+	
+	public int getVoteIdx() {
+		return voteIdx;
+	}
+
+	public void setVoteIdx(int voteIdx) {
+		this.voteIdx = voteIdx;
+	}
+	
+	public Integer getUserNo() {
+		return userNo;
+	}	
 	
 	
 	///////////// toString //////////////////////////////////////////
