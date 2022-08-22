@@ -32,7 +32,7 @@ public class StatService {
 		// 지난 6개월 간 선택한 음식의 인기 조회
 		List<StatVo> getFoodHitList = statDao.getFoodHit(menu1stCateName);
 		// 지난 6개월 간 선택한 음식의 인기 조회
-		List<StatVo> getAgeHitList = statDao.getFoodHit(menu1stCateName);
+		List<StatVo> getAgeHitList = statDao.getAgeHit(menu1stCateName);
 		
 		List<String> barLabels = new ArrayList<String>();
 		List<String> barData = new ArrayList<String>();
