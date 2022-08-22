@@ -257,5 +257,25 @@ public class VoteService {
 		
 		return "redirect:/";
 	}
+	
+	
+	
+	///// 여기갈래요 누르기 ///////////////////////////////////////////
+	
+	public void visitConfirm(int voteNo) {
+		int cnt = voteDao.updateVoteVisited(voteNo);
+		
+		if (cnt > 0) {
+			System.out.println("[투표 종료]");
+			
+			cnt = voteDao.updateUserVisited(voteNo);
+			
+			System.out.println("[회원 " + cnt + "명 방문 완료로 상태 변경]");
+			
+		} else {
+			System.out.println("[투표 종료 실패]");
+		}
+		
+	}
  
  }

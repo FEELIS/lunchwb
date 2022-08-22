@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -120,5 +121,30 @@ public class VoteController {
 		voteService.submitVote(myVote);
 		
 		return "redirect:/";
+	}
+	
+	
+	// 여기갈래요
+	@PostMapping("/visitConfirm")
+	public String visitConfirm(@RequestParam("voteNo") int voteNo) {
+		System.out.println("**********************************************************************************************************************************************************");
+		logger.info("여기갈래요");
+		System.out.println("**********************************************************************************************************************************************************");
+
+		voteService.visitConfirm(voteNo);
+		
+		return "redirect:/";
+	}
+	
+	
+	// 투표 초기화하기
+	@PostMapping("/resetVote")
+	public String resetVote(@RequestParam("voteNo") int voteNo) {
+		System.out.println("**********************************************************************************************************************************************************");
+		logger.info("투표 초기화");
+		System.out.println("**********************************************************************************************************************************************************");
+
+		return "redirect:/";
+				
 	}
 }

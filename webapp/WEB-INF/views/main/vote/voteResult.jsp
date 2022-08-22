@@ -89,9 +89,22 @@
                         </div><span class="vote-graph-votes">1표</span>
                     </div>
                 </div>
-                <div class="d-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center ." id="vote-result-btn-area">
-                    <div class="flex-nowrap" id="vote-result-btn-box"><button class="btn btn-danger d-inline-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center" id="vote-result-letsgo-btn" type="button">여기갈래요</button><button class="btn btn-danger d-inline-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center" id="vote-result-again-btn" type="button">다시 고를래요</button></div>
-                </div>
+                
+                <c:if test="${authUser.userNo == voteInfo.voteMadeUser}">
+                    <div id="vote-result-btn-area" class="d-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center">
+	                    <div class="flex-nowrap" id="vote-result-btn-box">
+	                    	<form action="${pageContext.request.contextPath}/vote/visitConfirm" method="post">
+		                    	<input type="hidden" name="voteNo" value="${voteInfo.voteNo}">
+		                    	<button id="vote-result-letsgo-btn" class="btn btn-primary d-inline-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center" type="submit">여기갈래요</button>
+	                    	</form>
+	                    	
+	                    	<form id="resetVote" action="${pageContext.request.contextPath}/vote/resetVote" method="post">
+	                    		<input type="hidden" name="voteNo" value="${voteInfo.voteNo}">
+	                    		<button id="vote-result-again-btn" class="btn btn-danger d-inline-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center" type="button">다시 고를래요</button>
+	                    	</form>
+	                    </div>
+	                </div>
+                </c:if>
             </div>
         </div>
         <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
@@ -112,6 +125,19 @@ $("#vote-url-copy-btn").on("click", function(){
         .catch(err => {
         console.log("클립보드 복사 실패");
     })
+})
+
+
+
+// 다시 고를래요 클릭
+$("#vote-result-again-btn").on("click", function(){
+	var reallyAgain = confirm("투표를 초기화하시겠습니까? 지금까지의 진행정보를 모두 삭제합니다.")
+	
+	if (!reallyAgain) {
+		return false
+	} else {
+		$("#resetVote").submit()
+	}
 })
 
 </script>

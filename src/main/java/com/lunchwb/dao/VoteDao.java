@@ -88,4 +88,16 @@ public class VoteDao {
 	public int updateUserEnd(int voteNo) {
 		return sqlSession.update("vote.updateUserEnd", voteNo);
 	}
+	
+	
+	// 여기갈래요 > userState 업데이트
+	public int updateUserVisited(int voteNo) {
+		return sqlSession.update("vote.updateUserVisited", voteNo);
+	}
+	
+	
+	// 여기랄래여 > voteState 업데이트
+	public int updateVoteVisited(int voteNo) {
+		return sqlSession.update("vote.updateVoteVisited", voteNo);
+	}
 }

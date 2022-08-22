@@ -147,4 +147,40 @@
 		]]>
 	</update>
 	
+	
+	<!--  사용자 상태 여기갈래요 완료로 업데이트  -->
+	<update id="updateUserVisited" parameterType="int">
+		<![CDATA[
+			UPDATE users
+			SET    user_state = 4
+			WHERE  user_no IN (SELECT user_no 
+			                   FROM   vote_members 
+			                   WHERE  vote_no = #{voteNo} 
+			                   AND    user_no != 0)
+		]]>
+	</update>
+	
+	
+	<!--  사용자 상태 투표 안함으로 초기화  -->
+	<update id="updateUserReset" parameterType="int">
+		<![CDATA[
+			UPDATE users
+			SET    user_state = 0
+			WHERE  user_no IN (SELECT user_no 
+			                   FROM   vote_members 
+			                   WHERE  vote_no = #{voteNo} 
+			                   AND    user_no != 0)
+		]]>
+	</update>
+	
+	
+	<!--  방문완료 투표 상태 업데이트  -->
+	<update id="updateVoteVisited" parameterType="int">
+		<![CDATA[
+			UPDATE vote
+			SET    vote_state = 4
+			WHERE  vote_no = #{voteNo}
+		]]>
+	</update>
+	
 </mapper>
