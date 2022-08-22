@@ -80,7 +80,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             
-            <div class="modal-body">
+            <div class="modal-body no-drag">
                 <div><span class="no-drag">출발 위치를 선택해주세요.</span>
                     <div id="modal-curr-location-box">
                     	<span class="emphasize-blue no-drag">현재 설정 위치:&nbsp;</span>
