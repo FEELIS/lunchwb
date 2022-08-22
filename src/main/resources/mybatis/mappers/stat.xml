@@ -22,13 +22,6 @@
 		<result column="rating_bujang" property="ratingBujang" />
 		<result column="age_group" property="ageGroup" />
 	</resultMap>
-	<!-- ============================ 방문내역 ============================ -->
-	<select id="reviewList">
-		<![CDATA[
-			select 
-	
-		]]>
-	</select>
 	
 	<!-- ============================ 통계 ============================ -->
 	<!-- 지난 한달간 음식별 여기갈래요 횟수 -->
