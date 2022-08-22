@@ -39,7 +39,6 @@ public class VoteService {
 	
 	
 	/////////// 투표 참여 못하는 회원 목록 불러오기 ///////////////////////////////
-	
 	public List<String> checkVoteMember(int[] checkMember) {
 		List<Integer> checkMem = new ArrayList<>();
 		for (int no: checkMember) checkMem.add(no);
@@ -50,7 +49,6 @@ public class VoteService {
 	
 	
 	///////// 투표 생성하기 ///////////////////////////////////////////////////////////////////////
-	
 	public int makeVote(int userNo, Date voteEndTime, String voteMember, String currBasket, int groupNo) {
 		System.out.println("**********************************************************************************************************************************************************");
 		System.out.println("[투표 생성 데이터 정리하기]");
@@ -127,7 +125,6 @@ public class VoteService {
 	
 	
 	///////// voteAside 필요한 파라미터 불러오기 ////////////////////////////////////////////////////////////
-	
 	public Map<String, Object> getVoteAsideData(int voteNo, int userState) {
 		Map<String, Object> voteData = new HashMap<>();
 		
@@ -210,7 +207,6 @@ public class VoteService {
 	
 	
 	//////// 투표하기 ///////////////////////////////////////////////////////////
-	
 	public String submitVote(VoteVo myVote) throws JsonProcessingException {
 		// 투표 업데이트
 		int voteIdx = myVote.getVoteIdx();
@@ -263,7 +259,6 @@ public class VoteService {
 	
 	
 	///// 여기갈래요 누르기 ///////////////////////////////////////////
-	
 	public void visitConfirm(int voteNo) {
 		int cnt = voteDao.updateVoteVisited(voteNo);
 		
@@ -279,5 +274,14 @@ public class VoteService {
 		}
 		
 	}
- 
+	
+	
+	////// 투표 수정 준비 ///////////////////////////////////////////////////
+	public void modifyVoteReady(int userNo) {
+		int cnt = userDao.updateState99(userNo);
+		
+		if (cnt > 0) {
+			System.out.println("[수정하기 모드]");
+		}
+	}
  }
