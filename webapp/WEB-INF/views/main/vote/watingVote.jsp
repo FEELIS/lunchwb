@@ -45,7 +45,7 @@
             	</button>
             	
             	<span class="d-inline-flex flex-shrink-0 justify-content-center flex-nowrap align-items-xxl-center" id="vote-url-copy-box">
-            		<i class="fas fa-link d-inline-flex d-xxl-flex flex-shrink-0 justify-content-start align-items-center justify-content-xl-start align-items-xl-center justify-content-xxl-start align-items-xxl-center no-drag"></i>
+            		<i class="fas fa-link d-inline-flex d-xxl-flex flex-shrink-0 justify-content-start align-items-center justify-content-xl-start align-items-xl-center justify-content-xxl-start align-items-xxl-center"></i>
             		<input id="vote-url-input" class="d-inline-flex d-xxl-flex flex-shrink-0 align-items-xxl-center" type="text" value="http://localhost:8088/lunchwb/${voteInfo.voteNo}">
             		<button id="vote-url-copy-btn" class="btn btn-primary d-inline-flex d-xxl-flex flex-shrink-0 justify-content-center align-items-center align-content-center align-items-xl-center justify-content-xxl-center align-items-xxl-center" type="button">복사</button>
             	</span>
@@ -54,12 +54,12 @@
             <div id="waiting-vote-area" class="d-flex d-xxl-flex justify-content-center align-items-center align-content-center flex-nowrap justify-content-xxl-center align-items-xxl-center card-body">
                 <div>
                     <div class="d-inline-flex d-xxl-flex justify-content-center align-content-center align-items-center justify-content-xxl-center align-items-xxl-center">
-                    	<span class="d-xxl-flex no-drag">아직 투표가 진행중입니다.</span>
+                    	<span class="d-xxl-flex">아직 투표가 진행중입니다.</span>
                     </div>
                     
                     <div class="d-xxl-flex flex-wrap justify-content-xxl-center">
                         <div class="progress">
-                            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated no-drag" aria-valuenow="${currVote.votedCnt}" aria-valuemin="0" aria-valuemax="${currVote.totCnt}" style="width: ${currVote.votedCnt/currVote.totCnt*100}%;"></div>
+                            <div class="progress-bar bg-warning progress-bar-striped progress-bar-animated" aria-valuenow="${currVote.votedCnt}" aria-valuemin="0" aria-valuemax="${currVote.totCnt}" style="width: ${currVote.votedCnt/currVote.totCnt*100}%;"></div>
                         </div>
                     </div>
                 </div>

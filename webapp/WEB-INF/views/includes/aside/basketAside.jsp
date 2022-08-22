@@ -17,28 +17,28 @@
 <nav id="basket-aside" class="navbar navbar-light bg-white text-center d-xxl-flex align-items-start justify-content-xxl-center sidebar accordion p-0">
     <div class="container-fluid d-flex flex-column p-0">
         <div id="bujang-logo-wrap">
-        	<a href="${pageContext.request.contextPath}/" class="no-drag"><img data-bss-hover-animate="pulse" id="bujang-logo-blue" class="no-drag" src="assets/img/bujang-logo%20blue.png"></a>
+        	<a href="${pageContext.request.contextPath}/"><img data-bss-hover-animate="pulse" id="bujang-logo-blue" src="${pageContext.request.contextPath}/assets/img/bujang-logo%20blue.png"></a>
         </div>
         
         <div id="comment-box">
-        	<span id="eat-what" class="d-inline-block no-drag">오늘 점심 뭐 먹지?</span>
-        	<span id="prefer-data" class="d-inline-block no-drag">
+        	<span id="eat-what" class="d-inline-block">오늘 점심 뭐 먹지?</span>
+        	<span id="prefer-data" class="d-inline-block">
         	<!--  
         		<span class="d-inline-block emphasize-blue">${authUser.userName}</span>
         		<span class="d-inline-block">님은 패스트푸드를 좋아하시니까!</span>
         	-->
-        		<span class="d-inline-block no-drag">오늘도 점심은 부장님요기요</span>
+        		<span class="d-inline-block">오늘도 점심은 부장님요기요</span>
         	</span>
         </div>
         
         <c:if test="${empty(authUser)}">
          <div id="basket-aside-login-area">
-         	<span class="d-inline-block no-drag" id="login-jebal">로그인을 하면 취향에 맞는 식당을 추천해드려요</span>
-         	<a href="${pageContext.request.contextPath}/login"><span class="d-inline-block no-drag" id="basket-login-btn">로그인하기</span></a>
+         	<span class="d-inline-block" id="login-jebal">로그인을 하면 취향에 맞는 식당을 추천해드려요</span>
+         	<a href="${pageContext.request.contextPath}/login"><span class="d-inline-block" id="basket-login-btn">로그인하기</span></a>
          
-             <div id="basket-login-controll" class="no-drag">
-             	<a href="${pageContext.request.contextPath}/join" class="no-drag"><span class="d-inline-block no-drag" id="basket-join-link">회원가입</span></a>
-             	<a href="${pageContext.request.contextPath}/findPW" class="no-drag"><span class="d-inline-block no-drag" id="basket-findpw-link">비밀번호 찾기</span></a>
+             <div id="basket-login-controll">
+             	<a href="${pageContext.request.contextPath}/join"><span class="d-inline-block" id="basket-join-link">회원가입</span></a>
+             	<a href="${pageContext.request.contextPath}/findPW"><span class="d-inline-block" id="basket-findpw-link">비밀번호 찾기</span></a>
              </div>
          </div>
         </c:if>
@@ -46,7 +46,7 @@
         <div id="basket-aside-content" class="full-box">
         	<c:if test="${!empty(authUser)}">
              <div class="text-start d-flex basket-aside-title" id="basket-title-group">
-             	<span class="d-inline-block no-drag">나의 그룹</span>
+             	<span class="d-inline-block">나의 그룹</span>
              </div>
              
              <div class="d-flex" id="basket-groups">
@@ -54,14 +54,14 @@
              	<c:if test="${!empty(basketGroup)}">
 					<c:forEach var="myGroup" items="${basketGroup}">
 						<c:if test="${myGroup.groupNo == curr_basket_group}">
-							<div class="basket-group basket-selected-group basket-normal-group no-drag" data-groupNo="${myGroup.groupNo}">
+							<div class="basket-group basket-selected-group basket-normal-group" data-groupNo="${myGroup.groupNo}">
 								<span>${myGroup.groupName}</span>
 								<i class="fas fa-user-circle"></i>
 							</div>	
 						</c:if>
 						
 						<c:if test="${myGroup.groupNo != curr_basket_group}">
-							<div class="basket-group basket-normal-group no-drag" data-groupNo="${myGroup.groupNo}">
+							<div class="basket-group basket-normal-group" data-groupNo="${myGroup.groupNo}">
 								<span>${myGroup.groupName}</span>
 								<i class="fas fa-user-circle"></i>
 							</div>	
@@ -70,19 +70,19 @@
              	</c:if>
 
              	<c:if test="${empty(basketGroup) or fn:length(basketGroup) < 4}">
-						<div class="basket-group no-drag basket-group-add"><span>그룹추가</span><i class="fas fa-user-plus"></i></div>	
+						<div class="basket-group basket-group-add"><span>그룹추가</span><i class="fas fa-user-plus"></i></div>	
 				</c:if>
              </div>
             </c:if>
             
             <div class="text-start d-flex basket-aside-title" id="basket-title-lunch-candidates">
-            	<span class="d-inline-block no-drag">오늘의 점심 후보</span>
+            	<span class="d-inline-block">오늘의 점심 후보</span>
             </div>
             
             <div class="table-responsive" id="basket-table">
                 <table class="table" id="basket-table-table">
 	                <tr>
-	                    <td id="basket-table-button-area" colspan="2" class="no-drag">
+	                    <td id="basket-table-button-area" colspan="2">
 	                    	<i class="fas fa-filter" id="basket-filter-btn"></i>
 	                    	<button class="btn btn-primary d-inline-block" id="basket-another-stores-btn" type="button">다른 가게 추천 받기</button>
 	                    </td>
@@ -113,7 +113,7 @@
 			                	
 			                	<c:if test="${basketCnt == 0}">
 			                		<tr id="no-basket-items">
-                                		<td id="basket-no-items" class="no-drag" colspan="2">점심 후보를 추가해주세요</td>
+                                		<td id="basket-no-items" colspan="2">점심 후보를 추가해주세요</td>
                             		</tr>
 			                	</c:if>
 			                </c:if>
@@ -123,7 +123,7 @@
             </div>
             
 
-            <div id="basket-button-area" class="no-drag">
+            <div id="basket-button-area">
             	<c:if test="${!empty(authUser)}">
             		<button class="btn btn-primary" id="basket-vote-btn" type="button">투표하기</button>
             	</c:if>
@@ -137,25 +137,25 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header text-primary modal-header-custom">
-            	<span class="no-drag">제외하고 싶은 음식은 체크를 해제해주세요&nbsp;<i class="fas fa-check"></i></span>
-            	<button type="button" class="btn-close no-drag" data-bs-dismiss="modal" aria-label="Close"></button>
+            	<span>제외하고 싶은 음식은 체크를 해제해주세요&nbsp;<i class="fas fa-check"></i></span>
+            	<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             
-            <div class="modal-body text-center text-dark no-drag" style="font-size: 14px;">
+            <div class="modal-body text-center text-dark" style="font-size: 14px;">
                 <div class="text-start" id="modal-recFilter-btn-area">
                 	<button class="btn btn-primary" id="modal-recFilter-addAll" type="button">전체선택</button>
                 	<button class="btn btn-primary" id="modal-recFilter-delAll" type="button">전체해제</button>
                 </div>
             
                 <div class="row">
-                    <div class="col no-drag" style="border-right: 1px solid voar(--bs-gray-200);">
+                    <div class="col" style="border-right: 1px solid voar(--bs-gray-200);">
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">뷔페</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label" for="formCheck-2">아시아음식</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-3">양식</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-4"><label class="form-check-label" for="formCheck-4">일식</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-5"><label class="form-check-label" for="formCheck-5">한식</label></div>
                     </div>
-                    <div class="col no-drag" style="border-right: 1px solid voar(--bs-gray-200);">
+                    <div class="col" style="border-right: 1px solid voar(--bs-gray-200);">
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-6"><label class="form-check-label" for="formCheck-6">패스트푸드</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-7"><label class="form-check-label" for="formCheck-7">패밀리레스토랑</label></div>
                         <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-8"><label class="form-check-label" for="formCheck-8">치킨</label></div>
@@ -910,7 +910,7 @@ async function deleteSessionBasketGroup(deleteStoreNo) {
 // 점심후보에 가게 하나도 없을 때 html 그려주는 함수
 function basketNoItem() {
 	$("#basket-table-table").append(
-		"<tr id='no-basket-items'><td id='basket-no-items' class='no-drag' colspan='2'>점심 후보를 추가해주세요</td></tr>"
+		"<tr id='no-basket-items'><td id='basket-no-items' colspan='2'>점심 후보를 추가해주세요</td></tr>"
 	)
 	
 	console.log("basketNoItem() 끝")

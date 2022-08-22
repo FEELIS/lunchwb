@@ -39,9 +39,9 @@
 
         <div class="container" id="container">
             <div id="main-content">
-                <div class="vote-container-title"><span class="no-drag">투표 만들기</span></div>
+                <div class="vote-container-title"><span>투표 만들기</span></div>
                 
-                <div id="edit-vote-area" class="card-body no-drag">
+                <div id="edit-vote-area" class="card-body">
                     <div id="edit-vote-header">
                     	<span id="edit-vote-group-name">${groupName}</span>                        	
                     	<span id="edit-vote-group-nums">
@@ -160,7 +160,7 @@
 	                    		<span>공유하기</span>
 	                    	</button>
 	                    	<span class="d-inline-flex flex-shrink-0 justify-content-center flex-nowrap align-items-xxl-center" id="vote-url-copy-box">
-	                    		<i class="fas fa-link d-inline-flex d-xxl-flex flex-shrink-0 justify-content-start align-items-center justify-content-xl-start align-items-xl-center justify-content-xxl-start align-items-xxl-center no-drag"></i>
+	                    		<i class="fas fa-link d-inline-flex d-xxl-flex flex-shrink-0 justify-content-start align-items-center justify-content-xl-start align-items-xl-center justify-content-xxl-start align-items-xxl-center"></i>
 	                    		<input id="vote-url-input" class="d-inline-flex d-xxl-flex flex-shrink-0 align-items-xxl-center" type="text" value="">
 	                    		<button id="vote-url-copy-btn" class="btn btn-primary d-inline-flex d-xxl-flex flex-shrink-0 justify-content-center align-items-center align-content-center align-items-xl-center justify-content-xxl-center align-items-xxl-center" type="button">복사</button>
 	                    	</span>
@@ -677,7 +677,7 @@ $("#make-vote-btn").on("click", function(){
 				alert("투표 생성 실패")
 				
 			} else {
-				$("#vote-url-input").val("http://localhost:8088/" + voteNo)
+				$("#vote-url-input").val("http://localhost:8088/lunchwb/" + voteNo)
 				$("#vote-link-modal").modal("show")
 			}
 		},
