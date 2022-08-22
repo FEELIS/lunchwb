@@ -61,6 +61,8 @@
     <script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 </body>
+<script type="text/javascript">
 
+</script>
 
 </html>

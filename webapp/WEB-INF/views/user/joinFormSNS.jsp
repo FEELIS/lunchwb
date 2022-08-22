@@ -19,7 +19,27 @@
 </head>
 
 <body>
-    <c:import url="/WEB-INF/views/includes/userHeader.jsp"></c:import>
+    <nav class="navbar navbar-light navbar-expand bg-white shadow d-xxl-flex justify-content-xxl-end mb-4 topbar static-top no-side-bar-header">
+	    <div class="container join-login-page">
+	    	<a href="${pageContext.request.contextPath}/" class="no-drag"><span class="logo-span"><img id="bujang-logo-blue" class="no-drag" width="159" height="38" src="${pageContext.request.contextPath}/assets/img/bujang-logo%20blue.png"/></span></a>
+	       	<ul class="navbar-nav d-xxl-flex align-items-xxl-center">
+	       		 <c:if test="${empty(authUser)}">
+	           	 <li class="nav-item d-inline-flex">
+	            	<a href="${pageContext.request.contextPath}/login" style="padding: 15px 0px">
+	            		<button id="logout-btn" class="btn btn-primary" type="button" style="2px 0px 0px 0px">로그인</button>
+	            	</a>
+	           	</li>
+	       		</c:if>
+				<c:if test="${!empty(authUser)}">
+	           	<li class="nav-item d-inline-flex">
+	           		<a href="${pageContext.request.contextPath}/logout" style="padding: 15px 0px">
+		            		<button id="logout-btn" class="btn btn-primary" type="button" style="2px 0px 0px 0px">로그아웃</button>
+	            	</a>
+	          	 </li>
+	       		</c:if>
+	       </ul>
+	    </div>
+	</nav>
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-9 col-lg-12 col-xl-10" style="width: 600px;">
@@ -45,7 +65,8 @@
                                         	<strong class="join-text">출생연도</strong>
                                         	<input id="inputBirthDate" type="number" name="userBirthYear" placeholder="출생연도를 적어주세요." min="1900" max="2030">
                                         	<span class="check-text" id="msgBirth"></span>
-                                        	<span class="check-text" id="msgErrorBirth">생년월일을 입력해주세요.</span>
+                                        	<br>
+                                        	<span class="check-text" id="msgErrorBirth">출생연도를 입력해주세요.</span>
                                        	</div>
                                         <div class="mb-3">
                                         	<strong class="join-text">성별</strong>
