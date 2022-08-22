@@ -209,6 +209,23 @@
   border-width: 1px;
 }
 
+.vote-wating-change-vote-btn {
+  color: var(--bs-red) !important;
+  background: #ffffff !important;
+  font-size: 13px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-right: 7px;
+  padding-left: 7px;
+  min-width: 66px;
+  max-width: 66px;
+  font-weight: bold;
+  width: 66px;
+  border-radius: 7px;
+  border-width: 1px;
+  border-color: var(--bs-red);	
+}
+
 #waiting-vote-my-name {
   width: 92px;
   min-width: 92px;
