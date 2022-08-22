@@ -81,6 +81,10 @@ body {
   width: 100%;
 }
 
+#header ul {
+	white-space: nowrap;
+}
+
 #user-alert i {
   cursor: pointer;
   height: 20px;
