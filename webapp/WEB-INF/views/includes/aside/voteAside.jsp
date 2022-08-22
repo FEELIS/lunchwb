@@ -168,10 +168,14 @@
 
 <script type="text/javascript">
 
+
+/////////////////////// 전역 변수 //////////////////////////////
+
 let voteEndTime = "${voteInfo.voteEndTime}"
 let clientIp
 let userState = "${userState}"
 
+// 투표할 때 넘길 데이터
 let selected = {
 	voteNo : parseInt("${voteInfo.voteNo}"),
 	voteIdx : -1,
@@ -179,20 +183,25 @@ let selected = {
 }
 
 
-// 로그인 안했으면 ip 확인 > guestInfo 형태로 데이터 가져오기
+//////////////////// 페이지 로드시 ///////////////////////////////////////////////////////////////////////
 
 $(document).ready(async function(){
+	// 투표 종료 시각 date type으로 변환하기
 	voteEndTime = changeTimeFormat(voteEndTime)
 	
+	// 투표 종료 안했다면 타이머 호출
 	if ("${userState}" != 3) {
 		countDownTimer(voteEndTime)
 	}
 
+	// 로그인 안했으면 클라이언트 ip 가져오기
 	if ("${authUser}" == "") { 
 	clientIp = await getIpClient()
+	
 	// userState, voteno 불러오기
-	} else {
-		if (userState == "1") {
+	
+	} else { 
+		if (userState == "1") { // 로그인 안했고 투표 안한 회원 - 투표할 때 보낼 정보 추가
 			selected["userNo"] = $(".vote-selected-name").attr("data-user-no")
 			selected["voteMemberNo"] = $(".vote-selected-name").attr("data-vote-member-no")
 	
@@ -222,34 +231,37 @@ async function getIpClient() {
 // guest 투표 참여했는 지 확인
 
 
-/////////// 게스트가 자기 이름 클릭했을 때 //////////////////////////////////////////
+////////////////////// 게스트가 자기 이름 클릭했을 때 //////////////////////////////////////////
 $(".can-click-name").on("click", function(){
 	alert("으악")
 })
 
 
-///////// 투표하기 클릭 //////////////////////////////////////////////////////////
+/////////////////// 투표하기 클릭 //////////////////////////////////////////////////////////
 $(".vote-vote-btn").on("click", function(){
-	if (new Date() >= voteEndTime) {
+	// 투표 가능한 시각인지 확인
+	if (new Date() >= voteEndTime) { // 종료시각 이후면 alert 후 메인으로 이동
 		alert("이미 종료된 투표입니다")
 		location.replace("${pageContext.request.contextPath}/")
 		
 		return false
 	}
-
+	
+	// 비회원인데 이름 선택을 안했다면
 	if (!("voteMemberNo" in selected)) {
 		alert("투표에 참가할 이름을 먼저 선택해주세요")
 		
 		return false
 	} 
 	
+	// 몇번째 가게 선택했는지 정보 받아오기
 	var voteRow = $(this).closest(".vote-table-row")
 	selected["voteIdx"] = parseInt(voteRow.attr("data-vote-idx"))
 	selected["voteVoted"] = parseInt(voteRow.attr("data-storeNo"))
 	
 	console.log(selected)
 
-	// form으로 묶어서 전송
+	// form으로 묶어서 controller에 전송
 	function postVoteData(path, params, method) {
 		method = method || "post"
 		
@@ -258,6 +270,7 @@ $(".vote-vote-btn").on("click", function(){
 		
 		form.setAttribute("method", method)
 		form.setAttribute("action", path)
+		
 		for (var key in params) {
 			var hiddenField = document.createElement("input")
 			
@@ -297,13 +310,15 @@ const countDownTimer = function(voteEndTime) {
 			return
 		}
 
-		var hours = Math.floor((distDt % day) / hour)
-		var minutes = Math.floor((distDt % hour) / minute)
-		var seconds = Math.floor((distDt % minute) / second)
-
-		$("#countdown-time").text(lpad(hours, 2, "0") + ":" + lpad(minutes, 2, "0") + ":" + lpad(seconds, 2, "0"))
+		var hours = "" + Math.floor((distDt % day) / hour) 
+		var minutes = "" + Math.floor((distDt % hour) / minute) 
+		var seconds = "" + Math.floor((distDt % minute) / second) 
+		
+		// 포맷 맞춰서 표시하기
+		$("#countdown-time").text(hours.padStart(2, "0") + ":" + minutes.padStart(2, "0") + ":" + seconds.padStart(2, "0"))
 	}
-
+	
+	// 1초마다 타이머 계산해서 표시
 	timer = setInterval(showRemaining, 1000)
 }
 
@@ -316,26 +331,6 @@ function changeTimeFormat(time) {
 	
 	return newTime
 }
-
-
-// 두자리수 변환
-function lpad(str, padLen, padStr) {
-    if (padStr.length > padLen) {
-        return str
-    }
-    str += ""
-    padStr += ""
-    
-    while (str.length < padLen) {
-        str = padStr + str
-    }
-    str = str.length >= padLen ? str.substring(0, padLen) : str
-    		
-    return str
-}
-	
-	
-	
 
 
 </script>

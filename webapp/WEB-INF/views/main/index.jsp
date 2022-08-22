@@ -104,17 +104,17 @@
 
 </div>
 
-</body>
-
 <script type="text/javascript">
 
+// basketAside에서 사용(나는 index.jsp임)
 indexJSP = true
 
-// 위치재설정 버튼 클릭 시
+// 위치재설정 버튼 클릭 시 > 모달 텍스트 불러옴 + 모달 보여주게
 $("#location-change-btn").on("click", function(){
 	console.log(countBasketItems(curr_basket_group))
 	var curr_address = ""
 	
+	// 모달 내부에 표시될 현재 위치 불러오기
 	if (gpsVo.address == "") {
 		curr_address = "현재 위치를 설정해주세요"
 		
@@ -122,38 +122,42 @@ $("#location-change-btn").on("click", function(){
 		curr_address = gpsVo.address
 	}
 	
+	// 모달에 내용 표시하고 보여주기
 	$("#modal-curr-location").text(curr_address)
 	$("#modal-location-change").modal("show")
-	$("#modal-location-change").modal( {
+	// 모달 밖 클릭해도 안닫히게 하고 싶은데 잘 닫힘
+	$("#modal-location-change").modal({
 		backdrop: 'static'
 	})
 })
 
 
-// 현위치로 재설정
+// gps에 저장할 위치를 현재 위치로 재설정
 $("#modal-curr-location-btn").on("click", function(){
 	curr_location()
 })
 
 
-// 주소 검색하기
+// 직접 주소 검색하기
 $(".location-search-bar").on("click", function(){			
 	DaumPostcode()
 })
 
 
-// 주소 api
+// Daum 주소 api 불러오는 함수
    function DaumPostcode() {
       new daum.Postcode({
           oncomplete: function(data) {
+        	  // 검색해서 클릭한 주소로 모달에 표시되는 주소도 변경
               $("#modal-curr-location").text(data.jibunAddress)
           }
       }).open()
    }
 
 
-// 모달 닫힐 때 페이지 로드
+// 주소 변경 모달에서 확인 클릭시 > 주소 변경, 위도 경도 불러오기, 세션에 저장
 $("#modal-gps-submit").on("click", function(){
+	// 주소가 변경되었다면
 	if ($("#curr-location-address").text() != $("#modal-curr-location").text()) {
 		var gpsChangeOK = confirm("현재 위치 변경 시 현재 저장한 점심 후보가 초기화됩니다. 정말로 변경하시겠습니까?")
 
@@ -161,33 +165,39 @@ $("#modal-gps-submit").on("click", function(){
 			return false
 		}
 		
+		// 카카오 api 주소 > 위도경도 찾기
 		var geocoder = new kakao.maps.services.Geocoder()
 		   geocoder.addressSearch($("#modal-curr-location").text(), async function(result, status) {
 
 		   if (status === kakao.maps.services.Status.OK) {
+			    // 전역변수 gpsVo에 변경된 위도, 경도, 주소 저장
 			    gpsVo.gpsX = result[0].x
 			    gpsVo.gpsY = result[0].y
 		        gpsVo.address = $("#modal-curr-location").text()
 		        
+		        // 세션에 gps저장
 		        await setGPS(gpsVo)
-			    await clearBasket()
 		   	  } 
 		});  
 		
+		// 모달 숨기고 알림
 		$("#modal-location-change").modal("hide")
+		
 		sleep(100)
 		alert("현재 위치가 변경되었습니다.")
 		
 		sleep(100)
+		// 페이지 다시 로드하기
 		location.replace("${pageContext.request.contextPath}/")
 		
 	} else {
+		// 주소 변경 안했으면 얌전히 모달만 닫기
 		$("#modal-location-change").modal("hide")
 	}
 })
 
 
-// 장바구니 비우기
+// 장바구니 아예 비워버리는 함수(지금은 안쓰는 듯)
 async function clearBasket() {
 	$.ajax({
 		url : "${pageContext.request.contextPath}/basket/clearBasket",		
@@ -203,7 +213,7 @@ async function clearBasket() {
 }
 
 
-// 주변에 가게가 하나도 없을 때 창
+// 주변에 가게가 하나도 없을 때 html 그려주는 함수
 function noStore() {
 	if (indexJSP) {
 		$("#container").append(
@@ -217,8 +227,9 @@ function noStore() {
 	}
 }
 
-
 	
 </script>
+
+</body>
 
 </html>

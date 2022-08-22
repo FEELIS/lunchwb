@@ -175,13 +175,22 @@
 	
 <script type="text/javascript">
 
+// 지금 시각
 let currentDate
+// 지금 시각(시)
 let currentTime
+// 지금 시각(분)
 let currentMin
+// 임시 시각(시)
 let tempTime
+// 임시 시각(분)
 let tempMin
+// 새이름 다 떨어졌을 때 사용할 변수
+let myBird = 1
+// idx로 사용할 전체 사람 수(계속 업데이트)
 let totVote = parseInt($("#edit-vote-group-num").text())
 	
+// 임시 멤버 이름으로 사용할 bird 이름
 let birdName = ["가마우지", "갈매기", "개개비", "거위", "고니", "곤줄박이", "기러기", "까마귀", "까치", 
 	"꼬리치레", "꾀꼬리", "꿩", "나무발발이", "논병아리", "느시", "닭", "독수리", "동고비", "두견", "두루미",
 	"따오기", "딱따구리", "뜸부기", "마도요", "말똥가리", "매", "메추라기", "메추라기", "밀화부리", "발구지",
@@ -189,8 +198,13 @@ let birdName = ["가마우지", "갈매기", "개개비", "거위", "고니", "�
 	"올빼미", "왜가리", "원앙", "제비", "조롱이", "종다리", "지빠귀", "직박구리", "찌르레기", "할미새사촌", "해오라기"]
 
 
+/////////////// 페이지 로딩 시 //////////////////////////////////////////////////////////////////
+
 $(document).ready(async function() {
+	// 현재 시각 불러오기
 	getTime()
+	
+	// 투표 종료시각 input에 현재 시각 표시
 	$("#vote-end-hour").val(currentTime)
 	$("#vote-end-min").val(currentMin)
 })
@@ -200,7 +214,7 @@ $(document).ready(async function() {
 
 document.onkeydown = noEvent
 
-// 부장 로고 클릭 시
+// 부장 로고 클릭 시 > 저장 안된다고 경고
 $("#bujang-logo-blue").on("click", function(){
 	var confirmRefresh = confirm("페이지 이동 시 진행상황이 저장되지 않습니다. 메인으로 이동하시겠습니까?")
 	if (!confirmRefresh) {		
@@ -208,7 +222,7 @@ $("#bujang-logo-blue").on("click", function(){
 	}
 })
 
-// F5 버튼 눌렀을 때
+// F5 버튼 눌렀을 때 > 저장 안된다고 경고
 function noEvent() {
 	if (event.keyCode == 116) {
 		var confirmRefresh = confirm("페이지 이동 시 진행상황이 저장되지 않습니다. 새로고침하시겠습니까?")
@@ -226,7 +240,7 @@ function noEvent() {
 
 ////////// 투표 인원 변경 //////////////////////////////////////////////////////////////////////	
 
-// 인원추가 - 버튼 토글
+// 인원추가 - 버튼 토글 > 추가 인원--
 $("#vote-member-minus").on("click", function(){
 	var voteAddNum = parseInt($("#vote-new-member-num").text())
 	
@@ -236,10 +250,11 @@ $("#vote-member-minus").on("click", function(){
 	}
 })
 
-// 인원추가 + 버튼 토글
+// 인원추가 + 버튼 토글 > 추가인원++
 $("#vote-member-plus").on("click", function(){
 	var voteAddNum = parseInt($("#vote-new-member-num").text())
 	
+	// 투표 최대 인원 30명 넘는지 확인, 넘으면 경고
 	if (voteAddNum + parseInt($("#edit-vote-group-num").text()) < 30) {
 		voteAddNum += 1
 		$("#vote-new-member-num").text(voteAddNum)
@@ -250,25 +265,38 @@ $("#vote-member-plus").on("click", function(){
 })	
 
 
-// 추가하기 버튼 클릭
+// 추가하기 버튼 클릭 > 인원초과 안되면 html상 추가
 $("#vote-new-member-add-btn").on("click", function(){
+	// 추가할 인원
 	var voteAddNum = parseInt($("#vote-new-member-num").text())
+	// 현재 총 인원
 	var totNum = parseInt($("#edit-vote-group-num").text())
-			
+	
+	// 인원 추가에 표시되는 인원 1로 초기화
 	$("#vote-new-member-num").text(1)
 	
+	// 총 인원 30명 넘어가면
 	if (totNum + voteAddNum > 30) {
 		alert("투표 총 인원은 30명을 초과할 수 없습니다.")
 		return false
 	}
 	
-	// 투표할 추가 인원 div 추가
+	// 투표할 추가 인원 div html상에 추가
 	for (var i = 0; i < voteAddNum; i++) {		
 		totVote += 1
-		var tempidx = Math.floor(Math.random() * birdName.length)
-		var tempName = birdName[tempidx]
-		birdName.splice(tempidx, 1)
 		
+		// 새이름 선택하기, 중복 안되게 사용한 이름은 birdName 배열에서 제거
+		if (birdName.length > 0) {	
+			var tempidx = Math.floor(Math.random() * birdName.length)
+			var tempName = birdName[tempidx]
+			birdName.splice(tempidx, 1)
+			
+		} else { // 혹시? 누가 50개나 되는 이름을 다 썼다면
+			var tempName = "새".repeat(myBird)
+			myBird += 1 
+		}
+		
+		// html 그리기
 		$("#edit-vote-people-area").append(
 			  "<span class='d-flex d-xxl-flex flex-wrap vote-people' data-vote-member-no='" + totVote + "'>"
        		+ 	"<span class='text-end d-xl-flex d-xxl-flex justify-content-xl-end align-items-xl-center justify-content-xxl-end vote-people-header'>"
@@ -286,6 +314,7 @@ $("#vote-new-member-add-btn").on("click", function(){
 		)
 	}
 	
+	// 투표 참여 인원 표시 변경된 총 인원으로 변경
 	totNum += voteAddNum
 	$("#edit-vote-group-num").text(totNum)
 })
@@ -298,35 +327,51 @@ $("#vote-new-member-add-btn").on("click", function(){
 $("#edit-vote-people-area").on("click", ".vote-member-not-today", function(){
 	//alert($(this).closest(".vote-people").find(".vote-people-name").text() + "님은 오늘 점심 따로갈래요 😢")
 	
+	// 인원 표시 div 삭제된 상태로 변경하기
 	$(this).closest(".vote-people").addClass("vote-people-deleted")
 	$(this).removeClass("fas fa-minus-circle vote-member-not-today")
 	$(this).addClass("fas fa-plus-circle vote-member-re-add")
+	
+	// 투표 총 인원 표시 변경
+	var totNum = parseInt($("#edit-vote-group-num").text()) - 1
+	$("#edit-vote-group-num").text(totNum)
+	
 })
 
 
 // 제외된 기존 그룹 멤버 다시 추가
 $("#edit-vote-people-area").on("click", ".vote-member-re-add", function(){
+	// 다시 참여한 상태로 div 변경
 	$(this).closest(".vote-people").removeClass("vote-people-deleted")
 	$(this).removeClass("fas fa-plus-circle vote-member-re-add")
 	$(this).addClass("fas fa-minus-circle vote-member-not-today")
+	
+	// 투표 총 인원 표시 변경
+	var totNum = parseInt($("#edit-vote-group-num").text()) + 1
+	$("#edit-vote-group-num").text(totNum)
 })
 
 
-// 새이름 멤버 삭제
+// 새이름 멤버 삭제 클릭 > 아예 삭제해버리기
 $("#edit-vote-people-area").on("click", ".vote-people-del-btn", function(){
 	var confirmDelBird = confirm($(this).closest(".vote-people").find(".vote-people-name").text() + "님을 투표에서 제외하시겠습니까?")
+	
 	if (!confirmDelBird) {
-		return
+		
+		return false
 	}
 	
+	// 새이름 표시 삭제
 	$(this).closest(".vote-people").remove()
 	
+	// 총 인원 변경 반영
 	var totNum = parseInt($("#edit-vote-group-num").text())
 	$("#edit-vote-group-num").text(totNum-1)
+
 })
 
 
-// 새이름 멤버 수정
+// 새이름 멤버 수정 클릭 > input 있는 상태로 변경
 $("#edit-vote-people-area").on("click", ".vote-people-edit-name-btn", function(){
 	$(this).removeClass("fas fa-pen vote-people-edit-name-btn")
 	$(this).addClass("fas fa-check-circle vote-people-edit-confirm")
@@ -346,6 +391,12 @@ $("#edit-vote-people-area").on("click", ".vote-people-edit-confirm", function(){
 })
 
 
+// 새이름 멤버 수정(포커스 안된 곳 클릭)
+$("#edit-vote-people-area").on("change", ".change-birdname-ipt", function(){
+	changeBirdName($(this).closest(".vote-people").find(".vote-people-edit-confirm"))
+})
+
+
 // 새이름 멤버 수정(엔터)
 $("#edit-vote-people-area").on("keyup", ".change-birdname-ipt", function(key){
 	if (key.keyCode == 13) {
@@ -359,14 +410,16 @@ function changeBirdName(btn) {
 	var spanName = btn.closest(".vote-people").find(".vote-people-name")
 	var changedName = spanName.find("input").val()
 	
-	if (changedName.length < 1) {
-		alert("적어도 한 글자 이상 입력해주세요")
+	if (changedName.length < 2) { // 글자수 체크
+		alert("적어도 두 글자 이상 입력해주세요")
 		
 		return
 	}
 	
+	// 표시되는 이름 변경
 	spanName.html(changedName)
 			
+	// html 다시 변경
 	btn.removeClass("fas fa-check-circle vote-people-edit-confirm")
 	btn.addClass("fas fa-pen vote-people-edit-name-btn")
 	btn.closest(".vote-people-header").append("<i class='fas fa-times-circle d-inline-block vote-people-del-btn'></i>")
@@ -381,11 +434,12 @@ function getTime() {
 	currentTime = String(currentDate.getHours())
 	currentMin = String(currentDate.getMinutes())
 	
+	// 0 채워서 보여주기
 	show_two_nums()
 }
 
 
-// 시간 계산
+// 시간 더하기 계산
 function calculateTime(plusMin) {
 	tempTime = parseInt(currentTime)
 	tempMin = parseInt(currentMin) + plusMin
@@ -397,6 +451,7 @@ function calculateTime(plusMin) {
 	
 	if (tempTime > 23) {
 		alert("투표 마감 시각은 오늘 자정을 넘어갈 수 없습니다")
+		
 		return
 		
 	} else {
@@ -410,7 +465,7 @@ function calculateTime(plusMin) {
 }
 	
 
-// 두자리 수 유지
+// 표시되는 숫자 두자리 유지하기
 function show_two_nums() {
 	currentTime = currentTime.padStart(2, "0")
 	currentMin = currentMin.padStart(2, "0")
@@ -469,6 +524,7 @@ $("#vote-add-1hr").on("click", function(){
 
 // 초기화 클릭
 $("#vote-reset-btn").on("click", function(){
+	// 현재시각 불러오기
 	getTime()
 	
 	$("#vote-end-hour").val(currentTime)
@@ -479,14 +535,14 @@ $("#vote-reset-btn").on("click", function(){
 ///////////////////// 투표 생성하기 //////////////////////////////////////////////////////////
 
 // 투표 만들기 버튼 클릭
-
 $("#make-vote-btn").on("click", function(){	
-	// 투표 정리 시각 데이터 
+	// 투표 종료 시각 데이터 
 	let voteEndDate = new Date()
 	voteEndDate.setHours($("#vote-end-hour").val())
 	voteEndDate.setMinutes($("#vote-end-min").val())
 	console.log(voteEndDate)
 	
+	// 현재시각이 투표종료시각 이후라면
 	if (voteEndDate <= new Date()) {
 		alert("투표 마감 시각은 현재 시각 이후여야합니다.")
 		
@@ -495,9 +551,9 @@ $("#make-vote-btn").on("click", function(){
 	
 	voteEndDate = String(voteEndDate)
 	
-	// 투표 멤버 불러오기
-	let voteMember = [] 
-	let checkMember = []
+	// 투표 멤버 데이터 정리하기
+	let voteMember = [] // 투표 참가자 저장할 리스트(List<VoteVo>)
+	let checkMember = [] // 투표 참가하는 회원 저장할 리스트(List<Integer>) >> userState 업데이트용
 	var cnt = 0
 	
 	for (var i = 1; i <= totVote; i++) {
@@ -506,21 +562,27 @@ $("#make-vote-btn").on("click", function(){
 		
 		var currName = currDiv.find(".vote-people-name").text()
 		
+		// 해당 no의 사람이 존재한다면
 		if (currName.length > 0) {
-			
+			// 오늘 안가기로 한 회원이면 저장하지 않음
 			if (currDiv.hasClass("vote-people-deleted")) {
+				
 				continue
 			}
+			
+			// 투표 참가 인원++
 			cnt += 1
+			// 투표 참가자 이름 불러오기
 			currMem["userName"] = currName
 						
 			var userGrade = parseInt(currDiv.attr("data-user-grade"))
 			
-			if (userGrade > 0) {
+			if (userGrade > 0) { // 회원이고 원래 그룹원인 사람이라면 정보 더 불러옴
 				var userNo =  parseInt(currDiv.attr("data-user-no"))
 						
 				currMem["userNo"] = userNo
 				currMem["userGrade"] = userGrade
+				
 				checkMember.push(userNo)
 			}
 			voteMember.push(currMem)
@@ -560,11 +622,13 @@ $("#make-vote-btn").on("click", function(){
 				
 				var cantTr = $("[data-user-name=" + result[i] + "]").closest(".vote-people")
 				
+				// 참여 못하는 회원 비활성화
 				cantTr.addClass("vote-people-deleted")
 				cantTr.find(".vote-people-header i").removeClass("fas fa-minus-circle vote-member-not-today")
 				cantTr.find(".vote-people-header i").addClass("fas fa-plus-circle vote-member-re-add")
 			}
 			
+			// 누구누구 참여 못하는지 알려주기
 			if (alertMember != "") {
 				alert(alertMember + "님은 이미 다른 투표에 참여중입니다.")
 				
@@ -576,6 +640,7 @@ $("#make-vote-btn").on("click", function(){
 		}
 	})
 	
+	// 참여 못하는 회원이 한 명이라도 있으면 return
 	if (stopVoteMake) {
 		return false
 	}
@@ -623,14 +688,17 @@ $("#make-vote-btn").on("click", function(){
 })
 
 
-// 복사 클릭 시 클립보드에 url 복사
+
+////////////////////// 투표 생성 모달 //////////////////////////////////////////////
+
+// 복사 버튼 클릭 시 클립보드에 url 복사
 $("#vote-url-copy-btn").on("click", async function(){
 	await saveClipBoard()
 	location.replace("${pageContext.request.contextPath}/")
 })
 	
 	
-// 클립보드 저장 function 
+// 클립보드 저장 api 사용하는 function
 async function saveClipBoard() {
 	var content = $("#vote-url-input").val();
 
@@ -644,7 +712,7 @@ async function saveClipBoard() {
 }
 
 
-// 투표 생성 모달 닫힐 때
+// 투표 생성 모달 닫힘 > 메인페이지로 이동
 $("#vote-link-modal").on("hide.bs.modal", function(){
 	location.replace("${pageContext.request.contextPath}/")
 })
