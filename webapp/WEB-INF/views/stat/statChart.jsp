@@ -261,7 +261,7 @@
 										<span class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;30대</span>
 										<span class="me-2"><i class="fas fa-circle text-info"></i>&nbsp;40대</span>
 										<span class="me-2"><i class="fas fa-circle text-warning"></i>&nbsp;50대</span>
-										<span class="me-2"><i class="fas fa-circle text-danger"></i>&nbsp;60대 이상</span>
+										<span class="me-2"><i class="fas fa-circle text-danger"></i>&nbsp;60대이상</span>
 									</div>
 								</div>
 							</div>
@@ -451,13 +451,9 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	// 지난 한달간 음식별 여기갈래요 횟수
 	var bar = barGraph();
-	var str ='';
 	var i =0;
 	
 	for (var chart of charts) {
-		//chart.chart = new Chart(chart, JSON.parse(chart.dataset.bssChart));
-		console.log("chart"+chart)
-		console.log("charts"+charts)
 		
 		chart.chart = new Chart(chart, JSON.parse(chart.dataset.bssChart=bar[i]));
 		console.log(chart.chart);
@@ -471,9 +467,16 @@ function barGraph() {
 	var strArray=[];
 	var menu = ['뷔페','아시아음식','양식','일식','한식','패스트푸드','패밀리레스토랑','치킨','분식','중식'];
 	
-	var menu1stCateName = menu[2]; 
+	var menu1stCateName = menu[(Math.floor(Math.random() * 10))];
 	
+	// 라인그래프, 파이모양그래프 제목
+	$('#lineMenu').text('지난 6개월간 '+ menu1stCateName +' 여기갈래요 수');
+	$('#pieMenu').text('연령별 '+ menu1stCateName +' 선호도');
+	
+	var userNo = '${authUser.userNo}';
+
 	var statVo = {
+		userNo: userNo,
 		menu1stCateName: menu1stCateName		
 			
 	};
@@ -499,8 +502,7 @@ function barGraph() {
 			strArray.push(line);
 			strArray.push(pie);
 			
-			$('#lineMenu').innerText('지난 6개월간 '+ statVo.menu1stCateName +' 여기갈래요 수');
-			$('#pieMenu').innerText('연령별 '+ statVo.menu1stCateName +' 선호도');
+			
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
@@ -569,6 +571,7 @@ function renderToBar(statVo) {
 		    '"zeroLineBorderDash": ["2"]'+
 		    '},'+
 		    '"ticks": {'+
+		    '"beginAtZero": "true",'+
 		    '"fontColor": "#858796",'+
 		    '"fontStyle": "normal",'+
 		    '"padding": 20'+
@@ -583,19 +586,23 @@ function renderToBar(statVo) {
 
 
 
-function renderToDoughnut() {
+function renderToDoughnut(statVo) {
 	var str = '';
 	
 	str +=
 		'{'+
 		'"type": "doughnut",'+
 		'"data": {'+
-			'"labels": ["소방기계", "소방전기", "BIM팀"],'+
+			'"labels": ['+
+				statVo.doughnutLabels +
+				'],'+
 			'"datasets": [{'+
 				'"label": "",'+
 				'"backgroundColor": ["#4e73df", "#1cc88a", "#36b9cc"],'+
 				'"borderColor": ["#ffffff", "#ffffff", "#ffffff"],'+
-				'"data": ["57", "26", "9"]'+
+				'"data": ['+
+					statVo.doughnutData +
+					']'+
 			'}]'+
 		'},'+
 		'"options": {'+
