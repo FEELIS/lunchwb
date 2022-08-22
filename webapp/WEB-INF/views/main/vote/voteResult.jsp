@@ -115,6 +115,7 @@
     <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
 
+
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
 <script type="text/javascript">
@@ -161,7 +162,7 @@ function kakaoShare() {
   Kakao.Link.sendDefault({
     objectType: 'feed',
     content: {
-      title: '부장님 오늘 점심은' + todayStore + '입니다.',
+      title: '부장님 오늘 점심은 ' + todayStore + ' 입니다.',
       imageUrl: 'http://localhost:8088/lunchwb/' + voteURL,
       description: todayStore,
       link: {
