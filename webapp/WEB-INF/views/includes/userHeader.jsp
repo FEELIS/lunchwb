@@ -9,11 +9,20 @@
     <div class="container join-login-page">
     	<a href="${pageContext.request.contextPath}/" class="no-drag"><span class="logo-span"><img id="bujang-logo-blue" class="no-drag" width="159" height="38" src="${pageContext.request.contextPath}/assets/img/bujang-logo%20blue.png"/></span></a>
         <ul class="navbar-nav d-xxl-flex align-items-xxl-center">
-            <li class="nav-item d-inline-flex">
+       		 <c:if test="${empty(authUser)}">
+           	 <li class="nav-item d-inline-flex">
             	<a href="${pageContext.request.contextPath}/login" style="padding: 15px 0px">
             		<button id="logout-btn" class="btn btn-primary" type="button" style="2px 0px 0px 0px">로그인</button>
             	</a>
-           </li>
-        </ul>
+           	</li>
+       		</c:if>
+			<c:if test="${!empty(authUser)}">
+           	<li class="nav-item d-inline-flex">
+           		<a href="${pageContext.request.contextPath}/logout" style="padding: 15px 0px">
+	            		<button id="logout-btn" class="btn btn-primary" type="button" style="2px 0px 0px 0px">로그아웃</button>
+            	</a>
+          	 </li>
+       		</c:if>
+       </ul>
     </div>
 </nav>

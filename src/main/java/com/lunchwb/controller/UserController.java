@@ -345,7 +345,7 @@ public class UserController {
 		if (loginUser != null) {
 			return "redirect:/lunchwb";
 		} else {
-			return "user/joinForm";
+			return "user/joinFormTest";
 		}
 	}
 
