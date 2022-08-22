@@ -980,7 +980,8 @@ $("#basket-random-btn").on("click", function(){
 				
 				alert("오늘 방문할 가게는 [" + randomStoreName + "] 입니다.")
 				
-				 $.ajax({
+				// 결과 세션으로 던지기.
+				 /* $.ajax({
 					url : "${pageContext.request.contextPath}/randomResult",		
 					type : "post",
 					contentType : "application/json",
@@ -994,7 +995,7 @@ $("#basket-random-btn").on("click", function(){
 					error : function(XHR, status, error) {
 						console.error(status + " : " + error);
 					}
-				})
+				}) */
 				
 			},
 			error : function(XHR, status, error) {
