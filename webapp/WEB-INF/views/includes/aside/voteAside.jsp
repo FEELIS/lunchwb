@@ -46,7 +46,13 @@
 	    </div>
 	    
 	    <div id="vote-select-name-area">
-	        <div id="label-select-name"><span class="no-drag">이름을 선택해주세요</span></div>
+	    	<c:if test="${userState == 1}">
+	        	<div id="label-select-name"><span class="no-drag">이름을 선택해주세요</span></div>
+	        </c:if>
+	        
+	        <c:if test="${userState > 1}">
+	        	<div id="label-select-name"><span class="no-drag">투표 참여자 목록입니다</span></div>
+	        </c:if>
 	        <div id="vote-select-names" class="d-flex d-xxl-flex flex-wrap justify-content-xxl-start">
 	        	<!--  투표 인원 영역  -->
 	        	
@@ -71,10 +77,27 @@
 		        		</c:if>
 		        	</c:forEach>
 	        	</c:if>	        	
+	        	
+	        	<!--  userState == 2 or 3  -->
+	        	<c:if test="${userState > 1}">
+	        		<c:forEach items="${voteMember}" var="member">
+		        		<c:if test="${!empty(authUser) and authUser.userNo == member.userNo}">
+		        			<button class="btn btn-primary text-center vote-select-name-btn vote-selected-name" type="button" disabled="disabled" data-vote-member-no="${member.voteMemberNo}" data-user-no="${member.userNo}">${member.userName}</button>
+		        		</c:if>
+		        		
+		        		<c:if test="${authUser.userNo != member.userNo and member.voteVoted != 0}">
+			        		<button class="btn btn-primary text-center vote-select-name-btn vote-voted-name" type="button" disabled="disabled" data-vote-member-no="${member.voteMemberNo}" data-user-no="${data-user-no}">${member.userName}</button>
+			        	</c:if>
+			        	
+			        	<c:if test="${member.voteVoted == 0}">
+			        		<button class="btn btn-primary text-center vote-select-name-btn can-click-name" type="button" disabled="disabled" data-vote-member-no="${member.voteMemberNo}" data-user-no="${data-user-no}">${member.userName}</button>
+			        	</c:if>
+		        	</c:forEach>
+	        	</c:if>
 	        </div>
 	    </div>
 	    
-	    <div style="width: 100%;">
+	    <div style="width: 100%;" class="justify-content-center align-items-center">
 	        <div class="text-start d-flex basket-aside-title"><span class="d-inline-block no-drag">오늘의 점심 후보</span></div>
 	        
 	        <div class="table-responsive no-drag" id="basket-table">
@@ -83,8 +106,9 @@
 	            	<c:set var="voteIdx" value="-1" />
 	            	<c:forEach items="${voteBasket}" var="store">
 	            		<c:set var="voteIdx" value="${voteIdx+1}" />
+	            		
 	            		<c:if test="${userState == 1}">
-	            			<tr class="vote-table-row" data-vote-idx="${voteIdx}" data-store-no="${store.storeNo}">
+	            			<tr class="vote-table-row basket-table-row" data-vote-idx="${voteIdx}" data-storeNo="${store.storeNo}">
                         		<td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
                             		<div class="basket-table-store-info">
                             			<span class="text-start basket-table-store-name">${store.storeName}</span>
@@ -98,6 +122,24 @@
 	            		</c:if>
 	            		
 	            		<c:if test="${userState > 1}">
+	            			<tr class="vote-table-row" data-vote-idx="${voteIdx}" data-storeNo="${store.storeNo}">
+                        		<td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
+                            		<div class="basket-table-store-info">
+                            			<span class="text-start basket-table-store-name">${store.storeName}</span>
+                            			<span class="text-start basket-table-store-detail">${store.menu2ndCateName}&nbsp;/&nbsp;${store.distance}m</span>
+                            		</div>
+                        		</td>
+                        		
+                        		<td class="basket-vote-btn-cell">
+                        			<c:if test="${store.storeNo == voteMember[authUser.userNo].voteVoted}">
+                        				<button class="btn btn-primary vote-waiting-voted-btn align-items-center" type="button">투표완료</button>
+                        			</c:if>
+                        			
+                        			<c:if test="${userState == 2 and store.storeNo != voteMember[authUser.userNo].voteVoted}">
+                        				<button class="btn btn-primary vote-wating-change-vote-btn align-items-center" type="button">투표변경</button>
+                        			</c:if>
+                        		</td>
+                    		</tr>
 	            		</c:if>
 	            	</c:forEach>
 
@@ -106,7 +148,7 @@
 	      
 	      	<c:if test="${authUser.userNo == voteInfo.voteMadeUser}">
 		        <div id="vote-leader-btn-area" class="d-xxl-flex justify-content-center align-items-center">
-		        	<button id="vote-leader-modify-btn" class="btn btn-danger d-flex d-xxl-flex justify-content-center align-items-center align-content-center" type="button">투표 수정하기</button>
+		        	<button id="vote-leader-modify-btn" class="btn btn-primary d-flex d-xxl-flex justify-content-center align-items-center align-content-center" type="button">투표 수정하기</button>
 		        	<button id="vote-leader-cancel-btn" class="btn btn-danger d-flex d-xxl-flex justify-content-center align-items-center align-content-center" type="button">투표 취소하기</button>
 		        </div>
 	        </c:if>
@@ -126,8 +168,10 @@
 
 <script type="text/javascript">
 
-let voteEndTime = "${voteInfo.voteEndTime}";
-let clientIp;
+let voteEndTime = "${voteInfo.voteEndTime}"
+let clientIp
+let userState = "${userState}"
+
 let selected = {
 	voteNo : parseInt("${voteInfo.voteNo}"),
 	voteIdx : -1,
@@ -139,16 +183,21 @@ let selected = {
 
 $(document).ready(async function(){
 	voteEndTime = changeTimeFormat(voteEndTime)
-	countDownTimer(voteEndTime)
+	
+	if ("${userState}" != 3) {
+		countDownTimer(voteEndTime)
+	}
 
 	if ("${authUser}" == "") { 
 	clientIp = await getIpClient()
 	// userState, voteno 불러오기
 	} else {
-		selected["userNo"] = $(".vote-selected-name").attr("data-user-no")
-		selected["voteMemberNo"] = $(".vote-selected-name").attr("data-vote-member-no")
-
-		console.log(selected)
+		if (userState == "1") {
+			selected["userNo"] = $(".vote-selected-name").attr("data-user-no")
+			selected["voteMemberNo"] = $(".vote-selected-name").attr("data-vote-member-no")
+	
+			console.log(selected)
+		}
 	}
 })
 	
@@ -188,7 +237,7 @@ $(".vote-vote-btn").on("click", function(){
 		return false
 	}
 
-	if (selected == null) {
+	if (!("voteMemberNo" in selected)) {
 		alert("투표에 참가할 이름을 먼저 선택해주세요")
 		
 		return false
@@ -196,7 +245,7 @@ $(".vote-vote-btn").on("click", function(){
 	
 	var voteRow = $(this).closest(".vote-table-row")
 	selected["voteIdx"] = parseInt(voteRow.attr("data-vote-idx"))
-	selected["voteVoted"] = parseInt(voteRow.attr("data-store-no"))
+	selected["voteVoted"] = parseInt(voteRow.attr("data-storeNo"))
 	
 	console.log(selected)
 

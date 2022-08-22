@@ -114,4 +114,37 @@
 		]]>
 	</update>
 	
+	
+	<!--  투표 진행 상황  -->
+	<select id="currVote" parameterType="int" resultType="VoteVo">
+		<![CDATA[
+			SELECT COUNT(*) totCnt, COUNT(CASE WHEN(vote_voted != 0) THEN 1 ELSE NULL END) votedCnt
+			FROM   vote_members
+			WHERE  vote_no = #{voteNo}
+		]]>
+	</select>
+	
+	
+	<!--  투표 종료  -->
+	<update id="updateVoteEnd" parameterType="int">
+		<![CDATA[
+			UPDATE vote
+			SET    vote_state = 3
+			WHERE  vote_no = #{voteNo}
+		]]>
+	</update>
+	
+	
+	<!--  사용자 상태 투표완료로 업데이트  -->
+	<update id="updateUserEnd" parameterType="int">
+		<![CDATA[
+			UPDATE users
+			SET    user_state = 3
+			WHERE  user_no IN (SELECT user_no 
+			                   FROM   vote_members 
+			                   WHERE  vote_no = #{voteNo} 
+			                   AND    user_no != 0)
+		]]>
+	</update>
+	
 </mapper>

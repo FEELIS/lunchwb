@@ -38,7 +38,8 @@ public class VoteService {
 	}
 	
 	
-	// 투표 참여 못하는 회원 목록 불러오기
+	/////////// 투표 참여 못하는 회원 목록 불러오기 ///////////////////////////////
+	
 	public List<String> checkVoteMember(int[] checkMember) {
 		List<Integer> checkMem = new ArrayList<>();
 		for (int no: checkMember) checkMem.add(no);
@@ -48,7 +49,8 @@ public class VoteService {
 	}
 	
 	
-	// 투표 생성하기
+	///////// 투표 생성하기 ///////////////////////////////////////////////////////////////////////
+	
 	public int makeVote(int userNo, Date voteEndTime, String voteMember, String currBasket, int groupNo) {
 		System.out.println("**********************************************************************************************************************************************************");
 		System.out.println("[투표 생성 데이터 정리하기]");
@@ -124,8 +126,9 @@ public class VoteService {
 
 	
 	
-	// voteAside 필요한 파라미터 불러오기
-	public Map<String, Object> getVoteAsideData(int voteNo) {
+	///////// voteAside 필요한 파라미터 불러오기 ////////////////////////////////////////////////////////////
+	
+	public Map<String, Object> getVoteAsideData(int voteNo, int userState) {
 		Map<String, Object> voteData = new HashMap<>();
 		
 		List<VoteVo> voteVo = voteDao.selectVoteInfo(voteNo);
@@ -182,18 +185,32 @@ public class VoteService {
 			voteMember.add(mem);
 		}
 		
-
+				
 		// model에 추가할 Map에 데이터 넣기
 		voteData.put("voteInfo", voteInfo);
 		voteData.put("voteBasket", voteStoreInfo);
 		voteData.put("voteMember", voteMember);
-
 		
+		
+		// 투표 진행상황(userStaet == 2일 때)
+		if (userState == 2) {
+			VoteVo currVote = voteDao.currVote(voteNo);
+			voteData.put("currVote", currVote);
+		}
+		
+		
+		// 투표 결과 정리한 것(userState == 3일 때)
+		if (userState == 3) {
+			
+		}
+				
 		return voteData;
 	}
 	
 	
-	// 투표하기
+	
+	//////// 투표하기 ///////////////////////////////////////////////////////////
+	
 	public String submitVote(VoteVo myVote) throws JsonProcessingException {
 		// 투표 업데이트
 		int voteIdx = myVote.getVoteIdx();
@@ -221,6 +238,22 @@ public class VoteService {
 		}
 		
 		// 비회원 추가해야함
+		
+		// 만약 내가 마지막 투표자면 투표 종료
+		VoteVo currVote = voteDao.currVote(voteNo);
+		
+		if (currVote.getTotCnt() == currVote.getVotedCnt()) {
+			int cnt = voteDao.updateVoteEnd(voteNo);
+			
+			if (cnt == 1) {
+				System.out.println(voteNo + "번 투표 종료");
+				
+				voteDao.updateUserEnd(voteNo);
+				
+			} else {
+				System.out.println("투표 종료 실패");
+			}
+		}
 		
 		return "redirect:/";
 	}

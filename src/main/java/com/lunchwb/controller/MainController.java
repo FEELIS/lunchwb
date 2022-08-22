@@ -79,19 +79,19 @@ public class MainController {
 		
 		switch (userState) {
 			case 1:
-				voteAsideData = voteService.getVoteAsideData(voteNo);
+				voteAsideData = voteService.getVoteAsideData(voteNo, userState);
 				model.addAllAttributes(voteAsideData);
 				
 				return "main/vote/voteProgress";
 				
 			case 2:
-				voteAsideData = voteService.getVoteAsideData(voteNo);
+				voteAsideData = voteService.getVoteAsideData(voteNo, userState);
 				model.addAllAttributes(voteAsideData);
 				
 				return "main/vote/watingVote";
 				
 			case 3:
-				voteAsideData = voteService.getVoteAsideData(voteNo);
+				voteAsideData = voteService.getVoteAsideData(voteNo, userState);
 				model.addAllAttributes(voteAsideData);
 				
 				return "main/vote/voteResult";

@@ -71,4 +71,21 @@ public class VoteDao {
 		sqlSession.update("vote.updateVoteVoted", myVote);
 	}
 	
+	
+	// 투표 현황
+	public VoteVo currVote(int voteNo) {
+		return sqlSession.selectOne("vote.currVote", voteNo);
+	}
+	
+	
+	// 투표 종료 > voteState 업데이트
+	public int updateVoteEnd(int voteNo) {
+		return sqlSession.update("vote.updateVoteEnd", voteNo);
+	}
+	
+	
+	// 투표 종료 > userState 업데이트
+	public int updateUserEnd(int voteNo) {
+		return sqlSession.update("vote.updateUserEnd", voteNo);
+	}
 }
