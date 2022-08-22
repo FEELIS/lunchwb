@@ -177,6 +177,7 @@ $("#modal-gps-submit").on("click", function(){
 		        
 		        // 세션에 gps저장
 		        await setGPS(gpsVo)
+			    await clearBasket()
 		   	  } 
 		});  
 		
@@ -197,7 +198,7 @@ $("#modal-gps-submit").on("click", function(){
 })
 
 
-// 장바구니 아예 비워버리는 함수(지금은 안쓰는 듯)
+// 장바구니 아예 비워버리는 함수
 async function clearBasket() {
 	$.ajax({
 		url : "${pageContext.request.contextPath}/basket/clearBasket",		
