@@ -61,8 +61,9 @@
 								<table id="dataTable" class="table my-0">
 									<thead>
 										<tr>
-											<th style="width: 30%;">가게 이름</th>
-											<th style="width: 60%;">가게 위치</th>
+											<th style="width: 25%;">가게 이름</th>
+											<th style="width: 15%;">카테고리</th>
+											<th style="width: 50%;">가게 위치</th>
 											<th style="width: 10%;">
 												<c:if test="${map.groupLeader == authUser.userNo}">삭제</c:if>
 											</th>
@@ -72,6 +73,7 @@
 										<c:forEach items="${map.blacklist}" var="blackVo" varStatus="status">
 											<tr id="black-${blackVo.blackNo}">
 												<td>${blackVo.storeName}</td>
+												<td>${blackVo.menu2ndCateName}</td>
 												<td>${blackVo.storeRoadAddress}</td>
 												<c:if test="${map.groupLeader == authUser.userNo}">
 													<td class="text-warning">
