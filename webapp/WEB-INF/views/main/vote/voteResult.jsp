@@ -26,7 +26,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
 </head>
 
 
@@ -114,6 +114,8 @@
     </div>
     <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
+
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
 <script type="text/javascript">
 
