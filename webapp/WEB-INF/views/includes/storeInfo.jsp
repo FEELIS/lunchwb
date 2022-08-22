@@ -253,6 +253,9 @@
     </div>
 </div>
 
+
+
+
 <script type="text/javascript">
 
 /* 바구니에서 - 가게 정보 보기 클릭 */
@@ -641,9 +644,9 @@ function modalSortOfStore(storeNo, k){
 		// k=1 : 바구니/지도
 			// 그룹? 비로그인 또는 그룹이 없으면 여기갈래요 불가 > 
 			var groupNo = "${curr_basket_group}"
-			console.log(groupNo + ": curr_group")
+			console.log(curr_basket_group + ": curr_group")
 
-			if(groupNo != "" && groupNo != "0"){
+			if(curr_basket_group != 0 ){
 				var str = '' 
 				str += '<a href="${pageContext.request.contextPath}/visited/decision/'+storeNo+'/'+groupNo+'">'
 				str += '	<button class="btn btn-primary btn-decision-this" type="button" data-bs-dismiss="modal">여기갈래요</button>'
@@ -667,6 +670,8 @@ function modalSortOfStore(storeNo, k){
 						}
 					}
 				}
+			}else{
+				$(".store-button-area").append('<button class="btn btn-light btn-add-store-basket" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">점심후보추가</button>')
 			}
 
 			break
