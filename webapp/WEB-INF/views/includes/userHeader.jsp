@@ -8,7 +8,7 @@
 <nav class="navbar navbar-light navbar-expand bg-white shadow d-xxl-flex justify-content-xxl-end mb-4 topbar static-top no-side-bar-header">
     <div class="container join-login-page">
     	<a href="${pageContext.request.contextPath}/" class="no-drag"><span class="logo-span"><img id="bujang-logo-blue" class="no-drag" width="159" height="38" src="${pageContext.request.contextPath}/assets/img/bujang-logo%20blue.png"/></span></a>
-        <ul class="navbar-nav d-xxl-flex align-items-xxl-center">
+        <%-- <ul class="navbar-nav d-xxl-flex align-items-xxl-center">
        		 <c:if test="${empty(authUser)}">
            	 <li class="nav-item d-inline-flex">
             	<a href="${pageContext.request.contextPath}/login" style="padding: 15px 0px">
@@ -23,6 +23,6 @@
             	</a>
           	 </li>
        		</c:if>
-       </ul>
+       </ul> --%>
     </div>
 </nav>

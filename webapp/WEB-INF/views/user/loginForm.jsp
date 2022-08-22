@@ -42,7 +42,7 @@
                                             <div class="custom-control custom-checkbox small">
                                                 <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="autoLogin" name = "autoLogin"><label class="form-check-label custom-control-label input-box" for="autoLogin">로그인 상태 유지</label></div>
                                             </div>
-                                        <!-- </div><button class="btn btn-primary d-block btn-user w-100 " id="btn-login" type="submit">로그인</button> -->
+                                        </div><button class="btn btn-primary d-block btn-user w-100 " id="btn-login" type="submit">로그인</button>
                                         <hr>
                                         <a class="btn btn-primary d-block btn-naver btn-user w-100 mb-2 fix-380" role="button" href="${naverUrl}">네이버 아이디로 로그인</a>
                                         <a class="btn btn-primary d-block btn-kakao btn-user w-100 mb-2 fix-380" role="button" 
