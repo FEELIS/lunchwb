@@ -236,3 +236,7 @@ select {
 option:hover {
   background-color: var(--bs-gray-300);
 }
+
+.black-store-name{
+  cursor: pointer;
+}

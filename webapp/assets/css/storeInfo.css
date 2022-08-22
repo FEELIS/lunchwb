@@ -73,8 +73,8 @@
 }
 
 #modal-store #store-about .review-area {
-  width: 542px;
- /*  height: 280px; */
+  width: 541px;
+  height: 280px;
   vertical-align: top;
 }
 
@@ -381,6 +381,7 @@
 
 #modal-all-menu .modal-footer-custom {
   min-width: 796px;
+  vertical-align: middle !important;
 }
 
 #modal-all-menu .modal-footer-custom p {

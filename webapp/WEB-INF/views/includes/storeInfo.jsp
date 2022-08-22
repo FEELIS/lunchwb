@@ -240,6 +240,14 @@ $("#visited-store-name").on("click", function(){
 })
 
 
+/* 블랙리스트(already) 가게 조회 */
+$("#black-body").on("click", ".black-store-name", function(){
+	var storeNo = $(this).attr("data-storeno")
+	console.log(storeNo+"번 가게 정보 보기")
+	storeInfoOpen(storeNo, 4)
+})
+
+
 /* 모달에서 > 다시 다른 가게 정보 조회(버튼) */
 $("#modal-store .other-store-btn").on("click", function(){
 	var storeNo = $(this).attr("data-no")
@@ -269,7 +277,8 @@ function storeInfoOpen(storeNo, k){
 	//k=1 > 장바구니 : 여기갈래요 / 장바구니에 있으면 점심후보추가 or 없으면 점심후보제외
 	//k=0 > 리뷰메인 : 내가 다녀온 장소 방문취소 (다녀온 곳 아니면 버튼 x) / 블랙리스트 추가(이미 블랙 > 블랙리스트 제외)   
 	//k=2 > 그동안의 기록 : 블랙리스트 추가 or 제외
-	//k=3 > 블랙리스트 가게 조회 : 블랙리스트 추가 or 제외
+	//k=3 > 블랙리스트 가게 조회 : 블랙리스트 추가
+	//k=4 > 블랙리스트 가게 제외
 	modalSortOfStore(storeNo, k)
 	
 	$("#modal-store").modal("show")
@@ -305,29 +314,37 @@ function storeBasicInfo(storeNo){
 			
 			//k = 1 가게 정보창
 			$("#modal-store .review-area").text("")
-			for(var i=0; i<3; i++){
-				modalStoreReivew(storeMap.reviewList[i], 1)
+			if(storeMap.reviewList.length != 0){
+				for(var i=0; i<3; i++){
+					modalStoreReivew(storeMap.reviewList[i], 1)
+				}
+				modalStoreMoreReivews()
 			}
 			
-			modalStoreMoreReivews()
 			
 			$(".other-store-state span").text(storeMap.storeVo.menu2ndCateName + " 카테고리 다른 가게")
 			
 			if(storeMap.visitedVo == null){
-				$(".modalStoreWithMe").text("아직 방문기록이 없어요. 이번에 가보는건 어떨가요?")
+				$(".modalStoreWithMe").text("방문기록이 없어요")
 			}else{
 				$(".modalStoreWithMe").text("나의 방문 횟수: " + storeMap.visitedVo.visitCount + "회(최근 방문일 " + storeMap.visitedVo.visitedDate + ", " + storeMap.visitedVo.groupName + ")")
 			}
 			
 			//k = 2 전체 리뷰창
 			$("#modal-reviews #store-all-review").text("")
-			for(var i=0; i<storeMap.reviewList.length; i++){
-				modalStoreReivew(storeMap.reviewList[i], 2)
+			if(storeMap.reviewList.length != 0){
+				for(var i=0; i<storeMap.reviewList.length; i++){
+					modalStoreReivew(storeMap.reviewList[i], 2)
+				}
 			}
 			
 			modalStoreSentence()
 			for(var i=0; i<storeMap.menuList.length; i++){
 				modalStoreAllMenu(storeMap.menuList[i])
+			}
+			
+			if(storeMap.menuList.length == 0){
+				$("#modal-all-menu #store-latest-menu").append("<span>최근 한달간 선택된 메뉴가 없습니다</span>")
 			}
 			
 		},
@@ -605,10 +622,15 @@ function modalSortOfStore(storeNo, k){
 			break
 			
 		case 3:
-		// 블랙리스트에서 조회 > 나중에 추가
-			
+		// 추가할 블랙리스트에서 조회
+			$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'">블랙추가</button>')
 			break
 		
+		case 4:
+		// 블랙리스트에서 조회
+			$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'">블랙제외</button>')
+			break
+			
 		default :
 			console.log("가게 조회 종류 오류")
 			break
@@ -620,7 +642,7 @@ function modalSortOfStore(storeNo, k){
 $(".btn-add-store-basket", ).on("click", function(){
 	var storeNo = $(this).attr("data-storeNo")
 	addItemToBasket(storeNo)
-	$(".modal-stores").modal("hide")
+	$("#modal-store .modal-stores").modal("hide")
 })
 
 

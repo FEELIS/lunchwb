@@ -7,12 +7,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 <title>부장님요기요: 블랙리스트</title>
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Bold-BS4-Responsive-Pricing-Table-Snippet.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/customModal.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/group.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/alert.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/storeInfo.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -26,7 +29,7 @@
 
 <body id="page-top">
 
-	<div id="wrapper">
+	<div id="wrapper" class="no-drag">
 
 		<c:import url="/WEB-INF/views/includes/aside/userAside.jsp"></c:import>
 
@@ -69,10 +72,10 @@
 											</th>
 										</tr>
 									</thead>
-									<tbody class="text-dark">
+									<tbody id="black-body" class="text-dark">
 										<c:forEach items="${map.blacklist}" var="blackVo" varStatus="status">
 											<tr id="black-${blackVo.blackNo}">
-												<td>${blackVo.storeName}</td>
+												<td class="black-store-name" data-storeno="${blackVo.storeNo}">${blackVo.storeName}</td>
 												<td>${blackVo.menu2ndCateName}</td>
 												<td>${blackVo.storeRoadAddress}</td>
 												<c:if test="${map.groupLeader == authUser.userNo}">
@@ -84,9 +87,6 @@
 											</tr>
 										</c:forEach>
 									</tbody>
-									<tfoot>
-										<tr></tr>
-									</tfoot>
 								</table>
 							</div>
 							<div class="row">
@@ -225,6 +225,8 @@
 	</a>
 	</div>
 
+<!--  가게 정보 모달 삽입 -->
+<c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
 
 
 
