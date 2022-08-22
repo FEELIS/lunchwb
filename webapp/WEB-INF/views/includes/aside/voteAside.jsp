@@ -21,10 +21,10 @@
 <nav id="vote-aside" class="navbar navbar-light bg-white text-center d-xxl-flex align-items-start justify-content-xxl-center sidebar accordion p-0">
 	<div class="container-fluid d-flex flex-column p-0">
 		<div id="bujang-logo-wrap">
-        	<a href="${pageContext.request.contextPath}/" class="no-drag"><img data-bss-hover-animate="pulse" id="bujang-logo-blue" class="no-drag" src="${pageContext.request.contextPath}/assets/img/bujang-logo%20blue.png"></a>
+        	<a href="${pageContext.request.contextPath}/"><img data-bss-hover-animate="pulse" id="bujang-logo-blue" src="${pageContext.request.contextPath}/assets/img/bujang-logo%20blue.png"></a>
         </div>
         
-        <div id="vote-countdown-box" class="no-drag">
+        <div id="vote-countdown-box">
 	        <div id="countdown-voting-group" class="justify-content-center align-items-center align-content-center">
 	        	<span class="d-inline-block only-bold">${voteInfo.groupName}</span>
 	        	<span class="d-inline-block">&nbsp;점심 투표</span>
@@ -47,11 +47,11 @@
 	    
 	    <div id="vote-select-name-area">
 	    	<c:if test="${userState == 1}">
-	        	<div id="label-select-name"><span class="no-drag">이름을 선택해주세요</span></div>
+	        	<div id="label-select-name"><span>이름을 선택해주세요</span></div>
 	        </c:if>
 	        
 	        <c:if test="${userState > 1}">
-	        	<div id="label-select-name"><span class="no-drag">투표 참여자 목록입니다</span></div>
+	        	<div id="label-select-name"><span>투표 참여자 목록입니다</span></div>
 	        </c:if>
 	        <div id="vote-select-names" class="d-flex d-xxl-flex flex-wrap justify-content-xxl-start">
 	        	<!--  투표 인원 영역  -->
@@ -98,10 +98,10 @@
 	    </div>
 	    
 	    <div style="width: 100%;" class="justify-content-center align-items-center">
-	        <div class="text-start d-flex basket-aside-title"><span class="d-inline-block no-drag">오늘의 점심 후보</span></div>
+	        <div class="text-start d-flex basket-aside-title"><span class="d-inline-block">오늘의 점심 후보</span></div>
 	        
-	        <div class="table-responsive no-drag" id="basket-table">
-	            <table class="table no-drag" id="basket-table-table">
+	        <div class="table-responsive" id="basket-table">
+	            <table class="table" id="basket-table-table">
 	            	<!--  투표 가게 목록 올 곳 -->
 	            	<c:set var="voteIdx" value="-1" />
 	            	<c:forEach items="${voteBasket}" var="store">
@@ -288,6 +288,24 @@ $(".vote-vote-btn").on("click", function(){
 	postVoteData("${pageContext.request.contextPath}/vote/submitVote", selected)
 })
 
+
+/////////////// 투표 수정하기 //////////////////////////////////////////////////
+
+$("#vote-leader-modify-btn").on("click", function(){
+	alert("수정")
+})
+
+/////////////// 투표 삭제하기 ///////////////////////////////////////////////////
+
+$("#vote-leader-cancel-btn").on("click", function(){
+	alert("취소")
+})
+
+/////////////// 투표 탈주하기 ////////////////////////////////////////////////////
+
+$("#vote-member-escape-btn").on("click", function(){
+	alert("탈주")
+})
 
 ////////// 카운트다운 타이머 관련 /////////////////////////////////////////////////
 

@@ -39,7 +39,7 @@
         
         <div class="container" id="container">
             <div id="contents-vote-result-title">
-            	<span class="no-drag">투표 결과</span>
+            	<span>투표 결과</span>
             </div>
 			
 			<div class="d-flex d-xxl-flex justify-content-center" id="vote-result-link-btn-area">
@@ -49,13 +49,13 @@
             	</button>
             	
             	<span class="d-inline-flex flex-shrink-0 justify-content-center flex-nowrap align-items-xxl-center" id="vote-url-copy-box">
-            		<i class="fas fa-link d-inline-flex d-xxl-flex flex-shrink-0 justify-content-start align-items-center justify-content-xl-start align-items-xl-center justify-content-xxl-start align-items-xxl-center no-drag"></i>
+            		<i class="fas fa-link d-inline-flex d-xxl-flex flex-shrink-0 justify-content-start align-items-center justify-content-xl-start align-items-xl-center justify-content-xxl-start align-items-xxl-center"></i>
             		<input id="vote-url-input" class="d-inline-flex d-xxl-flex flex-shrink-0 align-items-xxl-center" type="text" value="http://localhost:8088/lunchwb/${voteInfo.voteNo}">
             		<button id="vote-url-copy-btn" class="btn btn-primary d-inline-flex d-xxl-flex flex-shrink-0 justify-content-center align-items-center align-content-center align-items-xl-center justify-content-xxl-center align-items-xxl-center" type="button">복사</button>
             	</span>
             </div>
 
-            <div id="vote-result-area" class="d-flex d-xxl-flex justify-content-center no-drag align-items-center align-content-center flex-wrap justify-content-xxl-center align-items-xxl-center card-body">
+            <div id="vote-result-area" class="d-flex d-xxl-flex justify-content-center align-items-center align-content-center flex-wrap justify-content-xxl-center align-items-xxl-center card-body">
                 <div id="vote-result-text" class="justify-content-center align-items-center">
                     <div id="vote-result-lunch-group" class="d-flex d-sm-flex d-xl-flex d-xxl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-xl-center align-items-xl-center justify-content-xxl-center">
                     	<span id="vote-lunch-group">${voteInfo.groupName}</span>
