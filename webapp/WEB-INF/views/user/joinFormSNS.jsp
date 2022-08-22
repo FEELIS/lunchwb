@@ -111,19 +111,19 @@ $("input").change(function(){
 			$("#msgErrorBirth").addClass("check-text");
 			$("#msgErrorBirth").removeClass("collect-text");
 		}
-		$("#msgErrorBirth").text("생년월일을 입력해주세요.");
+		$("#msgErrorBirth").text("출생연도를 입력해주세요.");
 	}else if(birth < 1900 || birth > 2030){
 		if($("#msgErrorBirth").hasClass("check-text") === false) {
 			$("#msgErrorBirth").addClass("check-text");
 			$("#msgErrorBirth").removeClass("collect-text");
 		}
-		$("#msgErrorBirth").text("생년월일을 정확히 입력해주세요.");
+		$("#msgErrorBirth").text("출생연도를 정확히 입력해주세요.");
 	}else if(birth != null){
 		if($("#msgErrorBirth").hasClass("collect-text") === false) {
 			$("#msgErrorBirth").addClass("collect-text");
 			$("#msgErrorBirth").removeClass("check-text");
 		} 
-		$("#msgErrorBirth").text("생년월일을 입력하셨습니다.");
+		$("#msgErrorBirth").text("출생연도를 입력하셨습니다.");
 	}
 	
 	if(Check == false){
