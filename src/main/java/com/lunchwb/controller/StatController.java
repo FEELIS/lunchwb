@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -137,7 +136,7 @@ public class StatController {
 	@RequestMapping(value = "/getStatChart", method = {RequestMethod.GET,RequestMethod.POST})
 	public Map<String,List<String>> getStatChart(@RequestBody StatVo statVo){
 		logger.info("StatController > getStatChart()");
-		Map<String,List<String>> chartMap = statService.getStatChart(statVo.getMenu1stCateName());
+		Map<String,List<String>> chartMap = statService.getStatChart(statVo);
 		logger.info(chartMap.toString());
 		
 		
