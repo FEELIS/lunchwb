@@ -40,10 +40,15 @@
 }
 
 #modal-store .store-info .store-info-right .modalStoreStar{
-	font-size: 10px;
+  font-size: 10px;
+}
+/* 
+#modal-store #store-about {
+  height: 280px;	
 }
 
-#modal-store #store-about .store-imgs .img-area {
+ */
+ #modal-store #store-about .store-imgs .img-area {
   margin-top: 0px;
   padding-right: 16px;
   text-align: center;
@@ -70,11 +75,17 @@
 #modal-store #store-about .store-imgs .img-paging-icon {
   padding-top: 1px;
   padding-right: 20px;
+  font-size: 10px
+}
+
+#modal-store #store-about .store-imgs .img-paging-icon i {
+  padding-right: 5px;
+  padding-left: 5px;
 }
 
 #modal-store #store-about .review-area {
-  width: 541px;
-  height: 280px;
+  width: 543px;
+  height: 256px;
   vertical-align: top;
 }
 
@@ -98,6 +109,7 @@
 }
 
 #modal-store #store-about .review-area .store-reviews .store-review-right i {
+  margin-top: 5px;
   font-size: 10px;
 }
 
@@ -139,7 +151,7 @@
   margin-left: 20px;
 }
 
-#modal-store .other-stores button {
+#modal-store .other-stores button{
   width: 200px;
   height: 94px;
   margin: 10px 0px 10px 0px;
@@ -333,7 +345,7 @@
 
 #modal-all-menu #latest-menu-area #store-latest-menu {
   overflow: auto;
-  height: 284.5px;
+  height: 260px;
   margin-top: 10px;
   padding: 10px 20px 10px 20px;
   vertical-align: middle;
@@ -366,11 +378,14 @@
 
 #modal-all-menu .other-stores button {
   width: 200px;
-  padding: 10px 20px;
+  height: 94px;
   margin: 10px 0px 10px 0px;
   background-color: #464e60;
   color: white;
+  font-size: 16px;
   font-weight: normal;
+  vertical-align: middle !important;
+  text-align: center;
   border-radius: 7px;
 }
 

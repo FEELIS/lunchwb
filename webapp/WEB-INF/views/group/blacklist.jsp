@@ -11,15 +11,15 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style-jw.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/customModal.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/group.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/alert.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/storeInfo.css">
-<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&amp;display=swap">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/storeInfo.css">
 	
 <script type="text/javascript"src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript"src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
@@ -38,9 +38,10 @@
 		<div id="content-wrapper" class="d-flex flex-column">
 
 			<div id="content">
-
-				<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
-
+				<div id="header-1">
+					<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
+				</div>
+				
 				<div class="container-fluid">
 					<h3 class="text-dark mb-4 group-content-title">
 						<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -64 640 640"

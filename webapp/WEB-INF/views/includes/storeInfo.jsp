@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/storeInfo.css">
+
 <!-- 가게 정보 보기 -->
 <div id="modal-store" class="modal visible no-drag modal-stores" role="dialog" tabindex="-1" style="min-width: 800px;">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -32,20 +34,19 @@
                 <div>
                     <div id="store-about">
                         <div class="d-inline-block store-imgs">
-                            <div class="d-inline-block img-area height-full width-full"><span class="d-inline-block"><!-- <img src="" /> --></span></div>
+                            <div class="d-inline-block img-area height-full width-full"><span class="d-inline-block">이미지 띄우기<!-- <img src="" /> --></span></div>
                             <div class="text-center img-paging-icon">
-                            	<i class="typcn typcn-media-record"></i>
-                            	<i class="typcn typcn-media-record-outline"></i>
-                            	<i class="typcn typcn-media-record-outline"></i>
+                            	<i class="fas fa-circle"></i>
+                            	<i class="far fa-circle"></i>
+                            	<i class="far fa-circle"></i>
                             </div>
                         </div>
-                        <div class="d-inline-block review-area">
+                        <div class="d-inline-block review-area" style="height: 256px;">
 	                        	<!-- 최근 리뷰 영역 -->
                         </div>
                     </div>
                     <div id="all-menu" class="text-start">
-                    	<span class="fw-bold text-info d-inline-block" style="color: rgb(54, 185, 204);">
-                    		#양자강에서 최근 한달 동안 다른 사람들이 선택한 메뉴를 볼 수 있어요 &gt;&gt;
+                    	<span id="all-menu-sentence" class="fw-bold text-info d-inline-block" style="color: rgb(54, 185, 204);">
                     	</span>
                     	<button id="modal-see-menu" class="btn" type="button" data-bs-target="#modal-all-menu" data-bs-toggle="modal">
                     		메뉴 보러가기 <i class="icon ion-android-arrow-dropright-circle"></i>
@@ -125,8 +126,14 @@
                 </div>
                 <div class="store-info">
                     <div class="d-inline-block store-info-left">
-                        <div><span class="modalStoreAddress"></span><span class="fw-bold text-primary modalStoreDistance"></span></div>
-                        <div><span class="fw-bold text-primary modalStoreVisitCnt"></span><span> / 40대 그룹 선호 가게 "여기 해야함"</span></div>
+                        <div>
+                        	<span class="modalStoreAddress"></span>
+                       		<span class="fw-bold text-primary modalStoreDistance"></span>
+                       	</div>
+                        <div>
+                        	<span class="fw-bold text-primary modalStoreVisitCnt"></span>
+                        	<span> / 40대 그룹 선호 가게 "여기 해야함"</span>
+                        </div>
                     </div>
                     <div class="text-end d-inline-block store-info-right">
                         <div><span>별점</span><span class="fw-bold text-primary modalStoreScore"></span></div>
@@ -194,8 +201,47 @@
                     </div>
                 </div>
                 <div class="other-stores">
-                    <div class="text-primary other-store-state"><span class="d-inline-block"></span></div>
-                    <div class="text-start d-lg-flex justify-content-lg-center"><span class="d-inline-block"><button class="btn other-store-btn other-store-1" type="button">흑룡강<span class="fw-bold text-warning d-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-half-outline"></i><i class="typcn typcn-star-outline"></i></span></button></span><span class="d-inline-block"><button class="btn other-store-btn other-store-2" type="button">홍콩반점<span class="fw-bold text-warning d-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-half-outline"></i><i class="typcn typcn-star-outline"></i></span></button></span><span class="d-inline-block"><button id="other-store-6" class="btn link-light other-store-btn other-store-3" type="button">락궁<span class="fw-bold text-warning d-block"><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-full-outline"></i><i class="typcn typcn-star-half-outline"></i><i class="typcn typcn-star-outline"></i></span></button></span></div>
+                    <div class="text-primary other-store-state">
+                    	<span class="d-inline-block"></span>
+                    </div>
+                    <div class="text-start d-lg-flex justify-content-lg-center">
+                    	<span class="d-inline-block">
+                    		<button class="btn other-store-btn other-store-1" type="button">
+                    			흑룡강sssssssssssssssss
+                    			<span class="fw-bold text-warning d-block">
+                    				<i class="fas fa-star"></i>
+                    				<i class="fas fa-star"></i>
+                    				<i class="fas fa-star"></i>
+                    				<i class="fas fa-star"></i>
+                    				<i class="fas fa-star"></i>
+                    			</span>
+                    		</button>
+                    	</span>
+                    	<span class="d-inline-block">
+                    		<button class="btn other-store-btn other-store-2" type="button">
+	                    		홍콩반점
+	                    		<span class="fw-bold text-warning d-block">
+	                    			<i class="fas fa-star"></i>
+	                    			<i class="fas fa-star"></i>
+	                    			<i class="fas fa-star"></i>
+	                    			<i class="fas fa-star"></i>
+	                    			<i class="fas fa-star"></i>
+	                    		</span>
+                    		</button>
+                    	</span>
+                    	<span class="d-inline-block">
+                    		<button id="other-store-6" class="btn link-light other-store-btn other-store-3" type="button">
+                    			락궁
+                    			<span class="fw-bold text-warning d-block">
+                    				<i class="fas fa-star"></i>
+                    				<i class="fas fa-star"></i>
+                    				<i class="fas fa-star"></i>
+                    				<i class="fas fa-star"></i>
+                    				<i class="fas fa-star"></i>
+                    			</span>
+                    		</button>
+                    	</span>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer-custom">
@@ -315,12 +361,20 @@ function storeBasicInfo(storeNo){
 			//k = 1 가게 정보창
 			$("#modal-store .review-area").text("")
 			if(storeMap.reviewList.length != 0){
-				for(var i=0; i<3; i++){
+				for(var i=0; i<2; i++){
 					modalStoreReivew(storeMap.reviewList[i], 1)
 				}
 				modalStoreMoreReivews()
+				
+			}else{
+				$(".review-area").html('<div class = "store-reviews text-center" style="height: 192px; margin-bottom: 64px;">'
+										+'	<span class="d-block">'
+										+'		</br></br>작성된 리뷰가 존재하지 않습니다</br></br>'
+										+'	<span>'
+										+'</div>')
 			}
 			
+			$("#all-menu-sentence").html("#" + storeMap.storeVo.storeName + "에서 최근 한달 선택된 메뉴 &gt;&gt;")
 			
 			$(".other-store-state span").text(storeMap.storeVo.menu2ndCateName + " 카테고리 다른 가게")
 			
@@ -344,7 +398,7 @@ function storeBasicInfo(storeNo){
 			}
 			
 			if(storeMap.menuList.length == 0){
-				$("#modal-all-menu #store-latest-menu").append("<span>최근 한달간 선택된 메뉴가 없습니다</span>")
+				$("#modal-all-menu #store-latest-menu").append("<span></br></br>최근 한달간 선택된 메뉴가 없습니다</span>")
 			}
 			
 		},
@@ -576,10 +630,10 @@ function modalSortOfStore(storeNo, k){
 		// k=1 : 리뷰메인
 			//조회하는 가게 = 다녀온 가게
 			if(storeNo == "${visitedMap.visitedVo.storeNo}"){
-				$(".store-button-area").append('<button class="btn btn-primary btn-visit-cancle" type="button" data-storeNo="'+storeNo+'">방문취소</button>')
+				$(".store-button-area").append('<button class="btn btn-primary btn-visit-cancle" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">방문취소</button>')
 			}
 			//다녀온 가게가 아니면 블랙버튼만(조회 자체가 블랙 아닌것만 됨)
-			$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'">블랙추가</button>')
+			$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">블랙추가</button>')
 		
 			break
 		
@@ -592,7 +646,7 @@ function modalSortOfStore(storeNo, k){
 			if(groupNo != "" && groupNo != "0"){
 				var str = '' 
 				str += '<a href="${pageContext.request.contextPath}/visited/decision/'+storeNo+'/'+groupNo+'">'
-				str += '	<button class="btn btn-primary btn-decision-this" type="button">여기갈래요</button>'
+				str += '	<button class="btn btn-primary btn-decision-this" type="button" data-bs-dismiss="modal">여기갈래요</button>'
 				str += '</a>'
 				$(".store-button-area").append(str)
 			}
@@ -604,12 +658,12 @@ function modalSortOfStore(storeNo, k){
 					var listStoreNo = basketStore["${curr_basket_group}"][i].storeNo
 					console.log(listStoreNo)
 					//지금 모달을 여는 가게
-					if(listStoreNo = storeNo){
+					if(listStoreNo == storeNo){
 						//장바구니에 있는 가게
 						if(basketStore["${curr_basket_group}"][i].stored){
-							$(".store-button-area").append('<button class="btn btn-light btn-delete-store-basket" type="button" data-storeNo="'+storeNo+'">점심후보제외</button>')
+							$(".store-button-area").append('<button class="btn btn-light btn-delete-store-basket" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">점심후보제외</button>')
 						}else{
-							$(".store-button-area").append('<button class="btn btn-light btn-add-store-basket" type="button" data-storeNo="'+storeNo+'">점심후보추가</button>')
+							$(".store-button-area").append('<button class="btn btn-light btn-add-store-basket" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">점심후보추가</button>')
 						}
 					}
 				}
@@ -623,12 +677,12 @@ function modalSortOfStore(storeNo, k){
 			
 		case 3:
 		// 추가할 블랙리스트에서 조회
-			$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'">블랙추가</button>')
+			$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">블랙추가</button>')
 			break
 		
 		case 4:
 		// 블랙리스트에서 조회
-			$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'">블랙제외</button>')
+			$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">블랙제외</button>')
 			break
 			
 		default :
@@ -642,7 +696,6 @@ function modalSortOfStore(storeNo, k){
 $(".btn-add-store-basket", ).on("click", function(){
 	var storeNo = $(this).attr("data-storeNo")
 	addItemToBasket(storeNo)
-	$("#modal-store .modal-stores").modal("hide")
 })
 
 
@@ -650,7 +703,6 @@ $(".btn-add-store-basket", ).on("click", function(){
 $("#modal-store .btn-delete-store-basket").on("click", function(){
 	var storeNo = $(this).attr("data-storeNo")
 	deleteSessionBasketGroup(storeNo)
-	$(".modal-stores").modal("hide")
 })
 
 
@@ -662,4 +714,3 @@ $(".btn-decision-this").on("click", function(){
 })
 
 </script>
-
