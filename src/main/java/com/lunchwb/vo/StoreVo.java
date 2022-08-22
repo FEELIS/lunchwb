@@ -40,7 +40,8 @@ public class StoreVo {
 	///////////// visited table //////////////////
 	private int visitCnt;
 	
-	
+	////////////// 투표 ///////////////////////
+	private int votes;
 	
 	
 	/////////////// 생성자 /////////////////////////////////////////////////////////////////////
@@ -266,6 +267,14 @@ public class StoreVo {
 	public void setBreaktime(List<String> breaktime) {
 		this.breaktime = breaktime;
 	}
+	
+	public int getVotes() {
+		return votes;
+	}
+
+	public void setVotes(int votes) {
+		this.votes = votes;
+	}	
 
 
 	///// toString //////////////////////////////////////////////////////////////

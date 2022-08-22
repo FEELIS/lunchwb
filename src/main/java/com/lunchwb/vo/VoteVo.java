@@ -31,6 +31,8 @@ public class VoteVo {
 	private List<Integer> voteResultList;
 	private String groupName;
 	private int voteIdx;
+	private int totCnt;
+	private int votedCnt;
 	
 	////////// 생성자 ////////////////////////////////////////////
 	
@@ -171,6 +173,22 @@ public class VoteVo {
 	public Integer getUserNo() {
 		return userNo;
 	}	
+	
+	public int getTotCnt() {
+		return totCnt;
+	}
+
+	public void setTotCnt(int totCnt) {
+		this.totCnt = totCnt;
+	}
+
+	public int getVotedCnt() {
+		return votedCnt;
+	}
+
+	public void setVotedCnt(int votedCnt) {
+		this.votedCnt = votedCnt;
+	}
 	
 	
 	///////////// toString //////////////////////////////////////////
