@@ -22,6 +22,7 @@ public class VoteVo {
 	private Integer userNo;
 	private String userName;
 	private int voteVoted; // 투표 안함: 0; 투표함: 투표한 가게 storeNo
+	private String voteIp;
 	
 	
 	///////////// 기타 //////////////////////////////////////////
@@ -188,6 +189,14 @@ public class VoteVo {
 
 	public void setVotedCnt(int votedCnt) {
 		this.votedCnt = votedCnt;
+	}
+	
+	public String getVoteIp() {
+		return voteIp;
+	}
+
+	public void setVoteIp(String voteIp) {
+		this.voteIp = voteIp;
 	}
 	
 	

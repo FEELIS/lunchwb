@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.lunchwb.service.UserService;
 import com.lunchwb.service.VisitedService;
@@ -45,6 +47,7 @@ public class MainController {
 		logger.info("MainController");
 		System.out.println("**********************************************************************************************************************************************************");
 		
+		logger.info(home(request));
 		int userState = 0;
 		Integer userNo = null;
 		
@@ -111,5 +114,15 @@ public class MainController {
 				return "main/index";
 		}
 	}
+	
+	
+	/* -------------------- 클라이언트 ip 불러오기 ---------------------------------------------------------------- */
+	public static String home(HttpServletRequest request) {	
+		request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
+		String ip = request.getHeader("X-FORWARDED-FOR");
 		
+		if (ip == null) ip = request.getRemoteAddr();
+				
+		return ip;
+	}	
 }

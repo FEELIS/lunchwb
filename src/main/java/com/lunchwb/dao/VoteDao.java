@@ -100,4 +100,10 @@ public class VoteDao {
 	public int updateVoteVisited(int voteNo) {
 		return sqlSession.update("vote.updateVoteVisited", voteNo);
 	}
+	
+	
+	// 비회원 투표하기
+	public int updateGuestVoted(VoteVo myVote) {
+		return sqlSession.update("vote.updateGuestVoted", myVote);
+	}
 }

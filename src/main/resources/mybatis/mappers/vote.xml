@@ -183,4 +183,15 @@
 		]]>
 	</update>
 	
+	
+	<!--  비회원 투표하기  -->
+	<update id="updateGuestVoted" parameterType="VoteVo">
+		<![CDATA[
+			UPDATE vote_members
+			SET    vote_voted = #{voteVoted},
+			       vote_ip = #{voteIp}
+			WHERE  vote_member_no = #{voteMemberNo}
+		]]>
+	</update>
+	
 </mapper>

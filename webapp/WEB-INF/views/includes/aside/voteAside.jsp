@@ -90,7 +90,7 @@
 			        	</c:if>
 			        	
 			        	<c:if test="${member.voteVoted == 0}">
-			        		<button class="btn btn-primary text-center vote-select-name-btn can-click-name" type="button" disabled="disabled" data-vote-member-no="${member.voteMemberNo}" data-user-no="${data-user-no}">${member.userName}</button>
+			        		<button class="btn btn-primary text-center vote-select-name-btn" type="button" disabled="disabled" data-vote-member-no="${member.voteMemberNo}" data-user-no="${data-user-no}">${member.userName}</button>
 			        	</c:if>
 		        	</c:forEach>
 	        	</c:if>
@@ -196,10 +196,8 @@ $(document).ready(async function(){
 
 	// 로그인 안했으면 클라이언트 ip 가져오기
 	if ("${authUser}" == "") { 
-	clientIp = await getIpClient()
-	
-	// userState, voteno 불러오기
-	
+		await getIpClient()
+			
 	} else { 
 		if (userState == "1") { // 로그인 안했고 투표 안한 회원 - 투표할 때 보낼 정보 추가
 			selected["userNo"] = $(".vote-selected-name").attr("data-user-no")
@@ -217,10 +215,11 @@ $(document).ready(async function(){
 // 클라이언트 ip 불러오기
 async function getIpClient() {
   try {
-    const response = await axios.get('https://api.ipify.org?format=json');
-    console.log("clientIp: " + response["data"]["ip"]);
+    const response = await axios.get('https://api.ipify.org?format=json')
+    console.log("clientIp: " + response["data"]["ip"])
     
-    return response["data"]["ip"]
+    clientIp = response["data"]["ip"]
+    selected["voteIp"] = clientIp
     
   } catch (error) {
     console.error(error);
@@ -233,7 +232,13 @@ async function getIpClient() {
 
 ////////////////////// 게스트가 자기 이름 클릭했을 때 //////////////////////////////////////////
 $(".can-click-name").on("click", function(){
-	alert("으악")
+	$("button").removeClass("vote-selected-name")
+	$(this).addClass("vote-selected-name")
+	
+	selected["voteMemberNo"] = parseInt($(this).attr("data-vote-member-no"))
+	selected["userName"] = $(this).text()
+	
+	console.log(selected)
 })
 
 

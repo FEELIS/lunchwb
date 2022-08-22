@@ -235,9 +235,11 @@ public class VoteService {
 		if (myVote.getUserNo() != null) {
 			voteDao.updateVoteVoted(myVote);
 			userDao.updateState2(myVote.getUserNo());
-		}
 		
-		// 비회원 추가해야함
+		} else {
+			voteDao.updateGuestVoted(myVote);
+		}
+				
 		
 		// 만약 내가 마지막 투표자면 투표 종료
 		VoteVo currVote = voteDao.currVote(voteNo);
