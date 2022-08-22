@@ -266,30 +266,7 @@ $(".vote-vote-btn").on("click", function(){
 	
 	console.log(selected)
 
-	// form으로 묶어서 controller에 전송
-	function postVoteData(path, params, method) {
-		method = method || "post"
-		
-		let form = document.createElement("form")
-		document.charset = "utf-8"
-		
-		form.setAttribute("method", method)
-		form.setAttribute("action", path)
-		
-		for (var key in params) {
-			var hiddenField = document.createElement("input")
-			
-			hiddenField.setAttribute("type", "hidden")
-			hiddenField.setAttribute("name", key)
-			hiddenField.setAttribute("value", params[key])
-			
-			form.appendChild(hiddenField)
-		}
-	
-		document.body.appendChild(form)
-		form.submit()
-	}
-	
+	// form으로 묶어서 controller에 전송	
 	postVoteData("${pageContext.request.contextPath}/vote/submitVote", selected)
 })
 
@@ -297,7 +274,11 @@ $(".vote-vote-btn").on("click", function(){
 /////////////// 투표 수정하기 //////////////////////////////////////////////////
 
 $("#vote-leader-modify-btn").on("click", function(){
-	alert("수정")
+	var modifyCheck = confirm("투표를 수정하시겠습니까?")
+	
+	if (modifyCheck) {		
+		postVoteData("${pageContext.request.contextPath}/vote/modifyVoteReady")
+	}
 })
 
 /////////////// 투표 삭제하기 ///////////////////////////////////////////////////
@@ -355,6 +336,30 @@ function changeTimeFormat(time) {
 	return newTime
 }
 
+///////////////// form 전송하는 함수 ////////////////////////////////////////////////////////////////
+
+function postVoteData(path, params, method) {
+	method = method || "post"
+	
+	var form = document.createElement("form")
+	document.charset = "utf-8"
+	
+	form.setAttribute("method", method)
+	form.setAttribute("action", path)
+	
+	for (var key in params) {
+		var hiddenField = document.createElement("input")
+		
+		hiddenField.setAttribute("type", "hidden")
+		hiddenField.setAttribute("name", key)
+		hiddenField.setAttribute("value", params[key])
+		
+		form.appendChild(hiddenField)
+	}
+
+	document.body.appendChild(form)
+	form.submit()
+}
 
 </script>
 

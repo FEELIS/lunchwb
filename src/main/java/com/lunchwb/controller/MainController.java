@@ -103,6 +103,12 @@ public class MainController {
 				HashMap<String, Object> visitedMap = visitedService.visitedMain((UserVo)session.getAttribute("authUser"));	
 				model.addAttribute("visitedMap", visitedMap);
 				return "main/visitedMain";
+			
+			case 99:
+				voteAsideData = voteService.getVoteAsideData(voteNo, userState);
+				model.addAllAttributes(voteAsideData);
+				
+				return "main/vote/modifyVote";
 				
 			case 403:
 				return "error/403";

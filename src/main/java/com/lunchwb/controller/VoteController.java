@@ -141,10 +141,27 @@ public class VoteController {
 	@PostMapping("/resetVote")
 	public String resetVote(@RequestParam("voteNo") int voteNo) {
 		System.out.println("**********************************************************************************************************************************************************");
-		logger.info("투표 초기화");
+		logger.info("투표 초기화하기");
 		System.out.println("**********************************************************************************************************************************************************");
 
 		return "redirect:/";
 				
+	}
+	
+	
+	// 투표 수정하기
+	@PostMapping("/modifyVoteReady")
+	public String modifyVoteReady(HttpSession session) {
+		System.out.println("**********************************************************************************************************************************************************");
+		logger.info("투표 수정하기로 이동");
+		System.out.println("**********************************************************************************************************************************************************");
+		
+		UserVo loginUser = (UserVo)session.getAttribute("authUser");
+			
+		if (loginUser != null) {
+			voteService.modifyVoteReady(loginUser.getUserNo());
+		}
+		
+		return "redirect:/";
 	}
 }
