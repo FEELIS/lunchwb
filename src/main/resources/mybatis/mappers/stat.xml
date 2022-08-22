@@ -22,7 +22,15 @@
 		<result column="rating_bujang" property="ratingBujang" />
 		<result column="age_group" property="ageGroup" />
 	</resultMap>
+	<!-- ============================ 방문내역 ============================ -->
+	<select id="reviewList">
+		<![CDATA[
+			select 
 	
+		]]>
+	</select>
+	
+	<!-- ============================ 통계 ============================ -->
 	<!-- 지난 한달간 음식별 여기갈래요 횟수 -->
 	<select id="lastMonth" resultType="StatVo">
 		<![CDATA[
@@ -40,8 +48,15 @@
 	<!-- 그룹별 식사횟수 -->
 	<select id="withGroup" parameterType="int" resultMap="resultMapStatVo">
 		<![CDATA[
-	
-	
+			select  g.group_name, 
+					count(v.visited_no) visit_count 
+			from visited v,groups g, users u,group_member gm 
+			where v.user_no = u.user_no 
+			and v.group_no = g.group_no 
+			and g.group_no = gm.group_no 
+			and u.user_no = #{user_no} 
+			group by g.group_name,gm.group_order 
+			order by gm.group_order asc
 		]]>
 	</select>
 	
