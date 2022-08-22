@@ -19,6 +19,24 @@
 		<result column="store_road_address" property="storeRoadAddress" />
 		<result column="store_old_address" property="storeOldAddress" />
 	</resultMap>
-
+	
+		<!-- ============================ 방문내역 ============================ -->
+	<select id="reviewList">
+		<![CDATA[
+			select  s.store_name, 
+					s.store_road_address, 
+					r.review_content, 
+					r.user_score, 
+					r.review_file_name, 
+					r.review_reported 
+			from review r, users u, visited v, store s
+			where u.user_no = r.user_no 
+			and v.visited_no = r.visited_no 
+			and v.store_no = s.store_no 
+			and r.user_no = 1 
+			order by r.review_no asc;
+	
+		]]>
+		</select>
 
 </mapper>

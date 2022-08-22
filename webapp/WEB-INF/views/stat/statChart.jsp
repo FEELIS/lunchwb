@@ -191,12 +191,12 @@
 										<canvas data-bss-chart="">
 										</canvas>
 									</div>
-									<div class="text-center small mt-4">
+									<div id="doughnutMenu" class="text-center small mt-4">
 									
 									<!-- group_name -->
-										<span class="me-2"><i class="fas fa-circle text-primary"></i>&nbsp;소방기계</span><span
-											class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;소방전기</span><span
-											class="me-2"><i class="fas fa-circle text-info"></i>&nbsp;BIM팀</span>
+										<span class="me-2"><i class="fas fa-circle text-primary"></i>&nbsp;소방기계</span>
+										<span class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;소방전기</span>
+										<span class="me-2"><i class="fas fa-circle text-info"></i>&nbsp;BIM팀</span>
 									</div>
 								</div>
 							</div>
@@ -587,8 +587,34 @@ function renderToBar(statVo) {
 
 
 function renderToDoughnut(statVo) {
-	var str = '';
 	
+	var groupMenu = statVo.doughnutLabels;
+	
+	
+	var gStr = '';
+	
+	
+	// 그룹라벨 불러오기
+	for (var i = 0; i < groupMenu.length; i++) {
+	gStr+='<span class="me-2"><i class="fas fa-circle ';
+			if (i==0) {
+				gStr+='text-primary';
+			} else if(i==1){
+				gStr+='text-success';
+			} else if(i==2){
+				gStr+='text-info';
+			} else if(i==3){
+				gStr+='text-warning';
+			}
+			gStr+='"></i>&nbsp;';
+			gStr+=groupMenu[i].replaceAll("\"","");
+			gStr+='</span>';
+		
+	}
+	$('#doughnutMenu').html(gStr);
+	
+	// 도넛모양 차트 데이터 모음
+	var str = '';
 	str +=
 		'{'+
 		'"type": "doughnut",'+
@@ -598,8 +624,8 @@ function renderToDoughnut(statVo) {
 				'],'+
 			'"datasets": [{'+
 				'"label": "",'+
-				'"backgroundColor": ["#4e73df", "#1cc88a", "#36b9cc"],'+
-				'"borderColor": ["#ffffff", "#ffffff", "#ffffff"],'+
+				'"backgroundColor": ["#4e73df", "#1cc88a", "#36b9cc", "#f6c23e"],'+
+				'"borderColor": ["#ffffff", "#ffffff", "#ffffff", "#ffffff"],'+
 				'"data": ['+
 					statVo.doughnutData +
 					']'+
