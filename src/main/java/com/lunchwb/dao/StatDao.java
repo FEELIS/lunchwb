@@ -21,7 +21,13 @@ public class StatDao {
 		return lastMonthList;
 	};
 	
-	//
+	// 로그인 한 유저의 그룹간 식사수
+	public List<StatVo> withGroup(int userNo){
+		List<StatVo> withGroupList = sqlSession.selectList("stat.withGroup",userNo);
+		return withGroupList;
+	};
+	
+	
 	
 	
 	// 지난 6개월 간 선택한 음식의 인기 조회
