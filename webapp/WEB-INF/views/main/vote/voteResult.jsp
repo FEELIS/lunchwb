@@ -26,7 +26,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
-
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 </head>
 
 
@@ -43,10 +43,13 @@
             </div>
 			
 			<div class="d-flex d-xxl-flex justify-content-center" id="vote-result-link-btn-area">
-            	<button class="btn btn-danger d-inline-flex d-xxl-flex justify-content-center align-items-center" id="vote-kakao-btn" type="button">
-            		<i class="fas fa-comment"></i>
-            		<span>공유하기</span>
-            	</button>
+            	<a href="javascript:kakaoShare()" style="text-decoration:none;">
+	            	<button class="btn btn-danger d-inline-flex d-xxl-flex justify-content-center align-items-center" id="vote-kakao-btn" type="button">
+	            		<i class="fas fa-comment"></i>
+	            		<span>공유하기</span>
+	            	</button>
+            	</a>
+            	
             	
             	<span class="d-inline-flex flex-shrink-0 justify-content-center flex-nowrap align-items-xxl-center" id="vote-url-copy-box">
             		<i class="fas fa-link d-inline-flex d-xxl-flex flex-shrink-0 justify-content-start align-items-center justify-content-xl-start align-items-xl-center justify-content-xxl-start align-items-xxl-center"></i>
@@ -139,6 +142,45 @@ $("#vote-result-again-btn").on("click", function(){
 		$("#resetVote").submit()
 	}
 })
+
+/* 카카오 공유하기 api */
+
+var todayStore = $("#vote-lunch-store").text();
+
+var voteURL = ${voteInfo.voteNo};
+// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+Kakao.init('f78c3d22061aa91b824c89a07b348da9');
+
+// SDK 초기화 여부를 판단합니다.
+console.log(Kakao.isInitialized());
+
+function kakaoShare() {
+	console.log(todayStore);
+  Kakao.Link.sendDefault({
+    objectType: 'feed',
+    content: {
+      title: '부장님 오늘 점심은' + todayStore + '입니다.',
+      imageUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+      description: todayStore,
+      link: {
+        mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+        webUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+      },
+    },
+    buttons: [
+      {
+        title: '웹으로 보기',
+        link: {
+          mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+          webUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+        },
+      },
+    ],
+    // 카카오톡 미설치 시 카카오톡 설치 경로이동
+    installTalk: true,
+  })
+}
+
 
 </script>
 
