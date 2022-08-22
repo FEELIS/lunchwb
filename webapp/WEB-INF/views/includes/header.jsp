@@ -127,11 +127,6 @@
 		            		<button id="logout-btn" class="btn btn-primary" type="button" style="2px 0px 0px 0px">로그인</button>
 		            	</a>
 		            </li>
-		            <li class="nav-item d-inline-flex">
-		            	<a href="${pageContext.request.contextPath}/join" style="padding: 15px 0px">
-		            		<button id="logout-btn" class="btn btn-primary" type="button" style="2px 0px 0px 0px">회원가입</button>
-		            	</a>
-		            </li>
             	</c:otherwise>
             </c:choose>
         </ul>
