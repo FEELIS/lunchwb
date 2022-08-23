@@ -275,13 +275,4 @@ public class VoteService {
 		
 	}
 	
-	
-	////// 투표 수정 준비 ///////////////////////////////////////////////////
-	public void modifyVoteReady(int userNo) {
-		int cnt = userDao.updateState99(userNo);
-		
-		if (cnt > 0) {
-			System.out.println("[수정하기 모드]");
-		}
-	}
  }

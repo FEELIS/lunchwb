@@ -175,11 +175,6 @@ public class UserDao {
 	   return sqlSession.update("user.updateState4", userNo);
    }
    
-   /* userState 99로 변경 */
-   public int updateState99(int userNo) {
-	   return sqlSession.update("user.updateState99", userNo);
-   }
-   
    /* userState 불러오기 */
    public int selectUserState(int userNo) {
 	   return sqlSession.selectOne("user.selectUserState", userNo);

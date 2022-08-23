@@ -70,6 +70,12 @@ public class MainController {
 			
 		}
 		
+		Integer modifyState = (Integer)session.getAttribute("modifyState");
+		if (modifyState != null && modifyState == 99) {
+			userState = 99;
+			session.removeAttribute("modifyState");
+		}
+		
 		// 어느 페이지 로드할 지 결정
 		Integer[] stateInfo = userService.mainState(userState, userNo, voteNo);
 		userState = stateInfo[0];

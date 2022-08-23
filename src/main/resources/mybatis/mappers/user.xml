@@ -268,17 +268,7 @@
 	   		WHERE  user_no = #{userNo}
 	   	]]>
    	</update>
-   	
-   	
-   	<!--  투표수정중  -->
-   	<update id="updateState99" parameterType="int">
-   		<![CDATA[
-	   		UPDATE users
-	   		SET    user_state = 99
-	   		WHERE  user_no = #{userNo}
-	   	]]>
-   	</update>
-   	
+  	
    	
    	<!--  userState 다시 불러오기  -->
    	<select id="selectUserState" parameterType="int" resultType="int">

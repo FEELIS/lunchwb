@@ -159,7 +159,7 @@ public class VoteController {
 		UserVo loginUser = (UserVo)session.getAttribute("authUser");
 			
 		if (loginUser != null) {
-			voteService.modifyVoteReady(loginUser.getUserNo());
+			session.setAttribute("modifyState", 99);
 		}
 		
 		return "redirect:/";
