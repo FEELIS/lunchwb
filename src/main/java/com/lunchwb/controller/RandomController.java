@@ -1,7 +1,5 @@
 package com.lunchwb.controller;
 
-import java.util.HashMap;
-
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -17,6 +15,7 @@ import com.lunchwb.service.TestService;
 import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.UserVo;
 
+@RequestMapping("/random")
 @Controller
 public class RandomController {
 	
@@ -29,6 +28,12 @@ public class RandomController {
 	public String roulette() {
 		logger.info("/roulette");
 		return "main/random/randomRoulette";
+	}
+	
+	@GetMapping("")
+	public String randomMain() {
+		logger.info("/randomMain");
+		return "main/random/randomMain";
 	}
 	
 	@ResponseBody
