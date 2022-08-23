@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lunchwb.service.FaqService;
 import com.lunchwb.service.InquiryService;
@@ -73,13 +75,14 @@ public class CustomerController {
 		return "customer/writeInquiry";
 	};
 	
+	// MultipartFile 형식 데이터 받기용
 	@PostMapping("/writeInquiry")
-	public String writeInquiry(@ModelAttribute InquiryVo inqVo) {
+	public String writeInquiry(@ModelAttribute InquiryVo inqVo, @RequestPart(value = "file", required = false) MultipartFile file) {
 		logger.info("CustomerController > writeInquiry");
 		
 		logger.info(inqVo.toString());
 		
-		int count = inquiryService.writeInquiry(inqVo);
+		int count = inquiryService.writeInquiry(inqVo,file);
 		logger.info(count + "건 문의성공하였습니다.");
 		
 		
