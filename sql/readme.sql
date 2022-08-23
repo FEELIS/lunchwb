@@ -127,7 +127,11 @@
 -- vote_members테이블 vote_ip칼럼추가 varchar2(500) 에서 varchar2(1000) 으로 변경
 
 -- 2022.08.23 11:03 =====================
--- vote_members테이블 vote_ip칼럼추가 varchar2(1000) 에서 varchar2(3000) 으로 변경
+-- vote_members테이블 vote_ip칼럼 varchar2(1000) 에서 varchar2(3000) 으로 변경
+
+-- 2022.08.23 11:47 =====================
+-- vote테이블 vote_items칼럼 varchar2(1000) 에서 varchar2(3000) 으로 변경
+-- vote_members테이블 vote_ip칼럼 varchar2(3000) 에서 varchar2(500) 으로 변경
 
 
 
