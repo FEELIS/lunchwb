@@ -495,16 +495,16 @@ function visitedBlack(){
 
 //ASIDE 블랙리스트 추가/삭제 버튼 그리기
 function drawBlackBtn(result){
-	//블랙리스트 없음 result: Y
+	//블랙리스트 있음 result: Y
 	if(result == "Y"){
-		$("#visited-black-p").append("블랙리스트에 잘못 추가했었다면?")
-		$("#visited-black-btn-area").append('<button id="btn-visited-black-del" class="btn btn-light link-dark border rounded-pill border-dark" type="button">'
+		$("#visited-black-p").text("블랙리스트에 잘못 추가했었다면?")
+		$("#visited-black-btn-area").html('<button id="btn-visited-black-del" class="btn btn-light link-dark border rounded-pill border-dark" type="button">'
 											+'	블랙리스트 삭제'
 											+'</button>')
 	//블랙리스트 없음 result: N
 	}else{
-		$("#visited-black-p").append("혹시 그룹 취향이 아니었나요?")
-		$("#visited-black-btn-area").append('<button id="btn-visited-black-add" class="btn btn-light link-dark border rounded-pill border-dark" type="button">'
+		$("#visited-black-p").text("혹시 그룹 취향이 아니었나요?")
+		$("#visited-black-btn-area").html('<button id="btn-visited-black-add" class="btn btn-light link-dark border rounded-pill border-dark" type="button">'
 											+'	블랙리스트 추가'
 											+'</button>')
 	}
@@ -543,9 +543,12 @@ function visitedBlackAdd(){
 			console.log("블랙추가: "+result)
 			if(result == "success"){
 				alert("블랙리스트 추가 완료")
-				$("#visited-black-btn-area").html('<button id="btn-visited-black-del" class="btn btn-light link-dark border rounded-pill border-dark" type="button">'
-													+'	블랙리스트 삭제'
-													+'</button>')
+				//aside
+				drawBlackBtn("Y")
+				//modal
+				$(".modal-btn-add-black").remove()
+				addModalBlackBtn("Y")
+				
 			}else{
 				alert("블랙리스트 추가 실패")
 			}
@@ -582,9 +585,11 @@ function visitedBlackDel(){
 			console.log("블랙삭제: "+result)
 			if(result == "success"){
 				alert("블랙리스트 삭제 완료")
-				$("#visited-black-btn-area").html('<button id="btn-visited-black-add" class="btn btn-light link-dark border rounded-pill border-dark" type="button">'
-													+'	블랙리스트 추가'
-													+'</button>')
+				//aside
+				drawBlackBtn("N")
+				//modal
+				$(".modal-btn-del-black").remove()
+				addModalBlackBtn("N")
 			}else{
 				alert("블랙리스트 삭제 실패")
 			}

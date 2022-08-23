@@ -426,8 +426,10 @@ public class GroupService {
 	/******************** 블랙리스트 여부 확인 *************************************************/
 	public String isBlack(BlacklistVo blackVo) {
 		if(blackDao.isBlack(blackVo) == 0 ) {
+			//아니야
 			return "N";
 		}else {
+			//맞아 : 블랙리스트
 			return "Y";
 		}
 	}
