@@ -42,4 +42,11 @@
 		VALUES (seq_black_no.NEXTVAL, #{storeNo}, #{groupNo}, TO_DATE(SYSDATE))
 	</insert>
 	
+	
+	<delete id="deleteBlack" parameterType="BlackVo">
+		DELETE FROM blacklist
+		WHERE group_no = #{groupNo}
+		AND store_no = #{storeNo}
+	</delete>
+	
 </mapper>

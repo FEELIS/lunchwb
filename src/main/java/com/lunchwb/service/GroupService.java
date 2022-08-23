@@ -441,5 +441,15 @@ public class GroupService {
 			return "fail";
 		}
 	}
+	
+	
+	/******************** 블랙리스트 삭제 ****************************************************/
+	public String deleteBlack(BlacklistVo blackVo) {
+		if(blackDao.deleteBlack(blackVo) > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
+	}
 
 }

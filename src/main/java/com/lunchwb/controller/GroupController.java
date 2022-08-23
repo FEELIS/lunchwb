@@ -293,6 +293,15 @@ public class GroupController {
 		logger.info("GroupController > addBlack()");
 		return groupService.addBlack(blackVo);
 	}
+	
+	
+	/******************** 그룹 블랙리스트 삭제 *******************************************/
+	@ResponseBody
+	@PostMapping("/black/delete")
+	public String deleteBlack(@RequestBody BlacklistVo blackVo) {
+		logger.info("GroupController > addBlack()");
+		return groupService.deleteBlack(blackVo);
+	}
 		
 
 }

@@ -859,8 +859,9 @@ function isBlack(blackVo, bno){
 					drawBlackBtn(result)
 				case 1:
 					//방문메인 가게모달창
+					//나중에 묶기 visitedMain으로 옮길것
 					if(result == "Y"){
-						$(".store-button-area").append('<button class="btn btn-light modal-btn-del-black" type="button">블랙제거</button>')
+						$(".store-button-area").append('<button class="btn btn-light modal-btn-del-black" type="button">블랙삭제</button>')
 					//블랙아냐
 					}else{
 						$(".store-button-area").append('<button class="btn btn-light modal-btn-add-black" type="button">블랙추가</button>')

@@ -29,5 +29,10 @@ public class BlackDao {
 	public int addBlack(BlacklistVo blackVo) {
 		return sqlSession.insert("blacklist.addBlack", blackVo);
 	}
+	
+	/*********************** 블랙삭제 *********************************************/
+	public int deleteBlack(BlacklistVo blackVo) {
+		return sqlSession.delete("blacklist.deleteBlack", blackVo);
+	}
 
 }

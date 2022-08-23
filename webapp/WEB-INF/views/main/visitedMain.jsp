@@ -493,13 +493,13 @@ function visitedBlack(){
 }
 
 
-//ASIDE 블랙리스트 추가/제거 버튼 그리기
+//ASIDE 블랙리스트 추가/삭제 버튼 그리기
 function drawBlackBtn(result){
 	//블랙리스트 없음 result: Y
 	if(result == "Y"){
 		$("#visited-black-p").append("블랙리스트에 잘못 추가했었다면?")
 		$("#visited-black-btn-area").append('<button id="btn-visited-black-del" class="btn btn-light link-dark border rounded-pill border-dark" type="button">'
-											+'	블랙리스트 제거'
+											+'	블랙리스트 삭제'
 											+'</button>')
 	//블랙리스트 없음 result: N
 	}else{
@@ -511,14 +511,14 @@ function drawBlackBtn(result){
 }
 
 
-//Aside/가게모달/리뷰모달/메뉴모달 방문 취소
+//리뷰메인) Aside/가게모달/리뷰모달/메뉴모달 방문 취소
 $("#btn-visited-cancel").on("click", function(){if(!confirm("정말로 방문을 취소하시겠습니까?")){return false}})
 $("#modal-store").on("click", ".modal-btn-visited-cancel", function(){if(!confirm("정말로 방문을 취소하시겠습니까?")){return false}})
 $("#modal-reviews").on("click", ".modal-btn-visited-cancel", function(){if(!confirm("정말로 방문을 취소하시겠습니까?")){return false}})
 $("#modal-all-menu").on("click", ".modal-btn-visited-cancel", function(){if(!confirm("정말로 방문을 취소하시겠습니까?")){return false}})
 
 
-//Aside/가게모달/리뷰모달/메뉴모달 블랙 추가 버튼 클릭
+//리뷰메인) Aside/가게모달/리뷰모달/메뉴모달 블랙 추가 버튼 클릭
 $("#visited-black-btn-area").on("click", "#btn-visited-black-add", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트로 추가하시겠습니까?")){visitedBlackAdd()}})
 $("#modal-store").on("click", ".modal-btn-add-black", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트로 추가하시겠습니까?")){visitedBlackAdd()}})
 $("#modal-reviews").on("click", ".modal-btn-add-black", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트로 추가하시겠습니까?")){visitedBlackAdd()}})
@@ -527,7 +527,6 @@ $("#modal-all-menu").on("click", ".modal-btn-add-black", function(){if(confirm("
 
 //블랙추가
 function visitedBlackAdd(){
-	confirm("블랙리스트 추가")
 	var blackVo = {
 			storeNo : "${visitedMap.visitedVo.storeNo}",
 			groupNo : "${visitedMap.visitedVo.groupNo}" 
@@ -545,7 +544,7 @@ function visitedBlackAdd(){
 			if(result == "success"){
 				alert("블랙리스트 추가 완료")
 				$("#visited-black-btn-area").html('<button id="btn-visited-black-del" class="btn btn-light link-dark border rounded-pill border-dark" type="button">'
-													+'	블랙리스트 제거'
+													+'	블랙리스트 삭제'
 													+'</button>')
 			}else{
 				alert("블랙리스트 추가 실패")
@@ -558,6 +557,44 @@ function visitedBlackAdd(){
 	})
 }
 
+
+//리뷰메인) Aside/가게모달/리뷰모달/메뉴모달 블랙 삭제 버튼 클릭
+$("#visited-black-btn-area").on("click", "#btn-visited-black-del", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트에서 삭제하시겠습니까?")){visitedBlackDel()}})
+$("#modal-store").on("click", ".modal-btn-del-black", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트에서 삭제하시겠습니까?")){visitedBlackDel()}})
+$("#modal-reviews").on("click", ".modal-btn-del-black", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트에서 삭제하시겠습니까?")){visitedBlackDel()}})
+$("#modal-all-menu").on("click", ".modal-btn-del-black", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트에서 삭제하시겠습니까?")){visitedBlackDel()}})
+
+
+function visitedBlackDel(){
+	var blackVo = {
+			storeNo : "${visitedMap.visitedVo.storeNo}",
+			groupNo : "${visitedMap.visitedVo.groupNo}" 
+	}
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/group/black/delete",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(blackVo),
+		dataType : "json",
+		
+		success : function(result){
+			console.log("블랙삭제: "+result)
+			if(result == "success"){
+				alert("블랙리스트 삭제 완료")
+				$("#visited-black-btn-area").html('<button id="btn-visited-black-add" class="btn btn-light link-dark border rounded-pill border-dark" type="button">'
+													+'	블랙리스트 추가'
+													+'</button>')
+			}else{
+				alert("블랙리스트 삭제 실패")
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+ 
+	})
+}
 
 $("#today-star-icon").on("click", ".starScore", function(){
 	var score = $(this).attr("data-score")
