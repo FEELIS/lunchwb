@@ -33,7 +33,7 @@
 	        <div id="vote-countdown-times">
 	            <div class="d-xxl-flex justify-content-center align-items-center  align-content-center justify-content-xxl-center align-items-xxl-center" id="vote-countdown-end-time">
 	            	<span class="countdown-label">종료 시각</span>
-	            	<span class="countdown-time">
+	            	<span id="countdown-end-time" class="countdown-time">
 	            		<fmt:formatDate value="${voteInfo.voteEndTime}" pattern="HH"/>시 
 	            		<fmt:formatDate value="${voteInfo.voteEndTime}" pattern="mm"/>분
 	            	</span>
@@ -55,50 +55,20 @@
 	        </c:if>
 	        
 	        <c:if test="${userState == 99}">
-	        	<div id="label-select-name"><span>수정 전 투표 참여자 목록입니다</span></div>
+	        	<div id="label-select-name"><span>수정 전 투표 참여자 목록입니다<br>이미 투표 완료한 회원은 수정할 수 없습니다.</span></div>
 	        </c:if>
 	        
 	        <div id="vote-select-names" class="d-flex d-xxl-flex flex-wrap justify-content-xxl-start">
-	        	<!--  투표 인원 영역  -->
-	        	
-	        	<!--  userState == 1  -->
-	        	<c:if test="${userState == 1}">
-	        		<!--  로그인 한 경우  -->
-		        	<c:forEach items="${voteMember}" var="member">
-	        			<c:if test="${!empty(authUser) and authUser.userNo == member.userNo}">
-	        				<button class="btn btn-primary text-center vote-select-name-btn vote-selected-name" type="button" disabled="disabled" data-vote-member-no="${member.voteMemberNo}" data-user-no="${member.userNo}">${member.userName}</button>
-	        			</c:if>
-	        			
-	        			<c:if test="${((empty(authUser) and member.userNo != 0) or (!empty(authUser) and authUser.userNo != member.userNo)) and member.voteVoted == 0}">
-		        			<button class="btn btn-primary text-center vote-select-name-btn" type="button" disabled="disabled" data-vote-member-no="${member.voteMemberNo}" data-user-no="${data-user-no}">${member.userName}</button>
-		        		</c:if>
-		        		
-		        		<c:if test="${empty(authUser) and member.voteVoted == 0 and member.userNo == 0}">
-		        			<button class="btn btn-primary text-center vote-select-name-btn can-click-name" type="button" data-vote-member-no="${member.voteMemberNo}" data-user-no="${data-user-no}">${member.userName}</button>
-		        		</c:if>
-		        		
-		        		<c:if test="${member.voteVoted != 0}">
-		        			<button class="btn btn-primary text-center vote-select-name-btn vote-voted-name" type="button" disabled="disabled" data-vote-member-no="${member.voteMemberNo}" data-user-no="${data-user-no}">${member.userName}</button>
-		        		</c:if>
-		        	</c:forEach>
-	        	</c:if>	        	
-	        	
-	        	<!--  userState == 2 or 3  -->
-	        	<c:if test="${userState > 1}">
-	        		<c:forEach items="${voteMember}" var="member">
-		        		<c:if test="${!empty(authUser) and authUser.userNo == member.userNo}">
-		        			<button class="btn btn-primary text-center vote-select-name-btn vote-selected-name" type="button" disabled="disabled" data-vote-member-no="${member.voteMemberNo}" data-user-no="${member.userNo}">${member.userName}</button>
-		        		</c:if>
-		        		
-		        		<c:if test="${authUser.userNo != member.userNo and member.voteVoted != 0}">
-			        		<button class="btn btn-primary text-center vote-select-name-btn vote-voted-name" type="button" disabled="disabled" data-vote-member-no="${member.voteMemberNo}" data-user-no="${data-user-no}">${member.userName}</button>
-			        	</c:if>
-			        	
-			        	<c:if test="${member.voteVoted == 0}">
-			        		<button class="btn btn-primary text-center vote-select-name-btn" type="button" disabled="disabled" data-vote-member-no="${member.voteMemberNo}" data-user-no="${data-user-no}">${member.userName}</button>
-			        	</c:if>
-		        	</c:forEach>
-	        	</c:if>
+	        	<!--  투표 인원 영역  -->       	
+	        	<c:forEach items="${voteMember}" var="member">
+        			<button class="btn btn-primary text-center vote-select-name-btn 
+        			               <c:if test="${authUser.userNo == member.userNo}">vote-selected-name</c:if>
+        			               <c:if test="${userState == 1 and empty(authUser) and member.voteVoted == 0 and member.userGrade == -1}">can-click-name</c:if>
+        			               <c:if test="${member.voteVoted != 0}">vote-voted-name</c:if>" 
+        			        type="button" 
+        			        <c:if test="${!(userState == 1 and empty(authUser) and member.voteVoted == 0 and member.userNo == 0)}">disabled="disabled" </c:if>
+        			        data-vote-member-no="${member.voteMemberNo}" data-user-no="${member.userNo}">${member.userName}</button>
+	        	</c:forEach>
 	        </div>
 	    </div>
 	    
@@ -239,6 +209,7 @@ async function getIpClient() {
 
 
 ////////////////////// 게스트가 자기 이름 클릭했을 때 //////////////////////////////////////////
+
 $(".can-click-name").on("click", function(){
 	$("button").removeClass("vote-selected-name")
 	$(this).addClass("vote-selected-name")

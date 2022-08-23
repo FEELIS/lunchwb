@@ -220,4 +220,24 @@
 		]]>
 	</update>
 	
+	
+	<!--  투표 종료 시각 업데이트하기  -->
+	<update id="updateVoteEndTime" parameterType="Map">
+		<![CDATA[
+			UPDATE vote
+			SET    vote_end_time = #{voteEndTime}
+			WHERE  vote_no = #{voteNo}
+		]]>
+	</update>
+	
+	
+	<!--  아직 투표 안한 voteMembers 삭제  -->
+	<delete id="deleteNotVoted" parameterType="int">
+		<![CDATA[
+			DELETE vote_members
+			WHERE  vote_no = #{voteNo}
+			AND    vote_voted = 0
+		]]>
+	</delete>
+	
 </mapper>

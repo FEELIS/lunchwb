@@ -295,4 +295,64 @@ public class VoteService {
 			
 		}
 	}
+	
+	
+	///////// 투표 수정하기 ///////////////////////////////////////////////////////////////////////
+	public boolean modifyVote(Date voteEndTime, String voteMember, int voteNo) {
+		System.out.println("**********************************************************************************************************************************************************");
+		System.out.println("[투표 수정 데이터 정리하기]");
+		
+		boolean result = true;
+		
+		System.out.println(voteEndTime.toString());
+		
+		List<UserVo> voteMem = new ArrayList<>();
+	
+		JSONObject iptData = new JSONObject(voteMember);
+		JSONArray jArray = (JSONArray)iptData.get("mem");
+		
+		for (int i = 0; i < jArray.length(); i++) {
+			JSONObject user = jArray.getJSONObject(i);
+			System.out.println(user);
+			UserVo member = new UserVo();
+			
+			member.setUserName(user.getString("userName"));
+			if (user.has("userNo")) member.setUserNo(user.getInt("userNo"));
+						
+			if (user.has("userGrade")) {
+				int userGrade = user.getInt("userGrade");
+				member.setUserGrade(userGrade);
+				
+			}
+			voteMem.add(member);
+		}		
+		
+		System.out.println("**********************************[vote 수정하기]**********************************");
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("voteNo", voteNo);
+		map.put("voteEndTime", voteEndTime);
+		
+		int cnt = voteDao.updateVoteEndTime(map);
+		if (cnt < 1) return false;
+		
+		// 스케줄러 변경
+		
+		System.out.println("**********************************[vote_member 수정하기]**********************************");
+
+		cnt = voteDao.deleteNotVoted(voteNo);
+		if (cnt < 1) return false;	
+		
+		Map<String, Object> voteMems = new HashMap<>();
+		voteMems.put("voteMember", voteMem);
+		voteMems.put("voteNo", voteNo);
+		
+		cnt = voteDao.insertVoteMember(voteMems);
+		if (cnt < 1) return false;
+		
+		System.out.println("**********************************************************************************************************************************************************");
+	
+		
+		return result;
+	}
  }

@@ -150,7 +150,7 @@ public class VoteController {
 	}
 	
 	
-	// 투표 수정하기
+	// 투표 수정하기페이지 호출
 	@PostMapping("/modifyVoteReady")
 	public String modifyVoteReady(HttpSession session) {
 		System.out.println("**********************************************************************************************************************************************************");
@@ -166,4 +166,33 @@ public class VoteController {
 		return "redirect:/";
 	}
 	
+	
+	// 투표 수정하기
+	@ResponseBody
+	@PostMapping("/modifyVote")
+	public boolean modifyVote(@RequestBody Map<String, Object> voteData) {
+		System.out.println("**********************************************************************************************************************************************************");
+		logger.info("투표 수정하기");
+		System.out.println("**********************************************************************************************************************************************************");
+		
+		String voteEndDate = (String)voteData.get("voteEndDate");
+		logger.info(voteEndDate);
+		String voteMember = (String)voteData.get("voteMember");
+		logger.info(voteMember);
+		logger.info("" + voteData.get("voteNo"));
+		int voteNo = (int)voteData.get("voteNo");
+		logger.info("" + voteNo);
+		
+		if (voteEndDate.contains(".")) {
+			voteEndDate = voteEndDate.substring(0, voteEndDate.indexOf("."));
+		}
+		
+		@SuppressWarnings("deprecation")
+		Date date = new Date(voteEndDate);
+		
+		boolean result = false;
+		result = voteService.modifyVote(date, voteMember, voteNo);
+		
+		return result;
+	}
 }

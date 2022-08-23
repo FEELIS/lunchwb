@@ -83,9 +83,8 @@
                         		<c:set var="tempNo" value="${tempNo+1}" />
                         		                       		
                        			<span class="d-flex d-xxl-flex flex-wrap vote-people
-                       						<c:if test="${member.bossCheck == 1}">vote-people-bujang</c:if> 
-                       						<c:if test="${member.voteVoted != 0}">vote-people-selected</c:if>" 
-                       				  data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${member.voteMemberNo}" data-tempNo="${tempNo}">
+                       						<c:if test="${member.bossCheck == 1}">vote-people-bujang</c:if>" 
+                       				  data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${member.voteMemberNo}" data-voteVoted="${member.voteVoted}" data-tempNo="${tempNo}">
                        				  
                        				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
                        					<c:if test="${(member.userNo != authUser.userNo or member.voteVoted != 0) and member.userGrade != -1}">
@@ -161,7 +160,9 @@ let tempMin
 let myBird = 1
 // idx로 사용할 전체 사람 수(계속 업데이트)
 let totVote = parseInt($("#edit-vote-group-num").text())
-	
+// 모달 안나오게
+let indexJSP = false
+
 // 임시 멤버 이름으로 사용할 bird 이름
 let birdName = ["가마우지", "갈매기", "개개비", "거위", "고니", "곤줄박이", "기러기", "까마귀", "까치", 
 	"꼬리치레", "꾀꼬리", "꿩", "나무발발이", "논병아리", "느시", "닭", "독수리", "동고비", "두견", "두루미",
@@ -177,8 +178,8 @@ $(document).ready(async function() {
 	getTime()
 	
 	// 투표 종료시각 input에 현재 시각 표시
-	$("#vote-end-hour").val(currentTime)
-	$("#vote-end-min").val(currentMin)
+	$("#vote-end-hour").val(voteEndTime.getHours())
+	$("#vote-end-min").val(voteEndTime.getMinutes())
 	
 	// 투표 수정중이라면 이미 사용한 새 이름 제거
 	if ("${userState}" == "99") {
@@ -282,7 +283,7 @@ $("#vote-new-member-add-btn").on("click", function(){
 		
 		// html 그리기
 		$("#edit-vote-people-area").append(
-			  "<span class='d-flex d-xxl-flex flex-wrap vote-people' data-vote-member-no='" + totVote + "'>"
+			  "<span class='d-flex d-xxl-flex flex-wrap vote-people' data-tempNo='" + totVote + "'>"
        		+ 	"<span class='text-end d-xl-flex d-xxl-flex justify-content-xl-end align-items-xl-center justify-content-xxl-end vote-people-header'>"
    			+ 		"<i class='fas fa-pen d-inline-block vote-people-edit-name-btn'></i>"
    			+ 		"<i class='fas fa-times-circle d-inline-block vote-people-del-btn'></i>"
@@ -445,6 +446,11 @@ function calculateTime(plusMin) {
 		
 		$("#vote-end-hour").val(currentTime)
 		$("#vote-end-min").val(currentMin)
+		
+		voteEndTime.setHours(currentTime)
+		voteEndTime.setMinutes(currentMin)
+		
+		$("#countdown-end-time").text(currentTime + "시 " + currentMin + "분")
 	}
 }
 	
@@ -470,6 +476,9 @@ $("#vote-end-hour").on("change", function(){
 	currentTime = tempTime
 	show_two_nums()
 	$("#vote-end-hour").val(currentTime)
+	
+	voteEndTime.setHours(currentTime)		
+	$("#countdown-end-time").text(currentTime + "시 " + currentMin + "분")
 })
 
 $("#vote-end-min").on("change", function(){
@@ -485,6 +494,9 @@ $("#vote-end-min").on("change", function(){
 	currentMin = tempMin
 	show_two_nums()
 	$("#vote-end-min").val(currentMin)
+	
+	voteEndTime.setMinutes(currentMin)
+	$("#countdown-end-time").text(currentTime + "시 " + currentMin + "분")
 })
 
 
@@ -516,46 +528,53 @@ $("#vote-reset-btn").on("click", function(){
 })
 
 
-///////////////////// 투표 생성하기 //////////////////////////////////////////////////////////
+////////////////////// 돌아가기 클릭 //////////////////////////////////////////////////////////
 
-// 투표 만들기 버튼 클릭
+$("#vote-edit-return-btn").on("click", function(){
+	var returnAsk = confirm("변경사항을 저장하지 않고 이전 페이지로 돌아가시겠습니까?")
+	
+	if (returnAsk) {
+		location.replace("${pageContext.request.contextPath}/")
+		
+	} else {
+		return false
+	}
+})
+
+
+///////////////////// 투표 수정하기 //////////////////////////////////////////////////////////
+
+// 투표 수정 버튼 클릭
 $("#make-vote-btn").on("click", function(){	
-	// 투표 종료 시각 데이터 
-	let voteEndDate = new Date()
-	voteEndDate.setHours($("#vote-end-hour").val())
-	voteEndDate.setMinutes($("#vote-end-min").val())
-	console.log(voteEndDate)
 	
 	// 현재시각이 투표종료시각 이후라면
-	if (voteEndDate <= new Date()) {
+	if (voteEndTime <= new Date()) {
 		alert("투표 마감 시각은 현재 시각 이후여야합니다.")
 		
 		return false
 	}
 	
-	voteEndDate = String(voteEndDate)
+	voteEndDate = String(voteEndTime)
 	
 	// 투표 멤버 데이터 정리하기
 	let voteMember = [] // 투표 참가자 저장할 리스트(List<VoteVo>)
-	let checkMember = [] // 추가된 회원 저장할 리스트(List<Integer>) >> 투표 가능 여부 check 용
-	var cnt = 0
 	
 	for (var i = 1; i <= totVote; i++) {
 		var currMem = {}
-		var currDiv = $("[data-vote-member-no=" + i + "]")
+		var currDiv = $("[data-tempNo=" + i + "]")
 		
 		var currName = currDiv.find(".vote-people-name").text()
 		
 		// 해당 no의 사람이 존재한다면
 		if (currName.length > 0) {
-			// 오늘 안가기로 한 회원이면 저장하지 않음
-			if (currDiv.hasClass("vote-people-deleted")) {
+			// 이미 투표한 사람은 안따지기로
+			if (currDiv.hasClass("vote-people-voted")) {
+				continue
 				
+			} else if (currDiv.hasClass("vote-people-deleted")) { // 오늘 안가기로 한 회원이면 저장하지 않음
 				continue
 			}
 			
-			// 투표 참가 인원++
-			cnt += 1
 			// 투표 참가자 이름 불러오기
 			currMem["userName"] = currName
 						
@@ -564,15 +583,13 @@ $("#make-vote-btn").on("click", function(){
 
 			if (userGrade >= 0) { // 회원은 userState 업데이트 위해 정보 추가 수집
 				currMem["userNo"] = userNo
-				currMem["userGrade"] = userGrade
-				
-				checkMember.push(userNo)
+				currMem["userGrade"] = userGrade				
 			}
 			voteMember.push(currMem)
 		}
 	}
 	
-	if (cnt < 2) {
+	if (parseInt($("#edit-vote-group-num").text()) < 2) {
 		alert("최소 두 명 이상이 존재해야 투표를 진행할 수 있습니다.")
 		
 		return false
@@ -582,123 +599,40 @@ $("#make-vote-btn").on("click", function(){
 	console.log(voteMem)
 	
 	
-	// 투표 참여중인 회원 있는지 확인
-	let stopVoteMake = false
-	
-	$.ajax({
-		type : "POST",
-		url : "${pageContext.request.contextPath}/vote/checkVoteMem",
-		contentType : "application/json",
-		async : false,
-		data : JSON.stringify(checkMember),
-		dataType : 'json',
-		
-		success : function(result) {
-			var alertMember = ""
-			
-			for (var i = 0; i < result.length; i++) {
-				if (i != result.length-1) {
-					alertMember += result[i] + "님, "
-				} else {
-					alertMember += result[i]
-				}
-				
-				var cantTr = $("[data-user-name=" + result[i] + "]").closest(".vote-people")
-				
-				// 참여 못하는 회원 비활성화
-				cantTr.addClass("vote-people-deleted")
-				cantTr.find(".vote-people-header i").removeClass("fas fa-minus-circle vote-member-not-today")
-				cantTr.find(".vote-people-header i").addClass("fas fa-plus-circle vote-member-re-add")
-			}
-			
-			// 누구누구 참여 못하는지 알려주기
-			if (alertMember != "") {
-				alert(alertMember + "님은 이미 다른 투표에 참여중입니다.")
-				
-				stopVoteMake = true
-			}
-		},
-		error: function(xhr, status, error){
-			console.log("오류 발생" + error)
-		}
-	})
-	
-	// 참여 못하는 회원이 한 명이라도 있으면 return
-	if (stopVoteMake) {
-		return false
-	}
-		
-	
-	// 장바구니 데이터 정리
-	var curr_basket = []
-	for (var i = 0; i < basket[curr_basket_group].length; i++) {
-		if (basket[curr_basket_group][i].stored) {
-			curr_basket.push(basket[curr_basket_group][i])
-		}
-	}
-	console.log(curr_basket)
-	currBasket = JSON.stringify(curr_basket)
-	
-	
 	// ajax로 데이터 전송		
 	let voteData = {
 		voteEndDate : voteEndDate,
 		voteMember : voteMem,
-		currBasket : currBasket
+		voteNo : parseInt("${voteInfo.voteNo}")
 	}
+	
 	
 	$.ajax({
 		type : "POST",
-		url : "${pageContext.request.contextPath}/vote/makeVote",
+		url : "${pageContext.request.contextPath}/vote/modifyVote",
 		contentType : "application/json",
 		async : false,
 		data : JSON.stringify(voteData),
 		dataType : 'json',
 		
-		success : function(voteNo) {
-			if (voteNo == 0) {
-				alert("투표 생성 실패")
+		success : function(result) {
+			if (result) {
+				alert("투표가 수정되었습니다.")
+				location.replace("${pageContext.request.contextPath}/")
 				
 			} else {
-				$("#vote-url-input").val("http://localhost:8088/lunchwb/" + voteNo)
-				$("#vote-link-modal").modal("show")
+				alert("투표가 수정을 실패했습니다.")
+				
+				return false
 			}
 		},
 		error: function(xhr, status, error){
 			console.log("오류 발생" + error)
 		}
 	})
+		
 })
 
-
-
-////////////////////// 투표 생성 모달 //////////////////////////////////////////////
-
-// 복사 버튼 클릭 시 클립보드에 url 복사
-$("#vote-url-copy-btn").on("click", async function(){
-	await saveClipBoard()
-	location.replace("${pageContext.request.contextPath}/")
-})
-	
-	
-// 클립보드 저장 api 사용하는 function
-async function saveClipBoard() {
-	var content = $("#vote-url-input").val()
-
-    navigator.clipboard.writeText(content)
-        .then(() => {
-        alert("클립보드에 복사되었습니다.")
-    })
-        .catch(err => {
-        console.log("클립보드 복사 실패")
-    })
-}
-
-
-// 투표 생성 모달 닫힘 > 메인페이지로 이동
-$("#vote-link-modal").on("hide.bs.modal", function(){
-	location.replace("${pageContext.request.contextPath}/")
-})
 
 </script>
 

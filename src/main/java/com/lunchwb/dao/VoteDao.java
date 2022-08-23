@@ -118,4 +118,16 @@ public class VoteDao {
 	public int DeleteVote(int voteNo) {
 		return sqlSession.delete("vote.DeleteVote", voteNo);
 	}
+	
+	
+	// 투표 종료 시각 업데이트
+	public int updateVoteEndTime(Map<String, Object> map) {
+		return sqlSession.update("vote.updateVoteEndTime", map);
+	}
+	
+	
+	// 투표 수정시 아직 투표 종료 안한 회원들 삭제
+	public int deleteNotVoted(int voteNo) {
+		return sqlSession.delete("vote.deleteNotVoted", voteNo);
+	}
 }
