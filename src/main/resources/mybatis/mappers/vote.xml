@@ -55,21 +55,38 @@
 	<!--  basketAside 로딩 전 정보 가져오기    -->
 	<select id="selectVoteInfo" parameterType="int" resultType="VoteVo">
 		<![CDATA[
-			SELECT v.vote_no voteNo
-			       ,vote_made_user voteMadeUser
-			       ,vote_end_time voteEndTime
-			       ,vote_items voteItems
-			       ,vote_results voteResults
-			       ,vote_state voteState
-			       ,group_name groupName
-			       ,vote_member_no voteMemberNo
-			       ,user_no userNo
-			       ,user_name userName
-			       ,vote_voted voteVoted
-			FROM   vote v, vote_members, groups g
-			WHERE  v.vote_no = vote_members.vote_no
-			AND    v.group_no = g.group_no
-			AND    v.vote_no = #{voteNo}
+			SELECT DISTINCT voteNo 
+			                ,voteMadeUser
+			                ,voteEndTime
+			                ,voteItems
+			                ,voteResults
+			                ,voteState
+			                ,groupName
+			                ,voteMemberNo
+			                ,x.userNo
+			                ,userName 
+			                ,voteVoted
+			                ,userGrade
+			                ,NVL(boss_check, 0) bossCheck
+            FROM   group_member m, (SELECT v.vote_no voteNo
+			                               ,vote_made_user voteMadeUser
+			                               ,vote_end_time voteEndTime
+			                               ,vote_items voteItems
+			                               ,vote_results voteResults
+			                               ,vote_state voteState
+			                               ,g.group_name groupName
+			                               ,vote_member_no voteMemberNo
+			                               ,m.user_no userNo
+			                               ,m.user_name userName
+			                               ,vote_voted voteVoted
+                                           ,NVL(user_grade, -1) userGrade
+			                        FROM   vote v, vote_members m, groups g, users u
+			                        WHERE  v.vote_no = m.vote_no
+			                        AND    v.group_no = g.group_no
+                                    AND    u.user_no(+) = m.user_no
+			                        AND    v.vote_no = #{voteNo}) x
+            WHERE m.user_no(+) = x.userNo
+            ORDER BY voteMemberNo ASC
 		]]>
 	</select>
 	
