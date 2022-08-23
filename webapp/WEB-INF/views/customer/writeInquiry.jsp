@@ -55,7 +55,7 @@
                         <div class="card-body">
                             <h4 class="card-title">문의 및 의견</h4>
 
-                            <form method="post" class="mt-4 row row-cols-2" action="${pageContext.request.contextPath}/customer/writeInquiry">
+                            <form method="post" class="mt-4 row row-cols-2" action="${pageContext.request.contextPath}/customer/writeInquiry" enctype="multipart/form-data">
                                 <div class="col-1 text-center jumbotron py-1 px-4">제목</div>
                                 <div class="col-10">
                                     <textarea class="form-control h-50" name="inquiryTitle" placeholder="제목을 적어주세요"></textarea>
@@ -78,7 +78,7 @@
                                 <div class="col-12 mt-4"></div>
                                 <div class="col-1 text-center">이미지</div>
                                 <div class="col-10 mb-4">
-                                    <input id="inputFileToLoad" class="form-control" type="file" name="inquiryFilePath" />
+                                    <input id="inputFileToLoad" class="form-control" type="file" name="file" />
                                 </div>
                                 <div class="col-1"></div>
                                 <div class="col-1"></div>
