@@ -4,7 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +19,7 @@ import com.lunchwb.dao.MenuDao;
 import com.lunchwb.dao.ReviewDao;
 import com.lunchwb.dao.UserDao;
 import com.lunchwb.dao.VisitedDao;
+import com.lunchwb.vo.BlacklistVo;
 import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.MenuVo;
 import com.lunchwb.vo.ReviewVo;
@@ -137,6 +137,11 @@ public class VisitedService {
 		List<ReviewVo> reviewList = reviewDao.recentReview(storeNo); 
 		visitedMap.put("reviewList", reviewList);
 		visitedMap.put("reviewCount", reviewList.size());
+		
+		//다녀와서 블랙리스트 추가 했는지(있으면 1)
+		BlacklistVo blackVo = new BlacklistVo();
+		blackVo.setStoreNo(storeNo);
+		blackVo.setUserNo(userNo);
 		
 		//그룹장 여부 체크
 		int groupLeader = groupDao.groupLeader(visitedVo.getGroupNo());

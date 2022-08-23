@@ -165,11 +165,22 @@
   font-size: 14px;
 }
 
-#btn-visited-blacklist:hover {
+#btn-visited-black-add:hover {
   background-color: var(--bs-gray-200);
 }
 
-#btn-visited-blacklist {
+#btn-visited-black-add {
+  width: 120px;
+  height: 30px;
+  padding: 0px;
+  font-size: 14px;
+}
+
+#btn-visited-black-del:hover {
+  background-color: var(--bs-gray-200);
+}
+
+#btn-visited-black-del {
   width: 120px;
   height: 30px;
   padding: 0px;

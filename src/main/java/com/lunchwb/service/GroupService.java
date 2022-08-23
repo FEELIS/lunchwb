@@ -358,15 +358,11 @@ public class GroupService {
 	
 	/******************** 그룹장 위임 ****************************************************/
 	public String leaderChange(GroupVo groupVo) {
-		String result = "fail";
-		
-		int count = groupDao.groupChange(groupVo);
-		
-		if(count > 0) {
-			result = "success";
+		if(groupDao.groupChange(groupVo) > 0) {
+			return "success";
+		}else {
+			return "fail";
 		}
-		
-		return result;
 	}
 	
 	
@@ -424,6 +420,26 @@ public class GroupService {
 		
 		return map;
 		
+	}
+	
+	
+	/******************** 블랙리스트 여부 확인 *************************************************/
+	public String isBlack(BlacklistVo blackVo) {
+		if(blackDao.isBlack(blackVo) == 0 ) {
+			return "N";
+		}else {
+			return "Y";
+		}
+	}
+	
+	
+	/******************** 블랙리스트 추가 ****************************************************/
+	public String addBlack(BlacklistVo blackVo) {
+		if(blackDao.addBlack(blackVo) > 0) {
+			return "success";
+		}else {
+			return "fail";
+		}
 	}
 
 }

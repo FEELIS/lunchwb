@@ -7,6 +7,7 @@
 		<result column="black_no" property="blackNo" />
 		<result column="store_no" property="storeNo" />
 		<result column="group_no" property="groupNo" />
+		<result column="user_no" property="userNo" />
 		<result column="reg_date" property="regDate" />
 		<result column="store_name" property="storeName" />
 		<result column="menu_2nd_cate_name" property="menu2ndCateName" />
@@ -26,5 +27,19 @@
 		AND group_no = #{groupNo}
 		ORDER BY black_no ASC
 	</select>
+	
+	
+	<select id="isBlack" parameterType="BlackVo" resultType="int">
+		SELECT COUNT(black_no)
+		FROM blacklist
+		WHERE group_no = #{groupNo}
+		AND store_no = #{storeNo}
+	</select>
+	
+	
+	<insert id="addBlack" parameterType="BlackVo">
+		INSERT into blacklist
+		VALUES (seq_black_no.NEXTVAL, #{storeNo}, #{groupNo}, TO_DATE(SYSDATE))
+	</insert>
 	
 </mapper>

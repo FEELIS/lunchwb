@@ -13,12 +13,21 @@ public class BlackDao {
 	
 	@Autowired
 	SqlSession sqlSession;
+
 	
 	/******************** 블랙리스트 ***********************************************/
 	public List<BlacklistVo> blacklist(int groupNo){
-		List<BlacklistVo> blacklist = sqlSession.selectList("blacklist.blacklist", groupNo);
-		return blacklist;
+		return sqlSession.selectList("blacklist.blacklist", groupNo);
 	}
 	
+	/******************** 블랙한 가게인가? *******************************************/
+	public int isBlack(BlacklistVo blackVo) {
+		return sqlSession.selectOne("blacklist.isBlack", blackVo);
+	}
+	
+	/*********************** 블랙추가 *********************************************/
+	public int addBlack(BlacklistVo blackVo) {
+		return sqlSession.insert("blacklist.addBlack", blackVo);
+	}
 
 }

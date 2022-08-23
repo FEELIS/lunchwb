@@ -656,15 +656,27 @@ function modalSortOfStore(storeNo, k){
 	
 	switch(k){
 		case 0:
-		// k=1 : 리뷰메인
+		// k=1 : 리뷰메인(모달에서 넘어가는거 아니고)
 			//조회하는 가게 = 다녀온 가게
 			if(storeNo == "${visitedMap.visitedVo.storeNo}"){
 				$(".store-button-area").append('<a href="${pageContext.request.contextPath}/visited/cancel/${visitedMap.visitedVo.visitedNo}">'
-												+'	<button class="btn btn-primary modal-btn-visited-cancel" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">방문취소</button>'
+												+'	<button class="btn btn-primary modal-btn-visited-cancel" type="button" data-storeNo="'+storeNo+'">방문취소</button>'
 												+'</a>')
 			}
-			//다녀온 가게가 아니면 블랙버튼만(조회 자체가 블랙 아닌것만 됨)
-			$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">블랙추가</button>')
+			//다녀온 가게가 아니면 블랙버튼만 : 그룹장만
+			if("${authUser.userNo}" == "${visitedMap.groupLeader}"){
+				var blackVo = {
+					storeNo: "${visitedMap.visitedVo.storeNo}",
+					groupNo: "${visitedMap.visitedVo.groupNo}"
+				}
+				//블랙있어
+				if(isBlack(blackVo) == "Y"){
+					$(".store-button-area").append('<button class="btn btn-light modal-btn-del-black" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">블랙제거</button>')
+				//블랙아냐
+				}else{
+					$(".store-button-area").append('<button class="btn btn-light modal-btn-add-black" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">블랙추가</button>')
+				}	
+			}
 		
 			break
 		
@@ -834,6 +846,29 @@ $("#member-all-selection-del").on("click", function(){
 	console.log("전체해제")
 	$("#modal-select-member-area [name='memberList']").attr("checked",false)
 })
+
+
+/* 그룹 블랙리스트 가게인지 확인하기 */
+function isBlack(blackVo){
+	console.log("여기왔어 블랙")
+	$.ajax({
+		url : "${pageContext.request.contextPath}/group/isBlack",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(blackVo),
+		dataType : "json",
+		
+		success : function(result){
+			console.log("여기?")
+			return result
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+		
+	})
+}
+
 
 
 

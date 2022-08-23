@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lunchwb.service.BasketService;
 import com.lunchwb.service.GroupService;
+import com.lunchwb.vo.BlacklistVo;
 import com.lunchwb.vo.GPSVo;
 import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.StoreVo;
@@ -42,10 +43,7 @@ public class GroupController {
 	@PostMapping("/isThere")
 	public boolean isThereGroup(@RequestBody int userNo) {
 		logger.info("GroupController > isThereGroup()");
-		
-		boolean result = groupService.isThereGroup(userNo);
-		
-		return result;
+		return groupService.isThereGroup(userNo);
 	}
 
 	
@@ -141,10 +139,7 @@ public class GroupController {
 		logger.info("GroupController > changeOrder()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		
-		String result = groupService.changeOrder(gpOrder, authUser);
-		
-		return result;
+		return groupService.changeOrder(gpOrder, authUser);
 	}
 	
 	
@@ -153,10 +148,7 @@ public class GroupController {
 	@PostMapping("/nameChange")
 	public String nameChange(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > nameChange()");
-		
-		String result = groupService.nameChange(groupVo);
-		
-		return result;
+		return groupService.nameChange(groupVo);
 	}
 	
 	
@@ -165,10 +157,7 @@ public class GroupController {
 	@PostMapping("/beBoss")
 	public String beBoss(@RequestBody int groupNo) {
 		logger.info("GroupController > beBoss()");
-		
-		String result = groupService.beBoss(groupNo);
-		
-		return result;
+		return groupService.beBoss(groupNo);
 	}
 	
 
@@ -190,10 +179,7 @@ public class GroupController {
 	@PostMapping("/memberCheck")
 	public String memberCheck(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > memberCheck()");
-		
-		String state = groupService.memberCheck(groupVo);
-		
-		return state;
+		return groupService.memberCheck(groupVo);
 	}
 
 	
@@ -201,10 +187,7 @@ public class GroupController {
 	@ResponseBody
 	@PostMapping("/invtMember") public GroupVo invtMember(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > invtMember()");
-		
-		GroupVo memberVo = groupService.invtMember(groupVo);
-		
-		return memberVo; 
+		return groupService.invtMember(groupVo);
 	}
 	
 	
@@ -213,10 +196,7 @@ public class GroupController {
 	@PostMapping("/addMember")
 	public GroupVo addMember(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > addMember()");
-		
-		GroupVo memberVo = groupService.addMember(groupVo);
-		
-		return memberVo;
+		return groupService.addMember(groupVo);
 	}
 	
 	
@@ -225,10 +205,7 @@ public class GroupController {
 	@PostMapping("/outMember")
 	public String outMember(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > outMember()");
-		
-		String result = groupService.outMember(groupVo);		
-		
-		return result;
+		return groupService.outMember(groupVo);
 	}
 	
 	
@@ -271,10 +248,7 @@ public class GroupController {
 	@PostMapping("/leaderChange")
 	public String leaderChange(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > leaderchange()");
-		
-		String result = groupService.leaderChange(groupVo);
-		
-		return result;
+		return groupService.leaderChange(groupVo);
 	}
 	
 	
@@ -301,6 +275,24 @@ public class GroupController {
 		
 		return "group/blacklist";
 	}
-
+	
+	
+	/******************** 블랙리스트 가게인가? *******************************************/
+	@ResponseBody
+	@PostMapping("/isBlack")
+	public String isBlack(@RequestBody BlacklistVo blackVo) {
+		logger.info("GroupController > isBlack()");
+		return groupService.isBlack(blackVo);
+	}
+	
+	
+	/******************** 그룹 블랙리스트 추가 *******************************************/
+	@ResponseBody
+	@PostMapping("/black/add")
+	public String addBlack(@RequestBody BlacklistVo blackVo) {
+		logger.info("GroupController > addBlack()");
+		return groupService.addBlack(blackVo);
+	}
+		
 
 }

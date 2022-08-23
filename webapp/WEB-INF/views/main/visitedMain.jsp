@@ -61,13 +61,13 @@
 					<div id="my-lunch-group"
 						class="d-xxl-flex justify-content-xxl-center align-items-xxl-center">
 						<div>
-							<span id="my-lunch-group-name"> <svg
-									id="my-lunch-group-icon" xmlns="http://www.w3.org/2000/svg"
-									viewBox="0 -64 640 640" width="1em" height="1em"
-									fill="currentColor">
-                                <path
-										d="M224 256c70.7 0 128-57.31 128-128S294.7 0 224 0C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3c-95.73 0-173.3 77.6-173.3 173.3C0 496.5 15.52 512 34.66 512H413.3C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304zM479.1 320h-73.85C451.2 357.7 480 414.1 480 477.3C480 490.1 476.2 501.9 470 512h138C625.7 512 640 497.6 640 479.1C640 391.6 568.4 320 479.1 320zM432 256C493.9 256 544 205.9 544 144S493.9 32 432 32c-25.11 0-48.04 8.555-66.72 22.51C376.8 76.63 384 101.4 384 128c0 35.52-11.93 68.14-31.59 94.71C372.7 243.2 400.8 256 432 256z"></path>
-                            </svg> ${visitedMap.visitedVo.groupName}
+							<span id="my-lunch-group-name"> 
+								<svg id="my-lunch-group-icon" xmlns="http://www.w3.org/2000/svg"
+									 viewBox="0 -64 640 640" width="1em" height="1em"
+									 fill="currentColor">
+                                <path d="M224 256c70.7 0 128-57.31 128-128S294.7 0 224 0C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3c-95.73 0-173.3 77.6-173.3 173.3C0 496.5 15.52 512 34.66 512H413.3C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304zM479.1 320h-73.85C451.2 357.7 480 414.1 480 477.3C480 490.1 476.2 501.9 470 512h138C625.7 512 640 497.6 640 479.1C640 391.6 568.4 320 479.1 320zM432 256C493.9 256 544 205.9 544 144S493.9 32 432 32c-25.11 0-48.04 8.555-66.72 22.51C376.8 76.63 384 101.4 384 128c0 35.52-11.93 68.14-31.59 94.71C372.7 243.2 400.8 256 432 256z"></path>
+                            	</svg> 
+                            	${visitedMap.visitedVo.groupName}
 							</span>
 						</div>
 					</div>
@@ -134,10 +134,8 @@
 				</c:if>
 
 				<c:if test="${authUser.userNo == visitedMap.groupLeader}">
-					<p class="visited-p">혹시 그룹 취향이 아니었나요?</p>
-					<button id="btn-visited-blacklist" class="btn btn-light link-dark border rounded-pill border-dark" type="button">
-						블랙리스트 추가
-					</button>
+					<p id="visited-black-p"class="visited-p"></p>
+					<div id="visited-black-btn-area"></div>
 				</c:if>
 
 			</div>
@@ -438,15 +436,17 @@
 
 const visitedVo = "${visitedMap.visitedVo}"
 const myVisit = "${visitedMap.relVo}"
-console.log(visitedVo)
-console.log(myVisit)
+console.log("오늘 방문 정보" + visitedVo)
+console.log("오늘 방문한 곳의 지난 방문 정보" + myVisit)
 
 $(document).ready(function(){
 	drawStoreStar()
 	drawReviewStar()
+	drawBlackBtn()
 })
 
 
+//오늘 방문한 곳 전체 별점 그리기
 function drawStoreStar(){
 	var starScore = "${visitedMap.visitedVo.ratingBujang}"
 	
@@ -466,56 +466,7 @@ function drawStoreStar(){
 }
 
 
-//Aside에서 취소
-$("#btn-visited-cancel").on("click", function(){
-	console.log("방문 취소 버튼 클릭")
-	
-	if(!confirm("정말로 방문을 취소하시겠습니까?")){
-		return false
-		//그룹 리더가 같이 안갔을 수도 있으니까 모두 띄우겠음
-		//이라고 했다가....... 이거 잘못취소하는 것도 문제일 것 같아서 개개인만 가능하게
-		//if(confirm("함께 방문한 멤버들의 방문을 모두 취소하시겠습니까?")){	}
-	}
-	
-	return true
-})
-
-
-//가게정보 모달에서 취소
-$("#modal-store").on("click", ".modal-btn-visited-cancel", function(){
-	console.log("모달에서 방문 취소 버튼 클릭")
-	
-	if(!confirm("정말로 방문을 취소하시겠습니까?")){
-		return false
-	}
-	
-	return true
-})
-
-
-//가게 리뷰 모달에서 취소
-$("#modal-reviews").on("click", ".modal-btn-visited-cancel", function(){
-	console.log("모달에서 방문 취소 버튼 클릭")
-	
-	if(!confirm("정말로 방문을 취소하시겠습니까?")){
-		return false
-	}
-	
-	return true
-})
-
-
-//가게 메뉴 모달에서 취소
-$("#modal-all-menu").on("click", ".modal-btn-visited-cancel", function(){
-	console.log("모달에서 방문 취소 버튼 클릭")
-	
-	if(!confirm("정말로 방문을 취소하시겠습니까?")){
-		return false
-	}
-	
-	return true
-})
-
+//오늘 방문한 곳 리뷰 별점 그리기
 function drawReviewStar(){
 	var review = "${visitedMap.reviewVo}"
 	if(review != null && review != ""){
@@ -528,6 +479,77 @@ function drawReviewStar(){
 			}
 		}
 	}
+}
+
+
+//블랙리스트 추가/제거 버튼 그리기
+function drawBlackBtn(){
+	var blackVo = {
+		storeNo : "${visitedMap.visitedVo.storeNo}",
+		groupNo : "${visitedMap.visitedVo.groupNo}" 
+	}
+	
+	//블랙리스트 있음 result: Y :storeInfo 함수
+	if(isBlack(blackVo)=="Y"){
+		$("#visited-black-p").append("블랙리스트에 잘못 추가했었다면?")
+		$("#visited-black-btn-area").append('<button id="btn-visited-black-del" class="btn btn-light link-dark border rounded-pill border-dark" type="button">'
+											+'	블랙리스트 제거'
+											+'</button>')
+	//블랙리스트 없음 result: N
+	}else{
+		$("#visited-black-p").append("혹시 그룹 취향이 아니었나요?")
+		$("#visited-black-btn-area").append('<button id="btn-visited-black-add" class="btn btn-light link-dark border rounded-pill border-dark" type="button">'
+											+'	블랙리스트 추가'
+											+'</button>')
+	}
+}
+
+
+//Aside/가게모달/리뷰모달/메뉴모달 방문 취소
+$("#btn-visited-cancel").on("click", function(){if(!confirm("정말로 방문을 취소하시겠습니까?")){return false}})
+$("#modal-store").on("click", ".modal-btn-visited-cancel", function(){if(!confirm("정말로 방문을 취소하시겠습니까?")){return false}})
+$("#modal-reviews").on("click", ".modal-btn-visited-cancel", function(){if(!confirm("정말로 방문을 취소하시겠습니까?")){return false}})
+$("#modal-all-menu").on("click", ".modal-btn-visited-cancel", function(){if(!confirm("정말로 방문을 취소하시겠습니까?")){return false}})
+
+
+//Aside/가게모달/리뷰모달/메뉴모달 블랙 추가 버튼 클릭
+$("#visited-black-btn-area").on("click", "#btn-visited-black-add", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트로 추가하시겠습니까?")){visitedBlackAdd()}})
+$("#modal-store").on("click", ".modal-btn-add-black", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트로 추가하시겠습니까?")){visitedBlackAdd()}})
+$("#modal-reviews").on("click", ".modal-btn-add-black", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트로 추가하시겠습니까?")){visitedBlackAdd()}})
+$("#modal-all-menu").on("click", ".modal-btn-add-black", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트로 추가하시겠습니까?")){visitedBlackAdd()}})
+
+
+//블랙추가
+function visitedBlackAdd(){
+	confirm("블랙리스트 추가")
+	var blackVo = {
+			storeNo : "${visitedMap.visitedVo.storeNo}",
+			groupNo : "${visitedMap.visitedVo.groupNo}" 
+	}
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/group/black/add",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(blackVo),
+		dataType : "json",
+		
+		success : function(result){
+			console.log("블랙추가: "+result)
+			if(result == "success"){
+				alert("블랙리스트 추가 완료")
+				$("#visited-black-btn-area").html('<button id="btn-visited-black-del" class="btn btn-light link-dark border rounded-pill border-dark" type="button">'
+													+'	블랙리스트 제거'
+													+'<button>')
+			}else{
+				alert("블랙리스트 추가 실패")
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+ 
+	})
 }
 
 

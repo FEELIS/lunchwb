@@ -11,11 +11,14 @@ public class BlacklistVo {
 	private String menu2ndCateName;
 	private String storeRoadAddress;
 	
+	//////////검사용
+	private int userNo;
+	
 	public BlacklistVo() {
 	}
 
 	public BlacklistVo(int blackNo, int storeNo, int groupNo, String regDate, String storeName, String menu2ndCateName,
-			String storeRoadAddress) {
+			String storeRoadAddress, int userNo) {
 		this.blackNo = blackNo;
 		this.storeNo = storeNo;
 		this.groupNo = groupNo;
@@ -23,6 +26,7 @@ public class BlacklistVo {
 		this.storeName = storeName;
 		this.menu2ndCateName = menu2ndCateName;
 		this.storeRoadAddress = storeRoadAddress;
+		this.userNo = userNo;
 	}
 
 	public int getBlackNo() {
@@ -81,11 +85,19 @@ public class BlacklistVo {
 		this.storeRoadAddress = storeRoadAddress;
 	}
 
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
+
 	@Override
 	public String toString() {
 		return "BlacklistVo [blackNo=" + blackNo + ", storeNo=" + storeNo + ", groupNo=" + groupNo + ", regDate="
 				+ regDate + ", storeName=" + storeName + ", menu2ndCateName=" + menu2ndCateName + ", storeRoadAddress="
-				+ storeRoadAddress + "]";
+				+ storeRoadAddress + ", userNo=" + userNo + "]";
 	}
 
 }
