@@ -51,9 +51,7 @@
 	            		<i class="fas fa-comment"></i>
 	            		<span>공유하기</span>
 	            	</button>
-            	</a>
-            	
-            	
+            	</a>	
             	<span class="d-inline-flex flex-shrink-0 justify-content-center flex-nowrap align-items-xxl-center" id="vote-url-copy-box">
             		<i class="fas fa-link d-inline-flex d-xxl-flex flex-shrink-0 justify-content-start align-items-center justify-content-xl-start align-items-xl-center justify-content-xxl-start align-items-xxl-center"></i>
             		<input id="vote-url-input" class="d-inline-flex d-xxl-flex flex-shrink-0 align-items-xxl-center" type="text" value="http://localhost:8088/lunchwb/${voteInfo.voteNo}">
@@ -137,7 +135,6 @@ $("#vote-url-copy-btn").on("click", function(){
 })
 
 
-
 // 다시 고를래요 클릭
 $("#vote-result-again-btn").on("click", function(){
 	var reallyAgain = confirm("투표를 초기화하시겠습니까? 지금까지의 진행정보를 모두 삭제합니다.")
@@ -149,7 +146,8 @@ $("#vote-result-again-btn").on("click", function(){
 	}
 })
 
-/* 카카오 공유하기 api */
+
+///////////// 카카오 공유하기 api ////////////////////////////////////////////////////////////////////////////////
 
 var todayStore = $("#vote-lunch-store").text();
 
@@ -162,29 +160,27 @@ console.log(Kakao.isInitialized());
 
 function kakaoShare() {
 	console.log(todayStore);
-  Kakao.Link.sendDefault({
-    objectType: 'feed',
-    content: {
-      title: '부장님 오늘 점심은 ' + todayStore + ' 입니다.',
-      imageUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-      description: todayStore,
-      link: {
-        mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-        webUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-      },
-    },
-    buttons: [
-      {
-        title: '웹으로 보기',
-        link: {
-          mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-          webUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-        },
-      },
-    ],
-    // 카카오톡 미설치 시 카카오톡 설치 경로이동
-    installTalk: true,
-  })
+	Kakao.Link.sendDefault({
+	    objectType: 'feed',
+	    content: {
+	        title: '부장님 오늘 점심은 ' + todayStore + ' 입니다.',
+	        imageUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+	        description: todayStore,
+	        link: {
+	            mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+	            webUrl: 'http://localhost:8088/lunchwb/' + voteURL
+	        }
+	    },
+	    buttons: [{
+	        title: '웹으로 보기',
+	    	link: {
+	            mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+	        	webUrl: 'http://localhost:8088/lunchwb/' + voteURL
+	    	}
+	    }],
+	    // 카카오톡 미설치 시 카카오톡 설치 경로이동
+	    installTalk: true
+	})
 }
 
 
