@@ -76,12 +76,26 @@ public class VisitedService {
 	
 	//THIS IS 즉각적으로 결정했을 경우 (투표 no)
 	//그룹원 전체대상 > 참여하지 않은 그룹원은 알아서 방문취소를 누르도록 ㅎ :그러면 안될건데 어쩌지 다시해야됨 이미 다른데서 방문 결정했으면 충돌일어남
-	/******************************* 여기갈래요 결정 ********************************/
-	public void decideVisit(int storeNo, int groupNo) {
-		List<GroupVo> visitMemberList = groupDao.visitMember(groupNo);
+	
+	/****************** 여기갈래요> 함께할 그룹 멤버 리스트 for selection *****************/
+	public List<GroupVo> membersGoWith(UserVo authUser, int groupNo){
+		GroupVo groupVo = new GroupVo();
+		groupVo.setUserNo(authUser.getUserNo());
+		groupVo.setGroupNo(groupNo);
 		
-		for(int i=0; i<visitMemberList.size(); i++) {
-			int userNo = visitMemberList.get(i).getUserNo();
+		List<GroupVo> memberList = groupDao.membersGoWith(groupVo);
+		
+		return memberList;
+	}
+	
+	
+	
+	/******************************* 여기갈래요 결정 ********************************/
+	public void decideVisit(int storeNo, int groupNo, List<Integer> memberList, UserVo authUser) {
+		memberList.add(authUser.getUserNo());
+		
+		for(int i=0; i<memberList.size(); i++) {
+			int userNo = memberList.get(i);
 			//오늘 방문 저장
 			VisitedVo visitedVo = new VisitedVo(userNo, groupNo, storeNo);
 			vstDao.decideVisit(visitedVo);

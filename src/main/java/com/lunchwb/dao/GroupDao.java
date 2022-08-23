@@ -130,4 +130,10 @@ public class GroupDao {
 	public List<GroupVo> selectVoteMember(int groupNo) {
 		return sqlSession.selectList("group.selectVoteMember", groupNo);
 	}
+	
+	/********************* 여기갈래요 선택될 그룹 멤버 불러오기 ********************************/
+	public List<GroupVo> membersGoWith(GroupVo groupVo) {
+		List<GroupVo> memberList = sqlSession.selectList("group.membersGoWith", groupVo);
+		return memberList;
+	}
 }

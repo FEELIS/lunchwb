@@ -1,5 +1,7 @@
 package com.lunchwb.vo;
 
+import java.util.List;
+
 public class VisitedVo {
 	
 	//////////////////// visited table //////////////////// 
@@ -34,11 +36,18 @@ public class VisitedVo {
 	// 그룹 순서용
 	private int groupOrder;
 	
+	//갈사람들
+	private List<GroupVo> groupVoList;
+	
 	
 	//생성자
 	public VisitedVo() {
 	}
 	
+	public VisitedVo(List<GroupVo> groupVoList) {
+		this.groupVoList = groupVoList;
+	}
+
 	// 달력정보가져오기 용(입력값)
 	public VisitedVo(int userNo,String selectMonth) {
 		this.userNo = userNo;
@@ -229,7 +238,16 @@ public class VisitedVo {
 	public void setGroupOrder(int groupOrder) {
 		this.groupOrder = groupOrder;
 	}
+	
+	public List<GroupVo> getGroupVoList() {
+		return groupVoList;
+	}
 
+	public void setGroupVoList(List<GroupVo> groupVoList) {
+		this.groupVoList = groupVoList;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "VisitedVo [visitedNo=" + visitedNo + ", userNo=" + userNo + ", groupNo=" + groupNo + ", storeNo="

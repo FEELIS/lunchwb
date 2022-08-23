@@ -407,3 +407,20 @@
 #modal-all-menu .modal-footer-custom button {
 	width: 130px !important;
 }
+
+
+/*************************************************************************/
+/* 여기갈래요 멤버 선택 모달창 *************************************************/
+/************************************************************************/
+
+#modal-select-member-go .form-check-label {
+  cursor: pointer;
+}
+
+#modal-selec-member-go #member-selection-button {
+	width: 60px;
+	height: 25px;
+	margin: 10px 5px;
+	font-size: 14px;
+}
+

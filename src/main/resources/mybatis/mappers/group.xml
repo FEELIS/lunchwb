@@ -208,6 +208,19 @@
 	</update>
 	
 	
+	<!-- 방문 결정할 멤버 리스트 for selection -->
+	<select id="membersGoWith" parameterType="GroupVo" resultMap="GroupVo">
+		SELECT  u.user_no
+		        , user_name
+		FROM users u, group_member m
+		WHERE u.user_no = m.user_no
+		AND group_no = #{groupNo}
+		AND u.user_no != #{userNo}
+		AND user_state = 0
+		ORDER BY group_member_no ASC
+	</select>
+	
+	
 	<!-- 방문 결정 그룹 멤버 번호 조회(회원만 cause for 상태변경) -->
 	<select id="visitMember" parameterType="int" resultMap="GroupVo">
 		SELECT u.user_no

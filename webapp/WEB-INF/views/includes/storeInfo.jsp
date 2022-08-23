@@ -255,6 +255,32 @@
 
 
 
+<div id="modal-select-member-go" class="modal visible no-drag" role="dialog" tabindex="-1">
+	<div class="modal-dialog modal-sm modal-dialog-top" role="document">
+		<div class="modal-content">
+			<div class="modal-header text-primary modal-header-custom">
+				<span>함께할 멤버 선택</span>
+				<button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body text-center text-dark" style="font-size: 14px;">
+				<p>
+					표시되지 않은 멤버는<br> 이미 다른 그룹과 함께한 멤버입니다
+				</p>
+				<div id="member-selection-button">
+					<button id="member-all-selection" class="btn btn-primary">전체 선택</button>
+					<button id="member-all-selection-del" class="btn btn-primary">전체 해제</button>
+				</div>
+					<div id="modal-select-member-area">
+					</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+
+
 
 <script type="text/javascript">
 
@@ -643,22 +669,20 @@ function modalSortOfStore(storeNo, k){
 		case 1:
 		// k=1 : 바구니/지도
 			// 그룹? 비로그인 또는 그룹이 없으면 여기갈래요 불가 > 
-			var groupNo = "${curr_basket_group}"
-			console.log(curr_basket_group + ": curr_group")
+			console.log("${curr_basket_group} : curr_group")
 
 			if(curr_basket_group != 0 ){
-				var str = '' 
-				str += '<a href="${pageContext.request.contextPath}/visited/decision/'+storeNo+'/'+groupNo+'">'
-				str += '	<button class="btn btn-primary btn-decision-this" type="button" data-bs-dismiss="modal">여기갈래요</button>'
-				str += '</a>'
-				$(".store-button-area").append(str)
+				$(".store-button-area").append('<button class="btn btn-primary btn-decision-this" type="button" data-storeno="'+storeNo+'" data-bs-dismiss="modal">여기갈래요</button>')
 			}
+			
 			// 바구니? ${basket.curr_basket_group}: 선택된 가게 리스트
-			var basketStore = "${basket}"
-			if(basketStore["${curr_basket_group}"] != null && basketStore["${curr_basket_group}"] != []){
-				console.log(basketStore["${curr_basket_group}"])
-				for(var i=0; i<basketStore["${curr_basket_group}"].length; i++){
-					var listStoreNo = basketStore["${curr_basket_group}"][i].storeNo
+			console.log("basket: " + "${basket}")
+			console.log("basket(curr_group) : ${basket.curr_basket_group}")
+			//장바구니 안에 가게가 있으면 있는 가게인지 검사 해줘야해
+			if("${basket.curr_basket_group}" != null && "${basket.curr_basket_group}" != []){
+				console.log("장바구니에 추가된 가게 있음")
+				for(var i=0; i<"${basket.curr_basket_group}".length; i++){
+					var listStoreNo = "${basket.curr_basket_group}"[i].storeNo
 					console.log(listStoreNo)
 					//지금 모달을 여는 가게
 					if(listStoreNo == storeNo){
@@ -671,6 +695,7 @@ function modalSortOfStore(storeNo, k){
 					}
 				}
 			}else{
+				console.log("장바구니에 추가된 가게 없음")
 				$(".store-button-area").append('<button class="btn btn-light btn-add-store-basket" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">점심후보추가</button>')
 			}
 
@@ -698,24 +723,117 @@ function modalSortOfStore(storeNo, k){
 
 
 //장바구니 점심 후보 추가
-$(".btn-add-store-basket", ).on("click", function(){
+$(".btn-add-store-basket").on("click", function(){
+	console.log("장바구니 추가하기: ")
 	var storeNo = $(this).attr("data-storeNo")
 	addItemToBasket(storeNo)
 })
 
 
 //장바구니 점심 후보 삭제
-$("#modal-store .btn-delete-store-basket").on("click", function(){
+$("#modal-store .btn-delete-store-basket", "#modal-reviews .btn-delete-store-basket", "#modal-all-menu .btn-delete-store-basket").on("click", function(){
 	var storeNo = $(this).attr("data-storeNo")
 	deleteSessionBasketGroup(storeNo)
 })
 
 
-//여기갈래요 버튼 클릭
-$(".btn-decision-this").on("click", function(){
-	if(confirm("정말로 방문을 선택하시겠습니까?") == false){
-		return false
+//여기갈래요 버튼 클릭(장바구니화면 모달)
+$("#modal-store").on("click", ".btn-decision-this", function(){
+	console.log("가게 모달창 > 여기갈래요 버튼 클릭")
+	
+	if (typeof indexJSP == 'undefined' || indexJSP) {
+		var storeNo = $(this).attr("data-storeNo")
+        console.log("여기갈래요 그룹: ${curr_basket_group}, 가게: " + storeNo)
+
+        if(confirm("정말로 방문을 선택하시겠습니까?") == true){
+			if(modalSelectMembers(storeNo, curr_basket_group) == false){
+				return false
+			}
+		}
 	}
 })
+
+
+function modalSelectMembers(storeNo, groupNo){
+	console.log("여기갈래요 그룹 멤버")
+	$("#modal-select-member-area").html("")
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/visited/members/goWith",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(groupNo),
+		dataType : "json",
+		
+		success : function(memberList){
+			console.log(memberList)
+			
+			var str = ''
+			str += '<form id="members-with-me" action="${pageContext.request.contextPath}/visited/decision/'+storeNo+'/'+groupNo+'" method="post">'
+			str += '	<div class="row">'
+			
+			str += '		<div class="col" style="border-right: 1px solid; border-right-color: #EAEAEA;">'
+			
+			if(memberList.length == 0){
+				str += '			<p>선택할 수 있는 멤버가 없습니다</p>'
+			}
+			
+			for(var i=0; i<parseInt((memberList.length+1)/2); i++){
+				var n= String(i)
+				str += '			<div class="form-check">'
+				str += '				<input id="formCheck-'+n+'1" class="form-check-input" type="checkbox" name="memberList" value="'+memberList[i].userNo+'">'
+				str += '				<label class="form-check-label" for="formCheck-'+n+'1" data-no="'+i+'">  '+memberList[i].userName+'  </label>'
+				str += '			</div>'
+			}
+			str += '		</div>'
+			
+			str += '		<div class="col">'
+			for(var i=parseInt((memberList.length+1)/2); i<memberList.length; i++){
+				var n= String(i)
+				str += '			<div class="form-check">'
+				str += '				<input id="formCheck-'+n+'1" class="form-check-input" type="checkbox" name="memberList" value="'+memberList[i].userNo+'">'
+				str += '				<label class="form-check-label" for="formCheck-'+n+'1" data-no="'+i+'">  '+memberList[i].userName+'  </label>'
+				str += '			</div>'
+			}
+			str += '		</div>'
+			
+			str += '	</div>'
+			str += '	<div class="modal-footer-custom" style="margin-top: 20px; padding-top: 15px;">'
+			str += '		<span><button id="modal-select-member-ok" class="btn btn-primary" type="submit" style="width: 100px;">확인</button></span>'
+			str += '		<span><button id="modal-select-member-cancel" class="btn btn-light" type="button" data-bs-dismiss="modal" style="width: 100px;">취소</button></span>'
+			str += '	</div>'
+			str += '</form>'
+			
+			$("#modal-select-member-area").append(str)
+			
+			sleep(100)
+			
+			$("#modal-select-member-go").modal("show")
+			
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+ 
+	})
+}
+
+
+
+/* 여기갈래요 > 그룹멤버선택모달창 멤버 전체선택 */
+$("#member-all-selection").on("click", function(){
+	console.log("전체선택")
+	$("#modal-select-member-area [name='memberList']").attr("checked",true)
+})
+
+
+/* 여기갈래요 > 그룹멤버선택모달창 멤버 전체해제 */
+$("#member-all-selection-del").on("click", function(){
+	console.log("전체해제")
+	$("#modal-select-member-area [name='memberList']").attr("checked",false)
+})
+
+
+
 
 </script>

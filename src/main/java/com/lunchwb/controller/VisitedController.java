@@ -1,6 +1,7 @@
 package com.lunchwb.controller;
 
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -12,11 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lunchwb.service.VisitedService;
+import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.ReviewVo;
 import com.lunchwb.vo.UserVo;
 
@@ -30,11 +33,26 @@ public class VisitedController {
 	private static final Logger logger = LoggerFactory.getLogger(StoreController.class);
 	
 	
+	/* 여기갈래요 그룹 멤버 리스트 for selection */
+	@ResponseBody
+	@PostMapping("members/goWith")
+	public List<GroupVo> membersGoWith(@RequestBody int groupNo, HttpSession session){
+		logger.info("VisitedController > memberGoWith()");
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		List<GroupVo> memberList = visitedService.membersGoWith(authUser, groupNo);
+		
+		return memberList;
+	}
+	
+	
 	/* 방문 결정 */
-	@GetMapping("decision/{storeNo}/{groupNo}")
-	public String decideVisit(@PathVariable("storeNo") int storeNo, @PathVariable("groupNo") int groupNo) {
+	@PostMapping("decision/{storeNo}/{groupNo}")
+	public String decideVisit(@PathVariable("storeNo") int storeNo, @PathVariable("groupNo") int groupNo, @RequestParam List<Integer> memberList, HttpSession session) {
 		logger.info("VisitedController > decideVisit()");
-		visitedService.decideVisit(storeNo, groupNo);
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		visitedService.decideVisit(storeNo, groupNo, memberList, authUser);
 		return "redirect:/";
 	}
 	
