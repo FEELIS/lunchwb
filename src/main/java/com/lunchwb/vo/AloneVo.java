@@ -8,7 +8,7 @@ public class AloneVo {
 	private int visitedNo;
 	private String reviewContent;
 	private int userScore;
-	private String reviewFilePath;
+	private String reviewFileName;
 	private int reviewReported;
 	
 	// visited table //
@@ -29,8 +29,12 @@ public class AloneVo {
 		
 	};
 	
+	public AloneVo(int userNo) {
+		this.userNo = userNo;
+	};
 	
-	public AloneVo(int reviewNo, int userNo, int visitedNo, String reviewContent, int userScore, String reviewFilePath,
+	
+	public AloneVo(int reviewNo, int userNo, int visitedNo, String reviewContent, int userScore, String reviewFileName,
 			int reviewReported, int visitedDate, int visitedCount, int storeNo, String storeName, double storeX,
 			double storeY, String storeRoadAddress, String storeOldAddress) {
 		this.reviewNo = reviewNo;
@@ -38,7 +42,7 @@ public class AloneVo {
 		this.visitedNo = visitedNo;
 		this.reviewContent = reviewContent;
 		this.userScore = userScore;
-		this.reviewFilePath = reviewFilePath;
+		this.reviewFileName = reviewFileName;
 		this.reviewReported = reviewReported;
 		this.visitedDate = visitedDate;
 		this.visitedCount = visitedCount;
@@ -90,12 +94,12 @@ public class AloneVo {
 		this.userScore = userScore;
 	}
 
-	public String getReviewFilePath() {
-		return reviewFilePath;
+	public String getreviewFileName() {
+		return reviewFileName;
 	}
 
-	public void setReviewFilePath(String reviewFilePath) {
-		this.reviewFilePath = reviewFilePath;
+	public void setreviewFileName(String reviewFileName) {
+		this.reviewFileName = reviewFileName;
 	}
 
 	public int getReviewReported() {
@@ -173,7 +177,7 @@ public class AloneVo {
 	@Override
 	public String toString() {
 		return "AloneVo [reviewNo=" + reviewNo + ", userNo=" + userNo + ", visitedNo=" + visitedNo + ", reviewContent="
-				+ reviewContent + ", userScore=" + userScore + ", reviewFilePath=" + reviewFilePath
+				+ reviewContent + ", userScore=" + userScore + ", reviewFileName=" + reviewFileName
 				+ ", reviewReported=" + reviewReported + ", visitedDate=" + visitedDate + ", visitedCount="
 				+ visitedCount + ", storeNo=" + storeNo + ", storeName=" + storeName + ", storeX=" + storeX
 				+ ", storeY=" + storeY + ", storeRoadAddress=" + storeRoadAddress + ", storeOldAddress="
