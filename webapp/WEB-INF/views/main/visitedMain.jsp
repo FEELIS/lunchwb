@@ -466,11 +466,9 @@ function drawStoreStar(){
 }
 
 
+//Aside에서 취소
 $("#btn-visited-cancel").on("click", function(){
 	console.log("방문 취소 버튼 클릭")
-	
-	var userNo = "${authUser.userNo}"
-	var groupLeader = "${visitedMap.groupLeader}"
 	
 	if(!confirm("정말로 방문을 취소하시겠습니까?")){
 		return false
@@ -483,6 +481,40 @@ $("#btn-visited-cancel").on("click", function(){
 })
 
 
+//가게정보 모달에서 취소
+$("#modal-store").on("click", ".modal-btn-visited-cancel", function(){
+	console.log("모달에서 방문 취소 버튼 클릭")
+	
+	if(!confirm("정말로 방문을 취소하시겠습니까?")){
+		return false
+	}
+	
+	return true
+})
+
+
+//가게 리뷰 모달에서 취소
+$("#modal-reviews").on("click", ".modal-btn-visited-cancel", function(){
+	console.log("모달에서 방문 취소 버튼 클릭")
+	
+	if(!confirm("정말로 방문을 취소하시겠습니까?")){
+		return false
+	}
+	
+	return true
+})
+
+
+//가게 메뉴 모달에서 취소
+$("#modal-all-menu").on("click", ".modal-btn-visited-cancel", function(){
+	console.log("모달에서 방문 취소 버튼 클릭")
+	
+	if(!confirm("정말로 방문을 취소하시겠습니까?")){
+		return false
+	}
+	
+	return true
+})
 
 function drawReviewStar(){
 	var review = "${visitedMap.reviewVo}"

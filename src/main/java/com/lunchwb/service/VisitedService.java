@@ -110,12 +110,14 @@ public class VisitedService {
 	/**************************** 여기갈래요 취소(당일만) ******************************/
 	public void cancelVisit(UserVo authUser, int visitedNo) {
 		//방문 취소
+		int userNo = authUser.getUserNo();
+		
 		VisitedVo visitedVo = new VisitedVo();
+		visitedVo.setUserNo(userNo);
 		visitedVo.setVisitedNo(visitedNo);
 		
 		vstDao.cancelVisit(visitedVo);
 		
-		int userNo = authUser.getUserNo();
 		userDao.updateState0(userNo);
 	}
 	

@@ -659,7 +659,9 @@ function modalSortOfStore(storeNo, k){
 		// k=1 : 리뷰메인
 			//조회하는 가게 = 다녀온 가게
 			if(storeNo == "${visitedMap.visitedVo.storeNo}"){
-				$(".store-button-area").append('<button class="btn btn-primary btn-visit-cancle" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">방문취소</button>')
+				$(".store-button-area").append('<a href="${pageContext.request.contextPath}/visited/cancel/${visitedMap.visitedVo.visitedNo}">'
+												+'	<button class="btn btn-primary modal-btn-visited-cancel" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">방문취소</button>'
+												+'</a>')
 			}
 			//다녀온 가게가 아니면 블랙버튼만(조회 자체가 블랙 아닌것만 됨)
 			$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">블랙추가</button>')
