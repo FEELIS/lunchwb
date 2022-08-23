@@ -12,6 +12,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 <title>부장님요기요</title>
 
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/assets/img/bujang.png">
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Bold-BS4-Responsive-Pricing-Table-Snippet.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -76,40 +78,30 @@
                         
                         	<!--  투표 참여할 인원들 표시  -->   
                         	                         	
-                        	<c:forEach var="member" items="${voteMember}">
-                        		<c:if test="${member.bossCheck==1}">
-                        			<span class="d-flex d-xxl-flex flex-wrap vote-people-bujang vote-people" data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${member.voteMemberNo}">
+                        	<c:forEach var="member" items="${voteMember}">                       		
+                        			<span class="d-flex d-xxl-flex flex-wrap vote-people
+                        						<c:if test="${member.bossCheck == 1}">vote-people-bujang</c:if> 
+                        						<c:if test="${member.voteVoted != 0}">vote-people-selected</c:if>" 
+                        				  data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${member.voteMemberNo}">
+                        				  
                         				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
-                        					<c:if test="${member.userNo != authUser.userNo}">
+                        					<c:if test="${(member.userNo != authUser.userNo or member.voteVoted != 0) and member.userGrade != -1}">
                         						<i class="fas fa-minus-circle vote-member-not-today"></i>
+                        					</c:if>
+                        					
+                        					<c:if test="${member.userGrade == -1 and member.voteVoted == 0}">
+                        						<i class='fas fa-pen d-inline-block vote-people-edit-name-btn'></i>
+                        						<i class='fas fa-times-circle d-inline-block vote-people-del-btn'></i>
                         					</c:if>
                         				</span>
                         				<span class="vote-people-body-wrap">
                         					<span class="text-center d-flex d-xxl-flex justify-content-center align-items-center vote-people-body">
-                        						<i class="fas fa-crown vote-bujang-crown"></i>
+                        						<i class="fas fa-crown <c:if test="${member.bossCheck==1}">vote-bujang-crown</c:if>"></i>
                         						<span class="vote-people-name" data-user-name="${member.userName}">${member.userName}</span>
                         						<i class="fas fa-crown"></i>
                         					</span>
                         				</span>
-                        			</span>
-                        		</c:if>
-                        		
-                        		<c:if test="${member.bossCheck==0}">
-                        			<span class="d-flex d-xxl-flex flex-wrap vote-people" data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${member.voteMemberNo}">
-                        				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
-                        					<c:if test="${member.userNo != authUser.userNo}">
-                        						<i class="fas fa-minus-circle vote-member-not-today"></i>
-                        					</c:if>
-                        				</span>
-                        				<span class="vote-people-body-wrap">
-                        					<span class="text-center d-flex d-xxl-flex justify-content-center align-items-center vote-people-body">
-                        						<i class="fas fa-crown"></i>
-                        						<span class="vote-people-name" data-user-name="${member.userName}">${member.userName}</span>
-                        						<i class="fas fa-crown"></i>
-                        					</span>
-                        				</span>
-                        			</span>
-                        		</c:if>                    
+                        			</span>                 
                         	</c:forEach>
                         </div>
                     </div>
