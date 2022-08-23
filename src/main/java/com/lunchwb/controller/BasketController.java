@@ -207,8 +207,9 @@ public class BasketController {
 		Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
 		Integer groupNo = (Integer)session.getAttribute("curr_basket_group");
 		Integer storeNo = (Integer)addStore.get("storeNo");
+		GPSVo gpsVo = (GPSVo)session.getAttribute("curr_location");
 		
-		basket.put(groupNo,	basketService.addBasket(basket.get(groupNo), storeNo));
+		basket.put(groupNo,	basketService.addBasket(basket.get(groupNo), storeNo, gpsVo));
 		
 		if (session.getAttribute("basket") != null) {
 			session.removeAttribute("basket");

@@ -129,6 +129,18 @@
 	</select>
 	
 	
+	<!--  가게 하나 추가로 가져오기  -->
+	<select id="selectOneStore" parameterType="Map" resultMap="StoreVo">
+		<![CDATA[
+			SELECT store_breaktime, menu_2nd_cate_name, store_opening_hours, store_name, store_no, store_road_address,
+			       ROUND(SQRT(POWER(ABS(store_x-#{gpsVo.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(store_y-#{gpsVo.gpsY})*6400000*2*3.14/360, 2)), 0) distance
+			FROM   store s, food_2nd_category f
+			WHERE  s.menu_2nd_cate_no = f.menu_2nd_cate_no
+			AND    store_no = #{storeNo}
+		]]>
+	</select>
+	
+	
 	<!-- 가게기본정보 -->
 	<select id="basicStoreInfo" parameterType="int" resultMap="StoreVo">
 		SELECT  s.store_no

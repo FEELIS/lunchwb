@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.lunchwb.dao.BasketDao;
 import com.lunchwb.dao.GroupDao;
+import com.lunchwb.dao.StoreDao;
 import com.lunchwb.vo.GPSVo;
 import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.StoreVo;
@@ -20,10 +21,11 @@ import com.lunchwb.vo.StoreVo;
 public class BasketService {
 
 	@Autowired
-	private GroupDao groupDao;
-	
+	private GroupDao groupDao;	
 	@Autowired
 	private BasketDao basketDao;
+	@Autowired
+	private StoreDao storeDao;
 	
 	
 	// 초기 로드 시 장바구니 그룹 선택
@@ -161,12 +163,25 @@ public class BasketService {
 	
 	
 	// 장바구니에 아이템 추가
-	public List<StoreVo> addBasket(List<StoreVo> basketItems, Integer storeNo) {
+	public List<StoreVo> addBasket(List<StoreVo> basketItems, Integer storeNo, GPSVo gpsVo) {
+		int cnt = 0;
+		
 		for (StoreVo store: basketItems) {
 			if (store.getStoreNo() == storeNo) {
 				store.setStored(true);
+				cnt++;
 				break;
 			}
+		}
+		
+		if (cnt == 0) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("gpsVo", gpsVo);
+			map.put("storeNo", storeNo);
+			
+			StoreVo newStore = storeDao.selectOneStore(map);
+			newStore.setStored(true);
+			basketItems.add(newStore);
 		}
 
 		return basketItems;

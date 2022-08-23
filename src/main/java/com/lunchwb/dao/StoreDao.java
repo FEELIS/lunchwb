@@ -27,4 +27,9 @@ public class StoreDao {
 		int distance = sqlSession.selectOne("store.storeDistance", map);
 		return distance;
 	}
+	
+	/* 가게 정보 따로 불러오기 */
+	public StoreVo selectOneStore(Map<String, Object> map) {
+		return sqlSession.selectOne("store.selectOneStore", map);
+	}
 }
