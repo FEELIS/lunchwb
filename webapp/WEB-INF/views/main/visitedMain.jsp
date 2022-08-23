@@ -442,7 +442,7 @@ console.log("오늘 방문한 곳의 지난 방문 정보" + myVisit)
 $(document).ready(function(){
 	drawStoreStar()
 	drawReviewStar()
-	drawBlackBtn()
+	visitedBlack()
 })
 
 
@@ -482,15 +482,21 @@ function drawReviewStar(){
 }
 
 
-//블랙리스트 추가/제거 버튼 그리기
-function drawBlackBtn(){
+//방문 가게 블랙리스트 여부
+function visitedBlack(){
 	var blackVo = {
 		storeNo : "${visitedMap.visitedVo.storeNo}",
 		groupNo : "${visitedMap.visitedVo.groupNo}" 
 	}
 	
-	//블랙리스트 있음 result: Y :storeInfo 함수
-	if(isBlack(blackVo)=="Y"){
+	isBlack(blackVo, 0)
+}
+
+
+//ASIDE 블랙리스트 추가/제거 버튼 그리기
+function drawBlackBtn(result){
+	//블랙리스트 없음 result: Y
+	if(result == "Y"){
 		$("#visited-black-p").append("블랙리스트에 잘못 추가했었다면?")
 		$("#visited-black-btn-area").append('<button id="btn-visited-black-del" class="btn btn-light link-dark border rounded-pill border-dark" type="button">'
 											+'	블랙리스트 제거'
@@ -540,7 +546,7 @@ function visitedBlackAdd(){
 				alert("블랙리스트 추가 완료")
 				$("#visited-black-btn-area").html('<button id="btn-visited-black-del" class="btn btn-light link-dark border rounded-pill border-dark" type="button">'
 													+'	블랙리스트 제거'
-													+'<button>')
+													+'</button>')
 			}else{
 				alert("블랙리스트 추가 실패")
 			}

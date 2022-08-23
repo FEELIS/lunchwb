@@ -660,7 +660,7 @@ function modalSortOfStore(storeNo, k){
 			//조회하는 가게 = 다녀온 가게
 			if(storeNo == "${visitedMap.visitedVo.storeNo}"){
 				$(".store-button-area").append('<a href="${pageContext.request.contextPath}/visited/cancel/${visitedMap.visitedVo.visitedNo}">'
-												+'	<button class="btn btn-primary modal-btn-visited-cancel" type="button" data-storeNo="'+storeNo+'">방문취소</button>'
+												+'	<button class="btn btn-primary modal-btn-visited-cancel" type="button">방문취소</button>'
 												+'</a>')
 			}
 			//다녀온 가게가 아니면 블랙버튼만 : 그룹장만
@@ -669,13 +669,7 @@ function modalSortOfStore(storeNo, k){
 					storeNo: "${visitedMap.visitedVo.storeNo}",
 					groupNo: "${visitedMap.visitedVo.groupNo}"
 				}
-				//블랙있어
-				if(isBlack(blackVo) == "Y"){
-					$(".store-button-area").append('<button class="btn btn-light modal-btn-del-black" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">블랙제거</button>')
-				//블랙아냐
-				}else{
-					$(".store-button-area").append('<button class="btn btn-light modal-btn-add-black" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">블랙추가</button>')
-				}	
+				isBlack(blackVo, 1)
 			}
 		
 			break
@@ -849,8 +843,7 @@ $("#member-all-selection-del").on("click", function(){
 
 
 /* 그룹 블랙리스트 가게인지 확인하기 */
-function isBlack(blackVo){
-	console.log("여기왔어 블랙")
+function isBlack(blackVo, bno){
 	$.ajax({
 		url : "${pageContext.request.contextPath}/group/isBlack",
 		type : "post",
@@ -859,8 +852,20 @@ function isBlack(blackVo){
 		dataType : "json",
 		
 		success : function(result){
-			console.log("여기?")
-			return result
+			
+			switch(bno){
+				case 0:
+					//방문메인ASIDE
+					drawBlackBtn(result)
+				case 1:
+					//방문메인 가게모달창
+					if(result == "Y"){
+						$(".store-button-area").append('<button class="btn btn-light modal-btn-del-black" type="button">블랙제거</button>')
+					//블랙아냐
+					}else{
+						$(".store-button-area").append('<button class="btn btn-light modal-btn-add-black" type="button">블랙추가</button>')
+					}
+			}
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
