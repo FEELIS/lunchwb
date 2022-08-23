@@ -703,7 +703,8 @@ $("#vote-link-modal").on("hide.bs.modal", function(){
 	location.replace("${pageContext.request.contextPath}/")
 })
 
-/* 카카오 공유하기 api */
+
+//////////// 카카오 공유하기 api /////////////////////////////////////////////////////////////////////////
 
 // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
 Kakao.init('f78c3d22061aa91b824c89a07b348da9');
@@ -732,20 +733,18 @@ function kakaoShare() {
 			description: desc,
 			link: {
 			  mobileWebUrl: voteURL,
-			  webUrl: voteURL,
-			},
+			  webUrl: voteURL
+			}
 		},
-		buttons: [
-			{
-				title: '웹으로 보기',
-				link: {
-					mobileWebUrl: voteURL,
-					webUrl: voteURL,
-				},
-			},
-		],
+		buttons: [{
+			title: '웹으로 보기',
+			link: {
+				mobileWebUrl: voteURL,
+				webUrl: voteURL
+			}
+		}],
 	    // 카카오톡 미설치 시 카카오톡 설치 경로이동
-	    installTalk: true,
+	    installTalk: true
 	})
 }
 

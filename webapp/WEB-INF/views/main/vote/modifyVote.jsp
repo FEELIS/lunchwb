@@ -175,11 +175,11 @@ let birdName = ["가마우지", "갈매기", "개개비", "거위", "고니", "�
 
 $(document).ready(async function() {
 	// 현재 시각 불러오기
-	getTime()
+	getTime(voteEndTime)
 	
 	// 투표 종료시각 input에 현재 시각 표시
-	$("#vote-end-hour").val(voteEndTime.getHours())
-	$("#vote-end-min").val(voteEndTime.getMinutes())
+	$("#vote-end-hour").val(("" + voteEndTime.getHours()).padStart(2, "0"))
+	$("#vote-end-min").val(("" + voteEndTime.getMinutes()).padStart(2, "0"))
 	
 	// 투표 수정중이라면 이미 사용한 새 이름 제거
 	if ("${userState}" == "99") {
@@ -414,8 +414,7 @@ function changeBirdName(btn) {
 ////////// 투표 마감 시각 관련 /////////////////////////////////////////////////////////////////////////////
 
 // 현재 시각 가져오기
-function getTime() {
-	currentDate = new Date()
+function getTime(currentDate) {
 	currentTime = String(currentDate.getHours())
 	currentMin = String(currentDate.getMinutes())
 	
@@ -521,7 +520,7 @@ $("#vote-add-1hr").on("click", function(){
 // 초기화 클릭
 $("#vote-reset-btn").on("click", function(){
 	// 현재시각 불러오기
-	getTime()
+	getTime(new Date())
 	
 	$("#vote-end-hour").val(currentTime)
 	$("#vote-end-min").val(currentMin)
@@ -546,7 +545,6 @@ $("#vote-edit-return-btn").on("click", function(){
 
 // 투표 수정 버튼 클릭
 $("#make-vote-btn").on("click", function(){	
-	
 	// 현재시각이 투표종료시각 이후라면
 	if (voteEndTime <= new Date()) {
 		alert("투표 마감 시각은 현재 시각 이후여야합니다.")

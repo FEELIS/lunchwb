@@ -56,7 +56,7 @@
             <div id="waiting-vote-area" class="d-flex d-xxl-flex justify-content-center align-items-center align-content-center flex-nowrap justify-content-xxl-center align-items-xxl-center card-body">
                 <div>
                     <div class="d-inline-flex d-xxl-flex justify-content-center align-content-center align-items-center justify-content-xxl-center align-items-xxl-center">
-                    	<span class="d-xxl-flex">아직 투표가 진행중입니다.</span>
+                    	<span class="d-xxl-flex">아직 투표가 진행중입니다. (${currVote.votedCnt}명 /&nbsp;${currVote.totCnt}명)</span>
                     </div>
                     
                     <div class="d-xxl-flex flex-wrap justify-content-xxl-center">
@@ -86,6 +86,7 @@ $("#vote-url-copy-btn").on("click", function(){
         console.log("클립보드 복사 실패");
     })
 })
+
 
 </script>
 

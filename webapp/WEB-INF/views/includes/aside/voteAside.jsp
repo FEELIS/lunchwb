@@ -62,7 +62,7 @@
 	        	<!--  투표 인원 영역  -->       	
 	        	<c:forEach items="${voteMember}" var="member">
         			<button class="btn btn-primary text-center vote-select-name-btn 
-        			               <c:if test="${authUser.userNo == member.userNo}">vote-selected-name</c:if>
+        			               <c:if test="${authUser.userNo == member.userNo and member.voteVoted == 0}">vote-selected-name</c:if>
         			               <c:if test="${userState == 1 and empty(authUser) and member.voteVoted == 0 and member.userGrade == -1}">can-click-name</c:if>
         			               <c:if test="${member.voteVoted != 0}">vote-voted-name</c:if>" 
         			        type="button" 
@@ -78,6 +78,14 @@
 	        <div class="table-responsive" id="basket-table">
 	            <table class="table" id="basket-table-table">
 	            	<!--  투표 가게 목록 올 곳 -->
+	            	<c:if test="${!empty(authUser)}">
+            			<c:forEach var="mem" items="${voteMember}">
+            				<c:if test="${mem.userNo == authUser.userNo}">
+            					<c:set var="myStore" value="${mem.voteVoted}" />
+            				</c:if>
+            			</c:forEach>
+           			</c:if>
+                        			
 	            	<c:set var="voteIdx" value="-1" />
 	            	<c:forEach items="${voteBasket}" var="store">
 	            		<c:set var="voteIdx" value="${voteIdx+1}" />
@@ -105,12 +113,12 @@
                             		</div>
                         		</td>
                         		
-                        		<td class="basket-vote-btn-cell">
-                        			<c:if test="${store.storeNo == voteMember[authUser.userNo].voteVoted}">
-                        				<button class="btn btn-primary vote-waiting-voted-btn align-items-center" type="button">투표완료</button>
+                        		<td class="basket-vote-btn-cell">                        			
+                        			<c:if test="${userState >= 2 and store.storeNo == myStore}">
+                        				<button class="btn btn-primary vote-waiting-voted-btn align-items-center" type="button" disabled="disabled">투표완료</button>
                         			</c:if>
                         			
-                        			<c:if test="${userState == 2 and store.storeNo != voteMember[authUser.userNo].voteVoted}">
+                        			<c:if test="${userState == 2 and store.storeNo != myStore}">
                         				<button class="btn btn-primary vote-wating-change-vote-btn align-items-center" type="button">투표변경</button>
                         			</c:if>
                         		</td>
@@ -148,6 +156,7 @@
 
 /////////////////////// 전역 변수 //////////////////////////////
 
+console.log("${voteMember}")
 let curr_basket_group = parseInt("${voteInfo.groupNo}")
 let voteEndTime = "${voteInfo.voteEndTime}"
 let clientIp
@@ -263,7 +272,7 @@ $("#vote-leader-modify-btn").on("click", function(){
 /////////////// 투표 삭제하기 ///////////////////////////////////////////////////
 
 $("#vote-leader-cancel-btn").on("click", function(){
-	var deleteCheck = confirm("투표를 수정하시겠습니까?")
+	var deleteCheck = confirm("투표를 삭제하시겠습니까?")
 	
 	if (deleteCheck) {		
 		postVoteData("${pageContext.request.contextPath}/vote/resetVote", {"voteNo" : parseInt("${voteInfo.voteNo}")})
