@@ -137,11 +137,11 @@ public class VoteService {
 		voteInfo.setGroupName(voteVo.get(0).getGroupName());
 		voteInfo.setVoteEndTime(voteVo.get(0).getVoteEndTime());
 		voteInfo.setVoteMadeUser(voteVo.get(0).getVoteMadeUser());
-		
+		voteInfo.setVoteResults(voteVo.get(0).getVoteResults());
 		
 		// 장바구니 담긴 가게 정보		
 		JSONArray storeInfo = new JSONArray(voteVo.get(0).getVoteItems());
-		JSONArray voteStatus = new JSONArray(voteVo.get(0).getVoteResults());
+		//JSONArray voteStatus = new JSONArray(voteVo.get(0).getVoteResults());
 		
 		List<StoreVo> voteStoreInfo = new ArrayList<>();
 		List<Integer> voteResult = new ArrayList<>();
@@ -162,7 +162,7 @@ public class VoteService {
 			
 			
 			// vote_result 파싱
-			voteResult.add(voteStatus.getInt(i));
+			//voteResult.add(voteStatus.getInt(i));
 		}
 		
 		voteInfo.setVoteResultList(voteResult);
@@ -354,5 +354,36 @@ public class VoteService {
 	
 		
 		return result;
+	}
+	
+	
+	
+	///////// 따로먹을래요 ///////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void escapeVote(VoteVo myVote) {
+		int userNo = myVote.getUserNo();
+		int voteVoted = myVote.getVoteVoted();
+		
+		// userState 0으로 변경
+		userDao.updateState0(userNo);
+		
+		// voteMembers에서 나 삭제
+		voteDao.deleteEscape(myVote);
+		
+		// 투표를 했다면 voteResults에 결과반영
+		if (voteVoted != 0) {
+			int voteIdx = myVote.getVoteIdx();
+			String currVote = myVote.getVoteResults();
+			System.out.println("currVote " + currVote);
+			
+			JSONArray jArray = new JSONArray(currVote);
+			jArray.put(voteIdx, jArray.getInt(voteIdx)-1);
+			
+			currVote = jArray.toString();
+			myVote.setVoteResults(currVote);
+			System.out.println("변경 후 currVote " + currVote);
+			
+			voteDao.updateEscapeResult(myVote);
+		}
 	}
  }

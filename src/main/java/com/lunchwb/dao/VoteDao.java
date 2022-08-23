@@ -130,4 +130,16 @@ public class VoteDao {
 	public int deleteNotVoted(int voteNo) {
 		return sqlSession.delete("vote.deleteNotVoted", voteNo);
 	}
+	
+	
+	// 탈주 > vote_members에서 나 삭제하기
+	public void deleteEscape(VoteVo me) {
+		sqlSession.delete("vote.deleteEscape", me);
+	}
+	
+	
+	// 투표하고 탈주 > voteResults에서 이 사람 투표 제외
+	public void updateEscapeResult(VoteVo myVote) {
+		sqlSession.update("vote.updateEscapeResult", myVote);
+	}
 }

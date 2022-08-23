@@ -240,4 +240,23 @@
 		]]>
 	</delete>
 	
+	
+	<!--  탈주 > vote_members에서 나 삭제  -->
+	<delete id="deleteEscape" parameterType="VoteVo">
+		<![CDATA[
+			DELETE vote_members
+			WHERE  user_no = #{userNo}
+			AND    vote_no = #{voteNo}
+		]]>
+	</delete>
+	
+	
+	<!-- 투표 하고 탈주한 넘... > 투표 결과에서 얘꺼 빼버리기  -->
+	<update id="updateEscapeResult" parameterType="VoteVo">
+		<![CDATA[
+			UPDATE vote
+			SET    vote_results = #{voteResults}
+			WHERE  vote_no = #{voteNo}
+		]]>
+	</update>
 </mapper>

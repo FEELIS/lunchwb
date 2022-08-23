@@ -67,7 +67,7 @@
         			               <c:if test="${member.voteVoted != 0}">vote-voted-name</c:if>" 
         			        type="button" 
         			        <c:if test="${!(userState == 1 and empty(authUser) and member.voteVoted == 0 and member.userNo == 0)}">disabled="disabled" </c:if>
-        			        data-vote-member-no="${member.voteMemberNo}" data-user-no="${member.userNo}">${member.userName}</button>
+        			        data-vote-member-no="${member.voteMemberNo}" data-vote-voted="${member.voteVoted}" data-user-no="${member.userNo}">${member.userName}</button>
 	        	</c:forEach>
 	        </div>
 	    </div>
@@ -88,9 +88,7 @@
                         			
 	            	<c:set var="voteIdx" value="-1" />
 	            	<c:forEach items="${voteBasket}" var="store">
-	            		<c:set var="voteIdx" value="${voteIdx+1}" />
-	            		
-	            		<c:if test="${userState == 1}">
+	            		<c:set var="voteIdx" value="${voteIdx+1}" />		
 	            			<tr class="vote-table-row basket-table-row" data-vote-idx="${voteIdx}" data-storeNo="${store.storeNo}">
                         		<td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
                             		<div class="basket-table-store-info">
@@ -99,21 +97,10 @@
                             		</div>
                         		</td>
                         		<td class="basket-vote-btn-cell">
-                        			<button class="btn btn-primary vote-vote-btn align-items-center" type="button">투표하기</button>
-                        		</td>
-                    		</tr>
-	            		</c:if>
-	            		
-	            		<c:if test="${userState > 1}">
-	            			<tr class="vote-table-row" data-vote-idx="${voteIdx}" data-storeNo="${store.storeNo}">
-                        		<td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
-                            		<div class="basket-table-store-info">
-                            			<span class="text-start basket-table-store-name">${store.storeName}</span>
-                            			<span class="text-start basket-table-store-detail">${store.menu2ndCateName}&nbsp;/&nbsp;${store.distance}m</span>
-                            		</div>
-                        		</td>
-                        		
-                        		<td class="basket-vote-btn-cell">                        			
+                        			<c:if test="${userState == 1}">
+                        				<button class="btn btn-primary vote-vote-btn align-items-center" type="button">투표하기</button>
+                        			</c:if>
+                        			
                         			<c:if test="${userState >= 2 and store.storeNo == myStore}">
                         				<button class="btn btn-primary vote-waiting-voted-btn align-items-center" type="button" disabled="disabled">투표완료</button>
                         			</c:if>
@@ -123,7 +110,6 @@
                         			</c:if>
                         		</td>
                     		</tr>
-	            		</c:if>
 	            	</c:forEach>
 
 	            </table>
@@ -231,6 +217,7 @@ $(".can-click-name").on("click", function(){
 
 
 /////////////////// 투표하기 클릭 //////////////////////////////////////////////////////////
+
 $(".vote-vote-btn").on("click", function(){
 	// 투표 가능한 시각인지 확인
 	if (new Date() >= voteEndTime) { // 종료시각 이후면 alert 후 메인으로 이동
@@ -269,6 +256,7 @@ $("#vote-leader-modify-btn").on("click", function(){
 	}
 })
 
+
 /////////////// 투표 삭제하기 ///////////////////////////////////////////////////
 
 $("#vote-leader-cancel-btn").on("click", function(){
@@ -279,11 +267,42 @@ $("#vote-leader-cancel-btn").on("click", function(){
 	}
 })
 
+
 /////////////// 투표 탈주하기 ////////////////////////////////////////////////////
 
 $("#vote-member-escape-btn").on("click", function(){
-	alert("탈주")
+	var reallyEscape = confirm("${voteInfo.groupName}" + "과 점심을 따로 드시겠습니까?")
+		
+	if (reallyEscape) {
+		var myVote = parseInt($("[data-user-no=" + "${authUser.userNo}" + "]").attr("data-vote-voted"))		
+		var myIdx = 0
+		if (myVote != 0) {
+			for (var i = 0; i < 3; i++) {
+				if (parseInt($("[data-vote-idx=" + i + "]").attr("data-storeNo")) == myVote) {
+					myIdx = i
+					break
+				}
+			}
+		}
+		
+		var modifyData = {
+			"userNo" : parseInt("${authUser.userNo}"), 
+			"voteMemberNo" : parseInt($("[data-user-no=" + "${authUser.userNo}" + "]").attr("data-vote-member-no")),
+			"voteNo" : parseInt("${voteInfo.voteNo}"), 
+			"voteVoted" : myVote, 
+			"voteResults" : "${voteInfo.voteResults}", 
+			"voteIdx" : myIdx 		
+		}
+		
+		console.log(modifyData)
+		postVoteData("${pageContext.request.contextPath}/vote/escapeVote", modifyData)
+		
+	} else {
+		
+		return false
+	}
 })
+
 
 ////////// 카운트다운 타이머 관련 /////////////////////////////////////////////////
 
@@ -328,6 +347,7 @@ function changeTimeFormat(time) {
 	return newTime
 }
 
+
 ///////////////// form 전송하는 함수 ////////////////////////////////////////////////////////////////
 
 function postVoteData(path, params, method) {
@@ -352,6 +372,7 @@ function postVoteData(path, params, method) {
 	document.body.appendChild(form)
 	form.submit()
 }
+
 
 </script>
 

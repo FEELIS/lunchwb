@@ -195,4 +195,17 @@ public class VoteController {
 		
 		return result;
 	}
+	
+	
+	// 투표 > 다른 사람들이랑 먹을래요
+	@PostMapping("/escapeVote")
+	public String escapeVote(@ModelAttribute VoteVo myVote) {
+		System.out.println("**********************************************************************************************************************************************************");
+		logger.info("다른 사람들이랑 먹을래요");
+		System.out.println("**********************************************************************************************************************************************************");
+		
+		voteService.escapeVote(myVote);
+		
+		return "redirect:/";
+	}
 }
