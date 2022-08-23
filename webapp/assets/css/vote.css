@@ -160,6 +160,12 @@
   color: var(--bs-white);
 }
 
+#edit-vote-people-area .vote-people-selected {
+  background: #ffffff;
+  border: 2px solid var(--bs-blue);
+  border-radius: 10px;
+}
+
 .vote-people-header i {
   color: var(--bs-gray-600);
   margin-right: 5px;

@@ -178,6 +178,7 @@
 
 /////////////////////// 전역 변수 //////////////////////////////
 
+let curr_basket_group = parseInt("${voteInfo.groupNo}")
 let voteEndTime = "${voteInfo.voteEndTime}"
 let clientIp
 let userState = "${userState}"

@@ -8,7 +8,7 @@
 		<result column="visited_no" property="visitedNo" />
 		<result column="review_content" property="reviewContent" />
 		<result column="user_score" property="userScore" />
-		<result column="review_file_path" property="reviewFilePath" />
+		<result column="review_file_name" property="reviewFileName" />
 		<result column="review_reported" property="reviewReported" />
 		<result column="visited_date" property="visitedDate" />
 		<result column="visited_count" property="visitedCount" />
@@ -21,22 +21,28 @@
 	</resultMap>
 	
 		<!-- ============================ 방문내역 ============================ -->
-	<select id="reviewList">
+	<select id="reviewList" parameterType="int" resultMap="resultMapAloneVo">
 		<![CDATA[
-			select  s.store_name, 
+			select  r.review_no, 
+					s.store_name, 
 					s.store_road_address, 
 					r.review_content, 
 					r.user_score, 
 					r.review_file_name, 
 					r.review_reported 
-			from review r, users u, visited v, store s
+			from review r, users u, visited v, store s 
 			where u.user_no = r.user_no 
 			and v.visited_no = r.visited_no 
 			and v.store_no = s.store_no 
-			and r.user_no = 1 
-			order by r.review_no asc;
-	
+			and r.user_no = #{userNo}  
+			order by r.review_no asc
 		]]>
-		</select>
+	</select>
+	<delete id="deleteReview" parameterType="int">
+		<![CDATA[
+			delete from review 
+			where review_no = #{reviewNo}
+		]]>
+	</delete>
 
 </mapper>
