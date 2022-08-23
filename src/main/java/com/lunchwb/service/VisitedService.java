@@ -103,6 +103,7 @@ public class VisitedService {
 			//방문 결정 상태 변경
 			userDao.updateState4(userNo);
 		}
+		
 	}
 	
 	

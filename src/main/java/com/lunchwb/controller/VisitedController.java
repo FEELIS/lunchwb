@@ -48,7 +48,8 @@ public class VisitedController {
 	
 	/* 방문 결정 */
 	@PostMapping("decision/{storeNo}/{groupNo}")
-	public String decideVisit(@PathVariable("storeNo") int storeNo, @PathVariable("groupNo") int groupNo, @RequestParam List<Integer> memberList, HttpSession session) {
+	public String decideVisit(@PathVariable("storeNo") int storeNo, @PathVariable("groupNo") int groupNo, 
+							  @RequestParam(name="memberList", defaultValue = "") List<Integer> memberList, HttpSession session) {
 		logger.info("VisitedController > decideVisit()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
