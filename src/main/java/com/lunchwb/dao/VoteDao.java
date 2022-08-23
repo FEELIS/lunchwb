@@ -106,4 +106,16 @@ public class VoteDao {
 	public int updateGuestVoted(VoteVo myVote) {
 		return sqlSession.update("vote.updateGuestVoted", myVote);
 	}
+	
+	
+	// 투표 취소 > userState = 0으로 변경
+	public int updateUserReset(int voteNo) {
+		return sqlSession.update("vote.updateUserReset", voteNo);
+	}
+	
+	
+	// 투표 취소 > 투표 삭제
+	public int DeleteVote(int voteNo) {
+		return sqlSession.delete("vote.DeleteVote", voteNo);
+	}
 }

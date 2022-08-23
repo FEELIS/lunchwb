@@ -144,8 +144,9 @@ public class VoteController {
 		logger.info("투표 초기화하기");
 		System.out.println("**********************************************************************************************************************************************************");
 
-		return "redirect:/";
-				
+		voteService.cancelVote(voteNo);
+		
+		return "redirect:/";		
 	}
 	
 	
@@ -164,4 +165,5 @@ public class VoteController {
 		
 		return "redirect:/";
 	}
+	
 }

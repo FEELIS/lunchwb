@@ -258,7 +258,7 @@ public class VoteService {
 	
 	
 	
-	///// 여기갈래요 누르기 ///////////////////////////////////////////
+	///////////////////// 여기갈래요 누르기 ///////////////////////////////////////////
 	public void visitConfirm(int voteNo) {
 		int cnt = voteDao.updateVoteVisited(voteNo);
 		
@@ -269,10 +269,28 @@ public class VoteService {
 			
 			System.out.println("[회원 " + cnt + "명 방문 완료로 상태 변경]");
 			
+			// visited 테이블 추가
+			
 		} else {
 			System.out.println("[투표 종료 실패]");
 		}
 		
 	}
 	
+	
+	///////////////// 투표 취소하기 ///////////////////////////////////////
+	public void cancelVote(int voteNo) {
+		int cnt = voteDao.updateUserReset(voteNo);
+		
+		if (cnt > 0) {
+			System.out.println("[회원 " + cnt + "명 투표 전으로 상태 변경]");
+			cnt = voteDao.DeleteVote(voteNo);
+			
+			if (cnt > 0) System.out.println("[투표가 성공적으로 삭제되었습니다.]");
+		
+		} else {
+			System.out.println("[회원 투표 삭제 실패]");
+			
+		}
+	}
  }

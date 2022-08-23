@@ -152,6 +152,15 @@
 	</update>
 	
 	
+	<!--  투표 취소 -->
+	<delete id="DeleteVote" parameterType="int">
+		<![CDATA[
+			DELETE vote
+			WHERE  vote_no = #{voteNo}
+		]]>
+	</delete>
+	
+	
 	<!--  사용자 상태 투표완료로 업데이트  -->
 	<update id="updateUserEnd" parameterType="int">
 		<![CDATA[

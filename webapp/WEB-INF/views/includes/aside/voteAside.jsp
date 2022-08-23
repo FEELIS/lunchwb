@@ -50,9 +50,14 @@
 	        	<div id="label-select-name"><span>이름을 선택해주세요</span></div>
 	        </c:if>
 	        
-	        <c:if test="${userState > 1}">
+	        <c:if test="${userState == 2 or userState == 3}">
 	        	<div id="label-select-name"><span>투표 참여자 목록입니다</span></div>
 	        </c:if>
+	        
+	        <c:if test="${userState == 99}">
+	        	<div id="label-select-name"><span>수정 전 투표 참여자 목록입니다</span></div>
+	        </c:if>
+	        
 	        <div id="vote-select-names" class="d-flex d-xxl-flex flex-wrap justify-content-xxl-start">
 	        	<!--  투표 인원 영역  -->
 	        	
@@ -148,7 +153,9 @@
 	      
 	      	<c:if test="${authUser.userNo == voteInfo.voteMadeUser}">
 		        <div id="vote-leader-btn-area" class="d-xxl-flex justify-content-center align-items-center">
-		        	<button id="vote-leader-modify-btn" class="btn btn-primary d-flex d-xxl-flex justify-content-center align-items-center align-content-center" type="button">투표 수정하기</button>
+		        	<c:if test="${userState != 99}">
+		        		<button id="vote-leader-modify-btn" class="btn btn-primary d-flex d-xxl-flex justify-content-center align-items-center align-content-center" type="button">투표 수정하기</button>
+		        	</c:if>
 		        	<button id="vote-leader-cancel-btn" class="btn btn-danger d-flex d-xxl-flex justify-content-center align-items-center align-content-center" type="button">투표 취소하기</button>
 		        </div>
 	        </c:if>
@@ -284,7 +291,11 @@ $("#vote-leader-modify-btn").on("click", function(){
 /////////////// 투표 삭제하기 ///////////////////////////////////////////////////
 
 $("#vote-leader-cancel-btn").on("click", function(){
-	alert("취소")
+	var deleteCheck = confirm("투표를 수정하시겠습니까?")
+	
+	if (deleteCheck) {		
+		postVoteData("${pageContext.request.contextPath}/vote/resetVote", {"voteNo" : parseInt("${voteInfo.voteNo}")})
+	}
 })
 
 /////////////// 투표 탈주하기 ////////////////////////////////////////////////////
