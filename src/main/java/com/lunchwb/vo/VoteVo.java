@@ -25,15 +25,22 @@ public class VoteVo {
 	private String voteIp;
 	
 	
-	///////////// 기타 //////////////////////////////////////////
+	///////////// 투표에서 사용 //////////////////////////////////////////
 	
 	private Integer userGrade;
 	private List<StoreVo> voteStoreInfo;
 	private List<Integer> voteResultList;
 	private String groupName;
+	
+	/////////// 투표 처리 //////////////////////////////////////
+	
 	private int voteIdx;
 	private int totCnt;
 	private int votedCnt;
+	
+	/////////// 투표 수정 ////////////////////////////////////////////
+	
+	private int bossCheck;
 	
 	////////// 생성자 ////////////////////////////////////////////
 	
@@ -123,11 +130,11 @@ public class VoteVo {
 		this.voteVoted = voteVoted;
 	}
 
-	public int getUserGrade() {
+	public Integer getUserGrade() {
 		return userGrade;
 	}
 
-	public void setUserGrade(int userGrade) {
+	public void setUserGrade(Integer userGrade) {
 		this.userGrade = userGrade;
 	}
 	
@@ -149,10 +156,6 @@ public class VoteVo {
 	
 	public void setUserNo(Integer userNo) {
 		this.userNo = userNo;
-	}
-
-	public void setUserGrade(Integer userGrade) {
-		this.userGrade = userGrade;
 	}
 	
 	public String getGroupName() {
@@ -197,6 +200,14 @@ public class VoteVo {
 
 	public void setVoteIp(String voteIp) {
 		this.voteIp = voteIp;
+	}
+	
+	public int getBossCheck() {
+		return bossCheck;
+	}
+
+	public void setBossCheck(int bossCheck) {
+		this.bossCheck = bossCheck;
 	}
 	
 	
