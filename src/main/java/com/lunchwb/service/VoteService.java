@@ -178,6 +178,8 @@ public class VoteService {
 			mem.setUserNo(member.getUserNo());
 			mem.setUserName(member.getUserName());
 			mem.setVoteVoted(member.getVoteVoted());
+			mem.setBossCheck(member.getBossCheck());
+			mem.setUserGrade(member.getUserGrade());
 			
 			voteMember.add(mem);
 		}

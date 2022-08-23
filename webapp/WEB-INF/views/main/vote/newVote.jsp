@@ -553,7 +553,7 @@ $("#make-vote-btn").on("click", function(){
 	
 	// 투표 멤버 데이터 정리하기
 	let voteMember = [] // 투표 참가자 저장할 리스트(List<VoteVo>)
-	let checkMember = [] // 투표 참가하는 회원 저장할 리스트(List<Integer>) >> userState 업데이트용
+	let checkMember = [] // 추가된 회원 저장할 리스트(List<Integer>) >> 투표 가능 여부 check 용
 	var cnt = 0
 	
 	for (var i = 1; i <= totVote; i++) {
@@ -576,10 +576,9 @@ $("#make-vote-btn").on("click", function(){
 			currMem["userName"] = currName
 						
 			var userGrade = parseInt(currDiv.attr("data-user-grade"))
-			
-			if (userGrade > 0) { // 회원이고 원래 그룹원인 사람이라면 정보 더 불러옴
-				var userNo =  parseInt(currDiv.attr("data-user-no"))
-						
+			var userNo =  parseInt(currDiv.attr("data-user-no"))
+
+			if (userGrade >= 0) { // 회원은 userState 업데이트 위해 정보 추가 수집
 				currMem["userNo"] = userNo
 				currMem["userGrade"] = userGrade
 				

@@ -75,13 +75,10 @@
                         <div class="d-flex d-xxl-flex flex-row flex-grow-0 flex-wrap justify-content-xxl-start" id="edit-vote-people-area">
                         
                         	<!--  투표 참여할 인원들 표시  -->   
-                        	<c:set var="memberNo" value="0" />
                         	                         	
                         	<c:forEach var="member" items="${voteMember}">
-                        		<c:set var="memberNo" value="${memberNo+1}" />
-                        		
                         		<c:if test="${member.bossCheck==1}">
-                        			<span class="d-flex d-xxl-flex flex-wrap vote-people-bujang vote-people" data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${memberNo}">
+                        			<span class="d-flex d-xxl-flex flex-wrap vote-people-bujang vote-people" data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${member.voteMemberNo}">
                         				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
                         					<c:if test="${member.userNo != authUser.userNo}">
                         						<i class="fas fa-minus-circle vote-member-not-today"></i>
@@ -98,7 +95,7 @@
                         		</c:if>
                         		
                         		<c:if test="${member.bossCheck==0}">
-                        			<span class="d-flex d-xxl-flex flex-wrap vote-people" data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${memberNo}">
+                        			<span class="d-flex d-xxl-flex flex-wrap vote-people" data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${member.voteMemberNo}">
                         				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
                         					<c:if test="${member.userNo != authUser.userNo}">
                         						<i class="fas fa-minus-circle vote-member-not-today"></i>
