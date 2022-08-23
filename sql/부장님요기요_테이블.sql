@@ -338,7 +338,7 @@ CREATE TABLE vote_members (
  user_no number(20) NOT NULL,
  user_name varchar2(200) NOT NULL,
  vote_voted number(20) DEFAULT 0 NOT NULL, 
- vote_ip varchar2(500) null
+ vote_ip varchar2(1000) null
 );
 
 
