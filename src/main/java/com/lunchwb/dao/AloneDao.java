@@ -1,20 +1,31 @@
 package com.lunchwb.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import com.lunchwb.vo.AloneVo;
 
 @Repository
 public class AloneDao {
 	
 	@Autowired
 	private SqlSession sqlSession;
-	private static final Logger logger = LoggerFactory.getLogger(AloneDao.class);
 	
+	public List<AloneVo> reviewList(int userNo) {
+		List<AloneVo> reviewList = sqlSession.selectList("alone.reviewList", userNo);
+		
+		return reviewList;
+	};
 	
-	
+	public int delReview(int reviewNo) {
+		System.out.println("Dao: "+reviewNo);
+		int count = sqlSession.delete("alone.deleteReview",reviewNo);
+		
+		return count;
+	};
 	
 
 }
