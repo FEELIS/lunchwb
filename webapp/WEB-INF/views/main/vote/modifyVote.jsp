@@ -76,8 +76,7 @@
                         
                         <div class="d-flex d-xxl-flex flex-row flex-grow-0 flex-wrap justify-content-xxl-start" id="edit-vote-people-area">
                         
-                        	<!--  투표 참여할 인원들 표시  -->   
-                        	                         	
+                        	<!--  투표 참여할 인원들 표시  -->                           	                         	
                         	<c:forEach var="member" items="${voteMember}">                       		
                         			<span class="d-flex d-xxl-flex flex-wrap vote-people
                         						<c:if test="${member.bossCheck == 1}">vote-people-bujang</c:if> 
@@ -138,8 +137,12 @@
         
         <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
         
-    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
+    <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/editVote.js"></script>
+
 
 </body>
 
