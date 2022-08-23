@@ -10,6 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 <title>부장님요기요</title>
 
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/assets/img/bujang.png">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Bold-BS4-Responsive-Pricing-Table-Snippet.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -91,56 +92,37 @@ console.log(Kakao.isInitialized());
 function kakaoShare() {
 	console.log(basketItem);
 	console.log(basketItem.length);
-	if(basketItem[2] == '' || basketItem[2] == null ){
-		Kakao.Link.sendDefault({
-			objectType: 'feed',
-			content: {
-				title: '부장님 투표해주세요',
-				imageUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-				description: basketItem[0] + ", " + basketItem[1],
-				link: {
-				  mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-				  webUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-				},
-			},
-			buttons: [
-				{
-					title: '웹으로 보기',
-					link: {
-						mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-						webUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-					},
-				},
-			],
-		    // 카카오톡 미설치 시 카카오톡 설치 경로이동
-		    installTalk: true,
-		})
-	}else if(basketItem[2] != '' || basketItem[2] != null ){
-		Kakao.Link.sendDefault({
-			objectType: 'feed',
-			content: {
-				title: '부장님 투표해주세요',
-				imageUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-				description: basketItem[0] + ", " + basketItem[1] + ", " + basketItem[2], 
-				link: {
-				  mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-				  webUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-				},
-			},
-			buttons: [
-				{
-					title: '웹으로 보기',
-					link: {
-						mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-						webUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-					},
-				},
-			],
-		    // 카카오톡 미설치 시 카카오톡 설치 경로이동
-		    installTalk: true,
-		})
-		  
+	
+	var descr;
+	if(basketItem[2] == '' || basketItem[2] == null){
+		descr = basketItem[0] + ", " + basketItem[1];
+	}else{
+		descr = basketItem[0] + ", " + basketItem[1] + ", " + basketItem[2];
 	}
+	Kakao.Link.sendDefault({
+		objectType: 'feed',
+		content: {
+			title: '부장님 투표해주세요',
+			//title: '부장님 여기어때?',
+			imageUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+			description: descr,
+			link: {
+			  mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+			  webUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+			},
+		},
+		buttons: [
+			{
+				title: '웹으로 보기',
+				link: {
+					mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+					webUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+				},
+			},
+		],
+	    // 카카오톡 미설치 시 카카오톡 설치 경로이동
+	    installTalk: true,
+	})
 }
 </script>
 
