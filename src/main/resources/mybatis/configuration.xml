@@ -19,6 +19,7 @@
    		<typeAlias alias="BlackVo" type="com.lunchwb.vo.BlacklistVo"/>
    		<typeAlias alias="Map" type="java.util.Map"/>
    		<typeAlias alias="List" type="java.util.List"/>
+   		<typeAlias alias="Date" type="java.util.Date"/>
     </typeAliases>
 
     <mappers>
