@@ -417,7 +417,7 @@
   cursor: pointer;
 }
 
-#modal-selec-member-go #member-selection-button {
+#modal-select-member-go #member-selection-button button {
 	width: 60px;
 	height: 25px;
 	margin: 10px 5px;
