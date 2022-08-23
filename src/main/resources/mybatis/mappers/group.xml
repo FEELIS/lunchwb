@@ -15,6 +15,7 @@
 		<result column="user_age" property="userAge" />
 		<result column="user_sex" property="userSex" />
 		<result column="user_grade" property="userGrade" />
+		<result column="user_state" property="userState" />
 		<result column="group_order" property="groupOrder" />
 	</resultMap>	
 
