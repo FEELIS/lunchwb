@@ -35,7 +35,6 @@ public class BasketController {
 	@PostMapping("/getBasketGroup")
 	public List<GroupVo> getBasketGroup(@RequestBody int userNo) {
 		logger.info("basket group 불러오기");
-		logger.info("userNo: " + userNo);
 		
 		List<GroupVo> basketGroup = basketService.getBasketGroup(userNo);
 		
@@ -48,6 +47,7 @@ public class BasketController {
 	@PostMapping("/setSessionBasketGroup")
 	public boolean setSessionBasketGroup(@RequestBody Map<String, Object> basket_group, HttpSession session) {
 		logger.info("세션 장바구니 그룹 저장");
+		
 		boolean result = true;
 		
 		if (basket_group == null) {
@@ -60,7 +60,7 @@ public class BasketController {
 			session.removeAttribute("curr_basket_group");
 		}
 		session.setAttribute("curr_basket_group", currBasketGroup);
-		logger.info("현재 장바구니 그룹: " + currBasketGroup);
+		logger.info("현재 장바구니 그룹: " + currBasketGroup + " - 세션 저장 완료");
 		
 		return result;
 		
@@ -68,6 +68,7 @@ public class BasketController {
 	
 	
 	// 페이지 로드시 장바구니 불러오기
+	@SuppressWarnings("unchecked")
 	@ResponseBody
 	@PostMapping("/loadBasket")
 	public Map<Integer, List<StoreVo>> loadBasket(HttpSession session) {
@@ -84,10 +85,9 @@ public class BasketController {
 		logger.info("비로그인 회원 장바구니 생성");
 		
 		GPSVo curr_location = (GPSVo)session.getAttribute("curr_location");
-		logger.info(curr_location.toString());
 		
+		@SuppressWarnings("unchecked")
 		List<Integer> filter_excluded = (List<Integer>)session.getAttribute("filter_excluded");
-		logger.info(filter_excluded.toString());
 		
 		boolean user = false;
 		if (session.getAttribute("authUser") != null) {
@@ -96,9 +96,6 @@ public class BasketController {
 					
 		Map<Integer, List<StoreVo>> basket = basketService.makeNewbasket();	
 		basket.put(0, basketService.addItemsToBasket(basket.get(0), 0, curr_location, filter_excluded, true, user));	
-		
-		//JSONObject json = new JSONObject(basket);
-		//session.setAttribute("basket_json", json);
 
 		if (session.getAttribute("basket") != null) {
 			session.removeAttribute("basket");
@@ -117,10 +114,9 @@ public class BasketController {
 		logger.info("로그인 회원 장바구니 생성");
 		
 		GPSVo curr_location = (GPSVo)session.getAttribute("curr_location");
-		logger.info(curr_location.toString());
 		
+		@SuppressWarnings("unchecked")
 		List<Integer> filter_excluded = (List<Integer>)session.getAttribute("filter_excluded");
-		logger.info(filter_excluded.toString());
 		
 		if (basketGroup.size() == 0) {
 			GroupVo noGroup = new GroupVo();
@@ -153,10 +149,9 @@ public class BasketController {
 		logger.info(" 장바구니 추가 추천");
 		
 		GPSVo curr_location = (GPSVo)session.getAttribute("curr_location");
-		logger.info(curr_location.toString());
 		
+		@SuppressWarnings("unchecked")
 		List<Integer> filter_excluded = (List<Integer>)session.getAttribute("filter_excluded");
-		logger.info(filter_excluded.toString());
 		
 		boolean user = false;
 		if (session.getAttribute("authUser") != null) {
@@ -165,6 +160,7 @@ public class BasketController {
 		
 		Integer groupNo = (Integer)session.getAttribute("curr_basket_group");
 		
+		@SuppressWarnings("unchecked")
 		Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
 		basket.put(groupNo, basketService.addItemsToBasket(basket.get(groupNo), groupNo, curr_location, filter_excluded, false, user));
 		
@@ -184,6 +180,7 @@ public class BasketController {
 	public Map<Integer, List<StoreVo>> deleteFromBasket(@RequestBody Map<String, Object> deleteStore, HttpSession session) {
 		logger.info("장바구니 아이템 삭제");
 		
+		@SuppressWarnings("unchecked")
 		Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
 		Integer groupNo = (Integer)session.getAttribute("curr_basket_group");
 		Integer storeNo = (Integer)deleteStore.get("storeNo");
@@ -206,6 +203,7 @@ public class BasketController {
 	public Map<Integer, List<StoreVo>> addToBasket(@RequestBody Map<String, Object> addStore, HttpSession session) {
 		logger.info("장바구니 항목 추가");
 		
+		@SuppressWarnings("unchecked")
 		Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
 		Integer groupNo = (Integer)session.getAttribute("curr_basket_group");
 		Integer storeNo = (Integer)addStore.get("storeNo");
@@ -246,7 +244,6 @@ public class BasketController {
 			result = false;
 			
 		} else {
-			logger.info("gpsVo: " + gpsVo.toString());
 			result = true;
 		}
 		
@@ -264,6 +261,7 @@ public class BasketController {
 	@PostMapping("/makeFilterSession")
 	public boolean makeFilterSession(HttpSession session) {
 		logger.info("세션 필터 생성");
+		
 		List<Integer> filter_excluded = new ArrayList<>();
 		
 		session.setAttribute("filter_excluded", filter_excluded);

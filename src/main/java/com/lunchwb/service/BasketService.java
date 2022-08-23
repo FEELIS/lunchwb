@@ -125,7 +125,6 @@ public class BasketService {
 			store.setStoreOpeningHours(null);
 			
 			String today = jsonArray.get(day).toString();
-			System.out.println(store.getStoreName() + " 가게 오늘 영업시간: " + today);
 			
 			String time = "00";
 			if (today.contains("~")) {
@@ -139,8 +138,6 @@ public class BasketService {
 					store.setStored(false);
 				}
 				basket.add(store);
-				System.out.print("장바구니 담음 ");
-				System.out.println(store);
 				i++;
 			}
 			if (i >= 3 || basket.size() >= 15) break;

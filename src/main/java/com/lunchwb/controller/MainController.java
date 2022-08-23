@@ -47,7 +47,8 @@ public class MainController {
 		logger.info("MainController");
 		System.out.println("**********************************************************************************************************************************************************");
 		
-		logger.info(home(request));
+		logger.info("client ip: " + home(request));
+		
 		int userState = 0;
 		Integer userNo = null;
 		
