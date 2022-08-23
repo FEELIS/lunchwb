@@ -866,7 +866,7 @@ $("#basket-table").on("click", ".basket-del-btn", async function(){
 async function deleteBasketItem(storeNo) {
 	
 	// 장바구니에서 해당 가게 stored = false로 변경
-	await deleteSessionBasketGroup(deleteStoreNo)
+	await deleteSessionBasketGroup(storeNo)
 	
 	// 지도 핀 변경	
 }
@@ -951,7 +951,7 @@ function addItemToBasket(storeNo) {
 }
 
 
-// 다른 그룹 선택 시 장바구니 교페하는 함수
+// 다른 그룹 선택 시 장바구니 교체하는 함수
 async function changeGroupBasket() {
 	$(".basket-table-row").remove()
 	
