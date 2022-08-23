@@ -326,7 +326,7 @@ CREATE TABLE vote (
  vote_made_user number(20) NOT NULL,
  group_no number(20) NOT NULL,
  vote_end_time DATE NOT NULL,
- vote_items varchar2(1000) null,
+ vote_items varchar2(3000) null,
  vote_results varchar2(1000) NULL,
  vote_state number(20) DEFAULT 1 NOT NULL
 );
@@ -338,7 +338,7 @@ CREATE TABLE vote_members (
  user_no number(20) NOT NULL,
  user_name varchar2(200) NOT NULL,
  vote_voted number(20) DEFAULT 0 NOT NULL, 
- vote_ip varchar2(3000) null
+ vote_ip varchar2(500) null
 );
 
 
