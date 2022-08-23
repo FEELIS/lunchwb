@@ -137,10 +137,12 @@
 	                <div class="justify-content-center">
 	                    <p class="text-center">같이 밥을 먹을 그룹원들에게 투표를 공유할 수 있습니다<br></p>
 	                    <div class="d-flex justify-content-center">
-	                    	<button class="btn btn-danger d-inline-flex d-xxl-flex justify-content-center align-items-center" id="vote-kakao-btn" type="button">
-	                    		<i class="fas fa-comment"></i>
-	                    		<span>공유하기</span>
-	                    	</button>
+	                    	<a href="javascript:kakaoShare()" style="text-decoration:none;">
+				            	<button class="btn btn-danger d-inline-flex d-xxl-flex justify-content-center align-items-center" id="vote-kakao-btn" type="button">
+				            		<i class="fas fa-comment"></i>
+				            		<span>공유하기</span>
+				            	</button>
+			            	</a>
 	                    	<span class="d-inline-flex flex-shrink-0 justify-content-center flex-nowrap align-items-xxl-center" id="vote-url-copy-box">
 	                    		<i class="fas fa-link d-inline-flex d-xxl-flex flex-shrink-0 justify-content-start align-items-center justify-content-xl-start align-items-xl-center justify-content-xxl-start align-items-xxl-center"></i>
 	                    		<input id="vote-url-input" class="d-inline-flex d-xxl-flex flex-shrink-0 align-items-xxl-center" type="text" value="">
@@ -700,6 +702,52 @@ async function saveClipBoard() {
 $("#vote-link-modal").on("hide.bs.modal", function(){
 	location.replace("${pageContext.request.contextPath}/")
 })
+
+/* 카카오 공유하기 api */
+
+// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+Kakao.init('f78c3d22061aa91b824c89a07b348da9');
+
+// SDK 초기화 여부를 판단합니다.
+console.log(Kakao.isInitialized());
+
+function kakaoShare() {
+	var voteURL = $("#vote-url-input").val();
+	var basketItem = [JSON.parse(currBasket)[0].storeName, JSON.parse(currBasket)[1].storeName, JSON.parse(currBasket)[2].storeName];
+	console.log(basketItem)
+	var desc;
+	
+	if(basketItem[2] == '' || basketItem[2] == null){
+		desc = basketItem[0] + ", " + basketItem[1];
+	}else{
+		desc = basketItem[0] + ", " + basketItem[1] + ", " + basketItem[2];
+	} 
+	
+	Kakao.Link.sendDefault({
+		objectType: 'feed',
+		content: {
+			title: '부장님 투표해주세요',
+			//title: '부장님 여기어때?',
+			imageUrl: voteURL,
+			description: desc,
+			link: {
+			  mobileWebUrl: voteURL,
+			  webUrl: voteURL,
+			},
+		},
+		buttons: [
+			{
+				title: '웹으로 보기',
+				link: {
+					mobileWebUrl: voteURL,
+					webUrl: voteURL,
+				},
+			},
+		],
+	    // 카카오톡 미설치 시 카카오톡 설치 경로이동
+	    installTalk: true,
+	})
+}
 
 </script>
 
