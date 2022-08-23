@@ -59,11 +59,11 @@ public class VisitedController {
 	
 	/* 방문 취소 */
 	@GetMapping("cancel/{visitedNo}")
-	public String cancelVisit(@PathVariable("visitedNo") int visitedNo, @RequestParam(name="groupNo", defaultValue="0") int groupNo, HttpSession session) {
+	public String cancelVisit(@PathVariable("visitedNo") int visitedNo, HttpSession session) {
 		logger.info("VisitedController > decideVisit()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
-		visitedService.cancelVisit(authUser, visitedNo, groupNo);
+		visitedService.cancelVisit(authUser, visitedNo);
 		
 		return "redirect:/";
 	}

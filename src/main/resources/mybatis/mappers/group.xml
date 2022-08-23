@@ -221,27 +221,6 @@
 	</select>
 	
 	
-	<!-- 방문 결정 그룹 멤버 번호 조회(회원만 cause for 상태변경) -->
-	<select id="visitMember" parameterType="int" resultMap="GroupVo">
-		SELECT u.user_no
-		FROM group_member m, users u
-		WHERE group_no = #{groupNo}
-		AND m.user_no = u.user_no
-		AND user_email IS NOT NULL
-	</select>
-	
-	
-	<!-- 방문 결정 했던 멤버 번호 조회 --> 
-	<select id="visitedMember" parameterType="int" resultType="int">
-		SELECT u.user_no
-		FROM visited v, users u
-		WHERE group_no = #{groupNo}
-		AND visited_date = TO_DATE(SYSDATE)
-		AND v.user_no = u.user_no
-		AND user_email IS NOT NULL
-	</select>
-	
-	
 	<!--    정원     -->
 	<!-- index.jsp에서 그룹 선택 -->
 	<select id="selectBasketGroup" parameterType="int" resultMap="GroupVo">

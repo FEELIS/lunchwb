@@ -94,6 +94,7 @@ public class VisitedService {
 	public void decideVisit(int storeNo, int groupNo, List<Integer> memberList, UserVo authUser) {
 		memberList.add(authUser.getUserNo());
 		
+		//같이갈 멤버 전체
 		for(int i=0; i<memberList.size(); i++) {
 			int userNo = memberList.get(i);
 			//오늘 방문 저장
@@ -106,32 +107,15 @@ public class VisitedService {
 	
 	
 	/**************************** 여기갈래요 취소(당일만) ******************************/
-	public void cancelVisit(UserVo authUser, int visitedNo, int groupNo) {
+	public void cancelVisit(UserVo authUser, int visitedNo) {
 		//방문 취소
 		VisitedVo visitedVo = new VisitedVo();
 		visitedVo.setVisitedNo(visitedNo);
-		visitedVo.setGroupNo(groupNo);
 		
 		vstDao.cancelVisit(visitedVo);
 		
-		//상태변경
-		if(groupNo > 0) {
-			// 단체 취소 >같이 방문했던 그룹 멤버
-			List<Integer> visitedMemberList = groupDao.visitedMember(groupNo);
-			List<UserVo> members = new ArrayList<>();
-			
-			for(int i=0; i<visitedMemberList.size(); i++) {
-				UserVo userVo = new UserVo();
-				userVo.setUserNo(visitedMemberList.get(i));
-				members.add(userVo);
-				userDao.updateState0(members);
-			}
-			
-		}else {
-			// 개인 취소
-			int userNo = authUser.getUserNo();
-			userDao.updateState0(userNo);
-		}
+		int userNo = authUser.getUserNo();
+		userDao.updateState0(userNo);
 	}
 	
 	

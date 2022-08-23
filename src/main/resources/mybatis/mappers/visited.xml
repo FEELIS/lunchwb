@@ -62,15 +62,8 @@
 	
 	<delete id="cancelVisit" parameterType="VisitedVo">
 		DELETE FROM visited
-		WHERE 
-			<choose>
-				<when test="groupNo == 0">
-					visited_no = #{visitedNo}
-				</when>
-				<otherwise>
-					group_no = #{groupNo}
-				</otherwise>
-			</choose>
+		WHERE visited_no = #{visitedNo}
+		AND user_no = #{userNo}
 		AND visited_date = TO_DATE(SYSDATE)
 	</delete>
 	

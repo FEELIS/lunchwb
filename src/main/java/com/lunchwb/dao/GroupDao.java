@@ -102,18 +102,6 @@ public class GroupDao {
 		sqlSession.update("group.autoOrder", groupVo);
 	}
 	
-	/******************** 방문 결정 그룹 멤버 ***********************************************/
-	public List<GroupVo> visitMember(int groupNo) {
-		List<GroupVo> visitMemberList = sqlSession.selectList("group.visitMember", groupNo);
-		return visitMemberList;
-	}
-
-	/********************* 방문 취소할 그룹 멤버 *******************************************/
-	public List<Integer> visitedMember(int groupNo) {
-		List<Integer> visitedMemberList = sqlSession.selectList("group.visitedMember", groupNo);
-		return visitedMemberList;
-	}
-	
 	/******************** 장바구니 그룹 선택 ***********************************************/
 	public List<GroupVo> selectBasketGroup(int userNo) {
 		List<GroupVo> basketGroup = sqlSession.selectList("group.selectBasketGroup", userNo);

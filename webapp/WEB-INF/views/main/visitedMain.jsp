@@ -471,24 +471,15 @@ $("#btn-visited-cancel").on("click", function(){
 	
 	var userNo = "${authUser.userNo}"
 	var groupLeader = "${visitedMap.groupLeader}"
-	if(userNo == groupLeader){
-		if(confirm("정말로 방문을 취소하시겠습니까?")){
-			if(confirm("그룹 전체 방문을 취소하시겠습니까?")){
-				document.getElementById("visited-cancel-link").href = "${pageContext.request.contextPath}/visited/cancel/${visitedMap.visitedVo.visitedNo}?groupNo=${visitedMap.visitedVo.groupNo}"
-				return true
-			}
-		}else{
-			return false
-		} 
-	}else if(confirm("정말로 방문을 취소하시겠습니까?")){
-		return true
-		
-	}else{
-		
+	
+	if(!confirm("정말로 방문을 취소하시겠습니까?")){
 		return false
+		//그룹 리더가 같이 안갔을 수도 있으니까 모두 띄우겠음
+		//이라고 했다가....... 이거 잘못취소하는 것도 문제일 것 같아서 개개인만 가능하게
+		//if(confirm("함께 방문한 멤버들의 방문을 모두 취소하시겠습니까?")){	}
 	}
 	
-	return false
+	return true
 })
 
 
