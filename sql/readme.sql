@@ -123,6 +123,8 @@
 -- vote_members테이블 vote_ip칼럼추가 (vote_ip varchar2(500) null)
 -- vote_members테이블 user_no fk 제거
 
+-- 2022.08.23 10:24 =====================
+-- vote_members테이블 vote_ip칼럼추가 varchar2(500) 에서 varchar2(1000) 으로 변경
 
 
 
