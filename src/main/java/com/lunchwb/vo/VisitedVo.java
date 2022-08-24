@@ -61,8 +61,9 @@ public class VisitedVo {
 	}
 	
 	// 달력 출력용
-	public VisitedVo(String visitedDate, String menu1stCateName, String groupName, String storeName,
+	public VisitedVo(int storeNo,String visitedDate, String menu1stCateName, String groupName, String storeName,
 			String menuName, int groupOrder) {
+		this.storeNo = storeNo;
 		this.visitedDate = visitedDate;
 		this.menu1stCateName = menu1stCateName;
 		this.groupName = groupName;
