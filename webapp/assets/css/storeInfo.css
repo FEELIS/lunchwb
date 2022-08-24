@@ -413,16 +413,25 @@
 /* 여기갈래요 멤버 선택 모달창 *************************************************/
 /************************************************************************/
 
-#modal-select-member-go .form-check-label {
-  cursor: pointer;
+#modal-select-member-go p {
+	margin-bottom: 10px;
+}
+
+#modal-select-member-go #member-selection-button {
+	margin-bottom: 10px;
 }
 
 #modal-select-member-go #member-selection-button button {
-  width: 100px;
+  width: 80px;
   height: 25px;
+  padding: 0px;
+  vertical-align: middle;
   font-size: 14px;
   background-color: var(--bs-light);
   border-color: rgb(66,98,190);
   color: rgb(66,98,190);
 }
 
+#modal-select-member-go .form-check-label {
+  cursor: pointer;
+}
