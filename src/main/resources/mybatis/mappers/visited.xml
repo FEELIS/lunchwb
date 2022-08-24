@@ -188,7 +188,7 @@
 		SELECT seq_visited_no.NEXTVAL, A.*
 		FROM (
 		<foreach item="userNo" collection="voteMember" separator="UNION ALL ">
-			SELECT #{userNo} AS user_no, #{groupNo} AS group_no, #{storeNo} AS store_no, TO_DATE(SYSDATE) as visited_date 
+			SELECT #{userNo} AS user_no, #{groupNo} AS group_no, #{storeNo} AS store_no, TO_DATE(SYSDATE) AS visited_date 
 			FROM dual
 		</foreach>
 		) A
