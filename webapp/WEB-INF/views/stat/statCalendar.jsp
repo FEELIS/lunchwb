@@ -73,7 +73,7 @@
 </body>
 <script type="text/javascript">
 //가게모달 구분용
-CalendarJSP = true
+CalendarJSP = true;
 
     (function($) {
         var todayDate = new Date();
