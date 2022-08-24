@@ -52,8 +52,15 @@
                     <div id="edit-vote-header">
                     	<span id="edit-vote-group-name">${voteInfo.groupName}</span>                        	
                     	<span id="edit-vote-group-nums">
+                    		<c:set var="cntNums" value="0" />
+                    		<c:forEach var="member" items="${voteMember}">
+                    			<c:if test="${member.voteVoted != -1}">
+                    				<c:set var="cntNums" value="${cntNums+1}" />
+                    			</c:if>
+                    		</c:forEach>
+                    	
                     		<span>(총 인원&nbsp;</span>
-                    		<span id="edit-vote-group-num" class="emphasize-blue">${fn:length(voteMember)}</span>
+                    		<span id="edit-vote-group-num" class="emphasize-blue">${cntNums}</span>
                     		<span>명)</span>
                     	</span>
                     </div>
@@ -84,12 +91,17 @@
                         		                       		
                        			<span class="d-flex d-xxl-flex flex-wrap vote-people
                        						<c:if test="${member.bossCheck == 1}">vote-people-bujang</c:if>
-                       						<c:if test="${member.voteVoted != 0}">vote-people-voted</c:if>"
+                       						<c:if test="${member.voteVoted > 0}">vote-people-voted</c:if>
+                       						<c:if test="${member.voteVoted == -1}">vote-people-deleted</c:if>"
                        				  data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${member.voteMemberNo}" data-voteVoted="${member.voteVoted}" data-tempNo="${tempNo}">
                        				  
                        				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
-                       					<c:if test="${(member.userNo != authUser.userNo or member.voteVoted != 0) and member.userGrade != -1}">
+                       					<c:if test="${member.userNo != authUser.userNo and member.voteVoted == 0 and member.userGrade != -1}">
                        						<i class="fas fa-minus-circle vote-member-not-today"></i>
+                       					</c:if>
+                       					
+                       					<c:if test="${member.voteVoted == -1}">
+                       						<i class="fas fa-plus-circle vote-member-re-add"></i>
                        					</c:if>
                        					
                        					<c:if test="${member.userGrade == -1 and member.voteVoted == 0}">
@@ -147,20 +159,15 @@
 
 <script>
 
-//지금 시각
-let currentDate
-// 지금 시각(시)
-let currentTime
-// 지금 시각(분)
-let currentMin
-// 임시 시각(시)
-let tempTime
-// 임시 시각(분)
-let tempMin
-// 새이름 다 떨어졌을 때 사용할 변수
-let myBird = 1
+let currentDate //지금 시각
+let currentTime // 지금 시각(시)
+let currentMin // 지금 시각(분)
+let tempTime // 임시 시각(시)
+let tempMin // 임시 시각(분)
+let myBird = 1 // 새이름 다 떨어졌을 때 사용할 변수
+
 // idx로 사용할 전체 사람 수(계속 업데이트)
-let totVote = parseInt($("#edit-vote-group-num").text())
+let totVote = ${tempNo}
 // 모달 안나오게
 let indexJSP = false
 
@@ -557,6 +564,9 @@ $("#make-vote-btn").on("click", function(){
 	
 	// 투표 멤버 데이터 정리하기
 	let voteMember = [] // 투표 참가자 저장할 리스트(List<VoteVo>)
+	let checkMember = [] // 추가된 회원 저장할 리스트(List<Integer>) >> 투표 가능 여부 check 용
+	let notTodayMember = [] // 오늘 못가는 그룹원 저장할 리스트 (List<Integer>)
+	var cnt = 0
 	
 	for (var i = 1; i <= totVote; i++) {
 		var currMem = {}
@@ -567,13 +577,11 @@ $("#make-vote-btn").on("click", function(){
 		// 해당 no의 사람이 존재한다면
 		if (currName.length > 0) {
 			// 이미 투표한 사람은 안따지기로
-			if (currDiv.hasClass("vote-people-voted")) {
+			if (parseInt(currDiv.attr("data-voteVoted")) > 0) {
 				continue
 				
-			} else if (currDiv.hasClass("vote-people-deleted")) { // 오늘 안가기로 한 회원이면 저장하지 않음
-				continue
-			}
-			
+			} 
+			cnt += 1
 			// 투표 참가자 이름 불러오기
 			currMem["userName"] = currName
 						
@@ -582,12 +590,26 @@ $("#make-vote-btn").on("click", function(){
 
 			if (userGrade >= 0) { // 회원은 userState 업데이트 위해 정보 추가 수집
 				currMem["userNo"] = userNo
-				currMem["userGrade"] = userGrade				
+				currMem["userGrade"] = userGrade	
+				
+				// 오늘 안가기로 한 회원이면 따로 처리
+				if (currDiv.hasClass("vote-people-deleted")) {
+					if (currDiv.attr("data-voteVoted") != -1) {
+						notTodayMember.push(currMem)
+					}					
+					cnt -= 1
+					
+					continue
+				}
+				
+				if (currDiv.attr("data-voteVoted") == -1) {
+					checkMember.push(userNo)
+				}
 			}
 			voteMember.push(currMem)
 		}
 	}
-	
+		
 	if (parseInt($("#edit-vote-group-num").text()) < 2) {
 		alert("최소 두 명 이상이 존재해야 투표를 진행할 수 있습니다.")
 		
@@ -595,17 +617,65 @@ $("#make-vote-btn").on("click", function(){
 	}
 	
 	voteMem = JSON.stringify({"mem" : voteMember})
-	console.log(voteMem)
+	notTodayMem = JSON.stringify({"mem" : notTodayMember})
+		
+	// 투표 참여중인 회원 있는지 확인
+	let stopVoteMake = false
 	
+	$.ajax({
+		type : "POST",
+		url : "${pageContext.request.contextPath}/vote/checkVoteMem",
+		contentType : "application/json",
+		async : false,
+		data : JSON.stringify(checkMember),
+		dataType : 'json',
+		
+		success : function(result) {
+			var alertMember = ""
+			
+			for (var i = 0; i < result.length; i++) {
+				if (i != result.length-1) {
+					alertMember += result[i] + "님, "
+				} else {
+					alertMember += result[i]
+				}
+				
+				var cantTr = $("[data-user-name=" + result[i] + "]").closest(".vote-people")
+				
+				// 참여 못하는 회원 비활성화
+				cantTr.addClass("vote-people-deleted")
+				cantTr.find(".vote-people-header i").removeClass("fas fa-minus-circle vote-member-not-today")
+				cantTr.find(".vote-people-header i").addClass("fas fa-plus-circle vote-member-re-add")
+			}
+			
+			// 누구누구 참여 못하는지 알려주기
+			if (alertMember != "") {
+				alert(alertMember + "님은 이미 다른 투표에 참여중입니다.")
+				
+				stopVoteMake = true
+			}
+		},
+		error: function(xhr, status, error){
+			console.log("오류 발생" + error)
+		}
+	})
+	
+	// 참여 못하는 회원이 한 명이라도 있으면 return
+	if (stopVoteMake) {
+		return false
+	}
+		
 	
 	// ajax로 데이터 전송		
 	let voteData = {
 		voteEndDate : voteEndDate,
 		voteMember : voteMem,
-		voteNo : parseInt("${voteInfo.voteNo}")
+		voteNo : parseInt("${voteInfo.voteNo}"),
+		notTodayMember : notTodayMem
 	}
 	
-	
+	console.log(voteData)
+		
 	$.ajax({
 		type : "POST",
 		url : "${pageContext.request.contextPath}/vote/modifyVote",

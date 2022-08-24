@@ -61,13 +61,15 @@
 	        <div id="vote-select-names" class="d-flex d-xxl-flex flex-wrap justify-content-xxl-start">
 	        	<!--  투표 인원 영역  -->       	
 	        	<c:forEach items="${voteMember}" var="member">
-        			<button class="btn btn-primary text-center vote-select-name-btn 
-        			               <c:if test="${authUser.userNo == member.userNo and member.voteVoted == 0}">vote-selected-name</c:if>
-        			               <c:if test="${userState == 1 and empty(authUser) and member.voteVoted == 0 and member.userGrade != 1}">can-click-name</c:if>
-        			               <c:if test="${member.voteVoted != 0}">vote-voted-name</c:if>" 
-        			        type="button" 
-        			        <c:if test="${!(userState == 1 and empty(authUser) and member.voteVoted == 0 and member.userNo == 0)}">disabled="disabled" </c:if>
-        			        data-vote-member-no="${member.voteMemberNo}" data-vote-voted="${member.voteVoted}" data-user-no="${member.userNo}">${member.userName}</button>
+	        		<c:if test="${member.voteVoted != -1}">
+	        			<button class="btn btn-primary text-center vote-select-name-btn 
+	        			               <c:if test="${authUser.userNo == member.userNo and member.voteVoted == 0}">vote-selected-name</c:if>
+	        			               <c:if test="${userState == 1 and empty(authUser) and member.voteVoted == 0 and member.userGrade != 1}">can-click-name</c:if>
+	        			               <c:if test="${member.voteVoted != 0}">vote-voted-name</c:if>" 
+	        			        type="button" 
+	        			        <c:if test="${member.voteVoted > 0 or (empty(authUser) and member.userGrade == 1) or (!empty(authUser) and authUser.userNo != member.userNo)}">disabled="disabled"</c:if> 
+	        			        data-vote-member-no="${member.voteMemberNo}" data-vote-voted="${member.voteVoted}" data-user-no="${member.userNo}">${member.userName}</button>
+	        		</c:if>
 	        	</c:forEach>
 	        </div>
 	    </div>

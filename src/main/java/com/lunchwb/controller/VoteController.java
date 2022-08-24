@@ -78,6 +78,7 @@ public class VoteController {
 		String voteEndDate = voteData.get("voteEndDate");
 		String voteMember = voteData.get("voteMember");
 		String currBasket = voteData.get("currBasket");
+		String notTodayMember = voteData.get("notTodayMember");
 		
 		if (voteEndDate.contains(".")) {
 			voteEndDate = voteEndDate.substring(0, voteEndDate.indexOf("."));
@@ -91,7 +92,7 @@ public class VoteController {
 		int voteNo = 0;
 		
 		if (loginUser != null) {
-			voteNo = voteService.makeVote(loginUser.getUserNo(), date, voteMember, currBasket, groupNo);
+			voteNo = voteService.makeVote(loginUser.getUserNo(), date, voteMember, notTodayMember, currBasket, groupNo);
 		}
 		
 		return voteNo;
@@ -112,7 +113,7 @@ public class VoteController {
 	
 	// 투표하기
 	@PostMapping("/submitVote")
-	public String submitVote(@ModelAttribute VoteVo myVote) throws JsonProcessingException {
+	public String submitVote(@ModelAttribute VoteVo myVote, HttpSession session) throws JsonProcessingException {
 		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("투표하기");
 		System.out.println("**********************************************************************************************************************************************************");
@@ -120,7 +121,11 @@ public class VoteController {
 		logger.info(myVote.toString());
 		voteService.submitVote(myVote);
 		
-		return "redirect:/";
+		String url = "redirect:/";
+		if (session.getAttribute("authUser") == null) {
+			url = url + myVote.getVoteNo();
+		}
+		return url;
 	}
 	
 	
@@ -177,6 +182,7 @@ public class VoteController {
 		
 		String voteEndDate = (String)voteData.get("voteEndDate");
 		String voteMember = (String)voteData.get("voteMember");
+		String notTodayMember = (String)voteData.get("notTodayMember");
 		int voteNo = (int)voteData.get("voteNo");
 		
 		if (voteEndDate.contains(".")) {
@@ -187,7 +193,7 @@ public class VoteController {
 		Date date = new Date(voteEndDate);
 		
 		boolean result = false;
-		result = voteService.modifyVote(date, voteMember, voteNo);
+		result = voteService.modifyVote(date, voteMember, notTodayMember, voteNo);
 		
 		return result;
 	}

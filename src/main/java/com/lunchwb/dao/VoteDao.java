@@ -42,6 +42,12 @@ public class VoteDao {
 	}
 	
 	
+	// 오늘 투표 참여 안하는 그룹원 insert
+	public int insertNotTodayMember(Map<String, Object> notTodayMems) {
+		return sqlSession.insert("vote.insertNotTodayMember", notTodayMems);
+	}
+	
+	
 	// voteAside 정보 가져오기
 	public List<VoteVo> selectVoteInfo(int voteNo) {
 		return sqlSession.selectList("vote.selectVoteInfo", voteNo);
@@ -127,8 +133,20 @@ public class VoteDao {
 	
 	
 	// 투표 수정시 아직 투표 종료 안한 회원들 삭제
-	public int deleteNotVoted(int voteNo) {
-		return sqlSession.delete("vote.deleteNotVoted", voteNo);
+	public int deleteNotVoted(Map<String, Object> map) {
+		return sqlSession.delete("vote.deleteNotVoted", map);
+	}
+	
+	
+	// 투표 수정시 투표 빠질 회원들 user_state = 0으로 변경
+	public void updateState0(List<VoteVo> list) {
+		sqlSession.update("vote.updateState0", list);
+	}
+	
+	
+	// 투표 수정 시 참여 안하는 멤버들 vote_voted = -1로 업데이트
+	public void updateModifyMember(Map<String, Object> map) {
+		sqlSession.update("vote.updateModifyMember", map);
 	}
 	
 	
