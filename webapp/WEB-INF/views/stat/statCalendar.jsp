@@ -72,8 +72,6 @@
     <!-- /wrapper -->
 </body>
 <script type="text/javascript">
-//가게모달 구분용
-CalendarJSP = true;
 
     (function($) {
         var todayDate = new Date();
@@ -455,7 +453,7 @@ CalendarJSP = true;
 
                             }
 
-                            str += 'show-menu" data-storeno="'+vstList[j].storeNo+'">' + vstList[j].storeName + '</div>';
+                            str += 'show-menu" data-order="'+vstList[j].groupOrder+'" data-storeno="'+vstList[j].storeNo+'">' + vstList[j].storeName + '</div>';
 
                             $("#vday" + i).after(str);
 
