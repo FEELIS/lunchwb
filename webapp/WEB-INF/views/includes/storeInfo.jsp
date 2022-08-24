@@ -58,7 +58,7 @@
                         </div>
                         <div class="text-start d-lg-flex justify-content-lg-center">
                         	<span class="d-inline-block">
-		                        <button class="btn other-store-btn other-store-1" type="button" data-no="247">
+		                        <button class="btn other-store-btn other-store-1" type="button" data-no="247" data-sortno="3">
 		                        	명품청기와감자탕
 		                        	<span class="fw-bold text-warning d-block">
 		                        		<i class="fas fa-star"></i>
@@ -70,7 +70,7 @@
 		                        </button>
 		                    </span>
 		                    <span class="d-inline-block">
-		                    	<button class="btn other-store-btn other-store-2" type="button" data-no="246">
+		                    	<button class="btn other-store-btn other-store-2" type="button" data-no="246" data-sortno="1">
 		                    		다사랑분식
 		                    		<span class="fw-bold text-warning d-block">
 			                    		<i class="fas fa-star"></i>
@@ -315,7 +315,7 @@ $("#visited-store-name").on("click", function(){
 })
 
 
-/* 블랙리스트 가게 조회 */
+/* 블랙리스트(alrady)가게 조회 */
 $("#black-body").on("click", ".black-store-name", function(){
 	var storeNo = $(this).attr("data-storeno")
 	console.log(storeNo+"번 가게 정보 보기")
@@ -323,21 +323,34 @@ $("#black-body").on("click", ".black-store-name", function(){
 })
 
 
-/* 캘린더 기록 가게 조회 */
-$("#calendar-area").on("click", ".show-menu", function(){
+/* 블랙리스트에서 가게 조회(블랙에 없는 add할) */
+$("#black-add-body").on("click", ".black-store-name", function(){
 	var storeNo = $(this).attr("data-storeno")
 	console.log(storeNo+"번 가게 정보 보기")
 	storeInfoOpen(storeNo, 4)
 })
 
 
+/* 캘린더 기록 가게 조회 */
+$("#calendar-area").on("click", ".show-menu", function(){
+	var storeNo = $(this).attr("data-storeno")
+	console.log(storeNo+"번 가게 정보 보기")
+	storeInfoOpen(storeNo, 5)
+})
+
+
+//페이지 구분 두고 나중에 마지막까지 안쓰면 다 지워버리겠어
 /* 모달에서 > 다시 다른 가게 정보 조회(버튼) */
 $("#modal-store .other-store-btn").on("click", function(){
 	//모달에서 다른 모달로 넘어가기 : 페이지 상관없이 불러올 변수는 동일
 	var storeNo = $(this).attr("data-no")
 	console.log(storeNo+"번 가게 정보 보기")
 	
-	//리뷰메인
+	var sortNo = $(this).attr("data-sortno")
+	console.log("종류:" + sortNo)
+	storeInfoOpen(storeNo, Number(sortNo))
+	
+/* 	//리뷰메인
 	if(typeof visitedJSP){
 		storeInfoOpen(storeNo, 0)
 	
@@ -359,7 +372,7 @@ $("#modal-store .other-store-btn").on("click", function(){
 		
 	}else{
 		
-	}
+	} */
 		
 })
 
@@ -378,7 +391,10 @@ function storeInfoOpen(storeNo, k){
 	}
 	
 	//k:footer 버튼 용
-	modalSortOfStore(storeNo, k)
+	//k=2 > 버튼 없음
+	if(k != 2){
+		modalSortOfStore(storeNo, k)
+	}
 	
 	$("#modal-store").modal("show")
 }
@@ -505,7 +521,7 @@ function modalStoreStar(starScore, k){
 	
 	switch(k){
 		case 0: 
-			console.log("k:" + k)
+			//console.log("k:" + k)
 			$(".modalStoreStar").html(str)
 			break
 		default:
@@ -670,9 +686,10 @@ function modalStoreAllMenu(menuVo){
 
 //k=0 > 리뷰메인 : 내가 다녀온 장소 방문취소 (다녀온 곳 아니면 버튼 x) / 블랙리스트 추가(이미 블랙 > 블랙리스트 제외)   
 //k=1 > 장바구니 : 여기갈래요 / 장바구니에 있으면 점심후보추가 or 없으면 점심후보제외
-//k=2 > 장바구니 추천 제외 index 페이지
-//k=3 > 블랙리스트 가게 조회 : isBlack > 블랙리스트 추가/제외
-//k=4 > STAT(방문취소 불가) 블랙리스트만? 3&4 통합? 
+//k=2 > 장바구니 추천 제외 index 페이지 typeof indexJSP === 'undefined' 버튼 없음
+//k=3 > 블랙리스트 : 블랙리스트  제외 blacklistJSP
+//k=4 > 블랙리스트 : 블랙리스트 추가  blacklistJSP
+//k=5 > STAT(방문취소 불가) 블랙리스트만? 3&4 통합? 
 /* 가게 정보 모달  다른 가게 + footer 버튼 */
 function modalSortOfStore(storeNo, k){
 	//버튼 영역 초기화
@@ -691,7 +708,7 @@ function modalSortOfStore(storeNo, k){
 			//다녀온 가게가 아니면 블랙버튼만 : 그룹장만
 			if("${authUser.userNo}" == "${visitedMap.groupLeader}"){
 				var blackVo = {
-					storeNo: "${visitedMap.visitedVo.storeNo}",
+					storeNo: storeNo,
 					groupNo: "${visitedMap.visitedVo.groupNo}"
 				}
 				
@@ -701,7 +718,7 @@ function modalSortOfStore(storeNo, k){
 			break
 		
 		case 1:
-		// k=1 : 바구니/지도
+		// k=1 : 장바구니/지도
 			console.log("curr_group: " + curr_basket_group)
 
 			// 그룹? 비로그인 또는 그룹이 없으면 여기갈래요 불가 > 
@@ -716,14 +733,23 @@ function modalSortOfStore(storeNo, k){
 			if(basket[curr_basket_group] != null && basket[curr_basket_group] != "" && basket[curr_basket_group] != []){
 				console.log("장바구니에 추가된 가게 있음")
 				for(var i=0; i<basket[curr_basket_group].length; i++){
+					//장바구니에 있는 가게만 검사했어
 					if(basket[curr_basket_group][i].storeNo == storeNo){
 						console.log("바구니 가게: "+basket[curr_basket_group][i].storeNo)
+						
 						//장바구니에 있는 가게
 						if(basket[curr_basket_group][i].stored){
 							$(".store-button-area").append('<button class="btn btn-light btn-delete-store-basket" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">점심후보제외</button>')
 						}else{
 							$(".store-button-area").append('<button class="btn btn-light btn-add-store-basket" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">점심후보추가</button>')
 						}
+						
+						break
+						
+					//마지막까지 검사했어 없었어(모달에서 다른 가게 정보 접근)
+					}else if(i == basket[curr_basket_group].length - 1){
+						console.log("같은 카테고리 다른 가게 정보")
+						$(".store-button-area").append('<button class="btn btn-light btn-add-store-basket" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">점심후보추가</button>')
 					}
 				}
 			}else{
@@ -733,18 +759,32 @@ function modalSortOfStore(storeNo, k){
 
 			break
 			
-		case 2:
-		//stat에서 조회 > 나중에 추가
-			break
+		case 2: 
+		//k=2 : typeof indexJSP === 'undefined'
+
+		
 			
 		case 3:
-		// 추가할 블랙리스트에서 조회
-			$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">블랙추가</button>')
+		// 블랙리스트에서 조회(이미 있음 > 제거)
+			// 그룹장만 가능
+			if("${authUser.userNo}" == "${map.groupLeader}"){
+				$(".store-button-area").append('<button class="btn btn-light btn-del-black" type="button" data-storeNo="'+storeNo+'">블랙제외</button>')
+			}
 			break
 		
 		case 4:
-		// 블랙리스트에서 조회
-			$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">블랙제외</button>')
+		// 블랙리스트에서 블랙할 가게 검색(없음 > 추가)
+			//그룹장만 가능(애초에 접근자체가 그룹장만 되는데)
+			if("${authUser.userNo}" == "${map.groupLeader}"){
+				var blackVo = {
+						storeNo: storeNo,
+						groupNo: "${map.groupNo}"
+				}
+				$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'">블랙추가</button>')
+			}
+			
+		case 5:
+		// 캘린더에서 조회
 			break
 			
 		default :
@@ -784,6 +824,99 @@ $("#modal-all-menu .btn-delete-store-basket").on("click", function(){
 })
 
 
+//블랙추가 공통
+//bAddNo = 0 : visitedMain
+//bAddNo = 1 : blacklist.Jsp
+function blackAdd(blackVo, bAddNo){
+	$.ajax({
+		url : "${pageContext.request.contextPath}/group/black/add",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(blackVo),
+		dataType : "json",
+		
+		success : function(result){
+			console.log("블랙추가: "+result)
+			
+			if(result == "success"){
+				
+				alert("블랙리스트 추가 완료")
+				
+				//공통
+				//modal(showInfo.jsp)
+				$(".modal-btn-add-black").remove()
+				addModalBlackBtn(blackVo.storeNo, "Y")
+				
+				switch(bAddNo){
+					case 0: 
+						//visitedAside(visitedMain)
+						drawBlackBtn("Y")
+						break
+						
+					case 1:
+						//blacklist
+						addBlackTable(blackVo)
+				}
+				
+			}else{
+				alert("블랙리스트 추가 실패")
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	})
+}
+
+
+//블랙제거 공통
+//bAddNo = 0 : visitedMain.Jsp
+//bAddNo = 1 : blacklist.Jsp
+function blackDel(blackVo, bDelNo){
+	$.ajax({
+		url : "${pageContext.request.contextPath}/group/black/delete",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(blackVo),
+		dataType : "json",
+		
+		success : function(result){
+			console.log("블랙삭제: "+result)
+			
+			if(result == "success"){
+				
+				alert("블랙리스트 삭제 완료")
+				
+				//공통
+				//modal(showInfo.jsp)
+				$(".modal-btn-del-black").remove()
+				addModalBlackBtn(blackVo.storeNo, "N")
+				
+				switch(bDelNo){
+				case 0: 
+					//visitedAside(visitedMain)
+					drawBlackBtn("N")
+					break
+					
+				case 1:
+					//blacklist
+					delBlackTable(blackVo)
+					break
+				}
+				
+			}else{
+				alert("블랙리스트 삭제 실패")
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+ 
+	})
+}
+
+
+
 //여기갈래요 버튼 클릭(장바구니화면 모달)
 $("#modal-store").on("click", ".btn-decision-this", function(){
 	console.log("가게 모달창 > 여기갈래요 버튼 클릭")
@@ -793,9 +926,33 @@ $("#modal-store").on("click", ".btn-decision-this", function(){
         console.log("여기갈래요 그룹: ${curr_basket_group}, 가게: " + storeNo)
 
         if(confirm("정말로 방문을 선택하시겠습니까?") == true){
-			if(modalSelectMembers(storeNo, curr_basket_group) == false){
-				return false
-			}
+			modalSelectMembers(storeNo, curr_basket_group)
+		}
+	}
+})
+
+$("#modal-reviews").on("click", ".btn-decision-this", function(){
+	console.log("가게 모달창 > 여기갈래요 버튼 클릭")
+	
+	if (typeof indexJSP == 'undefined' || indexJSP) {
+		var storeNo = $(this).attr("data-storeNo")
+        console.log("여기갈래요 그룹: ${curr_basket_group}, 가게: " + storeNo)
+
+        if(confirm("정말로 방문을 선택하시겠습니까?") == true){
+			modalSelectMembers(storeNo, curr_basket_group)
+		}
+	}
+})
+
+$("#modal-all-menu").on("click", ".btn-decision-this", function(){
+	console.log("가게 모달창 > 여기갈래요 버튼 클릭")
+	
+	if (typeof indexJSP == 'undefined' || indexJSP) {
+		var storeNo = $(this).attr("data-storeNo")
+        console.log("여기갈래요 그룹: ${curr_basket_group}, 가게: " + storeNo)
+
+        if(confirm("정말로 방문을 선택하시겠습니까?") == true){
+			modalSelectMembers(storeNo, curr_basket_group)
 		}
 	}
 })
@@ -896,7 +1053,7 @@ function isBlack(blackVo, bno){
 					drawBlackBtn(result)
 				case 1:
 					//방문메인 가게모달창
-					addModalBlackBtn(result)
+					addModalBlackBtn(blackVo.storeNo, result)
 			}
 		},
 		error : function(XHR, status, error) {
@@ -908,13 +1065,13 @@ function isBlack(blackVo, bno){
 
 
 //모달 블랙 추가/삭제 버튼 그리기
-function addModalBlackBtn(result){
+function addModalBlackBtn(storeNo, result){
 	//블랙맞음
 	if(result == "Y"){
-		$(".store-button-area").append('<button class="btn btn-light modal-btn-del-black" type="button">블랙삭제</button>')
+		$(".store-button-area").append('<button class="btn btn-light modal-btn-del-black" type="button" data-storeno="' + storeNo + '">블랙삭제</button>')
 	//블랙아냐
 	}else{
-		$(".store-button-area").append('<button class="btn btn-light modal-btn-add-black" type="button">블랙추가</button>')
+		$(".store-button-area").append('<button class="btn btn-light modal-btn-add-black" type="button" data-storeno="' + storeNo + '">블랙추가</button>')
 	}
 }
 

@@ -410,8 +410,8 @@ public class GroupService {
 				map.put("blackCount", blackCount);
 				
 				//그룹 리더 
-				int leader = groupDao.groupLeader(groupNo);
-				map.put("leader", leader);
+				int groupLeader = groupDao.groupLeader(groupNo);
+				map.put("groupLeader", groupLeader);
 				
 				//그룹 어사이드 링크 구분
 				map.put("black", true);

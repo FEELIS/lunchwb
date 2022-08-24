@@ -452,7 +452,10 @@ const myVisit = "${visitedMap.relVo}"
 const todayReview = "${visitedMap.reviewVo}"
 console.log("오늘 방문 정보" + visitedVo)
 console.log("오늘 방문한 곳의 지난 방문 정보" + myVisit)
-console.log("오늘의 리뷰 정보" + todayReview)
+
+if(todayReview != null && todayReview != ""){
+	console.log("오늘의 리뷰 정보" + todayReview)
+}
 
 $(document).ready(function(){
 	drawStoreStar()
@@ -513,13 +516,15 @@ function drawBlackBtn(result){
 	//블랙리스트 있음 result: Y
 	if(result == "Y"){
 		$("#visited-black-p").text("블랙리스트에 잘못 추가했었다면?")
-		$("#visited-black-btn-area").html('<button id="btn-visited-black-del" class="btn btn-light link-dark border rounded-pill border-dark" type="button">'
+		$("#visited-black-btn-area").html('<button id="btn-visited-black-del" class="btn btn-light link-dark border rounded-pill border-dark" type="button" '
+											+'data-storeno="${visitedMap.visitedVo.storeNo}">'
 											+'	블랙리스트 삭제'
 											+'</button>')
 	//블랙리스트 없음 result: N
 	}else{
 		$("#visited-black-p").text("혹시 그룹 취향이 아니었나요?")
-		$("#visited-black-btn-area").html('<button id="btn-visited-black-add" class="btn btn-light link-dark border rounded-pill border-dark" type="button">'
+		$("#visited-black-btn-area").html('<button id="btn-visited-black-add" class="btn btn-light link-dark border rounded-pill border-dark" type="button" '
+											+'data-storeno="${visitedMap.visitedVo.storeNo}">'
 											+'	블랙리스트 추가'
 											+'</button>')
 	}
@@ -534,88 +539,100 @@ $("#modal-all-menu").on("click", ".modal-btn-visited-cancel", function(){if(!con
 
 
 //리뷰메인) Aside/가게모달/리뷰모달/메뉴모달 블랙 추가 버튼 클릭
-$("#visited-black-btn-area").on("click", "#btn-visited-black-add", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트로 추가하시겠습니까?")){visitedBlackAdd()}})
-$("#modal-store").on("click", ".modal-btn-add-black", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트로 추가하시겠습니까?")){visitedBlackAdd()}})
-$("#modal-reviews").on("click", ".modal-btn-add-black", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트로 추가하시겠습니까?")){visitedBlackAdd()}})
-$("#modal-all-menu").on("click", ".modal-btn-add-black", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트로 추가하시겠습니까?")){visitedBlackAdd()}})
-
-
-//블랙추가
-function visitedBlackAdd(){
-	var blackVo = {
-			storeNo : "${visitedMap.visitedVo.storeNo}",
+$("#visited-black-btn-area").on("click", "#btn-visited-black-add", function(){
+	if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트로 추가하시겠습니까?")){
+		var blackVo = {
+			storeNo : $(this).attr("data-storeno"),
 			groupNo : "${visitedMap.visitedVo.groupNo}" 
-	}
-	
-	$.ajax({
-		url : "${pageContext.request.contextPath}/group/black/add",
-		type : "post",
-		contentType : "application/json",
-		data : JSON.stringify(blackVo),
-		dataType : "json",
-		
-		success : function(result){
-			console.log("블랙추가: "+result)
-			if(result == "success"){
-				alert("블랙리스트 추가 완료")
-				//aside
-				drawBlackBtn("Y")
-				//modal
-				$(".modal-btn-add-black").remove()
-				addModalBlackBtn("Y")
-				
-			}else{
-				alert("블랙리스트 추가 실패")
-			}
-		},
-		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
 		}
- 
-	})
-}
+			
+		blackAdd(blackVo, 0)
+	}
+})
+
+$("#modal-store").on("click", ".modal-btn-add-black", function(){
+	if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트로 추가하시겠습니까?")){
+		var blackVo = {
+			storeNo : $(this).attr("data-storeno"),
+			groupNo : "${visitedMap.visitedVo.groupNo}" 
+		}
+		
+		blackAdd(blackVo, 0)
+	}
+})
+
+$("#modal-reviews").on("click", ".modal-btn-add-black", function(){
+	if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트로 추가하시겠습니까?")){
+		var blackVo = {
+			storeNo : $(this).attr("data-storeno"),
+			groupNo : "${visitedMap.visitedVo.groupNo}" 
+		}
+			
+		blackAdd(blackVo, 0)
+	}
+})
+
+$("#modal-all-menu").on("click", ".modal-btn-add-black", function(){
+	if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트로 추가하시겠습니까?")){
+		var blackVo = {
+			storeNo : $(this).attr("data-storeno"),
+			groupNo : "${visitedMap.visitedVo.groupNo}" 
+		}
+			
+		blackAdd(blackVo, 0)
+ 	}
+})
+
+
 
 
 //리뷰메인) Aside/가게모달/리뷰모달/메뉴모달 블랙 삭제 버튼 클릭
-$("#visited-black-btn-area").on("click", "#btn-visited-black-del", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트에서 삭제하시겠습니까?")){visitedBlackDel()}})
-$("#modal-store").on("click", ".modal-btn-del-black", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트에서 삭제하시겠습니까?")){visitedBlackDel()}})
-$("#modal-reviews").on("click", ".modal-btn-del-black", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트에서 삭제하시겠습니까?")){visitedBlackDel()}})
-$("#modal-all-menu").on("click", ".modal-btn-del-black", function(){if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트에서 삭제하시겠습니까?")){visitedBlackDel()}})
-
-
-function visitedBlackDel(){
-	var blackVo = {
-			storeNo : "${visitedMap.visitedVo.storeNo}",
+$("#visited-black-btn-area").on("click", "#btn-visited-black-del", function(){
+	if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트에서 삭제하시겠습니까?")){
+		var blackVo = {
+			storeNo : $(this).attr("data-storeno"),
 			groupNo : "${visitedMap.visitedVo.groupNo}" 
-	}
-	
-	$.ajax({
-		url : "${pageContext.request.contextPath}/group/black/delete",
-		type : "post",
-		contentType : "application/json",
-		data : JSON.stringify(blackVo),
-		dataType : "json",
-		
-		success : function(result){
-			console.log("블랙삭제: "+result)
-			if(result == "success"){
-				alert("블랙리스트 삭제 완료")
-				//aside
-				drawBlackBtn("N")
-				//modal
-				$(".modal-btn-del-black").remove()
-				addModalBlackBtn("N")
-			}else{
-				alert("블랙리스트 삭제 실패")
-			}
-		},
-		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
 		}
- 
-	})
-}
+		
+		blackDel(blackVo, 0)
+	}
+})
 
+$("#modal-store").on("click", ".modal-btn-del-black", function(){
+	if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트에서 삭제하시겠습니까?")){
+		var blackVo = {
+			storeNo : $(this).attr("data-storeno"),
+			groupNo : "${visitedMap.visitedVo.groupNo}" 
+		}
+		
+		blackDel(blackVo, 0)
+	}
+})
+
+$("#modal-reviews").on("click", ".modal-btn-del-black", function(){
+	if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트에서 삭제하시겠습니까?")){
+		var blackVo = {
+			storeNo : $(this).attr("data-storeno"),
+			groupNo : "${visitedMap.visitedVo.groupNo}" 
+		}
+		
+		blackDel(blackVo, 0)
+	}
+})
+
+$("#modal-all-menu").on("click", ".modal-btn-del-black", function(){
+	if(confirm("${visitedMap.visitedVo.groupName}의 블랙리스트에서 삭제하시겠습니까?")){
+		var blackVo = {
+			storeNo : $(this).attr("data-storeno"),
+			groupNo : "${visitedMap.visitedVo.groupNo}" 
+		}
+		
+		blackDel(blackVo, 0)
+	}
+})
+
+
+//리뷰 > 별점 그리기
 $("#today-star-icon").on("click", ".starScore", function(){
 	var score = $(this).attr("data-score")
 	var state = $(this).attr("data-stt")

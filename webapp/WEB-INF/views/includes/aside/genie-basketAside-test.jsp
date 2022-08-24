@@ -2,14 +2,36 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-
 <!DOCTYPE html>
 <html>
-
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title></title>
+<title>부장님요기요</title>
+
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/assets/img/bujang.png">
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Bold-BS4-Responsive-Pricing-Table-Snippet.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style-jw.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/basket-aside.css">
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/customModal.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/storeInfo.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nanum+Gothic&amp;display=swap">
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
+
 </head>
 
 
@@ -181,17 +203,30 @@
 
 
 <script type="text/javascript">
+	
+////////////////////////////////////// 대략 위치 ///////////////////////////////////////////////
+
+// 페이지로드: 212
+// gps: 232
+// 장바구니 카테고리 필터: 350
+// 로딩 초기 사용자 그룹 + 장바구니 정보 불러오기: 476 
+// 그룹 관련: 546
+// 장바구니 관련: 675
+// 투표하기 + 랜덤선택 버튼: 984
+// 기타: 1085
+
+
 /////////////////////////// 전역변수 //////////////////////////////////////////////////////////
 
-//index와 연결된 장바구니인지(모달 팝업 관련 필요)
+// index와 연결된 장바구니인지(모달 팝업 관련 필요)
 let indexJSP = false
 
 //userNo
 const userNo = "${authUser.userNo}" 
-//장바구니(Map<Integer, List<StoreVo>: key - storeNo / value - StoreVo(이거저거 많이 들어있음))
+// 장바구니(Map<Integer, List<StoreVo>: key - storeNo / value - StoreVo(이거저거 많이 들어있음))
 let basket = "${basket}" 
 
-//내가 속한 그룹 리스트(List<GroupVo> : groupNo, groupName 들어있음)
+// 내가 속한 그룹 리스트(List<GroupVo> : groupNo, groupName 들어있음)
 let basket_group = [] 
 //현재 선택 그룹(groupNo)
 let curr_basket_group = 0 
@@ -199,7 +234,7 @@ let curr_basket_group = 0
 //제외된 메뉴 카테고리(List<Integer>: menu_1st_cate_no 들어있음)
 let filter_excluded = "${filter_excluded}" 
 
-//현재 위치	
+// 현재 위치	
 let gpsVo = { 
 		gpsX : "${curr_location.gpsX}", // 경도
 		gpsY : "${curr_location.gpsY}", // 위도
@@ -228,7 +263,7 @@ $(document).ready(
 
 /////////////////// gps //////////////////////////////////////////////////////////////////////////////////
 
-//세션에 GPS 저장되어있으면 float로 불러오고, 없으면 찾아서 세션에 저장하는 함수 
+// 세션에 GPS 저장되어있으면 float로 불러오고, 없으면 찾아서 세션에 저장하는 함수 
 async function callGPS() {
 	sleep(300)
 	console.log(gpsVo.gpsX)
@@ -252,7 +287,7 @@ async function callGPS() {
 } 
 
 
-//geolocation 이용해서 현재 위치 불러오고, 지번주소까지 알아내는 함수
+// geolocation 이용해서 현재 위치 불러오고, 지번주소까지 알아내는 함수
 async function curr_location() {
 	document.cookie="safeCookie1=foo; SameSite=Lax";
 	document.cookie="safeCookie2=foo";
@@ -282,13 +317,13 @@ async function curr_location() {
 	console.log(gpsVo.gpsY)
 	
 	// 카카오 API로 주소 알아내기
- await getAddr(gpsVo.gpsY, gpsVo.gpsX)
+    await getAddr(gpsVo.gpsY, gpsVo.gpsX)
 			
 	console.log("curr_location() 종료")
 }
 
 
-//위도경도 > 지번주소 변환하는 카카오 api(파라미터 : 위도, 경도)
+// 위도경도 > 지번주소 변환하는 카카오 api(파라미터 : 위도, 경도)
 async function getAddr(lat, lng) {
 	console.log("getAddr() 시작")
 	let geocoder = new kakao.maps.services.Geocoder()
@@ -320,7 +355,7 @@ async function getAddr(lat, lng) {
 }
 
 
-//세션에 gps 값 저장하기
+// 세션에 gps 값 저장하기
 async function setGPS(gpsVo) {		
 	$.ajax({
 		url : "${pageContext.request.contextPath}/basket/setGPS",		
@@ -346,7 +381,7 @@ async function setGPS(gpsVo) {
 
 ///////////////// 장바구니 필터 /////////////////////////////////////////////////////////////////////////////////
 
-//세션에 필터가 없으면 생성해주고, 있으면 불러와서 파싱하는 함수
+// 세션에 필터가 없으면 생성해주고, 있으면 불러와서 파싱하는 함수
 async function callFilter() {
 	if (filter_excluded == "") { // 세션에 필터가 없다면 만들어서 저장
 		await makeFilterSession()
@@ -365,7 +400,7 @@ async function callFilter() {
 }
 
 
-//세션에 새로 만든 빈 필터 저장하는 함수
+// 세션에 새로 만든 빈 필터 저장하는 함수
 async function makeFilterSession() {
 	$.ajax({
 		url : "${pageContext.request.contextPath}/basket/makeFilterSession",		
@@ -389,7 +424,7 @@ async function makeFilterSession() {
 }
 
 
-//장바구니 필터 클릭 하면 작동 > 모달 체크박스 세션값과 동일하게 셋팅
+// 장바구니 필터 클릭 하면 작동 > 모달 체크박스 세션값과 동일하게 셋팅
 $("#basket-filter-btn").on("click", function(){
 	for (var i = 1; i <= 10; i++) {
 		var curr = "#formCheck-" + String(i)
@@ -404,7 +439,7 @@ $("#basket-filter-btn").on("click", function(){
 })
 
 
-//필터 전체 선택 클릭 시
+// 필터 전체 선택 클릭 시
 $("#modal-recFilter-addAll").on("click", function() {
 	for (var i = 1; i <= 10; i++) {
 		var curr = "#formCheck-" + String(i)
@@ -413,7 +448,7 @@ $("#modal-recFilter-addAll").on("click", function() {
 })
 
 
-//필터 전체 제외 클릭 시
+// 필터 전체 제외 클릭 시
 $("#modal-recFilter-delAll").on("click", function() {
 	for (var i = 1; i <= 10; i++) {
 		var curr = "#formCheck-" + String(i)
@@ -422,7 +457,7 @@ $("#modal-recFilter-delAll").on("click", function() {
 })
 
 
-//장바구니 필터 적용 클릭 > 변경된 사항 세션 저장
+// 장바구니 필터 적용 클릭 > 변경된 사항 세션 저장
 $("#modal-filter-submit").on("click", function() {
 	let temp_filter = filter_excluded
 	filter_excluded = []
@@ -470,7 +505,7 @@ $("#modal-filter-submit").on("click", function() {
 
 /////////////// 사용자 //////////////////////////////////////////////////////////////////////////////
 
-//페이지 로딩 초기 그룹 확인 + 장바구니 확인
+// 페이지 로딩 초기 그룹 확인 + 장바구니 확인
 async function callUser() {
 	console.log("callUser() 시작")
 	
@@ -519,7 +554,7 @@ async function callUser() {
 			console.log(groupChanged)
 			
 			// 그룹 삭제 or 추가때문에 curr_basket_group이 변경되야하는 경우 장바구니 변경
-			if (groupChanged && curr_basket_group != 0) {
+			if (groupChanged && curr_basket_group != 0) {				
 				for (var i = 0; i < basket[curr_basket_group].length; i++) {
 					if (basket[curr_basket_group][i].stored) {
 						addToBasket(basket[curr_basket_group][i])
@@ -536,9 +571,9 @@ async function callUser() {
 }
 	
 
-//////////////////////그룹 ////////////////////////////////////////////////////////////////////////////////////
+////////////////////// 그룹 ////////////////////////////////////////////////////////////////////////////////////
 
-//장바구니 그룹 목록 불러오기
+// 장바구니 그룹 목록 불러오기
 async function getBasketGroups() {
 	var change = true // curr_basket_group 수정 여부 확인
 	
@@ -586,7 +621,7 @@ async function getBasketGroups() {
 }
 
 
-//다른 그룹 클릭할 때 css 변경 + 장바구니 다시 로딩
+// 다른 그룹 클릭할 때 css 변경 + 장바구니 다시 로딩
 $("#basket-groups").on("click", ".basket-normal-group", async function(){
 	
 	// 클릭한 그룹이 현재 curr_basket_group과 다른 경우에만
@@ -631,7 +666,7 @@ $("#basket-groups").on("click", ".basket-normal-group", async function(){
 })	
 
 
-//세션에 현재 선택한 curr_basket_group 저장하는 함수
+// 세션에 현재 선택한 curr_basket_group 저장하는 함수
 async function setSessionBasketGroup() {
 	var data_group = {"curr_basket_group": curr_basket_group}
 	
@@ -659,7 +694,7 @@ async function setSessionBasketGroup() {
 }
 
 
-//그룹추가 버튼 클릭 > 해당 페이지로 이동
+// 그룹추가 버튼 클릭 > 해당 페이지로 이동
 $("#basket-groups").on("click", ".basket-group-add", function(){
 	location.replace("${pageContext.request.contextPath}/group/add")
 })
@@ -667,7 +702,7 @@ $("#basket-groups").on("click", ".basket-group-add", function(){
 
 /////// 장바구니 ///////////////////////////////////////////////////////////////////////////////////////
 
-//비회원 장바구니 새로 생성하기
+// 비회원 장바구니 새로 생성하기
 async function makeGuestBasket() {
 	$.ajax({
 		url : "${pageContext.request.contextPath}/basket/guestMakeBasket",		
@@ -701,7 +736,7 @@ async function makeGuestBasket() {
 }
 
 
-//회원 장바구니 새로 생성하기
+// 회원 장바구니 새로 생성하기
 async function makeGroupBasket() {
 	$.ajax({
 		url : "${pageContext.request.contextPath}/basket/groupMakeBasket",		
@@ -737,7 +772,7 @@ async function makeGroupBasket() {
 }
 
 
-//세션에 존재하는 장바구니 불러오기
+// 세션에 존재하는 장바구니 불러오기
 async function loadBasket() {
 	$.ajax({
 		url : "${pageContext.request.contextPath}/basket/loadBasket",		
@@ -757,20 +792,20 @@ async function loadBasket() {
 }
 
 
-//점심후보 항목 추가할 때 HTML 그려주는 함수
+// 점심후보 항목 추가할 때 HTML 그려주는 함수
 function addToBasket(store) {
 	$("#basket-table-table").append(
 		  "<tr class='basket-table-row' data-storeNo='" + store.storeNo + "'>"
-        + 	"<td class='d-xxl-flex justify-content-xxl-start basket-table-cell'>"                    
-        + 		"<div class='basket-table-store-info'><span class='text-start basket-table-store-name'>" + store.storeName + "</span><span class='text-start basket-table-store-detail'>" + store.menu2ndCateName + " / " + store.distance + "m</span></div>"                        
-        + 	"</td>"                    
-        + 	"<td class='basket-table-del-cell'><i class='fas fa-minus-circle d-xxl-flex basket-del-btn'></i></td>"                    
-        + "</tr>"
+           + 	"<td class='d-xxl-flex justify-content-xxl-start basket-table-cell'>"                    
+           + 		"<div class='basket-table-store-info'><span class='text-start basket-table-store-name'>" + store.storeName + "</span><span class='text-start basket-table-store-detail'>" + store.menu2ndCateName + " / " + store.distance + "m</span></div>"                        
+           + 	"</td>"                    
+           + 	"<td class='basket-table-del-cell'><i class='fas fa-minus-circle d-xxl-flex basket-del-btn'></i></td>"                    
+           + "</tr>"
 	)
 }
 
 
-//다른 가게 추천받기 버튼 클릭 > 가능하면 추가 가게 받아오기
+// 다른 가게 추천받기 버튼 클릭 > 가능하면 추가 가게 받아오기
 $("#basket-another-stores-btn").on("click", async function(){
 	if (!indexJSP) { // 투표나 랜덤에서 클릭했다면
 		var realRecommend = confirm("메인으로 이동하시겠습니까? 현재 진행상황은 저장되지 않습니다.")
@@ -799,7 +834,7 @@ $("#basket-another-stores-btn").on("click", async function(){
 })
 
 
-//장바구니에 추가할 가게 백엔드에서 받아오는 함수
+// 장바구니에 추가할 가게 백엔드에서 받아오는 함수
 async function addMoreStore() {	
 	var temp = basket[curr_basket_group].length // 가게 추가 전 장바구니 담긴 전체 항목 개수
 	
@@ -827,7 +862,7 @@ async function addMoreStore() {
 }
 
 
-//점심후보에서 삭제 버튼 클릭 시 > 점심후보에서 삭제하고 핀 변경 
+// 점심후보에서 삭제 버튼 클릭 시 > 점심후보에서 삭제하고 핀 변경 
 $("#basket-table").on("click", ".basket-del-btn", async function(){
 	if (!indexJSP) { // 투표, 랜덤에서 접근했다면 경고
 		var deleteReal = confirm("페이지를 이동해서 장바구니를 수정하시겠습니까? 지금까지의 진행상황은 저장되지 않습니다.")
@@ -851,7 +886,7 @@ $("#basket-table").on("click", ".basket-del-btn", async function(){
 })
 
 
-//점심후보에서 항목 삭제하는 함수 *********************************************** 모달 같은 데서 사용하셔요
+// 점심후보에서 항목 삭제하는 함수 *********************************************** 모달 같은 데서 사용하셔요
 async function deleteBasketItem(storeNo) {
 	
 	// 장바구니에서 해당 가게 stored = false로 변경
@@ -861,7 +896,7 @@ async function deleteBasketItem(storeNo) {
 }
 
 
-//점심후보에서 삭제한 뒤 세션에 반영
+// 점심후보에서 삭제한 뒤 세션에 반영
 async function deleteSessionBasketGroup(deleteStoreNo) {
 	var delete_obj = {"storeNo": deleteStoreNo}
 
@@ -896,7 +931,7 @@ async function deleteSessionBasketGroup(deleteStoreNo) {
 }
 
 
-//점심후보에 가게 하나도 없을 때 html 그려주는 함수
+// 점심후보에 가게 하나도 없을 때 html 그려주는 함수
 function basketNoItem() {
 	$("#basket-table-table").append(
 		"<tr id='no-basket-items'><td id='basket-no-items' colspan='2'>점심 후보를 추가해주세요</td></tr>"
@@ -906,14 +941,14 @@ function basketNoItem() {
 }
 	
 
-//점심후보에 항목 추가하기 ********************************************* 모달 같은데서 사용하세요
+// 점심후보에 항목 추가하기 ********************************************* 모달 같은데서 사용하세요
 function addItemToBasket(storeNo) {
-	console.log("추가하기"+storeNo)
 	if (countBasketItems(curr_basket_group) >= 3) { // 이미 점심 후보 3개 이상이면
 		alert("점심 후보는 최대 3개까지 추가 가능합니다.")
 		return false
 	}
 	
+	var temp = basket[curr_basket_group].length
 	var add_obj = {"storeNo": storeNo}
 
 	$.ajax({
@@ -926,6 +961,10 @@ function addItemToBasket(storeNo) {
 		success : function(result){				
 			basket = result // 장바구니 업데이트
 			$("#no-basket-items").remove()
+			
+			if (temp < basket[curr_basket_group].length) {
+				addToBasket(basket[curr_basket_group][basket[curr_basket_group].length-1])	
+			}
 			
 			console.log("장바구니에 항목이 추가되었습니다")
 			console.log(basket[curr_basket_group])
@@ -941,7 +980,7 @@ function addItemToBasket(storeNo) {
 }
 
 
-//다른 그룹 선택 시 장바구니 교체하는 함수
+// 다른 그룹 선택 시 장바구니 교체하는 함수
 async function changeGroupBasket() {
 	$(".basket-table-row").remove()
 	
@@ -960,7 +999,7 @@ async function changeGroupBasket() {
 }
 
 
-//점심 후보에 담겨있는 가게 개수 세는 함수(어차피 점심 후보는 curr_basket_group이라 파라미터 없어도 되는데 이미 늦은 듯)
+// 점심 후보에 담겨있는 가게 개수 세는 함수(어차피 점심 후보는 curr_basket_group이라 파라미터 없어도 되는데 이미 늦은 듯)
 function countBasketItems(groupNo) {
 	var cnt = 0
 	
@@ -973,9 +1012,9 @@ function countBasketItems(groupNo) {
 }
 	
 
-//////투표하기 / 랜덤선택 ////////////////////////////////////////////////////////////////////////////
+////// 투표하기 / 랜덤선택 ////////////////////////////////////////////////////////////////////////////
 
-//투표하기 클릭 > 새 투표 만들기 페이지로 이동
+// 투표하기 클릭 > 새 투표 만들기 페이지로 이동
 $("#basket-vote-btn").on("click", function(){
 	if (!indexJSP) { // 이미 메인이 아니라면 물어보기
 		var voteReal = confirm("페이지를 이동하시겠습니까? 지금까지의 진행상황은 저장되지 않습니다.")
@@ -984,6 +1023,17 @@ $("#basket-vote-btn").on("click", function(){
 			
 			return false
 		}
+	}
+	
+	// 그룹이 없으면 돌아가셈
+	if (curr_basket_group == 0) {
+		var noGroup = confirm("투표를 진행하려면 그룹이 필요합니다. 그룹 생성 페이지로 이동하시겠습니까?")
+		
+		if (noGroup) {
+			location.replace("${pageContext.request.contextPath}/group/add")
+		} 
+		
+		return false
 	}
 	
 	// 점심 후보가 2개 미만이면 돌려보냄
@@ -998,7 +1048,7 @@ $("#basket-vote-btn").on("click", function(){
 })
 
 
-//랜덤 선택 클릭 > 화이팅
+// 랜덤 선택 클릭 > 화이팅
 $("#basket-random-btn").on("click", function(){
 	if (!indexJSP) {
 		var voteReal = confirm("페이지를 이동하시겠습니까? 지금까지의 진행상황은 저장되지 않습니다.")
@@ -1013,14 +1063,14 @@ $("#basket-random-btn").on("click", function(){
 })	
 
 
-////////////////////////////기타 //////////////////////////////////////////////////////////////////////
+//////////////////////////// 기타 //////////////////////////////////////////////////////////////////////
 
-//sleep
+// sleep
 async function sleep(ms) {
 	let start = Date.now(), now = start
- while (now - start < ms) {
-     now = Date.now()
- }
+    while (now - start < ms) {
+        now = Date.now()
+    }
 }
 	
 </script>
