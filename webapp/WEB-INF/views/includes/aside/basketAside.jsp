@@ -940,7 +940,6 @@ function addItemToBasket(storeNo) {
 			basket = result // 장바구니 업데이트
 			$("#no-basket-items").remove()
 			
-			alert(bakset[curr_basket_group].length)
 			if (temp < bakset[curr_basket_group].length) {
 				addToBasket(basket[curr_basket_group][bakset[curr_basket_group].length-1])	
 			}
