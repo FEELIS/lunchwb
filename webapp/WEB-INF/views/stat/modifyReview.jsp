@@ -41,8 +41,8 @@
                 <c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
                 <!-- /header -->
                 <div>
-                    <div class="container-fluid ">
-                        <h1>리뷰남기기</h1>
+                    <div class="container-fluid">
+                        <h1 class="font-weight-bold">리뷰남기기</h1>
                         <hr />
                         <form id="contactForm-1" action="javascript:void(0);" method="get">
                             <input class="form-control" type="hidden" name="Introduction" value="This email was sent from www.awebsite.com" />
@@ -55,24 +55,24 @@
                             </div>
                             <div class="row">
                                 <div class="col-3">
-                                    <img src="../../assets/img/assets/img/ramen.jpeg">
+                                    <img src="${pageContext.request.contextPath}/upload/${aloneVo.reviewFileName}" class="img-fluid">
                                 </div>
                                 <div id="message-1" class="col-12 col-md-6">
                                     <h2 class="h4">
-                                        <i class="fa fa-envelope"></i>
-                                        치킨집
+                                        <i class="fas fa-utensils"></i>
+                                        ${aloneVo.storeName}
                                         <small>
-                                            <small class="required-input">분식/라면,치킨</small>
+                                            <small class="required-input">${aloneVo.menu1stCateName}/${aloneVo.menuName}</small>
                                         </small>
                                     </h2>
                                     <div class="form-group mb-3">
-                                        <label class="form-label" for="from-name">서울특별시 관악구 3333로 222길 12-5</label>
+                                        <label class="form-label" for="from-name">${aloneVo.storeRoadAddress}</label>
                                         <span class="required-input">*</span>
-                                        <div class="input-group">
+                                        <div class="input-group col-auto">
                                             <span class="input-group-text"> 
-                                           	 <i class="fa fa-user-o"></i>
+                                           	 <i class="fa fa-user"></i>
                                             </span> 
-                                            <input id="from-name-1" class="form-control" type="text" name="name" required placeholder="최정필" />
+                                            <input id="from-name-1" class="form-control bg-white" type="text" name="name" value="${aloneVo.userName}" readonly="readonly" required />
                                         </div>
                                     </div>
                                     <div class="form-group mb-3">
@@ -80,47 +80,39 @@
                                         <span class="required-input">*</span>
                                         <div class="input-group">
                                             <span class="input-group-text">
-                                                <i class="fa fa-file-o"></i></span>
-                                            <input id="from-file-1" class="form-control-file" type="file" name="file" required />
+                                                <i class="fa fa-file"></i></span>
+                                            <input id="from-file-1" class="form-control-file" type="file" name="file" required value="${pageContext.request.contextPath}/upload/${aloneVo.reviewFileName}"/>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-12 col-sm-6 col-md-12 col-lg-6">
                                             <div class="form-group mb-3">
                                                 <label class="form-label" for="from-calltime">별점</label>
-                                                <div class="input-group">
+                                                <div class="input-group col-auto">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text"><i class="fa fa-star"></i></span>
                                                     </div>
-                                                    <select id="from-calltime-1" class="form-select" name="call time">
-                                                        <optgroup label="주고싶은 별점을 선택하세요">
-                                                            <option value="0">☆☆☆☆☆</option>
-                                                            <option value="1" selected>★☆☆☆☆</option>
-                                                            <option value="2">★★☆☆☆</option>
-                                                            <option value="3">★★★☆☆</option>
-                                                            <option value="4">★★★★☆</option>
-                                                            <option value="5">★★★★★</option>
-                                                        </optgroup>
-                                                    </select>
+												<ul class="list-inline form-control">
+													<li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
+													<li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
+													<li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
+													<li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
+													<li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>
+												</ul>	
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-12 col-sm-6 col-md-12 col-lg-6">
-                                            <div class="form-group mb-3">
+                                            <div class="form-group mb-3 col-auto">
                                                 <label class="form-label" for="from-calltime">함께한 그룹</label>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text">
-                                                            <i class="fa fa-user-o"></i>
+                                                            <i class="fa fa-users"></i>
                                                         </span>
                                                     </div>
-                                                    <select id="from-calltime-1" class="form-select" name="call time">
-                                                        <optgroup label="그룹을 선택해주세요">
-                                                            <option value="Morning" selected>동기그룹</option>
-                                                            <option value="Afternoon">개발1팀</option>
-                                                            <option value="Evening">개발2팀</option>
-                                                        </optgroup>
-                                                    </select>
+													<input id="from-name-1" class="form-control bg-white" type="text" name="name" value="${aloneVo.groupName}" 
+													readonly="readonly" required />
                                                 </div>
                                             </div>
                                         </div>
@@ -132,13 +124,13 @@
                                     <div class="form-group mb-3">
                                         <div class="row">
                                             <div class="col">
-                                                <button class="btn btn-primary d-block w-100" type="reset">
-                                                    <i class="fa fa-undo"></i> 초기화
+                                                <button class="btn btn-primary d-block w-100" type="button" onclick="location.href='${pageContext.request.contextPath}/stat/reviewList'">
+                                                    <i class="fa fa-chevron-circle-left "></i> 리뷰내역으로 돌아가기
                                                 </button>
                                             </div>
                                             <div class="col">
                                                 <button class="btn btn-primary d-block w-100" type="submit">
-                                                    리뷰남기기 <i class="fa fa-chevron-circle-right"></i>
+                                                    리뷰수정하기 <i class="fa fa-chevron-circle-right"></i>
                                                 </button>
                                             </div>
                                         </div>
@@ -163,5 +155,4 @@
     </div>
     <!-- wrapper -->
 </body>
-
 </html>
