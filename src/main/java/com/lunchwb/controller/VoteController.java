@@ -176,12 +176,8 @@ public class VoteController {
 		System.out.println("**********************************************************************************************************************************************************");
 		
 		String voteEndDate = (String)voteData.get("voteEndDate");
-		logger.info(voteEndDate);
 		String voteMember = (String)voteData.get("voteMember");
-		logger.info(voteMember);
-		logger.info("" + voteData.get("voteNo"));
 		int voteNo = (int)voteData.get("voteNo");
-		logger.info("" + voteNo);
 		
 		if (voteEndDate.contains(".")) {
 			voteEndDate = voteEndDate.substring(0, voteEndDate.indexOf("."));
@@ -205,6 +201,19 @@ public class VoteController {
 		System.out.println("**********************************************************************************************************************************************************");
 		
 		voteService.escapeVote(myVote);
+		
+		return "redirect:/";
+	}
+	
+	
+	// 투표 완료 후 다른 가게로 변경
+	@PostMapping("/changeVotedStore")
+	public String changeVotedStore(@ModelAttribute VoteVo changeVote) {		
+		System.out.println("**********************************************************************************************************************************************************");
+		logger.info("투표한 가게 변경");
+		System.out.println("**********************************************************************************************************************************************************");
+	
+		voteService.changeVotedStore(changeVote);
 		
 		return "redirect:/";
 	}

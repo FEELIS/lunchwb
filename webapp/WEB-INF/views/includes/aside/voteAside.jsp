@@ -106,7 +106,7 @@
                         			</c:if>
                         			
                         			<c:if test="${userState == 2 and store.storeNo != myStore}">
-                        				<button class="btn btn-primary vote-wating-change-vote-btn align-items-center" type="button">투표변경</button>
+                        				<button class="btn btn-danger vote-wating-change-vote-btn align-items-center" type="button">투표변경</button>
                         			</c:if>
                         		</td>
                     		</tr>
@@ -301,6 +301,43 @@ $("#vote-member-escape-btn").on("click", function(){
 		
 		return false
 	}
+})
+
+
+///////////////////// 투표한 가게 변경하기 /////////////////////////////////////////////
+
+$(".vote-wating-change-vote-btn").on("click", function(){
+	var changeVoteOK = confirm("[" + $(this).closest(".vote-table-row").find(".basket-table-store-name").text() + "]로 투표를 변경하시겠습니까?")
+	
+	if (!changeVoteOK) {
+		
+		return false
+	}
+	
+	var newIdx = parseInt($(this).closest(".vote-table-row").attr("data-vote-idx"))
+	
+	var myVote = parseInt($("[data-user-no=" + "${authUser.userNo}" + "]").attr("data-vote-voted"))		
+	var myIdx = 0
+	if (myVote != 0) {
+		for (var i = 0; i < 3; i++) {
+			if (parseInt($("[data-vote-idx=" + i + "]").attr("data-storeNo")) == myVote) {
+				myIdx = i
+				break
+			}
+		}
+	}
+	
+	var modifyVoteStore = {
+			"userNo" : parseInt("${authUser.userNo}"), 
+			"voteMemberNo" : parseInt($("[data-user-no=" + "${authUser.userNo}" + "]").attr("data-vote-member-no")),
+			"voteNo" : parseInt("${voteInfo.voteNo}"), 
+			"voteVoted" : parseInt($(this).closest(".vote-table-row").attr("data-storeNo")), 
+			"voteResults" : "${voteInfo.voteResults}", 
+			"voteIdx" : newIdx,
+			"voteVotedIdx" : myIdx
+	}
+	
+	postVoteData("${pageContext.request.contextPath}/vote/changeVotedStore", modifyVoteStore)
 })
 
 

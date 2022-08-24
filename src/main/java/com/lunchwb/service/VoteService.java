@@ -1,7 +1,6 @@
 package com.lunchwb.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -266,6 +265,7 @@ public class VoteService {
 	
 	
 	///////////////////// 여기갈래요 누르기 ///////////////////////////////////////////
+	
 	public void visitConfirm(VoteVo visitData) {	
 		List<Integer> voteMember = visitData.getVoteMember();
 		int voteNo = visitData.getVoteNo();
@@ -400,5 +400,30 @@ public class VoteService {
 			
 			voteDao.updateEscapeResult(myVote);
 		}
+	}
+	
+	
+	////////////// 투표한 가게 다른 가게로 변경 ///////////////////////////////////////////////////////////////////////////////
+	
+	public void changeVotedStore(VoteVo changeVote) {
+		// vote_members 테이블 voteVoted 업데이트
+		voteDao.updateVoteVoted(changeVote);
+		
+		// vote 테이블 vote_results 업데이트
+		int newIdx = changeVote.getVoteIdx();
+		int currIdx = changeVote.getVoteVotedIdx();
+		
+		String currVote = changeVote.getVoteResults();
+		System.out.println("currVote " + currVote);
+		
+		JSONArray jArray = new JSONArray(currVote);
+		jArray.put(newIdx, jArray.getInt(newIdx)+1);
+		jArray.put(currIdx, jArray.getInt(currIdx)-1);
+		
+		currVote = jArray.toString();
+		changeVote.setVoteResults(currVote);
+		System.out.println("변경 후 currVote " + currVote);
+				
+		voteDao.updateVoteResults(changeVote);
 	}
  }

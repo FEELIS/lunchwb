@@ -43,6 +43,7 @@ public class VoteVo {
 	private int bossCheck;
 	private List<Integer> voteMember;
 	private int storeNo;
+	private int voteVotedIdx;
 	
 	////////// 생성자 ////////////////////////////////////////////
 	
@@ -228,8 +229,16 @@ public class VoteVo {
 		this.storeNo = storeNo;
 	}
 	
-	///////////// toString //////////////////////////////////////////
+	public int getVoteVotedIdx() {
+		return voteVotedIdx;
+	}
 
+	public void setVoteVotedIdx(int voteVotedIdx) {
+		this.voteVotedIdx = voteVotedIdx;
+	}
+	
+	///////////// toString //////////////////////////////////////////
+	
 	@Override
 	public String toString() {
 		return "VoteVo [voteNo=" + voteNo + ", voteMadeUser=" + voteMadeUser + ", groupNo=" + groupNo + ", voteEndTime="
