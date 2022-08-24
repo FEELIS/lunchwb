@@ -27,5 +27,12 @@ public class AloneDao {
 		return count;
 	};
 	
+	public AloneVo getReview(int reviewNo) {
+		AloneVo aloneVo = sqlSession.selectOne("alone.getReview", reviewNo);
+	
+		return aloneVo;
+		
+	};
+	
 
 }
