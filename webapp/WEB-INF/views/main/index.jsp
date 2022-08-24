@@ -41,12 +41,11 @@
 <c:import url="/WEB-INF/views/includes/aside/basketAside.jsp" />
 
 
-<div class="d-flex flex-column" id="content-wrapper" style="position: relative;">
+<div class="d-flex flex-column" id="content-wrapper">
 	<c:import url="/WEB-INF/views/includes/header.jsp" />
     
-    <div class="container" id="container" style="height: auto;margin: 0;padding: 0;">
-        
-        
+    <div class="container" id="container">
+                
         <div class="flex-nowrap" id="curr-location">
         	<span style="margin-right: 5px;"><i class="fas fa-crosshairs"></i>&nbsp;현위치:</span>
         	<span id="curr-location-address">${curr_location.address}</span>

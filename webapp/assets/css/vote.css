@@ -1,11 +1,13 @@
 #wrapper {
-	width: 100%;
-	min-width: 1000px;
-	margin: 0;
-	padding: 0;
+  position: relative;
+  width: 100%;
+  min-width: 1000px;
+  margin: 0;
+  padding: 0;
 }
 
 #vote-map-wrapper {
+  position: relative;
   width: 100%;
   min-width: 1000px;
   margin: 0; 
@@ -13,6 +15,7 @@
 }
 
 #vote-result-content-wrapper {
+  position: relative;
   width: 100%;
   min-width: 1000px;
   margin: 0;
@@ -20,12 +23,14 @@
 }
 
 #container {
+  position: relative;
   margin: 0;
   padding: 0;
   padding-bottom: 50px;
 }
 
 #vote-map-wrapper #container {
+  position: relative;
   margin: 0;
   padding: 0;
 }

@@ -66,7 +66,7 @@
                     	<span id="today-lunch-neun">&nbsp;오늘 점심은</span>
                     </div>
                     <div id="vote-result-lunch-menu" class="d-inline-flex d-sm-flex d-xl-flex d-xxl-flex justify-content-center align-items-center align-content-center justify-content-sm-center align-items-sm-center justify-content-xl-center align-items-xl-center justify-content-xxl-center align-items-xxl-center">
-                    	<span id="vote-lunch-store" class="d-xxl-flex justify-content-xxl-center align-items-xxl-center">써브웨이</span>
+                    	<span id="vote-lunch-store" data-storeNo="3351" class="d-xxl-flex justify-content-xxl-center align-items-xxl-center">써브웨이</span>
                     	<span id="ipnida" class="d-xxl-flex justify-content-xxl-center align-items-xxl-center">입니다.</span>
                     </div>
                 </div>
@@ -97,10 +97,7 @@
                 <c:if test="${authUser.userNo == voteInfo.voteMadeUser}">
                     <div id="vote-result-btn-area" class="d-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center">
 	                    <div class="flex-nowrap" id="vote-result-btn-box">
-	                    	<form action="${pageContext.request.contextPath}/vote/visitConfirm" method="post">
-		                    	<input type="hidden" name="voteNo" value="${voteInfo.voteNo}">
-		                    	<button id="vote-result-letsgo-btn" class="btn btn-primary d-inline-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center" type="submit">여기갈래요</button>
-	                    	</form>
+		                    <button id="vote-result-letsgo-btn" class="btn btn-primary d-inline-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center" type="submit">여기갈래요</button>
 	                    	
 	                    	<form id="resetVote" action="${pageContext.request.contextPath}/vote/resetVote" method="post">
 	                    		<input type="hidden" name="voteNo" value="${voteInfo.voteNo}">
@@ -132,6 +129,27 @@ $("#vote-url-copy-btn").on("click", function(){
         .catch(err => {
         console.log("클립보드 복사 실패");
     })
+})
+
+// 여기갈래요 클릭
+$("#vote-result-letsgo-btn").on("click", function(){
+	var voteMember = []
+	
+	$("#vote-select-name-area").find(".vote-select-name-btn").each(function(index, item){
+		var tempUserNo = parseInt($(item).attr("data-user-no"))
+		if (tempUserNo > 0) {
+			voteMember.push(tempUserNo)	
+		}
+	})
+	
+	var visitData = {
+		groupNo : parseInt("${voteInfo.groupNo}"),
+		voteNo : parseInt("${voteInfo.voteNo}"),
+		storeNo : parseInt($("#vote-lunch-store").attr("data-storeNo")),
+		voteMember : voteMember
+	}
+	
+	postVoteData("${pageContext.request.contextPath}/vote/visitConfirm", visitData)
 })
 
 

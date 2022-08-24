@@ -38,9 +38,11 @@ public class VoteVo {
 	private int totCnt;
 	private int votedCnt;
 	
-	/////////// 투표 수정 ////////////////////////////////////////////
+	/////////// 투표 수정, 여기갈래요 ////////////////////////////////////////////
 	
 	private int bossCheck;
+	private List<Integer> voteMember;
+	private int storeNo;
 	
 	////////// 생성자 ////////////////////////////////////////////
 	
@@ -209,7 +211,22 @@ public class VoteVo {
 	public void setBossCheck(int bossCheck) {
 		this.bossCheck = bossCheck;
 	}
-	
+		
+	public List<Integer> getVoteMember() {
+		return voteMember;
+	}
+
+	public void setVoteMember(List<Integer> voteMember) {
+		this.voteMember = voteMember;
+	}
+
+	public int getStoreNo() {
+		return storeNo;
+	}
+
+	public void setStoreNo(int storeNo) {
+		this.storeNo = storeNo;
+	}
 	
 	///////////// toString //////////////////////////////////////////
 

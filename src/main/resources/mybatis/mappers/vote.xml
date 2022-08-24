@@ -61,6 +61,7 @@
 			                ,voteItems
 			                ,voteResults
 			                ,voteState
+			                ,groupNo
 			                ,groupName
 			                ,voteMemberNo
 			                ,x.userNo
@@ -75,6 +76,7 @@
 			                               ,vote_results voteResults
 			                               ,vote_state voteState
 			                               ,g.group_name groupName
+			                               ,v.group_no groupNo
 			                               ,vote_member_no voteMemberNo
 			                               ,m.user_no userNo
 			                               ,m.user_name userName

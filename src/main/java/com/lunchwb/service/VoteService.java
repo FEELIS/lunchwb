@@ -1,6 +1,7 @@
 package com.lunchwb.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lunchwb.dao.GroupDao;
 import com.lunchwb.dao.UserDao;
+import com.lunchwb.dao.VisitedDao;
 import com.lunchwb.dao.VoteDao;
 import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.StoreVo;
@@ -31,7 +33,8 @@ public class VoteService {
 	private GroupDao groupDao;
 	@Autowired
 	private UserDao userDao;
-
+	@Autowired
+	private VisitedDao visitedDao;
 	
 	public List<GroupVo> getVoteMember(int groupNo) {
 		return groupDao.selectVoteMember(groupNo);
@@ -125,6 +128,7 @@ public class VoteService {
 	
 	
 	///////// voteAside 필요한 파라미터 불러오기 ////////////////////////////////////////////////////////////
+	
 	public Map<String, Object> getVoteAsideData(int voteNo, int userState) {
 		Map<String, Object> voteData = new HashMap<>();
 		
@@ -138,6 +142,7 @@ public class VoteService {
 		voteInfo.setVoteEndTime(voteVo.get(0).getVoteEndTime());
 		voteInfo.setVoteMadeUser(voteVo.get(0).getVoteMadeUser());
 		voteInfo.setVoteResults(voteVo.get(0).getVoteResults());
+		voteInfo.setGroupNo(voteVo.get(0).getGroupNo());
 		
 		// 장바구니 담긴 가게 정보		
 		JSONArray storeInfo = new JSONArray(voteVo.get(0).getVoteItems());
@@ -261,7 +266,10 @@ public class VoteService {
 	
 	
 	///////////////////// 여기갈래요 누르기 ///////////////////////////////////////////
-	public void visitConfirm(int voteNo) {
+	public void visitConfirm(VoteVo visitData) {	
+		List<Integer> voteMember = visitData.getVoteMember();
+		int voteNo = visitData.getVoteNo();
+		
 		int cnt = voteDao.updateVoteVisited(voteNo);
 		
 		if (cnt > 0) {
@@ -271,7 +279,14 @@ public class VoteService {
 			
 			System.out.println("[회원 " + cnt + "명 방문 완료로 상태 변경]");
 			
-			// visited 테이블 추가
+			if (voteMember.size() > 0 ) {
+				Map<String, Object> map = new HashMap<>();
+				map.put("groupNo", visitData.getGroupNo());
+				map.put("storeNo", visitData.getStoreNo());
+				map.put("voteMember", voteMember);
+				
+				visitedDao.insertVoteVisit(map);
+			}
 			
 		} else {
 			System.out.println("[투표 종료 실패]");

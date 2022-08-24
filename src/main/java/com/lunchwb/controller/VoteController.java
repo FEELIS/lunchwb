@@ -126,12 +126,12 @@ public class VoteController {
 	
 	// 여기갈래요
 	@PostMapping("/visitConfirm")
-	public String visitConfirm(@RequestParam("voteNo") int voteNo) {
+	public String visitConfirm(@ModelAttribute VoteVo visitData) {
 		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("여기갈래요");
 		System.out.println("**********************************************************************************************************************************************************");
 
-		voteService.visitConfirm(voteNo);
+		voteService.visitConfirm(visitData);
 		
 		return "redirect:/";
 	}

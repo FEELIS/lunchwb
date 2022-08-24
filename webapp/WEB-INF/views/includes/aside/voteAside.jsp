@@ -63,7 +63,7 @@
 	        	<c:forEach items="${voteMember}" var="member">
         			<button class="btn btn-primary text-center vote-select-name-btn 
         			               <c:if test="${authUser.userNo == member.userNo and member.voteVoted == 0}">vote-selected-name</c:if>
-        			               <c:if test="${userState == 1 and empty(authUser) and member.voteVoted == 0 and member.userGrade == -1}">can-click-name</c:if>
+        			               <c:if test="${userState == 1 and empty(authUser) and member.voteVoted == 0 and member.userGrade != 1}">can-click-name</c:if>
         			               <c:if test="${member.voteVoted != 0}">vote-voted-name</c:if>" 
         			        type="button" 
         			        <c:if test="${!(userState == 1 and empty(authUser) and member.voteVoted == 0 and member.userNo == 0)}">disabled="disabled" </c:if>
