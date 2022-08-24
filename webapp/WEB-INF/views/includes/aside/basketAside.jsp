@@ -600,11 +600,13 @@ async function getBasketGroups() {
 
 
 // 다른 그룹 클릭할 때 css 변경 + 장바구니 다시 로딩
-$("#basket-groups").on("click", ".basket-normal-group", async function(){
-	
+$("#basket-groups").on("click", ".basket-normal-group", async function(){	
 	// 클릭한 그룹이 현재 curr_basket_group과 다른 경우에만
 	if (String(curr_basket_group) != $(this).attr("data-groupNo")) { 	
-		if (!indexJSP) {  // 투표나 랜덤 작업 중일 때 confirm으로 경고
+		var url = document.location.href
+		url = url.substr(url.indexOf("/lunchwb/")+9)
+		
+		if (!indexJSP && url.indexOf("vote") != -1) {  // 투표나 랜덤 작업 중일 때 confirm으로 경고
 			var voteGroupChange = confirm("그룹을 변경하면 진행상황이 초기화됩니다. 변경하시겠습니까?")
 			
 			if(!voteGroupChange) {
@@ -633,9 +635,7 @@ $("#basket-groups").on("click", ".basket-normal-group", async function(){
 				location.replace("${pageContext.request.contextPath}/")
 			
 			// 장바구니가 충분히 차있으면 해당 그룹 + 장바구니에 대한 투표/랜덤 페이지로 이동 ****** 랜덤은 경우 더 생각해봐야 할 듯 ************
-			} else {
-				var url = document.location.href
-				url = url.substr(url.indexOf("/lunchwb/")+9)
+			} else {		
 				
 				location.replace("${pageContext.request.contextPath}/" + url)
 			}
@@ -842,9 +842,17 @@ async function addMoreStore() {
 
 // 점심후보에서 삭제 버튼 클릭 시 > 점심후보에서 삭제하고 핀 변경 
 $("#basket-table").on("click", ".basket-del-btn", async function(){
+	var url = document.location.href
+	url = url.substr(url.indexOf("/lunchwb/")+9)
+	
 	if (!indexJSP) { // 투표, 랜덤에서 접근했다면 경고
-		var deleteReal = confirm("페이지를 이동해서 장바구니를 수정하시겠습니까? 지금까지의 진행상황은 저장되지 않습니다.")
-		
+		if (url.indexOf("vote") != -1) {
+			var deleteReal = confirm("페이지를 이동해서 점심 후보를 수정하시겠습니까? 지금까지의 진행상황은 저장되지 않습니다.")
+			
+		} else {
+			var deleteReal = confirm("페이지를 이동해서 점심 후보를 수정하시겠습니까?")
+		}
+	
 		if (!deleteReal) {
 			
 			return false
@@ -994,7 +1002,10 @@ function countBasketItems(groupNo) {
 
 // 투표하기 클릭 > 새 투표 만들기 페이지로 이동
 $("#basket-vote-btn").on("click", function(){
-	if (!indexJSP) { // 이미 메인이 아니라면 물어보기
+	var url = document.location.href
+	url = url.substr(url.indexOf("/lunchwb/")+9)
+	
+	if (!indexJSP && url.indexOf("vote") != -1) { // 이미 메인이 아니라면 물어보기
 		var voteReal = confirm("페이지를 이동하시겠습니까? 지금까지의 진행상황은 저장되지 않습니다.")
 		
 		if (!voteReal) {
