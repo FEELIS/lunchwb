@@ -532,7 +532,7 @@ async function callUser() {
 			console.log(groupChanged)
 			
 			// 그룹 삭제 or 추가때문에 curr_basket_group이 변경되야하는 경우 장바구니 변경
-			if (groupChanged && curr_basket_group != 0) {
+			if (groupChanged && curr_basket_group != 0) {				
 				for (var i = 0; i < basket[curr_basket_group].length; i++) {
 					if (basket[curr_basket_group][i].stored) {
 						addToBasket(basket[curr_basket_group][i])
@@ -926,6 +926,7 @@ function addItemToBasket(storeNo) {
 		return false
 	}
 	
+	var temp = basket[curr_basket_group].length
 	var add_obj = {"storeNo": storeNo}
 
 	$.ajax({
@@ -938,6 +939,11 @@ function addItemToBasket(storeNo) {
 		success : function(result){				
 			basket = result // 장바구니 업데이트
 			$("#no-basket-items").remove()
+			
+			alert(bakset[curr_basket_group].length)
+			if (temp < bakset[curr_basket_group].length) {
+				addToBasket(basket[curr_basket_group][bakset[curr_basket_group].length-1])	
+			}
 			
 			console.log("장바구니에 항목이 추가되었습니다")
 			console.log(basket[curr_basket_group])
@@ -996,6 +1002,17 @@ $("#basket-vote-btn").on("click", function(){
 			
 			return false
 		}
+	}
+	
+	// 그룹이 없으면 돌아가셈
+	if (curr_basket_group == 0) {
+		var noGroup = confirm("투표를 진행하려면 그룹이 필요합니다. 그룹 생성 페이지로 이동하시겠습니까?")
+		
+		if (noGroup) {
+			location.replace("${pageContext.request.contextPath}/group/add")
+		} 
+		
+		return false
 	}
 	
 	// 점심 후보가 2개 미만이면 돌려보냄

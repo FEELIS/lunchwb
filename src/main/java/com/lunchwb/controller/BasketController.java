@@ -202,11 +202,11 @@ public class BasketController {
 	@PostMapping("/addToBasket")
 	public Map<Integer, List<StoreVo>> addToBasket(@RequestBody Map<String, Object> addStore, HttpSession session) {
 		logger.info("장바구니 항목 추가");
-		
+
 		@SuppressWarnings("unchecked")
 		Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
 		Integer groupNo = (Integer)session.getAttribute("curr_basket_group");
-		Integer storeNo = (Integer)addStore.get("storeNo");
+		int storeNo = (Integer)addStore.get("storeNo");
 		GPSVo gpsVo = (GPSVo)session.getAttribute("curr_location");
 		
 		basket.put(groupNo,	basketService.addBasket(basket.get(groupNo), storeNo, gpsVo));

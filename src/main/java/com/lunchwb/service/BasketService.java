@@ -163,24 +163,58 @@ public class BasketService {
 	
 	
 	// 장바구니에 아이템 추가
-	public List<StoreVo> addBasket(List<StoreVo> basketItems, Integer storeNo, GPSVo gpsVo) {
+	public List<StoreVo> addBasket(List<StoreVo> basketItems, int storeNo, GPSVo gpsVo) {
 		int cnt = 0;
-		
-		for (StoreVo store: basketItems) {
+		System.out.println("=========================================================================");
+		System.out.println("=========================================================================");
+		System.out.println("=========================================================================");
+		System.out.println("=========================================================================");
+		System.out.println("=========================================================================");
+
+		for (int i = 0; i < basketItems.size(); i++) {
+			StoreVo store = basketItems.get(i);
+
 			if (store.getStoreNo() == storeNo) {
 				store.setStored(true);
+				basketItems.set(i, store);
 				cnt++;
+				
 				break;
 			}
 		}
-		
-		if (cnt == 0) {
+
+		if (cnt == 0 && basketItems.size() < 15) {
 			Map<String, Object> map = new HashMap<>();
 			map.put("gpsVo", gpsVo);
 			map.put("storeNo", storeNo);
 			
 			StoreVo newStore = storeDao.selectOneStore(map);
+		    			
+			ArrayList<String> opening = new ArrayList<String>();   
+			JSONArray jsonArray = new JSONArray(newStore.getStoreOpeningHours());
+			if (jsonArray != null) { 
+			    int len = jsonArray.length();
+				for (int j = 0; j < len; j++){ 
+					opening.add(jsonArray.get(j).toString());
+				} 
+			} 
+			
+			ArrayList<String> breakTime = new ArrayList<String>();   
+			jsonArray = new JSONArray(newStore.getStoreOpeningHours());
+			if (jsonArray != null) { 
+			    int len = jsonArray.length();
+				for (int j = 0; j < len; j++){ 
+					breakTime.add(jsonArray.get(j).toString());
+				} 
+			}
+			
+			newStore.setOpeningHours(opening);
+			newStore.setBreaktime(breakTime);
+			newStore.setStoreBreaktime(null);
+			newStore.setStoreOpeningHours(null);
+			
 			newStore.setStored(true);
+					
 			basketItems.add(newStore);
 		}
 
