@@ -40,12 +40,26 @@
 	</insert>
 	
 	
+	<!-- vote_members에 사용자 추가하기  -->
 	<insert id="insertVoteMember" parameterType="Map">
 		INSERT INTO vote_members (vote_member_no, vote_no, user_no, user_name, vote_voted)
 		SELECT seq_vote_member_no.nextval, A.*
 		FROM (
 		<foreach item="member" collection="voteMember" separator="UNION ALL ">
 			SELECT #{voteNo} AS vote_no, #{member.userNo} AS user_no, #{member.userName} AS user_name, 0 AS vote_voted
+			FROM dual
+		</foreach>
+		) A
+	</insert>
+	
+	
+	<!-- vote_members에 오늘 투표 참여 안하는 추가하기  -->
+	<insert id="insertNotTodayMember" parameterType="Map">
+		INSERT INTO vote_members (vote_member_no, vote_no, user_no, user_name, vote_voted)
+		SELECT seq_vote_member_no.nextval, A.*
+		FROM (
+		<foreach item="member" collection="voteMember" separator="UNION ALL ">
+			SELECT #{voteNo} AS vote_no, #{member.userNo} AS user_no, #{member.userName} AS user_name, -1 AS vote_voted
 			FROM dual
 		</foreach>
 		) A
@@ -140,6 +154,7 @@
 			SELECT COUNT(*) totCnt, COUNT(CASE WHEN(vote_voted != 0) THEN 1 ELSE NULL END) votedCnt
 			FROM   vote_members
 			WHERE  vote_no = #{voteNo}
+			AND    vote_voted > -1
 		]]>
 	</select>
 	
@@ -189,6 +204,35 @@
 	</update>
 	
 	
+	<!--  투표 수정하면서 제외된 회원 voteVoted = -1로 수정  -->
+	<select id="updateModifyMember" parameterType="Map">
+		<![CDATA[
+			UPDATE vote_members
+			SET    vote_voted = -1
+			WHERE  vote_no = #{voteNo}
+			ANd    (1 = 0 
+		]]>		
+		<foreach item="member" collection="notTodayMem">
+		           OR     user_no = #{member.userNo}
+		</foreach>
+        <![CDATA[  )
+        ]]>
+	</select>
+	
+	
+	<!--  기본 상태로 변경  -->
+   	<update id="updateState0" parameterType="List">
+   		<![CDATA[
+	   		UPDATE users
+	   		SET    user_state = 0
+	   		WHERE  1 = 0
+	   	]]>
+	   	<foreach item="voteVo" collection="list">
+	   		OR     user_no = #{voteVo.userNo}
+	   	</foreach>
+   	</update>
+	
+	
 	<!--  사용자 상태 투표 안함으로 초기화  -->
 	<update id="updateUserReset" parameterType="int">
 		<![CDATA[
@@ -233,12 +277,18 @@
 	</update>
 	
 	
-	<!--  아직 투표 안한 voteMembers 삭제  -->
-	<delete id="deleteNotVoted" parameterType="int">
+	<!--  투표 수정 > 아직 투표 안하고 앞으로 투표 참여할 voteMembers 삭제  -->
+	<delete id="deleteNotVoted" parameterType="Map">
 		<![CDATA[
 			DELETE vote_members
 			WHERE  vote_no = #{voteNo}
-			AND    vote_voted = 0
+			AND    (1 = 0
+		]]>
+		<foreach item="member" collection="voteMem">
+			OR     user_no = #{member.userNo}
+		</foreach>
+		<![CDATA[
+			OR     vote_voted = 0)
 		]]>
 	</delete>
 	

@@ -51,7 +51,7 @@ public class VoteService {
 	
 	
 	///////// 투표 생성하기 ///////////////////////////////////////////////////////////////////////
-	public int makeVote(int userNo, Date voteEndTime, String voteMember, String currBasket, int groupNo) {
+	public int makeVote(int userNo, Date voteEndTime, String voteMember, String notTodayMember, String currBasket, int groupNo) {
 		System.out.println("**********************************************************************************************************************************************************");
 		System.out.println("[투표 생성 데이터 정리하기]");
 		System.out.println(voteEndTime.toString());
@@ -59,14 +59,16 @@ public class VoteService {
 		
 		List<UserVo> voteMem = new ArrayList<>();
 		List<UserVo> memberMem = new ArrayList<>();
+		List<UserVo> notTodayMem = new ArrayList<>();
 		System.out.println(voteMember);
 
 		JSONObject iptData = new JSONObject(voteMember);
+		JSONObject notToday = new JSONObject(notTodayMember);
 		JSONArray jArray = (JSONArray)iptData.get("mem");
+		JSONArray notArray = (JSONArray)notToday.get("mem");
 		
 		for (int i = 0; i < jArray.length(); i++) {
 			JSONObject user = jArray.getJSONObject(i);
-			System.out.println(user);
 			UserVo member = new UserVo();
 			
 			member.setUserName(user.getString("userName"));
@@ -81,8 +83,15 @@ public class VoteService {
 			voteMem.add(member);
 		}		
 		
-		System.out.println("memberMem");
-		System.out.println(memberMem);
+		for (int i = 0; i < notArray.length(); i++) {
+			JSONObject user = notArray.getJSONObject(i);
+			UserVo member = new UserVo();
+			
+			member.setUserName(user.getString("userName"));
+			member.setUserNo(user.getInt("userNo"));
+						
+			notTodayMem.add(member);
+		}
 		
 		System.out.println("**********************************[vote 생성하기]**********************************");
 		VoteVo voteItems = new VoteVo();
@@ -106,12 +115,19 @@ public class VoteService {
 		// 스케줄러 추가해줘야할 듯
 		
 		System.out.println("**********************************[vote_member 생성하기]**********************************");
+		// 투표 참여자들
 		Map<String, Object> voteMems = new HashMap<>();
 		voteMems.put("voteMember", voteMem);
 		voteMems.put("voteNo", voteNo);
 		
-		int cnt = voteDao.insertVoteMember(voteMems);
-		System.out.println(cnt);
+		voteDao.insertVoteMember(voteMems);
+		
+		// 투표 참여 안하는 사람들
+		Map<String, Object> notTodayMems = new HashMap<>();
+		notTodayMems.put("voteMember", notTodayMem);
+		notTodayMems.put("voteNo", voteNo);
+		
+		voteDao.insertNotTodayMember(notTodayMems);
 		
 		System.out.println("**********************************[회원들 user_state 변경하기]**********************************");
 		userDao.updateState1(memberMem);
@@ -318,7 +334,7 @@ public class VoteService {
 	
 	///////// 투표 수정하기 ///////////////////////////////////////////////////////////////////////
 	
-	public boolean modifyVote(Date voteEndTime, String voteMember, int voteNo) {
+	public boolean modifyVote(Date voteEndTime, String voteMember, String notTodayMember, int voteNo) {
 		System.out.println("**********************************************************************************************************************************************************");
 		System.out.println("[투표 수정 데이터 정리하기]");
 		
@@ -327,26 +343,52 @@ public class VoteService {
 		System.out.println(voteEndTime.toString());
 		
 		List<UserVo> voteMem = new ArrayList<>();
-	
+		List<UserVo> memberMem = new ArrayList<>();
+		List<UserVo> notTodayMem = new ArrayList<>();
+		System.out.println(voteMember);
+
 		JSONObject iptData = new JSONObject(voteMember);
+		JSONObject notToday = new JSONObject(notTodayMember);
 		JSONArray jArray = (JSONArray)iptData.get("mem");
+		JSONArray notArray = (JSONArray)notToday.get("mem");
 		
 		for (int i = 0; i < jArray.length(); i++) {
 			JSONObject user = jArray.getJSONObject(i);
 			UserVo member = new UserVo();
+			UserVo mem = new UserVo();
 			
 			member.setUserName(user.getString("userName"));
-			if (user.has("userNo")) member.setUserNo(user.getInt("userNo"));
+			mem.setUserName(user.getString("userName"));
+			
+			if (user.has("userNo")) {
+				member.setUserNo(user.getInt("userNo"));
+				mem.setUserNo(user.getInt("userNo"));
+			}
 						
 			if (user.has("userGrade")) {
 				int userGrade = user.getInt("userGrade");
 				member.setUserGrade(userGrade);
+				mem.setUserGrade(userGrade);
 				
-			}
+				if (userGrade == 1) memberMem.add(mem);
+			}			
 			voteMem.add(member);
 		}		
 		
-		System.out.println("**********************************[vote 수정하기]**********************************");
+		for (int i = 0; i < notArray.length(); i++) {
+			JSONObject user = notArray.getJSONObject(i);
+			UserVo member = new UserVo();
+			
+			member.setUserName(user.getString("userName"));
+			member.setUserNo(user.getInt("userNo"));
+			
+			notTodayMem.add(member);
+		}
+		
+		System.out.println(voteMem.toString());
+		System.out.println(notTodayMem.toString());
+		
+		System.out.println("**********************************************************[vote 수정하기]**********************************************************************");
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("voteNo", voteNo);
@@ -357,17 +399,31 @@ public class VoteService {
 		
 		// 스케줄러 변경
 		
-		System.out.println("**********************************[vote_member 수정하기]**********************************");
-
-		cnt = voteDao.deleteNotVoted(voteNo);
-		if (cnt < 1) return false;	
+		System.out.println("*********************************************************[vote_member 수정하기]*******************************************************************");
 		
-		Map<String, Object> voteMems = new HashMap<>();
-		voteMems.put("voteMember", voteMem);
-		voteMems.put("voteNo", voteNo);
+		// 투표 안가는 멤버들 처리
+	    userDao.updateState0(notTodayMem);
+	   
+	    map = new HashMap<>();
+	    map.put("voteNo", voteNo);
+	    map.put("notTodayMem", notTodayMem);
+	    
+	    voteDao.updateModifyMember(map);
 		
-		cnt = voteDao.insertVoteMember(voteMems);
-		if (cnt < 1) return false;
+		// 투표 가는 멤버들 처리
+	    map = new HashMap<>();
+	    map.put("voteNo", voteNo);
+	    map.put("voteMem", memberMem);
+	    
+		voteDao.deleteNotVoted(map);
+		
+		map = new HashMap<>();
+		map.put("voteMember", voteMem);
+		map.put("voteNo", voteNo);
+		
+		voteDao.insertVoteMember(map);
+		
+		userDao.updateState1(memberMem);
 		
 		System.out.println("**********************************************************************************************************************************************************");
 	

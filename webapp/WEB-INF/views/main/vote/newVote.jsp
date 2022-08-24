@@ -161,18 +161,14 @@
 	
 <script>
 
-//지금 시각
-let currentDate
-// 지금 시각(시)
-let currentTime
-// 지금 시각(분)
-let currentMin
-// 임시 시각(시)
-let tempTime
-// 임시 시각(분)
-let tempMin
-// 새이름 다 떨어졌을 때 사용할 변수
-let myBird = 1
+
+let currentDate //지금 시각
+let currentTime // 지금 시각(시)
+let currentMin // 지금 시각(분)
+let tempTime // 임시 시각(시)
+let tempMin // 임시 시각(분)
+let myBird = 1 // 새이름 다 떨어졌을 때 사용할 변수
+
 // idx로 사용할 전체 사람 수(계속 업데이트)
 let totVote = parseInt($("#edit-vote-group-num").text())
 	
@@ -541,6 +537,7 @@ $("#make-vote-btn").on("click", function(){
 	// 투표 멤버 데이터 정리하기
 	let voteMember = [] // 투표 참가자 저장할 리스트(List<VoteVo>)
 	let checkMember = [] // 추가된 회원 저장할 리스트(List<Integer>) >> 투표 가능 여부 check 용
+	let notTodayMember = [] // 오늘 못가는 그룹원 저장할 리스트 (List<Integer>)
 	var cnt = 0
 	
 	for (var i = 1; i <= totVote; i++) {
@@ -550,13 +547,7 @@ $("#make-vote-btn").on("click", function(){
 		var currName = currDiv.find(".vote-people-name").text()
 		
 		// 해당 no의 사람이 존재한다면
-		if (currName.length > 0) {
-			// 오늘 안가기로 한 회원이면 저장하지 않음
-			if (currDiv.hasClass("vote-people-deleted")) {
-				
-				continue
-			}
-			
+		if (currName.length > 0) {			
 			// 투표 참가 인원++
 			cnt += 1
 			// 투표 참가자 이름 불러오기
@@ -569,6 +560,13 @@ $("#make-vote-btn").on("click", function(){
 				currMem["userNo"] = userNo
 				currMem["userGrade"] = userGrade
 				
+				// 오늘 안가기로 한 회원이면 따로 처리
+				if (currDiv.hasClass("vote-people-deleted")) {
+					notTodayMember.push(currMem)
+					cnt -= 1
+					
+					continue
+				}
 				checkMember.push(userNo)
 			}
 			voteMember.push(currMem)
@@ -582,6 +580,7 @@ $("#make-vote-btn").on("click", function(){
 	}
 	
 	voteMem = JSON.stringify({"mem" : voteMember})
+	notTodayMem = JSON.stringify({"mem" : notTodayMember})
 	console.log(voteMem)
 	
 	
@@ -647,7 +646,8 @@ $("#make-vote-btn").on("click", function(){
 	let voteData = {
 		voteEndDate : voteEndDate,
 		voteMember : voteMem,
-		currBasket : currBasket
+		currBasket : currBasket,
+		notTodayMember : notTodayMem
 	}
 	
 	$.ajax({

@@ -1065,7 +1065,7 @@ Winwheel.prototype.drawSegmentText = function()
                             // Work out the angle around the wheel to draw the text at, which is simply in the middle of the segment the text is for.
                             // The rotation angle is added in to correct the annoyance with the canvas arc drawing functions which put the 0 degrees at the 3 oclock
                             let textAngle = this.degToRad(seg.endAngle - ((seg.endAngle - seg.startAngle) / 2) + this.rotationAngle - 90);
-
+							
                             // We need to rotate in order to draw the text because it is output horizontally, so to
                             // place correctly around the wheel for all but a segment at 3 o'clock we need to rotate.
                             this.ctx.save();
@@ -1309,7 +1309,6 @@ Winwheel.prototype.drawSegmentText = function()
                             // ----------------------
                             // Adjust the initial draw angle as needed to take in to account the rotationAngle of the wheel.
                             drawAngle += this.rotationAngle;
-
                             // ----------------------
                             // Now the drawing itself.
                             // Loop for each character in the text.
@@ -1335,7 +1334,6 @@ Winwheel.prototype.drawSegmentText = function()
                                 // Increment the drawAngle by the angle per character so next loop we rotate
                                 // to the next angle required to draw the character at.
                                 drawAngle += anglePerChar;
-
                                 this.ctx.restore();
                             }
                         }
@@ -1618,6 +1616,8 @@ Winwheel.prototype.getIndicatedSegment = function()
 // Works out the segment currently pointed to by the pointer of the wheel. Normally called when the spinning has stopped
 // to work out the prize the user has won. Returns the number of the segment in the segments array.
 // ====================================================================================================================
+
+// 테스트 필요합니다.
 Winwheel.prototype.getIndicatedSegmentNumber = function()
 {
     let indicatedPrize = 0;
@@ -1630,7 +1630,7 @@ Winwheel.prototype.getIndicatedSegmentNumber = function()
     if (relativeAngle < 0) {
         relativeAngle = 360 - Math.abs(relativeAngle);
     }
-
+    
     // Now we can work out the prize won by seeing what prize segment startAngle and endAngle the relativeAngle is between.
     for (let x = 1; x < (this.segments.length); x ++) {
         if ((relativeAngle >= this.segments[x]['startAngle']) && (relativeAngle <= this.segments[x]['endAngle'])) {
@@ -1716,7 +1716,10 @@ Winwheel.prototype.getRotationPosition = function()
 
         rawAngle = (360 + rawAngle);    // Make in the range 0-360. Is plus because raw is still negative.
     }
-
+	
+	//테스트 필요합니다.
+	rawAngle = 120;
+	
     return rawAngle;
 }
 
