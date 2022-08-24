@@ -182,7 +182,6 @@ $(document).ready(async function(){
 })
 	
 
-
 ////////// ip check 관련 ////////////////////////////////////////////////////////////////////
 
 // 클라이언트 ip 불러오기
@@ -307,7 +306,7 @@ $("#vote-member-escape-btn").on("click", function(){
 ///////////////////// 투표한 가게 변경하기 /////////////////////////////////////////////
 
 $(".vote-wating-change-vote-btn").on("click", function(){
-	var changeVoteOK = confirm("[" + $(this).closest(".vote-table-row").find(".basket-table-store-name").text() + "]로 투표를 변경하시겠습니까?")
+	var changeVoteOK = confirm("[" + $(this).closest(".vote-table-row").find(".basket-table-store-name").text() + "] 가게로 투표를 변경하시겠습니까?")
 	
 	if (!changeVoteOK) {
 		

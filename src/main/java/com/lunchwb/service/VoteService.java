@@ -156,7 +156,10 @@ public class VoteService {
 			JSONObject jstore = (JSONObject)storeInfo.getJSONObject(i);
 			
 			String storeName = jstore.getString("storeName");
-			if (storeName.length() >= 13) storeName = storeName.substring(0, 13);
+			if (storeName.length() >= 13) {
+				storeName = storeName.substring(0, 13);
+				if (storeName.charAt(storeName.length()-1) == ' ') storeName = storeName.substring(0, storeName.length()-1);
+			}
 			store.setStoreName(storeName);
 			store.setStoreNo(jstore.getInt("storeNo"));
 			store.setDistance(jstore.getInt("distance"));
@@ -296,6 +299,7 @@ public class VoteService {
 	
 	
 	///////////////// 투표 취소하기 ///////////////////////////////////////
+	
 	public void cancelVote(int voteNo) {
 		int cnt = voteDao.updateUserReset(voteNo);
 		
@@ -313,6 +317,7 @@ public class VoteService {
 	
 	
 	///////// 투표 수정하기 ///////////////////////////////////////////////////////////////////////
+	
 	public boolean modifyVote(Date voteEndTime, String voteMember, int voteNo) {
 		System.out.println("**********************************************************************************************************************************************************");
 		System.out.println("[투표 수정 데이터 정리하기]");
@@ -328,7 +333,6 @@ public class VoteService {
 		
 		for (int i = 0; i < jArray.length(); i++) {
 			JSONObject user = jArray.getJSONObject(i);
-			System.out.println(user);
 			UserVo member = new UserVo();
 			
 			member.setUserName(user.getString("userName"));

@@ -83,7 +83,8 @@
                         		<c:set var="tempNo" value="${tempNo+1}" />
                         		                       		
                        			<span class="d-flex d-xxl-flex flex-wrap vote-people
-                       						<c:if test="${member.bossCheck == 1}">vote-people-bujang</c:if>" 
+                       						<c:if test="${member.bossCheck == 1}">vote-people-bujang</c:if>
+                       						<c:if test="${member.voteVoted != 0}">vote-people-voted</c:if>"
                        				  data-user-no="${member.userNo}" data-user-grade="${member.userGrade}" data-vote-member-no="${member.voteMemberNo}" data-voteVoted="${member.voteVoted}" data-tempNo="${tempNo}">
                        				  
                        				<span class="text-end d-xxl-flex justify-content-xxl-end vote-people-header">
