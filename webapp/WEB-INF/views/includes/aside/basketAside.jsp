@@ -940,8 +940,8 @@ function addItemToBasket(storeNo) {
 			basket = result // 장바구니 업데이트
 			$("#no-basket-items").remove()
 			
-			if (temp < bakset[curr_basket_group].length) {
-				addToBasket(basket[curr_basket_group][bakset[curr_basket_group].length-1])	
+			if (temp < basket[curr_basket_group].length) {
+				addToBasket(basket[curr_basket_group][basket[curr_basket_group].length-1])	
 			}
 			
 			console.log("장바구니에 항목이 추가되었습니다")
