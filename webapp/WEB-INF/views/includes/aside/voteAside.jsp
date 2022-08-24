@@ -306,7 +306,16 @@ $("#vote-member-escape-btn").on("click", function(){
 ///////////////////// 투표한 가게 변경하기 /////////////////////////////////////////////
 
 $(".vote-wating-change-vote-btn").on("click", function(){
-	var changeVoteOK = confirm("[" + $(this).closest(".vote-table-row").find(".basket-table-store-name").text() + "] 가게로 투표를 변경하시겠습니까?")
+	var storeName = $(this).closest(".vote-table-row").find(".basket-table-store-name").text()
+	var lastWord = storeName.charCodeAt(storeName.length - 1)
+	
+	if ((lastWord-44032)%28 == 0) {
+		storeName = storeName + "]로"
+	} else {
+		storeName = storeName + "]으로"
+	}
+	
+	var changeVoteOK = confirm("[" + storeName + " 투표를 변경하시겠습니까?")
 	
 	if (!changeVoteOK) {
 		
