@@ -81,7 +81,7 @@ $("#random-btn").on("click", function(){
 	if(basket_group.length > 0){
 		
 		$.ajax({
-			url : "${pageContext.request.contextPath}/getGroupName",		
+			url : "${pageContext.request.contextPath}/random/getGroupName",		
 			type : "post",
 			contentType : "application/json",
 			data : JSON.stringify(curr_basket_group),
