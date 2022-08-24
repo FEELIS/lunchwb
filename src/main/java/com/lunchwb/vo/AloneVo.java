@@ -23,6 +23,19 @@ public class AloneVo {
 	private String storeRoadAddress;
 	private String storeOldAddress;
 	
+	// food_1st_category table //
+	private String menu1stCateName;
+	
+	// user table //
+	private String userName;
+	
+	// menu table //
+	private String menuName;
+	
+	// groups table //
+	private String groupName;
+	
+	
 	
 	// 생성자
 	public AloneVo() {
@@ -31,12 +44,12 @@ public class AloneVo {
 	
 	public AloneVo(int userNo) {
 		this.userNo = userNo;
-	};
-	
-	
+	}
+
 	public AloneVo(int reviewNo, int userNo, int visitedNo, String reviewContent, int userScore, String reviewFileName,
 			int reviewReported, int visitedDate, int visitedCount, int storeNo, String storeName, double storeX,
-			double storeY, String storeRoadAddress, String storeOldAddress) {
+			double storeY, String storeRoadAddress, String storeOldAddress, String menu1stCateName, String userName,
+			String menuName, String groupName) {
 		this.reviewNo = reviewNo;
 		this.userNo = userNo;
 		this.visitedNo = visitedNo;
@@ -52,6 +65,10 @@ public class AloneVo {
 		this.storeY = storeY;
 		this.storeRoadAddress = storeRoadAddress;
 		this.storeOldAddress = storeOldAddress;
+		this.menu1stCateName = menu1stCateName;
+		this.userName = userName;
+		this.menuName = menuName;
+		this.groupName = groupName;
 	}
 
 	public int getReviewNo() {
@@ -94,11 +111,11 @@ public class AloneVo {
 		this.userScore = userScore;
 	}
 
-	public String getreviewFileName() {
+	public String getReviewFileName() {
 		return reviewFileName;
 	}
 
-	public void setreviewFileName(String reviewFileName) {
+	public void setReviewFileName(String reviewFileName) {
 		this.reviewFileName = reviewFileName;
 	}
 
@@ -174,6 +191,38 @@ public class AloneVo {
 		this.storeOldAddress = storeOldAddress;
 	}
 
+	public String getMenu1stCateName() {
+		return menu1stCateName;
+	}
+
+	public void setMenu1stCateName(String menu1stCateName) {
+		this.menu1stCateName = menu1stCateName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getMenuName() {
+		return menuName;
+	}
+
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
+	}
+
+	public String getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
 	@Override
 	public String toString() {
 		return "AloneVo [reviewNo=" + reviewNo + ", userNo=" + userNo + ", visitedNo=" + visitedNo + ", reviewContent="
@@ -181,9 +230,11 @@ public class AloneVo {
 				+ ", reviewReported=" + reviewReported + ", visitedDate=" + visitedDate + ", visitedCount="
 				+ visitedCount + ", storeNo=" + storeNo + ", storeName=" + storeName + ", storeX=" + storeX
 				+ ", storeY=" + storeY + ", storeRoadAddress=" + storeRoadAddress + ", storeOldAddress="
-				+ storeOldAddress + "]";
+				+ storeOldAddress + ", menu1stCateName=" + menu1stCateName + ", userName=" + userName + ", menuName="
+				+ menuName + ", groupName=" + groupName + "]";
 	};
-
+	
+	
 	
 
 }
