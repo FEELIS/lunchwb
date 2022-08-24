@@ -51,7 +51,7 @@
                             <i class="fa fa-pen fa-sm text-white-50"></i>&nbsp;따로 갔다왔어요</a>
                     </div>
 
-                    <div class="calendar card mb-4">
+                    <div id="calendar-area" class="calendar card mb-4">
                         <!-- 달력js 들어가는 공간 -->
                     </div>
 
@@ -435,9 +435,11 @@ CalendarJSP = true;
                                 str += 'bg-warning ';
                             } else if (vstList[j].groupOrder === 3) {
                                 str += 'bg-danger ';
+                            } else if (vstList[j].groupOrder === 4) {
+                                str += 'bg-info ';
                             }
-
-                            str += 'show-menu">' + vstList[j].menu1stCateName + "/" + vstList[j].menuName + '</div>';
+                            str += 'show-menu" data-storeno="'+vstList[j].storeNo+'">' + vstList[j].menu1stCateName + "/" + vstList[j].menuName + '</div>';
+                            
                             str += '<div class="event ';
                             if (vstList[j].groupOrder === 1) {
                                 str += 'bg-success ';
@@ -447,10 +449,13 @@ CalendarJSP = true;
 
                             } else if (vstList[j].groupOrder === 3) {
                                 str += 'bg-danger ';
+                                
+                            } else if (vstList[j].groupOrder === 4) {
+                                str += 'bg-info ';
 
                             }
 
-                            str += 'show-menu">' + vstList[j].storeName + '</div>';
+                            str += 'show-menu" data-storeno="'+vstList[j].storeNo+'">' + vstList[j].storeName + '</div>';
 
                             $("#vday" + i).after(str);
 
