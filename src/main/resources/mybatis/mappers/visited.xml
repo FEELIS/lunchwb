@@ -26,7 +26,8 @@
    
    <!-- 달력 가게정보 띄우기 -->
    <select id="calendar" parameterType="VisitedVo" resultMap="resultMapVisitedVo">
-         select to_char(v.visited_date,'Mon DD YYYY','NLS_DATE_LANGUAGE=ENGLISH')visited_date, 
+         select s.store_no, 
+         		to_char(v.visited_date,'Mon DD YYYY','NLS_DATE_LANGUAGE=ENGLISH')visited_date, 
                 f1.menu_1st_cate_name, 
                 g.group_name, 
                 s.store_name, 
