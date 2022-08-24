@@ -117,6 +117,7 @@ $("#random-btn").on("click", function(){
 		
 	}else{
 		alert("오늘 방문할 가게는 [" + randomStoreName + "] 입니다.")
+		alert("시간 있으시면 가입하시죠?")
 	}
 	
 	console.log("방문 가게 no = " + randomStoreNo)
