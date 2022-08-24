@@ -284,9 +284,6 @@
 
 <script type="text/javascript">
 
-/* k : 1 바구니(추천) 경우 거리 표시
- * k : 0  경우 거리 표시 제외 */
-
 /* 메인-가게바구니에서 조회할 때 */
 $("#basket-table").on("click", ".basket-table-store-name", function(){
 	if (typeof indexJSP) {
@@ -297,7 +294,7 @@ $("#basket-table").on("click", ".basket-table-store-name", function(){
 	}else if(typeof indexJSP === 'undefined'){
         var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
 		console.log(storeNo+"번 가게 정보 보기")
-		storeInfoOpen(storeNo, 1)
+		storeInfoOpen(storeNo, 2)
 	}
 })
 
@@ -318,8 +315,16 @@ $("#visited-store-name").on("click", function(){
 })
 
 
-/* 블랙리스트(already) 가게 조회 */
+/* 블랙리스트 가게 조회 */
 $("#black-body").on("click", ".black-store-name", function(){
+	var storeNo = $(this).attr("data-storeno")
+	console.log(storeNo+"번 가게 정보 보기")
+	storeInfoOpen(storeNo, 3)
+})
+
+
+/* 캘린더 기록 가게 조회 */
+$("#calendar-area").on("click", ".show-menu", function(){
 	var storeNo = $(this).attr("data-storeno")
 	console.log(storeNo+"번 가게 정보 보기")
 	storeInfoOpen(storeNo, 4)
@@ -328,15 +333,34 @@ $("#black-body").on("click", ".black-store-name", function(){
 
 /* 모달에서 > 다시 다른 가게 정보 조회(버튼) */
 $("#modal-store .other-store-btn").on("click", function(){
+	//모달에서 다른 모달로 넘어가기 : 페이지 상관없이 불러올 변수는 동일
 	var storeNo = $(this).attr("data-no")
 	console.log(storeNo+"번 가게 정보 보기")
 	
-	//장바구니 일때만 가게정보 
-	if(typeof indexJSP){
-		storeInfoOpen(storeNo, 1)
-	}else{
+	//리뷰메인
+	if(typeof visitedJSP){
 		storeInfoOpen(storeNo, 0)
+	
+	//메인 : 장바구니 추천
+	}else if(typeof indexJSP){
+		storeInfoOpen(storeNo, 1)
+	
+	//메인 : 장바구니 이외
+	}else if(typeof indexJSP === 'undefined'){
+		storeInfoOpen(storeNo, 2)
+	
+	//그룹 블랙리스트 페이지
+	}else if(typeof blacklistJSP){
+		storeInfoOpen(storeNo, 3)
+	
+	//캘린더
+	}else if(typeof CalendarJSP){
+		storeInfoOpen(storeNo, 4)
+		
+	}else{
+		
 	}
+		
 })
 
  
@@ -353,11 +377,7 @@ function storeInfoOpen(storeNo, k){
 		modalStoreDistance(storeNo)
 	}
 	
-	//k=1 > 장바구니 : 여기갈래요 / 장바구니에 있으면 점심후보추가 or 없으면 점심후보제외
-	//k=0 > 리뷰메인 : 내가 다녀온 장소 방문취소 (다녀온 곳 아니면 버튼 x) / 블랙리스트 추가(이미 블랙 > 블랙리스트 제외)   
-	//k=2 > 그동안의 기록 : 블랙리스트 추가 or 제외
-	//k=3 > 블랙리스트 가게 조회 : 블랙리스트 추가
-	//k=4 > 블랙리스트 가게 제외
+	//k:footer 버튼 용
 	modalSortOfStore(storeNo, k)
 	
 	$("#modal-store").modal("show")
@@ -443,10 +463,8 @@ function storeBasicInfo(storeNo){
 }
 
 
-/* 조회하는 유저와의 가게 거리 */
+/* 조회하는 유저와의 가게 거리 - only 추천 장바구니 */
 function modalStoreDistance(storeNo) {
-	console.log("modalStoreDistance storeNo : " + storeNo)
-	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/store/distance",
 		type : "post",
@@ -455,7 +473,7 @@ function modalStoreDistance(storeNo) {
 		dataType : "json",
 		
 		success : function(distance){
-			console.log("distance: "+distance)
+			console.log( "storeNo: " + storeNo + ", distance: "+distance)
 			
 			if(distance>0){
 				$(".modalStoreDistance").text(" ("+distance+"m)")
@@ -472,7 +490,7 @@ function modalStoreDistance(storeNo) {
 /* 별 그리기 */
 /* k:별그릴위치 종류 0:이 가게, 1 2 3: 다른가게 */
 function modalStoreStar(starScore, k){
-	console.log("score: " + starScore)
+	console.log("AvgScore: " + starScore)
 	
 	var str = ''
 	for(var i=0; i<5; i++){
@@ -499,8 +517,6 @@ function modalStoreStar(starScore, k){
 
 /* 영업시간+브레이크타임 드랍다운 리스트 */
 function modalStoreTime(storeTime, opt){
-	console.log("storeTime: " + opt)
-	
 	var str = ''
 	
 	if(storeTime[0] == "정보없음"){
@@ -652,6 +668,11 @@ function modalStoreAllMenu(menuVo){
 }
 
 
+//k=0 > 리뷰메인 : 내가 다녀온 장소 방문취소 (다녀온 곳 아니면 버튼 x) / 블랙리스트 추가(이미 블랙 > 블랙리스트 제외)   
+//k=1 > 장바구니 : 여기갈래요 / 장바구니에 있으면 점심후보추가 or 없으면 점심후보제외
+//k=2 > 장바구니 추천 제외 index 페이지
+//k=3 > 블랙리스트 가게 조회 : isBlack > 블랙리스트 추가/제외
+//k=4 > STAT(방문취소 불가) 블랙리스트만? 3&4 통합? 
 /* 가게 정보 모달  다른 가게 + footer 버튼 */
 function modalSortOfStore(storeNo, k){
 	//버튼 영역 초기화
@@ -673,6 +694,7 @@ function modalSortOfStore(storeNo, k){
 					storeNo: "${visitedMap.visitedVo.storeNo}",
 					groupNo: "${visitedMap.visitedVo.groupNo}"
 				}
+				
 				isBlack(blackVo, 1)
 			}
 		
@@ -680,26 +702,24 @@ function modalSortOfStore(storeNo, k){
 		
 		case 1:
 		// k=1 : 바구니/지도
-			// 그룹? 비로그인 또는 그룹이 없으면 여기갈래요 불가 > 
-			console.log("${curr_basket_group} : curr_group")
+			console.log("curr_group: " + curr_basket_group)
 
-			if(curr_basket_group != 0 ){
+			// 그룹? 비로그인 또는 그룹이 없으면 여기갈래요 불가 > 
+			if(curr_basket_group != 0 && curr_basket_group != null){
 				$(".store-button-area").append('<button class="btn btn-primary btn-decision-this" type="button" data-storeno="'+storeNo+'" data-bs-dismiss="modal">여기갈래요</button>')
 			}
 			
 			// 바구니? ${basket.curr_basket_group}: 선택된 가게 리스트
-			console.log("basket: " + "${basket}")
-			console.log("basket(curr_group) : ${basket.curr_basket_group}")
+			console.log("basket: " + basket)
+			console.log("basket(curr_group): " + basket[curr_basket_group])
 			//장바구니 안에 가게가 있으면 있는 가게인지 검사 해줘야해
-			if("${basket.curr_basket_group}" != null && "${basket.curr_basket_group}" != []){
+			if(basket[curr_basket_group] != null && basket[curr_basket_group] != "" && basket[curr_basket_group] != []){
 				console.log("장바구니에 추가된 가게 있음")
-				for(var i=0; i<"${basket.curr_basket_group}".length; i++){
-					var listStoreNo = "${basket.curr_basket_group}"[i].storeNo
-					console.log(listStoreNo)
-					//지금 모달을 여는 가게
-					if(listStoreNo == storeNo){
+				for(var i=0; i<basket[curr_basket_group].length; i++){
+					if(basket[curr_basket_group][i].storeNo == storeNo){
+						console.log("바구니 가게: "+basket[curr_basket_group][i].storeNo)
 						//장바구니에 있는 가게
-						if(basketStore["${curr_basket_group}"][i].stored){
+						if(basket[curr_basket_group][i].stored){
 							$(".store-button-area").append('<button class="btn btn-light btn-delete-store-basket" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">점심후보제외</button>')
 						}else{
 							$(".store-button-area").append('<button class="btn btn-light btn-add-store-basket" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">점심후보추가</button>')
@@ -735,16 +755,31 @@ function modalSortOfStore(storeNo, k){
 
 
 //장바구니 점심 후보 추가
-$(".btn-add-store-basket").on("click", function(){
-	console.log("장바구니 추가하기: ")
-	var storeNo = $(this).attr("data-storeNo")
+$("#modal-store").on("click", ".btn-add-store-basket", function(){
+	var storeNo = $(this).attr("data-storeNo") 
+	addItemToBasket(storeNo)
+})
+$("#modal-reviews").on("click", ".btn-add-store-basket", function(){
+	var storeNo = $(this).attr("data-storeNo") 
+	addItemToBasket(storeNo)
+})
+$("#modal-all-menu").on("click", ".btn-add-store-basket", function(){
+	var storeNo = $(this).attr("data-storeNo") 
 	addItemToBasket(storeNo)
 })
 
 
 //장바구니 점심 후보 삭제
-$("#modal-store .btn-delete-store-basket", "#modal-reviews .btn-delete-store-basket", "#modal-all-menu .btn-delete-store-basket").on("click", function(){
-	var storeNo = $(this).attr("data-storeNo")
+$("#modal-store .btn-delete-store-basket").on("click", function(){
+	var storeNo = $(this).attr("data-storeNo") 
+	deleteSessionBasketGroup(storeNo)
+})
+$("#modal-reviews .btn-delete-store-basket").on("click", function(){
+	var storeNo = $(this).attr("data-storeNo") 
+	deleteSessionBasketGroup(storeNo)
+})
+$("#modal-all-menu .btn-delete-store-basket").on("click", function(){
+	var storeNo = $(this).attr("data-storeNo") 
 	deleteSessionBasketGroup(storeNo)
 })
 
@@ -817,8 +852,6 @@ function modalSelectMembers(storeNo, groupNo){
 			str += '</form>'
 			
 			$("#modal-select-member-area").append(str)
-			
-			sleep(100)
 			
 			$("#modal-select-member-go").modal("show")
 			

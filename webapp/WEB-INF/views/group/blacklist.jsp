@@ -230,6 +230,12 @@
 <c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
 
 
+<script type="text/javascript">
+
+//가게정보 조회용
+blacklistJSP = true
+
+</script>
 
 </body>
 </html>
