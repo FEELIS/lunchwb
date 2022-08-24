@@ -267,8 +267,8 @@
 					표시되지 않은 멤버는<br> 이미 다른 그룹과 함께한 멤버입니다
 				</p>
 				<div id="member-selection-button">
-					<button id="member-all-selection" class="btn btn-primary">전체 선택</button>
-					<button id="member-all-selection-del" class="btn btn-primary">전체 해제</button>
+					<button id="member-all-selection" class="btn btn-light">전체 선택</button>
+					<button id="member-all-selection-del" class="btn btn-light">전체 해제</button>
 				</div>
 					<div id="modal-select-member-area">
 					</div>
@@ -780,11 +780,11 @@ function modalSelectMembers(storeNo, groupNo){
 			str += '<form id="members-with-me" action="${pageContext.request.contextPath}/visited/decision/'+storeNo+'/'+groupNo+'" method="post">'
 			str += '	<div class="row">'
 			
-			str += '		<div class="col" style="border-right: 1px solid; border-right-color: #EAEAEA;">'
-			
 			if(memberList.length == 0){
 				str += '			<p>선택할 수 있는 멤버가 없습니다</p>'
 			}
+
+			str += '		<div class="col" style="border-right: 1px solid; border-right-color: #EAEAEA;">'
 			
 			for(var i=0; i<parseInt((memberList.length+1)/2); i++){
 				var n= String(i)
