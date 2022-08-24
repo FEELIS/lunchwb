@@ -757,7 +757,7 @@ function modalSortOfStore(storeNo, k){
 //장바구니 점심 후보 추가
 $("#modal-store").on("click", ".btn-add-store-basket", function(){
 	var storeNo = $(this).attr("data-storeNo") 
-	addItemToBasket(storeNo)
+	addItemToBasket(Number(storeNo))
 })
 $("#modal-reviews").on("click", ".btn-add-store-basket", function(){
 	var storeNo = $(this).attr("data-storeNo") 
