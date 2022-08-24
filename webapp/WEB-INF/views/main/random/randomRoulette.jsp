@@ -49,12 +49,6 @@
             <c:import url="/WEB-INF/views/includes/header.jsp" />
         </div>
         
-        <div class="flex-nowrap no-drag" id="curr-location">
-        	<span style="margin-right: 5px;" class="no-drag"><i class="fas fa-crosshairs no-drag"></i>&nbsp;현위치:</span>
-        	<span id="curr-location-address">${curr_location.address}</span>
-        	<button class="btn btn-primary no-drag" id="location-change-btn" type="button">위치재설정</button>
-        </div>
-        
        <div style="margin-top: 100px;" align="center">
             <table cellpadding="0" cellspacing="0" border="0">
                 <tr>
@@ -76,119 +70,12 @@
 
 <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 
-<!-- 위치 재설정 모달 -->
-<div id="modal-location-change" class="modal fade" role="dialog" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="border-bottom-color: rgb(255,255,255);">
-                    <h4 class="modal-title no-drag">현재 위치 설정</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            
-            <div class="modal-body">
-                <div><span class="no-drag">출발 위치를 선택해주세요.</span>
-                    <div id="modal-curr-location-box">
-                    	<span class="emphasize-blue no-drag">현재 설정 위치:&nbsp;</span>
-                    	<span id="modal-curr-location" class="no-drag">${curr_location.address}</span>
-                    	<button class="btn btn-primary float-end" id="modal-curr-location-btn" type="button">현위치</button>
-                    </div>
-                    <div id="write-location-box" class="no-drag">
-                    	<span class="d-inline-block no-drag">직접 입력하기:</span>
-                    	<input type="text" class="location-search-bar" readonly>
-                    	<button class="btn btn-primary align-items-center location-search-bar" type="button"><i class="fas fa-search"></i></button>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer modal-footer-custom">
-            	<button id="modal-gps-submit" class="btn btn-primary" type="button">저장</button>
-            	<button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 </div>
 
 </body>
 
 <script type="text/javascript">
 
-	// 위치재설정 버튼 클릭 시
-	$("#location-change-btn").on("click", function(){
-		var curr_address = ""
-		
-		if (gpsVo.address == "") {
-			curr_address = "현재 위치를 설정해주세요"
-			
-		} else {
-			curr_address = gpsVo.address
-		}
-		
-		$("#modal-curr-location").text(curr_address)
-		$("#modal-location-change").modal("show")
-		$("#modal-location-change").modal( {
-			backdrop: 'static'
-		})
-	})
-	
-	
-	// 현위치로 재설정
-	$("#modal-curr-location-btn").on("click", function(){
-		curr_location()
-	})
-	
-	
-	// 주소 검색하기
-	$(".location-search-bar").on("click", function(){			
-		DaumPostcode()
-	})
-	
-	
-	// 주소 api
-    function DaumPostcode() {
-       new daum.Postcode({
-           oncomplete: function(data) {
-               $("#modal-curr-location").text(data.jibunAddress)
-           }
-       }).open()
-    }
-	
-	
-	// 모달 닫힐 때 페이지 로드
-	$("#modal-gps-submit").on("click", function(){
-		if ($("#curr-location-address").text() != $("#modal-curr-location").text()) {
-			var gpsChangeOK = confirm("현재 위치 변경 시 현재 저장한 점심 후보가 초기화됩니다. 정말로 변경하시겠습니까?")
-
-			if (!gpsChangeOK) {
-				return false
-			}
-			
-			var geocoder = new kakao.maps.services.Geocoder()
-			   geocoder.addressSearch($("#modal-curr-location").text(), async function(result, status) {
-
-			   if (status === kakao.maps.services.Status.OK) {
-				    gpsVo.gpsX = result[0].x
-				    gpsVo.gpsY = result[0].y
-			        gpsVo.address = $("#modal-curr-location").text()
-			        
-			        await setGPS(gpsVo)
-				    await clearBasket()
-			   	  } 
-			});  
-			
-			$("#modal-location-change").modal("hide")
-			sleep(100)
-			alert("현재 위치가 변경되었습니다.")
-			
-			sleep(100)
-			location.replace("${pageContext.request.contextPath}/")
-			
-		} else {
-			$("#modal-location-change").modal("hide")
-		}
-	})
-	
-	
 	// 장바구니 비우기
 	async function clearBasket() {
 		$.ajax({
@@ -205,23 +92,8 @@
 	}
 	
 	
-	// 주변에 가게가 하나도 없을 때 창
-	function noStore() {
-		if (indexJSP) {
-			$("#container").append(
-				  "<div class='d-inline-flex justify-content-center align-items-center' id='no-store'>"
-	            + 	"<div>"
-	            +   	"<span class='d-block justify-content-center' id='no-store-alert-1'>주변에 추천 가능한 가게가 없어요</span>"
-	            +       "<span class='d-flex justify-content-center' id='no-store-alert-2'>현재 위치나 필터를 확인해주세요</span>"
-	            +   "</div>"
-	            + "</div>"
-			)
-		}
-	}
 	let countbas;
 	let theWheel;
-	
-	
 	// 룰렛
 	// Create new wheel object specifying the parameters at creation time.
 	
@@ -236,9 +108,9 @@
 	              'textFontSize' : 18,    // Set font size as desired.
 	              'segments'     :        // Define segments including colour and text.
 	              [ 
-	                    {'fillStyle' : '#36b9cc', 'text' : basket[curr_basket_group][0].storeName},
-	                    {'fillStyle' : '#f6c23e', 'text' : basket[curr_basket_group][1].storeName},
-	                    {'fillStyle' : '#1cc88a', 'text' : basket[curr_basket_group][2].storeName}
+	                    {'fillStyle' : '#36b9cc', 'text' : basket[curr_basket_group][0].storeName, 'storeNo' : basket[curr_basket_group][0].storeNo},
+	                    {'fillStyle' : '#f6c23e', 'text' : basket[curr_basket_group][1].storeName, 'storeNo' : basket[curr_basket_group][1].storeNo},
+	                    {'fillStyle' : '#1cc88a', 'text' : basket[curr_basket_group][2].storeName, 'storeNo' : basket[curr_basket_group][2].storeNo}
 	              ],
 	              'animation' :           // Specify the animation to use.
 	              {
@@ -269,51 +141,7 @@
 	           });
 	      }
 	}, 400);
-   /*  $(document).ready(function(){
-      countbas = countBasketItems(curr_basket_group);
-      
-      if(countbas == 3){
-    	  theWheel = new Winwheel({
-              
-              'numSegments'  : countbas,     // Specify number of segments.
-              'outerRadius'  : 305,   // Set outer radius so wheel fits inside the background.
-              'textFontSize' : 18,    // Set font size as desired.
-              'segments'     :        // Define segments including colour and text.
-              [ 
-                    {'fillStyle' : '#36b9cc', 'text' : basket[curr_basket_group][0].storeName},
-                    {'fillStyle' : '#f6c23e', 'text' : basket[curr_basket_group][1].storeName},
-                    {'fillStyle' : '#1cc88a', 'text' : basket[curr_basket_group][2].storeName}
-              ],
-              'animation' :           // Specify the animation to use.
-              {
-                  'type'     : 'spinToStop',
-                  'duration' : 5,     // Duration in seconds.
-                  'spins'    : 8,     // Number of complete spins.
-                  'callbackFinished' : alertPrize
-              }
-           });
-      }else if (countbas == 2){
-    	  theWheel = new Winwheel({
-              
-              'numSegments'  : countbas,     // Specify number of segments.
-              'outerRadius'  : 305,   // Set outer radius so wheel fits inside the background.
-              'textFontSize' : 18,    // Set font size as desired.
-              'segments'     :        // Define segments including colour and text.
-              [ 
-                    {'fillStyle' : '#36b9cc', 'text' : basket[curr_basket_group][0].storeName},
-                    {'fillStyle' : '#f6c23e', 'text' : basket[curr_basket_group][1].storeName}
-              ],
-              'animation' :           // Specify the animation to use.
-              {
-                  'type'     : 'spinToStop',
-                  'duration' : 5,     // Duration in seconds.
-                  'spins'    : 8,     // Number of complete spins.
-                  'callbackFinished' : alertPrize
-              }
-           });
-      }
-      
-   }) */
+
 
     // Vars used by the code in this page to do power controls.
     let wheelSpinning = false;
@@ -366,6 +194,11 @@
     {
         // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
         alert("오늘 방문할 가게는 [" + indicatedSegment.text +"] 입니다.");
+        
+        if(modalSelectMembers(indicatedSegment.storeNo, curr_basket_group) == false){
+			return false
+		}
+        
     }
 	
 </script>

@@ -2056,7 +2056,8 @@ function Segment(options)
         'textLineWidth'     : null,
         'image'             : null, // Name/path to the image
         'imageDirection'    : null, // Direction of the image, can be set globally for the whole wheel.
-        'imgData'           : null  // Image object created here and loaded with image data.
+        'imgData'           : null,  // Image object created here and loaded with image data.
+        'storeNo'			: null
     };
 
     // Now loop through the default options and create properties of this class set to the value for
