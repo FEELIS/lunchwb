@@ -133,8 +133,13 @@
 					</c:when>
 					<c:otherwise>
 						<p class="visited-p">
-							오늘은 이미 방문 후 리뷰를 남겼습니다
+							오늘의 리뷰를 수정하고 싶으신가요?
 						</p>
+						<a id="visited-review-modify-link" href="${pageContext.request.contextPath}/stat/modifyReview/${visitedMap.reviewVo.reviewNo}">
+							<button id="btn-visited-review-modify" class="btn btn-light link-danger border rounded-pill border-danger" type="button">
+								리뷰 수정
+							</button>
+						</a>
 					</c:otherwise>
 				</c:choose>
 
@@ -439,10 +444,15 @@
 
 <script type="text/javascript">
 
+//방문 메인에서 (모달종류체크용)
+visitedJSP = true
+
 const visitedVo = "${visitedMap.visitedVo}"
 const myVisit = "${visitedMap.relVo}"
+const todayReview = "${visitedMap.reviewVo}"
 console.log("오늘 방문 정보" + visitedVo)
 console.log("오늘 방문한 곳의 지난 방문 정보" + myVisit)
+console.log("오늘의 리뷰 정보" + todayReview)
 
 $(document).ready(function(){
 	drawStoreStar()

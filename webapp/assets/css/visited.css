@@ -165,6 +165,18 @@
   font-size: 14px;
 }
 
+#btn-visited-review-modify:hover {
+  background-color: var(--bs-gray-200);
+}
+
+#btn-visited-review-modify {
+  width: 120px;
+  height: 30px;
+  margin-bottom: 5px;
+  padding: 0px;
+  font-size: 14px;
+}
+
 #btn-visited-black-add:hover {
   background-color: var(--bs-gray-200);
 }
