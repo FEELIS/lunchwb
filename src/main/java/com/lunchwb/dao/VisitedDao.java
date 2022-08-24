@@ -1,6 +1,7 @@
 package com.lunchwb.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,6 +58,10 @@ public class VisitedDao {
 	
 	public void todayMenu(VisitedVo visitedVo) {
 		sqlSession.update("visited.todayMenu", visitedVo);
+	}
+	
+	public void insertVoteVisit(Map<String, Object> map) {
+		sqlSession.insert("visited.insertVoteVisit", map);
 	}
 	
 

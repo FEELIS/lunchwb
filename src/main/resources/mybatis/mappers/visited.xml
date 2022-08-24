@@ -179,5 +179,18 @@
 		SET menu_no = #{menuNo}
 		WHERE visited_no = #{visitedNo}
 	</select>
+	
+	
+	<!--  투표 후 여기갈래요  -->
+	<insert id="insertVoteVisit" parameterType="Map">
+		INSERT INTO visited (visited_no, user_no, group_no, store_no, visited_date)
+		SELECT seq_visited_no.NEXTVAL, A.*
+		FROM (
+		<foreach item="member" collection="voteMember" separator="UNION ALL ">
+			SELECT #{userNo} AS user_no, #{groupNo} AS group_no, #{storeNo} AS store_no, TO_DATE(SYSDATE) as visited_date 
+			FROM dual
+		</foreach>
+		) A
+	</insert>
 
 </mapper>
