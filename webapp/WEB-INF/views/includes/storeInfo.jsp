@@ -761,26 +761,26 @@ $("#modal-store").on("click", ".btn-add-store-basket", function(){
 })
 $("#modal-reviews").on("click", ".btn-add-store-basket", function(){
 	var storeNo = $(this).attr("data-storeNo") 
-	addItemToBasket(storeNo)
+	addItemToBasket(Number(storeNo))
 })
 $("#modal-all-menu").on("click", ".btn-add-store-basket", function(){
 	var storeNo = $(this).attr("data-storeNo") 
-	addItemToBasket(storeNo)
+	addItemToBasket(Number(storeNo))
 })
 
 
 //장바구니 점심 후보 삭제
 $("#modal-store .btn-delete-store-basket").on("click", function(){
 	var storeNo = $(this).attr("data-storeNo") 
-	deleteSessionBasketGroup(storeNo)
+	deleteSessionBasketGroup(Number(storeNo))
 })
 $("#modal-reviews .btn-delete-store-basket").on("click", function(){
 	var storeNo = $(this).attr("data-storeNo") 
-	deleteSessionBasketGroup(storeNo)
+	deleteSessionBasketGroup(Number(storeNo))
 })
 $("#modal-all-menu .btn-delete-store-basket").on("click", function(){
 	var storeNo = $(this).attr("data-storeNo") 
-	deleteSessionBasketGroup(storeNo)
+	deleteSessionBasketGroup(Number(storeNo))
 })
 
 
