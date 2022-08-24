@@ -105,22 +105,9 @@ $("#random-btn").on("click", function(){
 				
 				alert("오늘 방문할 가게는 [" + randomStoreName + "] 입니다.")
 				
-				// 결과 세션으로 던지기.
-				 /* $.ajax({
-					url : "${pageContext.request.contextPath}/randomResult",		
-					type : "post",
-					contentType : "application/json",
-					data : JSON.stringify(curr_basket_group),
-					dataType : "json",
-					async : false,
-					success : function(result){				
-						
-						console.log(result)
-					},
-					error : function(XHR, status, error) {
-						console.error(status + " : " + error);
-					}
-				}) */
+				if(modalSelectMembers(randomStoreNo, curr_basket_group) == false){
+					return false
+				}
 				
 			},
 			error : function(XHR, status, error) {
