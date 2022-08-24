@@ -123,15 +123,21 @@
 					</c:forEach>
 
 				</div>
-
-				<c:if test="${visitedMap.reviewVo == null}">
-					<p class="visited-p">오늘이 가기 전에 리뷰를 남겨주세요!</p>
-					<a id="visited-cancel-link" href="${pageContext.request.contextPath}/visited/cancel/${visitedMap.visitedVo.visitedNo}">
-						<button id="btn-visited-cancel" class="btn btn-light link-danger border rounded-pill border-danger" type="button">
-							방문 취소
-						</button>
-					</a>
-				</c:if>
+				<c:choose>
+					<c:when test="${visitedMap.reviewVo == null}">
+						<p class="visited-p">오늘이 가기 전에 리뷰를 남겨주세요!</p>
+						<a id="visited-cancel-link" href="${pageContext.request.contextPath}/visited/cancel/${visitedMap.visitedVo.visitedNo}">
+							<button id="btn-visited-cancel" class="btn btn-light link-danger border rounded-pill border-danger" type="button">
+								방문 취소
+							</button>
+						</a>
+					</c:when>
+					<c:otherwise>
+						<p class="visited-p">
+							오늘은 이미 방문 후 리뷰를 남겼습니다
+						</p>
+					</c:otherwise>
+				</c:choose>
 
 				<c:if test="${authUser.userNo == visitedMap.groupLeader}">
 					<p id="visited-black-p"class="visited-p"></p>
@@ -661,9 +667,8 @@ $("#review-submit").on("submit", function(){
 	
 	var userScore = $("[name = 'userScore']").val()
 	if(userScore == 0){
-		if(confirm("별점이 0점으로 기록됩니다.") == false){
-			return false
-		}
+		alert("별점을 기록해주세요(최소 1점)")
+		return false
 	}
 	
 	return true
