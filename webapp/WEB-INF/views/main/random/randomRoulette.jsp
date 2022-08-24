@@ -193,7 +193,18 @@
     function alertPrize(indicatedSegment)
     {
         // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
-        alert("오늘 방문할 가게는 [" + indicatedSegment.text +"] 입니다.");
+        if(confirm("오늘 방문할 가게는 [" + indicatedSegment.text +"] 입니다. \n방문하시겠습니까?" ) == false){
+        	wheelSpinning = false
+        	
+        	document.getElementById('spin_button').src       = "${pageContext.request.contextPath}/assets/img/rouletteOn.png";
+            document.getElementById('spin_button').className = "";
+            
+            theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
+            theWheel.rotationAngle = 0;     // Re-set the wheel angle to 0 degrees.
+            theWheel.draw();                // Call draw to render changes to the wheel.
+            
+        	return false
+        }
         
         if(modalSelectMembers(indicatedSegment.storeNo, curr_basket_group) == false){
 			return false
