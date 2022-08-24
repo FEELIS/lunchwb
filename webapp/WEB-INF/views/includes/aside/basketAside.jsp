@@ -127,7 +127,9 @@
             	<c:if test="${!empty(authUser)}">
             		<button class="btn btn-primary" id="basket-vote-btn" type="button">투표하기</button>
             	</c:if>
-            	<button class="btn btn-primary" id="basket-random-btn" type="button">랜덤선택</button>
+            	<a href="${pageContext.request.contextPath}/random" style="text-decoration:none;">
+            		<button class="btn btn-primary" id="basket-random-btn" type="button">랜덤선택</button>
+           		</a>
             </div>
         </div>
     </div>
@@ -1020,66 +1022,6 @@ $("#basket-random-btn").on("click", function(){
 		alert("오늘의 점심 후보가 2개 이상일 때 이용할 수 있습니다.")
 		return
 	}
-	
-	var randomStore = Math.floor(Math.random()*(countBasketItems(curr_basket_group)))
-	var randomStoreNo = basket[curr_basket_group][randomStore].storeNo
-	var randomStoreName = basket[curr_basket_group][randomStore].storeName
-	
-	var checkGroup
-	
-	// curr_basket_group의 값이 0일 경우 그룹이 하나도 없을 것.
-	// 그룹이 하나도 없다면 로그인/비로그인 유저 모두 그룹 명 체크를 할 필요가 없음.
-	if(basket_group.length > 0){
-		
-		$.ajax({
-			url : "${pageContext.request.contextPath}/getGroupName",		
-			type : "post",
-			contentType : "application/json",
-			data : JSON.stringify(curr_basket_group),
-			dataType : "json",
-			async : false,
-			success : function(result){				
-				
-				console.log(result)
-				
-				checkGroup = confirm("현재 선택하신 그룹이 [" + result + "] 맞습니까?");
-				
-				if(!checkGroup) {
-					return false
-				}
-				
-				alert("오늘 방문할 가게는 [" + randomStoreName + "] 입니다.")
-				
-				// 결과 세션으로 던지기.
-				 /* $.ajax({
-					url : "${pageContext.request.contextPath}/randomResult",		
-					type : "post",
-					contentType : "application/json",
-					data : JSON.stringify(curr_basket_group),
-					dataType : "json",
-					async : false,
-					success : function(result){				
-						
-						console.log(result)
-					},
-					error : function(XHR, status, error) {
-						console.error(status + " : " + error);
-					}
-				}) */
-				
-			},
-			error : function(XHR, status, error) {
-				console.error(status + " : " + error);
-			}
-		})
-		
-	}else{
-		alert("오늘 방문할 가게는 [" + randomStoreName + "] 입니다.")
-	}
-	
-	console.log("방문 가게 no = " + randomStoreNo)
-	console.log("방문 가게 이름 = " + randomStoreName)
-	
 })	
 
 

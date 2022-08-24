@@ -53,7 +53,13 @@
                             <div class="col" style="padding: 0px;">
                             	<button class="btn btn-primary" id="random-btn" type="button" style="width: 172px;height: 60px;">부장님 요기요의 선택</button>
                            	</div>
-                            <div class="col" style="padding: 0px;"><button class="btn btn-primary" type="button" style="width: 172px;height: 60px;">룰렛 돌리기</button></div>
+                           	<c:if test="${!empty(basketGroup)}">
+                           		<div class="col" style="padding: 0px;">
+                           			<a href="${pageContext.request.contextPath}/random/roulette" style="text-decoration:none;">
+                            			<button class="btn btn-primary" type="button" style="width: 172px;height: 60px;">룰렛 돌리기</button>
+                           			</a>
+                       			</div>
+                            </c:if>
                         </div>
                     </div>
                 </div>

@@ -88,16 +88,28 @@ public class StatController {
 		return reviewList;
 	};
 	
+	// 리뷰 수정폼
 	@GetMapping("/modifyReview/{reviewNo}")
-	public String modifyReviewForm(@PathVariable("reviewNo")int reviewNo) {
+	public String modifyReviewForm(@PathVariable("reviewNo")int reviewNo, Model model) {
 		logger.info("StatController > modifyReviewForm()");
 		
-		return "stat/reviewList";	// 리다이렉트로 수정
+		AloneVo aloneVo = aloneService.modifyRevForm(reviewNo);
+		logger.info(aloneVo.toString());
+		
+		model.addAttribute("aloneVo",aloneVo);
+		return "stat/modifyReview";	// 리다이렉트로 수정
 	};
 	
 	@PostMapping("/modifyReview/{reviewNo}")
 	public String modifyReview(@PathVariable("reviewNo")int reviewNo) {
 		logger.info("StatController > modifyReviewForm()");
+		
+		
+		
+		
+		
+		
+		
 		return "stat/reviewList";	// 리다이렉트로 수정
 	};
 	

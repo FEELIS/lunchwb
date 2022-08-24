@@ -184,11 +184,13 @@ public class VisitedService {
 		MultipartFile file = reviewVo.getFile();
 		
 		if(!file.isEmpty()) {
-			String saveDir = "C:\\javaStudy\\upload";
+			String saveDir = "C:\\javaStudy\\upload";			//윈도우용
+			//String saveDir = "/Users/choijungphil/javaStudy/upload";	//맥OS용
 			String orgName = file.getOriginalFilename();
 			String exName = orgName.substring(orgName.lastIndexOf("."));
 			String saveName = System.currentTimeMillis()+UUID.randomUUID().toString()+exName;
-			String filePath = saveDir + "\\" + saveName;
+			String filePath = saveDir + "\\" + saveName;			//윈도우용
+			// String filePath = saveDir + "/" + saveName;			//맥OS용
 			
 			reviewVo.setReviewFileName(saveName);
 			

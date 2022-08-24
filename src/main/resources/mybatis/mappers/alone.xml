@@ -18,9 +18,13 @@
 		<result column="store_y" property="storeY" />
 		<result column="store_road_address" property="storeRoadAddress" />
 		<result column="store_old_address" property="storeOldAddress" />
+		<result column="menu_1st_cate_name" property="menu1stCateName" />
+		<result column="user_name" property="userName" />
+		<result column="menu_name" property="menuName" />
+		<result column="group_name" property="groupName" />
 	</resultMap>
 	
-		<!-- ============================ 방문내역 ============================ -->
+	<!-- ============================ 방문내역 ============================ -->
 	<select id="reviewList" parameterType="int" resultMap="resultMapAloneVo">
 		<![CDATA[
 			select  r.review_no, 
@@ -38,6 +42,45 @@
 			order by r.review_no asc
 		]]>
 	</select>
+	
+	<!-- 리뷰 수정창 -->
+	<select id="getReview" parameterType="int" resultMap="resultMapAloneVo">
+		<![CDATA[
+			select  r.review_no, 
+					s.store_name, 
+				    f1.menu_1st_cate_name, 
+	                m.menu_name, 
+					s.store_road_address, 
+					u.user_name, 
+					r.review_file_name, 
+					r.user_score, 
+					g.group_name, 
+					r.review_content 
+			from review r, users u, visited v, store s, food_1st_category f1, groups g, menu m ,food_2nd_category f2 
+			where u.user_no = r.user_no 
+			and v.visited_no = r.visited_no 
+			and v.store_no = s.store_no 
+			and v.group_no = g.group_no 
+			and v.menu_no = m.menu_no 
+			and f2.menu_1st_cate_no = f1.menu_1st_cate_no 
+			and s.menu_2nd_cate_no = f2.menu_2nd_cate_no 
+			and r.review_no = #{reviewNo}  
+		]]>
+	</select>
+	
+	<!-- 리뷰 수정 -->
+	<update id="">
+		
+	
+	
+	
+	
+	
+	
+	
+	</update>
+	
+	<!-- 리뷰 1개 삭제 -->
 	<delete id="deleteReview" parameterType="int">
 		<![CDATA[
 			delete from review 

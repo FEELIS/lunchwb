@@ -37,5 +37,12 @@ public class AloneService {
 	};
 	
 	
+	public AloneVo modifyRevForm(int reviewNo) {
+		AloneVo aloneVo = aloneDao.getReview(reviewNo);
+		
+		return aloneVo;
+	};
+	
+	
 
 }
