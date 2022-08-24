@@ -284,14 +284,17 @@
 
 <script type="text/javascript">
 
-/* 바구니에서 - 가게 정보 보기 클릭 */
-/* 메인페이지로 옮겨놓기 + 다른가게 눌렀을 때도*/
 /* k : 1 바구니(추천) 경우 거리 표시
-k : 0 기록(비추천) 경우 거리 표시 제외 */
+ * k : 0  경우 거리 표시 제외 */
 
 /* 메인-가게바구니에서 조회할 때 */
 $("#basket-table").on("click", ".basket-table-store-name", function(){
-	if (typeof indexJSP === 'undefined' || indexJSP) {
+	if (typeof indexJSP) {
+        var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
+		console.log(storeNo+"번 가게 정보 보기")
+		storeInfoOpen(storeNo, 1)
+	
+	}else if(typeof indexJSP === 'undefined'){
         var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
 		console.log(storeNo+"번 가게 정보 보기")
 		storeInfoOpen(storeNo, 1)
@@ -327,8 +330,9 @@ $("#black-body").on("click", ".black-store-name", function(){
 $("#modal-store .other-store-btn").on("click", function(){
 	var storeNo = $(this).attr("data-no")
 	console.log(storeNo+"번 가게 정보 보기")
-	//세션에 주소가 있으면 거리를 재고 아님 말고
-	if("${curr_location}" != null){
+	
+	//장바구니 일때만 가게정보 
+	if(typeof indexJSP){
 		storeInfoOpen(storeNo, 1)
 	}else{
 		storeInfoOpen(storeNo, 0)
