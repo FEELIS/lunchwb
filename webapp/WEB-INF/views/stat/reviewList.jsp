@@ -120,16 +120,24 @@
         str += '	<li id="t' + aloneVo.reviewNo + '" class="list-group-item">';
         str += '		<div class="media align-items-lg-center flex-column flex-lg-row p-3">';
         str += '			<div class="media-body order-2 order-lg-1">';
-        str += '				<h5 class="mt-0 font-weight-bold mb-2">' + aloneVo.storeName + '</h5>';
+        str += '				<h5 class="mt-0 font-weight-bold mb-2"><i class="fas fa-utensils"></i> ' + aloneVo.storeName + '</h5>';
         str += '				<p class="font-italic text-muted mb-0 small">' + aloneVo.storeRoadAddress + '</p>';
         str += '				<div class="d-flex align-items-center justify-content-between mt-1">';
-        str += '					<h6 class="font-italic text-muted mb-0 small">여기갈래요 213회/40대 그룹 선호 가게';
+        str += '					<h6 class="font-italic text-muted mb-0 small">여기갈래요 213회/40대 그룹 선호 가게</h6>';
         str += '					<ul class="list-inline small">';
-        str += '						<li class="list-inline-item m-0"><i class="fa fa-star text-warning"></i></li>';
-        str += '						<li class="list-inline-item m-0"><i class="fa fa-star text-warning"></i></li>';
-        str += '						<li class="list-inline-item m-0"><i class="fa fa-star text-warning"></i></li>';
-        str += '						<li class="list-inline-item m-0"><i class="fa fa-star text-warning"></i></li>';
-        str += '						<li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li> ';
+        
+        
+        // 별점 추가
+        for (var i = 1; i <= 5; i++) {
+			if (aloneVo.userScore<i) {
+        str += '						<li class="list-inline-item m-0"><i class="far fa-star text-warning"></i></li>';	// light
+				
+			} else {
+        str += '						<li class="list-inline-item m-0"><i class="fas fa-star text-warning"></i></li>';	// solid
+
+			}
+		};
+		
         str += '					</ul>';
         str += '				</div>';
         str += '			</div>';
