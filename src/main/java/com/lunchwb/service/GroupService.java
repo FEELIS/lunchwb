@@ -435,6 +435,14 @@ public class GroupService {
 	}
 	
 	
+	/******************** 블랙리스트 추가(목록 추가) *********************************************/
+	public BlacklistVo addBlacklist(BlacklistVo blackVo) {
+		blackDao.addBlack(blackVo);
+		int blackNo = blackVo.getBlackNo();
+		return blackDao.blackStore(blackNo);
+	}
+	
+	
 	/******************** 블랙리스트 추가 ****************************************************/
 	public String addBlack(BlacklistVo blackVo) {
 		if(blackDao.addBlack(blackVo) > 0) {

@@ -349,31 +349,6 @@ $("#modal-store .other-store-btn").on("click", function(){
 	var sortNo = $(this).attr("data-sortno")
 	console.log("종류:" + sortNo)
 	storeInfoOpen(storeNo, Number(sortNo))
-	
-/* 	//리뷰메인
-	if(typeof visitedJSP){
-		storeInfoOpen(storeNo, 0)
-	
-	//메인 : 장바구니 추천
-	}else if(typeof indexJSP){
-		storeInfoOpen(storeNo, 1)
-	
-	//메인 : 장바구니 이외
-	}else if(typeof indexJSP === 'undefined'){
-		storeInfoOpen(storeNo, 2)
-	
-	//그룹 블랙리스트 페이지
-	}else if(typeof blacklistJSP){
-		storeInfoOpen(storeNo, 3)
-	
-	//캘린더
-	}else if(typeof CalendarJSP){
-		storeInfoOpen(storeNo, 4)
-		
-	}else{
-		
-	} */
-		
 })
 
  
@@ -688,9 +663,9 @@ function modalStoreAllMenu(menuVo){
 //k=0 > 리뷰메인 : 내가 다녀온 장소 방문취소 (다녀온 곳 아니면 버튼 x) / 블랙리스트 추가(이미 블랙 > 블랙리스트 제외)   
 //k=1 > 장바구니 : 여기갈래요 / 장바구니에 있으면 점심후보추가 or 없으면 점심후보제외
 //k=2 > 장바구니 추천 제외 index 페이지 typeof indexJSP === 'undefined' 버튼 없음
-//k=3 > 블랙리스트 : 블랙리스트  제외 blacklistJSP
-//k=4 > 블랙리스트 : 블랙리스트 추가  blacklistJSP
-//k=5 > STAT(방문취소 불가) 블랙리스트만? 3&4 통합? 
+//k=3 > 블랙리스트 : 블랙리스트 제외 blacklistJSP
+//k=4 > 블랙리스트 : 블랙리스트 추가 blacklistJSP
+//k=5 > STAT(방문취소 불가) 블랙리스트만? 3&4 통합? 취소
 /* 가게 정보 모달  다른 가게 + footer 버튼 */
 function modalSortOfStore(storeNo, k){
 	//버튼 영역 초기화
@@ -706,16 +681,21 @@ function modalSortOfStore(storeNo, k){
 												+'	<button class="btn btn-primary modal-btn-visited-cancel" type="button">방문취소</button>'
 												+'</a>')
 			}
-			//다녀온 가게가 아니면 블랙버튼만 : 그룹장만
+			//다녀온 가게가 아니면 블랙추가버튼이겠죠.. :  
 			if("${authUser.userNo}" == "${visitedMap.groupLeader}"){
-				var blackVo = {
-					storeNo: storeNo,
-					groupNo: "${visitedMap.visitedVo.groupNo}"
-				}
+				//다녀온 가게 블추 했는지?
+				if(storeNo == "${visitedMap.visitedVo.storeNo}"){
+					var blackVo = {
+						storeNo: storeNo,
+						groupNo: "${visitedMap.visitedVo.groupNo}"
+					}
 				
-				isBlack(blackVo, 1)
+					isBlack(blackVo, 1)
+				//안 갔다 온 가게는 블랙 아닌것만 볼수있어요;;
+				}else{
+					addModalBlackBtn(storeNo, "N")
+				}
 			}
-		
 			break
 		
 		case 1:
@@ -766,7 +746,7 @@ function modalSortOfStore(storeNo, k){
 		
 			
 		case 3:
-		// 블랙리스트에서 조회(이미 있음 > 제거)
+		// 블랙리스트 테이블에서 조회(이미 있음 > 제거)
 			// 그룹장만 가능
 			if("${authUser.userNo}" == "${map.groupLeader}"){
 				$(".store-button-area").append('<button class="btn btn-light btn-del-black" type="button" data-storeNo="'+storeNo+'">블랙제외</button>')
@@ -777,6 +757,7 @@ function modalSortOfStore(storeNo, k){
 		// 블랙리스트에서 블랙할 가게 검색(없음 > 추가)
 			//그룹장만 가능(애초에 접근자체가 그룹장만 되는데)
 			if("${authUser.userNo}" == "${map.groupLeader}"){
+				
 				$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'">블랙추가</button>')
 			}
 			
@@ -822,7 +803,8 @@ $("#modal-all-menu .btn-delete-store-basket").on("click", function(){
 
 //블랙추가 공통
 //bAddNo = 0 : visitedMain
-//bAddNo = 1 : blacklist.Jsp
+//bAddNo = 1 : blacklist.Jsp 분리 X
+//bAddNo = 2 : 나중에 추가될지도 모를 STAT용으로 놔둠 
 function blackAdd(blackVo, bAddNo){
 	$.ajax({
 		url : "${pageContext.request.contextPath}/group/black/add",
@@ -848,10 +830,6 @@ function blackAdd(blackVo, bAddNo){
 						//visitedAside(visitedMain)
 						drawBlackBtn("Y")
 						break
-						
-					case 1:
-						//blacklist
-						addBlackTable(blackVo)
 				}
 				
 			}else{
@@ -889,15 +867,15 @@ function blackDel(blackVo, bDelNo){
 				addModalBlackBtn(blackVo.storeNo, "N")
 				
 				switch(bDelNo){
-				case 0: 
-					//visitedAside(visitedMain)
-					drawBlackBtn("N")
-					break
-					
-				case 1:
-					//blacklist
-					delBlackTable(blackVo)
-					break
+					case 0: 
+						//visitedAside(visitedMain)
+						drawBlackBtn("N")
+						break
+						
+					case 1:
+						//blacklist
+						delBlackTable(blackVo.storeNo)
+						break
 				}
 				
 			}else{

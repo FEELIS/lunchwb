@@ -36,9 +36,25 @@
 	</select>
 	
 	
+	<select id="blackStore" parameterType="int" resultMap="BlackVo">
+		SELECT  b.store_no
+		        , store_name
+		        , menu_2nd_cate_name
+		        , store_road_address
+		FROM blacklist b, store s, food_2nd_category f
+		WHERE b.store_no = s.store_no
+		AND s.menu_2nd_cate_no = f.menu_2nd_cate_no
+		AND black_no = #{blackNo}
+		ORDER BY black_no ASC
+	</select>	
+	
+	
 	<insert id="addBlack" parameterType="BlackVo">
+		<selectKey keyProperty="blackNo" resultType="int" order="BEFORE">
+			SELECT SEQ_BLACK_NO.NEXTVAL FROM DUAL
+		</selectKey>
 		INSERT into blacklist
-		VALUES (seq_black_no.NEXTVAL, #{storeNo}, #{groupNo}, TO_DATE(SYSDATE))
+		VALUES (#{blackNo}, #{storeNo}, #{groupNo}, TO_DATE(SYSDATE))
 	</insert>
 	
 	

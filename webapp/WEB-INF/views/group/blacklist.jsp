@@ -136,8 +136,8 @@
 							</div>
 							<div class="card-body">
 								<div id="black-add-search">
-									<input type="text" placeholder="가게 이름을 입력해주세요" name="keyword"/>
-									<button class="btn btn-primary btn-store-search" type="button">검색</button>
+									<input id="store-search" type="text" placeholder="가게 이름을 입력해주세요" name="keyword"/>
+									<button id="search2" class="btn btn-primary btn-store-search" type="button">검색</button>
 									<div>
 										<span id="store-search-limit">
 											<!-- 현재위치에서 1km 이내의 음식점이 검색됩니다 -->
@@ -209,10 +209,25 @@
 
 <script type="text/javascript">
 
+//검색 결과 > 추가시 배열에 저장: 검색 테이블에서 모달 눌렀을 때, 다른 가게로 갔을 때 블추된 가게인지 볼건데(다른 가게로 가면 당연히 black없지않나 씨부레) 
+const blackAdded = []
+
+//블랙할 가게 검색 > 엔터
+var input = document.getElementById("store-search")
+
+input.addEventListener("keyup", function (event) {
+	if (event.keyCode === 13) {
+		event.preventDefault();
+		document.getElementById("search2").click()
+	}
+})
+
+
 //블랙할 가게 검색하기
 $("#black-add-search button").on("click", function(){
 	var keyword = $("#black-add-search [name = 'keyword']").val()
 	var groupNo = "${map.groupNo}"
+	
 	if(keyword == null || keyword == ""){
 		alert("검색어를 입력해주세요")
 		return false
@@ -239,10 +254,12 @@ $("#black-add-search button").on("click", function(){
 			
 			if(searchList.length == 0){
 				alert("검색결과가 존재하지 않습니다")
+				$("#black-add-search [name = 'keyword']").val("")
 				return false
 			}
 			
 			$("#nonSearch").remove()
+			$("#black-add-search [name = 'keyword']").val("")
 			$("#black-add-body").html("")
 			
 			for(var i=0; i<searchList.length; i++){
@@ -261,7 +278,7 @@ $("#black-add-search button").on("click", function(){
 
 //블랙리스트/검색목록 row 그리기
 //어차피 블랙 추가/제거는 리더만 가능 그릴 때 검사하지 않겠다
-//opt = 1 : 블랙리스트 > prep / opt = 2 : 검색목록 > append
+//opt = 1 : 블랙리스트 목록에 > prep / opt = 2 : 검색목록 > append
 function renderTable(blackVo, opt){
 	var str = ''
 	
@@ -274,16 +291,15 @@ function renderTable(blackVo, opt){
 	str += '	<td class="store-search-name">' + blackVo.storeName + '</td>'
 	str += '	<td>' + blackVo.menu2ndCateName +'</td>'
 	str += '	<td>' + blackVo.storeRoadAddress + '</td>'
-	str += '	<td>'
 	
 	if(opt == 1){
 		str += '		<td class="text-warning">'
 		str += '			<i class="fas fa-trash group-black-delete" data-storeno="' + blackVo.storeNo + '"></i>'
-		str += '		</td>'
 		
 	}else{
+		str += '	<td>'
 		str += '		<svg class="text-primary group-black-add" data-storeno="' + blackVo.storeNo + '" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">'
-		str += '			path d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path>'
+		str += '			<path d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path>'
 		str += '		</svg>'
 	}
 
@@ -291,7 +307,8 @@ function renderTable(blackVo, opt){
 	str += '</tr>'
 	
 	if(opt == 1){
-		$("#black-body").prep(str)
+		$("#black-body").prepend(str)
+		
 	}else{
 		$("#black-add-body").append(str)
 	}
@@ -300,7 +317,8 @@ function renderTable(blackVo, opt){
 
 
 //그룹블랙리스트 페이지) black-add-body 테이블/가게모달/리뷰모달/메뉴모달 블랙 추가 버튼 클릭
-//storeInfo add와 합치지 않음 : 바로 리스트 정보를 불러와야함
+//모달에서 온 애들은 검색해서 가져와야해서
+//addNo = 0 검색해서 추가 / addNo = 1 모달에서 추가
 $("#black-add-body").on("click", ".group-black-add", function(){
 	if(confirm("블랙리스트로 추가하시겠습니까?")){
 		var blackVo = {
@@ -308,6 +326,8 @@ $("#black-add-body").on("click", ".group-black-add", function(){
 			groupNo : "${map.groupNo}"
 		}
 	}
+	
+	addBlackThis(blackVo, 0)
 })
 
 $("#modal-store").on("click", ".modal-btn-add-black", function(){
@@ -317,6 +337,8 @@ $("#modal-store").on("click", ".modal-btn-add-black", function(){
 			groupNo : "${map.groupNo}"
 		}
 	}
+	
+	addBlackThis(blackVo, 1)
 })
 
 $("#modal-reviews").on("click", ".modal-btn-add-black", function(){
@@ -326,6 +348,8 @@ $("#modal-reviews").on("click", ".modal-btn-add-black", function(){
 			groupNo : "${map.groupNo}"
 		}
 	}
+	
+	addBlackThis(blackVo, 1)
 })
 
 $("#modal-all-menu").on("click", ".modal-btn-add-black", function(){
@@ -335,10 +359,66 @@ $("#modal-all-menu").on("click", ".modal-btn-add-black", function(){
 			groupNo : "${map.groupNo}"
 		}
 	}
+	
+	addBlackThis(blackVo, 1)
 })
 
 
+//블랙추가 함수 
+//addNo = 0 > 테이블에서 추가
+//addNo = 1 > 모달에서 추가
+function addBlackThis(blackVo, addNo){
+	$.ajax({
+		url : "${pageContext.request.contextPath}/group/blacklist/add",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(blackVo),
+		dataType : "json",
+		
+		success : function(addBlackVo){
+			if(addBlackVo != null){
+				
+				alert("블랙리스트 추가 완료")
 
+				$("#nonBlack").remove()
+				$("#black-count").text(Number($("#black-count").text()) +1)
+				
+				//검색테이블에서 블랙추가 버튼 삭제
+				$("#search-" + addBlackVo.storeNo + " .group-black-add").remove()
+				
+				//블랙리스트 목록에 추가
+				renderTable(addBlackVo, 1)
+				//추가된 목록
+				blackAdded.push(addBlackVo.storeNo)
+				console.log(blackAdded)
+			
+			}else{
+				alert("블랙리스트 추가 실패")
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	})
+}
+
+
+//블랙리스트 추가한 가게 블랙리스트 목록 가장 앞으로 추가
+/* 
+function addBlackTable(blackVo){
+	var storeNo = blackVo.storeNo
+	
+	$("#nonBlack").remove()
+	$("#black-count").text($("#black-count").text() +1)
+	
+	//검색테이블에서 블랙추가 버튼 삭제
+	$("#search-" + storeNo + " .group-black-delete").remove()
+	
+	//블랙리스트 목록에 추가
+	renderTable(blackVo, 1)
+}
+
+ */
 //그룹블랙리스트 페이지) black-body 테이블/가게모달/리뷰모달/메뉴모달 블랙 삭제 버튼 클릭
 $("#black-body").on("click", ".group-black-delete", function(){
 	if(confirm("삭제하시겠습니까?")){
@@ -386,9 +466,9 @@ $("#modal-all-menu").on("click", ".modal-btn-del-black", function(){
 
 
 //블랙리스트 삭제 > 테이블에서 삭제
-function delBlackTable(blackVo){
+function delBlackTable(storeNo){
 	$("#black-count").text($("#black-count").text() -1)
-	$("#black-" + blackVo.storeNo).remove()
+	$("#black-" + storeNo).remove()
 }
 
 

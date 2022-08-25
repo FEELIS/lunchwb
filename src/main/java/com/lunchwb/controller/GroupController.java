@@ -286,6 +286,16 @@ public class GroupController {
 	}
 	
 	
+	/******************** 그룹 블랙리스트 추가(블랙페이지 리스트) ********************************/
+	@ResponseBody
+	@PostMapping("/blacklist/add")
+	public BlacklistVo addBlacklist(@RequestBody BlacklistVo blackVo) {
+		logger.info("GroupController > addBlacklist()");
+		return groupService.addBlacklist(blackVo);
+	}
+
+	
+	
 	/******************** 그룹 블랙리스트 추가 *******************************************/
 	@ResponseBody
 	@PostMapping("/black/add")

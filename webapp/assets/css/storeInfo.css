@@ -424,6 +424,8 @@
 #modal-select-member-go #member-selection-button button {
   width: 80px;
   height: 25px;
+  margin-left: 5px;
+  margin-right: 5px;
   padding: 0px;
   vertical-align: middle;
   font-size: 14px;

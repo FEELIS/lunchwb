@@ -25,6 +25,11 @@ public class BlackDao {
 		return sqlSession.selectOne("blacklist.isBlack", blackVo);
 	}
 	
+	/*********************** 블랙스토어 정보(1건) ************************************/
+	public BlacklistVo blackStore(int blackNo) {
+		return sqlSession.selectOne("blacklist.blackStore", blackNo);
+	}
+	
 	/*********************** 블랙추가 *********************************************/
 	public int addBlack(BlacklistVo blackVo) {
 		return sqlSession.insert("blacklist.addBlack", blackVo);
