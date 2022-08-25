@@ -34,5 +34,11 @@ public class BlackDao {
 	public int deleteBlack(BlacklistVo blackVo) {
 		return sqlSession.delete("blacklist.deleteBlack", blackVo);
 	}
+	
+	/*********************** 가게 검색(블랙 제외) ************************************/
+	public List<BlacklistVo> blackStoreSearch(BlacklistVo blackVo){
+		return sqlSession.selectList("blacklist.blackStoreSearch", blackVo);
+	}
+	
 
 }

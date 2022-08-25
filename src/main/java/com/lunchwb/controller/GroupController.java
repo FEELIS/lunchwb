@@ -302,6 +302,16 @@ public class GroupController {
 		logger.info("GroupController > addBlack()");
 		return groupService.deleteBlack(blackVo);
 	}
+	
+	
+	/******************** 가게 검색 for(그룹 블추) *******************************************/
+	@ResponseBody
+	@PostMapping("/black/store/search")
+	public List<BlacklistVo> blackStoreSearch(@RequestBody BlacklistVo blackVo){
+		logger.info("GroupController > blackStoreSearch()");
+		return groupService.blackStoreSearch(blackVo);
+	}
+	
 		
 
 }
