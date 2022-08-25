@@ -324,7 +324,7 @@ $("#black-body").on("click", ".black-store-name", function(){
 
 
 /* 블랙리스트에서 가게 조회(블랙에 없는 add할) */
-$("#black-add-body").on("click", ".black-store-name", function(){
+$("#black-add-body").on("click", ".store-search-name", function(){
 	var storeNo = $(this).attr("data-storeno")
 	console.log(storeNo+"번 가게 정보 보기")
 	storeInfoOpen(storeNo, 4)

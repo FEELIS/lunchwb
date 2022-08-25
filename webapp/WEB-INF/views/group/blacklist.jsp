@@ -288,7 +288,7 @@ function renderTable(blackVo, opt){
 		str += '<tr id="search-'+ blackVo.storeNo +'">'
 	}
 	
-	str += '	<td class="store-search-name">' + blackVo.storeName + '</td>'
+	str += '	<td class="store-search-name" data-storeno="' + blackVo.storeNo + '">' + blackVo.storeName + '</td>'
 	str += '	<td>' + blackVo.menu2ndCateName +'</td>'
 	str += '	<td>' + blackVo.storeRoadAddress + '</td>'
 	
