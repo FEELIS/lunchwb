@@ -3,8 +3,6 @@ package com.lunchwb.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +14,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.lunchwb.service.AloneService;
 import com.lunchwb.service.StatService;
 import com.lunchwb.service.VisitedService;
 import com.lunchwb.vo.AloneVo;
 import com.lunchwb.vo.StatVo;
-import com.lunchwb.vo.UserVo;
 import com.lunchwb.vo.VisitedVo;
 
 @Controller
@@ -93,22 +93,23 @@ public class StatController {
 	public String modifyReviewForm(@PathVariable("reviewNo")int reviewNo, Model model) {
 		logger.info("StatController > modifyReviewForm()");
 		
-		AloneVo aloneVo = aloneService.modifyRevForm(reviewNo);
+		AloneVo aloneVo = aloneService.getReview(reviewNo);
 		logger.info(aloneVo.toString());
 		
 		model.addAttribute("aloneVo",aloneVo);
 		return "stat/modifyReview";	// 리다이렉트로 수정
 	};
 	
-	@PostMapping("/modifyReview/{reviewNo}")
-	public String modifyReview(@PathVariable("reviewNo")int reviewNo) {
+	@RequestMapping(value = "/modifyReview",method = {RequestMethod.GET,RequestMethod.POST})
+	public String modifyReview(@RequestParam int reviewNo, @RequestParam String reviewContent ,@RequestParam int userScore, @RequestPart(value = "file", required = false) MultipartFile file) {
 		logger.info("StatController > modifyReviewForm()");
 		
+		AloneVo aloneVo = new AloneVo(reviewNo,reviewContent,userScore);
+		logger.info(aloneVo.toString());
+		logger.info(file.toString());
 		
-		
-		
-		
-		
+		int count = aloneService.modifyReview(aloneVo,file);
+		logger.info(Integer.toString(count)+ "건 수정하였습니다."); 
 		
 		return "stat/reviewList";	// 리다이렉트로 수정
 	};
