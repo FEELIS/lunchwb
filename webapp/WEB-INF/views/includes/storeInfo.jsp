@@ -392,7 +392,8 @@ function storeInfoOpen(storeNo, k){
 	
 	//k:footer 버튼 용
 	//k=2 > 버튼 없음
-	if(k != 2){
+	//k=5 > 리뷰 내역 버튼 안띄울거...........띄우려면 이제 groupNo groupLeader 다 가지고 확장시켜야함
+	if(k != 2 || k != 5){
 		modalSortOfStore(storeNo, k)
 	}
 	
@@ -759,7 +760,7 @@ function modalSortOfStore(storeNo, k){
 
 			break
 			
-		case 2: 
+		//case 2: 
 		//k=2 : typeof indexJSP === 'undefined'
 
 		
@@ -776,16 +777,11 @@ function modalSortOfStore(storeNo, k){
 		// 블랙리스트에서 블랙할 가게 검색(없음 > 추가)
 			//그룹장만 가능(애초에 접근자체가 그룹장만 되는데)
 			if("${authUser.userNo}" == "${map.groupLeader}"){
-				var blackVo = {
-						storeNo: storeNo,
-						groupNo: "${map.groupNo}"
-				}
 				$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'">블랙추가</button>')
 			}
 			
-		case 5:
+		//case 5:
 		// 캘린더에서 조회
-			break
 			
 		default :
 			console.log("가게 조회 종류 오류")

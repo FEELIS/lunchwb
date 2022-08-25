@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 <title>부장님요기요: 블랙리스트</title>
+
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/assets/img/bujang.png">
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Bold-BS4-Responsive-Pricing-Table-Snippet.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
@@ -25,6 +28,7 @@
 <script type="text/javascript"src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
 <script type="text/javascript"src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body id="page-top">
@@ -119,32 +123,48 @@
 							<div>
 								<input type="text" placeholder="가게 이름을 입력해주세요" />
 								<button class="btn btn-primary btn-store-search" type="button">검색</button>
+								<!-- 
 								<div>
 									<span id="store-search-limit">현재위치에서 1km 이내의 음식점이 검색됩니다</span>
 								</div>
+								 -->
 							</div>
-							<div class="table-responsive table mt-2 store-list-table"
-								role="grid" aria-describedby="dataTable_info">
-								<table id="dataTable" class="table my-0">
+							<div class="table-responsive table mt-2 store-list-table" role="grid" aria-describedby="dataTable_info">
+								<table id="dataTable-1" class="table my-0">
 									<thead>
 										<tr>
-											<th style="width: 30%;">가게 이름</th>
-											<th style="width: 60%;">가게 위치</th>
+											<th style="width: 25%;">가게 이름</th>
+											<th style="width: 15%;">카테고리</th>
+											<th style="width: 50%;">가게 위치</th>
 											<th style="width: 10%;">추가</th>
 										</tr>
 									</thead>
 									<tbody id="black-add-body">
 										<tr>
-											<td>라밥 서울대2호점</td>
+											<td class="store-search-name">라밥 서울대2호점</td>
+											<td>서울 관악구</td>
 											<td>서울 관악구 쑥고개로 139</td>
 											<td>
-												<svg class="text-primary blacklist-add" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
+												<svg class="text-primary group-black-add" data-storeno="241" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
                                                     <path d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path>
                                                 </svg>
                                             </td>
 										</tr>
 										<tr>
 											<td>라밥 서울대2호점<br /></td>
+											<td>서울 관악구<br /></td>
+											<td>서울 관악구 쑥고개로 139<br /></td>
+											<td>
+												<svg class="text-primary blacklist-add"
+													xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512"
+													width="1em" height="1em" fill="currentColor">
+                                                <path
+														d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path>
+                                            </svg></td>
+										</tr>
+										<tr>
+											<td>라밥 서울대2호점<br /></td>
+											<td>서울 관악구<br /></td>
 											<td>서울 관악구 쑥고개로 139<br /></td>
 											<td><svg class="text-primary blacklist-add"
 													xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512"
@@ -155,6 +175,7 @@
 										</tr>
 										<tr>
 											<td>라밥 서울대2호점<br /></td>
+											<td>서울 관악구<br /></td>
 											<td>서울 관악구 쑥고개로 139<br /></td>
 											<td><svg class="text-primary blacklist-add"
 													xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512"
@@ -165,16 +186,7 @@
 										</tr>
 										<tr>
 											<td>라밥 서울대2호점<br /></td>
-											<td>서울 관악구 쑥고개로 139<br /></td>
-											<td><svg class="text-primary blacklist-add"
-													xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512"
-													width="1em" height="1em" fill="currentColor">
-                                                <path
-														d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path>
-                                            </svg></td>
-										</tr>
-										<tr>
-											<td>라밥 서울대2호점<br /></td>
+											<td>서울 관악구<br /></td>
 											<td>서울 관악구 쑥고개로 139<br /></td>
 											<td><svg class="text-primary blacklist-add"
 													xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512"
@@ -221,6 +233,7 @@
 	</a>
 	</div>
 
+
 <!--  가게 정보 모달 삽입 -->
 <c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
 
@@ -230,11 +243,50 @@
 //가게정보 조회용
 blacklistJSP = true
 
-//그룹블랙리스트 페이지) black-body 테이블/가게모달/리뷰모달/메뉴모달 블랙 추가 버튼 클릭
 
 
 
-//그룹블랙리스트 페이지) black-add-body 테이블/가게모달/리뷰모달/메뉴모달 블랙 삭제 버튼 클릭
+//그룹블랙리스트 페이지) black-add-body 테이블/가게모달/리뷰모달/메뉴모달 블랙 추가 버튼 클릭
+//storeInfo add와 합치지 않음 : 바로 리스트 정보를 불러와야함
+$("#black-add-body").on("click", ".group-black-add", function(){
+	if(confirm("블랙리스트로 추가하시겠습니까?")){
+		var blackVo = {
+			storeNo : $(this).attr("data-storeno"),
+			groupNo : "${map.groupNo}"
+		}
+	}
+})
+
+$("#modal-store").on("click", ".modal-btn-add-black", function(){
+	if(confirm("블랙리스트로 추가하시겠습니까?")){
+		var blackVo = {
+			storeNo : $(this).attr("data-storeno"),
+			groupNo : "${map.groupNo}"
+		}
+	}
+})
+
+$("#modal-reviews").on("click", ".modal-btn-add-black", function(){
+	if(confirm("블랙리스트로 추가하시겠습니까?")){
+		var blackVo = {
+			storeNo : $(this).attr("data-storeno"),
+			groupNo : "${map.groupNo}"
+		}
+	}
+})
+
+$("#modal-all-menu").on("click", ".modal-btn-add-black", function(){
+	if(confirm("블랙리스트로 추가하시겠습니까?")){
+		var blackVo = {
+			storeNo : $(this).attr("data-storeno"),
+			groupNo : "${map.groupNo}"
+		}
+	}
+})
+
+
+
+//그룹블랙리스트 페이지) black-body 테이블/가게모달/리뷰모달/메뉴모달 블랙 삭제 버튼 클릭
 $("#black-body").on("click", ".group-black-delete", function(){
 	if(confirm("삭제하시겠습니까?")){
 		var blackVo = {
@@ -285,6 +337,8 @@ $("#modal-all-menu").on("click", ".modal-btn-del-black", function(){
 function delBlackTable(blackVo){
 	$("#black-" + blackVo.blackNo).remove()
 }
+
+
 
 </script>
 
