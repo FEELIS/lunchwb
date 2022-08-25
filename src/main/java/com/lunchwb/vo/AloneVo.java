@@ -46,6 +46,19 @@ public class AloneVo {
 		this.userNo = userNo;
 	}
 
+	public AloneVo(int reviewNo, String reviewContent, int userScore) {
+		this.reviewNo = reviewNo;
+		this.reviewContent = reviewContent;
+		this.userScore = userScore;
+	}
+
+	public AloneVo(int reviewNo, String reviewContent, int userScore, String reviewFileName) {
+		this.reviewNo = reviewNo;
+		this.reviewContent = reviewContent;
+		this.userScore = userScore;
+		this.reviewFileName = reviewFileName;
+	}
+
 	public AloneVo(int reviewNo, int userNo, int visitedNo, String reviewContent, int userScore, String reviewFileName,
 			int reviewReported, int visitedDate, int visitedCount, int storeNo, String storeName, double storeX,
 			double storeY, String storeRoadAddress, String storeOldAddress, String menu1stCateName, String userName,
