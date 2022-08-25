@@ -78,7 +78,7 @@ public class VoteService {
 				int userGrade = user.getInt("userGrade");
 				member.setUserGrade(userGrade);
 				
-				if (userGrade == 1) memberMem.add(member);
+				memberMem.add(member);
 			}
 			voteMem.add(member);
 		}		
