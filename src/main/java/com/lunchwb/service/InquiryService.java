@@ -31,7 +31,8 @@ public class InquiryService {
 		
 		int count = 0;
 		
-		String saveDir = "/Users/choijungphil/javaStudy/upload";
+		String saveDir = "C:\\javaStudy\\upload";			//윈도우용
+		//String saveDir = "/Users/choijungphil/javaStudy/upload";	//맥OS용
 		String orgName = "";
 		String saveName = "";
 
@@ -55,7 +56,8 @@ public class InquiryService {
 			System.out.println("saveName: " + saveName);
 
 			// 파일경로(디렉토리+저장파일명)
-			String filePath = saveDir + "/" + saveName;
+			String filePath = saveDir + "\\" + saveName;			//윈도우용
+			//String filePath = saveDir + "/" + saveName;			//맥OS용
 			
 			inqVo.setInquiryFilePath(saveName);
 
