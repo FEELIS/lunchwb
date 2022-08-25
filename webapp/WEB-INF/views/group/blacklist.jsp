@@ -58,7 +58,7 @@
 							<p class="text-primary m-0 fw-bold">블랙리스트 목록</p>
 						</div>
 						<div class="card-body">
-						<!-- 
+							<!-- 
 							<span class="blacklist-search"><input type="text"
 								placeholder="가게 이름을 입력해주세요" />
 							<button class="btn btn-primary btn-store-search" type="button">검색</button></span>
@@ -76,6 +76,11 @@
 										</tr>
 									</thead>
 									<tbody id="black-body" class="text-dark">
+										<c:if test="${map.blackCount == 0}">
+											<tr id="nonBlack">
+												<td colspan="4" >블랙리스트에 추가된 음식점이 존재하지 않습니다</td>
+											<tr>
+										</c:if>
 										<c:forEach items="${map.blacklist}" var="blackVo" varStatus="status">
 											<tr id="black-${blackVo.storeNo}">
 												<td class="black-store-name" data-storeno="${blackVo.storeNo}">${blackVo.storeName}</td>
@@ -91,10 +96,15 @@
 									</tbody>
 								</table>
 							</div>
+							
 							<div class="row">
 								<div class="col-md-6 align-self-center">
-									<p class="dataTables_info" role="status" aria-live="polite">총 개수 : <span id="black-count">${map.blackCount}</span></p>
+									<p class="dataTables_info" role="status" aria-live="polite">
+										총 개수 : <span id="black-count">${map.blackCount}</span>
+									</p>
 								</div>
+								
+								<!-- 
 								<div class="col-md-6">
 									<nav
 										class="d-lg-flex justify-content-lg-end visible dataTables_paginate paging_simple_numbers">
@@ -110,69 +120,81 @@
 										</ul>
 									</nav>
 								</div>
-							</div>
-						</div>
-					</div>
-					<div id="group-blacklist-add" class="card shadow">
-						<div class="card-header py-3">
-							<p class="text-primary m-0 fw-bold">
-								<strong>블랙리스트 추가하기</strong><br />
-							</p>
-						</div>
-						<div class="card-body">
-							<div id="black-add-search">
-								<input type="text" placeholder="가게 이름을 입력해주세요" name="keyword"/>
-								<button class="btn btn-primary btn-store-search" type="button">검색</button>
-								<div>
-									<span id="store-search-limit">
-										<!-- 현재위치에서 1km 이내의 음식점이 검색됩니다 -->
-										현재 블랙리스트에 포함된 음식점은 검색결과에 포함되지 않습니다										
-									</span>
-								</div>
-							</div>
-							<div class="table-responsive table mt-2 store-list-table" role="grid" aria-describedby="dataTable_info">
-								<table id="dataTable-1" class="table my-0">
-									<thead>
-										<tr>
-											<th style="width: 25%;">가게 이름</th>
-											<th style="width: 15%;">카테고리</th>
-											<th style="width: 50%;">가게 위치</th>
-											<th style="width: 10%;">추가</th>
-										</tr>
-									</thead>
-									<tbody id="black-add-body"></tbody>
-								</table>
-							</div>
-							<div class="row">
-								<div class="col-md-6 align-self-center">
-									<p class="dataTables_info" role="status" aria-live="polite">
-										총 개수 : <span id="black-search-count">14</span>
-									</p>
-								</div>
-								
-								<!-- 
-								페이징
-								<div class="col-md-6">
-									<nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-										<ul class="pagination">
-											<li class="page-item disabled"><a class="page-link"
-												aria-label="Previous" href="#"><span aria-hidden="true">«</span></a></li>
-											<li class="page-item active"><a class="page-link"
-												href="#">1</a></li>
-											<li class="page-item"><a class="page-link" href="#">2</a></li>
-											<li class="page-item"><a class="page-link" href="#">3</a></li>
-											<li class="page-item"><a class="page-link"
-												aria-label="Next" href="#"><span aria-hidden="true">»</span></a></li>
-										</ul>
-									</nav>
-								</div>
 								 -->
-								 
-							</div>
+								
+							</div>							
+
 						</div>
 					</div>
+					
+					<c:if test="${authUser.userNo == map.groupLeader}">
+						<div id="group-blacklist-add" class="card shadow">
+							<div class="card-header py-3">
+								<p class="text-primary m-0 fw-bold">
+									<strong>블랙리스트 추가하기</strong><br />
+								</p>
+							</div>
+							<div class="card-body">
+								<div id="black-add-search">
+									<input type="text" placeholder="가게 이름을 입력해주세요" name="keyword"/>
+									<button class="btn btn-primary btn-store-search" type="button">검색</button>
+									<div>
+										<span id="store-search-limit">
+											<!-- 현재위치에서 1km 이내의 음식점이 검색됩니다 -->
+											현재 블랙리스트에 포함된 음식점은 검색결과에 포함되지 않습니다										
+										</span>
+									</div>
+								</div>
+								<div class="table-responsive table mt-2 store-list-table" role="grid" aria-describedby="dataTable_info">
+									<table id="dataTable-1" class="table my-0">
+										<thead>
+											<tr>
+												<th style="width: 25%;">가게 이름</th>
+												<th style="width: 15%;">카테고리</th>
+												<th style="width: 50%;">가게 위치</th>
+												<th style="width: 10%;">추가</th>
+											</tr>
+										</thead>
+										<tbody id="black-add-body">
+											<tr id="nonSearch">
+												<td colspan="4" >음식점을 검색해주세요</td>
+											<tr>											
+										</tbody>
+									</table>
+								</div>
+								<div class="row">
+									<div class="col-md-6 align-self-center">
+										<p class="dataTables_info" role="status" aria-live="polite">
+											총 개수 : <span id="black-search-count">0</span>
+										</p>
+									</div>
+									
+									<!-- 
+									페이징
+									<div class="col-md-6">
+										<nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+											<ul class="pagination">
+												<li class="page-item disabled"><a class="page-link"
+													aria-label="Previous" href="#"><span aria-hidden="true">«</span></a></li>
+												<li class="page-item active"><a class="page-link"
+													href="#">1</a></li>
+												<li class="page-item"><a class="page-link" href="#">2</a></li>
+												<li class="page-item"><a class="page-link" href="#">3</a></li>
+												<li class="page-item"><a class="page-link"
+													aria-label="Next" href="#"><span aria-hidden="true">»</span></a></li>
+											</ul>
+										</nav>
+									</div>
+									 -->
+									 
+								</div>
+							</div>
+						</div>
+					</c:if>
+					
 				</div>
 				<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+				
 			</div>
 		</div>
 	<a class="border rounded d-inline scroll-to-top" href="#page-top">
@@ -189,8 +211,8 @@
 
 //블랙할 가게 검색하기
 $("#black-add-search button").on("click", function(){
-	var keyword = $("#black-add search [name = 'keyword']").val()
-	var groupNo = "{map.groupNo}"
+	var keyword = $("#black-add-search [name = 'keyword']").val()
+	var groupNo = "${map.groupNo}"
 	if(keyword == null || keyword == ""){
 		alert("검색어를 입력해주세요")
 		return false
@@ -214,6 +236,14 @@ $("#black-add-search button").on("click", function(){
 		dataType : "json",
 		
 		success : function(searchList){
+			
+			if(searchList.length == 0){
+				alert("검색결과가 존재하지 않습니다")
+				return false
+			}
+			
+			$("#nonSearch").remove()
+			$("#black-add-body").html("")
 			
 			for(var i=0; i<searchList.length; i++){
 				renderTable(searchList[i], 2)
@@ -243,7 +273,7 @@ function renderTable(blackVo, opt){
 	
 	str += '	<td class="store-search-name">' + blackVo.storeName + '</td>'
 	str += '	<td>' + blackVo.menu2ndCateName +'</td>'
-	str += '	<td>' + blackVo.storeReadAddress + '</td>'
+	str += '	<td>' + blackVo.storeRoadAddress + '</td>'
 	str += '	<td>'
 	
 	if(opt == 1){

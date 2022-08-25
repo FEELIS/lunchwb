@@ -84,7 +84,8 @@
   min-width: 700px;
 }
 
-#groupmem-list, #groupmem-invt, #groupmem-add, #new-group, #group-blacklist, #group-blacklist-add {
+/* , #group-blacklist-add */
+#groupmem-list, #groupmem-invt, #groupmem-add, #new-group, #group-blacklist{
   min-width: 700px;
 }
 
