@@ -12,10 +12,11 @@
                 <div class="fs-4 fw-bold text-dark modal-store-title">
                 	<span class="d-inline-block modalStoreName"></span>
                		<span class="fs-6 text-secondary d-inline-block store-cate modalStoreCate"></span>
-                    <div class="dropdown d-inline-block"><button class="btn btn-sm dropdown-toggle fs-6 fw-bold text-start text-secondary" aria-expanded="false" data-bs-toggle="dropdown" type="button">영업시간</button>
-                        <div class="dropdown-menu">
-                        	<div class="modalStoreOpening"></div>
-                        	<div class="modalStoreBreak"></div>
+                    <div id="storeHours1" class="dropdown d-inline-block">
+                    	<button class="btn btn-sm dropdown-toggle fs-6 fw-bold text-start text-secondary" aria-expanded="false" data-bs-toggle="dropdown" type="button">영업시간</button>
+                        <div id="drop1" class="dropdown-menu">
+                        	<div class="modalStoreOpening" style="z-index: 9000;"></div>
+                        	<div class="modalStoreBreak" style="z-index: 9000;"></div>
                         </div>
                     </div>
                 </div>
@@ -58,7 +59,7 @@
                         </div>
                         <div class="text-start d-lg-flex justify-content-lg-center">
                         	<span class="d-inline-block">
-		                        <button class="btn other-store-btn other-store-1" type="button" data-no="247" data-sortno="3">
+		                        <button class="btn other-store-btn other-store-1" type="button" data-no="247" data-sortno="4">
 		                        	명품청기와감자탕
 		                        	<span class="fw-bold text-warning d-block">
 		                        		<i class="fas fa-star"></i>
@@ -398,6 +399,8 @@ function storeBasicInfo(storeNo){
 			
 			modalStoreStar(storeMap.storeVo.ratingBujang, 0)
 			
+			//$(".modalStoreOpening").text("")
+			//$(".modalStoreBreak").text("")
 			$(".modalStoreOpening").html('<a class="dropdown-item disabled link-secondary bg-warning">영업시간 :</a>')
 			$(".modalStoreBreak").html('<a class="dropdown-item disabled link-secondary bg-warning">브레이크타임 :</a>')
 			modalStoreTime(storeMap.storeVo.openingHours, 1)
@@ -506,7 +509,17 @@ function modalStoreStar(starScore, k){
 	
 }
 
+$(document).ready(function () {
+    $('.dropdown-toggle').dropdown();
+})
 
+/* 
+$("#storeHours1").on("mouseup", function(){
+	$("#drop1").show() 
+})
+ */
+ 
+ 
 /* 영업시간+브레이크타임 드랍다운 리스트 */
 function modalStoreTime(storeTime, opt){
 	var str = ''

@@ -134,7 +134,7 @@ body {
 }
 
 #menu-dropdown .dropdown-menu {
-  z-index:100;
+  z-index:9999;
   margin: 2px 0 0;
   width: 130px;
   min-width: 120px;
