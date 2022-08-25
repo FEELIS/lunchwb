@@ -215,15 +215,40 @@ public class VoteService {
 		
 		
 		// 투표 진행상황(userStaet == 2일 때)
-		if (userState == 2) {
+		if (userState >= 2) {
 			VoteVo currVote = voteDao.currVote(voteNo);
 			voteData.put("currVote", currVote);
 		}
 		
-		
 		// 투표 결과 정리한 것(userState == 3일 때)
 		if (userState == 3) {
+			JSONArray jArray = new JSONArray(voteVo.get(0).getVoteResults());
+			List<StoreVo> voteResults = new ArrayList<>();
 			
+			for (int i = 0; i < jArray.length(); i++) {
+				int votes = jArray.getInt(i);
+				voteStoreInfo.get(i).setVotes(votes);
+				
+				int j = 0;
+				while (j < voteResults.size()) {
+					if (votes > voteResults.get(j).getVotes()) break;
+					j++;
+				}
+				voteResults.add(j, voteStoreInfo.get(i));
+			}	
+			
+			int maxVote = voteResults.get(0).getVotes();
+			
+			for (int i = 0; i < voteResults.size(); i++) {
+				if (voteResults.get(i).getVotes() == maxVote) {
+					voteResults.get(i).setVote1st(true);
+					
+				} else {
+					voteResults.get(i).setVote1st(false);
+				}
+			}
+			
+			voteData.put("voteResults", voteResults);
 		}
 				
 		return voteData;
@@ -232,6 +257,7 @@ public class VoteService {
 	
 	
 	//////// 투표하기 ///////////////////////////////////////////////////////////
+	
 	public String submitVote(VoteVo myVote) throws JsonProcessingException {
 		// 투표 업데이트
 		int voteIdx = myVote.getVoteIdx();

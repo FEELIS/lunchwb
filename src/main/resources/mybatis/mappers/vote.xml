@@ -151,7 +151,7 @@
 	<!--  투표 진행 상황  -->
 	<select id="currVote" parameterType="int" resultType="VoteVo">
 		<![CDATA[
-			SELECT COUNT(*) totCnt, COUNT(CASE WHEN(vote_voted != 0) THEN 1 ELSE NULL END) votedCnt
+			SELECT COUNT(*) totCnt, COUNT(CASE WHEN(vote_voted > 0) THEN 1 ELSE NULL END) votedCnt
 			FROM   vote_members
 			WHERE  vote_no = #{voteNo}
 			AND    vote_voted > -1
@@ -241,7 +241,8 @@
 			WHERE  user_no IN (SELECT user_no 
 			                   FROM   vote_members 
 			                   WHERE  vote_no = #{voteNo} 
-			                   AND    user_no != 0)
+			                   AND    user_no != 0
+			                   AND    vote_voted >= 0)
 		]]>
 	</update>
 	

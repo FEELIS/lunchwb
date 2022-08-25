@@ -43,6 +43,22 @@
         <div class="container" id="container">
             <div id="contents-vote-result-title">
             	<span>투표 결과</span>
+            	<c:set var="topStore" value="" />
+            	<c:set var="topCnt" value="" />
+            	
+            	<c:forEach var="store" items="${voteResults}">
+            		<c:if test="${store.vote1st}">
+            			<c:if test="${!empty(topStore)}">
+            				<c:set var="topStore" value="${topStore}, ${store.storeName}" />
+            			</c:if>
+            			
+            			<c:if test="${empty(topStore)}">
+            				<c:set var="topStore" value="${store.storeName}" />
+            			</c:if>
+            			
+            			<c:set var="topCnt" value="${topCnt+1}" />
+            		</c:if>
+            	</c:forEach>
             </div>
 			
 			<div class="d-flex d-xxl-flex justify-content-center" id="vote-result-link-btn-area">
@@ -60,44 +76,52 @@
             </div>
 
             <div id="vote-result-area" class="d-flex d-xxl-flex justify-content-center align-items-center align-content-center flex-wrap justify-content-xxl-center align-items-xxl-center card-body">
-                <div id="vote-result-text" class="justify-content-center align-items-center">
+                <div id="align-content-centert" class="justify-content-center align-items-center align-content-center">
                     <div id="vote-result-lunch-group" class="d-flex d-sm-flex d-xl-flex d-xxl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-xl-center align-items-xl-center justify-content-xxl-center">
                     	<span id="vote-lunch-group">${voteInfo.groupName}</span>
                     	<span id="today-lunch-neun">&nbsp;오늘 점심은</span>
                     </div>
+                    
                     <div id="vote-result-lunch-menu" class="d-inline-flex d-sm-flex d-xl-flex d-xxl-flex justify-content-center align-items-center align-content-center justify-content-sm-center align-items-sm-center justify-content-xl-center align-items-xl-center justify-content-xxl-center align-items-xxl-center">
-                    	<span id="vote-lunch-store" data-storeNo="3351" class="d-xxl-flex justify-content-xxl-center align-items-xxl-center">써브웨이</span>
-                    	<span id="ipnida" class="d-xxl-flex justify-content-xxl-center align-items-xxl-center">입니다.</span>
+                    	<c:if test="${topCnt == 1}">
+	                    	<span id="vote-lunch-store" class="d-xxl-flex justify-content-xxl-center align-items-xxl-center">${topStore}</span>
+	                    	<span id="ipnida" class="d-xxl-flex justify-content-xxl-center align-items-xxl-center">&nbsp;요기요!</span>
+                    	</c:if>
+                    	
+                    	<c:if test="${topCnt > 1}">
+	                    	<span id="vote-lunch-store" class="d-xxl-flex justify-content-xxl-center align-items-xxl-center">${topStore}</span>
+	                    	<span id="ipnida" class="d-xxl-flex justify-content-xxl-center align-items-xxl-center">&nbsp;중에 어디가 좋을까요?</span>
+                    	</c:if>
                     </div>
                 </div>
-                <div id="vote-result-graph" class="d-inline-flex justify-content-center align-items-center align-content-center align-self-center flex-wrap">
                 
-                    <div class="d-flex justify-content-center align-items-center justify-content-xl-center align-items-xl-center justify-content-xxl-center align-items-xxl-center vote-graph-div">
-                    	<span class="vote-graph-store">써브웨이</span>
-                        <div id="vote-progress-chart" class="progress">
-                            <div class="progress-bar bg-primary" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
-                            	<span class="visually-hidden">50%</span>
-                            </div>
-                        </div>
-                        <span class="vote-graph-votes">3표</span>
-                    </div>
-                    
-                    <div class="d-flex justify-content-center align-items-center justify-content-xl-center align-items-xl-center justify-content-xxl-center align-items-xxl-center vote-graph-div"><span class="vote-graph-store">맥도날드</span>
-                        <div class="progress" id="vote-progress-chart">
-                            <div class="progress-bar bg-primary" aria-valuenow="33.33" aria-valuemin="0" aria-valuemax="100" style="width: 33.33%;"><span class="visually-hidden">33.33%</span></div>
-                        </div><span class="vote-graph-votes">2표</span>
-                    </div>
-                    <div class="d-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center vote-graph-div"><span class="vote-graph-store">양자강</span>
-                        <div class="progress" id="vote-progress-chart">
-                            <div class="progress-bar bg-primary" aria-valuenow="16.66" aria-valuemin="0" aria-valuemax="100" style="width: 16.66%;"><span class="visually-hidden">16.66%</span></div>
-                        </div><span class="vote-graph-votes">1표</span>
-                    </div>
+                <div id="vote-result-graph" class="d-inline-flex justify-content-center align-items-center align-content-center align-self-center flex-wrap">       
+                	<c:set var="resultCnt" value="0" />
+                	
+                	<c:forEach var="result" items="${voteResults}">
+                		<c:set var="resultCnt" value="${resultCnt+1}" />
+                		
+                		<div class="d-flex justify-content-center align-items-center justify-content-xl-center align-items-xl-center justify-content-xxl-center align-items-xxl-center vote-graph-div">
+	                    	<span class="vote-graph-store" data-storeNo="${result.storeNo}" data-resultCnt="${resultCnt}">${result.storeName}</span>
+	                        <div id="vote-progress-chart" class="progress">
+	                            <div class="progress-bar bg-primary" aria-valuenow="${result.votes}" aria-valuemin="0" aria-valuemax="${currVote.totCnt}" style="width: ${result.votes/currVote.totCnt*100}%;"></div>
+	                        </div>
+	                        <span class="vote-graph-votes">${result.votes}표</span>
+                    	</div>	
+                	</c:forEach>
                 </div>
                 
                 <c:if test="${authUser.userNo == voteInfo.voteMadeUser}">
                     <div id="vote-result-btn-area" class="d-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center">
 	                    <div class="flex-nowrap" id="vote-result-btn-box">
-		                    <button id="vote-result-letsgo-btn" class="btn btn-primary d-inline-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center" type="submit">여기갈래요</button>
+	                    	<c:if test="${topCnt == 1}">
+		                    	<button id="vote-result-letsgo-btn" class="btn btn-primary d-inline-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center" type="button">여기갈래요</button>
+	                    	</c:if>
+	                    	
+	                    	<c:if test="${topCnt > 1}">
+		                    	<button id="vote-result-random-btn" class="btn btn-primary d-inline-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center" type="button">랜덤선택</button>
+	                    	</c:if>
+	                    	
 	                    	
 	                    	<form id="resetVote" action="${pageContext.request.contextPath}/vote/resetVote" method="post">
 	                    		<input type="hidden" name="voteNo" value="${voteInfo.voteNo}">
@@ -118,18 +142,28 @@
 
 <script type="text/javascript">
 
+// 투표 결과 가게 이름 정렬
+let maxwidth = 0
+var content = $(".vote-graph-store")
+content.each(function(){
+	maxwidth = Math.max(maxwidth, $(this).width())
+})
+$(".vote-graph-store").css("width", maxwidth + "px")
+
+
 //복사 클릭 시 클립보드에 url 복사
 $("#vote-url-copy-btn").on("click", function(){
-	var content = $("#vote-url-input").val();
+	var content = $("#vote-url-input").val()
 
     navigator.clipboard.writeText(content)
         .then(() => {
         alert("클립보드에 복사되었습니다.")
     })
         .catch(err => {
-        console.log("클립보드 복사 실패");
+        console.log("클립보드 복사 실패")
     })
 })
+
 
 // 여기갈래요 클릭
 $("#vote-result-letsgo-btn").on("click", function(){
@@ -145,7 +179,7 @@ $("#vote-result-letsgo-btn").on("click", function(){
 	var visitData = {
 		groupNo : parseInt("${voteInfo.groupNo}"),
 		voteNo : parseInt("${voteInfo.voteNo}"),
-		storeNo : parseInt($("#vote-lunch-store").attr("data-storeNo")),
+		storeNo : parseInt($("[data-resultCnt=1]").attr("data-storeNo")),
 		voteMember : voteMember
 	}
 	
@@ -177,18 +211,29 @@ Kakao.init('f78c3d22061aa91b824c89a07b348da9');
 console.log(Kakao.isInitialized());
 
 function kakaoShare() {
+	var title
+	
+	if (${topCnt} > 1) {
+   		title = '부장님 오늘 점심은 ' + todayStore + ' 중에 어디가 좋겠습니까?'
+	} else {
+		title = '부장님 오늘 점심은 ' + todayStore + ' 입니다.'
+	}
+	
+	var content = {
+		title: title,
+	    imageUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+	    description: todayStore,
+	    link: {
+	        mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+	        webUrl: 'http://localhost:8088/lunchwb/' + voteURL
+	    }
+	}
+	
+	console.log(content)
 	console.log(todayStore);
 	Kakao.Link.sendDefault({
 	    objectType: 'feed',
-	    content: {
-	        title: '부장님 오늘 점심은 ' + todayStore + ' 입니다.',
-	        imageUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-	        description: todayStore,
-	        link: {
-	            mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-	            webUrl: 'http://localhost:8088/lunchwb/' + voteURL
-	        }
-	    },
+	    content: content,
 	    buttons: [{
 	        title: '웹으로 보기',
 	    	link: {
@@ -201,6 +246,38 @@ function kakaoShare() {
 	})
 }
 
+
+// 랜덤 선택 긁어옴
+$("#vote-result-random-btn").on("click", function(){
+	var randomIdx = 1 + Math.floor(Math.random() * ${topCnt})
+	var randomStoreNo = parseInt($("[data-resultCnt=" + randomIdx + "]").attr("data-storeNo"))
+	var randomStoreName = $("[data-resultCnt=" + randomIdx + "]").text()
+	
+	var confirmRandom = confirm("오늘 방문할 가게는 [" + randomStoreName + "] 입니다. 방문하시겠습니까?")
+	
+	if (confirmRandom) {
+		var voteMember = []
+		
+		$("#vote-select-name-area").find(".vote-select-name-btn").each(function(index, item){
+			var tempUserNo = parseInt($(item).attr("data-user-no"))
+			if (tempUserNo > 0) {
+				voteMember.push(tempUserNo)	
+			}
+		})
+		
+		var visitData = {
+			groupNo : parseInt("${voteInfo.groupNo}"),
+			voteNo : parseInt("${voteInfo.voteNo}"),
+			storeNo : randomStoreNo,
+			voteMember : voteMember
+		}
+		
+		postVoteData("${pageContext.request.contextPath}/vote/visitConfirm", visitData)	
+		
+	} else {
+		return false
+	}
+})
 
 </script>
 

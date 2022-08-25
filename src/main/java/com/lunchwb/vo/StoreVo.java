@@ -42,6 +42,7 @@ public class StoreVo {
 	
 	////////////// 투표 ///////////////////////
 	private int votes;
+	private boolean vote1st;
 	
 	
 	/////////////// 생성자 /////////////////////////////////////////////////////////////////////
@@ -268,15 +269,27 @@ public class StoreVo {
 		this.breaktime = breaktime;
 	}
 	
+	
 	public int getVotes() {
 		return votes;
 	}
+	
 
 	public void setVotes(int votes) {
 		this.votes = votes;
 	}	
 
 
+	public boolean getVote1st() {
+		return vote1st;
+	}
+
+
+	public void setVote1st(boolean vote1st) {
+		this.vote1st = vote1st;
+	}
+	
+	
 	///// toString //////////////////////////////////////////////////////////////
 
 	@Override
@@ -286,7 +299,7 @@ public class StoreVo {
 				+ ", storeOldAddress=" + storeOldAddress + ", storeOpeningHours=" + storeOpeningHours + ", storeBreaktime=" + storeBreaktime
 				+ ", menu2ndCateName=" + menu2ndCateName + ", ratingNaver=" + ratingNaver + ", ratingKakao=" + ratingKakao
 				+ ", distance=" + distance + ", score=" + score + ", stored=" + stored + ", ratingBujang="
-				+ ratingBujang + ", visitCnt=" + visitCnt + "]";
+				+ ratingBujang + ", visitCnt=" + visitCnt + ", votes=" + votes +  "]";
 	}
 	
 }
