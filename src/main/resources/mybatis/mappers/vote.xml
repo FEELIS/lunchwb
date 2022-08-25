@@ -186,7 +186,8 @@
 			WHERE  user_no IN (SELECT user_no 
 			                   FROM   vote_members 
 			                   WHERE  vote_no = #{voteNo} 
-			                   AND    user_no != 0)
+			                   AND    user_no > 0
+			                   AND    vote_voted >= 0)
 		]]>
 	</update>
 	
@@ -199,7 +200,8 @@
 			WHERE  user_no IN (SELECT user_no 
 			                   FROM   vote_members 
 			                   WHERE  vote_no = #{voteNo} 
-			                   AND    user_no != 0)
+			                   AND    user_no != 0
+			                   AND    vote_voted >= 0)
 		]]>
 	</update>
 	

@@ -313,28 +313,20 @@ public class VoteService {
 	
 	public void visitConfirm(VoteVo visitData) {	
 		List<Integer> voteMember = visitData.getVoteMember();
-		int voteNo = visitData.getVoteNo();
+
+		System.out.println("[투표 종료]");
 		
-		int cnt = voteDao.updateVoteVisited(voteNo);
+		int cnt = voteDao.updateUserVisited(visitData.getVoteNo());
 		
-		if (cnt > 0) {
-			System.out.println("[투표 종료]");
+		System.out.println("[회원 " + cnt + "명 방문 완료로 상태 변경]");
+		
+		if (voteMember.size() > 0 ) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("groupNo", visitData.getGroupNo());
+			map.put("storeNo", visitData.getStoreNo());
+			map.put("voteMember", voteMember);
 			
-			cnt = voteDao.updateUserVisited(voteNo);
-			
-			System.out.println("[회원 " + cnt + "명 방문 완료로 상태 변경]");
-			
-			if (voteMember.size() > 0 ) {
-				Map<String, Object> map = new HashMap<>();
-				map.put("groupNo", visitData.getGroupNo());
-				map.put("storeNo", visitData.getStoreNo());
-				map.put("voteMember", voteMember);
-				
-				visitedDao.insertVoteVisit(map);
-			}
-			
-		} else {
-			System.out.println("[투표 종료 실패]");
+			visitedDao.insertVoteVisit(map);
 		}
 		
 	}

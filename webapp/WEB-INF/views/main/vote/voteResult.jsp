@@ -262,8 +262,10 @@ $("#vote-result-random-btn").on("click", function(){
 		
 		$("#vote-select-name-area").find(".vote-select-name-btn").each(function(index, item){
 			var tempUserNo = parseInt($(item).attr("data-user-no"))
-			if (tempUserNo > 0) {
-				voteMember.push(tempUserNo)	
+			var voteVoted = parseInt($(item).attr("data-vote-voted"))
+		
+			if (tempUserNo > 0 && voteVoted >= 0) {
+				voteMember.push(tempUserNo)			
 			}
 		})
 		

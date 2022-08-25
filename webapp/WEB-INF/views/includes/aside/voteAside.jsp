@@ -126,7 +126,7 @@
 		        </div>
 	        </c:if>
 	        
-	        <c:if test="${!empty(authUser) and authUser.userNo != voteInfo.voteMadeUser}">
+	        <c:if test="${!empty(authUser) and authUser.userNo != voteInfo.voteMadeUser and voteState < 3}">
 		        <div id="vote-member-btn-area" class="justify-content-center align-items-center">
 		        	<button id="vote-member-escape-btn" class="btn btn-danger d-flex d-xxl-flex justify-content-center align-items-center align-content-center justify-content-xxl-center align-items-xxl-start" type="button">다른 사람들이랑 먹을래요</button>
 		        </div>
@@ -135,7 +135,9 @@
 	</div>
 </nav>
 
-<c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
+<c:if test="${userState >= 1 and userState != 99}">
+	<c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
+</c:if>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
