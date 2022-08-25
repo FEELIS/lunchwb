@@ -69,15 +69,20 @@
 	</select>
 	
 	<!-- 리뷰 수정 -->
-	<update id="">
-		
-	
-	
-	
-	
-	
-	
-	
+	<update id="updateReview" parameterType="AloneVo">
+		<![CDATA[
+			update review 
+			set review_content = #{reviewContent}, 
+			user_score = #{userScore} 
+		]]>
+			<if test="reviewFileName != null"> 
+		<![CDATA[
+		    , review_file_name = #{reviewFileName} 
+		]]>
+			</if>
+		<![CDATA[
+			where review_no = #{reviewNo}
+		]]>
 	</update>
 	
 	<!-- 리뷰 1개 삭제 -->
