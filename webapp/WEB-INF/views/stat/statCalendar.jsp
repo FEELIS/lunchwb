@@ -70,6 +70,10 @@
 
     </div>
     <!-- /wrapper -->
+    
+    <!--  가게 정보 모달 삽입 -->
+	<c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
+	
 </body>
 <script type="text/javascript">
 
@@ -696,4 +700,3 @@
 </script>
 
 </html>
-
