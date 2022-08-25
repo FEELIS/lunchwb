@@ -165,7 +165,7 @@
     // -------------------------------------------------------
     // Click handler for spin button.
     // -------------------------------------------------------
-    function startSpin()
+    /* function startSpin()
     {	
         // Ensure that spinning can't be clicked again while already running.
         if (wheelSpinning == false) {
@@ -184,19 +184,33 @@
             // the current animation. The user will have to reset before spinning again.
             wheelSpinning = true;
         }
-    }
+    } */
 
-    function calculatePrize()
+    function startSpin()
     {
-        // This formula always makes the wheel stop somewhere inside prize 3 at least
-        // 1 degree away from the start and end edges of the segment.
-        let stopAt = (91 + Math.floor((Math.random() * 43)))
+       
  
-        // Important thing is to set the stopAngle of the animation before stating the spin.
-        theWheel.animation.stopAngle = stopAt;
- 
+        if (wheelSpinning == false) {
+        	 // This formula always makes the wheel stop somewhere inside prize 3 at least
+            // 1 degree away from the start and end edges of the segment.
+            let stopAt = 200
+     
+            // Important thing is to set the stopAngle of the animation before stating the spin.
+            theWheel.animation.stopAngle = stopAt;
+
+            // Disable the spin button so can't click again while wheel is spinning.
+            document.getElementById('spin_button').src       = "${pageContext.request.contextPath}/assets/img/rouletteOff.png";
+            document.getElementById('spin_button').className = "";
+
+            // Begin the spin animation by calling startAnimation on the wheel object.
+            theWheel.startAnimation();
+
+            // Set to true so that power can't be changed and spin button re-enabled during
+            // the current animation. The user will have to reset before spinning again.
+            wheelSpinning = true;
+        }
+        
         // May as well start the spin from here.
-        theWheel.startAnimation();
     }
     
     // -------------------------------------------------------

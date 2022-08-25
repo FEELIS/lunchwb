@@ -1718,7 +1718,6 @@ Winwheel.prototype.getRotationPosition = function()
     }
 	
 	//테스트 필요합니다.
-	rawAngle = 120;
 	
     return rawAngle;
 }
@@ -1949,7 +1948,6 @@ Winwheel.prototype.getRandomForSegment = function(segmentNumber)
     } else {
         console.log('Segment number not specified');
     }
-
     return stopAngle;
 }
 
@@ -2145,7 +2143,6 @@ function winwheelPercentToDegrees(percentValue)
         let divider = (percentValue / 100);
         degrees = (360 * divider);
     }
-
     return degrees;
 }
 
