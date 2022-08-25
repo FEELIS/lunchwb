@@ -58,7 +58,7 @@
 							<p class="text-primary m-0 fw-bold">블랙리스트 목록</p>
 						</div>
 						<div class="card-body">
-						<!-- 
+							<!-- 
 							<span class="blacklist-search"><input type="text"
 								placeholder="가게 이름을 입력해주세요" />
 							<button class="btn btn-primary btn-store-search" type="button">검색</button></span>
@@ -76,14 +76,19 @@
 										</tr>
 									</thead>
 									<tbody id="black-body" class="text-dark">
+										<c:if test="${map.blackCount == 0}">
+											<tr id="nonBlack">
+												<td colspan="4" >블랙리스트에 추가된 음식점이 존재하지 않습니다</td>
+											<tr>
+										</c:if>
 										<c:forEach items="${map.blacklist}" var="blackVo" varStatus="status">
-											<tr id="black-${blackVo.blackNo}">
+											<tr id="black-${blackVo.storeNo}">
 												<td class="black-store-name" data-storeno="${blackVo.storeNo}">${blackVo.storeName}</td>
 												<td>${blackVo.menu2ndCateName}</td>
 												<td>${blackVo.storeRoadAddress}</td>
 												<c:if test="${map.groupLeader == authUser.userNo}">
 													<td class="text-warning">
-														<i class="fas fa-trash group-black-delete" data-storeno="${blackVo.storeNo}" data-blackno="${blackVo.blackNo}"></i>
+														<i class="fas fa-trash group-black-delete" data-storeno="${blackVo.storeNo}"></i>
 													</td>
 												</c:if>
 											</tr>
@@ -91,10 +96,15 @@
 									</tbody>
 								</table>
 							</div>
+							
 							<div class="row">
 								<div class="col-md-6 align-self-center">
-									<p class="dataTables_info" role="status" aria-live="polite">총 개수 : ${map.blackCount}</p>
+									<p class="dataTables_info" role="status" aria-live="polite">
+										총 개수 : <span id="black-count">${map.blackCount}</span>
+									</p>
 								</div>
+								
+								<!-- 
 								<div class="col-md-6">
 									<nav
 										class="d-lg-flex justify-content-lg-end visible dataTables_paginate paging_simple_numbers">
@@ -110,122 +120,81 @@
 										</ul>
 									</nav>
 								</div>
-							</div>
-						</div>
-					</div>
-					<div id="group-blacklist-add" class="card shadow">
-						<div class="card-header py-3">
-							<p class="text-primary m-0 fw-bold">
-								<strong>블랙리스트 추가하기</strong><br />
-							</p>
-						</div>
-						<div class="card-body">
-							<div>
-								<input type="text" placeholder="가게 이름을 입력해주세요" />
-								<button class="btn btn-primary btn-store-search" type="button">검색</button>
-								<!-- 
-								<div>
-									<span id="store-search-limit">현재위치에서 1km 이내의 음식점이 검색됩니다</span>
-								</div>
 								 -->
+								
+							</div>							
+
+						</div>
+					</div>
+					
+					<c:if test="${authUser.userNo == map.groupLeader}">
+						<div id="group-blacklist-add" class="card shadow">
+							<div class="card-header py-3">
+								<p class="text-primary m-0 fw-bold">
+									<strong>블랙리스트 추가하기</strong><br />
+								</p>
 							</div>
-							<div class="table-responsive table mt-2 store-list-table" role="grid" aria-describedby="dataTable_info">
-								<table id="dataTable-1" class="table my-0">
-									<thead>
-										<tr>
-											<th style="width: 25%;">가게 이름</th>
-											<th style="width: 15%;">카테고리</th>
-											<th style="width: 50%;">가게 위치</th>
-											<th style="width: 10%;">추가</th>
-										</tr>
-									</thead>
-									<tbody id="black-add-body">
-										<tr>
-											<td class="store-search-name">라밥 서울대2호점</td>
-											<td>서울 관악구</td>
-											<td>서울 관악구 쑥고개로 139</td>
-											<td>
-												<svg class="text-primary group-black-add" data-storeno="241" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
-                                                    <path d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path>
-                                                </svg>
-                                            </td>
-										</tr>
-										<tr>
-											<td>라밥 서울대2호점<br /></td>
-											<td>서울 관악구<br /></td>
-											<td>서울 관악구 쑥고개로 139<br /></td>
-											<td>
-												<svg class="text-primary blacklist-add"
-													xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512"
-													width="1em" height="1em" fill="currentColor">
-                                                <path
-														d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path>
-                                            </svg></td>
-										</tr>
-										<tr>
-											<td>라밥 서울대2호점<br /></td>
-											<td>서울 관악구<br /></td>
-											<td>서울 관악구 쑥고개로 139<br /></td>
-											<td><svg class="text-primary blacklist-add"
-													xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512"
-													width="1em" height="1em" fill="currentColor">
-                                                <path
-														d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path>
-                                            </svg></td>
-										</tr>
-										<tr>
-											<td>라밥 서울대2호점<br /></td>
-											<td>서울 관악구<br /></td>
-											<td>서울 관악구 쑥고개로 139<br /></td>
-											<td><svg class="text-primary blacklist-add"
-													xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512"
-													width="1em" height="1em" fill="currentColor">
-                                                <path
-														d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path>
-                                            </svg></td>
-										</tr>
-										<tr>
-											<td>라밥 서울대2호점<br /></td>
-											<td>서울 관악구<br /></td>
-											<td>서울 관악구 쑥고개로 139<br /></td>
-											<td><svg class="text-primary blacklist-add"
-													xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512"
-													width="1em" height="1em" fill="currentColor">
-                                                <path
-														d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path>
-                                            </svg></td>
-										</tr>
-									</tbody>
-									<tfoot>
-										<tr></tr>
-									</tfoot>
-								</table>
-							</div>
-							<div class="row">
-								<div class="col-md-6 align-self-center">
-									<p class="dataTables_info" role="status" aria-live="polite">총
-										개수 : 14</p>
+							<div class="card-body">
+								<div id="black-add-search">
+									<input type="text" placeholder="가게 이름을 입력해주세요" name="keyword"/>
+									<button class="btn btn-primary btn-store-search" type="button">검색</button>
+									<div>
+										<span id="store-search-limit">
+											<!-- 현재위치에서 1km 이내의 음식점이 검색됩니다 -->
+											현재 블랙리스트에 포함된 음식점은 검색결과에 포함되지 않습니다										
+										</span>
+									</div>
 								</div>
-								<div class="col-md-6">
-									<nav
-										class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-										<ul class="pagination">
-											<li class="page-item disabled"><a class="page-link"
-												aria-label="Previous" href="#"><span aria-hidden="true">«</span></a></li>
-											<li class="page-item active"><a class="page-link"
-												href="#">1</a></li>
-											<li class="page-item"><a class="page-link" href="#">2</a></li>
-											<li class="page-item"><a class="page-link" href="#">3</a></li>
-											<li class="page-item"><a class="page-link"
-												aria-label="Next" href="#"><span aria-hidden="true">»</span></a></li>
-										</ul>
-									</nav>
+								<div class="table-responsive table mt-2 store-list-table" role="grid" aria-describedby="dataTable_info">
+									<table id="dataTable-1" class="table my-0">
+										<thead>
+											<tr>
+												<th style="width: 25%;">가게 이름</th>
+												<th style="width: 15%;">카테고리</th>
+												<th style="width: 50%;">가게 위치</th>
+												<th style="width: 10%;">추가</th>
+											</tr>
+										</thead>
+										<tbody id="black-add-body">
+											<tr id="nonSearch">
+												<td colspan="4" >음식점을 검색해주세요</td>
+											<tr>											
+										</tbody>
+									</table>
+								</div>
+								<div class="row">
+									<div class="col-md-6 align-self-center">
+										<p class="dataTables_info" role="status" aria-live="polite">
+											총 개수 : <span id="black-search-count">0</span>
+										</p>
+									</div>
+									
+									<!-- 
+									페이징
+									<div class="col-md-6">
+										<nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+											<ul class="pagination">
+												<li class="page-item disabled"><a class="page-link"
+													aria-label="Previous" href="#"><span aria-hidden="true">«</span></a></li>
+												<li class="page-item active"><a class="page-link"
+													href="#">1</a></li>
+												<li class="page-item"><a class="page-link" href="#">2</a></li>
+												<li class="page-item"><a class="page-link" href="#">3</a></li>
+												<li class="page-item"><a class="page-link"
+													aria-label="Next" href="#"><span aria-hidden="true">»</span></a></li>
+											</ul>
+										</nav>
+									</div>
+									 -->
+									 
 								</div>
 							</div>
 						</div>
-					</div>
+					</c:if>
+					
 				</div>
 				<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+				
 			</div>
 		</div>
 	<a class="border rounded d-inline scroll-to-top" href="#page-top">
@@ -240,10 +209,94 @@
 
 <script type="text/javascript">
 
-//가게정보 조회용
-blacklistJSP = true
+//블랙할 가게 검색하기
+$("#black-add-search button").on("click", function(){
+	var keyword = $("#black-add-search [name = 'keyword']").val()
+	var groupNo = "${map.groupNo}"
+	if(keyword == null || keyword == ""){
+		alert("검색어를 입력해주세요")
+		return false
+	}
+	
+	if(keyword.length < 2){
+		alert("검색어를 두 글자 이상 입력해주세요")
+		return false
+	}
+	
+	var blackVo = {
+		keyword : keyword,
+		groupNo : groupNo
+	}
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/group/black/store/search",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(blackVo),
+		dataType : "json",
+		
+		success : function(searchList){
+			
+			if(searchList.length == 0){
+				alert("검색결과가 존재하지 않습니다")
+				return false
+			}
+			
+			$("#nonSearch").remove()
+			$("#black-add-body").html("")
+			
+			for(var i=0; i<searchList.length; i++){
+				renderTable(searchList[i], 2)
+			}
+			
+			$("#black-search-count").text(searchList.length)
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+		
+	})
+})
 
 
+//블랙리스트/검색목록 row 그리기
+//어차피 블랙 추가/제거는 리더만 가능 그릴 때 검사하지 않겠다
+//opt = 1 : 블랙리스트 > prep / opt = 2 : 검색목록 > append
+function renderTable(blackVo, opt){
+	var str = ''
+	
+	if(opt == 1){
+		str += '<tr id="black-' + blackVo.storeNo + '">'
+	}else {
+		str += '<tr id="search-'+ blackVo.storeNo +'">'
+	}
+	
+	str += '	<td class="store-search-name">' + blackVo.storeName + '</td>'
+	str += '	<td>' + blackVo.menu2ndCateName +'</td>'
+	str += '	<td>' + blackVo.storeRoadAddress + '</td>'
+	str += '	<td>'
+	
+	if(opt == 1){
+		str += '		<td class="text-warning">'
+		str += '			<i class="fas fa-trash group-black-delete" data-storeno="' + blackVo.storeNo + '"></i>'
+		str += '		</td>'
+		
+	}else{
+		str += '		<svg class="text-primary group-black-add" data-storeno="' + blackVo.storeNo + '" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">'
+		str += '			path d="M432 256c0 17.69-14.33 32.01-32 32.01H256v144c0 17.69-14.33 31.99-32 31.99s-32-14.3-32-31.99v-144H48c-17.67 0-32-14.32-32-32.01s14.33-31.99 32-31.99H192v-144c0-17.69 14.33-32.01 32-32.01s32 14.32 32 32.01v144h144C417.7 224 432 238.3 432 256z"></path>'
+		str += '		</svg>'
+	}
+
+	str += '	</td>'
+	str += '</tr>'
+	
+	if(opt == 1){
+		$("#black-body").prep(str)
+	}else{
+		$("#black-add-body").append(str)
+	}
+	
+}
 
 
 //그룹블랙리스트 페이지) black-add-body 테이블/가게모달/리뷰모달/메뉴모달 블랙 추가 버튼 클릭
@@ -290,7 +343,6 @@ $("#modal-all-menu").on("click", ".modal-btn-add-black", function(){
 $("#black-body").on("click", ".group-black-delete", function(){
 	if(confirm("삭제하시겠습니까?")){
 		var blackVo = {
-			blackNo : $(this).attr("data-blackno"),
 			storeNo : $(this).attr("data-storeno"),
 			groupNo : "${map.groupNo}"
 		}
@@ -335,7 +387,8 @@ $("#modal-all-menu").on("click", ".modal-btn-del-black", function(){
 
 //블랙리스트 삭제 > 테이블에서 삭제
 function delBlackTable(blackVo){
-	$("#black-" + blackVo.blackNo).remove()
+	$("#black-count").text($("#black-count").text() -1)
+	$("#black-" + blackVo.storeNo).remove()
 }
 
 

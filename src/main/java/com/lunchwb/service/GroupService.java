@@ -454,4 +454,9 @@ public class GroupService {
 		}
 	}
 
+	
+	/******************** Search for Store that would be added ******************************/
+	public List<BlacklistVo> blackStoreSearch(BlacklistVo blackVo){
+		return blackDao.blackStoreSearch(blackVo);
+	}
 }

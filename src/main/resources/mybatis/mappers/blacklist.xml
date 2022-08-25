@@ -16,8 +16,7 @@
 
 
 	<select id="blacklist" parameterType="int" resultMap="BlackVo">
-		SELECT  black_no
-		        , b.store_no
+		SELECT  b.store_no
 		        , store_name
 		        , menu_2nd_cate_name
 		        , store_road_address
@@ -48,5 +47,20 @@
 		WHERE group_no = #{groupNo}
 		AND store_no = #{storeNo}
 	</delete>
+	
+	
+	<select id="blackStoreSearch" parameterType="BlackVo" resultMap="BlackVo">
+		SELECT  s.store_no
+		        , store_name
+		        , menu_2nd_cate_name
+		        , store_road_address
+		FROM store s, food_2nd_category f
+		WHERE s.store_name LIKE '%'||#{keyword}||'%'
+		AND s.store_no NOT IN	(SELECT store_no 
+								 FROM blacklist 
+								 WHERE group_no = #{groupNo})
+		AND s.menu_2nd_cate_no = f.menu_2nd_cate_no
+		ORDER BY s.store_no ASC
+	</select>
 	
 </mapper>

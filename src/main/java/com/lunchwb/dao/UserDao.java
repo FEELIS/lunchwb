@@ -184,4 +184,9 @@ public class UserDao {
    public List<String> selectImpossibleMember(List<Integer> checkVoteMember) {
 	   return sqlSession.selectList("user.selectImpossibleMember", checkVoteMember);
    }
+   
+   /* 모든 user userState 0으로 초기화 */
+   public void updateAllUsers() {
+	   sqlSession.update("user.updateAllUsers");
+   }
 }

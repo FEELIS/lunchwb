@@ -14,6 +14,9 @@ public class BlacklistVo {
 	//////////검사용
 	private int userNo;
 	
+	//검색용
+	private String keyword;
+	
 	public BlacklistVo() {
 	}
 
@@ -91,6 +94,14 @@ public class BlacklistVo {
 
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
+	}
+	
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 
 	@Override

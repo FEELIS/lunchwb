@@ -295,5 +295,12 @@
 		          )
 		]]>
 	</select>
+	
+	
+	<!--  (스케줄러) 모든 회원 user_State 0으로 초기화  -->
+	<update id="updateAllUsers">
+		UPDATE users
+		SET    user_state = 0
+	</update>
    	
 </mapper>
