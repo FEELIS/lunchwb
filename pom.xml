@@ -176,9 +176,8 @@
 		    <version>1.5</version>
 		</dependency>
 		<!-- 메일 발송 기능을 위한 dependency 추가 END-->
-
+		
 	</dependencies>
-
 
 	<build>
 		<plugins>
