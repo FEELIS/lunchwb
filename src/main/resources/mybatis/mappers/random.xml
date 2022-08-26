@@ -2,4 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="random">
+	<insert id="insertRandomResult" parameterType="RandomVo">
+		<selectKey keyProperty="randomNo" resultType="int" order="BEFORE">
+			select seq_vote_no.nextval * 1000000 + LPAD(ROUND(DBMS_RANDOM.VALUE(0, 999999)),6,0) randomNo
+            from   dual
+		</selectKey>
+		
+		<![CDATA[
+			insert into random
+			values (#{randomNo}, #{storeInfo}, #{stopAtValue}, sysdate)
+		]]>
+	</insert>
 </mapper>

@@ -1,5 +1,7 @@
 package com.lunchwb.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lunchwb.service.TestService;
 import com.lunchwb.vo.GroupVo;
+import com.lunchwb.vo.RandomVo;
 import com.lunchwb.vo.UserVo;
 
 @RequestMapping("/random")
@@ -75,6 +78,17 @@ public class RandomController {
 		System.out.println("groupNo = " + groupNo);
 		System.out.println("result = " + result);
 		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/makeRandomResult")
+	public RandomVo randomResult(@RequestBody Map<String, String> randomData) {
+		
+		String storeInfo = randomData.get("storeInfo");
+		String stopAtValue = randomData.get("stopAtValue");
+		
+		RandomVo result = new RandomVo();
 		return result;
 	}
 	
