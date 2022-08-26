@@ -238,6 +238,7 @@ $(document).ready(
 		
 		if (indexJSP) {
 			// 지도 로딩
+			await callMap()
 		}
 })
 

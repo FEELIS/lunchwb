@@ -32,6 +32,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
 
+
 </head>
 
 
@@ -51,6 +52,8 @@
         	<span id="curr-location-address">${curr_location.address}</span>
         	<button class="btn btn-primary" id="location-change-btn" type="button">위치재설정</button>
         </div>
+        
+        <div id="kakaoMap" style="width: 100%; height: 900px;"></div>
         
         <c:if test="${!empty(curr_location)}">
         	<c:forEach var="basketItems" items="${basket}">
@@ -104,6 +107,8 @@
 </div>
 
 </div>
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e74b599be710b798192fd5221284718a"></script> 
 
 <script type="text/javascript">
 
@@ -227,6 +232,19 @@ function noStore() {
             + "</div>"
 		)
 	}
+}
+
+
+// 카카오지도 API
+async function callMap() {
+	var mapDiv = document.getElementById('kakaoMap')
+	
+	var mapOption = {
+		center: new kakao.maps.LatLng(gpsVo.gpsY, gpsVo.gpsX),
+		level: 3
+	}
+	
+	var map = new kakao.maps.Map(mapDiv, mapOption)
 }
 
 	
