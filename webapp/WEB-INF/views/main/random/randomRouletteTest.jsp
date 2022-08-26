@@ -40,7 +40,7 @@
 <body>
 
 <div id="wrapper">
-<c:import url="/WEB-INF/views/includes/aside/basketAside.jsp" />
+<c:import url="/WEB-INF/views/includes/aside/rouletteAside.jsp" />
 
 
 <div class="d-flex flex-column" id="content-wrapper" style="position: relative;">
@@ -197,6 +197,7 @@
             theWheel.animation.stopAngle = stopAt;
 			
         	console.log("stopAt = " + stopAt);
+        	console.log("basket = " + "${basket}");
             // Disable the spin button so can't click again while wheel is spinning.
             document.getElementById('spin_button').src       = "${pageContext.request.contextPath}/assets/img/rouletteOff.png";
             document.getElementById('spin_button').className = "";

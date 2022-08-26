@@ -40,7 +40,7 @@
 <body>
 
 <div id="wrapper">
-<c:import url="/WEB-INF/views/includes/aside/basketAside.jsp" />
+<c:import url="/WEB-INF/views/includes/aside/rouletteAside.jsp" />
 
 
 <div class="d-flex flex-column" id="content-wrapper" style="position: relative;">
