@@ -1,5 +1,6 @@
 package com.lunchwb.service;
 
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -111,9 +112,7 @@ public class VoteService {
 		
 		System.out.println(voteItems.toString());
 		int voteNo = voteDao.insertNewVote(voteItems);
-		
-		// 스케줄러 추가해줘야할 듯
-		
+				
 		System.out.println("**********************************[vote_member 생성하기]**********************************");
 		// 투표 참여자들
 		Map<String, Object> voteMems = new HashMap<>();
@@ -132,29 +131,38 @@ public class VoteService {
 		System.out.println("**********************************[회원들 user_state 변경하기]**********************************");
 		userDao.updateState1(memberMem);
 		
-		// 스케쥴러 추가
-		
-		System.out.println("**********************************************************************************************************************************************************");
-	
 		
 		return voteNo;
 	}
 
 	
-	
+
 	///////// voteAside 필요한 파라미터 불러오기 ////////////////////////////////////////////////////////////
 	
 	public Map<String, Object> getVoteAsideData(int voteNo, int userState) {
 		Map<String, Object> voteData = new HashMap<>();
 		
 		List<VoteVo> voteVo = voteDao.selectVoteInfo(voteNo);
+		Date voteEndTime = voteVo.get(0).getVoteEndTime();
+		int voteState = voteVo.get(0).getVoteState();
+		
+		// 시간 됐으면 투표 종료
+		if (voteEndTime.before(new Date()) && voteState < 3) {			
+			System.out.println("****************************************************[" + voteNo + "번 투표 종료]*************************************************************");
+			voteDao.updateVoteEnd(voteNo);
+			voteDao.updateUserEnd(voteNo);
+			
+			voteVo = voteDao.selectVoteInfo(voteNo);
+			voteState = 3;
+		}
+		
 		
 		// 끝나는 시각, 가게 정보, 투표 만든 사람
 		VoteVo voteInfo = new VoteVo();
+		voteInfo.setVoteEndTime(voteEndTime);
 		voteInfo.setVoteNo(voteNo);
-		voteInfo.setVoteState(voteVo.get(0).getVoteState());
+		voteInfo.setVoteState(voteState);
 		voteInfo.setGroupName(voteVo.get(0).getGroupName());
-		voteInfo.setVoteEndTime(voteVo.get(0).getVoteEndTime());
 		voteInfo.setVoteMadeUser(voteVo.get(0).getVoteMadeUser());
 		voteInfo.setVoteResults(voteVo.get(0).getVoteResults());
 		voteInfo.setGroupNo(voteVo.get(0).getGroupNo());
@@ -414,9 +422,7 @@ public class VoteService {
 		
 		int cnt = voteDao.updateVoteEndTime(map);
 		if (cnt < 1) return false;
-		
-		// 스케줄러 변경
-		
+				
 		System.out.println("*********************************************************[vote_member 수정하기]*******************************************************************");
 		
 		// 투표 안가는 멤버들 처리
@@ -503,5 +509,13 @@ public class VoteService {
 		System.out.println("변경 후 currVote " + currVote);
 				
 		voteDao.updateVoteResults(changeVote);
+	}
+	
+	
+	/////////////// 시간 다 돼서 투표 종료하기 ///////////////////////////////////////////////////////////////////////////////////////////
+	
+	public void finishVote(int voteNo) {
+		voteDao.updateVoteEnd(voteNo);
+		voteDao.updateUserEnd(voteNo);
 	}
  }

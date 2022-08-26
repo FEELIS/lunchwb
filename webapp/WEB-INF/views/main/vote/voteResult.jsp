@@ -121,8 +121,7 @@
 	                    	<c:if test="${topCnt > 1}">
 		                    	<button id="vote-result-random-btn" class="btn btn-primary d-inline-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center" type="button">랜덤선택</button>
 	                    	</c:if>
-	                    	
-	                    	
+	                    		                    	
 	                    	<form id="resetVote" action="${pageContext.request.contextPath}/vote/resetVote" method="post">
 	                    		<input type="hidden" name="voteNo" value="${voteInfo.voteNo}">
 	                    		<button id="vote-result-again-btn" class="btn btn-danger d-inline-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center" type="button">다시 고를래요</button>

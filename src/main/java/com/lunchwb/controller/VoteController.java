@@ -223,4 +223,17 @@ public class VoteController {
 		
 		return "redirect:/";
 	}
+	
+	
+	// 투표 종료하기
+	@PostMapping("/finishVote")
+	public String finishVote(@RequestParam int voteNo) {
+		System.out.println("**********************************************************************************************************************************************************");
+		logger.info("투표종료");
+		System.out.println("**********************************************************************************************************************************************************");
+	
+		voteService.finishVote(voteNo);
+		
+		return "redirect:/";
+	}
 }

@@ -371,6 +371,11 @@ const countDownTimer = function(voteEndTime) {
 			clearInterval(timer);
 			$("#countdown-time").text("00:00:00")
 			
+			if (parseInt("${userState}") != 99 && parseInt("${voteInfo.voteState}") < 3) {
+				alert("투표가 종료되었습니다.")
+				
+				postVoteData("${pageContext.request.contextPath}/vote/finishVote", {"voteNo" : parseInt("${voteInfo.voteNo}")})				
+			}
 			return
 		}
 
