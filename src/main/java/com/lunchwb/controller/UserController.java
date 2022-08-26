@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -120,6 +121,7 @@ public class UserController {
 		String apiResult = naverLoginBo.getUserProfile(oauthToken);
 		ObjectMapper objectMapper = new ObjectMapper();
 
+		@SuppressWarnings("unchecked")
 		Map<String, Object> apiJson = (Map<String, Object>) objectMapper.readValue(apiResult, Map.class).get("response");
 		System.out.println("apiJson =>" + apiJson);
 
@@ -497,6 +499,13 @@ public class UserController {
 		String result = userService.checkEmail(Email);
 
 		return result;
+	}
+	
+	
+	/* --------------------- 매일 자정 db userState 업데이트 ----------------------------------------------------- */
+	@Scheduled(cron = "0 0 0 * * *") 
+	public void updateUserStateMidnight() {
+		userService.updateUserStateSchedule();
 	}
 
 }

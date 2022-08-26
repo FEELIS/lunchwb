@@ -54,14 +54,14 @@ public class TestController {
 		return "main/random/randomRoulette";
 	}
 	
-	/*
-	@Scheduled(fixedDelay = 1000)
-	@RequestMapping("/schedule")
-	public void testScheduler() {
-		System.out.println("제발");
-	}
 	
+	/*
+	@Scheduled(fixedDelay = 3000) 
+	public void testScheduler() {
+		System.out.println("되나");
+	}
 	*/
+	
 	
 	
 	

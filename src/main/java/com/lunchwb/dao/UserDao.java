@@ -186,7 +186,7 @@ public class UserDao {
    }
    
    /* 모든 user userState 0으로 초기화 */
-   public void updateAllUsers() {
-	   sqlSession.update("user.updateAllUsers");
+   public int updateAllUsers() {
+	   return sqlSession.update("user.updateAllUsers");
    }
 }

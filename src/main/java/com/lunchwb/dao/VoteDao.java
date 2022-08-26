@@ -160,4 +160,5 @@ public class VoteDao {
 	public void updateEscapeResult(VoteVo myVote) {
 		sqlSession.update("vote.updateEscapeResult", myVote);
 	}
+
 }
