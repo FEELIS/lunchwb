@@ -93,6 +93,7 @@ public class UserController {
 			} else {
 				returnURL = "redirect:./login?result=fail";
 			}
+			session.setAttribute("basketGroup", basketService.getBasketGroup(authUser.getUserNo()));
 		} else { // 로그인 실패
 			returnURL = "redirect:./login?result=fail";
 
@@ -102,7 +103,7 @@ public class UserController {
 			session.removeAttribute("basket");
 		}
 		
-		session.setAttribute("basketGroup", basketService.getBasketGroup(authUser.getUserNo())); 
+		 
 
 		return returnURL;
 	}
