@@ -369,7 +369,7 @@ function storeInfoOpen(storeNo, k){
 	//k:footer 버튼 용
 	//k=2 > 버튼 없음
 	//k=5 > 리뷰 내역 버튼 안띄울거...........띄우려면 이제 groupNo groupLeader 다 가지고 확장시켜야함
-	if(k != 2 || k != 5){
+	if(k != 2 && k != 5){
 		modalSortOfStore(storeNo, k)
 	}
 	

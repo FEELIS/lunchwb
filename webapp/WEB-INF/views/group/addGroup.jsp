@@ -5,7 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>부장님요기요: 새 그룹 추가</title>
+<title>부장님요기요: 새 그룹</title>
+
+<link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/assets/img/bujang.png">
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
