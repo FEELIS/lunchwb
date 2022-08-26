@@ -51,6 +51,18 @@ public class VoteService {
 	}
 	
 	
+	
+	//////// 해당 그룹이 투표 생성 가능한지 체크 /////////////////////////////////
+	
+	public boolean canMakeVote(int groupNo) {
+		boolean result = true;
+		
+		if (voteDao.canMakeVote(groupNo) > 0) result = false;
+		
+		return result;
+	}
+	
+	
 	///////// 투표 생성하기 ///////////////////////////////////////////////////////////////////////
 	public int makeVote(int userNo, Date voteEndTime, String voteMember, String notTodayMember, String currBasket, int groupNo) {
 		System.out.println("**********************************************************************************************************************************************************");

@@ -314,4 +314,15 @@
 			WHERE  vote_no = #{voteNo}
 		]]>
 	</update>
+	
+	
+	<!--  투표 생성 가능 여부 체크  -->
+	<select id="canMakeVote" parameterType="int" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM   vote
+			WHERE  group_no = #{groupNo}
+			AND    TO_CHAR(vote_end_time, 'YY/MM/DD') = TO_CHAR(SYSDATE, 'YY/MM/DD')
+		]]>
+	</select>
 </mapper>

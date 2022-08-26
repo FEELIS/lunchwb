@@ -1,10 +1,13 @@
 package com.lunchwb.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -39,12 +42,23 @@ public class VoteController {
 	// 새 투표 생성하기 페이지로 이동
 	@SuppressWarnings("unchecked")
 	@RequestMapping("")
-	public String newVote(Model model, HttpSession session) {
+	public String newVote(Model model, HttpSession session, HttpServletResponse response) throws IOException {
 		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("투표 생성 페이지로 이동");
 		System.out.println("**********************************************************************************************************************************************************");
 
 		Integer groupNo = (Integer)session.getAttribute("curr_basket_group");
+		
+		// 선택 그룹이 투표 참여 가능한지 확인
+		boolean check = voteService.canMakeVote(groupNo);
+		
+		if (!check) {
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('선택한 그룹은 오늘 이미 투표가 진행되었습니다.');location.replace('http://localhost:8088/lunchwb/');</script>");
+			out.flush(); 
+		}
+		
 		Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
 		UserVo loginUser = (UserVo)session.getAttribute("authUser");
 		

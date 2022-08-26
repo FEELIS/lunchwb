@@ -174,7 +174,11 @@
     </div>
 </div>
 
-<c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
+<c:set var="URI" value="${pageContext.request.requestURI}" />
+<c:if test="${URI == '/lunchwb/WEB-INF/views/main/index.jsp'}">
+	<c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
+</c:if>
+
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e74b599be710b798192fd5221284718a&libraries=services"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -195,7 +199,6 @@
 
 
 /////////////////////////// 전역변수 //////////////////////////////////////////////////////////
-
 // index와 연결된 장바구니인지(모달 팝업 관련 필요)
 let indexJSP = false
 

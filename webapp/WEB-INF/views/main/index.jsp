@@ -188,7 +188,7 @@ $("#modal-gps-submit").on("click", function(){
 		sleep(100)
 		alert("현재 위치가 변경되었습니다.")
 		
-		sleep(100)
+		sleep(300)
 		// 페이지 다시 로드하기
 		location.replace("${pageContext.request.contextPath}/")
 		

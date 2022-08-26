@@ -161,4 +161,9 @@ public class VoteDao {
 		sqlSession.update("vote.updateEscapeResult", myVote);
 	}
 
+	
+	// 투표 생성 가능 여부 체크
+	public int canMakeVote(int groupNo) {
+		return sqlSession.selectOne("vote.canMakeVote", groupNo);
+	}
 }
