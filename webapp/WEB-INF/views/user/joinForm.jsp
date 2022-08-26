@@ -64,26 +64,22 @@
                                         <div class="mb-3 fix-480">
                                         	<strong class="join-text">비밀번호</strong>
                                         	<input class="form-control form-control-user input-box" type="password" id="inputJoinPassword" placeholder="비밀번호를 입력해주세요." name="userPassword">
-                                        	<span class="check-text" id="msgPassword"></span>
                                         	<span class="check-text" id="msgErrorPassword">8자리 이상의 비밀번호를 작성해주세요.</span>
                                        	</div>
                                         <div class="mb-3 fix-480">
                                         	<strong class="join-text">비밀번호 확인</strong>
                                         	<input class="form-control form-control-user input-box" type="password" id="checkJoinPassword" placeholder="비밀번호를 한 번 더 입력해주세요." name="checkPassword">
-                                        	<span class="check-text" id="msgCheckPassword"></span>
                                         	<span class="check-text" id="msgErrorCheckPassword">비밀번호를 입력해주세요.</span>
                                        	</div>
                                         <div class="mb-3 fix-480">
                                         	<strong class="join-text">닉네임</strong>
-                                        	<input class="form-control form-control-user input-box" type="text" id="inputJoinNickname" placeholder="사용하실 닉네임을 입력해주세요" name="userName">
-                                        	<span class="check-text" id="msgName"></span>
-                                        	<span class="check-text" id="msgErrorName">이름을 입력해주세요.</span>
+                                        	<input class="form-control form-control-user input-box" type="text" id="inputJoinNickname" placeholder="사용하실 닉네임을 입력해주세요. (5자 이하)" name="userName">
+                                        	<span class="check-text" id="msgErrorName">사용하실 닉네임을 입력해주세요. (5자 이하)</span>
                                        	</div>
                                         <div class="mb-3 fix-480">
                                         	<strong class="join-text">출생연도</strong>
                                         	<input id="inputBirthDate" type="number" name="userBirthYear" placeholder="출생연도를 적어주세요." min="1900" max="2030">
-                                        	<span class="check-text" id="msgBirth"></span><br>
-                                        	<span class="check-text" id="msgErrorBirth">생년월일을 입력해주세요.</span>
+                                        	<span class="check-text" id="msgErrorBirth">출생연도를 입력해주세요.</span>
                                        	</div>
                                         <div class="mb-3 fix-480">
                                         	<strong class="join-text">성별</strong>
@@ -224,14 +220,19 @@ $("input").change(function(){
 			$("#msgErrorName").addClass("check-text");
 			$("#msgErrorName").removeClass("collect-text");
 		}
-		$("#msgErrorName").text("이름을 입력해주세요.");
+		$("#msgErrorName").text("닉네임을 입력해주세요.");
+	}else if(name.length > 5){
+		if($("#msgErrorName").hasClass("check-text") === false) {
+			$("#msgErrorName").addClass("check-text");
+			$("#msgErrorName").removeClass("collect-text");
+		}
+		$("#msgErrorName").text("닉네임의 길이가 초과되었습니다.");
 	}else if(name != null){
 		if($("#msgErrorName").hasClass("collect-text") === false) {
 			$("#msgErrorName").addClass("collect-text");
 			$("#msgErrorName").removeClass("check-text");
 		} 
-		
-		$("#msgErrorName").text("이름을 입력하셨습니다.");
+		$("#msgErrorName").text("닉네임을 입력하셨습니다.");
 	}
 	
 	if(birth == "" || birth == null){
@@ -309,7 +310,7 @@ $("#btn-join").on("click", function(){
 		alert("비밀번호를 확인해주세요.");
 		return false;	
 	}else if (password.length < 8){
-		alert("비밀번호를 확인해주세요.");
+		alert("8자리 이상의 비밀번호를 작성해주세요.");
 		return false;	
 	}
 	
@@ -319,7 +320,10 @@ $("#btn-join").on("click", function(){
 	}
 	
 	if(name == "" || name == null){
-		alert("이름을 입력해주세요.");
+		alert("닉네임을 입력해주세요.");
+		return false;
+	}else if (name.length > 5){
+		alert("5자 이하의 닉네임을 입력해주세요.")
 		return false;
 	}
 	

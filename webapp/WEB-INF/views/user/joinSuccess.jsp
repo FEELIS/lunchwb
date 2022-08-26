@@ -31,7 +31,10 @@
                                     <div class="text-center">
                                         <h4 class="text-dark mb-4 h1" style="font-weight: bold;">환영합니다!</h4>
                                     </div>
-                                    <p style="text-align: center;"><br>부장님 요기요 회원가입을 축하합니다.<br>${authUser.userName}님의 점심 선택의 부담을 덜어드릴 수 있도록 최선을 다하겠습니다.<br><br>그룹을 생성하시면 <br>각 그룹의 취향에 맞는 식당을 추천해드리고 있습니다.<br><br>또한&nbsp;<br>${authUser.userName}님의 막중한 책임감을 덜어드릴 수 있는<br>투표, 랜덤 선택 등 다양한 기능들을 제공하고 있습니다.<br><br>감사합니다.<br><br></p><button class="btn btn-primary d-block btn-user w-25 btn-radius" id="btn-joinsuccess" type="submit">그룹 만들기</button>
+                                    <p style="text-align: center;"><br>부장님 요기요 회원가입을 축하합니다.<br>${authUser.userName}님의 점심 선택의 부담을 덜어드릴 수 있도록 최선을 다하겠습니다.<br><br>그룹을 생성하시면 <br>각 그룹의 취향에 맞는 식당을 추천해드리고 있습니다.<br><br>또한&nbsp;<br>${authUser.userName}님의 막중한 책임감을 덜어드릴 수 있는<br>투표, 랜덤 선택 등 다양한 기능들을 제공하고 있습니다.<br><br>감사합니다.<br><br></p>
+                                    <a href = "${pageContext.request.contextPath}/group/add" style="text-decoration:none;">
+                                    	<button class="btn btn-primary d-block btn-user w-25 btn-radius" id="btn-joinsuccess" type="submit">그룹 만들기</button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

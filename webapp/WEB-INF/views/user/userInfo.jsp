@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>회원정보 변경</title>
+    <title>회원정보 수정</title>
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/assets/img/bujang.png">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
@@ -48,18 +48,22 @@
                                             <div class="mb-3">
                                             	<strong class="join-text">새 비밀번호</strong>
                                             	<input class="form-control form-control-user input-box btn-radius" type="password" id="inputPassword" placeholder="비밀번호를 입력해주세요." name="userPassword">
+                                            	<span class="check-text" id="msgErrorPassword">8자리 이상의 비밀번호를 작성해주세요.</span>
                                            	</div>
                                             <div class="mb-3">
                                             	<strong class="join-text">새 비밀번호 확인</strong>
                                             	<input class="form-control form-control-user input-box btn-radius" type="password" id="checkPassword" placeholder="비밀번호를 한 번 더 입력해주세요." name="checkPassword">
+                                            	<span class="check-text" id="msgErrorCheckPassword">비밀번호를 입력해주세요.</span>
                                            	</div>
                                             <div class="mb-3">
                                             	<strong class="join-text">닉네임</strong>
-                                            	<input class="form-control form-control-user input-box" type="text" id="inputJoinNickname" placeholder="사용하실 닉네임을 입력해주세요" value="${userInfo.userName}" name="userName">
+                                            	<input class="form-control form-control-user input-box" type="text" id="inputJoinNickname" placeholder="사용하실 닉네임을 입력해주세요. (5자 이하)" value="${userInfo.userName}" name="userName">
+												<span class="collect-text" id="msgErrorName">닉네임을 입력하셨습니다.</span>
                                            	</div>
                                             <div class="mb-3">
                                             	<strong class="join-text">출생연도</strong>
                                             	<input id=inputBirthDate type="number" value="${userInfo.userBirthYear}" name="userBirthYear" placeholder="출생연도를 적어주세요." min="1900" max="2100">
+                                            	<span class="collect-text" id="msgErrorBirth">출생연도를 입력하셨습니다.</span>
                                            	</div>
                                             <div class="mb-3"><strong class="join-text">성별</strong>
                                             	<select class="form-select gender-box" style="width: 150px;height: auto;" name="userSex">
@@ -86,6 +90,101 @@
 
 <script type="text/javascript">
 
+$("input").change(function(){
+	var id = $('#joinForm [name = userEmail]').val();
+	var password = $('#joinForm [name = userPassword]').val();
+	var checkPassword = $('#joinForm [name = checkPassword]').val();
+	var name = $('#joinForm [name = userName]').val();
+	var birth = $('#joinForm [name = userBirthYear]').val();
+	var sex = $('#joinForm [name = userSex]').val();
+	var Check = $('#formCheck-1').is(":checked");
+	
+	if(id=="" || id == null){
+		$("#msgOverlapEmail").html("");
+		$("#msgErrorEmail").html("<br>이메일 형식으로 입력해주세요.");
+	}else if(id.indexOf("@") != -1){
+		$("#msgErrorEmail").text("");
+	}
+	
+	
+	if(password =="" || password == null){
+		if($("#msgErrorPassword").hasClass("check-text") === false) {
+			$("#msgErrorPassword").addClass("check-text");
+			$("#msgErrorPassword").removeClass("collect-text");
+		}
+		$("#msgErrorPassword").text("8자리 이상의 비밀번호를 작성해주세요.");
+	}else if(password.length >= 8){
+		if($("#msgErrorPassword").hasClass("collect-text") === false) {
+			$("#msgErrorPassword").addClass("collect-text");
+			$("#msgErrorPassword").removeClass("check-text");
+		} 
+		$("#msgErrorPassword").text("사용 가능한 비밀번호 입니다.");
+	}
+	
+	if(password == null){
+		if($("#msgErrorCheckPassword").hasClass("check-text") === false) {
+			$("#msgErrorCheckPassword").addClass("check-text");
+			$("#msgErrorCheckPassword").removeClass("collect-text");
+		}
+		$("#msgErrorCheckPassword").text("비밀번호를 입력해주세요.");
+	}else if(password != checkPassword){
+		if($("#msgErrorCheckPassword").hasClass("check-text") === false) {
+			$("#msgErrorCheckPassword").addClass("check-text");
+			$("#msgErrorCheckPassword").removeClass("collect-text");
+		}
+		$("#msgErrorCheckPassword").text("비밀번호가 일치하지 않습니다.");
+	}else if(password == checkPassword && password != null && password.length >= 8){
+		if($("#msgErrorCheckPassword").hasClass("collect-text") === false) {
+			$("#msgErrorCheckPassword").addClass("collect-text");
+			$("#msgErrorCheckPassword").removeClass("check-text");
+		} 
+		
+		$("#msgErrorCheckPassword").text("비밀번호가 일치합니다.");
+	}
+	
+	if(name == "" || name == null){
+		if($("#msgErrorName").hasClass("check-text") === false) {
+			$("#msgErrorName").addClass("check-text");
+			$("#msgErrorName").removeClass("collect-text");
+		}
+		$("#msgErrorName").text("닉네임을 입력해주세요.");
+	}else if(name.length > 5){
+		if($("#msgErrorName").hasClass("check-text") === false) {
+			$("#msgErrorName").addClass("check-text");
+			$("#msgErrorName").removeClass("collect-text");
+		}
+		$("#msgErrorName").text("닉네임의 길이가 초과되었습니다.");
+	}else if(name != null){
+		if($("#msgErrorName").hasClass("collect-text") === false) {
+			$("#msgErrorName").addClass("collect-text");
+			$("#msgErrorName").removeClass("check-text");
+		} 
+		$("#msgErrorName").text("닉네임을 입력하셨습니다.");
+	}
+	
+	if(birth == "" || birth == null){
+		if($("#msgErrorBirth").hasClass("check-text") === false) {
+			$("#msgErrorBirth").addClass("check-text");
+			$("#msgErrorBirth").removeClass("collect-text");
+		}
+		$("#msgErrorBirth").text("출생연도를 입력해주세요.");
+	}else if(birth < 1900 || birth > 2030){
+		if($("#msgErrorBirth").hasClass("check-text") === false) {
+			$("#msgErrorBirth").addClass("check-text");
+			$("#msgErrorBirth").removeClass("collect-text");
+		}
+		$("#msgErrorBirth").text("출생연도를 정확히 입력해주세요.");
+	}else if(birth != null){
+		if($("#msgErrorBirth").hasClass("collect-text") === false) {
+			$("#msgErrorBirth").addClass("collect-text");
+			$("#msgErrorBirth").removeClass("check-text");
+		} 
+		$("#msgErrorBirth").text("출생연도를 입력하셨습니다.");
+	}
+	return true;
+})
+
+
 $("#btn-submit").on("click", function(){
 	console.log("버튼 확인");
 	
@@ -109,12 +208,19 @@ $("#btn-submit").on("click", function(){
 	if(password != checkPassword){
 		alert("비밀번호가 일치하지 않습니다.");
 		return false;
+	}else if (password.length < 8){
+		alert("8자리 이상의 비밀번호를 작성해주세요.");
+		return false;	
 	}
 	
 	if(name == "" || name == null){
-		alert("이름을 입력해주세요.");
+		alert("닉네임을 입력해주세요.");
+		return false;
+	}else if (name.length > 5){
+		alert("5자 이하의 닉네임을 입력해주세요.")
 		return false;
 	}
+	
 	
 	if(birth == "" || birth == null){
 		alert("출생연도를 입력해주세요.");
