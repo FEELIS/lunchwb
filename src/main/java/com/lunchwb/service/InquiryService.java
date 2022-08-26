@@ -36,7 +36,7 @@ public class InquiryService {
 		String orgName = "";
 		String saveName = "";
 
-		if (file.getOriginalFilename().equals("")) {	//블로그 타이틀만 바꿀 경우 방지
+		if (file.getOriginalFilename().equals("")) {	//파일 없는 경우 방지
 			System.out.println("이미 미업로드시");
 			inqVo.setInquiryFilePath(saveName);
 
