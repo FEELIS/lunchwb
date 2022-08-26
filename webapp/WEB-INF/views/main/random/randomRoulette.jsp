@@ -194,9 +194,10 @@
  
         // Important thing is to set the stopAngle of the animation before stating the spin.
         theWheel.animation.stopAngle = stopAt;
-        console.log("끝나는각도 = " + theWheel.animation.stopAngle)
+        console.log("끝나는각도ㅇ = " + stopAt)
         // May as well start the spin from here.
         theWheel.startAnimation();
+        
     }
     
     // -------------------------------------------------------

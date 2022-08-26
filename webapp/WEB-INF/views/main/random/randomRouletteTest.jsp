@@ -191,11 +191,12 @@
         if (wheelSpinning == false) {
         	 // This formula always makes the wheel stop somewhere inside prize 3 at least
             // 1 degree away from the start and end edges of the segment.
-            let stopAt = 200
+            let stopAt = (91 + Math.floor((Math.random() * 43)))
      
             // Important thing is to set the stopAngle of the animation before stating the spin.
             theWheel.animation.stopAngle = stopAt;
-
+			
+        	console.log("stopAt = " + stopAt);
             // Disable the spin button so can't click again while wheel is spinning.
             document.getElementById('spin_button').src       = "${pageContext.request.contextPath}/assets/img/rouletteOff.png";
             document.getElementById('spin_button').className = "";
