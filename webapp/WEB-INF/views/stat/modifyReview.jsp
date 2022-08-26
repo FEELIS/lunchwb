@@ -75,8 +75,7 @@
                                     <label class="form-label" for="from-file">이미지를 선택해주세요</label> <span class="required-input">*</span>
                                     <div class="input-group">
                                         <span class="input-group-text"> <i class="fa fa-file"></i></span> 
-                                        <input  id="from-file-1" class="form-control-file" type="file" name="file"  
-                                        		value="${pageContext.request.contextPath}/upload/${aloneVo.reviewFileName}" />
+                                        <input  id="from-file-1" class="form-control-file" type="file" name="file"/>
                                     </div>
                                 </div>
                                 <div class="row">
