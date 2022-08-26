@@ -27,7 +27,7 @@ public class RandomController {
 	@GetMapping("/roulette")
 	public String roulette() {
 		logger.info("/roulette");
-		return "main/random/randomRouletteTest";
+		return "main/random/randomRoulette";
 	}
 	
 	@GetMapping("")

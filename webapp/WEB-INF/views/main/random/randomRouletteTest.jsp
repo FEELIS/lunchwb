@@ -188,8 +188,6 @@
 
     function startSpin()
     {
-       
- 
         if (wheelSpinning == false) {
         	 // This formula always makes the wheel stop somewhere inside prize 3 at least
             // 1 degree away from the start and end edges of the segment.

@@ -179,10 +179,10 @@
 
             // Begin the spin animation by calling startAnimation on the wheel object.
             theWheel.startAnimation();
-
             // Set to true so that power can't be changed and spin button re-enabled during
             // the current animation. The user will have to reset before spinning again.
             wheelSpinning = true;
+            console.log("끝나는각도 = " + theWheel.animation.stopAngle)
         }
     }
 
@@ -194,7 +194,7 @@
  
         // Important thing is to set the stopAngle of the animation before stating the spin.
         theWheel.animation.stopAngle = stopAt;
- 
+        console.log("끝나는각도 = " + theWheel.animation.stopAngle)
         // May as well start the spin from here.
         theWheel.startAnimation();
     }
@@ -206,6 +206,8 @@
     function alertPrize(indicatedSegment)
     {
         // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
+        console.log("끝나는각도 = " + theWheel.animation.stopAngle)
+        
         if(confirm("오늘 방문할 가게는 [" + indicatedSegment.text +"] 입니다. \n방문하시겠습니까?" ) == false){
         	wheelSpinning = false
         	
