@@ -1,6 +1,7 @@
 package com.lunchwb.service;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -36,14 +37,13 @@ public class AloneService {
 		
 		int count = 0;
 		
-		//String saveDir = "C:\\javaStudy\\upload";				//윈도우용
-		String saveDir = "/Users/choijungphil/javaStudy/upload";	//맥OS용
+		String saveDir = "C:\\javaStudy\\upload";				//윈도우용
+		//String saveDir = "/Users/choijungphil/javaStudy/upload";	//맥OS용
 		String orgName = "";
 		String saveName = "";
 
 		if (file.getOriginalFilename().equals("")) {	// 파일 없을 경우
 			System.out.println("이미 미업로드시");
-			aloneVo.setReviewFileName(saveName);
 			// (1)다오로 보내서 DB 업데이트
 			count = aloneDao.updateReview(aloneVo);
 			
@@ -61,10 +61,27 @@ public class AloneService {
 			System.out.println("saveName: " + saveName);
 	
 			// 파일경로(디렉토리+저장파일명)
-			//String filePath = saveDir + "\\" + saveName;			//윈도우용
-			String filePath = saveDir + "/" + saveName;			//맥OS용
+			String filePath = saveDir + "\\" + saveName;			//윈도우용
+			//String filePath = saveDir + "/" + saveName;			//맥OS용
 			
 			aloneVo.setReviewFileName(saveName);
+			
+			int reviewNo = aloneVo.getReviewNo();
+			
+			//이전 파일
+			String prevFile = saveDir + "\\" + aloneDao.getReview(reviewNo).getReviewFileName();	//윈도우용
+			//String prevFile = saveDir + "/" + aloneDao.getReview(reviewNo).getReviewFileName();	//맥OS용
+			File deleteFile = new File(prevFile);
+			
+			// 파일이 존재하는지 체크 존재할경우 true, 존재하지않을경우 false
+			if (deleteFile.exists()) {
+				// 파일을 삭제합니다.
+				deleteFile.delete();
+				System.out.println("파일을 삭제하였습니다.");
+			} else {
+				System.out.println("파일이 존재하지 않습니다.");
+			}
+			
 	
 			// (1)다오로 보내서 DB 업데이트
 			count = aloneDao.updateReview(aloneVo);
