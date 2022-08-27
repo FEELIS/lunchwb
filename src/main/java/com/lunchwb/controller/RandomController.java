@@ -92,6 +92,8 @@ public class RandomController {
 		String countbas = randomData.get("countbas");
 		String basket = randomData.get("basket");
 		String stopAtValue = randomData.get("stopAt");
+		// + groupNO 보내야함. 그룹 이름 따야함.
+		
 		
 		System.out.println("장바구시 가게 숫자 = " + countbas);
 		System.out.println("가게정보 = " + basket);
