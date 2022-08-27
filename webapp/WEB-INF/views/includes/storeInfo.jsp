@@ -229,7 +229,8 @@
 $("#basket-table").on("click", ".basket-table-store-name", function(){
 	if (typeof indexJSP) {
         var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
-		var groupNo = curr_basket_group
+		
+		groupNo = curr_basket_group
 		console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
 		
 		storeInfoOpen(storeNo, groupNo, 1)
@@ -691,7 +692,7 @@ function drawOtherStores(storeNo, groupNo, sortNo){
 		dataType : "json",
 		
 		success : function(otherStores){
-			console.log(otherStores)
+			console.log("otherStores"+otherStores)
 
 			if(otherStores != null){
 				for(var i=0; i<otherStores.length; i++){

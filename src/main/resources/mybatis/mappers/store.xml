@@ -178,77 +178,97 @@
 	</select>
 	
 	
-		<!-- 같은 카테고리 다른 가게 -->
+	<!-- 같은 카테고리 다른 가게 -->
 	<select id="sameCateOtherStores" parameterType="Map" resultMap="StoreVo">
 		<![CDATA[
 			SELECT  store_no
 					, store_name
 					, rating_bujang
-			FROM(SELECT ROWNUM rn, store_no, store_name, rating_bujang
-				 FROM(SELECT s.store_no, store_name, NVL(rating_bujang, 0) rating_bujang
-					  FROM store s 
-					       , (SELECT store_no, COUNT(visited_no) all_visit_count 
-					       	  FROM visited v  
-					       	  GROUP BY store_no) vct
-					       , (SELECT store_no, AVG(user_score) rating_bujang 
-					          FROM review r, visited v 
-					          WHERE r.visited_no = v.visited_no 
-					          GROUP BY store_no) rbt
-					       , (SELECT store_no, COUNT(DISTINCT(TO_DATE(visited_date))) group_visit_count 
-					          FROM visited 
-					          WHERE group_no = #{storeVo.groupNo} 
-					          GROUP BY store_no) gvc
-					       , (SELECT store_no, AVG(user_score) rating_group 
-					          FROM visited v, review r 
-					          WHERE v.visited_no = r.visited_no 
-					          AND group_no = #{storeVo.groupNo} 
-					          GROUP BY store_no) grt
-					       , (SELECT aa.store_no,(NVL(same_age_visit, 0)/all_age_visit)*100 -25 age_visit_ratio 
-					       	  FROM  (SELECT store_no, COUNT(store_no) all_age_visit
-									 FROM (SELECT store_no, group_no, TO_DATE(visited_date) visited_date 
-									 	   FROM visited v, users u 
-									 	   WHERE v.user_no = u.user_no 
-									 	   GROUP BY store_no, group_no, visited_date)
-									 GROUP BY store_no) aa
-								  , (SELECT store_no , count(store_no) same_age_visit 
-								  	 FROM (SELECT store_no, group_no, CASE  WHEN AVG(age) <30 THEN '20s' 
-								  	 										WHEN AVG(age) >=30 AND AVG(age) < 40 THEN '30s' 
-								  	 										WHEN AVG(age) >=40 AND AVG(age) < 50 THEN '40s'
-								  									  ELSE  '50s' 
-								  									  END group_avg_age
-								   		   FROM	(SELECT store_no, group_no, TO_DATE(visited_date) visited_date, TO_NUMBER(TO_CHAR(visited_date, 'YYYY')) - user_birth_year + 1 age
-								   				 FROM visited v, users u 
-								   				 WHERE v.user_no = u.user_no) 
-								   				 GROUP BY store_no, group_no, visited_date) ct
-										   WHERE group_avg_age = (SELECT CASE WHEN AVG(TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - user_birth_year + 1) <30 THEN '20s'
-										   									  WHEN AVG(TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - user_birth_year + 1) >= 30 AND AVG(TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - user_birth_year + 1) < 40 THEN '30s'    
-										   									  WHEN AVG(TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - user_birth_year + 1) >= 40 AND AVG(TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - user_birth_year + 1) < 50 THEN '40s'
-										   								 ELSE '50s' END g_ave_age
-																  FROM users u, group_member m 
-																  WHERE u.user_no = m.user_no 
-																  AND group_no = #{storeVo.groupNo} 
-																  GROUP BY group_no)
-										   GROUP BY store_no) sa
-									 WHERE aa.store_no = sa.store_no (+)) avr
-					  		  WHERE ROUND(SQRT(POWER(ABS(store_x-#{gpsVo.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(store_y-#{gpsVo.gpsY})*6400000*2*3.14/360, 2)), 0) <= 1000
-					  AND menu_2nd_cate_no = (SELECT s.menu_2nd_cate_no 
-					  						  FROM store s, food_2nd_category f 
-					  						  WHERE s.store_no = #{storeVo.storeNo} 
-					  						  AND s.menu_2nd_cate_no = f.menu_2nd_cate_no)
-					  AND s.store_no NOT IN (SELECT  store_no 
-					  						 FROM visited 
-					  						 WHERE visited_date >= TO_DATE(SYSDATE-5) 
-					  						 AND group_no = #{storeVo.groupNo}) 
-					  AND s.store_no = vct.store_no (+)
-					  AND s.store_no = rbt.store_no (+)
-					  AND s.store_no = gvc.store_no (+)
-					  AND s.store_no = grt.store_no (+)
-					  AND s.store_no = avr.store_no (+)
-					  AND s.store_no != #{storeVo.storeNo}
-					  ORDER BY (NVL((all_visit_count/10), 0) + NVL((group_visit_count)*2, 0) + NVL((rating_bujang*100),0) + NVL(rating_group, 0) + NVL(age_visit_ratio, 0)) DESC))
+			FROM (SELECT ROWNUM rn, store_no, store_name, rating_bujang
+				  FROM (SELECT s.store_no, store_name, NVL(rating_bujang, 0) rating_bujang
+				 	    FROM store s 
+				 	         , (SELECT store_no, COUNT(visited_no) all_visit_count 
+				 	         	  FROM visited v  
+				 	         	  GROUP BY store_no) vct
+				 	         , (SELECT store_no, AVG(user_score) rating_bujang 
+				 	            FROM review r, visited v 
+				 	            WHERE r.visited_no = v.visited_no 
+				 	            GROUP BY store_no) rbt
+		]]>
+						<if test="storeVo.groupNo != 0 and storeVo.groupNo != ''">	 	    
+				 	         , (SELECT store_no, COUNT(DISTINCT(TO_DATE(visited_date))) group_visit_count 
+				 	            FROM visited 
+				 	            WHERE group_no = #{storeVo.groupNo} 
+				 	            GROUP BY store_no) gvc
+				 	         , (SELECT store_no, AVG(user_score) rating_group 
+				 	            FROM visited v, review r 
+				 	            WHERE v.visited_no = r.visited_no 
+				 	            AND group_no = #{storeVo.groupNo} 
+				 	            GROUP BY store_no) grt
+				 	         , (SELECT aa.store_no,(NVL(same_age_visit, 0)/all_age_visit)*100 -25 age_visit_ratio 
+				 	         	FROM (SELECT store_no, COUNT(store_no) all_age_visit
+				 	  				  FROM (SELECT store_no, group_no, TO_DATE(visited_date) visited_date 
+				 	  				        FROM visited v, users u 
+				 	  				        WHERE v.user_no = u.user_no 
+				 	  				        GROUP BY store_no, group_no, visited_date)
+				 	  				  GROUP BY store_no) aa
+		<![CDATA[
+				 	  		 	   , (SELECT store_no , count(store_no) same_age_visit 
+				 	  			 	  FROM (SELECT store_no, group_no, CASE  WHEN AVG(age) <30 THEN '20s' 
+				 	  			 									   		 WHEN AVG(age) >=30 AND AVG(age) < 40 THEN '30s' 
+				 	  			 									   		 WHEN AVG(age) >=40 AND AVG(age) < 50 THEN '40s'
+				 	  											  	   ELSE  '50s' 
+				 	  											  	   END group_avg_age
+				 	  			 	   		FROM (SELECT store_no, group_no, TO_DATE(visited_date) visited_date, TO_NUMBER(TO_CHAR(visited_date, 'YYYY')) - user_birth_year + 1 age
+				 	  			 			 	  FROM visited v, users u 
+				 	  			 			 	  WHERE v.user_no = u.user_no) 
+				 	  			 			GROUP BY store_no, group_no, visited_date) ct
+				 	  			   	  WHERE group_avg_age = (SELECT CASE WHEN AVG(TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - user_birth_year + 1) <30 THEN '20s'
+					 	  			   									 WHEN AVG(TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - user_birth_year + 1) >= 30 AND AVG(TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - user_birth_year + 1) < 40 THEN '30s'    
+					 	  			   									 WHEN AVG(TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - user_birth_year + 1) >= 40 AND AVG(TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - user_birth_year + 1) < 50 THEN '40s'
+				 	  			   								 	ELSE '50s' END g_ave_age
+				 	  									  	 FROM users u, group_member m 
+				 	  									  	 WHERE u.user_no = m.user_no 
+				 	  									  	 AND group_no = #{storeVo.groupNo} 
+				 	  									  	 GROUP BY group_no)
+				 	  			 	  GROUP BY store_no) sa
+		]]>						  					   	
+				 	  			WHERE aa.store_no = sa.store_no (+)) avr
+				 	  	</if>
+		<![CDATA[
+				 	    WHERE ROUND(SQRT(POWER(ABS(store_x-#{gpsVo.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(store_y-#{gpsVo.gpsY})*6400000*2*3.14/360, 2)), 0) <= 1000
+		]]>
+				 	    AND menu_2nd_cate_no = (SELECT s.menu_2nd_cate_no 
+				 	    						FROM store s, food_2nd_category f 
+				 	    						WHERE s.store_no = #{storeVo.storeNo} 
+				 	    						AND s.menu_2nd_cate_no = f.menu_2nd_cate_no)
+				 	    <if test="storeVo.groupNo != 0 and storeVo.groupNo != ''">						
+				 	    AND s.store_no NOT IN (SELECT  store_no 
+						 	    		       FROM visited 
+		<![CDATA[						 	    		       
+						 	    		       WHERE visited_date >= TO_DATE(SYSDATE-5) 
+						 	    		       AND group_no = #{storeVo.groupNo})
+		]]>						 	    		       
+						</if> 	    		     
+				 	    AND s.store_no = vct.store_no (+)
+				 	    AND s.store_no = rbt.store_no (+)
+				 	    <if test="storeVo.groupNo != 0 and storeVo.groupNo != ''">
+				 	    AND s.store_no = gvc.store_no (+)
+				 	    AND s.store_no = grt.store_no (+)
+				 	    AND s.store_no = avr.store_no (+)
+				 	    </if>
+				 	    AND s.store_no != #{storeVo.storeNo}
+				 	    ORDER BY (NVL((all_visit_count/10), 0)
+				 	    <if test="storeVo.groupNo != 0 and storeVo.groupNo != ''"> 
+				 	    		  + NVL((group_visit_count)*2, 0) 
+				 	    		  + NVL(rating_group, 0) 
+				 	    		  + NVL(age_visit_ratio, 0)
+				 	    </if>
+				 	    		  + NVL((rating_bujang*100),0)) 
+				 	    		  DESC))
+		<![CDATA[			
 			WHERE ROWNUM <= 3
 		]]>
 	</select>
-	
 	
 </mapper>
