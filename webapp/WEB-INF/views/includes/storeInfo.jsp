@@ -58,42 +58,6 @@
                         	<span class="d-inline-block"></span>
                         </div>
                         <div class="text-start d-lg-flex justify-content-lg-center other-stores-area">
-                        	<span class="d-inline-block">
-		                        <button class="btn other-store-btn other-store-1" type="button" data-no="247" data-sortno="4">
-		                        	명품청기와감자탕
-		                        	<span class="fw-bold text-warning d-block">
-		                        		<i class="fas fa-star"></i>
-		                        		<i class="fas fa-star"></i>
-		                        		<i class="fas fa-star"></i>
-		                        		<i class="fas fa-star-half-alt"></i>
-		                        		<i class="far fa-star"></i>
-		                        	</span>
-		                        </button>
-		                    </span>
-		                    <span class="d-inline-block">
-		                    	<button class="btn other-store-btn other-store-2" type="button" data-no="246" data-sortno="1">
-		                    		다사랑분식
-		                    		<span class="fw-bold text-warning d-block">
-			                    		<i class="fas fa-star"></i>
-		                        		<i class="fas fa-star"></i>
-		                        		<i class="fas fa-star"></i>
-		                        		<i class="fas fa-star-half-alt"></i>
-		                        		<i class="far fa-star"></i>
-		                    		</span>
-		                    	</button>
-		                    </span>
-		                    <span class="d-inline-block">
-		                    	<button class="btn link-light other-store-btn other-store-3" type="button" data-no="245">
-		                    		주궁
-		                    		<span class="fw-bold text-warning d-block">
-		                    			<i class="fas fa-star"></i>
-		                        		<i class="fas fa-star"></i>
-		                        		<i class="fas fa-star"></i>
-		                        		<i class="fas fa-star-half-alt"></i>
-		                        		<i class="far fa-star"></i>
-		                    		</span>
-		                    	</button>
-		                    </span>
 		                </div>
                     </div>
                 </div>
@@ -168,12 +132,15 @@
 <div id="modal-all-menu" class="modal visible no-drag modal-stores" role="dialog" tabindex="-1" style="min-width: 798px;">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content" style="width: 798px;">
-            <div class="modal-header"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-header">
+            	<button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
             <div class="modal-body">
                 <div class="fs-4 fw-bold text-dark modal-store-title">
                 	<span class="d-inline-block modalStoreName"></span>
                		<span class="fs-6 text-secondary d-inline-block store-cate modalStoreCate"></span>
-                    <div class="dropdown d-inline-block"><button class="btn btn-sm dropdown-toggle fs-6 fw-bold text-start text-secondary" aria-expanded="false" data-bs-toggle="dropdown" type="button">영업시간</button>
+                    <div class="dropdown d-inline-block">
+                    	<button class="btn btn-sm dropdown-toggle fs-6 fw-bold text-start text-secondary" aria-expanded="false" data-bs-toggle="dropdown" type="button">영업시간</button>
                         <div class="dropdown-menu">
                         	<div class="modalStoreOpening"></div>
                         	<div class="modalStoreBreak"></div>
@@ -182,11 +149,20 @@
                 </div>
                 <div class="store-info">
                     <div class="d-inline-block store-info-left">
-                        <div><span class="modalStoreAddress"></span><span class="fw-bold text-primary modalStoreDistance"></span></div>
-                        <div><span class="fw-bold text-primary modalStoreVisitCnt"></span><span> / 40대 그룹 선호 가게 "여기 해야함"</span></div>
+                        <div>
+                        	<span class="modalStoreAddress"></span>
+                        	<span class="fw-bold text-primary modalStoreDistance"></span>
+                        </div>
+                        <div>
+	                        <span class="fw-bold text-primary modalStoreVisitCnt"></span>
+	                        <span> / 40대 그룹 선호 가게 "여기 해야함"</span>
+                        </div>
                     </div>
                     <div class="text-end d-inline-block store-info-right">
-                        <div><span>별점</span><span class="fw-bold text-primary modalStoreScore"></span></div>
+                        <div>
+                        	<span>별점</span>
+                        	<span class="fw-bold text-primary modalStoreScore"></span>
+                        </div>
                         <div>
                         	<span class="fw-bold text-warning modalStoreStar"></span>
                         </div>
@@ -205,43 +181,7 @@
                     <div class="text-primary other-store-state">
                     	<span class="d-inline-block"></span>
                     </div>
-                    <div class="text-start d-lg-flex justify-content-lg-center">
-                    	<span class="d-inline-block">
-                    		<button class="btn other-store-btn other-store-1" type="button">
-                    			흑룡강sssssssssssssssss
-                    			<span class="fw-bold text-warning d-block">
-                    				<i class="fas fa-star"></i>
-                    				<i class="fas fa-star"></i>
-                    				<i class="fas fa-star"></i>
-                    				<i class="fas fa-star"></i>
-                    				<i class="fas fa-star"></i>
-                    			</span>
-                    		</button>
-                    	</span>
-                    	<span class="d-inline-block">
-                    		<button class="btn other-store-btn other-store-2" type="button">
-	                    		홍콩반점
-	                    		<span class="fw-bold text-warning d-block">
-	                    			<i class="fas fa-star"></i>
-	                    			<i class="fas fa-star"></i>
-	                    			<i class="fas fa-star"></i>
-	                    			<i class="fas fa-star"></i>
-	                    			<i class="fas fa-star"></i>
-	                    		</span>
-                    		</button>
-                    	</span>
-                    	<span class="d-inline-block">
-                    		<button id="other-store-6" class="btn link-light other-store-btn other-store-3" type="button">
-                    			락궁
-                    			<span class="fw-bold text-warning d-block">
-                    				<i class="fas fa-star"></i>
-                    				<i class="fas fa-star"></i>
-                    				<i class="fas fa-star"></i>
-                    				<i class="fas fa-star"></i>
-                    				<i class="fas fa-star"></i>
-                    			</span>
-                    		</button>
-                    	</span>
+                    <div class="text-start d-lg-flex justify-content-lg-center other-stores-area">
                     </div>
                 </div>
             </div>
@@ -386,7 +326,18 @@ $("#calendar-area").on("click", ".show-menu", function(){
 
 //페이지 구분 두고 나중에 마지막까지 안쓰면 다 지워버리겠어
 /* 모달에서 > 다시 다른 가게 정보 조회(버튼) */
-$("#modal-store .other-store-btn").on("click", function(){
+$("#modal-store").on("click", ".other-store-btn", function(){
+	//모달에서 다른 모달로 넘어가기 : 페이지 상관없이 불러올 변수는 동일
+	var storeNo = $(this).attr("data-no")
+	var groupNo = $(this).attr("data-groupno")
+	var sortNo = $(this).attr("data-sortno")
+	console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
+	
+	
+	storeInfoOpen(storeNo, groupNo, Number(sortNo))
+})
+
+$("#modal-all-menu").on("click", ".other-store-btn", function(){
 	//모달에서 다른 모달로 넘어가기 : 페이지 상관없이 불러올 변수는 동일
 	var storeNo = $(this).attr("data-no")
 	var groupNo = $(this).attr("data-groupno")
@@ -548,15 +499,15 @@ function modalStoreStar(starScore, k){
 			break
 		
 		case 1:
-			$(".other-store-"+1).html(str)
+			$(".other-store-"+1+" span").append(str)
 			break
 		
 		case 2:
-			$(".other-store-"+2).html(str)
+			$(".other-store-"+2+" span").append(str)
 			break
 		
 		case 3:
-			$(".other-store-"+3).html(str)
+			$(".other-store-"+3+" span").append(str)
 			break
 			
 		default:
@@ -566,17 +517,12 @@ function modalStoreStar(starScore, k){
 	
 }
 
+/* 
 $(document).ready(function () {
     $('.dropdown-toggle').dropdown();
 })
 
-/* 
-$("#storeHours1").on("mouseup", function(){
-	$("#drop1").show() 
-})
- */
- 
- 
+ */ 
 /* 영업시간+브레이크타임 드랍다운 리스트 */
 function modalStoreTime(storeTime, opt){
 	var str = ''
@@ -745,23 +691,57 @@ function drawOtherStores(storeNo, groupNo, sortNo){
 		dataType : "json",
 		
 		success : function(otherStores){
-			for(var i=1; i<=otherStores.length; i++){
-				var str = ''
-				str += '<span class="d-inline-block">'
-				str += '	<button class="btn other-store-btn other-store-'+i+'" type="button" data-no="'+otherStores[i].storeNo+'247" data-groupno="'+groupNo+'" data-sortno="'+sortNo+'">'
-				str += '		'+otherStores[i].storeName+''
-				str += '		<span class="fw-bold text-warning d-block">'
-				str += '		</span>'
-				str += '	</button>'
-				str += '</span>'
-				
-				$(".other-stores-area").append(str)
-				
-				modalStoreStar(otherStores[i].ratingBujang, [i])
+			console.log(otherStores)
+
+			if(otherStores != null){
+				for(var i=0; i<otherStores.length; i++){
+					var str = ''
+					str += '<span class="d-inline-block">'
+					str += '	<button class="btn other-store-btn other-store-'+(i+1)+'" type="button" data-no="'+otherStores[i].storeNo+'" data-groupno="'+groupNo+'" data-sortno="'+sortNo+'">'
+					
+					if(otherStores[i].storeName.length > 10){
+						var name = (otherStores[i].storeName).split(' ')
+						
+						var sum
+						for(var l=1; l<name.length; l++){
+							sum += name[l].length
+						}
+						
+						//두번째 배열부터의 합이 길면 > 첫줄 : 첫번째 + 두번째 / 두번째줄 : 나머지  
+						if(sum.length>10){
+							
+							str += name[0] + name[1] + '<br>'
+							for(var j=2; j<name.length; j++){
+								str += name[j]
+							}
+
+						//두번째 배열부터의 합이 짧으면 > 두번째 줄에 두번째 배열부터
+						}else{
+							
+							str += name[0] + '<br>'
+							for(var j=1; j<name.length; j++){
+								str += name[j]
+							}
+						}
+
+					}else{
+						
+						str += otherStores[i].storeName
+					}
+
+					str += '		<span class="fw-bold text-warning d-block">'
+					str += '		</span>'
+					str += '	</button>'
+					str += '</span>'
+					
+					$(".other-stores-area").append(str)
+					
+					modalStoreStar(otherStores[i].ratingBujang, i+1)
+				}
 			}
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			console.error(status + " : " + error)
 		}
 	})
 	

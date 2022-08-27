@@ -88,10 +88,17 @@ public class StoreController {
 	/* 같은 카테 다른 가게(3곳) */
 	@ResponseBody
 	@PostMapping("/store/sameCate")
-	public List<StoreVo> sameCateOtherStores(@RequestBody StoreVo storeVo){
+	public List<StoreVo> sameCateOtherStores(@RequestBody StoreVo storeVo, HttpSession session){
 		logger.info("sameCateOtherStores...storeVo={}", storeVo);
 		
-		List<StoreVo> otherStores = storeService.sameCateOtherStores(storeVo);
+		List<StoreVo> otherStores;
+		GPSVo gpsVo = (GPSVo)session.getAttribute("curr_location");
+		
+		if(gpsVo == null) {
+			return otherStores = null;
+		}
+		
+		otherStores = storeService.sameCateOtherStores(storeVo, gpsVo);
 		
 		return otherStores;
 	}

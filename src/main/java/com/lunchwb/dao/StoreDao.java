@@ -31,8 +31,8 @@ public class StoreDao {
 	
 	
 	/* 같은 카테 다른 가게(3곳) */
-	public List<StoreVo> sameCateOtherStores(StoreVo storeVo){
-		List<StoreVo> otherStores = sqlSession.selectList("store.sameCateOtherStores", storeVo);
+	public List<StoreVo> sameCateOtherStores(Map<String, Object> map){
+		List<StoreVo> otherStores = sqlSession.selectList("store.sameCateOtherStores", map);
 		return otherStores;
 	}
 	

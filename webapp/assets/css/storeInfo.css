@@ -42,13 +42,8 @@
 #modal-store .store-info .store-info-right .modalStoreStar{
   font-size: 10px;
 }
-/* 
-#modal-store #store-about {
-  height: 280px;	
-}
 
- */
- #modal-store #store-about .store-imgs .img-area {
+#modal-store #store-about .store-imgs .img-area {
   margin-top: 0px;
   padding-right: 16px;
   text-align: center;

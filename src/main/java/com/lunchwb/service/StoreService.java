@@ -126,8 +126,13 @@ public class StoreService {
 	
 	
 	/* 같은 카테 다른 가게 */
-	public List<StoreVo> sameCateOtherStores(StoreVo storeVo) {
-		List<StoreVo> otherStores = storeDao.sameCateOtherStores(storeVo);
+	public List<StoreVo> sameCateOtherStores(StoreVo storeVo, GPSVo gpsVo) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("storeVo", storeVo);
+		map.put("gpsVo", gpsVo);
+		
+		List<StoreVo> otherStores = storeDao.sameCateOtherStores(map);
+		
 		return otherStores;
 	}
 	
