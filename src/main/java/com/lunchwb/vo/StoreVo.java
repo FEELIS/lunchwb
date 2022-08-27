@@ -40,6 +40,9 @@ public class StoreVo {
 	///////////// visited table //////////////////
 	private int visitCnt;
 	
+	///////////// group ///////////////////////
+	private int groupNo;
+	
 	////////////// 투표 ///////////////////////
 	private int votes;
 	private boolean vote1st;
@@ -51,11 +54,13 @@ public class StoreVo {
 		
 	}
 
-	
+
 	public StoreVo(int storeNo, int menu2ndCateNo, String storeName, double storeX, double storeY,
 			String storeRoadAddress, String storeOldAddress, String storeOpeningHours, String storeBreaktime,
 			List<String> openingHours, List<String> breaktime, String menu2ndCateName, float ratingNaver,
-			float ratingKakao, int distance, int score, boolean stored, float ratingBujang, int visitCnt) {
+			float ratingKakao, int distance, int score, boolean stored, float ratingBujang, int visitCnt, int groupNo,
+			int votes, boolean vote1st) {
+		super();
 		this.storeNo = storeNo;
 		this.menu2ndCateNo = menu2ndCateNo;
 		this.storeName = storeName;
@@ -75,7 +80,11 @@ public class StoreVo {
 		this.stored = stored;
 		this.ratingBujang = ratingBujang;
 		this.visitCnt = visitCnt;
+		this.groupNo = groupNo;
+		this.votes = votes;
+		this.vote1st = vote1st;
 	}
+
 
 
 	////////////// getter setter ////////////////////////////////////////////////////////////////////////
@@ -290,16 +299,30 @@ public class StoreVo {
 	}
 	
 	
-	///// toString //////////////////////////////////////////////////////////////
+	public int getGroupNo() {
+		return groupNo;
+	}
+	
+	
+	public void setGroupNo(int groupNo) {
+		this.groupNo = groupNo;
+	}
 
+
+	
+	///// toString //////////////////////////////////////////////////////////////
 	@Override
 	public String toString() {
 		return "StoreVo [storeNo=" + storeNo + ", menu2ndCateNo=" + menu2ndCateNo + ", storeName=" + storeName
 				+ ", storeX=" + storeX + ", storeY=" + storeY + ", storeRoadAddress=" + storeRoadAddress
-				+ ", storeOldAddress=" + storeOldAddress + ", storeOpeningHours=" + storeOpeningHours + ", storeBreaktime=" + storeBreaktime
-				+ ", menu2ndCateName=" + menu2ndCateName + ", ratingNaver=" + ratingNaver + ", ratingKakao=" + ratingKakao
-				+ ", distance=" + distance + ", score=" + score + ", stored=" + stored + ", ratingBujang="
-				+ ratingBujang + ", visitCnt=" + visitCnt + ", votes=" + votes +  "]";
+				+ ", storeOldAddress=" + storeOldAddress + ", storeOpeningHours=" + storeOpeningHours
+				+ ", storeBreaktime=" + storeBreaktime + ", openingHours=" + openingHours + ", breaktime=" + breaktime
+				+ ", menu2ndCateName=" + menu2ndCateName + ", ratingNaver=" + ratingNaver + ", ratingKakao="
+				+ ratingKakao + ", distance=" + distance + ", score=" + score + ", stored=" + stored + ", ratingBujang="
+				+ ratingBujang + ", visitCnt=" + visitCnt + ", groupNo=" + groupNo + ", votes=" + votes + ", vote1st="
+				+ vote1st + "]";
 	}
+
+	
 	
 }

@@ -123,4 +123,13 @@ public class StoreService {
 		
 		return result;
 	}
+	
+	
+	/* 같은 카테 다른 가게 */
+	public List<StoreVo> sameCateOtherStores(StoreVo storeVo) {
+		List<StoreVo> otherStores = storeDao.sameCateOtherStores(storeVo);
+		return otherStores;
+	}
+	
+	
 }

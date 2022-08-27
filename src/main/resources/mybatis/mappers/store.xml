@@ -175,7 +175,7 @@
 	
 	
 	<!-- 같은 카테고리 다른 가게 -->
-	<select id="sameCateOtherStores" parameterType="Map" resultType="StoreVo">
+	<select id="sameCateOtherStores" parameterType="StoreVo" resultMap="StoreVo">
 		<![CDATA[
 			SELECT  store_no
 					, store_name

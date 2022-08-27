@@ -1,5 +1,6 @@
 package com.lunchwb.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -27,6 +28,14 @@ public class StoreDao {
 		int distance = sqlSession.selectOne("store.storeDistance", map);
 		return distance;
 	}
+	
+	
+	/* 같은 카테 다른 가게(3곳) */
+	public List<StoreVo> sameCateOtherStores(StoreVo storeVo){
+		List<StoreVo> otherStores = sqlSession.selectList("store.sameCateOtherStores", storeVo);
+		return otherStores;
+	}
+	
 	
 	/* 가게 정보 따로 불러오기 */
 	public StoreVo selectOneStore(Map<String, Object> map) {

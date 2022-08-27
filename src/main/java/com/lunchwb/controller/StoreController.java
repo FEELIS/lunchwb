@@ -1,5 +1,6 @@
 package com.lunchwb.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.lunchwb.service.StoreService;
 import com.lunchwb.vo.GPSVo;
 import com.lunchwb.vo.ReportVo;
+import com.lunchwb.vo.StoreVo;
 import com.lunchwb.vo.UserVo;
 
 @Controller
@@ -34,7 +36,7 @@ public class StoreController {
 	
 	/* 모달 - 가게 정보 받기 */
 	@ResponseBody
-	@PostMapping("store/info")
+	@PostMapping("/store/info")
 	public Map<String, Object> storeInfo(@RequestBody int storeNo, HttpSession session) {
 		logger.info("storeInfo...storeNo={}", storeNo);
 		
@@ -47,7 +49,7 @@ public class StoreController {
 	
 	/* 가게와 나의 거리 */
 	@ResponseBody
-	@PostMapping("store/distance")
+	@PostMapping("/store/distance")
 	public int storeDistance(@RequestBody int storeNo, HttpSession session) {
 		logger.info("storeDistance...storeNo={}", storeNo);
 		
@@ -68,9 +70,9 @@ public class StoreController {
 	
 	/* 리뷰 신고 */
 	@ResponseBody
-	@PostMapping("store/review/report")
+	@PostMapping("/store/review/report")
 	public String reviewReport(@RequestBody ReportVo reportVo, HttpSession session) {
-		logger.info("storeDistance...reportVo={}", reportVo);
+		logger.info("reviewReport...reportVo={}", reportVo);
 		
 		String result = "not login";
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
@@ -80,6 +82,18 @@ public class StoreController {
 		}
 		
 		return result;
+	}
+	
+	
+	/* 같은 카테 다른 가게(3곳) */
+	@ResponseBody
+	@PostMapping("/store/sameCate")
+	public List<StoreVo> sameCateOtherStores(@RequestBody StoreVo storeVo){
+		logger.info("sameCateOtherStores...storeVo={}", storeVo);
+		
+		List<StoreVo> otherStores = storeService.sameCateOtherStores(storeVo);
+		
+		return otherStores;
 	}
 
 }
