@@ -36,15 +36,15 @@ public class RandomController {
 		return "main/random/randomRouletteTest";
 	}
 	
-	@GetMapping(value = {"/", "/{randomNo}"})
+	@RequestMapping(value = {"", "/{randomNo}"})
 	public String randomMain(Model model,
-							@PathVariable(required = false) Integer randomeNo) {
+							@PathVariable(required = false, name = "randomNo") Integer randomNo) {
 		logger.info("/randomMain");
 		
-		if(randomeNo == null) {
+		if(randomNo == null) {
 			return "main/random/randomMain";
 		}else {
-			return "redirect:/lunchwb/random/" + randomeNo;
+			return "redirect:/random/" + randomNo;
 		}
 		
 	}

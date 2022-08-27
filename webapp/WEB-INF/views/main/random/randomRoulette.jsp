@@ -166,38 +166,30 @@
     // Click handler for spin button.
     // -------------------------------------------------------
     function startSpin()
-    {	
-        // Ensure that spinning can't be clicked again while already running.
+    {
         if (wheelSpinning == false) {
-            // Based on the power level selected adjust the number of spins for the wheel, the more times is has
-            // to rotate with the duration of the animation the quicker the wheel spins.
-            //theWheel.animation.spins = 8;
-
+        	 // This formula always makes the wheel stop somewhere inside prize 3 at least
+            // 1 degree away from the start and end edges of the segment.
+            let stopAt = (91 + Math.floor((Math.random() * 43)))
+     
+            // Important thing is to set the stopAngle of the animation before stating the spin.
+            theWheel.animation.stopAngle = stopAt;
+			
+        	console.log("stopAt = " + stopAt);
+        	console.log("basket = " + "${basket}");
             // Disable the spin button so can't click again while wheel is spinning.
             document.getElementById('spin_button').src       = "${pageContext.request.contextPath}/assets/img/rouletteOff.png";
             document.getElementById('spin_button').className = "";
 
             // Begin the spin animation by calling startAnimation on the wheel object.
             theWheel.startAnimation();
+
             // Set to true so that power can't be changed and spin button re-enabled during
             // the current animation. The user will have to reset before spinning again.
             wheelSpinning = true;
-            console.log("끝나는각도 = " + theWheel.animation.stopAngle)
         }
-    }
-
-    function calculatePrize()
-    {
-        // This formula always makes the wheel stop somewhere inside prize 3 at least
-        // 1 degree away from the start and end edges of the segment.
-        let stopAt = (91 + Math.floor((Math.random() * 43)))
- 
-        // Important thing is to set the stopAngle of the animation before stating the spin.
-        theWheel.animation.stopAngle = stopAt;
-        console.log("끝나는각도ㅇ = " + stopAt)
-        // May as well start the spin from here.
-        theWheel.startAnimation();
         
+        // May as well start the spin from here.
     }
     
     // -------------------------------------------------------
