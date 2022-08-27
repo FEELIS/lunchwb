@@ -72,6 +72,9 @@
     <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
 
+
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
 <script type="text/javascript">
 
 //복사 클릭 시 클립보드에 url 복사
@@ -86,6 +89,53 @@ $("#vote-url-copy-btn").on("click", function(){
         console.log("클립보드 복사 실패");
     })
 })
+
+
+/////////////// 카카오 공유하기 api ////////////////////////////////////////////////////
+
+var voteURL = ${voteInfo.voteNo};
+var basketItem = ["${voteBasket[0].storeName}", "${voteBasket[1].storeName}", "${voteBasket[2].storeName}"] ;
+// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+Kakao.init('f78c3d22061aa91b824c89a07b348da9');
+
+// SDK 초기화 여부를 판단합니다.
+console.log(Kakao.isInitialized());
+
+function kakaoShare() {
+	console.log(basketItem);
+	console.log(basketItem.length);
+	
+	var descr;
+	if(basketItem[2] == '' || basketItem[2] == null){
+		descr = basketItem[0] + ", " + basketItem[1];
+	}else{
+		descr = basketItem[0] + ", " + basketItem[1] + ", " + basketItem[2];
+	}
+	Kakao.Link.sendDefault({
+		objectType: 'feed',
+		content: {
+			title: '부장님 투표해주세요',
+			//title: '부장님 여기어때?',
+			imageUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+			description: descr,
+			link: {
+			  mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+			  webUrl: 'http://localhost:8088/lunchwb/' + voteURL
+			}
+		},
+		buttons: [
+			{
+				title: '웹으로 보기',
+				link: {
+					mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
+					webUrl: 'http://localhost:8088/lunchwb/' + voteURL
+				}
+			}
+		],
+	    // 카카오톡 미설치 시 카카오톡 설치 경로이동
+	    installTalk: true
+	})
+}
 
 
 </script>

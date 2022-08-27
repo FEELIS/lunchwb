@@ -28,7 +28,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
 </head>
 
@@ -63,6 +62,8 @@
         
 </div>
 
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
 <script type="text/javascript">
 
 
@@ -79,7 +80,8 @@ $("#vote-url-copy-btn").on("click", function(){
     })
 })
 
-/* 카카오 공유하기 api */
+
+/////////////// 카카오 공유하기 api ////////////////////////////////////////////////////
 
 var voteURL = ${voteInfo.voteNo};
 var basketItem = ["${voteBasket[0].storeName}", "${voteBasket[1].storeName}", "${voteBasket[2].storeName}"] ;
@@ -108,22 +110,23 @@ function kakaoShare() {
 			description: descr,
 			link: {
 			  mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-			  webUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-			},
+			  webUrl: 'http://localhost:8088/lunchwb/' + voteURL
+			}
 		},
 		buttons: [
 			{
 				title: '웹으로 보기',
 				link: {
 					mobileWebUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-					webUrl: 'http://localhost:8088/lunchwb/' + voteURL,
-				},
-			},
+					webUrl: 'http://localhost:8088/lunchwb/' + voteURL
+				}
+			}
 		],
 	    // 카카오톡 미설치 시 카카오톡 설치 경로이동
-	    installTalk: true,
+	    installTalk: true
 	})
 }
+
 </script>
 
 </body>
