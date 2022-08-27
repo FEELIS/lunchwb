@@ -931,11 +931,22 @@ function basketNoItem() {
 }
 	
 
-// 점심후보에 항목 추가하기 ********************************************* 모달 같은데서 사용하세요
+/// 점심후보에 항목 추가하기 ********************************************* 모달 같은데서 사용하세요
 function addItemToBasket(storeNo) {
 	if (countBasketItems(curr_basket_group) >= 3) { // 이미 점심 후보 3개 이상이면
 		alert("점심 후보는 최대 3개까지 추가 가능합니다.")
 		return false
+	}
+	
+	var idx = basket[curr_basket_group].length
+	
+	for (var i = 0; i < basket[curr_basket_group].length; i++) {
+		var curr = basket[curr_basket_group][i]
+		
+		if (curr.storeNo == storeNo) {
+			idx = i
+			break
+		}
 	}
 	
 	var temp = basket[curr_basket_group].length
@@ -952,10 +963,8 @@ function addItemToBasket(storeNo) {
 			basket = result // 장바구니 업데이트
 			$("#no-basket-items").remove()
 			
-			if (temp < basket[curr_basket_group].length) {
-				addToBasket(basket[curr_basket_group][basket[curr_basket_group].length-1])	
-			}
-			
+			addToBasket(basket[curr_basket_group][i])	
+						
 			console.log("장바구니에 항목이 추가되었습니다")
 			console.log(basket[curr_basket_group])
 		},

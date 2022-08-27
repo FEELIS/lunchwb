@@ -289,7 +289,12 @@ async function callMap() {
 		newMarker.setMap(map)
 		
 		kakao.maps.event.addListener(newMarker, 'click', function() {
-		      // 모달 연결
+			// 모달 연결
+		    var storeNo = $(this).attr("data-storeNo")
+			var groupNo = curr_basket_group
+			console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+		
+			storeInfoOpen(storeNo, groupNo, 1)
 		});
 		
 		
@@ -300,12 +305,12 @@ async function callMap() {
 		
 		if (curr_store.stored) {
 			content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
-            + 	'<span class="store_name">' + storeName + '&nbsp;&nbsp;<i class="far fa-minus-square"></i></span>'
-            + '</div>'
+            		  + 	'<span class="store_name">' + storeName + '</span>'
+            		  + '</div>'
             
 		} else {
 			content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
-	                  + 	'<span class="store_name">' + storeName + '&nbsp;&nbsp;<i class="far fa-plus-square"></i></span>'
+	                  + 	'<span class="store_name">' + storeName + '<i class="far fa-plus-square"></i></span>'
 	                  + '</div>'
 		}
 		
@@ -319,13 +324,24 @@ async function callMap() {
 	}
 }
 
+
+// customoverlay 클릭 시 - 모달 연결
 $("#kakaoMap").on("click", ".customoverlay", function(){
-	alert("클릭: " + $(this).attr("data-storeNo"))
+	var storeNo = parseInt($(this).attr("data-storeNo"))
+	var groupNo = curr_basket_group
+	console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+
+	storeInfoOpen(storeNo, groupNo, 1)
 })
 
-$("#kakaoMap").on("click", "i", function(){
 
-	alert("나야")
+// 가게 제거 버튼 클릭 시 > 장바구니에 항목 추가
+$("#kakaoMap").on("click", ".fa-plus-square", function(e){
+	var storeNo = parseInt($(this).closest(".customoverlay").attr("data-storeNo"))
+	addItemToBasket(storeNo)
+
+	// 부모 태그 function 작동 방지
+	e.stopPropagation()
 })
 
 	

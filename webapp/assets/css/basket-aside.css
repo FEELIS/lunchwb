@@ -457,7 +457,7 @@
 }
 
 .customoverlay {
-  font-size: 16px;
+  font-size: 13px;
   color: rgb(255,255,255);
   background: rgba(120,120,120,0.75);
   padding: 3px 7px 3px 10px;
@@ -467,7 +467,11 @@
   z-index: 100;
 }
 
+.customoverlay:hover {
+  cursor: pointer;
+}
+
 .customoverlay i {
-  margin-left: 5px;
+  margin-left: 10px;
 }
 
