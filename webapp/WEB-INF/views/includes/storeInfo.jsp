@@ -57,7 +57,7 @@
                         <div class="text-primary other-store-state">
                         	<span class="d-inline-block"></span>
                         </div>
-                        <div class="text-start d-lg-flex justify-content-lg-center">
+                        <div class="text-start d-lg-flex justify-content-lg-center other-stores-area">
                         	<span class="d-inline-block">
 		                        <button class="btn other-store-btn other-store-1" type="button" data-no="247" data-sortno="4">
 		                        	명품청기와감자탕
@@ -289,21 +289,27 @@
 $("#basket-table").on("click", ".basket-table-store-name", function(){
 	if (typeof indexJSP) {
         var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
-		console.log(storeNo+"번 가게 정보 보기")
-		storeInfoOpen(storeNo, 1)
+		var groupNo = curr_basket_group
+		console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+		
+		storeInfoOpen(storeNo, groupNo, 1)
 	
 	}else if(typeof indexJSP === 'undefined'){
         var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
-		console.log(storeNo+"번 가게 정보 보기")
-		storeInfoOpen(storeNo, 2)
+		var groupNo = curr_basket_group
+		console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+		
+		storeInfoOpen(storeNo, groupNo, 2)
 	}
 })
 
 /* 실험용 */
 $("#test-storeInfo").on("click", function(){
 	var storeNo = $(this).data("storeno")
-	console.log(storeNo+"번 가게 정보 보기")
-	storeInfoOpen(storeNo, 1)
+	var groupNo = curr_basket_group
+	console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+	
+	storeInfoOpen(storeNo, groupNo, 1)
 })
 
 
@@ -311,24 +317,30 @@ $("#test-storeInfo").on("click", function(){
 /* 리뷰 메인 가게정보에서 조회할 때 */
 $("#visited-store-name").on("click", function(){
 	var storeNo = $(this).data("storeno")
-	console.log(storeNo+"번 가게 정보 보기")
-	storeInfoOpen(storeNo, 0)
+	var groupNo = "${visitedMap.visitedVo.groupNo}"
+	console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+	
+	storeInfoOpen(storeNo, groupNo, 0)
 })
 
 
 /* 블랙리스트(alrady)가게 조회 */
 $("#black-body").on("click", ".black-store-name", function(){
 	var storeNo = $(this).attr("data-storeno")
-	console.log(storeNo+"번 가게 정보 보기")
-	storeInfoOpen(storeNo, 3)
+	var groupNo = "${map.groupNo}"
+	console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+	
+	storeInfoOpen(storeNo, groupNo, 3)
 })
 
 
 /* 블랙리스트에서 가게 조회(블랙에 없는 add할) */
 $("#black-add-body").on("click", ".store-search-name", function(){
 	var storeNo = $(this).attr("data-storeno")
-	console.log(storeNo+"번 가게 정보 보기")
-	storeInfoOpen(storeNo, 4)
+	var groupNo = "${map.groupNo}"
+	console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+	
+	storeInfoOpen(storeNo, groupNo, 4)
 })
 
 
@@ -336,7 +348,39 @@ $("#black-add-body").on("click", ".store-search-name", function(){
 $("#calendar-area").on("click", ".show-menu", function(){
 	var storeNo = $(this).attr("data-storeno")
 	console.log(storeNo+"번 가게 정보 보기")
-	storeInfoOpen(storeNo, 5)
+	
+	//임시 : 그룹 순서로 그룹 번호 알아오기 > 탈퇴그룹 불가라서 당시 방문일로 가져오기로함
+	//그룹 넘버를 data로 저장 > 그 번호 가져오고
+	var userNo = "${authUser.userNo}"
+	var visitedDate = $(this).attr("data-visit")
+	
+	var visitedVo = {
+		userNo: userNo,
+		visitedDate: visitedDate
+	}
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/visited/group/byDate",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(visitedVo),
+		dataType : "json",
+		
+		success : function(groupNo){
+			
+			if(groupNo != 0 && groupNo != ""){
+				
+				storeInfoOpen(storeNo, groupNo, 5)
+				
+			}else{
+				console.log("그룹을 찾을 수 없음")
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	})
+	
 })
 
 
@@ -345,18 +389,17 @@ $("#calendar-area").on("click", ".show-menu", function(){
 $("#modal-store .other-store-btn").on("click", function(){
 	//모달에서 다른 모달로 넘어가기 : 페이지 상관없이 불러올 변수는 동일
 	var storeNo = $(this).attr("data-no")
-	console.log(storeNo+"번 가게 정보 보기")
-	
+	var groupNo = $(this).attr("data-groupno")
 	var sortNo = $(this).attr("data-sortno")
-	console.log("종류:" + sortNo)
-	storeInfoOpen(storeNo, Number(sortNo))
+	console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
+	
+	
+	storeInfoOpen(storeNo, groupNo, Number(sortNo))
 })
-
- 
  
  
 /* 가게정보 모달 오픈 */
-function storeInfoOpen(storeNo, k){
+function storeInfoOpen(storeNo, groupNo, k){
 	console.log("가게: "+storeNo)
 	
 	storeBasicInfo(storeNo)
@@ -365,6 +408,8 @@ function storeInfoOpen(storeNo, k){
 	if(k==1){
 		modalStoreDistance(storeNo)
 	}
+	
+	drawOtherStores(storeNo, groupNo, k)
 	
 	//k:footer 버튼 용
 	//k=2 > 버튼 없음
@@ -399,8 +444,6 @@ function storeBasicInfo(storeNo){
 			
 			modalStoreStar(storeMap.storeVo.ratingBujang, 0)
 			
-			//$(".modalStoreOpening").text("")
-			//$(".modalStoreBreak").text("")
 			$(".modalStoreOpening").html('<a class="dropdown-item disabled link-secondary bg-warning">영업시간 :</a>')
 			$(".modalStoreBreak").html('<a class="dropdown-item disabled link-secondary bg-warning">브레이크타임 :</a>')
 			modalStoreTime(storeMap.storeVo.openingHours, 1)
@@ -425,6 +468,7 @@ function storeBasicInfo(storeNo){
 			$("#all-menu-sentence").html("#" + storeMap.storeVo.storeName + "에서 최근 한달 선택된 메뉴 &gt;&gt;")
 			
 			$(".other-store-state span").text(storeMap.storeVo.menu2ndCateName + " 카테고리 다른 가게")
+			$(".other-stores-area").html("")
 			
 			if(storeMap.visitedVo == null){
 				$(".modalStoreWithMe").text("방문기록이 없어요")
@@ -485,7 +529,7 @@ function modalStoreDistance(storeNo) {
 /* 별 그리기 */
 /* k:별그릴위치 종류 0:이 가게, 1 2 3: 다른가게 */
 function modalStoreStar(starScore, k){
-	console.log("AvgScore: " + starScore)
+	console.log("AvgScore: " + starScore + ", k:"+k)
 	
 	var str = ''
 	for(var i=0; i<5; i++){
@@ -500,10 +544,23 @@ function modalStoreStar(starScore, k){
 	
 	switch(k){
 		case 0: 
-			//console.log("k:" + k)
 			$(".modalStoreStar").html(str)
 			break
+		
+		case 1:
+			$(".other-store-"+1).html(str)
+			break
+		
+		case 2:
+			$(".other-store-"+2).html(str)
+			break
+		
+		case 3:
+			$(".other-store-"+3).html(str)
+			break
+			
 		default:
+			console.log("별점 그리기 번호 종류 오류")
 			break
 	}
 	
@@ -671,6 +728,46 @@ function modalStoreAllMenu(menuVo){
 	var str = '<span class="latest-menu">' + menuVo.menuName + '(<span>' + menuVo.menuCount + '</span>회)</span>'
 	$("#modal-all-menu #store-latest-menu").append(str)
 }
+
+
+/* 같은 카테 다른 가게 버튼 그리기 */
+function drawOtherStores(storeNo, groupNo, sortNo){
+	var storeVo = {
+		storeNo : storeNo,
+		groupNo : groupNo
+	}
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/store/sameCate",
+		type : "post",
+		contentType : "application/json",
+		data : JSON.stringify(storeVo),
+		dataType : "json",
+		
+		success : function(otherStores){
+			for(var i=1; i<=otherStores.length; i++){
+				var str = ''
+				str += '<span class="d-inline-block">'
+				str += '	<button class="btn other-store-btn other-store-'+i+'" type="button" data-no="'+otherStores[i].storeNo+'247" data-groupno="'+groupNo+'" data-sortno="'+sortNo+'">'
+				str += '		'+otherStores[i].storeName+''
+				str += '		<span class="fw-bold text-warning d-block">'
+				str += '		</span>'
+				str += '	</button>'
+				str += '</span>'
+				
+				$(".other-stores-area").append(str)
+				
+				modalStoreStar(otherStores[i].ratingBujang, [i])
+			}
+		},
+		error : function(XHR, status, error) {
+			console.error(status + " : " + error);
+		}
+	})
+	
+}
+
+
 
 
 //k=0 > 리뷰메인 : 내가 다녀온 장소 방문취소 (다녀온 곳 아니면 버튼 x) / 블랙리스트 추가(이미 블랙 > 블랙리스트 제외)   
