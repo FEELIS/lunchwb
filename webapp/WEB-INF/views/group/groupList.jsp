@@ -471,10 +471,10 @@ $("#groupmem-add button").on("click", function(){
 		return false
 	}
 	
-	if(userName.length < 2){
-		alert("이름을 두 글자 이상 입력해주세요")
+	if(userName.length < 2 || userName.length > 5){
+		alert("이름을 두 자리 이상 5자리 이하로 입력해주세요")
 	}
-
+	
 	var userBirthYear = $("#groupmem-add [name ='userBirthYear']").val()
 	if(userBirthYear == null || userBirthYear == ""){
 		alert("출생연도를 입력해주세요")
