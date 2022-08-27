@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lunchwb.service.RandomService;
 import com.lunchwb.service.TestService;
 import com.lunchwb.vo.GroupVo;
-import com.lunchwb.vo.RandomVo;
 import com.lunchwb.vo.UserVo;
 
 @RequestMapping("/random")
@@ -26,6 +26,9 @@ public class RandomController {
 	
 	@Autowired
 	TestService testService;
+	@Autowired
+	RandomService randomService;
+	
 	
 	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
 	
@@ -83,13 +86,26 @@ public class RandomController {
 	
 	@ResponseBody
 	@RequestMapping("/makeRandomResult")
-	public RandomVo randomResult(@RequestBody Map<String, String> randomData) {
+	public int randomResult(@RequestBody Map<String, String> randomData, HttpSession session) {
+		System.out.println("랜덤 정보 = " + randomData);
 		
-		String storeInfo = randomData.get("storeInfo");
-		String stopAtValue = randomData.get("stopAtValue");
+		String countbas = randomData.get("countbas");
+		String basket = randomData.get("basket");
+		String stopAtValue = randomData.get("stopAt");
 		
-		RandomVo result = new RandomVo();
-		return result;
+		System.out.println("장바구시 가게 숫자 = " + countbas);
+		System.out.println("가게정보 = " + basket);
+		System.out.println("룰렛 각도 = " + stopAtValue);
+		
+		UserVo loginUser = (UserVo)session.getAttribute("authUser");
+		
+		int randomNo = 0;
+		if (loginUser != null) {
+			randomNo = randomService.makeResult(countbas, basket, stopAtValue);
+		}
+		
+		
+		return randomNo;
 	}
 	
 }

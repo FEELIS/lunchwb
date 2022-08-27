@@ -167,13 +167,14 @@
         if (wheelSpinning == false) {
         	 // This formula always makes the wheel stop somewhere inside prize 3 at least
             // 1 degree away from the start and end edges of the segment.
-            stopAt = (91 + Math.floor((Math.random() * 43)))
+            stopAt = (1 + Math.floor((Math.random() * 120)))
      
             // Important thing is to set the stopAngle of the animation before stating the spin.
             theWheel.animation.stopAngle = stopAt;
 			
         	console.log("stopAt = " + stopAt);
         	console.log("basket = " + "${basket}");
+        	
             // Disable the spin button so can't click again while wheel is spinning.
             document.getElementById('spin_button').src       = "${pageContext.request.contextPath}/assets/img/rouletteOff.png";
             document.getElementById('spin_button').className = "";
@@ -209,6 +210,40 @@
         	return false
         }
         
+        
+        basket = JSON.stringify(basket)
+        
+        let randomData = {
+        		countbas : countbas,
+        		stopAt : stopAt,
+        		basket : basket,
+        	}
+        
+        
+        console.log("randomData = " + randomData);
+        
+        $.ajax({
+    		type : "POST",
+    		url : "${pageContext.request.contextPath}/random/makeRandomResult",
+    		contentType : "application/json",
+    		async : false,
+    		data : JSON.stringify(randomData),
+    		dataType : 'json',
+    		
+    		success : function(randomNo) {
+    			if (randomNo == 0) {
+    				alert("랜덤 결과 생성 실패")
+    				
+    			} else {
+    				$("#vote-url-input").val("http://localhost:8088/lunchwb/" + randomNo)
+    				$("#vote-link-modal").modal("show")
+    			}
+    		},
+    		error: function(xhr, status, error){
+    			console.log("오류 발생" + error)
+    		}
+    	})
+    	
         if(modalSelectMembers(indicatedSegment.storeNo, curr_basket_group) == false){
 			return false
 		}
