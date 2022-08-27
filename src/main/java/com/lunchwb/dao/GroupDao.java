@@ -124,4 +124,6 @@ public class GroupDao {
 		List<GroupVo> memberList = sqlSession.selectList("group.membersGoWith", groupVo);
 		return memberList;
 	}
+	
+	
 }

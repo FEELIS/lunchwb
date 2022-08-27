@@ -286,7 +286,7 @@ public class GroupController {
 	}
 	
 	
-	/******************** 그룹 블랙리스트 추가(블랙페이지 리스트) ********************************/
+	/******************** 그룹 블랙리스트 목록 추가(블랙페이지 리스트) ********************************/
 	@ResponseBody
 	@PostMapping("/blacklist/add")
 	public BlacklistVo addBlacklist(@RequestBody BlacklistVo blackVo) {
@@ -322,6 +322,5 @@ public class GroupController {
 		return groupService.blackStoreSearch(blackVo);
 	}
 	
-		
-
+	
 }

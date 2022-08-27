@@ -467,4 +467,6 @@ public class GroupService {
 	public List<BlacklistVo> blackStoreSearch(BlacklistVo blackVo){
 		return blackDao.blackStoreSearch(blackVo);
 	}
+	
+	
 }
