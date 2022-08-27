@@ -10,7 +10,7 @@
 		
 		<![CDATA[
 			insert into random
-			values (#{randomNo}, #{storeInfo}, #{stopAtValue}, sysdate)
+			values (#{randomNo}, #{storeInfo}, #{stopAtValue}, #{groupName}, sysdate)
 		]]>
 	</insert>
 </mapper>

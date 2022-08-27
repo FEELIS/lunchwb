@@ -108,14 +108,14 @@
 	              'textFontSize' : 18,    // Set font size as desired.
 	              'segments'     :        // Define segments including colour and text.
 	              [ 
-	                    {'fillStyle' : '#36b9cc', 'text' : basket[curr_basket_group][0].storeName, 'storeNo' : basket[curr_basket_group][0].storeNo},
-	                    {'fillStyle' : '#f6c23e', 'text' : basket[curr_basket_group][1].storeName, 'storeNo' : basket[curr_basket_group][1].storeNo},
-	                    {'fillStyle' : '#1cc88a', 'text' : basket[curr_basket_group][2].storeName, 'storeNo' : basket[curr_basket_group][2].storeNo}
+	                    {'fillStyle' : '#36b9cc', 'text' : basket[curr_basket_group][0].storeName},
+	                    {'fillStyle' : '#f6c23e', 'text' : basket[curr_basket_group][1].storeName},
+	                    {'fillStyle' : '#1cc88a', 'text' : basket[curr_basket_group][2].storeName}
 	              ],
 	              'animation' :           // Specify the animation to use.
 	              {
 	                  'type'     : 'spinToStop',
-	                  'duration' : 5,     // Duration in seconds.
+	                  'duration' : 1,     // Duration in seconds.
 	                  'spins'    : 10,     // Number of complete spins.
 	                  'callbackFinished' : alertPrize
 	              },
@@ -142,7 +142,7 @@
 	              'animation' :           // Specify the animation to use.
 	              {
 	                  'type'     : 'spinToStop',
-	                  'duration' : 5,     // Duration in seconds.
+	                  'duration' : 1,     // Duration in seconds.
 	                  'spins'    : 10,     // Number of complete spins.
 	                  'callbackFinished' : alertPrize
 	              },
@@ -210,13 +210,20 @@
         	return false
         }
         
-        
-        basket = JSON.stringify(basket)
-        
+     // 장바구니 데이터 정리
+    	var curr_basket = []
+    	for (var i = 0; i < basket[curr_basket_group].length; i++) {
+    		if (basket[curr_basket_group][i].stored) {
+    			curr_basket.push(basket[curr_basket_group][i])
+    		}
+    	}
+    	console.log(curr_basket)
+    	currBasket = JSON.stringify(curr_basket)
+    	
         let randomData = {
         		countbas : countbas,
         		stopAt : stopAt,
-        		basket : basket,
+        		currBasket : currBasket,
         	}
         
         
