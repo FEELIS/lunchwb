@@ -60,6 +60,10 @@ public class VisitedDao {
 		sqlSession.update("visited.todayMenu", visitedVo);
 	}
 	
+	public int groupByDate(VisitedVo visitedVo) {
+		return sqlSession.selectOne("visited.groupByDate", visitedVo);
+	}
+	
 	public void insertVoteVisit(Map<String, Object> map) {
 		sqlSession.insert("visited.insertVoteVisit", map);
 	}

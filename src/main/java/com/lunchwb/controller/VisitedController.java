@@ -22,6 +22,7 @@ import com.lunchwb.service.VisitedService;
 import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.ReviewVo;
 import com.lunchwb.vo.UserVo;
+import com.lunchwb.vo.VisitedVo;
 
 @RequestMapping("/visited")
 @Controller
@@ -100,6 +101,16 @@ public class VisitedController {
 		
 		return "redirect:/";
 	}
+	
+	
+	/* 같은 카테 다른 가게를 조회할 "그룹 번호"(for 캘린더 - by 방문일자) */
+	@ResponseBody
+	@PostMapping("/group/byOrder")
+	public int groupByOrder(@RequestBody VisitedVo visitedVo) {
+		logger.info("VisitedController > groupByDate()");
+		return visitedService.groupByDate(visitedVo);
+	}
+
 	
 
 }

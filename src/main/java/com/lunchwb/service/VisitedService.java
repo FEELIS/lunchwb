@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,8 +38,6 @@ public class VisitedService {
 	@Autowired
 	private UserDao userDao;
 	
-	
-	private static final Logger logger = LoggerFactory.getLogger(VisitedService.class);
 	
 	// ================== 달력에 가게라벨 띄우기 ==================
 	public List<VisitedVo> showCalendar(VisitedVo vstVo){
@@ -208,6 +204,12 @@ public class VisitedService {
 		}
 		//리뷰 작성
 		reviewDao.addReview(reviewVo);
+	}
+	
+	
+	/*************** 같은 카테 다른 가게를 조회할 "그룹 번호" (for 캘린더 - by 그룹순서) *****************/
+	public int groupByDate(VisitedVo visitedVo) {
+		return vstDao.groupByDate(visitedVo);
 	}
 	
 

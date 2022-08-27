@@ -181,6 +181,13 @@
 		WHERE visited_no = #{visitedNo}
 	</select>
 	
+	<select id="groupByDate" parameterType="VisitedVo" resultType="int">
+		SELECT group_no
+		FROM visited
+		WHERE user_no = #{userNo}
+		AND visited_date = #{visitedDate}
+	</select>
+	
 	
 	<!--  투표 후 여기갈래요  -->
 	<insert id="insertVoteVisit" parameterType="Map">
