@@ -259,8 +259,13 @@
   border-bottom-color: rgb(255,255,255);
 }
 
-#curr-location {
+#map-util {
   position: absolute;
+  display: inline-flex;
+  z-index:100;
+}
+
+#curr-location {
   margin-left: 39px;
   padding: 5px 15px;
   background: #ffffff;
@@ -270,7 +275,6 @@
   max-height: 41px;
   flex-shrink: 0;
   margin-top: 31px;
-  z-index: 100;
   white-space: nowrap;
 }
 
@@ -291,6 +295,29 @@
   font-size: 14px;
   padding: 3px 5px;
   white-space: nowrap;
+}
+
+#reset-recommend {
+  min-width:37px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  padding: 17px 10px;
+  height: 29px;
+  margin-top: 32px;
+  margin-left: 15px;
+  box-shadow: 1px 1px 10px 1px rgb(182,184,194);
+  color: #ffffff;
+  background: var(--bs-blue);
+  border-radius: 10px;
+}
+
+#reset-recommend:hover {
+  background-color: #3253b1;
+}
+
+#reset-recommend i {
+  font-size: 15px;
 }
 
 #modal-location-change .modal-header h4 {

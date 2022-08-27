@@ -967,6 +967,7 @@ function addItemToBasket(storeNo) {
 						
 			console.log("장바구니에 항목이 추가되었습니다")
 			console.log(basket[curr_basket_group])
+
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);

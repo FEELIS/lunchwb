@@ -47,10 +47,16 @@
     
     <div class="container" id="container">
                 
-        <div class="flex-nowrap" id="curr-location">
-        	<span style="margin-right: 5px;"><i class="fas fa-crosshairs"></i>&nbsp;현위치:</span>
-        	<span id="curr-location-address">${curr_location.address}</span>
-        	<button class="btn btn-primary" id="location-change-btn" type="button">위치재설정</button>
+        <div class="align-items-center" id="map-util">
+        	<div class="flex-nowrap" id="curr-location">
+	        	<span style="margin-right: 5px;"><i class="fas fa-crosshairs"></i>&nbsp;현위치:</span>
+	        	<span id="curr-location-address">${curr_location.address}</span>
+	        	<button class="btn btn-primary" id="location-change-btn" type="button">위치재설정</button>
+        	</div>
+        	
+        	<button id="reset-recommend" class="btn btn-primary d-inline-flex d-xl-flex align-items-center align-items-xl-center" type="button">
+        		<i class="fas fa-undo"></i>
+        	</button>
         </div>
         
         <div id="kakaoMap" style="width: 100%; height: 900px;"></div>
@@ -286,17 +292,7 @@ async function callMap() {
 		})
 		
 		// 마커 지도에 표시
-		newMarker.setMap(map)
-		
-		kakao.maps.event.addListener(newMarker, 'click', function() {
-			// 모달 연결
-		    var storeNo = $(this).attr("data-storeNo")
-			var groupNo = curr_basket_group
-			console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
-		
-			storeInfoOpen(storeNo, groupNo, 1)
-		});
-		
+		newMarker.setMap(map)	
 		
 		// 마커 태그 생성
 		var content 
@@ -345,6 +341,15 @@ $("#kakaoMap").on("click", ".fa-plus-square", function(e){
 })
 
 	
+// 가게 추천 초기화하기 클릭
+$("#reset-recommend").on("click", function(){
+	if (basket[curr_basket_group].length == 0) {
+		alert("추천된 가게가 적어도 1개 이상 있어야 사용 가능합니다.")
+		return false
+	}
+	alert("임시")
+})
+
 </script>
 
 </body>
