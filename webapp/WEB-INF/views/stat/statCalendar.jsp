@@ -457,7 +457,7 @@
 
                             }
 
-                            str += 'show-menu" data-order="'+vstList[j].groupOrder+'" data-storeno="'+vstList[j].storeNo+'">' + vstList[j].storeName + '</div>';
+                            str += 'show-menu" data-visit="'+vstList[j].visitedDate+'" data-storeno="'+vstList[j].storeNo+'">' + vstList[j].storeName + '</div>';
 
                             $("#vday" + i).after(str);
 
