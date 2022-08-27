@@ -25,6 +25,11 @@ public class ReviewDao {
 		return reviewList;
 	}
 	
+	public List<String> recentImages(int storeNo){
+		List<String> imgList = sqlSession.selectList("review.recentImages", storeNo);
+		return imgList;
+	}
+	
 	public ReviewVo todayReview(int userNo) {
 		ReviewVo reviewVo = sqlSession.selectOne("review.todayReview", userNo);
 		return reviewVo;

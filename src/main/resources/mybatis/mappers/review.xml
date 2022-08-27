@@ -141,6 +141,19 @@
 		]]>
 	</select>
 	
+	<!-- 최근 가게 이미지(3) -->
+	<select id="recentImages" parameterType="int" resultType="String">
+		<![CDATA[
+			SELECT review_file_name
+			FROM review r, visited v
+			WHERE r.visited_no = v.visited_no
+			AND store_no = #{storeNo}
+			AND review_file_name IS NOT NULL
+			AND ROWNUM <= 3
+			ORDER BY review_no DESC
+		]]>		
+	</select>
+	
 	<!-- 오늘 리뷰를 했다면 -->
 	<select id="todayReview" parameterType="int" resultMap = "ReviewVo">
 		SELECT  review_no

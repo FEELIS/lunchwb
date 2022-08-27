@@ -88,6 +88,8 @@ public class StoreService {
 		storeMap.put("reviewList", reviewList);
 		
 		//최근 리뷰 사진(null 가능이라 따로 최근 3개? - 이거는 리뷰 작성부터.............)
+		List<String> imgList = reviewDao.recentImages(storeNo);
+		storeMap.put("imgList", imgList);
 		
 		////////////// 최근 한달 선택된 메뉴 ///////////////////////////
 		List<VisitedVo> menuList = visitedDao.recentMenu(storeNo);

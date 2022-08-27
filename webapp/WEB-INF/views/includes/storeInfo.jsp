@@ -7,7 +7,9 @@
 <div id="modal-store" class="modal visible no-drag modal-stores" role="dialog" tabindex="-1" style="min-width: 800px;">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content" style="width: 798px;">
-            <div class="modal-header"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-header">
+            	<button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
             <div class="modal-body">
                 <div class="fs-4 fw-bold text-dark modal-store-title">
                 	<span class="d-inline-block modalStoreName"></span>
@@ -22,11 +24,20 @@
                 </div>
                 <div class="store-info">
                     <div class="d-inline-block store-info-left">
-                        <div><span class="modalStoreAddress"></span><span class="fw-bold text-primary modalStoreDistance"></span></div>
-                        <div><span class="fw-bold text-primary modalStoreVisitCnt"></span><span> / 40대 그룹 선호 가게 "여기 해야함"</span></div>
+                        <div>
+                        	<span class="modalStoreAddress"></span>
+                        	<span class="fw-bold text-primary modalStoreDistance"></span>
+                        </div>
+                        <div>
+                        	<span class="fw-bold text-primary modalStoreVisitCnt"></span>
+                        	<span> / 40대 그룹 선호 가게 "여기 해야함"</span>
+                        </div>
                     </div>
                     <div class="text-end d-inline-block store-info-right">
-                        <div><span>별점</span><span class="fw-bold text-primary modalStoreScore"></span></div>
+                        <div>
+                        	<span>별점</span>
+                        	<span class="fw-bold text-primary modalStoreScore"></span>
+                        </div>
                         <div>
                         	<span class="fw-bold text-warning modalStoreStar"></span>
                         </div>
@@ -35,11 +46,13 @@
                 <div>
                     <div id="store-about">
                         <div class="d-inline-block store-imgs">
-                            <div class="d-inline-block img-area height-full width-full"><span class="d-inline-block">이미지 띄우기<!-- <img src="" /> --></span></div>
+                            <div class="d-inline-block img-area height-full width-full">
+                            	<span class="d-inline-block"></span>
+                            </div>
                             <div class="text-center img-paging-icon">
-                            	<i class="fas fa-circle"></i>
-                            	<i class="far fa-circle"></i>
-                            	<i class="far fa-circle"></i>
+                            	<i id="imgIcon-1" class="fas fa-circle visually-hidden"></i>
+                            	<i id="imgIcon-2" class="far fa-circle visually-hidden"></i>
+                            	<i id="imgIcon-3" class="far fa-circle visually-hidden"></i>
                             </div>
                         </div>
                         <div class="d-inline-block review-area" style="height: 256px;">
@@ -47,8 +60,7 @@
                         </div>
                     </div>
                     <div id="all-menu" class="text-start">
-                    	<span id="all-menu-sentence" class="fw-bold text-info d-inline-block" style="color: rgb(54, 185, 204);">
-                    	</span>
+                    	<span id="all-menu-sentence" class="fw-bold text-info d-inline-block" style="color: rgb(54, 185, 204);"></span>
                     	<button id="modal-see-menu" class="btn" type="button" data-bs-target="#modal-all-menu" data-bs-toggle="modal">
                     		메뉴 보러가기 <i class="icon ion-android-arrow-dropright-circle"></i>
                     	</button>
@@ -64,8 +76,7 @@
             </div>
             <div class="modal-footer-custom">
                 <p class="modalStoreWithMe"></p>
-                <div class="store-button-area">
-            	</div>
+                <div class="store-button-area"></div>
             </div>
         </div>
     </div>
@@ -77,12 +88,15 @@
 <div id="modal-reviews" class="modal visible no-drag modal-stores" role="dialog" tabindex="-1" style="min-width: 798px;">
     <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
         <div class="modal-content" style="width: 798px;">
-            <div class="modal-header"><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+            <div class="modal-header">
+            	<button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
             <div class="modal-body">
                 <div class="fs-4 fw-bold text-dark modal-store-title">
                 	<span class="d-inline-block modalStoreName"></span>
                 	<span class="fs-6 text-secondary d-inline-block store-cate modalStoreCate"></span>
-                    <div class="dropdown d-inline-block"><button class="btn btn-sm dropdown-toggle fs-6 fw-bold text-start text-secondary" aria-expanded="false" data-bs-toggle="dropdown" type="button">영업시간</button>
+                    <div class="dropdown d-inline-block">
+                    	<button class="btn btn-sm dropdown-toggle fs-6 fw-bold text-start text-secondary" aria-expanded="false" data-bs-toggle="dropdown" type="button">영업시간</button>
                         <div class="dropdown-menu">
                         	<div class="modalStoreOpening"></div>
                         	<div class="modalStoreBreak"></div>
@@ -101,7 +115,10 @@
                         </div>
                     </div>
                     <div class="text-end d-inline-block store-info-right">
-                        <div><span>별점</span><span class="fw-bold text-primary modalStoreScore"></span></div>
+                        <div>
+                        	<span>별점</span>
+                        	<span class="fw-bold text-primary modalStoreScore"></span>
+                        </div>
                         <div>
                         	<span class="fw-bold text-warning modalStoreStar"></span>
                         </div>
@@ -181,14 +198,12 @@
                     <div class="text-primary other-store-state">
                     	<span class="d-inline-block"></span>
                     </div>
-                    <div class="text-start d-lg-flex justify-content-lg-center other-stores-area">
-                    </div>
+                    <div class="text-start d-lg-flex justify-content-lg-center other-stores-area"></div>
                 </div>
             </div>
             <div class="modal-footer-custom">
                 <p class="modalStoreWithMe"></p>
-                <div class="store-button-area">
-	            </div>
+                <div class="store-button-area"></div>
             </div>
         </div>
     </div>
@@ -211,8 +226,7 @@
 					<button id="member-all-selection" class="btn btn-light">전체 선택</button>
 					<button id="member-all-selection-del" class="btn btn-light">전체 해제</button>
 				</div>
-					<div id="modal-select-member-area">
-					</div>
+				<div id="modal-select-member-area"></div>
 			</div>
 		</div>
 	</div>
@@ -334,7 +348,6 @@ $("#modal-store").on("click", ".other-store-btn", function(){
 	var sortNo = $(this).attr("data-sortno")
 	console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
 	
-	
 	storeInfoOpen(storeNo, groupNo, Number(sortNo))
 })
 
@@ -401,11 +414,33 @@ function storeBasicInfo(storeNo){
 			modalStoreTime(storeMap.storeVo.openingHours, 1)
 			modalStoreTime(storeMap.storeVo.breaktime, 2)
 			
-			//k = 1 가게 정보창
+			//가게 이미지
+			if(storeMap.imgList.length == 0){
+				$(".img-area span").html('<img src="${pageContext.request.contextPath}/assets/img/no-review-img.png"/>')
+				
+			}else{
+				for(var i=0; i<storeMap.imgList.length; i++){
+					if(i==0){
+						$(".img-area span").html('<img id="proImg-1" data-imgno="1" data-end="'+storeMap.imgList.length+'" src="${pageContext.request.contextPath}/upload/'+storeMap.imgList[0]+'">')	
+						document.getElementById("imgIcon-1").className = "fas fa-circle"
+					
+					}else if(i==1){
+						$(".img-area span").append('<img id="proImg-2" class="visually-hidden" data-imgno="2" data-end="'+storeMap.imgList.length+'" src="${pageContext.request.contextPath}/upload/'+storeMap.imgList[1]+'">')	
+						document.getElementById("imgIcon-2").className = "far fa-circle"
+
+					}else{
+						$(".img-area span").append('<img id="proImg-3" class="visually-hidden" data-imgno="3" data-end="'+storeMap.imgList.length+'" src="${pageContext.request.contextPath}/upload/'+storeMap.imgList[2]+'">')	
+						document.getElementById("imgIcon-3").className = "far fa-circle"
+					}
+				}
+			}
+			
+			//가게 정보창
 			$("#modal-store .review-area").text("")
 			if(storeMap.reviewList.length != 0){
 				for(var i=0; i<2; i++){
 					modalStoreReivew(storeMap.reviewList[i], 1)
+					
 				}
 				modalStoreMoreReivews()
 				
@@ -422,13 +457,14 @@ function storeBasicInfo(storeNo){
 			$(".other-store-state span").text(storeMap.storeVo.menu2ndCateName + " 카테고리 다른 가게")
 			$(".other-stores-area").html("")
 			
+			//푸터
 			if(storeMap.visitedVo == null){
 				$(".modalStoreWithMe").text("방문기록이 없어요")
 			}else{
 				$(".modalStoreWithMe").text("나의 방문 횟수: " + storeMap.visitedVo.visitCount + "회(최근 방문일 " + storeMap.visitedVo.visitedDate + ", " + storeMap.visitedVo.groupName + ")")
 			}
 			
-			//k = 2 전체 리뷰창
+			//전체 리뷰창
 			$("#modal-reviews #store-all-review").text("")
 			if(storeMap.reviewList.length != 0){
 				for(var i=0; i<storeMap.reviewList.length; i++){
@@ -518,12 +554,7 @@ function modalStoreStar(starScore, k){
 	
 }
 
-/* 
-$(document).ready(function () {
-    $('.dropdown-toggle').dropdown();
-})
 
- */ 
 /* 영업시간+브레이크타임 드랍다운 리스트 */
 function modalStoreTime(storeTime, opt){
 	var str = ''
@@ -549,6 +580,28 @@ function modalStoreTime(storeTime, opt){
 	}
 }
 
+
+/* 가게 이미지 클릭 > 다음 이미지로 전환 */
+/* 
+$("#store-about").on("click", "img", function(){
+	var imgNo = $(this).attr("data-imgno")
+	var endNo = $(this).attr("data-end")
+	
+	document.getElementById("proImg-"+imgNo).className = "visually-hidden"
+	document.getElementById("imgIcon-"+imgNo).className = "far fa-circle"
+	
+	//마지막 이미지면 첫번째꺼로 
+	if(imgNo == endNo){
+		document.getElementById("proImg-1").className = ""
+		document.getElementById("imgIcon-1").className = "fas fa-circle"
+	
+	}else{
+		document.getElementById("proImg-"+(imgNo+1)).className = ""
+		document.getElementById("imgIcon-"+(imgNo+1)).className = "fas fa-circle"
+	}
+	
+})
+ */
 
 /* 가게 리뷰 */
 function modalStoreReivew(storeReview, k){
@@ -767,7 +820,7 @@ function modalSortOfStore(storeNo, k){
 		case 0:
 		// k=1 : 리뷰메인(모달에서 넘어가는거 아니고)
 			//조회하는 가게 = 다녀온 가게
-			if(storeNo == "${visitedMap.visitedVo.storeNo}"){
+			if(storeNo == "${visitedMap.visitedVo.storeNo}" && "${visitedMap.reviewVo}" != null){
 				$(".store-button-area").append('<a href="${pageContext.request.contextPath}/visited/cancel/${visitedMap.visitedVo.visitedNo}">'
 												+'	<button class="btn btn-primary modal-btn-visited-cancel" type="button">방문취소</button>'
 												+'</a>')
