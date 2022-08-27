@@ -184,18 +184,14 @@ $("#modal-gps-submit").on("click", function(){
 		        // 세션에 gps저장
 		        await setGPS(gpsVo)
 			    await clearBasket()
+			    
+				// 모달 숨기고 페이지 다시 로드
+			    $("#modal-location-change").modal("hide")
+			    
+			    alert("현재 위치가 변경되었습니다.")
+			    location.replace("${pageContext.request.contextPath}/")
 		   	  } 
-		});  
-		
-		// 모달 숨기고 알림
-		$("#modal-location-change").modal("hide")
-		
-		sleep(100)
-		alert("현재 위치가 변경되었습니다.")
-		
-		sleep(300)
-		// 페이지 다시 로드하기
-		location.replace("${pageContext.request.contextPath}/")
+		})
 		
 	} else {
 		// 주소 변경 안했으면 얌전히 모달만 닫기
@@ -235,7 +231,7 @@ function noStore() {
 }
 
 
-// 카카오지도 API
+//카카오지도 API
 async function callMap() {
 	// 지도가 표시될 구역
 	var mapDiv = document.getElementById('kakaoMap')
@@ -249,7 +245,7 @@ async function callMap() {
 	
 	// 지도 표시하기, 축소 최대 레벨 설정
 	var map = new kakao.maps.Map(mapDiv, mapOption)
-	map.setMaxLevel(5)
+	map.setMaxLevel(4)
 	
 	
 	// 현재 위치 마커 표시하기
@@ -264,7 +260,73 @@ async function callMap() {
 	currMarker.setMap(map)
 	
 
+	// 장바구니 항목들 지도에 마커로 표시하기
+	for (var i = 0; i < basket[curr_basket_group].length; i++) {
+		var curr_store = basket[curr_basket_group][i]
+		var img
+		
+		// 마커 색깔 구분
+		if (curr_store.stored) {
+			img = new kakao.maps.MarkerImage(
+			      	"${pageContext.request.contextPath}/assets/img/markers/selectedPin.png",
+			      	new kakao.maps.Size(40, 40)
+			      )
+		} else {
+			img = new kakao.maps.MarkerImage(
+			      	"${pageContext.request.contextPath}/assets/img/markers/unselectedPin.png",
+			      	new kakao.maps.Size(40, 40)
+			      )
+		}
+		
+		// 마커 생성
+		var newMarker = new kakao.maps.Marker({
+			position : new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
+			image: img,
+			clickable: true
+		})
+		
+		// 마커 지도에 표시
+		newMarker.setMap(map)
+		
+		kakao.maps.event.addListener(newMarker, 'click', function() {
+		      // 모달 연결
+		});
+		
+		
+		// 마커 태그 생성
+		var content 
+		var storeName = curr_store.storeName
+		storeName = storeName.split(" ")[0]
+		
+		if (curr_store.stored) {
+			content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
+            + 	'<span class="store_name">' + storeName + '&nbsp;&nbsp;<i class="far fa-minus-square"></i></span>'
+            + '</div>'
+            
+		} else {
+			content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
+	                  + 	'<span class="store_name">' + storeName + '&nbsp;&nbsp;<i class="far fa-plus-square"></i></span>'
+	                  + '</div>'
+		}
+		
+        var customOverlay = new kakao.maps.CustomOverlay({
+      	    map: map,
+      	    position: new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
+      	    content: content,
+      	    yAnchor: 1
+      	})
+        
+	}
 }
+
+$("#kakaoMap").on("click", ".customoverlay", function(){
+	alert("클릭: " + $(this).attr("data-storeNo"))
+})
+
+$("#kakaoMap").on("click", "i", function(){
+
+	alert("나야")
+})
 
 	
 </script>

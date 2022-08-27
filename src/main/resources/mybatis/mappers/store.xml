@@ -24,12 +24,14 @@
 			       ,menu_2nd_cate_name menu2ndCateName
 			       ,store_name storeName
 			       ,store_road_address storeRoadAddress
+			       ,store_x storeX
+			       ,store_y storeY
 			       ,rating_bujang ratingBujang
 			       ,store_opening_hours storeOpeningHours
                    ,store_breaktime storeBreaktime
 			       ,distance
 			       ,score
-			FROM (SELECT s.store_no, f.menu_2nd_cate_name, s.store_name, s.store_road_address, b.rating_bujang, s.store_opening_hours, s.store_breaktime
+			FROM (SELECT s.store_no, f.menu_2nd_cate_name, s.store_name, s.store_road_address, b.rating_bujang, s.store_opening_hours, s.store_breaktime, store_x, store_y
 			             ,ROUND(SQRT(POWER(ABS(s.store_x-#{curr_location.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(s.store_y-#{curr_location.gpsY})*6400000*2*3.14/360, 2)), 0) distance
 			             ,(NVL(v.cnt, 0)/10 + (r.rating_naver-4) * 100 + NVL(b.rating_bujang, 0) * 50) score
 			      FROM   store s, rating_others r, food_2nd_category f
@@ -57,7 +59,7 @@
 		<![CDATA[
 		         AND    ((r.rating_naver >= 4.3 AND r.rating_kakao >= 3) OR (r.rating_naver >= 4.5 AND r.rating_kakao = 0)) 
 			     ORDER BY score DESC)
-		    WHERE  distance <= 1000
+		    WHERE  distance <= 500
 		    AND    ROWNUM <= 200
 		    ORDER BY DBMS_RANDOM.value
 		]]>
@@ -70,13 +72,15 @@
 			SELECT store_no storeNo
 			       ,menu_2nd_cate_name menu2ndCateName
 			       ,store_name storeName
+			       ,store_x storeX
+			       ,store_y storeY
 			       ,store_road_address storeRoadAddress
 			       ,rating_bujang ratingBujang
 			       ,store_opening_hours storeOpeningHours
                    ,store_breaktime storeBreaktime
 			       ,distance
 			       ,score
-			FROM (SELECT s.store_no, f.menu_2nd_cate_name, s.store_name, s.store_road_address, b.rating_bujang, s.store_opening_hours, s.store_breaktime
+			FROM (SELECT s.store_no, f.menu_2nd_cate_name, s.store_name, s.store_road_address, b.rating_bujang, s.store_opening_hours, s.store_breaktime, store_x, store_y
 			             ,ROUND(SQRT(POWER(ABS(s.store_x-#{curr_location.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(s.store_y-#{curr_location.gpsY})*6400000*2*3.14/360, 2)), 0) distance
 			             ,(NVL(v.cnt, 0)/10 + (r.rating_naver-4) * 100 + NVL(b.rating_bujang, 0) * 50 + NVL(gv.group_cnt, 0) * 10 + NVL(gr.group_rating-3, 0) * 10 - NVL(rv.visit, 0) * 10000) score
 			      FROM   store s, rating_others r, food_2nd_category f
@@ -122,7 +126,7 @@
 		<![CDATA[
 		         AND    ((r.rating_naver >= 4.3 AND r.rating_kakao >= 3) OR (r.rating_naver >= 4.5 AND r.rating_kakao = 0)) 
 			     ORDER BY score DESC)
-		    WHERE  distance <= 1000
+		    WHERE  distance <= 500
 		    AND    ROWNUM <= 100
 		    ORDER BY DBMS_RANDOM.value
 		]]>
@@ -132,7 +136,7 @@
 	<!--  가게 하나 추가로 가져오기  -->
 	<select id="selectOneStore" parameterType="Map" resultMap="StoreVo">
 		<![CDATA[
-			SELECT store_breaktime, menu_2nd_cate_name, store_opening_hours, store_name, store_no, store_road_address,
+			SELECT store_breaktime storeBreakTime, menu_2nd_cate_name menu2ndCateName, store_opening_hours storeOpeningHours, store_name storeName, store_no storeNo, store_road_address storeRoadAdderss, store_x storeX, store_y storeY
 			       ROUND(SQRT(POWER(ABS(store_x-#{gpsVo.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(store_y-#{gpsVo.gpsY})*6400000*2*3.14/360, 2)), 0) distance
 			FROM   store s, food_2nd_category f
 			WHERE  s.menu_2nd_cate_no = f.menu_2nd_cate_no
