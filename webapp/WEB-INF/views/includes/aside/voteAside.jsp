@@ -91,7 +91,7 @@
 	            	<c:set var="voteIdx" value="-1" />
 	            	<c:forEach items="${voteBasket}" var="store">
 	            		<c:set var="voteIdx" value="${voteIdx+1}" />		
-	            			<tr class="vote-table-row basket-table-row" data-vote-idx="${voteIdx}" data-storeNo="${store.storeNo}">
+	            			<tr class="vote-table-row basket-table-row" data-vote-idx="${voteIdx}" data-storeNo="${store.storeNo}" data-storeX="${store.storeX}" data-storeY="${store.storeY}">
                         		<td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
                             		<div class="basket-table-store-info">
                             			<span class="text-start basket-table-store-name">${store.storeName}</span>
@@ -425,6 +425,85 @@ function postVoteData(path, params, method) {
 
 	document.body.appendChild(form)
 	form.submit()
+}
+
+
+//////////// 지도 만드는 함수 /////////////////////////////////////////////////////////////////////
+
+async function callMap() {
+	// 지도가 표시될 구역
+	var mapDiv = document.getElementById('kakaoMap')
+	
+	// 위치 불러오기
+	var gpsX = parseFloat("${voteInfo.currX}")
+	var gpsY = parseFloat("${voteInfo.currY}")
+	
+	console.log(gpsX)
+	console.log(gpsY)
+	
+	// 지도의 기본 설정
+	var mapOption = {
+		center: new kakao.maps.LatLng(gpsY, gpsX),
+		level: 3,
+		draggable: false,
+	}
+	
+	// 지도 표시하기, 축소 최대 레벨 설정
+	map = new kakao.maps.Map(mapDiv, mapOption)
+	
+	// 현재 위치 마커 표시하기
+	var currMarker = new kakao.maps.Marker({
+		position: new kakao.maps.LatLng(gpsY, gpsX),
+		image: new kakao.maps.MarkerImage(
+			"${pageContext.request.contextPath}/assets/img/markers/currMarker.png",
+			new kakao.maps.Size(40, 40)
+		)
+	})
+	
+	currMarker.setMap(map)
+	
+	console.log(${voteIdx})
+	// 장바구니 항목들 지도에 마커로 표시하기
+	for (var i = 0; i <= ${voteIdx}; i++) {
+		var currTr = $("[data-vote-idx=" + i + "]")
+		
+		var storeName = currTr.find(".basket-table-store-name").text().split(" ")[0]
+		var storeNo = parseInt(currTr.attr("data-storeNo"))
+		var storeX = parseFloat(currTr.attr("data-storeX"))
+		var storeY = parseFloat(currTr.attr("data-storeY"))
+		
+		var img = new kakao.maps.MarkerImage(
+			      	"${pageContext.request.contextPath}/assets/img/markers/selectedPin.png",
+			      	new kakao.maps.Size(40, 40),
+			      	{offset: new kakao.maps.Point(20, 45)}
+			      )
+
+						
+		// 마커 생성
+		var marker = new kakao.maps.Marker({
+			map: map,
+			position: new kakao.maps.LatLng(storeY, storeX),
+			image: img,
+			clickable: true
+		})
+		
+		kakao.maps.event.addListener(marker, 'click', function(){
+			alert("왜")
+		})
+									
+		// 마커 태그 생성
+		var content =   '<div class="customoverlay" data-storeNo="' + storeNo + '">' 
+	        		  + 	'<span class="store_name">' + storeName + '</span>'
+	        		  + '</div>'
+	        
+	    var customOverlay = new kakao.maps.CustomOverlay({
+	  	    map: map,
+	  	    position: new kakao.maps.LatLng(storeY, storeX),
+	  	    content: content,
+	  	    yAnchor: 1
+	  	})
+
+	}
 }
 
 

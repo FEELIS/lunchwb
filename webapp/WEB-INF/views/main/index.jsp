@@ -275,6 +275,7 @@ async function callMap() {
 	
 	currMarker.setMap(map)
 	
+	// 현재 위치 마커 클릭 > 현재 위치 변경
 	kakao.maps.event.addListener(currMarker, 'click', function() { 
 		var changeCurrLoc = confirm("현재 위치를 변경하시겠습니까?")
 		
@@ -332,17 +333,18 @@ async function callMap() {
 				var dontChange = confirm("현재 위치 변경을 취소하시겠습니까?")
 				
 				if (dontChange) {
-					marker.setMap(null)
+					location.replace("${pageContext.request.contextPath}/")
 					
-					var currMarker = new kakao.maps.Marker({
-						position: new kakao.maps.LatLng(gpsVo.gpsY, gpsVo.gpsX),
-						image: new kakao.maps.MarkerImage(
-							"${pageContext.request.contextPath}/assets/img/markers/currMarker.png",
-							new kakao.maps.Size(40, 40)
-						)
-					})
-					
-					currMarker.setMap(map)
+				} else {
+					return false
+				}
+			})
+			
+			$("#reset-center").on('click', function() {
+				var dontChange = confirm("현재 위치 변경을 취소하시겠습니까?")
+				
+				if (dontChange) {
+					location.replace("${pageContext.request.contextPath}/")
 					
 				} else {
 					return false
@@ -439,16 +441,16 @@ function updateMapPin(idx, selected) {
 					
 	// 마커 생성
 	var marker = new kakao.maps.Marker({
-		position : new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
-		image: img
+		map: map,
+		position: new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
+		image: img,
+		clickable: true
 	})
-			
-	marker.setMap(map)
 	
-	kakao.maps.event.addListener(marker, 'click', function(){
+	kakao.maps.event.addListener(marker, 'click', function(idx){
 		alert("왜")
 	})
-				
+								
 	// 배열에 마커 저장
 	markers[idx] = marker 
 	

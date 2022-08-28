@@ -232,6 +232,7 @@ $("#vote-member-minus").on("click", function(){
 	}
 })
 
+
 // 인원추가 + 버튼 토글 > 추가인원++
 $("#vote-member-plus").on("click", function(){
 	var voteAddNum = parseInt($("#vote-new-member-num").text())
@@ -646,7 +647,9 @@ $("#make-vote-btn").on("click", function(){
 		voteEndDate : voteEndDate,
 		voteMember : voteMem,
 		currBasket : currBasket,
-		notTodayMember : notTodayMem
+		notTodayMember : notTodayMem,
+		currX : "${curr_location.gpsX}",
+		currY : "${curr_location.gpsY}"
 	}
 	
 	$.ajax({
@@ -658,7 +661,7 @@ $("#make-vote-btn").on("click", function(){
 		dataType : 'json',
 		
 		success : function(voteNo) {
-			if (voteNo == 0) {
+			if (voteNo <= 0) {
 				alert("투표 생성 실패")
 				
 			} else {

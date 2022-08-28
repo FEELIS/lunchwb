@@ -14,6 +14,8 @@ public class VoteVo {
 	private String voteItems;
 	private String voteResults;
 	private int voteState; // userState랑 거의 동일한 내용으로 1: 투표중, 3: 투표 종료, 4: 방문 완료
+	private double currX;
+	private double currY;
 	
 	//////////////////// vote_members table ////////////////////
 	
@@ -235,6 +237,22 @@ public class VoteVo {
 
 	public void setVoteVotedIdx(int voteVotedIdx) {
 		this.voteVotedIdx = voteVotedIdx;
+	}
+	
+	public double getCurrX() {
+		return currX;
+	}
+
+	public void setCurrX(double currX) {
+		this.currX = currX;
+	}
+
+	public double getCurrY() {
+		return currY;
+	}
+
+	public void setCurrY(double currY) {
+		this.currY = currY;
 	}
 	
 	///////////// toString //////////////////////////////////////////

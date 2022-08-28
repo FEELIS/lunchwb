@@ -35,7 +35,7 @@
 		
 		<![CDATA[
 			INSERT INTO vote
-			VALUES (#{voteNo}, #{userNo}, #{groupNo}, #{voteEndTime}, #{voteItems}, #{voteResults}, 1)
+			VALUES (#{voteNo}, #{userNo}, #{groupNo}, #{voteEndTime}, #{voteItems}, #{voteResults}, 1, #{currX}, #{currY})
 		]]>
 	</insert>
 	
@@ -75,6 +75,8 @@
 			                ,voteItems
 			                ,voteResults
 			                ,voteState
+			                ,currX
+			                ,currY
 			                ,groupNo
 			                ,groupName
 			                ,voteMemberNo
@@ -89,6 +91,8 @@
 			                               ,vote_items voteItems
 			                               ,vote_results voteResults
 			                               ,vote_state voteState
+			                               ,curr_x currX
+			                               ,curr_y currY
 			                               ,g.group_name groupName
 			                               ,v.group_no groupNo
 			                               ,vote_member_no voteMemberNo

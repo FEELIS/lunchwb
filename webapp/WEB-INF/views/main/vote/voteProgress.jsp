@@ -7,7 +7,7 @@
 
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
 <title>부장님요기요</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/assets/img/bujang.png">
@@ -40,7 +40,6 @@
 	    <c:import url="/WEB-INF/views/includes/header.jsp" />
         
         <div class="container" id="container">
-	        
             <div class="d-flex d-xxl-flex justify-content-center" id="map-btn-area">
             	<a href="javascript:kakaoShare()" style="text-decoration:none;">
 	            	<button class="btn btn-danger d-inline-flex d-xxl-flex justify-content-center align-items-center" id="vote-kakao-btn" type="button">
@@ -55,6 +54,8 @@
             		<button id="vote-url-copy-btn" class="btn btn-primary d-inline-flex d-xxl-flex flex-shrink-0 justify-content-center align-items-center align-content-center align-items-xl-center justify-content-xxl-center align-items-xxl-center" type="button">복사</button>
             	</span>
             </div>
+            
+            <div id="kakaoMap" style="width: 100%; height: 100%; position: absolute; margin: 0; padding: 0"></div>
         </div>
     </div>
     
@@ -63,8 +64,14 @@
 </div>
 
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e74b599be710b798192fd5221284718a&libraries=services"></script>
 
 <script type="text/javascript">
+
+// 문서 로드시 지도 생성
+$(document).ready(async function(){
+	await callMap()
+})
 
 
 //복사 클릭 시 클립보드에 url 복사
@@ -126,6 +133,16 @@ function kakaoShare() {
 	    installTalk: true
 	})
 }
+
+//customoverlay 클릭 시 - 모달 연결
+/*$("#kakaoMap").on("click", ".customoverlay", function(){
+	var storeNo = parseInt($(this).attr("data-storeNo"))
+	var groupNo = curr_basket_group
+	console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+
+	storeInfoOpen(storeNo, groupNo, 1)
+})*/
+
 
 </script>
 

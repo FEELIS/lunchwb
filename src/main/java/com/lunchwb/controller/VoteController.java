@@ -93,7 +93,13 @@ public class VoteController {
 		String voteMember = voteData.get("voteMember");
 		String currBasket = voteData.get("currBasket");
 		String notTodayMember = voteData.get("notTodayMember");
+		Double currX = Double.parseDouble(voteData.get("currX"));
+		Double currY = Double.parseDouble(voteData.get("currY"));
 		
+		System.out.println(currX);
+		System.out.println(currY);
+		
+
 		if (voteEndDate.contains(".")) {
 			voteEndDate = voteEndDate.substring(0, voteEndDate.indexOf("."));
 		}
@@ -106,7 +112,7 @@ public class VoteController {
 		int voteNo = 0;
 		
 		if (loginUser != null) {
-			voteNo = voteService.makeVote(loginUser.getUserNo(), date, voteMember, notTodayMember, currBasket, groupNo);
+			voteNo = voteService.makeVote(loginUser.getUserNo(), date, voteMember, notTodayMember, currBasket, groupNo, currX, currY);
 		}
 		
 		return voteNo;

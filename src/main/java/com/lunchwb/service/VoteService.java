@@ -64,7 +64,7 @@ public class VoteService {
 	
 	
 	///////// 투표 생성하기 ///////////////////////////////////////////////////////////////////////
-	public int makeVote(int userNo, Date voteEndTime, String voteMember, String notTodayMember, String currBasket, int groupNo) {
+	public int makeVote(int userNo, Date voteEndTime, String voteMember, String notTodayMember, String currBasket, int groupNo, double currX, double currY) {
 		System.out.println("**********************************************************************************************************************************************************");
 		System.out.println("[투표 생성 데이터 정리하기]");
 		System.out.println(voteEndTime.toString());
@@ -111,6 +111,8 @@ public class VoteService {
 		voteItems.setUserNo(userNo);
 		voteItems.setGroupNo(groupNo);
 		voteItems.setVoteEndTime(voteEndTime);
+		voteItems.setCurrX(currX);
+		voteItems.setCurrY(currY);
 		
 		JSONArray basketArray = new JSONArray(currBasket);
 		JSONArray resultArray = new JSONArray();
@@ -180,6 +182,9 @@ public class VoteService {
 		voteInfo.setVoteMadeUser(voteVo.get(0).getVoteMadeUser());
 		voteInfo.setVoteResults(voteVo.get(0).getVoteResults());
 		voteInfo.setGroupNo(voteVo.get(0).getGroupNo());
+		voteInfo.setCurrX(voteVo.get(0).getCurrX());
+		voteInfo.setCurrY(voteVo.get(0).getCurrY());
+		
 		
 		// 장바구니 담긴 가게 정보		
 		JSONArray storeInfo = new JSONArray(voteVo.get(0).getVoteItems());
@@ -202,6 +207,8 @@ public class VoteService {
 			store.setStoreNo(jstore.getInt("storeNo"));
 			store.setDistance(jstore.getInt("distance"));
 			store.setMenu2ndCateName(jstore.getString("menu2ndCateName"));
+			store.setStoreX(jstore.getDouble("storeX"));
+			store.setStoreY(jstore.getDouble("storeY"));
 			
 			voteStoreInfo.add(store);
 			
