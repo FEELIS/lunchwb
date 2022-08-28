@@ -185,7 +185,7 @@
 		SELECT group_no
 		FROM visited
 		WHERE user_no = #{userNo}
-		AND visited_date = #{visitedDate}
+		AND to_char(visited_date,'Mon DD YYYY','NLS_DATE_LANGUAGE=ENGLISH') = #{visitedDate}
 	</select>
 	
 	
