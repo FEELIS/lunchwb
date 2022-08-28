@@ -4,8 +4,8 @@ import java.util.List;
 
 public class RandomVo {
 	
-	private int randomeNo;
-	private List<String> storeInfo;
+	private int randomNo;
+	private String storeInfo;
 	private int stopAtValue;
 	private String groupName;
 	private String resultTime;
@@ -16,9 +16,9 @@ public class RandomVo {
 	}
 
 
-	public RandomVo(int randomeNo, List<String> storeInfo, int stopAtValue, String groupName, String resultTime) {
+	public RandomVo(int randomNo, String storeInfo, int stopAtValue, String groupName, String resultTime) {
 		super();
-		this.randomeNo = randomeNo;
+		this.randomNo = randomNo;
 		this.storeInfo = storeInfo;
 		this.stopAtValue = stopAtValue;
 		this.groupName = groupName;
@@ -26,22 +26,22 @@ public class RandomVo {
 	}
 
 
-	public int getRandomeNo() {
-		return randomeNo;
+	public int getRandomNo() {
+		return randomNo;
 	}
 
 
-	public void setRandomeNo(int randomeNo) {
-		this.randomeNo = randomeNo;
+	public void setRandomNo(int randomNo) {
+		this.randomNo = randomNo;
 	}
 
 
-	public List<String> getStoreInfo() {
+	public String getStoreInfo() {
 		return storeInfo;
 	}
 
 
-	public void setStoreInfo(List<String> storeInfo) {
+	public void setStoreInfo(String storeInfo) {
 		this.storeInfo = storeInfo;
 	}
 
@@ -78,11 +78,10 @@ public class RandomVo {
 
 	@Override
 	public String toString() {
-		return "RandomVo [randomeNo=" + randomeNo + ", storeInfo=" + storeInfo + ", stopAtValue=" + stopAtValue
+		return "RandomVo [randomNo=" + randomNo + ", storeInfo=" + storeInfo + ", stopAtValue=" + stopAtValue
 				+ ", groupName=" + groupName + ", resultTime=" + resultTime + "]";
 	}
 	
-
 
 
 }

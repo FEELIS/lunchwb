@@ -23,43 +23,28 @@ public class RandomService {
 	@Autowired
 	TestDao testDao;
 	
-	public int makeResult(String countbas, String basket, String stopAtValue, String currBasketGroup) {
+	public int makeResult(String stopAtValue, String currBasket, String currBasketGroup) {
+		System.out.println("**********************************************************************************************************************************************************");
 		System.out.println("랜덤 결과 만들기");
 		
 		RandomVo randomVo = new RandomVo();
 		
-		// 장바구니에 담긴 가게 갯수 ---> 없어도 될듯 basDat.length()에서 해결되는 듯
-		int basCount = Integer.parseInt(countbas);
 		
-		// 그룹명 알아내기
-		int currBasket = Integer.parseInt(currBasketGroup);
-		GroupVo groupName = testDao.getGroupName(currBasket);
+		// 룰렛을 진행한 그룹명 알아내기
+		int BasketGroupNo = Integer.parseInt(currBasketGroup);
+		GroupVo groupName = testDao.getGroupName(BasketGroupNo);
 		randomVo.setGroupName(groupName.getGroupName());
 		
-		// 각도 int화
+		// 결과 각도
 		int stopAt = Integer.parseInt(stopAtValue);
 		randomVo.setStopAtValue(stopAt);
 		
-		
+
 		// 장바구니에 담긴 가게
+		JSONArray basketArray = new JSONArray(currBasket);
+		randomVo.setStoreInfo(basketArray.toString());
 		
-		JSONArray basketArray = new JSONArray(basket);
-		System.out.println(basketArray.toString());
-		/*
-		 * for(int i=0; i<basDat.length(); i++){ basData = basDat.getJSONObject(i);
-		 * String value = basData.getString("storeName");
-		 * 
-		 * System.out.println("가게 이름 = " + value);
-		 * 
-		 * storeInfo.add(value); }
-		 */
-		
-//		randomVo.setStoreInfo(storeInfo);
-//		
-//		System.out.println("basDat = " + basDat);
-		System.out.println("basCount = " + basCount);
-		System.out.println("currBasket = " + currBasket);
-		System.out.println("stopAt = " + stopAt);
+		System.out.println(randomVo.toString());
 		
 		int randomNo = randomDao.insertRandomResult(randomVo);
 		

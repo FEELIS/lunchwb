@@ -69,11 +69,39 @@
 </div>
 
 <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
-
+    <div class="modal fade" role="dialog" tabindex="-1" id="vote-link-modal">
+	    <div class="modal-dialog modal-dialog-centered" role="document">
+	        <div class="modal-content">
+	            <div class="modal-header d-xxl-flex" id="vote-link-modal-header">
+	                <h4 class="modal-title d-xxl-flex" id="vote-link-modal-header-title">투표가 성공적으로 생성되었습니다!</h4>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            
+	            <div class="modal-body d-flex justify-content-center justify-content-xxl-center" id="vote-link-modal-body">
+	                <div class="justify-content-center">
+	                    <p class="text-center">같이 밥을 먹을 그룹원들에게 투표를 공유할 수 있습니다<br></p>
+	                    <div class="d-flex justify-content-center">
+	                    	<a href="javascript:kakaoShare()" style="text-decoration:none;">
+				            	<button class="btn btn-danger d-inline-flex d-xxl-flex justify-content-center align-items-center" id="vote-kakao-btn" type="button">
+				            		<i class="fas fa-comment"></i>
+				            		<span>공유하기</span>
+				            	</button>
+			            	</a>
+	                    	<span class="d-inline-flex flex-shrink-0 justify-content-center flex-nowrap align-items-xxl-center" id="vote-url-copy-box">
+	                    		<i class="fas fa-link d-inline-flex d-xxl-flex flex-shrink-0 justify-content-start align-items-center justify-content-xl-start align-items-xl-center justify-content-xxl-start align-items-xxl-center"></i>
+	                    		<input id="vote-url-input" class="d-inline-flex d-xxl-flex flex-shrink-0 align-items-xxl-center" type="text" value="">
+	                    		<button id="vote-url-copy-btn" class="btn btn-primary d-inline-flex d-xxl-flex flex-shrink-0 justify-content-center align-items-center align-content-center align-items-xl-center justify-content-xxl-center align-items-xxl-center" type="button">복사</button>
+	                    	</span>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 </div>
 
 </body>
-
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript">
 
 	// 장바구니 비우기
@@ -108,9 +136,9 @@
 	              'textFontSize' : 18,    // Set font size as desired.
 	              'segments'     :        // Define segments including colour and text.
 	              [ 
-	                    {'fillStyle' : '#36b9cc', 'text' : basket[curr_basket_group][0].storeName},
-	                    {'fillStyle' : '#f6c23e', 'text' : basket[curr_basket_group][1].storeName},
-	                    {'fillStyle' : '#1cc88a', 'text' : basket[curr_basket_group][2].storeName}
+	                    {'fillStyle' : '#36b9cc', 'text' : basket[curr_basket_group][0].storeName, 'storeNo' : basket[curr_basket_group][0].storeNo},
+	                    {'fillStyle' : '#f6c23e', 'text' : basket[curr_basket_group][1].storeName, 'storeNo' : basket[curr_basket_group][1].storeNo},
+	                    {'fillStyle' : '#1cc88a', 'text' : basket[curr_basket_group][2].storeName, 'storeNo' : basket[curr_basket_group][2].storeNo}
 	              ],
 	              'animation' :           // Specify the animation to use.
 	              {
@@ -136,8 +164,8 @@
 	              'textFontSize' : 18,    // Set font size as desired.
 	              'segments'     :        // Define segments including colour and text.
 	              [ 
-	                    {'fillStyle' : '#36b9cc', 'text' : basket[curr_basket_group][0].storeName},
-	                    {'fillStyle' : '#f6c23e', 'text' : basket[curr_basket_group][1].storeName}
+	                    {'fillStyle' : '#36b9cc', 'text' : basket[curr_basket_group][0].storeName, 'storeNo' : basket[curr_basket_group][0].storeNo},
+	                    {'fillStyle' : '#f6c23e', 'text' : basket[curr_basket_group][1].storeName, 'storeNo' : basket[curr_basket_group][1].storeNo}
 	              ],
 	              'animation' :           // Specify the animation to use.
 	              {
@@ -221,13 +249,18 @@
     	currBasket = JSON.stringify(curr_basket)
     	
         let randomData = {
-        		countbas : countbas,
         		stopAt : stopAt,
         		currBasket : currBasket,
+        		currBasketGroup : curr_basket_group
         	}
         
         
         console.log("randomData = " + randomData);
+        
+    	
+        if(modalSelectMembers(indicatedSegment.storeNo, curr_basket_group) == false){
+			return false
+		}
         
         $.ajax({
     		type : "POST",
@@ -242,7 +275,7 @@
     				alert("랜덤 결과 생성 실패")
     				
     			} else {
-    				$("#vote-url-input").val("http://localhost:8088/lunchwb/" + randomNo)
+    				$("#vote-url-input").val("http://localhost:8088/lunchwb/random/" + randomNo)
     				$("#vote-link-modal").modal("show")
     			}
     		},
@@ -250,13 +283,82 @@
     			console.log("오류 발생" + error)
     		}
     	})
-    	
-        if(modalSelectMembers(indicatedSegment.storeNo, curr_basket_group) == false){
-			return false
-		}
         
     }
-	
+    
+//////////////////////투표 생성 모달 //////////////////////////////////////////////
+
+ // 복사 버튼 클릭 시 클립보드에 url 복사
+ $("#vote-url-copy-btn").on("click", async function(){
+ 	await saveClipBoard()
+ 	location.replace("${pageContext.request.contextPath}/")
+ })
+ 	
+ 	
+ // 클립보드 저장 api 사용하는 function
+ async function saveClipBoard() {
+ 	var content = $("#vote-url-input").val()
+
+     navigator.clipboard.writeText(content)
+         .then(() => {
+         alert("클립보드에 복사되었습니다.")
+     })
+         .catch(err => {
+         console.log("클립보드 복사 실패")
+     })
+ }
+
+
+ // 투표 생성 모달 닫힘 > 메인페이지로 이동
+ $("#vote-link-modal").on("hide.bs.modal", function(){
+ 	location.replace("${pageContext.request.contextPath}/")
+ })
+
+
+ //////////// 카카오 공유하기 api /////////////////////////////////////////////////////////////////////////
+
+ // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+ Kakao.init('f78c3d22061aa91b824c89a07b348da9');
+
+ // SDK 초기화 여부를 판단합니다.
+ console.log(Kakao.isInitialized());
+
+ /* function kakaoShare() {
+ 	var voteURL = $("#vote-url-input").val();
+ 	var basketItem = [JSON.parse(currBasket)[0].storeName, JSON.parse(currBasket)[1].storeName, JSON.parse(currBasket)[2].storeName];
+ 	console.log(basketItem)
+ 	var desc;
+ 	
+ 	if(basketItem[2] == '' || basketItem[2] == null){
+ 		desc = basketItem[0] + ", " + basketItem[1];
+ 	}else{
+ 		desc = basketItem[0] + ", " + basketItem[1] + ", " + basketItem[2];
+ 	} 
+ 	
+ 	Kakao.Link.sendDefault({
+ 		objectType: 'feed',
+ 		content: {
+ 			title: '부장님 투표해주세요',
+ 			//title: '부장님 여기어때?',
+ 			imageUrl: voteURL,
+ 			description: desc,
+ 			link: {
+ 			  mobileWebUrl: voteURL,
+ 			  webUrl: voteURL
+ 			}
+ 		},
+ 		buttons: [{
+ 			title: '웹으로 보기',
+ 			link: {
+ 				mobileWebUrl: voteURL,
+ 				webUrl: voteURL
+ 			}
+ 		}],
+ 	    // 카카오톡 미설치 시 카카오톡 설치 경로이동
+ 	    installTalk: true
+ 	})
+ } */
+ 
 </script>
 
 </html>

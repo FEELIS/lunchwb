@@ -89,23 +89,19 @@ public class RandomController {
 	public int randomResult(@RequestBody Map<String, String> randomData, HttpSession session) {
 		System.out.println("랜덤 정보 = " + randomData);
 		
-		String countbas = randomData.get("countbas");
-		String basket = randomData.get("basket");
 		String stopAtValue = randomData.get("stopAt");
-		String currBasketGroup = randomData.get("currBasket");
-		// + groupNO 보내야함. 그룹 이름 따야함.
+		String currBasket = randomData.get("currBasket");
+		String currBasketGroup = randomData.get("currBasketGroup");
 		
-		
-		System.out.println("장바구시 가게 숫자 = " + countbas);
-		System.out.println("가게정보 = " + basket);
 		System.out.println("룰렛 각도 = " + stopAtValue);
+		System.out.println("현재 장바구니 = " + currBasket);
 		System.out.println("현재 장바구니 그룹 = " + currBasketGroup);
 		
 		UserVo loginUser = (UserVo)session.getAttribute("authUser");
 		
 		int randomNo = 0;
 		if (loginUser != null) {
-			randomNo = randomService.makeResult(countbas, basket, stopAtValue, currBasketGroup);
+			randomNo = randomService.makeResult(stopAtValue, currBasket, currBasketGroup);
 		}
 		
 		

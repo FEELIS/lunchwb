@@ -14,7 +14,7 @@ public class RandomDao {
 	
 	public int insertRandomResult(RandomVo randomVo) {
 		sqlSession.insert("random.insertRandomResult", randomVo);
-		return randomVo.getRandomeNo();
+		return randomVo.getRandomNo();
 	}
 
 }
