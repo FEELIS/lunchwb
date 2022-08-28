@@ -137,7 +137,10 @@
 -- vote테이블 vote_items,vote_results칼럼 null에서 not null로 변경
 -- vote_members테이블 user_no칼럼 not null에서 null로 변경
 
--- 2022.08.28 20:41 =====================
+-- 2022.08.28 22:41 =====================
 -- vote테이블 curr_x, curr_y number(13,10) not null로 두개의 칼럼 추가
+
+-- 2022.08.28 22:49 =====================
+-- notification 테이블 noti_state칼럼 추가 (number(20) defulat 0 not null
 
 
