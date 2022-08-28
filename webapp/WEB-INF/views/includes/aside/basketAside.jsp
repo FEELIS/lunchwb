@@ -83,7 +83,7 @@
                 <table class="table" id="basket-table-table">
 	                <tr>
 	                    <td id="basket-table-button-area" colspan="2">
-	                    	<i class="fas fa-filter" id="basket-filter-btn"></i>
+	                    	<i class="fas fa-filter" id="basket-filter-btn" title="메뉴 필터"></i>
 	                    	<button class="btn btn-primary d-inline-block" id="basket-another-stores-btn" type="button">다른 가게 추천 받기</button>
 	                    </td>
 	                </tr>
@@ -206,9 +206,6 @@ let indexJSP = false
 const userNo = "${authUser.userNo}" 
 // 장바구니(Map<Integer, List<StoreVo>: key - storeNo / value - StoreVo(이거저거 많이 들어있음))
 let basket = "${basket}" 
-
-// 지도 전역변수로 놔두기
-let map
 
 // 내가 속한 그룹 리스트(List<GroupVo> : groupNo, groupName 들어있음)
 let basket_group = [] 
@@ -625,6 +622,15 @@ $("#basket-groups").on("click", ".basket-normal-group", async function(){
 		$("[data-groupNo=" + String(curr_basket_group) + "]").removeClass("basket-selected-group")
 		$(this).addClass("basket-selected-group")
 		
+		// 핀 제거
+		for (var i = 0; i < markers.length; i++) {
+			markers[i].setMap(null)
+			overlays[i].setMap(null)
+		}
+		
+		markers = []
+		overlays = []
+		
 		// curr_basket_group 변경
 		curr_basket_group = parseInt($(this).attr("data-groupNo"))
 		console.log("현재 장바구니 그룹: " + curr_basket_group)
@@ -810,9 +816,7 @@ $("#basket-another-stores-btn").on("click", async function(){
 	
 	// 장바구니에 추가할 항목 가져오기
 	await addMoreStore()
-	
-	// 지도 핀 처리
-	
+		
 	if (!indexJSP) { // 투표나 랜덤에 있었다면 메인으로 돌아가서 보여줌
 		location.replace("${pageContext.request.contextPath}/")
 	}
@@ -833,6 +837,12 @@ async function addMoreStore() {
 			if (basket[curr_basket_group].length > temp) { 
 				console.log("가게가 추가되었습니다")
 				console.log(basket[curr_basket_group])
+				
+				if (indexJSP) {
+					for (var i = temp; i < basket[curr_basket_group].length; i++) {
+						updateMapPin(i, false)
+					}
+				}
 				
 			} else {
 				alert("현재 위치, 필터를 적용할 때 추천 가능한 가게가 없습니다.")
@@ -885,7 +895,17 @@ async function deleteBasketItem(storeNo) {
 	// 장바구니에서 해당 가게 stored = false로 변경
 	await deleteSessionBasketGroup(storeNo)
 	
-	// 지도 핀 변경	
+	// 현재 가게 선택
+	var idx
+	for (var i = 0; i < basket[curr_basket_group].length; i++) {
+		if (basket[curr_basket_group][i].storeNo == storeNo) {
+			idx = i
+			break
+		}
+	}
+	
+	// 핀 삭제하기
+	updateMapPin(idx, false)
 }
 
 
@@ -934,7 +954,7 @@ function basketNoItem() {
 }
 	
 
-/// 점심후보에 항목 추가하기 ********************************************* 모달 같은데서 사용하세요
+// 점심후보에 항목 추가하기 ********************************************* 모달 같은데서 사용하세요
 function addItemToBasket(storeNo) {
 	if (countBasketItems(curr_basket_group) >= 3) { // 이미 점심 후보 3개 이상이면
 		alert("점심 후보는 최대 3개까지 추가 가능합니다.")
@@ -966,19 +986,20 @@ function addItemToBasket(storeNo) {
 			basket = result // 장바구니 업데이트
 			$("#no-basket-items").remove()
 			
-			addToBasket(basket[curr_basket_group][i])	
+			addToBasket(basket[curr_basket_group][idx])	
 						
 			console.log("장바구니에 항목이 추가되었습니다")
 			console.log(basket[curr_basket_group])
-
+			
+			// 핀 변경 or 생성하기
+			updateMapPin(idx, true)
+			
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
 		}
 	})
-	
-	// 지도 핀 변경
-	
+		
 	console.log("addItemsToBasket() 끝")
 }
 
@@ -992,6 +1013,9 @@ async function changeGroupBasket() {
 		if (basket[curr_basket_group][i].stored) {
 			cnt += 1
 			addToBasket(basket[curr_basket_group][i])
+			updateMapPin(i, true)
+		} else {
+			updateMapPin(i, false)
 		}
 	}
 	
@@ -999,6 +1023,76 @@ async function changeGroupBasket() {
 	if (cnt == 0) {
 		basketNoItem()
 	}
+}
+
+
+
+// 지도에 핀 제거 / 생성 함수
+function updateMapPin(idx, selected) {
+	if (markers.length > idx) {
+		overlays[idx].setMap(null)
+		markers[idx].setMap(null)
+	}
+	
+	var curr_store = basket[curr_basket_group][idx]
+	
+	var img
+	
+	// 마커 색깔 구분
+	if (selected) {
+		img = new kakao.maps.MarkerImage(
+		      	"${pageContext.request.contextPath}/assets/img/markers/selectedPin.png",
+		      	new kakao.maps.Size(40, 40)
+		      )
+	} else {
+		img = new kakao.maps.MarkerImage(
+		      	"${pageContext.request.contextPath}/assets/img/markers/unselectedPin.png",
+		      	new kakao.maps.Size(40, 40)
+		      )
+	}
+					
+	// 마커 생성
+	var marker = new kakao.maps.Marker({
+		position : new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
+		image: img,
+		clickable: true
+	})
+			
+	marker.setMap(map)
+	
+	kakao.maps.event.addListener(marker, 'click', function(){
+		alert("왜")
+	})
+				
+	// 배열에 마커 저장
+	markers[idx] = marker 
+	
+	// 마커 태그 생성
+	var content 
+	
+	var storeName = curr_store.storeName
+	storeName = storeName.split(" ")[0]
+	
+	if (selected) {
+		content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
+        		  + 	'<span class="store_name">' + storeName + '</span>'
+        		  + '</div>'
+        
+	} else {
+		content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
+                  + 	'<span class="store_name">' + storeName + '<i class="far fa-plus-square"></i></span>'
+                  + '</div>'
+	}
+
+    var customOverlay = new kakao.maps.CustomOverlay({
+  	    map: map,
+  	    position: new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
+  	    content: content,
+  	    yAnchor: 1
+  	})
+
+	// 배열에 오버레이 저장
+	overlays[idx] = customOverlay
 }
 
 

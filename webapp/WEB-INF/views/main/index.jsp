@@ -99,7 +99,7 @@
                     <div id="modal-curr-location-box">
                     	<span class="emphasize-blue">현재 설정 위치:&nbsp;</span>
                     	<span id="modal-curr-location">${curr_location.address}</span>
-                    	<button class="btn btn-primary float-end" id="modal-curr-location-btn" type="button">현위치</button>
+                    	<button class="btn btn-primary float-end" id="modal-curr-location-btn" type="button" title="현재 위치로 변경">현위치</button>
                     </div>
                     <div id="write-location-box">
                     	<span class="d-inline-block">직접 입력하기:</span>
@@ -124,6 +124,14 @@
 
 // basketAside에서 사용(나는 index.jsp임)
 indexJSP = true
+
+//지도 전역변수로 놔두기
+let map
+
+// 마커 저장할 배열
+let markers = []
+let overlays = []
+
 
 // 위치재설정 버튼 클릭 시 > 모달 텍스트 불러옴 + 모달 보여주게
 $("#location-change-btn").on("click", function(){
@@ -284,15 +292,22 @@ async function callMap() {
 			      )
 		}
 		
+		
 		// 마커 생성
-		var newMarker = new kakao.maps.Marker({
+		var marker = new kakao.maps.Marker({
 			position : new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
 			image: img,
 			clickable: true
 		})
+				
+		marker.setMap(map)
 		
-		// 마커 지도에 표시
-		newMarker.setMap(map)	
+		kakao.maps.event.addListener(marker, 'click', function(){
+			alert("왜")
+		})
+		
+		// 배열에 마커 저장
+		markers.push(marker)
 		
 		// 마커 태그 생성
 		var content 
@@ -317,6 +332,7 @@ async function callMap() {
       	    yAnchor: 1
       	})
         
+        overlays.push(customOverlay)
 	}
 }
 
@@ -349,13 +365,22 @@ $("#reset-center").on("click", function(){
 })
 
 // 가게 추천 초기화하기 클릭
-$("#reset-recommend").on("click", function(){
+$("#reset-recommend").on("click", async function(){
 	if (basket[curr_basket_group].length == 0) {
 		alert("추천된 가게가 적어도 1개 이상 있어야 사용 가능합니다.")
 		return false
 	}
-	alert("임시")
+	
+	var resetConfirm = confirm("현재 추천된 가게 목록을 초기화하시겠습니까?")
+	
+	if (resetConfirm) {
+		await clearBasket()
+		location.replace("${pageContext.request.contextPath}/")
+	} else {
+		return
+	}
 })
+
 
 </script>
 
