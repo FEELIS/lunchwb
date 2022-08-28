@@ -134,11 +134,13 @@ public class VoteService {
 		voteDao.insertVoteMember(voteMems);
 		
 		// 투표 참여 안하는 사람들
-		Map<String, Object> notTodayMems = new HashMap<>();
-		notTodayMems.put("voteMember", notTodayMem);
-		notTodayMems.put("voteNo", voteNo);
-		
-		voteDao.insertNotTodayMember(notTodayMems);
+		if (notTodayMem.size() > 0) {
+			Map<String, Object> notTodayMems = new HashMap<>();
+			notTodayMems.put("voteMember", notTodayMem);
+			notTodayMems.put("voteNo", voteNo);
+			
+			voteDao.insertNotTodayMember(notTodayMems);
+		}
 		
 		System.out.println("**********************************[회원들 user_state 변경하기]**********************************");
 		userDao.updateState1(memberMem);
