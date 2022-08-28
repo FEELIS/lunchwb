@@ -83,7 +83,7 @@
                 <table class="table" id="basket-table-table">
 	                <tr>
 	                    <td id="basket-table-button-area" colspan="2">
-	                    	<i class="fas fa-filter" id="basket-filter-btn"></i>
+	                    	<i class="fas fa-filter" id="basket-filter-btn" title="메뉴 필터"></i>
 	                    	<button class="btn btn-primary d-inline-block" id="basket-another-stores-btn" type="button">다른 가게 추천 받기</button>
 	                    </td>
 	                </tr>
@@ -206,9 +206,6 @@ let indexJSP = false
 const userNo = "${authUser.userNo}" 
 // 장바구니(Map<Integer, List<StoreVo>: key - storeNo / value - StoreVo(이거저거 많이 들어있음))
 let basket = "${basket}" 
-
-// 지도 전역변수로 놔두기
-let map
 
 // 내가 속한 그룹 리스트(List<GroupVo> : groupNo, groupName 들어있음)
 let basket_group = [] 
@@ -885,7 +882,52 @@ async function deleteBasketItem(storeNo) {
 	// 장바구니에서 해당 가게 stored = false로 변경
 	await deleteSessionBasketGroup(storeNo)
 	
-	// 지도 핀 변경	
+	// 현재 가게 선택
+	var idx
+	for (var i = 0; i < basket[curr_basket_group].length; i++) {
+		if (basket[curr_basket_group][i].storeNo == storeNo) {
+			idx = i
+			break
+		}
+	}
+	
+	var curr_store = basket[curr_basket_group][idx]
+
+	// 마커 변경	
+	markers[idx].setMap(null)
+	overlays[idx].setMap(null)
+	
+	var marker = new kakao.maps.Marker({
+		position : new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
+		image: img = new kakao.maps.MarkerImage(
+			      	"${pageContext.request.contextPath}/assets/img/markers/unselectedPin.png",
+			      	new kakao.maps.Size(40, 40)
+		        ),
+		clickable: true
+	})
+			
+	marker.setMap(map)
+	
+	kakao.maps.event.addListener(marker, 'click', function(){
+		alert("왜")
+	})
+	
+	markers[idx] = marker
+	
+	var content 
+	var storeName = curr_store.storeName
+	storeName = storeName.split(" ")[0]
+	
+    var customOverlay = new kakao.maps.CustomOverlay({
+  	    map: map,
+  	    position: new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
+  	    content:   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
+       			 +     '<span class="store_name">' + storeName + '<i class="far fa-plus-square"></i></span>'
+        		 + '</div>',
+  	    yAnchor: 1
+  	})
+	
+	overlays[idx] = customOverlay
 }
 
 
@@ -934,7 +976,7 @@ function basketNoItem() {
 }
 	
 
-/// 점심후보에 항목 추가하기 ********************************************* 모달 같은데서 사용하세요
+// 점심후보에 항목 추가하기 ********************************************* 모달 같은데서 사용하세요
 function addItemToBasket(storeNo) {
 	if (countBasketItems(curr_basket_group) >= 3) { // 이미 점심 후보 3개 이상이면
 		alert("점심 후보는 최대 3개까지 추가 가능합니다.")
@@ -966,19 +1008,59 @@ function addItemToBasket(storeNo) {
 			basket = result // 장바구니 업데이트
 			$("#no-basket-items").remove()
 			
-			addToBasket(basket[curr_basket_group][i])	
+			addToBasket(basket[curr_basket_group][idx])	
 						
 			console.log("장바구니에 항목이 추가되었습니다")
 			console.log(basket[curr_basket_group])
+			
+			// 핀 변경 or 생성하기
+			if (markers.length > idx) {
+				overlays[idx].setMap(null)
+				markers[idx].setMap(null)
+			}
+						
+			var curr_store = basket[curr_basket_group][idx]
+			
+			// 마커 생성
+			var marker = new kakao.maps.Marker({
+				position : new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
+				image: new kakao.maps.MarkerImage(
+					      	"${pageContext.request.contextPath}/assets/img/markers/selectedPin.png",
+					      	new kakao.maps.Size(40, 40)
+				       ),
+				clickable: true
+			})
+					
+			marker.setMap(map)
+			
+			kakao.maps.event.addListener(marker, 'click', function(){
+				alert("왜")
+			})
+						
+			// 배열에 마커 저장
+			markers[idx] = marker 
+			
+			// 마커 태그 생성
+			var content 
+			var storeName = curr_store.storeName
+			storeName = storeName.split(" ")[0]
 
+	        var customOverlay = new kakao.maps.CustomOverlay({
+	      	    map: map,
+	      	    position: new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
+	      	    content:   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
+		      		     + 	   '<span class="store_name">' + storeName + '</span>'
+		    		     + '</div>',
+	      	    yAnchor: 1
+	      	})
+
+			overlays[idx] = customOverlay
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
 		}
 	})
-	
-	// 지도 핀 변경
-	
+		
 	console.log("addItemsToBasket() 끝")
 }
 
