@@ -3,6 +3,23 @@
 	min-width: 1000px;
 	margin: 0;
 	padding: 0;
+	position: relative;
+}
+
+#content-wrapper > .container {
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#no-store {
+  background: rgba(255,255,255,0.80);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 3;
 }
 
 #basket-aside {
@@ -410,22 +427,6 @@
   font-size: 10px;
   position: relative;
   display: inline;
-}
-
-#container {
-  width: 100%;
-  height: auto;
-  margin: 0;
-  padding: 0;
-}
-
-#no-store {
-  background: rgba(255,255,255,0.88);
-  left: 300px;
-  width: 80%;
-  height: 80%;
-  position: absolute;
-  z-index: 99;
 }
 
 #no-store-alert-1 {

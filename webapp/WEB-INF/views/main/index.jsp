@@ -6,7 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+
 <title>부장님요기요</title>
 
 <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/assets/img/bujang.png">
@@ -46,7 +47,6 @@
 	<c:import url="/WEB-INF/views/includes/header.jsp" />
     
     <div class="container" id="container">
-                
         <div class="align-items-center" id="map-util">
         	<div class="flex-nowrap" id="curr-location">
 	        	<span class="emphasize-blue" style="margin-right: 5px;">&nbsp;현위치:</span>
@@ -54,23 +54,21 @@
 	        	<button class="btn btn-primary" id="location-change-btn" type="button">위치재설정</button>
         	</div>
         	
-        	<button id="reset-center" title="현재 위치로 이동" class="btn btn-primary d-inline-flex d-xl-flex align-items-center align-items-xl-center" type="button">
+        	<button id="reset-center" title="현재 위치로 이동" class="btn btn-primary d-flex d-xl-flex align-items-center align-items-xl-center" type="button">
         		<i class="fas fa-crosshairs"></i>
         	</button>
         	
-        	<button id="reset-recommend" title="다시 추천받기" class="btn btn-primary d-inline-flex d-xl-flex align-items-center align-items-xl-center" type="button">
+        	<button id="reset-recommend" title="다시 추천받기" class="btn btn-primary d-flex d-xl-flex align-items-center align-items-xl-center" type="button">
         		<i class="fas fa-undo"></i>
         	</button>
         </div>
-        
-        <div id="kakaoMap" style="width: 100%; height: 900px;"></div>
         
         <c:if test="${!empty(curr_location)}">
         	<c:forEach var="basketItems" items="${basket}">
             	<c:if test="${basketItems.key == curr_basket_group}">
             		<c:set var="stores" value="${basketItems.value}" />
             		<c:if test="${fn:length(stores)==0}">
-            			<div class='d-inline-flex justify-content-center align-items-center' id='no-store'>
+            			<div class='d-flex justify-content-center align-items-center' id='no-store'>
                     		<div>
                     			<span class='d-block justify-content-center' id='no-store-alert-1'>주변에 추천 가능한 가게가 없어요</span>
                     			<span class='d-flex justify-content-center' id='no-store-alert-2'>현재 위치나 필터를 확인해주세요</span>
@@ -80,7 +78,12 @@
              	</c:if>
              </c:forEach>
         </c:if>
+        
+        <div id="kakaoMap" style="width: 100%; height: 100%; position: absolute;"></div>
+        
+        &nbsp;
     </div>
+    &nbsp;
 </div>
 
 <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
@@ -233,8 +236,8 @@ async function clearBasket() {
 // 주변에 가게가 하나도 없을 때 html 그려주는 함수
 function noStore() {
 	if (indexJSP) {
-		$("#container").append(
-			  "<div class='d-inline-flex justify-content-center align-items-center' id='no-store'>"
+		$("#container").prepend(
+			  "<div class='d-flex justify-content-center align-items-center' id='no-store'>"
             + 	"<div>"
             +   	"<span class='d-block justify-content-center' id='no-store-alert-1'>주변에 추천 가능한 가게가 없어요</span>"
             +       "<span class='d-flex justify-content-center' id='no-store-alert-2'>현재 위치나 필터를 확인해주세요</span>"
@@ -253,8 +256,7 @@ async function callMap() {
 	// 지도의 기본 설정
 	var mapOption = {
 		center: new kakao.maps.LatLng(gpsVo.gpsY, gpsVo.gpsX),
-		level: 3,
-		
+		level: 3		
 	}
 	
 	// 지도 표시하기, 축소 최대 레벨 설정
@@ -273,66 +275,9 @@ async function callMap() {
 	
 	currMarker.setMap(map)
 	
-
 	// 장바구니 항목들 지도에 마커로 표시하기
 	for (var i = 0; i < basket[curr_basket_group].length; i++) {
-		var curr_store = basket[curr_basket_group][i]
-		var img
-		
-		// 마커 색깔 구분
-		if (curr_store.stored) {
-			img = new kakao.maps.MarkerImage(
-			      	"${pageContext.request.contextPath}/assets/img/markers/selectedPin.png",
-			      	new kakao.maps.Size(40, 40)
-			      )
-		} else {
-			img = new kakao.maps.MarkerImage(
-			      	"${pageContext.request.contextPath}/assets/img/markers/unselectedPin.png",
-			      	new kakao.maps.Size(40, 40)
-			      )
-		}
-		
-		
-		// 마커 생성
-		var marker = new kakao.maps.Marker({
-			position : new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
-			image: img,
-			clickable: true
-		})
-				
-		marker.setMap(map)
-		
-		kakao.maps.event.addListener(marker, 'click', function(){
-			alert("왜")
-		})
-		
-		// 배열에 마커 저장
-		markers.push(marker)
-		
-		// 마커 태그 생성
-		var content 
-		var storeName = curr_store.storeName
-		storeName = storeName.split(" ")[0]
-		
-		if (curr_store.stored) {
-			content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
-            		  + 	'<span class="store_name">' + storeName + '</span>'
-            		  + '</div>'
-            
-		} else {
-			content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
-	                  + 	'<span class="store_name">' + storeName + '<i class="far fa-plus-square"></i></span>'
-	                  + '</div>'
-		}
-		
-        var customOverlay = new kakao.maps.CustomOverlay({
-      	    map: map,
-      	    position: new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
-      	    content: content,
-      	    yAnchor: 1
-      	})
-        
-        overlays.push(customOverlay)
+		updateMapPin(i, basket[curr_basket_group][i].stored)
 	}
 }
 
@@ -358,11 +303,12 @@ $("#kakaoMap").on("click", ".fa-plus-square", function(e){
 
 	
 	
-// 중심 좌표로 이동
+// 중심 좌표로 이동하기
 $("#reset-center").on("click", function(){
 	map.setCenter(new kakao.maps.LatLng(gpsVo.gpsY, gpsVo.gpsX))
 	map.setLevel(3)
 })
+
 
 // 가게 추천 초기화하기 클릭
 $("#reset-recommend").on("click", async function(){
@@ -376,10 +322,80 @@ $("#reset-recommend").on("click", async function(){
 	if (resetConfirm) {
 		await clearBasket()
 		location.replace("${pageContext.request.contextPath}/")
+		
 	} else {
 		return
 	}
 })
+
+
+// 지도에 핀 제거 / 생성 함수
+function updateMapPin(idx, selected) {
+	if (markers.length > idx) {
+		overlays[idx].setMap(null)
+		markers[idx].setMap(null)
+	}
+	
+	var curr_store = basket[curr_basket_group][idx]
+	
+	var img
+	
+	// 마커 색깔 구분
+	if (selected) {
+		img = new kakao.maps.MarkerImage(
+		      	"${pageContext.request.contextPath}/assets/img/markers/selectedPin.png",
+		      	new kakao.maps.Size(40, 40)
+		      )
+	} else {
+		img = new kakao.maps.MarkerImage(
+		      	"${pageContext.request.contextPath}/assets/img/markers/unselectedPin.png",
+		      	new kakao.maps.Size(40, 40)
+		      )
+	}
+					
+	// 마커 생성
+	var marker = new kakao.maps.Marker({
+		position : new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
+		image: img,
+		clickable: true
+	})
+			
+	marker.setMap(map)
+	
+	kakao.maps.event.addListener(marker, 'click', function(){
+		alert("왜")
+	})
+				
+	// 배열에 마커 저장
+	markers[idx] = marker 
+	
+	// 마커 태그 생성
+	var content 
+	
+	var storeName = curr_store.storeName
+	storeName = storeName.split(" ")[0]
+	
+	if (selected) {
+		content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
+        		  + 	'<span class="store_name">' + storeName + '</span>'
+        		  + '</div>'
+        
+	} else {
+		content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
+                  + 	'<span class="store_name">' + storeName + '<i class="far fa-plus-square"></i></span>'
+                  + '</div>'
+	}
+
+    var customOverlay = new kakao.maps.CustomOverlay({
+  	    map: map,
+  	    position: new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
+  	    content: content,
+  	    yAnchor: 1
+  	})
+
+	// 배열에 오버레이 저장
+	overlays[idx] = customOverlay
+}
 
 
 </script>
