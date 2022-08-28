@@ -49,12 +49,16 @@
                 
         <div class="align-items-center" id="map-util">
         	<div class="flex-nowrap" id="curr-location">
-	        	<span style="margin-right: 5px;"><i class="fas fa-crosshairs"></i>&nbsp;현위치:</span>
+	        	<span class="emphasize-blue" style="margin-right: 5px;">&nbsp;현위치:</span>
 	        	<span id="curr-location-address">${curr_location.address}</span>
 	        	<button class="btn btn-primary" id="location-change-btn" type="button">위치재설정</button>
         	</div>
         	
-        	<button id="reset-recommend" class="btn btn-primary d-inline-flex d-xl-flex align-items-center align-items-xl-center" type="button">
+        	<button id="reset-center" title="현재 위치로 이동" class="btn btn-primary d-inline-flex d-xl-flex align-items-center align-items-xl-center" type="button">
+        		<i class="fas fa-crosshairs"></i>
+        	</button>
+        	
+        	<button id="reset-recommend" title="다시 추천받기" class="btn btn-primary d-inline-flex d-xl-flex align-items-center align-items-xl-center" type="button">
         		<i class="fas fa-undo"></i>
         	</button>
         </div>
@@ -250,7 +254,7 @@ async function callMap() {
 	}
 	
 	// 지도 표시하기, 축소 최대 레벨 설정
-	var map = new kakao.maps.Map(mapDiv, mapOption)
+	map = new kakao.maps.Map(mapDiv, mapOption)
 	map.setMaxLevel(4)
 	
 	
@@ -331,7 +335,7 @@ $("#kakaoMap").on("click", ".customoverlay", function(){
 })
 
 
-// 가게 제거 버튼 클릭 시 > 장바구니에 항목 추가
+// 가게 추가 버튼 클릭 시 > 장바구니에 항목 추가
 $("#kakaoMap").on("click", ".fa-plus-square", function(e){
 	var storeNo = parseInt($(this).closest(".customoverlay").attr("data-storeNo"))
 	addItemToBasket(storeNo)
@@ -341,6 +345,13 @@ $("#kakaoMap").on("click", ".fa-plus-square", function(e){
 })
 
 	
+	
+// 중심 좌표로 이동
+$("#reset-center").on("click", function(){
+	map.setCenter(new kakao.maps.LatLng(gpsVo.gpsY, gpsVo.gpsX))
+	map.setLevel(3)
+})
+
 // 가게 추천 초기화하기 클릭
 $("#reset-recommend").on("click", function(){
 	if (basket[curr_basket_group].length == 0) {

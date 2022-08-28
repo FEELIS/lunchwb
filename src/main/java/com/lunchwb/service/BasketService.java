@@ -165,11 +165,6 @@ public class BasketService {
 	// 장바구니에 아이템 추가
 	public List<StoreVo> addBasket(List<StoreVo> basketItems, int storeNo, GPSVo gpsVo) {
 		int cnt = 0;
-		System.out.println("=========================================================================");
-		System.out.println("=========================================================================");
-		System.out.println("=========================================================================");
-		System.out.println("=========================================================================");
-		System.out.println("=========================================================================");
 
 		for (int i = 0; i < basketItems.size(); i++) {
 			StoreVo store = basketItems.get(i);

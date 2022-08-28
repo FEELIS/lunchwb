@@ -207,6 +207,9 @@ const userNo = "${authUser.userNo}"
 // 장바구니(Map<Integer, List<StoreVo>: key - storeNo / value - StoreVo(이거저거 많이 들어있음))
 let basket = "${basket}" 
 
+// 지도 전역변수로 놔두기
+let map
+
 // 내가 속한 그룹 리스트(List<GroupVo> : groupNo, groupName 들어있음)
 let basket_group = [] 
 //현재 선택 그룹(groupNo)

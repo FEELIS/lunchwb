@@ -305,7 +305,7 @@
   padding: 17px 10px;
   height: 29px;
   margin-top: 32px;
-  margin-left: 15px;
+  margin-left: 12px;
   box-shadow: 1px 1px 10px 1px rgb(182,184,194);
   color: #ffffff;
   background: var(--bs-blue);
@@ -317,6 +317,29 @@
 }
 
 #reset-recommend i {
+  font-size: 15px;
+}
+
+#reset-center {
+  min-width:37px;
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  padding: 17px 10px;
+  height: 29px;
+  margin-top: 32px;
+  margin-left: 15px;
+  box-shadow: 1px 1px 10px 1px rgb(182,184,194);
+  color: #ffffff;
+  background: var(--bs-blue);
+  border-radius: 10px;
+}
+
+#reset-center:hover {
+  background-color: #3253b1;
+}
+
+#reset-center i {
   font-size: 15px;
 }
 
