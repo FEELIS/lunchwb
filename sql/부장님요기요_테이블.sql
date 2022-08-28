@@ -328,7 +328,9 @@ CREATE TABLE vote (
  vote_end_time DATE NOT NULL,
  vote_items varchar2(3000) not null,
  vote_results varchar2(1000) not NULL,
- vote_state number(20) DEFAULT 1 NOT NULL
+ vote_state number(20) DEFAULT 1 NOT NULL, 
+ curr_x number(13,10) NOT NULL, 
+ curr_y number(13,10) NOT NULL
 );
 
 --===== 투표하는 그룹 =====
