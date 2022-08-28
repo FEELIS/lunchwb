@@ -18,6 +18,7 @@
   background: rgba(255,255,255,0.80);
   width: 100%;
   height: 100%;
+  padding-bottom: 10%;
   position: absolute;
   z-index: 3;
 }
@@ -284,7 +285,7 @@
 
 #curr-location {
   margin-left: 39px;
-  padding: 5px 15px;
+  padding: 5px 10px;
   background: #ffffff;
   border: 1px solid rgb(255,255,255);
   border-radius: 10px;
@@ -514,7 +515,7 @@
   padding: 3px 7px 3px 10px;
   border-color: rgb(255,255,255);
   border-radius: 7px;
-  margin-bottom: 40px;
+  margin-bottom: 47px;
   z-index: 100;
 }
 

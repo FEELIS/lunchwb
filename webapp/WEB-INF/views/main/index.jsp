@@ -248,7 +248,7 @@ function noStore() {
 }
 
 
-//카카오지도 API
+//카카오지도 API 불러오기
 async function callMap() {
 	// 지도가 표시될 구역
 	var mapDiv = document.getElementById('kakaoMap')
@@ -274,6 +274,85 @@ async function callMap() {
 	})
 	
 	currMarker.setMap(map)
+	
+	kakao.maps.event.addListener(currMarker, 'click', function() { 
+		var changeCurrLoc = confirm("현재 위치를 변경하시겠습니까?")
+		
+		if (changeCurrLoc) {
+			currMarker.setMap(null)
+
+			var marker = new kakao.maps.Marker({
+			    position: new kakao.maps.LatLng(gpsVo.gpsY, gpsVo.gpsX),
+			    image: new kakao.maps.MarkerImage(
+					   "${pageContext.request.contextPath}/assets/img/markers/selectedRed.png",
+					   new kakao.maps.Size(40, 40),
+					   {offset: new kakao.maps.Point(20, 40)}
+					)
+			})
+			
+			marker.setMap(map)
+			marker.setDraggable(true)
+			
+			kakao.maps.event.addListener(marker, 'dragend', function() {
+				var latlng =  marker.getPosition()
+				var newX = latlng.getLng()
+				var newY = latlng.getLat()
+				var newAddress
+				
+				geocoder = new kakao.maps.services.Geocoder()
+				
+				geocoder.coord2Address(newX, newY, async function(result, status) {
+					if (status === kakao.maps.services.Status.OK) {
+						newAddress = result[0].address.address_name // 주소 획득
+						console.log(newAddress)
+											
+						var changeAddr = confirm("[" + newAddress + "]로 기준 위치를 변경하시겠습니까? 추천된 가게 목록은 초기화됩니다.")
+						
+						if (changeAddr) {
+							gpsVo.gpsX = newX
+							gpsVo.gpsY = newY
+							gpsVo.address = newAddress
+							
+							await setGPS(gpsVo)
+						    await clearBasket()
+						    
+							// 페이지 다시 로드						    
+						    alert("현재 위치가 변경되었습니다.")
+						    location.replace("${pageContext.request.contextPath}/")
+							
+						} else {
+							return false
+						}
+	
+					}
+				})		
+			})
+				
+			kakao.maps.event.addListener(map, 'click', function() {
+				var dontChange = confirm("현재 위치 변경을 취소하시겠습니까?")
+				
+				if (dontChange) {
+					marker.setMap(null)
+					
+					var currMarker = new kakao.maps.Marker({
+						position: new kakao.maps.LatLng(gpsVo.gpsY, gpsVo.gpsX),
+						image: new kakao.maps.MarkerImage(
+							"${pageContext.request.contextPath}/assets/img/markers/currMarker.png",
+							new kakao.maps.Size(40, 40)
+						)
+					})
+					
+					currMarker.setMap(map)
+					
+				} else {
+					return false
+				}
+			})
+			
+		} else {
+			return false
+		}
+	})
 	
 	// 장바구니 항목들 지도에 마커로 표시하기
 	for (var i = 0; i < basket[curr_basket_group].length; i++) {
@@ -329,6 +408,9 @@ $("#reset-recommend").on("click", async function(){
 })
 
 
+//  
+
+
 // 지도에 핀 제거 / 생성 함수
 function updateMapPin(idx, selected) {
 	if (markers.length > idx) {
@@ -344,20 +426,21 @@ function updateMapPin(idx, selected) {
 	if (selected) {
 		img = new kakao.maps.MarkerImage(
 		      	"${pageContext.request.contextPath}/assets/img/markers/selectedPin.png",
-		      	new kakao.maps.Size(40, 40)
+		      	new kakao.maps.Size(40, 40),
+		      	{offset: new kakao.maps.Point(20, 45)}
 		      )
 	} else {
 		img = new kakao.maps.MarkerImage(
 		      	"${pageContext.request.contextPath}/assets/img/markers/unselectedPin.png",
-		      	new kakao.maps.Size(40, 40)
+		      	new kakao.maps.Size(40, 40),
+		      	{offset: new kakao.maps.Point(20, 45)}
 		      )
 	}
 					
 	// 마커 생성
 	var marker = new kakao.maps.Marker({
 		position : new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
-		image: img,
-		clickable: true
+		image: img
 	})
 			
 	marker.setMap(map)
@@ -396,6 +479,7 @@ function updateMapPin(idx, selected) {
 	// 배열에 오버레이 저장
 	overlays[idx] = customOverlay
 }
+
 
 
 </script>
