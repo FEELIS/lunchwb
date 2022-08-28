@@ -426,11 +426,11 @@ function storeBasicInfo(storeNo){
 					
 					}else if(i==1){
 						$(".img-area span").append('<img id="proImg-2" class="visually-hidden" data-imgno="2" data-end="'+storeMap.imgList.length+'" src="${pageContext.request.contextPath}/upload/'+storeMap.imgList[1]+'">')	
-						document.getElementById("imgIcon-2").className = "far fa-circle"
+						//document.getElementById("imgIcon-2").className = "far fa-circle"
 
 					}else{
 						$(".img-area span").append('<img id="proImg-3" class="visually-hidden" data-imgno="3" data-end="'+storeMap.imgList.length+'" src="${pageContext.request.contextPath}/upload/'+storeMap.imgList[2]+'">')	
-						document.getElementById("imgIcon-3").className = "far fa-circle"
+						//document.getElementById("imgIcon-3").className = "far fa-circle"
 					}
 				}
 			}
@@ -747,7 +747,7 @@ function drawOtherStores(storeNo, groupNo, sortNo){
 		success : function(otherStores){
 			console.log("otherStores"+otherStores)
 
-			if(otherStores != null){
+			if(otherStores != null && otherStores != ""){
 				for(var i=0; i<otherStores.length; i++){
 					var str = ''
 					str += '<span class="d-inline-block">'
@@ -792,6 +792,12 @@ function drawOtherStores(storeNo, groupNo, sortNo){
 					
 					modalStoreStar(otherStores[i].ratingBujang, i+1)
 				}
+				
+			}else{
+				$(".other-stores-area").append('<span class="d-block">'
+												+'	</br></br>현재 위치가 설정되지 않았거나 근처에 같은 카테고리의 다른 가게가 없습니다</br></br>'
+												+'</span>')
+				
 			}
 		},
 		error : function(XHR, status, error) {
@@ -820,7 +826,7 @@ function modalSortOfStore(storeNo, k){
 		case 0:
 		// k=1 : 리뷰메인(모달에서 넘어가는거 아니고)
 			//조회하는 가게 = 다녀온 가게
-			if(storeNo == "${visitedMap.visitedVo.storeNo}" && "${visitedMap.reviewVo}" != null){
+			if(storeNo == "${visitedMap.visitedVo.storeNo}" && "${visitedMap.reviewVo}" == ""){
 				$(".store-button-area").append('<a href="${pageContext.request.contextPath}/visited/cancel/${visitedMap.visitedVo.visitedNo}">'
 												+'	<button class="btn btn-primary modal-btn-visited-cancel" type="button">방문취소</button>'
 												+'</a>')
