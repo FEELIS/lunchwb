@@ -831,6 +831,10 @@ async function addMoreStore() {
 				console.log("가게가 추가되었습니다")
 				console.log(basket[curr_basket_group])
 				
+				for (var i = temp; i < basket[curr_basket_group].length; i++) {
+					updateMapPin(i, false)
+				}
+				
 			} else {
 				alert("현재 위치, 필터를 적용할 때 추천 가능한 가게가 없습니다.")
 			}
@@ -891,43 +895,8 @@ async function deleteBasketItem(storeNo) {
 		}
 	}
 	
-	var curr_store = basket[curr_basket_group][idx]
-
-	// 마커 변경	
-	markers[idx].setMap(null)
-	overlays[idx].setMap(null)
-	
-	var marker = new kakao.maps.Marker({
-		position : new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
-		image: img = new kakao.maps.MarkerImage(
-			      	"${pageContext.request.contextPath}/assets/img/markers/unselectedPin.png",
-			      	new kakao.maps.Size(40, 40)
-		        ),
-		clickable: true
-	})
-			
-	marker.setMap(map)
-	
-	kakao.maps.event.addListener(marker, 'click', function(){
-		alert("왜")
-	})
-	
-	markers[idx] = marker
-	
-	var content 
-	var storeName = curr_store.storeName
-	storeName = storeName.split(" ")[0]
-	
-    var customOverlay = new kakao.maps.CustomOverlay({
-  	    map: map,
-  	    position: new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
-  	    content:   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
-       			 +     '<span class="store_name">' + storeName + '<i class="far fa-plus-square"></i></span>'
-        		 + '</div>',
-  	    yAnchor: 1
-  	})
-	
-	overlays[idx] = customOverlay
+	// 핀 삭제하기
+	updateMapPin(idx, false)
 }
 
 
@@ -1014,47 +983,8 @@ function addItemToBasket(storeNo) {
 			console.log(basket[curr_basket_group])
 			
 			// 핀 변경 or 생성하기
-			if (markers.length > idx) {
-				overlays[idx].setMap(null)
-				markers[idx].setMap(null)
-			}
-						
-			var curr_store = basket[curr_basket_group][idx]
+			updateMapPin(idx, true)
 			
-			// 마커 생성
-			var marker = new kakao.maps.Marker({
-				position : new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
-				image: new kakao.maps.MarkerImage(
-					      	"${pageContext.request.contextPath}/assets/img/markers/selectedPin.png",
-					      	new kakao.maps.Size(40, 40)
-				       ),
-				clickable: true
-			})
-					
-			marker.setMap(map)
-			
-			kakao.maps.event.addListener(marker, 'click', function(){
-				alert("왜")
-			})
-						
-			// 배열에 마커 저장
-			markers[idx] = marker 
-			
-			// 마커 태그 생성
-			var content 
-			var storeName = curr_store.storeName
-			storeName = storeName.split(" ")[0]
-
-	        var customOverlay = new kakao.maps.CustomOverlay({
-	      	    map: map,
-	      	    position: new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
-	      	    content:   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
-		      		     + 	   '<span class="store_name">' + storeName + '</span>'
-		    		     + '</div>',
-	      	    yAnchor: 1
-	      	})
-
-			overlays[idx] = customOverlay
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
@@ -1081,6 +1011,77 @@ async function changeGroupBasket() {
 	if (cnt == 0) {
 		basketNoItem()
 	}
+}
+
+
+
+// 지도에 핀 제거 / 생성 함수
+function updateMapPin(idx, selected) {
+	if (markers.length > idx) {
+		overlays[idx].setMap(null)
+		markers[idx].setMap(null)
+	}
+	
+	var curr_store = basket[curr_basket_group][idx]
+	
+	var img
+	
+	// 마커 색깔 구분
+	if (selected) {
+		img = new kakao.maps.MarkerImage(
+		      	"${pageContext.request.contextPath}/assets/img/markers/selectedPin.png",
+		      	new kakao.maps.Size(40, 40)
+		      )
+	} else {
+		img = new kakao.maps.MarkerImage(
+		      	"${pageContext.request.contextPath}/assets/img/markers/unselectedPin.png",
+		      	new kakao.maps.Size(40, 40)
+		      )
+	}
+					
+
+	// 마커 생성
+	var marker = new kakao.maps.Marker({
+		position : new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
+		image: img,
+		clickable: true
+	})
+			
+	marker.setMap(map)
+	
+	kakao.maps.event.addListener(marker, 'click', function(){
+		alert("왜")
+	})
+				
+	// 배열에 마커 저장
+	markers[idx] = marker 
+	
+	// 마커 태그 생성
+	var content 
+	
+	var storeName = curr_store.storeName
+	storeName = storeName.split(" ")[0]
+	
+	if (selected) {
+		content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
+        		  + 	'<span class="store_name">' + storeName + '</span>'
+        		  + '</div>'
+        
+	} else {
+		content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
+                  + 	'<span class="store_name">' + storeName + '<i class="far fa-plus-square"></i></span>'
+                  + '</div>'
+	}
+
+    var customOverlay = new kakao.maps.CustomOverlay({
+  	    map: map,
+  	    position: new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
+  	    content: content,
+  	    yAnchor: 1
+  	})
+
+	// 배열에 오버레이 저장
+	overlays[idx] = customOverlay
 }
 
 
