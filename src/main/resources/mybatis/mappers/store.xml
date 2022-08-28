@@ -137,7 +137,7 @@
 	<select id="selectOneStore" parameterType="Map" resultMap="StoreVo">
 		<![CDATA[
 			SELECT store_breaktime storeBreakTime, menu_2nd_cate_name menu2ndCateName, store_opening_hours storeOpeningHours, store_name storeName, store_no storeNo, store_road_address storeRoadAdderss, store_x storeX, store_y storeY
-			       ROUND(SQRT(POWER(ABS(store_x-#{gpsVo.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(store_y-#{gpsVo.gpsY})*6400000*2*3.14/360, 2)), 0) distance
+			       ,ROUND(SQRT(POWER(ABS(store_x-#{gpsVo.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(store_y-#{gpsVo.gpsY})*6400000*2*3.14/360, 2)), 0) distance
 			FROM   store s, food_2nd_category f
 			WHERE  s.menu_2nd_cate_no = f.menu_2nd_cate_no
 			AND    store_no = #{storeNo}
