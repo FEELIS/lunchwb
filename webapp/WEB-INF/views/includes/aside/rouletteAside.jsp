@@ -44,36 +44,18 @@
         </c:if>
         
         <div id="basket-aside-content" class="full-box">
-        	<c:if test="${!empty(authUser)}">
              <div class="text-start d-flex basket-aside-title" id="basket-title-group">
-             	<span class="d-inline-block">나의 그룹</span>
+             	<span class="d-inline-block">룰렛 그룹</span>
              </div>
              
              <div class="d-flex" id="basket-groups">
              	<!--  회원이 속한 그룹이 올 자리  -->
-             	<c:if test="${!empty(basketGroup)}">
-					<c:forEach var="myGroup" items="${basketGroup}">
-						<c:if test="${myGroup.groupNo == curr_basket_group}">
-							<div class="basket-group basket-selected-group basket-normal-group" data-groupNo="${myGroup.groupNo}">
-								<span>${myGroup.groupName}</span>
-								<i class="fas fa-user-circle"></i>
-							</div>	
-						</c:if>
-						
-						<c:if test="${myGroup.groupNo != curr_basket_group}">
-							<div class="basket-group basket-normal-group" data-groupNo="${myGroup.groupNo}">
-								<span>${myGroup.groupName}</span>
-								<i class="fas fa-user-circle"></i>
-							</div>	
-						</c:if>
-					</c:forEach>
-             	</c:if>
+				<div class="basket-group basket-selected-group basket-normal-group" data-groupNo="${myGroup.groupNo}">
+					<span>${randomInfo.groupName}</span>
+					<i class="fas fa-user-circle"></i>
+				</div>	
 
-             	<c:if test="${empty(basketGroup) or fn:length(basketGroup) < 4}">
-						<div class="basket-group basket-group-add"><span>그룹추가</span><i class="fas fa-user-plus"></i></div>	
-				</c:if>
              </div>
-            </c:if>
             
             <div class="text-start d-flex basket-aside-title" id="basket-title-lunch-candidates">
             	<span class="d-inline-block">오늘의 점심 후보</span>

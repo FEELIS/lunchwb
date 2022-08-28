@@ -18,6 +18,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/customModal.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/storeInfo.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/vote.css">
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
@@ -40,7 +41,7 @@
 <body>
 
 <div id="wrapper">
-<c:import url="/WEB-INF/views/includes/aside/basketAside.jsp" />
+<c:import url="/WEB-INF/views/includes/aside/rouletteAside.jsp" />
 
 
 <div class="d-flex flex-column" id="content-wrapper" style="position: relative;">
@@ -48,6 +49,21 @@
         <div id="header-1">
             <c:import url="/WEB-INF/views/includes/header.jsp" />
         </div>
+        
+        <div class="d-flex d-xxl-flex justify-content-center" id="vote-result-link-btn-area">
+            	<a href="javascript:kakaoShare()" style="text-decoration:none;">
+	            	<button class="btn btn-danger d-inline-flex d-xxl-flex justify-content-center align-items-center" id="vote-kakao-btn" type="button">
+	            		<i class="fas fa-comment"></i>
+	            		<span>공유하기</span>
+	            	</button>
+            	</a>	
+            	<span class="d-inline-flex flex-shrink-0 justify-content-center flex-nowrap align-items-xxl-center" id="vote-url-copy-box">
+            		<i class="fas fa-link d-inline-flex d-xxl-flex flex-shrink-0 justify-content-start align-items-center justify-content-xl-start align-items-xl-center justify-content-xxl-start align-items-xxl-center"></i>
+            		<input id="vote-url-input" class="d-inline-flex d-xxl-flex flex-shrink-0 align-items-xxl-center" type="text" value="http://localhost:8088/lunchwb/${randomInfo.randomNo}">
+            		<button id="vote-url-copy-btn" class="btn btn-primary d-inline-flex d-xxl-flex flex-shrink-0 justify-content-center align-items-center align-content-center align-items-xl-center justify-content-xxl-center align-items-xxl-center" type="button">복사</button>
+            	</span>
+            </div>
+            
         
        <div style="margin-top: 100px;" align="center">
             <table cellpadding="0" cellspacing="0" border="0">
@@ -66,28 +82,6 @@
             </table>
         </div>
     </div>
-</div>
-
-<div id="modal-select-member-go" class="modal visible no-drag" role="dialog" tabindex="-1">
-	<div class="modal-dialog modal-sm modal-dialog-top" role="document">
-		<div class="modal-content">
-			<div class="modal-header text-primary modal-header-custom">
-				<span>함께할 멤버 선택</span>
-				<button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body text-center text-dark" style="font-size: 14px;">
-				<p>
-					표시되지 않은 멤버는<br> 이미 다른 그룹과 함께한 멤버입니다
-				</p>
-				<div id="member-selection-button">
-					<button id="member-all-selection" class="btn btn-light">전체 선택</button>
-					<button id="member-all-selection-del" class="btn btn-light">전체 해제</button>
-				</div>
-				<div id="modal-select-member-area"></div>
-			</div>
-		</div>
-	</div>
-
 </div>
 
 </body>
@@ -210,7 +204,6 @@ function startSpin()
 
 let creatorNo = "${authUser.userNo}";
 console.log("creatorNo = " + creatorNo );
-
 function alertPrize(indicatedSegment){
     // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
     if(confirm("오늘 방문할 가게는 [" + indicatedSegment.text +"] 입니다. \n방문하시겠습니까?" ) == false){
@@ -257,6 +250,7 @@ function alertPrize(indicatedSegment){
 		success : function(randomNo) {
 			if (randomNo == 0) {
 				alert("랜덤 결과 생성 실패")
+				
 			}
 		},
 		error: function(xhr, status, error){
@@ -265,7 +259,7 @@ function alertPrize(indicatedSegment){
 	})
   	
       if(modalSelectRandomMembers(indicatedSegment.storeNo, curr_basket_group) == false){
-		return false
+	return false
         
     }
 }

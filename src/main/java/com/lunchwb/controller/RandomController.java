@@ -1,5 +1,6 @@
 package com.lunchwb.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -11,13 +12,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lunchwb.service.RandomService;
 import com.lunchwb.service.TestService;
+import com.lunchwb.service.VisitedService;
 import com.lunchwb.vo.GroupVo;
+import com.lunchwb.vo.RandomVo;
 import com.lunchwb.vo.UserVo;
 
 @RequestMapping("/random")
@@ -28,6 +33,8 @@ public class RandomController {
 	TestService testService;
 	@Autowired
 	RandomService randomService;
+	@Autowired
+	VisitedService visitedService;
 	
 	
 	private static final Logger logger = LoggerFactory.getLogger(TestController.class);
@@ -41,13 +48,18 @@ public class RandomController {
 	
 	@RequestMapping(value = {"", "/{randomNo}"})
 	public String randomMain(Model model,
+							HttpSession session,
 							@PathVariable(required = false, name = "randomNo") Integer randomNo) {
 		logger.info("/randomMain");
 		
 		if(randomNo == null) {
 			return "main/random/randomMain";
 		}else {
-			return "redirect:/random/" + randomNo;
+			RandomVo randomInfo = randomService.checkAllRandomResult(randomNo);
+			
+			model.addAttribute("randomInfo", randomInfo);
+			
+			return "main/random/randomRouletteResult";
 		}
 		
 	}
@@ -89,23 +101,36 @@ public class RandomController {
 	public int randomResult(@RequestBody Map<String, String> randomData, HttpSession session) {
 		System.out.println("랜덤 정보 = " + randomData);
 		
-		String stopAtValue = randomData.get("stopAt");
+		int stopAtValue = Integer.parseInt(randomData.get("stopAt"));
 		String currBasket = randomData.get("currBasket");
-		String currBasketGroup = randomData.get("currBasketGroup");
+		int currBasketGroup = Integer.parseInt(randomData.get("currBasketGroup"));
+		int creatorUserNo = Integer.parseInt(randomData.get("creatorNo"));
 		
 		System.out.println("룰렛 각도 = " + stopAtValue);
 		System.out.println("현재 장바구니 = " + currBasket);
 		System.out.println("현재 장바구니 그룹 = " + currBasketGroup);
+		System.out.println("랜덤 제작자 = " + creatorUserNo);
 		
 		UserVo loginUser = (UserVo)session.getAttribute("authUser");
 		
 		int randomNo = 0;
 		if (loginUser != null) {
-			randomNo = randomService.makeResult(stopAtValue, currBasket, currBasketGroup);
+			randomNo = randomService.makeResult(stopAtValue, currBasket, currBasketGroup, creatorUserNo);
 		}
 		
-		
 		return randomNo;
+	}
+	
+	/* 방문 결정 */
+	@PostMapping("decision/{storeNo}/{groupNo}")
+	public String decideVisit(@PathVariable("storeNo") int storeNo, @PathVariable("groupNo") int groupNo, 
+							  @RequestParam(name="memberList", defaultValue = "") List<Integer> memberList, HttpSession session) {
+		logger.info("VisitedController > decideVisit()");
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		int randomNo = (randomService.checkRandomResult(authUser.getUserNo())).getRandomNo();
+		
+		visitedService.decideVisit(storeNo, groupNo, memberList, authUser);
+		return "redirect:/random/" + randomNo;
 	}
 	
 }
