@@ -241,21 +241,21 @@
 
 /* 메인-가게바구니에서 조회할 때 */
 $("#basket-table").on("click", ".basket-table-store-name", function(){
-	if (typeof indexJSP) {
+   if(typeof indexJSP === 'undefined'){
         var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
-		
-		groupNo = curr_basket_group
-		console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
-		
-		storeInfoOpen(storeNo, groupNo, 1)
-	
-	}else if(typeof indexJSP === 'undefined'){
-        var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
-		var groupNo = curr_basket_group
-		console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
-		
-		storeInfoOpen(storeNo, groupNo, 2)
-	}
+      var groupNo = curr_basket_group
+      console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+      
+      storeInfoOpen(storeNo, groupNo, 2)
+      
+   } else if (indexJSP) {
+      var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
+      
+      groupNo = curr_basket_group
+      console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+      
+      storeInfoOpen(storeNo, groupNo, 1)
+   }
 })
 
 /* 실험용 */
