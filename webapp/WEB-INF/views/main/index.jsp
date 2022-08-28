@@ -86,7 +86,7 @@
 <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 
 <!-- 위치 재설정 모달 -->
-<div id="modal-location-change" class="modal fade" role="dialog" tabindex="-1">
+<div id="modal-location-change" class="modal fade" role="dialog" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header" style="border-bottom-color: rgb(255,255,255);">
@@ -140,11 +140,7 @@ $("#location-change-btn").on("click", function(){
 	
 	// 모달에 내용 표시하고 보여주기
 	$("#modal-curr-location").text(curr_address)
-	$("#modal-location-change").modal("show")
-	// 모달 밖 클릭해도 안닫히게 하고 싶은데 잘 닫힘
-	$("#modal-location-change").modal({
-		backdrop: 'static'
-	})
+	$("#modal-location-change").modal('show')
 })
 
 
