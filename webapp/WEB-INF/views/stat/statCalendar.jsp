@@ -440,7 +440,7 @@
                             } else if (vstList[j].groupOrder === 4) {
                                 str += 'bg-info ';
                             }
-                            str += 'show-menu" data-storeno="'+vstList[j].storeNo+'">' + vstList[j].menu1stCateName + "/" + vstList[j].menuName + '</div>';
+                            str += 'show-menu" data-visit="'+vstList[j].visitedDate+'" data-storeno="'+vstList[j].storeNo+'">' + vstList[j].menu1stCateName + "/" + vstList[j].menuName + '</div>';
                             
                             str += '<div class="event ';
                             if (vstList[j].groupOrder === 1) {
