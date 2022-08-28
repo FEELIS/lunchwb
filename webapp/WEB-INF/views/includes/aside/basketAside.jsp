@@ -622,6 +622,15 @@ $("#basket-groups").on("click", ".basket-normal-group", async function(){
 		$("[data-groupNo=" + String(curr_basket_group) + "]").removeClass("basket-selected-group")
 		$(this).addClass("basket-selected-group")
 		
+		// 핀 제거
+		for (var i = 0; i < markers.length; i++) {
+			markers[i].setMap(null)
+			overlays[i].setMap(null)
+		}
+		
+		markers = []
+		overlays = []
+		
 		// curr_basket_group 변경
 		curr_basket_group = parseInt($(this).attr("data-groupNo"))
 		console.log("현재 장바구니 그룹: " + curr_basket_group)
@@ -807,9 +816,7 @@ $("#basket-another-stores-btn").on("click", async function(){
 	
 	// 장바구니에 추가할 항목 가져오기
 	await addMoreStore()
-	
-	// 지도 핀 처리
-	
+		
 	if (!indexJSP) { // 투표나 랜덤에 있었다면 메인으로 돌아가서 보여줌
 		location.replace("${pageContext.request.contextPath}/")
 	}
@@ -831,8 +838,10 @@ async function addMoreStore() {
 				console.log("가게가 추가되었습니다")
 				console.log(basket[curr_basket_group])
 				
-				for (var i = temp; i < basket[curr_basket_group].length; i++) {
-					updateMapPin(i, false)
+				if (indexJSP) {
+					for (var i = temp; i < basket[curr_basket_group].length; i++) {
+						updateMapPin(i, false)
+					}
 				}
 				
 			} else {
@@ -1004,6 +1013,9 @@ async function changeGroupBasket() {
 		if (basket[curr_basket_group][i].stored) {
 			cnt += 1
 			addToBasket(basket[curr_basket_group][i])
+			updateMapPin(i, true)
+		} else {
+			updateMapPin(i, false)
 		}
 	}
 	
@@ -1039,7 +1051,6 @@ function updateMapPin(idx, selected) {
 		      )
 	}
 					
-
 	// 마커 생성
 	var marker = new kakao.maps.Marker({
 		position : new kakao.maps.LatLng(curr_store.storeY, curr_store.storeX),
