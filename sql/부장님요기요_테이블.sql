@@ -352,7 +352,8 @@ CREATE TABLE notification (
  noti_type number(20) NOT null,
  group_no number(20) NOT null,
  reply_no number(20) NOT null,
- alert_comment varchar2(400) NOT null
+ alert_comment varchar2(400) NOT null, 
+ noti_state number(20) DEFAULT 0 NOT NULL
 );
 
 --===== 알림_일련번호 =====
