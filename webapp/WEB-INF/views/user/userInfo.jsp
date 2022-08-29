@@ -31,47 +31,48 @@
                 <div>
                     <section class="position-relative py-4 py-xl-5">
                         <div class="container">
-                            <div class="row mb-0">
-                                <div class="col-md-8 col-xl-6 text-center mx-auto">
-                                    <h2 style="font-weight: bold;">회원 정보 수정</h2>
+                            <div class="mb-0" style = "width: 1071px;">
+                                <div class="col-md-8 col-xl-6 text-center mx-auto" style = "width: 535px;">
+                                    <h2 style="font-weight: bold; width: 512px;">회원 정보 수정</h2>
                                 </div>
                             </div>
-                            <div class="row d-flex justify-content-center">
-                                <div class="col-md-6 col-xl-4 col-xxl-5">
-                                    <div class="p-5">
+                            <div class="d-flex justify-content-center" style = "width: 1071px;">
+                                <div class="col-md-6 col-xl-4 col-xxl-5" style = "width: 448px;">
+                                    <div class="p-5" style = "width: 423px;">
                                         <div class="text-center"></div>
                                         <form method="post" action="${pageContext.request.contextPath}/user/modifyUser" class="user" id="updateForm">
-                                            <div class="mb-3">
-                                            	<strong class="join-text">아이디</strong>
-                                            	<input id="infoEmail" class="form-control form-control-user input-box btn-radius" name = "userEmail" value="${userInfo.userEmail}"readonly>
+                                            <div class="mb-3 fix-330">
+                                            	<strong class="join-text fix-330">아이디</strong>
+                                            	<input id="infoEmail" class="form-control form-control-user input-box btn-radius fix-330" name = "userEmail" value="${userInfo.userEmail}"readonly>
+                                           	</div>
+                                            <div class="mb-3 fix-330 password">
+                                            	<strong class="join-text fix-330">새 비밀번호</strong>
+                                            	<input class="form-control form-control-user input-box btn-radius fix-330" type="password" id="inputPassword" placeholder="비밀번호를 입력해주세요." name="userPassword">
+                                            	<span class="check-text fix-330" id="msgErrorPassword">8자리 이상의 비밀번호를 작성해주세요.</span>
+                                           	</div>
+                                            <div class="mb-3 fix-330 password">
+                                            	<strong class="join-text fix-330">새 비밀번호 확인</strong>
+                                            	<input class="form-control form-control-user input-box btn-radius fix-330" type="password" id="checkPassword" placeholder="비밀번호를 한 번 더 입력해주세요." name="checkPassword">
+                                            	<span class="check-text fix-330" id="msgErrorCheckPassword">비밀번호를 입력해주세요.</span>
+                                           	</div>
+                                            <div class="mb-3 fix-330 name">
+                                            	<strong class="join-text fix-330">닉네임</strong>
+                                            	<input class="form-control form-control-user input-box fix-330" type="text" id="inputJoinNickname" placeholder="사용하실 닉네임을 입력해주세요. (5자 이하)" value="${userInfo.userName}" name="userName">
+												<span class="collect-text fix-330" id="msgErrorName">닉네임을 입력하셨습니다.</span>
                                            	</div>
                                             <div class="mb-3">
-                                            	<strong class="join-text">새 비밀번호</strong>
-                                            	<input class="form-control form-control-user input-box btn-radius" type="password" id="inputPassword" placeholder="비밀번호를 입력해주세요." name="userPassword">
-                                            	<span class="check-text" id="msgErrorPassword">8자리 이상의 비밀번호를 작성해주세요.</span>
-                                           	</div>
-                                            <div class="mb-3">
-                                            	<strong class="join-text">새 비밀번호 확인</strong>
-                                            	<input class="form-control form-control-user input-box btn-radius" type="password" id="checkPassword" placeholder="비밀번호를 한 번 더 입력해주세요." name="checkPassword">
-                                            	<span class="check-text" id="msgErrorCheckPassword">비밀번호를 입력해주세요.</span>
-                                           	</div>
-                                            <div class="mb-3">
-                                            	<strong class="join-text">닉네임</strong>
-                                            	<input class="form-control form-control-user input-box" type="text" id="inputJoinNickname" placeholder="사용하실 닉네임을 입력해주세요. (5자 이하)" value="${userInfo.userName}" name="userName">
-												<span class="collect-text" id="msgErrorName">닉네임을 입력하셨습니다.</span>
-                                           	</div>
-                                            <div class="mb-3">
-                                            	<strong class="join-text">출생연도</strong>
+                                            	<strong class="join-text fix-330">출생연도</strong>
                                             	<input id=inputBirthDate type="number" value="${userInfo.userBirthYear}" name="userBirthYear" placeholder="출생연도를 적어주세요." min="1900" max="2100">
-                                            	<span class="collect-text" id="msgErrorBirth">출생연도를 입력하셨습니다.</span>
+                                            	<br>
+                                            	<span class="collect-text fix-330" id="msgErrorBirth">출생연도를 입력하셨습니다.</span>
                                            	</div>
-                                            <div class="mb-3"><strong class="join-text">성별</strong>
+                                            <div class="mb-3"><strong class="join-text fix-330">성별</strong>
                                             	<select class="form-select gender-box" style="width: 150px;height: auto;" name="userSex">
                                             		<option value="male" <c:if test="${userInfo.userSex eq 'male' }">selected</c:if>>남자</option>
                                                    	<option value="female" <c:if test="${userInfo.userSex eq 'female' }">selected</c:if>>여자</option>
                                                 </select>
                                             </div>
-                                            <div class="mb-3">
+                                            <div class="mb-3 fix-330">
                                             	<button class="btn btn-primary d-block btn-user w-100 btn-radius" id="btn-submit" type="submit">수정하기</button>
                                            	</div>
                                         </form>
@@ -89,23 +90,11 @@
 </body>
 
 <script type="text/javascript">
+var specialCheck = /[`~!@#$%^&*|\\\'\";:\/?.]/gi;
 
-$("input").change(function(){
-	var id = $('#joinForm [name = userEmail]').val();
-	var password = $('#joinForm [name = userPassword]').val();
-	var checkPassword = $('#joinForm [name = checkPassword]').val();
-	var name = $('#joinForm [name = userName]').val();
-	var birth = $('#joinForm [name = userBirthYear]').val();
-	var sex = $('#joinForm [name = userSex]').val();
-	var Check = $('#formCheck-1').is(":checked");
-	
-	if(id=="" || id == null){
-		$("#msgOverlapEmail").html("");
-		$("#msgErrorEmail").html("<br>이메일 형식으로 입력해주세요.");
-	}else if(id.indexOf("@") != -1){
-		$("#msgErrorEmail").text("");
-	}
-	
+$(".password").change(function(){
+	var password = $('#updateForm [name = userPassword]').val();
+	var checkPassword = $('#updateForm [name = checkPassword]').val();
 	
 	if(password =="" || password == null){
 		if($("#msgErrorPassword").hasClass("check-text") === false) {
@@ -141,6 +130,10 @@ $("input").change(function(){
 		
 		$("#msgErrorCheckPassword").text("비밀번호가 일치합니다.");
 	}
+})
+
+$(".name").change(function(){
+	var name = $('#updateForm [name = userName]').val();
 	
 	if(name == "" || name == null){
 		if($("#msgErrorName").hasClass("check-text") === false) {
@@ -154,13 +147,30 @@ $("input").change(function(){
 			$("#msgErrorName").removeClass("collect-text");
 		}
 		$("#msgErrorName").text("닉네임의 길이가 초과되었습니다.");
-	}else if(name != null){
+	}else if (name.search(/\s/) != -1) {
+		if($("#msgErrorName").hasClass("check-text") === false) {
+			$("#msgErrorName").addClass("check-text");
+			$("#msgErrorName").removeClass("collect-text");
+		}
+		$("#msgErrorName").text("닉네임은 빈 칸을 포함 할 수 없습니다.");
+    }else if (specialCheck.test(name)) {
+    	if($("#msgErrorName").hasClass("check-text") === false) {
+			$("#msgErrorName").addClass("check-text");
+			$("#msgErrorName").removeClass("collect-text");
+		}
+		$("#msgErrorName").text("닉네임은 특수문자를 포함 할 수 없습니다.");
+    }else if(name != null){
 		if($("#msgErrorName").hasClass("collect-text") === false) {
 			$("#msgErrorName").addClass("collect-text");
 			$("#msgErrorName").removeClass("check-text");
 		} 
 		$("#msgErrorName").text("닉네임을 입력하셨습니다.");
 	}
+})
+
+$("input").change(function(){
+	var birth = $('#updateForm [name = userBirthYear]').val();
+	var sex = $('#updateForm [name = userSex]').val();
 	
 	if(birth == "" || birth == null){
 		if($("#msgErrorBirth").hasClass("check-text") === false) {
@@ -202,15 +212,15 @@ $("#btn-submit").on("click", function(){
 	
 	if(password =="" || password == null){
 		alert("비밀번호를 확인해주세요.");
-		return false;
+		return false;	
+	}else if (password.length < 8){
+		alert("8자리 이상의 비밀번호를 작성해주세요.");
+		return false;	
 	}
 	
 	if(password != checkPassword){
 		alert("비밀번호가 일치하지 않습니다.");
 		return false;
-	}else if (password.length < 8){
-		alert("8자리 이상의 비밀번호를 작성해주세요.");
-		return false;	
 	}
 	
 	if(name == "" || name == null){
@@ -219,8 +229,13 @@ $("#btn-submit").on("click", function(){
 	}else if (name.length > 5){
 		alert("5자 이하의 닉네임을 입력해주세요.")
 		return false;
-	}
-	
+	}else if (name.search(/\s/) != -1) {
+        alert("닉네임은 빈 칸을 포함 할 수 없습니다.");
+        return false;
+    }else if (specialCheck.test(name)) {
+		alert("닉네임은 특수문자를 포함 할 수 없습니다.");
+		return false;
+    }
 	
 	if(birth == "" || birth == null){
 		alert("출생연도를 입력해주세요.");

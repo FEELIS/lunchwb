@@ -56,18 +56,18 @@
                                     	<input class="form-control form-control-user input-box" type="hidden" id="inputJoinNickname" name="email" value="${userEmail}">
                                     	<input class="form-control form-control-user input-box" type="hidden" id="inputJoinNickname" name="id" value="${snsLogin }">
                                     	<input class="form-control form-control-user input-box" type="hidden" id="inputJoinNickname" name="access_token" value="${access_Token }">
-                                        <div class="mb-3">
+                                        <div class="mb-3 fix-480 name">
                                         	<strong class="join-text">닉네임</strong>
                                         	<input class="form-control form-control-user input-box" type="text" id="inputJoinNickname" placeholder="사용하실 닉네임을 입력해주세요. (5자 이하)" name="userName">
                                         	<span class="check-text" id="msgErrorName">사용하실 닉네임을 입력해주세요. (5자 이하)</span>
                                        	</div>
-                                        <div class="mb-3">
+                                        <div class="mb-3 fix-480">
                                         	<strong class="join-text">출생연도</strong>
                                         	<input id="inputBirthDate" type="number" name="userBirthYear" placeholder="출생연도를 적어주세요." min="1900" max="2030">
                                         	<br>
                                         	<span class="check-text" id="msgErrorBirth">출생연도를 입력해주세요.</span>
                                        	</div>
-                                        <div class="mb-3">
+                                        <div class="mb-3 fix-480">
                                         	<strong class="join-text">성별</strong>
                                        		<select class="form-select" style="width: 150px;height: auto;" name="userSex">
                                                 <option value="male" selected="selected">남자</option>
@@ -75,7 +75,7 @@
                                            	</select>
                                            	<span class="check-text" id="msgSex"></span>
                                        	</div>
-                                        <div class="mb-3">
+                                        <div class="mb-3 fix-480">
                                             <div class="custom-control custom-checkbox small">
                                                 <div class="form-check">
                                                 	<input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1">
@@ -86,7 +86,10 @@
                                                	</div>
                                             </div>
                                             <span class="check-text" id="msgCheckOverlap"></span>
-                                        </div><button class="btn btn-primary d-block btn-user w-100" id="btn-join" type="submit">가입하기</button>
+                                        </div>
+                                        <div class="mb-3 fix-480">
+                                        	<button class="btn btn-primary d-block btn-user w-100" id="btn-join" type="submit">가입하기</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -107,10 +110,12 @@
 </body>
 <script type="text/javascript">
 
-$("input").change(function(){
+var engCheck = /[a-z]/;
+var specialCheck = /[`~!@#$%^&*|\\\'\";:\/?.]/gi;
+
+
+$(".name").change(function(){
 	var name = $('#joinForm [name = userName]').val();
-	var birth = $('#joinForm [name = userBirthYear]').val();
-	var Check = $('#formCheck-1').is(":checked");
 	
 	if(name == "" || name == null){
 		if($("#msgErrorName").hasClass("check-text") === false) {
@@ -124,13 +129,30 @@ $("input").change(function(){
 			$("#msgErrorName").removeClass("collect-text");
 		}
 		$("#msgErrorName").text("닉네임의 길이가 초과되었습니다.");
-	}else if(name != null){
+	}else if (name.search(/\s/) != -1) {
+		if($("#msgErrorName").hasClass("check-text") === false) {
+			$("#msgErrorName").addClass("check-text");
+			$("#msgErrorName").removeClass("collect-text");
+		}
+		$("#msgErrorName").text("닉네임은 빈 칸을 포함 할 수 없습니다.");
+    }else if (specialCheck.test(name)) {
+    	if($("#msgErrorName").hasClass("check-text") === false) {
+			$("#msgErrorName").addClass("check-text");
+			$("#msgErrorName").removeClass("collect-text");
+		}
+		$("#msgErrorName").text("닉네임은 특수문자를 포함 할 수 없습니다.");
+    }else if(name != null){
 		if($("#msgErrorName").hasClass("collect-text") === false) {
 			$("#msgErrorName").addClass("collect-text");
 			$("#msgErrorName").removeClass("check-text");
 		} 
 		$("#msgErrorName").text("닉네임을 입력하셨습니다.");
 	}
+})
+
+$("input").change(function(){
+	var birth = $('#joinForm [name = userBirthYear]').val();
+	var Check = $('#formCheck-1').is(":checked");
 	
 	if(birth == "" || birth == null){
 		if($("#msgErrorBirth").hasClass("check-text") === false) {
@@ -183,7 +205,13 @@ $("#btn-join").on("click", function(){
 	}else if (name.length > 5){
 		alert("5자 이하의 닉네임을 입력해주세요.")
 		return false;
-	}
+	}else if (name.search(/\s/) != -1) {
+        alert("닉네임은 빈 칸을 포함 할 수 없습니다.");
+        return false;
+    }else if (specialCheck.test(name)) {
+		alert("닉네임은 특수문자를 포함 할 수 없습니다.");
+		return false;
+    }
 	
 	if(birth == "" || birth == null){
 		alert("생년월일을 입력해주세요.");
