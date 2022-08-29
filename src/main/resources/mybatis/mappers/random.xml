@@ -12,7 +12,7 @@
 		
 		<![CDATA[
 			insert into random
-			values (#{randomNo}, #{storeInfo}, #{stopAtValue}, #{groupName}, sysdate, #{userNo})
+			values (#{randomNo}, #{userNo}, #{storeInfo}, #{stopAtValue}, #{groupName}, sysdate)
 		]]>
 	</insert>
 	

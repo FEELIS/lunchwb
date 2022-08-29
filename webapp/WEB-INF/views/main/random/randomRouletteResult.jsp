@@ -184,10 +184,7 @@ function startSpin()
     }
     
     // May as well start the spin from here.
-}
 
-let creatorNo = "${authUser.userNo}";
-console.log("creatorNo = " + creatorNo );
 function alertPrize(indicatedSegment){
     // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
     
