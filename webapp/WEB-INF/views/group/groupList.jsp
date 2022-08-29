@@ -85,68 +85,61 @@
                            <div id="groupmem-list-table" class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
                              
                                <table id="dataTable" class="table my-0">
-                                	
+                                	<colgroup>
+                                		<col style="width: 10%;">
+                                		<col style="width: 10%;">
+                                		<col style="width: 15%;">
+                                		<col style="width: 10%;">
+                                		<col style="width: 15%;">
+                                		<col style="width: 15%;">
+                                		<col style="width: 10%;">
+                                		<col style="width: 15%;">
+                                	</colgroup>
                                    	<thead>
                                        	<tr>
-	                                       	<c:choose>
-		                                		<c:when test="${authUser.userNo == map.leader}">
-		                                           	<th style="width: 10%;">부장님</th>
-		                                           	<th style="width: 10%;">그룹장</th>
-		                                           	<th style="width: 20%;">이름</th>
-		                                           	<th style="width: 10%;">성별</th>
-		                                           	<th style="width: 10%;">출생연도</th>
-		                                           	<th style="width: 10%;">연령대</th>
-		                                           	<th style="width: 10%;">회원</th>
-		                                           	<th style="width: 10%;">내보내기</th>
-	                                           	</c:when>
-	                                           	<c:otherwise>
-	                                           		<th style="width: 10%;">부장님</th>
-		                                           	<th style="width: 10%;">그룹장</th>
-		                                           	<th style="width: 30%;">이름</th>
-		                                           	<th style="width: 10%;">성별</th>
-		                                           	<th style="width: 10%;">출생연도</th>
-		                                           	<th style="width: 10%;">연령대</th>
-		                                           	<th style="width: 10%;">회원</th>
-	                                           	</c:otherwise>
-	                                        </c:choose>
+											<th>부장님</th>
+											<th>그룹장</th>
+											<th>이름</th>
+											<th>성별</th>
+											<th>출생연도</th>
+											<th>연령대</th>
+											<th>회원</th>
+											<th>
+												<c:if test="${authUser.userNo == map.leader}">
+													내보내기
+												</c:if>
+											</th>
                                        	</tr>
                                     </thead>
                                   
                                     <tbody id="memberListArea" class="text-dark">
 										<c:forEach items="${map.memberList}" var="memberVo" varStatus="status">
 											<tr id="member-${memberVo.userNo}" <c:if test="${memberVo.userNo == authUser.userNo}">class="fw-bold"</c:if>>
-												<td class="group-bujang" style="width: 10%;">
+												<td class="group-bujang">
 													<c:if test="${memberVo.bossCheck == 1}">
 	                                           			<img src="${pageContext.request.contextPath}/assets/img/bujang.png" width="24px" />
 	                                           		</c:if>
 	                                           	</td>
-												<td style="width: 10%;">
+												<td>
 													<c:if test="${memberVo.userNo == map.leader}">
 														<svg class="groupmem-user" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
 													        <path d="M438.6 105.4C451.1 117.9 451.1 138.1 438.6 150.6L182.6 406.6C170.1 419.1 149.9 419.1 137.4 406.6L9.372 278.6C-3.124 266.1-3.124 245.9 9.372 233.4C21.87 220.9 42.13 220.9 54.63 233.4L159.1 338.7L393.4 105.4C405.9 92.88 426.1 92.88 438.6 105.4H438.6z"></path>
 													    </svg>
 													</c:if>													
 												</td>
-												<c:choose>
-		                          	      			<c:when test="${authUser.userNo == map.leader}">
-														<td style="width: 30%;">${memberVo.userName}</td>
-													</c:when>
-													<c:otherwise>
-														<td style="width: 40%;">${memberVo.userName}</td>
-													</c:otherwise>
-												</c:choose>
-												<td style="width: 10%;">${memberVo.userSex}</td>
-												<td style="width: 10%;">${memberVo.userBirthYear}</td>
-												<td style="width: 10%;">${memberVo.userAge}</td>
-												<td style="width: 10%;">
+												<td>${memberVo.userName}</td>
+												<td>${memberVo.userSex}</td>
+												<td>${memberVo.userBirthYear}</td>
+												<td>${memberVo.userAge}</td>
+												<td>
 													<c:if test="${memberVo.groupOrder != 0}">
 														<svg class="groupmem-user" xmlns="http://www.w3.org/2000/svg" viewBox="-32 0 512 512" width="1em" height="1em" fill="currentColor">
 													        <path d="M438.6 105.4C451.1 117.9 451.1 138.1 438.6 150.6L182.6 406.6C170.1 419.1 149.9 419.1 137.4 406.6L9.372 278.6C-3.124 266.1-3.124 245.9 9.372 233.4C21.87 220.9 42.13 220.9 54.63 233.4L159.1 338.7L393.4 105.4C405.9 92.88 426.1 92.88 438.6 105.4H438.6z"></path>
 													    </svg>
 													</c:if>
 												</td>
-												<c:if test="${authUser.userNo == map.leader}">
-													<td style="width: 10%;">
+												<td>
+													<c:if test="${authUser.userNo == map.leader}">
 														<c:if test="${memberVo.userNo != authUser.userNo}">
 															<svg class="text-danger groupmem-delete" data-no="${memberVo.userNo}" data-user="${memberVo.userName}"
 																 data-order="${memberVo.groupOrder}"
@@ -154,14 +147,11 @@
 													        	<path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"></path>
 													    	</svg>
 													    </c:if>
-													</td>
-												</c:if>
+													</c:if>
+												</td>
 											</tr>
 										</c:forEach>
                                    </tbody>
-                                   <tfoot>
-                                       <tr></tr>
-                                   </tfoot>
                                </table>
                            </div>
                            
