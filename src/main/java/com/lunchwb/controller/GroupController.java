@@ -143,7 +143,7 @@ public class GroupController {
 	}
 	
 	
-	/******************** 그룹 보스 유무 ********************************************/
+	/******************** 그룹 이름 변경 ********************************************/
 	@ResponseBody
 	@PostMapping("/nameChange")
 	public String nameChange(@RequestBody GroupVo groupVo) {
