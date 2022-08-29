@@ -192,7 +192,7 @@
 	                       <div class="card-body">
 	                       		<div>
 	                           		<input type="email" placeholder="이메일을 입력해주세요" name="userEmail" />
-	                           		<button class="btn btn-primary btn-groupmem-invt" type="button">초대하기</button>
+	                           		<button id="btn-invite"class="btn btn-primary btn-groupmem-invt" type="button">초대하기</button>
 	                               	<div class="form-check">
 	                               		<input id="chk-boss-user" class="form-check-input" type="checkbox" />
 	                               		<label class="form-check-label" for="chk-boss-user">부장님이면 체크해주세요</label>
@@ -215,7 +215,7 @@
                                        <option value="male">남자</option>
                                        <option value="female">여자</option>
 	                               	</select>
-	                               	<button class="btn btn-primary btn-groupmem-invt" type="button">추가하기</button>
+	                               	<button id="btn-add" class="btn btn-primary btn-groupmem-invt" type="button">추가하기</button>
 	                            </div>
 	                           	<div class="form-check">
 	                           		<input id="chk-boss-notuser" class="form-check-input" type="checkbox" name="bossCheck" value="1"/>
@@ -250,7 +250,7 @@
                 <input type="text" name="groupName" placeholder="그룹 이름을 입력해주세요" />
             </div>
             <div class="modal-footer-custom">
-            	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"><button class="btn btn-primary" type="submit">변경</button></a>
+            	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"><button id="btn-name-change"  class="btn btn-primary" type="submit">변경</button></a>
             	<button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button>
             </div>
         </div>
@@ -296,9 +296,7 @@
                 </div>
             </div>
             <div class="modal-footer-custom">
-            	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}">
-            		<button class="btn btn-primary" type="submit">확인</button>
-            	</a>
+            	<a href="${pageContext.request.contextPath}/group/list?no=${map.groupNo}"><button class="btn btn-primary" type="submit">확인</button></a>
             	<button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button>
             </div>
         </div>
@@ -310,6 +308,37 @@
 
 var groupNo = $("#thisGpNo").val()
 console.log(groupNo+"번 그룹")
+
+
+//그룹원초대 > 엔터
+var invt = document.getElementById("groupmem-invt")
+invt.addEventListener("keyup", function (event) {
+	if (event.keyCode === 13) {
+		event.preventDefault();
+		document.getElementById("btn-invite").click()
+	}
+})
+
+
+//그룹원추가 > 엔터
+var inputAdd = document.getElementById("groupmem-add")
+inputAdd.addEventListener("keyup", function (event) {
+	if (event.keyCode === 13) {
+		event.preventDefault();
+		document.getElementById("btn-add").click()
+	}
+})
+
+
+//그룹이름변경 > 엔터
+var changeName = document.getElementById("modal-group-name-change")
+changeName.addEventListener("keyup", function (event) {
+	if (event.keyCode === 13) {
+		event.preventDefault();
+		document.getElementById("btn-name-change").click()
+	}
+})
+
 
 $(".form-check-input").on("click", function(){
 	console.log("부장님 여부 체크")
