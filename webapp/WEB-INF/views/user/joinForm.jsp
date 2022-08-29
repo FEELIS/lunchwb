@@ -53,7 +53,7 @@
                                         <h4 class="text-dark mb-4 fix-480" style="font-weight:bold">회원가입</h4>
                                     </div>
                                     <form method="post" action="${pageContext.request.contextPath}/join" class="user" id="joinForm" style="width:480px height:720px">
-                                        <div class="mb-3 fix-480">
+                                        <div class="mb-3 fix-480" id="email">
                                         	<strong class="join-text">아이디</strong>
                                         	<input class="form-control form-control-user" type="email" id="inputJoinEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="userEmail">
                                         	<button class="btn btn-primary" id="check-email" type="button">중복 확인</button>
@@ -61,17 +61,17 @@
                                         	<span class="check-text" id="msgOverlapEmail"><br></span>
                                         	
                                        	</div>
-                                        <div class="mb-3 fix-480">
+                                        <div class="mb-3 fix-480 password" >
                                         	<strong class="join-text">비밀번호</strong>
                                         	<input class="form-control form-control-user input-box" type="password" id="inputJoinPassword" placeholder="비밀번호를 입력해주세요." name="userPassword">
                                         	<span class="check-text" id="msgErrorPassword">8자리 이상의 비밀번호를 작성해주세요.</span>
                                        	</div>
-                                        <div class="mb-3 fix-480">
+                                        <div class="mb-3 fix-480 password">
                                         	<strong class="join-text">비밀번호 확인</strong>
                                         	<input class="form-control form-control-user input-box" type="password" id="checkJoinPassword" placeholder="비밀번호를 한 번 더 입력해주세요." name="checkPassword">
                                         	<span class="check-text" id="msgErrorCheckPassword">비밀번호를 입력해주세요.</span>
                                        	</div>
-                                        <div class="mb-3 fix-480">
+                                        <div class="mb-3 fix-480 name">
                                         	<strong class="join-text">닉네임</strong>
                                         	<input class="form-control form-control-user input-box" type="text" id="inputJoinNickname" placeholder="사용하실 닉네임을 입력해주세요. (5자 이하)" name="userName">
                                         	<span class="check-text" id="msgErrorName">사용하실 닉네임을 입력해주세요. (5자 이하)</span>
@@ -79,6 +79,7 @@
                                         <div class="mb-3 fix-480">
                                         	<strong class="join-text">출생연도</strong>
                                         	<input id="inputBirthDate" type="number" name="userBirthYear" placeholder="출생연도를 적어주세요." min="1900" max="2030">
+                                        	<br>
                                         	<span class="check-text" id="msgErrorBirth">출생연도를 입력해주세요.</span>
                                        	</div>
                                         <div class="mb-3 fix-480">
@@ -126,59 +127,76 @@
 
 var idChk;
 
+var engCheck = /[a-z]/;
+var numCheck = /[0-9]/;
+var specialCheckEmail = /[`~!#$%^&*|\\\'\";:\/?]/gi;
+var specialCheck = /[`~!@#$%^&*|\\\'\";:\/?.]/gi;
+
 $("#check-email").on("click", function(){
 	console.log("아이디 체크");
 	
 	var id = $('[name = "userEmail"]').val();
 	
 	console.log(id);
-	
- 	$.ajax({
-		url : "${pageContext.request.contextPath }/user/checkEmail",		
-		type : "post",
-		contentType : "application/json",
-		data : JSON.stringify(id),
-		dataType : "json",
-		success : function(result){
-			console.log(result);
-			
-			if(result == "success"){
-				if($("#msgOverlapEmail").hasClass("collect-text") === false) {
-						$("#msgOverlapEmail").addClass("collect-text");
-						$("#msgOverlapEmail").removeClass("check-text");
-					} 
-				$("#msgOverlapEmail").html("<br>사용할 수 있는 이메일 입니다.");
-				idChk = id;
-			}else {
-				if($("#msgOverlapEmail").hasClass("check-text") === false) {
-					$("#msgOverlapEmail").addClass("check-text");
-					$("#msgOverlapEmail").removeClass("collect-text");
-				}
-				$("#msgOverlapEmail").html("<br>이미 사용중인 이메일 입니다.");
-			}
-		},
-		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+	if($("#msgErrorEmail").text() != "") {
+		if($("#msgOverlapEmail").hasClass("check-text") === false) {
+			$("#msgOverlapEmail").addClass("check-text");
+			$("#msgOverlapEmail").removeClass("collect-text");
 		}
-	}); 
+		$("#msgOverlapEmail").html("<br>사용할 수 없는 이메일입니다.");
+	}else{
+		$.ajax({
+			url : "${pageContext.request.contextPath }/user/checkEmail",		
+			type : "post",
+			contentType : "application/json",
+			data : JSON.stringify(id),
+			dataType : "json",
+			success : function(result){
+				console.log(result);
+				
+				if(result == "success"){
+					if($("#msgOverlapEmail").hasClass("collect-text") === false) {
+							$("#msgOverlapEmail").addClass("collect-text");
+							$("#msgOverlapEmail").removeClass("check-text");
+						} 
+					$("#msgOverlapEmail").html("<br>사용할 수 있는 이메일 입니다.");
+					idChk = id;
+				}else {
+					if($("#msgOverlapEmail").hasClass("check-text") === false) {
+						$("#msgOverlapEmail").addClass("check-text");
+						$("#msgOverlapEmail").removeClass("collect-text");
+					}
+					$("#msgOverlapEmail").html("<br>이미 사용중인 이메일 입니다.");
+				}
+			},
+			error : function(XHR, status, error) {
+				console.error(status + " : " + error);
+			}
+		}); 
+	}
+ 	
 });
 	
-$("input").change(function(){
-	var id = $('#joinForm [name = userEmail]').val();
-	var password = $('#joinForm [name = userPassword]').val();
-	var checkPassword = $('#joinForm [name = checkPassword]').val();
-	var name = $('#joinForm [name = userName]').val();
-	var birth = $('#joinForm [name = userBirthYear]').val();
-	var sex = $('#joinForm [name = userSex]').val();
-	var Check = $('#formCheck-1').is(":checked");
 	
+$("#email").change(function(){
+	var id = $('#joinForm [name = userEmail]').val();
 	if(id=="" || id == null){
 		$("#msgOverlapEmail").html("");
 		$("#msgErrorEmail").html("<br>이메일 형식으로 입력해주세요.");
-	}else if(id.indexOf("@") != -1){
-		$("#msgErrorEmail").text("");
+	}else if (id.search(/\s/) != -1) {
+		$("#msgOverlapEmail").html("");
+		$("#msgErrorEmail").html("<br>이메일은 빈 칸을 포함 할 수 없습니다.");
+	}else if (specialCheckEmail.test(id)) {
+    	$("#msgOverlapEmail").html("");
+ 		$("#msgErrorEmail").html("<br>@와 .을 제외한 특수문자를 포함 할 수 없습니다.");
+	}else{
+ 		$("#msgErrorEmail").text("");
 	}
-	
+})
+
+$(".password").change(function(){
+	var password = $('#joinForm [name = userPassword]').val();
+	var checkPassword = $('#joinForm [name = checkPassword]').val();
 	
 	if(password =="" || password == null){
 		if($("#msgErrorPassword").hasClass("check-text") === false) {
@@ -214,6 +232,10 @@ $("input").change(function(){
 		
 		$("#msgErrorCheckPassword").text("비밀번호가 일치합니다.");
 	}
+})
+
+$(".name").change(function(){
+	var name = $('#joinForm [name = userName]').val();
 	
 	if(name == "" || name == null){
 		if($("#msgErrorName").hasClass("check-text") === false) {
@@ -227,13 +249,32 @@ $("input").change(function(){
 			$("#msgErrorName").removeClass("collect-text");
 		}
 		$("#msgErrorName").text("닉네임의 길이가 초과되었습니다.");
-	}else if(name != null){
+	}else if (name.search(/\s/) != -1) {
+		if($("#msgErrorName").hasClass("check-text") === false) {
+			$("#msgErrorName").addClass("check-text");
+			$("#msgErrorName").removeClass("collect-text");
+		}
+		$("#msgErrorName").text("닉네임은 빈 칸을 포함 할 수 없습니다.");
+    }else if (specialCheck.test(name)) {
+    	if($("#msgErrorName").hasClass("check-text") === false) {
+			$("#msgErrorName").addClass("check-text");
+			$("#msgErrorName").removeClass("collect-text");
+		}
+		$("#msgErrorName").text("닉네임은 특수문자를 포함 할 수 없습니다.");
+    }else if(name != null){
 		if($("#msgErrorName").hasClass("collect-text") === false) {
 			$("#msgErrorName").addClass("collect-text");
 			$("#msgErrorName").removeClass("check-text");
 		} 
 		$("#msgErrorName").text("닉네임을 입력하셨습니다.");
 	}
+})
+
+$("input").change(function(){
+	
+	var birth = $('#joinForm [name = userBirthYear]').val();
+	var sex = $('#joinForm [name = userSex]').val();
+	var Check = $('#formCheck-1').is(":checked");
 	
 	if(birth == "" || birth == null){
 		if($("#msgErrorBirth").hasClass("check-text") === false) {
@@ -293,10 +334,16 @@ $("#btn-join").on("click", function(){
 	console.log(Check);
 		
 	if(id=="" || id == null){
-		alert("아이디를 확인해주세요.");
+		alert("이메일을 확인해주세요.");
 		/* $("#msgErrorEmail").text("아이디를 입력해주세요."); */
 		return false;
-	}
+	}else if (id.search(/\s/) != -1) {
+        alert("이메일은 빈 칸을 포함 할 수 없습니다.");
+        return false;
+     }else if (specialCheckEmail.test(id)) {
+		alert("@와 .을 제외한 특수문자를 포함 할 수 없습니다.");
+ 		return false;
+     }
 	
 	console.log(idChk);
 	
@@ -325,7 +372,13 @@ $("#btn-join").on("click", function(){
 	}else if (name.length > 5){
 		alert("5자 이하의 닉네임을 입력해주세요.")
 		return false;
-	}
+	}else if (name.search(/\s/) != -1) {
+        alert("닉네임은 빈 칸을 포함 할 수 없습니다.");
+        return false;
+    }else if (specialCheck.test(name)) {
+		alert("닉네임은 특수문자를 포함 할 수 없습니다.");
+		return false;
+    }
 	
 	if(birth == "" || birth == null){
 		alert("생년월일을 입력해주세요.");
