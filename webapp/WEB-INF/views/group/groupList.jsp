@@ -60,7 +60,7 @@
 	                    </c:if>
 	                    
 	                    <span class="group-title-btn-area">
-	                    	<c:if test="${authUser.userNo == map.leader && map.memberCount > 1}">
+	                    	<c:if test="${authUser.userNo == map.leader && map.userCount > 1}">
 		                    	<button class="btn btn-primary group-title-btn btn-leader-pass" type="button" data-bs-target="#modal-group-leader-pass" data-bs-toggle="modal">
 		                    		그룹장 위임
 		                    	</button>
@@ -269,7 +269,7 @@
                 </div>
             </div>
             <div class="modal-footer-custom">
-           		<a href="${pageContext.request.contextPath}/group/leave?no=${map.groupNo}&lead=${map.groupLeader}"><button class="btn btn-primary" type="submit">확인</button></a>
+           		<a href="${pageContext.request.contextPath}/group/leave?no=${map.groupNo}&lead=${map.leader}"><button class="btn btn-primary" type="submit">확인</button></a>
            		<button class="btn btn-light" type="button">취소</button>
             </div>
         </div>
