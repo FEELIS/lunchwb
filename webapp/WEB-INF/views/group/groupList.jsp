@@ -239,7 +239,9 @@
                 <div><span>그룹 이름 변경</span></div><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body modal-body-custom">
-                <p class="modal-group-p">현재 그룹 이름 : <span class="group-color-blue">${map.groupName}</span></p>
+                <p class="modal-group-p">현재 그룹 이름 : 
+                	<span class="group-color-blue">${map.groupName}</span>
+                </p>
                 <input type="text" name="groupName" placeholder="그룹 이름을 입력해주세요" />
             </div>
             <div class="modal-footer-custom">
@@ -440,7 +442,7 @@ function invt(groupVo){
 				$(".group-bujang").html("")
 			}
 			
-			render(memberVo)
+			//render(memberVo) x >> 회원 초대 : 수락 후 표기 (즉시 그리기 불.....가.)
 			
 		}, 
 		error : function(XHR, status, error) {
@@ -543,13 +545,13 @@ function render(memberVo, k){
 		str += '		<img src="${pageContext.request.contextPath}/assets/img/bujang.png" width="24px" />'
 	}
 		str += '	</td>'
-		str += '	<td style="widt: 10%;"></td>'	
-		str += '	<td style="width: 30%;">' + memberVo.userName + '</td>'
-		str += '	<td style="width: 10%;">' + memberVo.userSex + '</td>'
-		str += '	<td style="width: 10%;">' + memberVo.userBirthYear + '</td>'
-		str += '	<td style="width: 10%;">' + memberVo.userAge + '</td>'
-		str += '	<td style="width: 10%;"></td>'
-		str += '	<td style="width: 10%;">'
+		str += '	<td></td>'	
+		str += '	<td>' + memberVo.userName + '</td>'
+		str += '	<td>' + memberVo.userSex + '</td>'
+		str += '	<td>' + memberVo.userBirthYear + '</td>'
+		str += '	<td>' + memberVo.userAge + '</td>'
+		str += '	<td></td>'
+		str += '	<td>'
 		str += '		<svg class="text-danger groupmem-delete" data-no="' + memberVo.userNo +'" data-user="' + memberVo.userName +'" xmlns="http://www.w3.org/2000/svg" viewBox="-96 0 512 512" width="1em" height="1em" fill="currentColor">'
         str += '				<path d="M310.6 361.4c12.5 12.5 12.5 32.75 0 45.25C304.4 412.9 296.2 416 288 416s-16.38-3.125-22.62-9.375L160 301.3L54.63 406.6C48.38 412.9 40.19 416 32 416S15.63 412.9 9.375 406.6c-12.5-12.5-12.5-32.75 0-45.25l105.4-105.4L9.375 150.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0L160 210.8l105.4-105.4c12.5-12.5 32.75-12.5 45.25 0s12.5 32.75 0 45.25l-105.4 105.4L310.6 361.4z"></path>'
 	    str += '		</svg>'
@@ -561,6 +563,7 @@ function render(memberVo, k){
 }
 
 
+/* 그룹 이름 변경 모달 띄우기 */
 $(".group-content-title .btn-sm").on("click", function(){
 	console.log("그룹 이름 변경 버튼 클릭")
 	$("#modal-group-name-change [name = 'groupName']").val("")
@@ -568,6 +571,7 @@ $(".group-content-title .btn-sm").on("click", function(){
 })
 
 
+/* 그룹 이름 변경 결정 */
 $("#modal-group-name-change .btn-primary").on("click", function(){
 	var groupName = $("#modal-group-name-change [name = 'groupName']").val()
 	
@@ -609,6 +613,7 @@ $("#modal-group-name-change .btn-primary").on("click", function(){
 })
 
 
+/* 그룹원 강퇴 */
 $("#memberListArea").on("click", ".groupmem-delete", function(){
 	var $this = $(this)
 	var userName = $this.data("user")
