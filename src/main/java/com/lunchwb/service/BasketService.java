@@ -126,6 +126,18 @@ public class BasketService {
 			store.setStoreBreaktime(null);
 			store.setStoreOpeningHours(null);
 			
+			String storeName = store.getStoreName();
+
+			if (storeName.length() > 15) {
+				String[] names = storeName.split(storeName);
+				if (names.length > 2) storeName = names[0] + " " + names[1];								
+				if (storeName.length() > 15 && names.length > 1) storeName = names[0]; 				
+				if (storeName.length() > 15) storeName = storeName.substring(0, 15);				
+				if (storeName.charAt(storeName.length()-1) == ' ') storeName = storeName.substring(0, storeName.length()-1);
+				
+				store.setStoreName(storeName);
+			}			
+			
 			String today = jsonArray.get(day).toString();
 			
 			String time = "00";

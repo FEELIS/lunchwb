@@ -486,11 +486,7 @@ async function callMap() {
 			image: img,
 			clickable: true
 		})
-		
-		kakao.maps.event.addListener(marker, 'click', function(){
-			alert("왜")
-		})
-									
+											
 		// 마커 태그 생성
 		var content =   '<div class="customoverlay" data-storeNo="' + storeNo + '">' 
 	        		  + 	'<span class="store_name">' + storeName + '</span>'

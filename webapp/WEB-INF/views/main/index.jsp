@@ -456,10 +456,6 @@ function updateMapPin(idx, selected) {
 		image: img,
 		clickable: true
 	})
-	
-	kakao.maps.event.addListener(marker, 'click', function(idx){
-		alert("왜")
-	})
 								
 	// 배열에 마커 저장
 	markers[idx] = marker 
@@ -471,13 +467,13 @@ function updateMapPin(idx, selected) {
 	storeName = storeName.split(" ")[0]
 	
 	if (selected) {
-		content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
-        		  + 	'<span class="store_name">' + storeName + '<i class="far fa-minus-square"></i></span>'
+		content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '" title="상세보기">' 
+        		  + 	'<span class="store_name">' + storeName + '<i class="far fa-minus-square" title="점심 후보 제외"></i></span>'
         		  + '</div>'
         
 	} else {
-		content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
-                  + 	'<span class="store_name">' + storeName + '<i class="far fa-plus-square"></i></span>'
+		content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '" title="상세보기">' 
+                  + 	'<span class="store_name">' + storeName + '<i class="far fa-plus-square" title="점심 후보 추가"></i></span>'
                   + '</div>'
 	}
 

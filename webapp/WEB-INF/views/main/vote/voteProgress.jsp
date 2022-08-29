@@ -134,7 +134,10 @@ function kakaoShare() {
 	})
 }
 
+
+
 //customoverlay 클릭 시 - 모달 연결
+
 $("#kakaoMap").on("click", ".customoverlay", function(){
 	var storeNo = parseInt($(this).attr("data-storeNo"))
 	var groupNo = curr_basket_group

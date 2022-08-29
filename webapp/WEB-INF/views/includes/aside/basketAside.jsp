@@ -27,7 +27,7 @@
         		<span class="d-inline-block emphasize-blue">${authUser.userName}</span>
         		<span class="d-inline-block">님은 패스트푸드를 좋아하시니까!</span>
         	-->
-        		<span class="d-inline-block">오늘도 점심은 부장님요기요</span>
+        		<span class="d-inline-block"><c:if test="${!empty(authUser)}"><span class="emphasize-blue">${authUser.userName}</span>님&nbsp;</c:if>오늘도 점심은 부장님요기요</span>
         	</span>
         </div>
         
