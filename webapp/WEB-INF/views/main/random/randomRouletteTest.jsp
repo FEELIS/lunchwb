@@ -185,7 +185,7 @@ function startSpin()
     if (wheelSpinning == false) {
     	 // This formula always makes the wheel stop somewhere inside prize 3 at least
         // 1 degree away from the start and end edges of the segment.
-        stopAt = (1 + Math.floor((Math.random() * 120)))
+        stopAt = (1 + Math.floor((Math.random() * 360)))
  
         // Important thing is to set the stopAngle of the animation before stating the spin.
         theWheel.animation.stopAngle = stopAt;
