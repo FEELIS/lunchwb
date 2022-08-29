@@ -136,7 +136,7 @@
 	
 	<!-- 그룸장 제외 그룹원 목록 -->
 	<select id="groupMembersForAlert" parameterType="int" resultType="int">
-		SELECT  group_member_no
+		SELECT u.user_no
 		FROM group_member m, users u
 		WHERE m.group_no = #{groupNo}
 		AND  m.user_no = u.user_no

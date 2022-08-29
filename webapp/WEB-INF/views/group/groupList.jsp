@@ -157,7 +157,7 @@
                            
                            	<div class="row">
                                	<div class="col-md-6 align-self-center">
-                                   	<p class="dataTables_info" role="status" aria-live="polite">총 인원 : 
+                                   	<p class="dataTables_info" role="status" aria-live="polite">인원 : 
                                    		<span id="memberCount">${map.memberCount}</span>
                                    		<c:if test="${map.leader == authUser.userNo}">
                                    			(초대중인 인원: <span id="inviteCount">${map.inviteCount}</span>)

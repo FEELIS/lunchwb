@@ -17,7 +17,7 @@ public class NotiDao {
 	
 	/* 그룹 이름 변경 알림 */
 	public int alertOfGroupChange(NotificationVo notiVo) {
-		return sqlSession.insert("notification.addNoti", notiVo);
+		return sqlSession.insert("notification.alertOfGroupChange", notiVo);
 	}
 	
 	/* 개인 알림 */

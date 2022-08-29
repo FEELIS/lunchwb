@@ -18,7 +18,7 @@
 	<!-- 그룹원 단체 알림 : 그룹 이름 변경 -->
 	<insert id="alertOfGroupChange" parameterType="NotiVo" >
 		INSERT INTO notification
-		VALUES (SEQ_NOTI_NO.NEXTVAL, #{userNo}, 7, #{groupNo}, 0, #{beforeGroupName}, 0);
+		VALUES (SEQ_NOTI_NO.NEXTVAL, #{userNo}, 7, #{groupNo}, 0, #{alertCmt}, 0)
 	</insert>
 	
 	
