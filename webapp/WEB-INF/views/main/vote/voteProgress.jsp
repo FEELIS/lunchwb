@@ -135,13 +135,13 @@ function kakaoShare() {
 }
 
 //customoverlay 클릭 시 - 모달 연결
-/*$("#kakaoMap").on("click", ".customoverlay", function(){
+$("#kakaoMap").on("click", ".customoverlay", function(){
 	var storeNo = parseInt($(this).attr("data-storeNo"))
 	var groupNo = curr_basket_group
 	console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
 
-	storeInfoOpen(storeNo, groupNo, 1)
-})*/
+	storeInfoOpen(storeNo, groupNo, 2)
+})
 
 
 </script>
