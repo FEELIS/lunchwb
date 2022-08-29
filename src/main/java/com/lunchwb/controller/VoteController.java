@@ -50,13 +50,15 @@ public class VoteController {
 		Integer groupNo = (Integer)session.getAttribute("curr_basket_group");
 		
 		// 선택 그룹이 투표 참여 가능한지 확인
-		boolean check = voteService.canMakeVote(groupNo);
-		
-		if (!check) {
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('선택한 그룹은 오늘 이미 투표가 진행되었습니다.');location.replace('http://localhost:8088/lunchwb/');</script>");
-			out.flush(); 
+		if (groupNo != null) {
+			boolean check = voteService.canMakeVote(groupNo);
+			
+			if (!check) {
+				response.setContentType("text/html; charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('선택한 그룹은 오늘 이미 투표가 진행되었습니다.');location.replace('http://localhost:8088/lunchwb/');</script>");
+				out.flush(); 
+			}
 		}
 		
 		Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");

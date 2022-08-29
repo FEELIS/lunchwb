@@ -8,6 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>부장님요기요</title>
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
 
 <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/assets/img/bujang.png">
 
@@ -118,7 +119,7 @@
                     
                     <div class="text-center" id="vote-make-finish"><button class="btn btn-primary text-center" id="make-vote-btn" type="button">투표 만들기</button></div>
                 </div>
-            </div>
+            </div>          
         </div>
         <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     </div>

@@ -9,7 +9,6 @@
 			SELECT vote_state
 			FROM   vote
 			WHERE  vote_no = #{voteNo}
-			AND    vote_state != 4
 		]]>
 	</select>
 	
@@ -22,6 +21,7 @@
 			WHERE  vote_members.vote_no = vote.vote_no
 			AND    user_no = #{userNo}
 			AND    vote_state != 4
+			AND    TO_CHAR(vote_end_time, 'YY/MM/DD') = TO_CHAR(SYSDATE, 'YY/MM/DD')
 		]]>
 	</select>
 	

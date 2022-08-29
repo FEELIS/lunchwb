@@ -208,6 +208,7 @@
   width: 66px;
   border-radius: 7px;
   border-width: 1px;
+  white-space: nowrap;
 }
 
 .vote-wating-change-vote-btn {
@@ -225,6 +226,7 @@
   border-radius: 7px;
   border-width: 1px;
   border-color: var(--bs-red);	
+  white-space: nowrap;
 }
 
 #waiting-vote-my-name {
