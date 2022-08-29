@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.lunchwb.service.FaqService;
 import com.lunchwb.service.InquiryService;
 import com.lunchwb.vo.InquiryVo;
 
@@ -26,22 +25,16 @@ import com.lunchwb.vo.InquiryVo;
 public class CustomerController {
 	
 	@Autowired
-	private FaqService faqService;
-	@Autowired
 	private InquiryService inquiryService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
-
 	
 	// ============================================ FAQ 폼 ============================================
 	@GetMapping("/faq")
 	public String faqForm(Model model) {
 		logger.info("CustomerController > faqForm()");
 		
-		Map<String,Object> fMap = faqService.divFaqList();
-		logger.info(fMap.toString());
-		
-		
+		Map<String,Object> fMap = inquiryService.divFaqList();
 		model.addAttribute("fMap",fMap);
 		
 		return "customer/FAQ";
@@ -51,19 +44,11 @@ public class CustomerController {
 	public String manageFaqForm(Model model) {
 		logger.info("CustomerController > manageFaqForm()");
 		
-		Map<String,Object> fMap = faqService.divFaqList();
-		logger.info(fMap.toString());
-		
-		
+		Map<String,Object> fMap = inquiryService.divFaqList();
 		model.addAttribute("fMap",fMap);
-		
-		
 		
 		return "customer/manageFAQ";
 	};
-	
-	
-	
 	
 	
 	// ============================================ 문의작성 폼 ============================================
@@ -80,13 +65,7 @@ public class CustomerController {
 	public String writeInquiry(@ModelAttribute InquiryVo inqVo, @RequestPart(value = "file", required = false) MultipartFile file) {
 		logger.info("CustomerController > writeInquiry");
 		
-		logger.info(inqVo.toString());
-		
-		int count = inquiryService.writeInquiry(inqVo,file);
-		logger.info(count + "건 문의성공하였습니다.");
-		
-		
-		
+		inquiryService.writeInquiry(inqVo,file);
 		
 		return "redirect:/customer/reviewReport/"+inqVo.getUserNo();
 	};
@@ -95,10 +74,8 @@ public class CustomerController {
 	@GetMapping("/reviewReport/{userNo}")
 	public String reviewReportForm(@PathVariable("userNo") int userNo, Model model) {
 		logger.info("CustomerController > reviewReportForm()");
+		
 		List<InquiryVo> inqList= inquiryService.userInqList(userNo);
-		
-		logger.info(inqList.toString());
-		
 		model.addAttribute("inqList", inqList);
 		
 		return "customer/reviewReport";
@@ -116,6 +93,7 @@ public class CustomerController {
 	@RequestMapping(value = "/readInquiry", method= {RequestMethod.GET,RequestMethod.POST})
 	public String readInquiryForm() {
 		logger.info("CustomerController > readInquiryForm");
+		
 		
 		
 		return "customer/readInquiry";
