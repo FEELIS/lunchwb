@@ -154,4 +154,6 @@
 --     result_time DATE not null
 -- );
 
+-- 2022.08.29 11:49 =====================
+-- groups테이블 group_leader fk 삭제 
 
