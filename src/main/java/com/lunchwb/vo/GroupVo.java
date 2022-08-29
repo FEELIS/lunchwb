@@ -28,6 +28,9 @@ public class GroupVo {
 	//그룹 순서 변경 +
 	private int order;
 	
+	//그룹 이름 변경전
+	private String beforeGroupName;
+	
 	
 	public GroupVo() {
 	}
@@ -162,6 +165,15 @@ public class GroupVo {
 	public void setUserGrade(int userGrade) {
 		this.userGrade = userGrade;
 	}
+	
+	public String getBeforeGroupName() {
+		return beforeGroupName;
+	}
+
+	public void setBeforeGroupName(String beforeGroupName) {
+		this.beforeGroupName = beforeGroupName;
+	}
+	
 
 	@Override
 	public String toString() {
