@@ -90,6 +90,11 @@ public class GroupService {
 				//그룹 리더 
 				int leader = groupDao.groupLeader(groupNo);
 				map.put("leader", leader);
+				
+				if(userNo == leader) {
+					int userCount = groupDao.groupUsers(groupNo);
+					map.put("userCount", userCount);
+				}
 
 				//초대중인 회원 수(그룹장만 표기)
 				if(leader == userNo) {
@@ -403,12 +408,15 @@ public class GroupService {
 		GroupVo groupVo = new GroupVo();
 		groupVo.setUserNo(userNo);
 		groupVo.setGroupNo(groupNo);
+	
+		groupDao.outGroup(groupVo);
+		groupDao.autoOrder(groupVo);
 		
 		//내가 그룹장이었나요? > 그룹 비활성화 group - leader no = 0
 		if(userNo == groupLeader) {
 			groupVo.setGroupLeader(0);
 			groupDao.groupChange(groupVo);
-		
+			
 		}else {
 			//탈퇴 알림(그룹장에게) type : 4
 			Map<String, Object> map = new HashMap<>();
@@ -418,9 +426,6 @@ public class GroupService {
 			
 			notiDao.addNoti(map);
 		}
-	
-		groupDao.outGroup(groupVo);
-		groupDao.autoOrder(groupVo);
 		
 		//그룹장이 아닐 때만 알림(그룹장이면 보낼 사람이 없어)
 
