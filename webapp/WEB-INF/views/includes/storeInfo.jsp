@@ -892,8 +892,6 @@ function modalSortOfStore(storeNo, k){
 			
 		//case 2: 
 		//k=2 : typeof indexJSP === 'undefined'
-
-		
 			
 		case 3:
 		// 블랙리스트 테이블에서 조회(이미 있음 > 제거)
@@ -937,15 +935,15 @@ $("#modal-all-menu").on("click", ".btn-add-store-basket", function(){
 
 
 //장바구니 점심 후보 삭제
-$("#modal-store .btn-delete-store-basket").on("click", function(){
+$("#modal-store").on("click", ".btn-delete-store-basket", function(){
 	var storeNo = $(this).attr("data-storeNo") 
 	deleteSessionBasketGroup(Number(storeNo))
 })
-$("#modal-reviews .btn-delete-store-basket").on("click", function(){
+$("#modal-reviews").on("click", ".btn-delete-store-basket", function(){
 	var storeNo = $(this).attr("data-storeNo") 
 	deleteSessionBasketGroup(Number(storeNo))
 })
-$("#modal-all-menu .btn-delete-store-basket").on("click", function(){
+$("#modal-all-menu").on("click", ".btn-delete-store-basket", function(){
 	var storeNo = $(this).attr("data-storeNo") 
 	deleteSessionBasketGroup(Number(storeNo))
 })
@@ -1144,8 +1142,7 @@ function modalSelectMembers(storeNo, groupNo){
 	})
 }
 
-
-
+ 
 /* 여기갈래요 > 그룹멤버선택모달창 멤버 전체선택 */
 $("#member-all-selection").on("click", function(){
 	console.log("전체선택")
