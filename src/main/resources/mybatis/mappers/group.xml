@@ -42,6 +42,17 @@
 	</select>
 	
 	
+	<!-- 그룹에 포함된 회원(유령x)수 -->
+	<select id="groupUsers" parameterType="int" resultType="int">
+		SELECT NVL(MAX(count(u.user_no)) , 0) 
+		FROM users u, group_member m
+		WHERE u.user_no = m.user_no
+		AND m.group_no = #{groupNo}
+		AND user_email IS NOT NUll
+		GROUP BY group_no
+	</select>
+	
+	
 	<!-- 그룹 멤버 리스트 -->
 	<select id="groupMembers" parameterType="int" resultMap="GroupVo">
 		SELECT  group_member_no,
