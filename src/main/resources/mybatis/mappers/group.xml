@@ -123,6 +123,18 @@
 	</update>
 	
 	
+	<!-- 그룸장 제외 그룹원 목록 -->
+	<select id="groupMembersForAlert" parameterType="int" resultType="int">
+		SELECT  group_member_no
+		FROM group_member m, users u
+		WHERE m.group_no = #{groupNo}
+		AND  m.user_no = u.user_no
+		AND m.user_no != 
+		(SELECT group_leader FROM groups WHERE group_no = #{groupNo})
+		AND u.user_email IS NOT NULL
+	</select>
+	
+	
 	<!-- 그룹 보스 유무 -->
 	<select id="beBoss" parameterType="int" resultType="int">
 		SELECT COUNT(boss_check)

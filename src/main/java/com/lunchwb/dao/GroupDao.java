@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.lunchwb.vo.GroupVo;
-import com.lunchwb.vo.UserVo;
 
 @Repository
 public class GroupDao {
@@ -61,6 +60,12 @@ public class GroupDao {
 	public int groupChange(GroupVo groupVo) {
 		int count = sqlSession.update("group.groupChange", groupVo);
 		return count;
+	}
+	
+	/******************** 그룸장 제외 그룹원 목록 ***********************************************/
+	public List<Integer> groupMembersForAlert(int groupNo) {
+		List<Integer> groupMembers = sqlSession.selectList("group.groupMembersForAlert", groupNo);
+		return groupMembers;
 	}
 	
 	/******************** 그룹 보스 유무 ***********************************************/

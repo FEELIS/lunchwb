@@ -186,6 +186,10 @@ public class GroupService {
 	
 	/******************** 그룹 이름 변경 *********************************************/
 	public String nameChange(GroupVo groupVo) {
+
+		//그룹장 제외(본인이 바꿨으니까) 멤버원 알림 전송 (noti_type = 7)
+		
+		
 		String result = "fail";
 		
 		int count = groupDao.groupChange(groupVo);
@@ -325,6 +329,7 @@ public class GroupService {
 			 * if(groupVo.getGroupOrder() == 0) { userDao.groupOut(userNo); }
 			 */
 			
+			//count != 1 > 그 사이에 멤버가 탈퇴를 먼저 했을 경우 그룹 오더를 조정하면 안됨
 			//group_order 조정
 			groupDao.autoOrder(groupVo);
 		}
