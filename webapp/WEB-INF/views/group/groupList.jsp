@@ -159,7 +159,9 @@
                                	<div class="col-md-6 align-self-center">
                                    	<p class="dataTables_info" role="status" aria-live="polite">총 인원 : 
                                    		<span id="memberCount">${map.memberCount}</span>
-                                   		(초대중인 인원: <span id="inviteCount">${map.inviteCount}</span>)
+                                   		<c:if test="${map.leader == authUser.userNo}">
+                                   			(초대중인 인원: <span id="inviteCount">${map.inviteCount}</span>)
+                                   		</c:if>
                                    	</p>
                                	</div>
                                <div class="col-md-6">
@@ -268,7 +270,7 @@
             </div>
             <div class="modal-footer-custom">
            		<a href="${pageContext.request.contextPath}/group/leave?no=${map.groupNo}&lead=${map.groupLeader}"><button class="btn btn-primary" type="submit">확인</button></a>
-            	<button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button>
+           		<button class="btn btn-light" type="button">취소</button>
             </div>
         </div>
     </div>
@@ -358,9 +360,10 @@ $("#groupmem-invt button").on("click", function(){
 		return false
 	}
 	
-	let inviteMap = new Map()
-	inviteMap.set("groupNo", groupNo)
-	inviteMap.set("userEmail", userEamil)
+	var inviteMap = {
+		groupNo: groupNo,
+		userEmail : userEmail
+	}
 
 	$.ajax({
 		url : "${pageContext.request.contextPath}/group/userCheck",
@@ -454,7 +457,7 @@ function invt(groupVo){
 				$("#inviteCount").text(Number(inviteCount)+1)
 
 				
-				if(memberVo.bossCheck == 1){
+				if(bossCheck == 1){
 					$(".group-bujang").html("")
 				}
 				
@@ -613,7 +616,7 @@ $("#modal-group-name-change .btn-primary").on("click", function(){
 	
 	var groupVo = {
 		groupNo: groupNo,
-		groupName: groupName
+		groupName: groupName,
 		beforeGroupName : "${map.groupName}"
 	}
 	
@@ -690,7 +693,7 @@ $(".btn-leader-pass").on("click", function(){
 
 $("#modal-group-leader-pass .btn-primary").on("click", function(){
 	var groupLeader = $("[name = 'leaderNo']").val()
-	var userName = $("[name = 'eaderNo']").text()
+	var userName = $("[val = '" + groupLeader + "']").text()
 	
 	if(groupLeader == null || groupLeader == ""){
 		alter("그룹원을 선택해주세요")
