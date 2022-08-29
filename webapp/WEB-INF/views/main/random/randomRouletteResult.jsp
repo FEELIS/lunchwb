@@ -182,6 +182,7 @@ function startSpin()
         // the current animation. The user will have to reset before spinning again.
         wheelSpinning = true;
     }
+}
     
     // May as well start the spin from here.
 
@@ -272,7 +273,7 @@ function kakaoShare() {
  	    // 카카오톡 미설치 시 카카오톡 설치 경로이동
  	    installTalk: true
  	})
- }
+}
  
 </script>
 
