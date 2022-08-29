@@ -94,8 +94,7 @@ public class MainController {
 				voteAsideData = voteService.getVoteAsideData(voteNo, userState);
 				model.addAllAttributes(voteAsideData);
 				
-				if (device.isMobile()) return "mobile/main/vote/voteProgress";
-				else return "main/vote/voteProgress";
+				return "main/vote/voteProgress";
 				
 			case 2:
 				voteAsideData = voteService.getVoteAsideData(voteNo, userState);
