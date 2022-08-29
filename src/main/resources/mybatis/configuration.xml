@@ -18,7 +18,7 @@
    		<typeAlias alias="MenuVo" type="com.lunchwb.vo.MenuVo"/>
    		<typeAlias alias="BlackVo" type="com.lunchwb.vo.BlacklistVo"/>
    		<typeAlias alias="RandomVo" type="com.lunchwb.vo.RandomVo"/>
-   		<typeAlias alias="NotificationVo" type="com.lunchwb.vo.NotificationVo"/>
+   		<typeAlias alias="NotiVo" type="com.lunchwb.vo.NotificationVo"/>
    		<typeAlias alias="Map" type="java.util.Map"/>
    		<typeAlias alias="List" type="java.util.List"/>
    		<typeAlias alias="Date" type="java.util.Date"/>
