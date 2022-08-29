@@ -629,7 +629,7 @@ $("#modal-group-name-change .btn-primary").on("click", function(){
 		
 		success : function(result){
 			
-			if(result = success){
+			if(result = "success"){
 				alert("그룹 이름이 변경되었습니다")
 				return true
 			}
