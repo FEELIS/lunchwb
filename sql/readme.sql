@@ -157,3 +157,8 @@
 -- 2022.08.29 11:49 =====================
 -- groups테이블 group_leader fk 삭제 
 
+-- 2022.08.29 16:45 =====================
+-- notification테이블 reply_no fk 삭제 , null, dafault 0
+
+-- 2022.08.29 17:07 =====================
+-- notification테이블 group_no fk 삭제 , null, dafault 0
