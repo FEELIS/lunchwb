@@ -36,6 +36,10 @@ public class AloneVo {
 	private String groupName;
 	
 	
+	// 평균나이가져오기 용
+	private String ageGroup;
+	
+	
 	
 	// 생성자
 	public AloneVo() {
@@ -62,7 +66,7 @@ public class AloneVo {
 	public AloneVo(int reviewNo, int userNo, int visitedNo, String reviewContent, int userScore, String reviewFileName,
 			int reviewReported, int visitedDate, int visitedCount, int storeNo, String storeName, double storeX,
 			double storeY, String storeRoadAddress, String storeOldAddress, String menu1stCateName, String userName,
-			String menuName, String groupName) {
+			String menuName, String groupName, String ageGroup) {
 		this.reviewNo = reviewNo;
 		this.userNo = userNo;
 		this.visitedNo = visitedNo;
@@ -82,6 +86,7 @@ public class AloneVo {
 		this.userName = userName;
 		this.menuName = menuName;
 		this.groupName = groupName;
+		this.ageGroup = ageGroup;
 	}
 
 	public int getReviewNo() {
@@ -235,7 +240,16 @@ public class AloneVo {
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
+	
 
+	public String getAgeGroup() {
+		return ageGroup;
+	}
+
+	public void setAgeGroup(String ageGroup) {
+		this.ageGroup = ageGroup;
+	}
+	
 	@Override
 	public String toString() {
 		return "AloneVo [reviewNo=" + reviewNo + ", userNo=" + userNo + ", visitedNo=" + visitedNo + ", reviewContent="
@@ -244,10 +258,8 @@ public class AloneVo {
 				+ visitedCount + ", storeNo=" + storeNo + ", storeName=" + storeName + ", storeX=" + storeX
 				+ ", storeY=" + storeY + ", storeRoadAddress=" + storeRoadAddress + ", storeOldAddress="
 				+ storeOldAddress + ", menu1stCateName=" + menu1stCateName + ", userName=" + userName + ", menuName="
-				+ menuName + ", groupName=" + groupName + "]";
-	};
-	
-	
-	
+				+ menuName + ", groupName=" + groupName + ", ageGroup=" + ageGroup + "]";
+	}
+
 
 }
