@@ -38,7 +38,7 @@ public class GroupController {
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 	
 	
-	/********************* 그룹원 리스트 페이지 ********************************************/
+	/********************* 그룹이 있나 ********************************************/
 	@ResponseBody
 	@PostMapping("/isThere")
 	public boolean isThereGroup(@RequestBody int userNo) {
@@ -53,6 +53,11 @@ public class GroupController {
 		logger.info("GroupController > groupList()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		if(authUser == null) {
+			return "redirect:/login";
+		}
+		
 		Map<String, Object> map = groupService.groupList(authUser, groupNo);
 		
 		model.addAttribute("map", map);
@@ -74,6 +79,11 @@ public class GroupController {
 		logger.info("GroupController > addGroupForm()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		if(authUser == null) {
+			return "redirect:/login";
+		}
+		
 		Map<String, Object> map = groupService.addGroupForm(authUser);
 		
 		//그룹 최대 개수 보유(4개) : 잘못된 접근이지만 그냥 list로 보내버릴래요
@@ -217,6 +227,11 @@ public class GroupController {
 		logger.info("GroupController > leaveGroup()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");	
+		
+		if(authUser == null) {
+			return "redirect:/login";
+		}
+		
 		int groupCount = groupService.leaveGroup(authUser, groupNo, groupLeader);
 		
 		/////////////// Basket ///////////////////////////
@@ -260,6 +275,11 @@ public class GroupController {
 		logger.info("GroupController > blacklist()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		if(authUser == null) {
+			return "redirect:/login";
+		}
+		
 		Map<String, Object> map = groupService.blacklist(authUser, groupNo);
 		
 		model.addAttribute("map", map);
