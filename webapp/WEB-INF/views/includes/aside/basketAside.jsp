@@ -608,8 +608,9 @@ $("#basket-groups").on("click", ".basket-normal-group", async function(){
 	// 클릭한 그룹이 현재 curr_basket_group과 다른 경우에만
 	if (String(curr_basket_group) != $(this).attr("data-groupNo")) { 	
 		var url = document.location.href
+		console.log(url)
 		url = url.substr(url.indexOf("/lunchwb/")+9)
-		
+		console.log(url)
 		if (!indexJSP && url.indexOf("vote") != -1) {  // 투표나 랜덤 작업 중일 때 confirm으로 경고
 			var voteGroupChange = confirm("그룹을 변경하면 진행상황이 초기화됩니다. 변경하시겠습니까?")
 			
@@ -623,13 +624,15 @@ $("#basket-groups").on("click", ".basket-normal-group", async function(){
 		$(this).addClass("basket-selected-group")
 		
 		// 핀 제거
-		for (var i = 0; i < markers.length; i++) {
-			markers[i].setMap(null)
-			overlays[i].setMap(null)
+		if (indexJSP) {
+			for (var i = 0; i < markers.length; i++) {
+				markers[i].setMap(null)
+				overlays[i].setMap(null)
+			}
+			
+			markers = []
+			overlays = []
 		}
-		
-		markers = []
-		overlays = []
 		
 		// curr_basket_group 변경
 		curr_basket_group = parseInt($(this).attr("data-groupNo"))
@@ -648,8 +651,7 @@ $("#basket-groups").on("click", ".basket-normal-group", async function(){
 				location.replace("${pageContext.request.contextPath}/")
 			
 			// 장바구니가 충분히 차있으면 해당 그룹 + 장바구니에 대한 투표/랜덤 페이지로 이동 ****** 랜덤은 경우 더 생각해봐야 할 듯 ************
-			} else {		
-				
+			} else {						
 				location.replace("${pageContext.request.contextPath}/" + url)
 			}
 		}
@@ -1013,9 +1015,14 @@ async function changeGroupBasket() {
 		if (basket[curr_basket_group][i].stored) {
 			cnt += 1
 			addToBasket(basket[curr_basket_group][i])
-			updateMapPin(i, true)
+			
+			if (indexJSP) {
+				updateMapPin(i, true)
+			}
 		} else {
-			updateMapPin(i, false)
+			if (indexJSP) {
+				updateMapPin(i, false)
+			}
 		}
 	}
 	

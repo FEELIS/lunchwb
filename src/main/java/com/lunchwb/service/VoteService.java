@@ -199,8 +199,11 @@ public class VoteService {
 			JSONObject jstore = (JSONObject)storeInfo.getJSONObject(i);
 			
 			String storeName = jstore.getString("storeName");
-			if (storeName.length() >= 13) {
-				storeName = storeName.substring(0, 13);
+			if (storeName.length() > 12) {
+				String[] names = storeName.split(storeName);
+				if (names.length > 2) storeName = names[0] + " " + names[1];								
+				if (storeName.length() > 12 && names.length > 1) storeName = names[0]; 				
+				if (storeName.length() > 12) storeName = storeName.substring(0, 12);				
 				if (storeName.charAt(storeName.length()-1) == ' ') storeName = storeName.substring(0, storeName.length()-1);
 			}
 			store.setStoreName(storeName);
