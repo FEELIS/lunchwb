@@ -236,7 +236,7 @@
 				 	  			WHERE aa.store_no = sa.store_no (+)) avr
 				 	  	</if>
 		<![CDATA[
-				 	    WHERE ROUND(SQRT(POWER(ABS(store_x-#{gpsVo.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(store_y-#{gpsVo.gpsY})*6400000*2*3.14/360, 2)), 0) <= 1000
+				 	    WHERE ROUND(SQRT(POWER(ABS(store_x-#{gpsVo.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(store_y-#{gpsVo.gpsY})*6400000*2*3.14/360, 2)), 0) <= 500
 		]]>
 				 	    AND menu_2nd_cate_no = (SELECT s.menu_2nd_cate_no 
 				 	    						FROM store s, food_2nd_category f 
