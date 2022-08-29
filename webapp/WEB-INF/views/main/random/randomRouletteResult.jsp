@@ -89,12 +89,16 @@
 <script type="text/javascript">
 
 
+
 let countbas;
 let theWheel;
 let storeInfo = ${storeInfo};
 console.log(storeInfo);
 console.log(storeInfo[0].storeNo);
 console.log(storeInfo.length);
+
+
+
 // 룰렛
 // Create new wheel object specifying the parameters at creation time.
 
@@ -159,6 +163,9 @@ setTimeout(() => {
       }
 }, 400);
 
+setTimeout(() => {
+	startSpin();
+}, 900);
 
 // Vars used by the code in this page to do power controls.
 let wheelSpinning = false;
