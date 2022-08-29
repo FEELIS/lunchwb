@@ -6,10 +6,6 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/alert.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
 
-<c:set var="URL" value="${pageContext.request.requestURL}" />
-<c:if test="${fn:contains(URL, 'group') or fn:contains(URL, 'stat') or fn:contains(URL, 'customer') or fn:contains(URL, 'user')}">
-	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
-</c:if>
 
 <li id="user-alert" class="nav-item dropdown d-xxl-flex no-arrow">
 	<a class="dropdown-toggle nav-link nav-link" aria-expanded="false" data-bs-toggle="dropdown" data-bs-auto-close="outside">
