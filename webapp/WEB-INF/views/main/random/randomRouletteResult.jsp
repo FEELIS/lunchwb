@@ -242,9 +242,9 @@ function alertPrize(indicatedSegment){
  // SDK 초기화 여부를 판단합니다.
  console.log(Kakao.isInitialized());
 
- /* function kakaoShare() {
+function kakaoShare() {
  	var voteURL = $("#vote-url-input").val();
- 	var basketItem = [JSON.parse(currBasket)[0].storeName, JSON.parse(currBasket)[1].storeName, JSON.parse(currBasket)[2].storeName];
+ 	var basketItem = [storeInfo[0].storeName, storeInfo[1].storeName, storeInfo[2].storeName];
  	console.log(basketItem)
  	var desc;
  	
@@ -257,8 +257,7 @@ function alertPrize(indicatedSegment){
  	Kakao.Link.sendDefault({
  		objectType: 'feed',
  		content: {
- 			title: '부장님 투표해주세요',
- 			//title: '부장님 여기어때?',
+ 			title: '오늘 점심 결과입니다.',
  			imageUrl: voteURL,
  			description: desc,
  			link: {
@@ -276,7 +275,7 @@ function alertPrize(indicatedSegment){
  	    // 카카오톡 미설치 시 카카오톡 설치 경로이동
  	    installTalk: true
  	})
- } */
+ }
  
 </script>
 
