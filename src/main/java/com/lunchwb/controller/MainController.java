@@ -93,7 +93,7 @@ public class MainController {
 				voteAsideData = voteService.getVoteAsideData(voteNo, userState);
 				model.addAllAttributes(voteAsideData);
 				
-				return "main/vote/voteProgressMobile";
+				return "main/vote/voteProgress";
 				
 			case 2:
 				voteAsideData = voteService.getVoteAsideData(voteNo, userState);
