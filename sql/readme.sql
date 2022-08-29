@@ -143,4 +143,15 @@
 -- 2022.08.28 22:49 =====================
 -- notification 테이블 noti_state칼럼 추가 (number(20) defulat 0 not null
 
+-- 2022.08.29 10:49 =====================
+-- random 테이블 추가
+-- create table random (
+--     random_no number(20) not null, 		// pk
+--     user_no number(20) not null, 		// fk
+--     store_info varchar2(3000) not null, 
+--     stop_at_value number(20) not null, 
+--     group_name varchar2(200) not null, 
+--     result_time DATE not null
+-- );
+
 
