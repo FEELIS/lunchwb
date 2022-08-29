@@ -1,0 +1,143 @@
+body {
+  height: 100%;	
+}
+
+header > div {
+  background: var(--bs-blue);
+  margin: 0;
+  padding: 18px 0;	
+}
+
+header > div > img {
+  height: 39px;	
+}
+
+#countdown-area {
+  background: #ffffff;
+  padding: 10px 0;
+  padding-bottom: 15px;
+  padding-top: 16px;	
+}
+
+#countdown-teamname {
+  margin: 0;
+  margin-bottom: 5px;	
+}
+
+#groupName {
+  color: rgb(0,0,0);
+  font-size: 20px;	
+}
+
+#toopyo {
+  color: rgb(76,76,82);
+  font-size: 16px;	
+}
+
+.countdown-title {
+  color: rgb(0,0,0);
+  width: 110px;
+  min-width: 110px;
+  max-width: 110px;
+  margin-right: 10px;
+}
+
+.countdown-time {
+  color: var(--bs-blue);
+  font-size: 20px;
+  font-weight: bold;
+  width: 180px;
+  min-width: 180px;
+  max-width: 180px;	
+}
+
+.vote-title {
+  padding: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: rgb(255,255,255);
+  background: var(--bs-blue);	
+}
+
+#vote-name-area {
+  padding-top: 19px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 15px;	
+}
+
+.vote-select-name-btn {
+  cursor: pointer;
+  background: rgb(234,236,244);
+  border-radius: 10px;
+  color: rgb(0,0,0);
+  border-color: rgb(234,236,244);
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-right: 9px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  margin-bottom: 9px;	
+}
+
+.vote-select-name-btn:active {
+  color: var(--bs-blue);
+  background: rgb(255,255,255);	
+  border-color: var(--bs-blue);
+  font-weight: bold;	
+}
+
+.vote-voted-name {
+  color: rgb(255,255,255);
+  background: var(--bs-gray-900);
+  border-color: var(--bs-gray-900);	
+}
+
+.vote-selected-name {
+  color: var(--bs-blue);
+  background: rgb(255,255,255);	
+  border-color: var(--bs-blue);
+  font-weight: bold;
+}
+
+.vote-selected-name:acitve {
+  background-color: var(--bs-gray-300);	
+}
+
+.storeRadio {
+  width: 20%;
+}
+
+.storeRadio input {
+  width: 15px;
+  height: 15px;	
+  margin-top: 15px;
+}
+
+.storeInfo {
+  width: 80%;	
+}
+
+.storeName {
+  color: rgb(0,0,0);
+  font-weight: bold;	
+}
+
+#vote-btn {
+  margin-top: 14px;	
+}
+
+#vote-btn button {
+  cursor: pointer;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 15px;
+  padding-left: 15px;
+  border-color: var(--bs-blue);
+  border-radius: 10px;	
+  margin-bottom: 30px;
+}
+
+#vote-btn button:active {
+  background-color: #3557bc;
+}

@@ -63,7 +63,10 @@ public class TestController {
 	*/
 	
 	
-	
+	@GetMapping("/mobile")
+	public String mobile() {
+		return "main/vote/voteProgressMobile";
+	}
 	
 	
 	
