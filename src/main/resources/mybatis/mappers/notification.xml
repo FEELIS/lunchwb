@@ -3,4 +3,72 @@
 
 <mapper namespace="notification">
 
+	<resultMap id="NotiVo" type="com.lunchwb.vo.NotificationVo">
+		<result column="noti_no" property="notiNo" />
+		<result column="user_no" property="userNo" />
+		<result column="group_no" property="groupNo" />
+		<result column="reply_no" property="replyNo" />
+		<result column="alert_comment" property="alertComment" />
+		<result column="noti_state" property="notiState" />
+		<result column="noti_type" property="notiType" />
+		<result column="noti_name" property="notiName" />
+	</resultMap>
+	
+	
+	<!-- 알림 보내기 -->
+	<insert id="addNoti" parameterType="Map">
+		<choose>
+			<!-- 개인 알림 -->
+			<when test="groupMembers == null">
+				INSERT INTO notification
+				VALUES (SEQ_NOTI_NO.NEXTVAL, #{noti.userNo}, #{notiType},
+						<choose>
+							<when test="noti.groupNo == 0 || noti.groupNo == null">
+								0, #{noti.replyNo},
+							</when>
+							<otherwise>
+								#{noti.groupNo}, 0,
+							</otherwise>
+						</choose>
+					 	'', 0)
+			</when>
+			
+			<!-- 단체 알림 -->
+			<otherwise>
+				<foreach collection="groupMembers" item="userNo">
+					INSERT INTO notification
+					VALUES (SEQ_NOTI_NO.NEXTVAL, #{userNo}, #7, #{groupVo.groupNo}, 0, #{groupVo.beforeGroupName}, 0);
+				</foreach>
+			</otherwise>
+		</choose>
+	</insert>
+	
+	
+	<!-- 그룹 초대장을 보낸 인원(초대 중)/초대중인지 확인 -->
+	<select id="membersInvitedCount" parameterType="int" resultType="int">
+		SELECT count(user_no)
+		FROM notification
+		WHERE group_no = #{groupNo}
+		AND noti_type = 1
+		AND alert_state = 0
+		GROUP BY group_no
+	</select>
+	
+	
+	<!-- 그룹 초대중인 회원인가? -->
+	<select id="alreadyInvite" parameterType="Map" resultType="int">>
+		SELECT count(user_no)
+		FROM notification
+		WHERE group_no = #{groupNo}
+		AND noti_type = 1
+		AND alert_state = 0
+		AND user_no = (SELECT user_no 
+						   FROM users 
+						   WHERE user_email = #{userEamil})
+		GROUP BY group_no
+	</select>
+	
+	
+	
+
 </mapper>

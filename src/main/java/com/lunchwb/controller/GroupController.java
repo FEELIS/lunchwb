@@ -164,11 +164,11 @@ public class GroupController {
 	/******************** 초대할 유저 존재 확인 ***************************************/
 	@ResponseBody
 	@PostMapping("/userCheck")
-	public Map<String, Object> userCheck(@RequestBody String userEmail, HttpSession session) {
+	public Map<String, Object> userCheck(@RequestBody Map<String, Object> inviteMap, HttpSession session) {
 		logger.info("GroupController > userCheck()");
 		
 		UserVo authUser = (UserVo)session.getAttribute("authUser");	
-		Map<String, Object> checkMap = groupService.userCheck(userEmail, authUser);
+		Map<String, Object> checkMap = groupService.userCheck(inviteMap, authUser);
 		
 		return checkMap;
 	}
@@ -185,7 +185,7 @@ public class GroupController {
 	
 	/******************** 회원 그룹 멤버 추가 *******************************************/
 	@ResponseBody
-	@PostMapping("/invtMember") public GroupVo invtMember(@RequestBody GroupVo groupVo) {
+	@PostMapping("/invtMember") public String invtMember(@RequestBody GroupVo groupVo) {
 		logger.info("GroupController > invtMember()");
 		return groupService.invtMember(groupVo);
 	}

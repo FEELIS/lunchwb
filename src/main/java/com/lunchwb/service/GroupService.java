@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.lunchwb.dao.BlackDao;
 import com.lunchwb.dao.GroupDao;
+import com.lunchwb.dao.NotiDao;
 import com.lunchwb.dao.UserDao;
 import com.lunchwb.vo.BlacklistVo;
 import com.lunchwb.vo.GroupVo;
@@ -23,6 +24,8 @@ public class GroupService {
 	private BlackDao blackDao;
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private NotiDao notiDao;
 	
 	
 	/******************** 그룹 없으면 userAside에서 블랙리스트 가림 **************************/
@@ -83,6 +86,10 @@ public class GroupService {
 				//그룹원 수(혼자인지 아닌지 판단하게)
 				int memberCount = memberList.size();
 				map.put("memberCount", memberCount);
+				
+				//초대중인 회원 수
+				int inviteCount = notiDao.membersInvitedCount(groupNo);
+				map.put("inviteCount", inviteCount);
 				
 				//그룹 리더 
 				int leader = groupDao.groupLeader(groupNo);
@@ -186,16 +193,25 @@ public class GroupService {
 	
 	/******************** 그룹 이름 변경 *********************************************/
 	public String nameChange(GroupVo groupVo) {
-
-		//그룹장 제외(본인이 바꿨으니까) 멤버원 알림 전송 (noti_type = 7)
-		
-		
 		String result = "fail";
 		
 		int count = groupDao.groupChange(groupVo);
 		
 		if(count == 1) {
 			result = "success";
+
+			//그룹장 제외(본인이 바꿨으니까) 멤버원 알림 전송 (noti_type = 7)
+			List<Integer> groupMembers = groupDao.groupMembersForAlert(groupVo.getGroupNo());
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("groupMembers", groupMembers);
+			map.put("groupVo", groupVo);
+			map.put("notiType", 7);
+			
+			//view
+			//map.put("alertCmt", groupVo.getBeforeGroupName() + "의 이름이 " + groupVo.getGroupName() + "으로 변경되었습니다.");
+			
+			notiDao.addNoti(map);
 		}
 		
 		return result;
@@ -216,11 +232,12 @@ public class GroupService {
 	}
 	
 	
+	
 	/******************** 그룹에 초대할 회원 체크 ******************************************/
-	public Map<String, Object> userCheck(String userEmail, UserVo authUser) {
+	public Map<String, Object> userCheck(Map<String, Object> map, UserVo authUser) {
 		Map<String, Object> checkMap = new HashMap<String, Object>(); 
 		
-		UserVo userVo = userDao.userCheck(userEmail);
+		UserVo userVo = userDao.userCheck((String)map.get("userEmail"));
 		
 		String state = "not user";
 		if(userVo != null) {
@@ -230,17 +247,25 @@ public class GroupService {
 				state = "It's U";
 				
 			}else {
-				int gpCount = groupDao.groupCount(userNo);
 				
-				//해당 회원이 그룹 추가 가능
-				if(gpCount < 4) {
-					state = "possible";
-					checkMap.put("userNo", userNo);
-					checkMap.put("gpCount", gpCount);
-					
-					//그룹 추가 불가(최대 개수 보유)
+				//이미 초대를 보냈는지?
+				int already = notiDao.alreadyInvite(map);
+				if(already > 0) {
+					state = "already invite";
+
 				}else {
-					state = "impossible";
+					int gpCount = groupDao.groupCount(userNo);
+					
+					//해당 회원이 그룹 추가 가능
+					if(gpCount < 4) {
+						state = "possible";
+						checkMap.put("userNo", userNo);
+						checkMap.put("gpCount", gpCount);
+						
+						//그룹 추가 불가(최대 개수 보유)
+					}else {
+						state = "impossible";
+					}
 				}
 			}
 		}
@@ -264,18 +289,39 @@ public class GroupService {
 	}
 	
 	
-	/******************** 회원 그룹 멤버 추가 ********************************************/
-	public GroupVo invtMember(GroupVo groupVo) {
+	/******************** 회원 그룹 멤버 초대 ********************************************/
+	public String invtMember(GroupVo groupVo) {
+		
+		//그룹 초대 보내기 
+		Map<String, Object> map = new HashMap<>();
+		map.put("noti", groupVo);
+		
 		//보스 변경
 		if(groupVo.getBossCheck() == 1) {
 			groupDao.deleteBoss(groupVo.getGroupNo());
+			
+			//부장님으로 초대 type : 10
+			map.put("notiType", 10);
+		}else {
+			
+			//일반 그룹원으로 초대 type : 1
+			map.put("notiType", 1);
 		}
 		
-		//멤버 추가
-		groupDao.addMember(groupVo);
-		int memberNo = groupVo.getGroupMemberNo();
-		GroupVo memberVo = groupDao.memberInfo(memberNo);
-		return memberVo;
+		//멤버 추가 안함(초대 수락 후)
+		/*
+		 * groupDao.addMember(groupVo); int memberNo = groupVo.getGroupMemberNo();
+		 * GroupVo memberVo = groupDao.memberInfo(memberNo);
+		 */
+		
+		//알림 추가
+		if(notiDao.addNoti(map) > 0) {
+			return "success";
+			
+		}else {
+			return "fail";
+		}
+		
 	}
 	
 	
@@ -322,16 +368,23 @@ public class GroupService {
 		
 		if(count > 0) {
 			result = "success";
-		
-			//유령회원 user 테이블에서 제거
-			//그룹없는 회원도 있어서 이거 아니야 없애지말까 아니면 유저검사 joindate나 email
-			/*
-			 * if(groupVo.getGroupOrder() == 0) { userDao.groupOut(userNo); }
-			 */
 			
 			//count != 1 > 그 사이에 멤버가 탈퇴를 먼저 했을 경우 그룹 오더를 조정하면 안됨
 			//group_order 조정
 			groupDao.autoOrder(groupVo);
+			
+			//강퇴 알림 noti_type : 5
+			Map<String, Object> map = new HashMap<>();
+			map.put("noti", groupVo);
+			map.put("notiType", 5);
+			
+			notiDao.addNoti(map);
+			
+			//NotificationVo notiVo = new NotificationVo();
+			//notiVo.setUserNo(groupVo.getUserNo());
+			//notiVo.setNotiType(5);
+			//notiVo.setGroupNo(groupVo.getGroupNo());
+			
 		}
 		
 		return result;
@@ -364,6 +417,16 @@ public class GroupService {
 	/******************** 그룹장 위임 ****************************************************/
 	public String leaderChange(GroupVo groupVo) {
 		if(groupDao.groupChange(groupVo) > 0) {
+			
+			//그룹장 위임 알림(type : 6)
+			groupVo.setUserNo(groupVo.getGroupLeader());
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("noti", groupVo);
+			map.put("notiType", 6);
+			
+			notiDao.addNoti(map);
+			
 			return "success";
 		}else {
 			return "fail";

@@ -76,15 +76,15 @@
                     
                    	<div id="groupmem-list" class="card shadow">
                    	
-                       <div class="card-header py-3">
+                       	<div class="card-header py-3">
                            <p class="text-primary m-0 fw-bold">그룹원 목록</p>
-                       </div>
+                       	</div>
                        
-                       <div class="card-body">
+                       	<div class="card-body">
                          
-                           <div id="groupmem-list-table" class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
+                           	<div id="groupmem-list-table" class="table-responsive table mt-2" role="grid" aria-describedby="dataTable_info">
                              
-                               <table id="dataTable" class="table my-0">
+                               	<table id="dataTable" class="table my-0">
                                 	<colgroup>
                                 		<col style="width: 10%;">
                                 		<col style="width: 10%;">
@@ -151,14 +151,17 @@
 												</td>
 											</tr>
 										</c:forEach>
-                                   </tbody>
-                               </table>
-                           </div>
+                                   	</tbody>
+                               	</table>
+                           	</div>
                            
-                           <div class="row">
-                               <div class="col-md-6 align-self-center">
-                                   <p class="dataTables_info" role="status" aria-live="polite">총 인원 : <span id="memberCount">${map.memberCount}</span></p>
-                               </div>
+                           	<div class="row">
+                               	<div class="col-md-6 align-self-center">
+                                   	<p class="dataTables_info" role="status" aria-live="polite">총 인원 : 
+                                   		<span id="memberCount">${map.memberCount}</span>
+                                   		(초대중인 인원: <span id="inviteCount">${map.inviteCount}</span>)
+                                   	</p>
+                               	</div>
                                <div class="col-md-6">
                                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                                        <ul class="pagination">
@@ -169,8 +172,8 @@
                                            <li class="page-item"><a class="page-link" aria-label="Next" href="#"><span aria-hidden="true">»</span></a></li>
                                        </ul>
                                    </nav>
-                               </div>
-                           </div>
+                               	</div>
+                           	</div>
                        
                        </div>
                    </div>
@@ -304,7 +307,7 @@
 <script type="text/javascript">
 
 var groupNo = $("#thisGpNo").val()
-console.log(groupNo)
+console.log(groupNo+"번 그룹")
 
 $(".form-check-input").on("click", function(){
 	console.log("부장님 여부 체크")
@@ -343,17 +346,27 @@ $(".form-check-input").on("click", function(){
 $("#groupmem-invt button").on("click", function(){
 	console.log("그룹원 초대 버튼 클릭")
 	
+	var members = $("#memberCount").text() + $("inviteCount").text()
+	if(members == 15){
+		alert("그룹원은 최대 15명까지입니다")
+		return false
+	}
+	
 	var userEmail = $("[name = 'userEmail']").val()
 	if(userEmail == null || userEmail == ""){
 		alert("이메일을 입력해주세요")
 		return false
 	}
+	
+	let inviteMap = new Map()
+	inviteMap.set("groupNo", groupNo)
+	inviteMap.set("userEmail", userEamil)
 
 	$.ajax({
 		url : "${pageContext.request.contextPath}/group/userCheck",
 		type : "post",
 		contentType : "application/json",
-		data : JSON.stringify(userEmail),
+		data : JSON.stringify(inviteMap),
 		dataType : "json",
 		
 		success : function(checkMap){
@@ -362,6 +375,10 @@ $("#groupmem-invt button").on("click", function(){
 			//해당 이메일 유저 초대 가능
 			if(checkMap.state == "possible"){
 				memberCheck(checkMap.userNo, userEmail, checkMap.gpCount)
+				
+			//이미 초대 중
+			}else if(checkMap.state == "already invite"){
+				alert(userEmail+"님에게 이미 초대장을 보냈습니다")
 				
 			//해당 이메일 유저 초대 불가(그룹 개수 초과)
 			}else if(checkMap.state == "impossible"){
@@ -401,7 +418,7 @@ function memberCheck(userNo, userEmail, gpCount){
 			if(state == "already"){
 				alert("이미 그룹 멤버입니다")
 			
-			}else if(confirm(userEmail + " 님을 초대하시겠습니까?") == true){
+			}else if(confirm(userEmail + " 님을 초대하시겠습니까?(취소 불가)") == true){
 				invt(groupVo)
 				
 			}
@@ -427,22 +444,25 @@ function invt(groupVo){
 		data : JSON.stringify(groupVo),
 		dataType : "json",
 		
-		success : function(memberVo){
-			
-			alert("멤버가 추가되었습니다")
+		success : function(result){
 			
 			$("[name = 'userEmail']").val("")
 			$(".form-check-input").prop("checked", false)
-			
-			var memberCount = $("#memberCount").text()
-			$("#memberCount").text(Number(memberCount)+1)
-			console.log(memberCount)
-			
-			if(memberVo.bossCheck == 1){
-				$(".group-bujang").html("")
+
+			if(result == "success"){
+				var inviteCount = $("#inviteCount").text()
+				$("#inviteCount").text(Number(inviteCount)+1)
+
+				
+				if(memberVo.bossCheck == 1){
+					$(".group-bujang").html("")
+				}
+				
+				//테이블 표기 안함
+				
+			}else{
+				alert("초대 실패")
 			}
-			
-			//render(memberVo) x >> 회원 초대 : 수락 후 표기 (즉시 그리기 불.....가.)
 			
 		}, 
 		error : function(XHR, status, error) {
@@ -453,9 +473,16 @@ function invt(groupVo){
 }
 
 
+
 /* 그룹원 직접 추가 */
 $("#groupmem-add button").on("click", function(){
 	console.log("비회원 그룹 멤버 추가 버튼 클릭")
+	
+	var members = $("#memberCount").text() + $("inviteCount").text()
+	if(members == 15){
+		alert("그룹원은 최대 15명까지입니다")
+		return false
+	}
 
 	var userName = $("#groupmem-add [name ='userName']").val()
 	if(userName == null || userName == ""){
@@ -515,7 +542,6 @@ $("#groupmem-add button").on("click", function(){
 			
 			var memberCount = $("#memberCount").text()
 			$("#memberCount").text(Number(memberCount)+1)
-			console.log(memberCount)
 			
 			if(memberVo.bossCheck == 1){
 				$(".group-bujang").html("")
@@ -533,13 +559,13 @@ $("#groupmem-add button").on("click", function(){
 })
 
 
-/* 테이블 추가 */
-function render(memberVo, k){
+/* 멤버 직접 추가 > 테이블 추가 */
+function render(memberVo){
 	console.log("render()")
 	
 	var str = ''
 		str += '<tr id="member-' + memberVo.userNo + '">'
-		str += '	<td class="group-bujang" style="width: 10%;">'
+		str += '	<td class="group-bujang">'
 	
 	if(memberVo.bossCheck == 1){
 		str += '		<img src="${pageContext.request.contextPath}/assets/img/bujang.png" width="24px" />'
@@ -588,6 +614,7 @@ $("#modal-group-name-change .btn-primary").on("click", function(){
 	var groupVo = {
 		groupNo: groupNo,
 		groupName: groupName
+		beforeGroupName : "${map.groupName}"
 	}
 	
 	$.ajax({
@@ -642,12 +669,13 @@ $("#memberListArea").on("click", ".groupmem-delete", function(){
 			
 			if(result == "success"){
 				alert("삭제되었습니다")
-				$("#member-"+userNo).remove()
-				var memberCount = $("#memberCount").text()
-				$("#memberCount").text(Number(memberCount)-1)
 			}else{
-				alert("삭제가 되지 않았습니다")
+				alert("그룹원이 이미 탈퇴하였습니다)")
 			}
+
+			$("#member-"+userNo).remove()
+			var memberCount = $("#memberCount").text()
+			$("#memberCount").text(Number(memberCount)-1)
 		}
 	})
 	
