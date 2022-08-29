@@ -15,32 +15,26 @@
 	</resultMap>
 	
 	
-	<!-- 알림 보내기 -->
+	<!-- 그룹원 단체 알림 : 그룹 이름 변경 -->
+	<insert id="alertOfGroupChange" parameterType="NotiVo" >
+		INSERT INTO notification
+		VALUES (SEQ_NOTI_NO.NEXTVAL, #{userNo}, 7, #{groupNo}, 0, #{beforeGroupName}, 0);
+	</insert>
+	
+	
+	<!-- 개인 알림 -->
 	<insert id="addNoti" parameterType="Map">
-		<choose>
-			<!-- 개인 알림 -->
-			<when test="groupMembers == null">
-				INSERT INTO notification
-				VALUES (SEQ_NOTI_NO.NEXTVAL, #{noti.userNo}, #{notiType},
-						<choose>
-							<when test="noti.groupNo == 0 || noti.groupNo == null">
-								0, #{noti.replyNo},
-							</when>
-							<otherwise>
-								#{noti.groupNo}, 0,
-							</otherwise>
-						</choose>
-					 	'', 0)
-			</when>
-			
-			<!-- 단체 알림 -->
-			<otherwise>
-				<foreach collection="groupMembers" item="userNo">
-					INSERT INTO notification
-					VALUES (SEQ_NOTI_NO.NEXTVAL, #{userNo}, #7, #{groupVo.groupNo}, 0, #{groupVo.beforeGroupName}, 0);
-				</foreach>
-			</otherwise>
-		</choose>
+		INSERT INTO notification
+		VALUES (SEQ_NOTI_NO.NEXTVAL, #{noti.userNo}, #{notiType},
+				<choose>
+					<when test="noti.groupNo == 0 || noti.groupNo == ''">
+						0, #{noti.replyNo},
+					</when>
+					<otherwise>
+						#{noti.groupNo}, 0,
+					</otherwise>
+				</choose>
+			 	'', 0)
 	</insert>
 	
 	

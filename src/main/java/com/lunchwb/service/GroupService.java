@@ -13,6 +13,7 @@ import com.lunchwb.dao.NotiDao;
 import com.lunchwb.dao.UserDao;
 import com.lunchwb.vo.BlacklistVo;
 import com.lunchwb.vo.GroupVo;
+import com.lunchwb.vo.NotificationVo;
 import com.lunchwb.vo.UserVo;
 
 @Service
@@ -211,15 +212,15 @@ public class GroupService {
 			//그룹장 제외(본인이 바꿨으니까) 멤버원 알림 전송 (noti_type = 7)
 			List<Integer> groupMembers = groupDao.groupMembersForAlert(groupVo.getGroupNo());
 			
-			Map<String, Object> map = new HashMap<>();
-			map.put("groupMembers", groupMembers);
-			map.put("groupVo", groupVo);
-			map.put("notiType", 7);
+			for(int i=0; i<groupMembers.size(); i++) {
+				NotificationVo notiVo = new NotificationVo();
+				notiVo.setUserNo(groupMembers.get(i));
+				notiVo.setGroupNo(groupVo.getGroupNo());
+				notiVo.setAlertCmt(groupVo.getBeforeGroupName());
+
+				notiDao.alertOfGroupChange(notiVo);
+			}
 			
-			//view
-			//map.put("alertCmt", groupVo.getBeforeGroupName() + "의 이름이 " + groupVo.getGroupName() + "으로 변경되었습니다.");
-			
-			notiDao.addNoti(map);
 		}
 		
 		return result;
