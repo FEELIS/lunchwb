@@ -337,7 +337,6 @@ create table random (
     result_time DATE not null
 );
 
-
 --===== 투표 =====
 CREATE TABLE vote (
  vote_no number(20) NOT NULL,
