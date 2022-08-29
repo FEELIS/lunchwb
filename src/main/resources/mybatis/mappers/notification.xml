@@ -46,7 +46,7 @@
 	
 	<!-- 그룹 초대장을 보낸 인원(초대 중)/초대중인지 확인 -->
 	<select id="membersInvitedCount" parameterType="int" resultType="int">
-		SELECT count(user_no)
+		SELECT NVL(MAX(count(user_no)) , 0)
 		FROM notification
 		WHERE group_no = #{groupNo}
 		AND noti_type = 1
@@ -56,15 +56,15 @@
 	
 	
 	<!-- 그룹 초대중인 회원인가? -->
-	<select id="alreadyInvite" parameterType="Map" resultType="int">>
-		SELECT count(user_no)
+	<select id="alreadyInvite" parameterType="Map" resultType="int">
+		SELECT NVL(MAX(count(user_no)) , 0)
 		FROM notification
 		WHERE group_no = #{groupNo}
 		AND noti_type = 1
 		AND alert_state = 0
 		AND user_no = (SELECT user_no 
-						   FROM users 
-						   WHERE user_email = #{userEamil})
+					   FROM users 
+					   WHERE user_email = #{userEmail})
 		GROUP BY group_no
 	</select>
 	
