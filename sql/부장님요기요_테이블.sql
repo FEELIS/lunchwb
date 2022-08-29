@@ -76,8 +76,6 @@ drop constraint visited_user_no;
 --=============== 알림 테이블 ==================================
 --===== 알림 =====
 alter table notification 
-drop constraint notification_reply_no;
-alter table notification 
 drop constraint notification_group_no;
 alter table notification 
 drop constraint notification_noti_type;
@@ -365,7 +363,7 @@ CREATE TABLE notification (
  user_no number(20) NOT NULL,
  noti_type number(20) NOT null,
  group_no number(20) NOT null,
- reply_no number(20) NOT null,
+ reply_no number(20) DEFAULT 0 null,
  alert_comment varchar2(400) NOT null, 
  noti_state number(20) DEFAULT 0 NOT NULL
 );
@@ -542,8 +540,6 @@ ALTER TABLE notification
 add constraint notification_noti_type FOREIGN KEY (noti_type) REFERENCES noti_no(noti_type) ON DELETE CASCADE;
 ALTER TABLE notification 
 add constraint notification_group_no FOREIGN KEY (group_no) REFERENCES groups(group_no) ON DELETE CASCADE;
-ALTER TABLE notification 
-add constraint notification_reply_no FOREIGN KEY (reply_no) REFERENCES reply_inquiry(reply_no) ON DELETE CASCADE;
 
 
 --=============== 리뷰 테이블 ========================================
