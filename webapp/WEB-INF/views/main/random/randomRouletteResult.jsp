@@ -257,7 +257,7 @@ function kakaoShare() {
  	Kakao.Link.sendDefault({
  		objectType: 'feed',
  		content: {
- 			title: '오늘 점심 결과입니다.',
+ 			title: '오늘 점심 결과가 궁금하지 않으세요?.',
  			imageUrl: voteURL,
  			description: desc,
  			link: {
