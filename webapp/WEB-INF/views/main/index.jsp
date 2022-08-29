@@ -382,6 +382,16 @@ $("#kakaoMap").on("click", ".fa-plus-square", function(e){
 	e.stopPropagation()
 })
 
+
+// 가게 제거 버튼 클릭 시 > 장바구니에 항목 삭제
+$("#kakaoMap").on("click", ".fa-minus-square", function(e){
+	var storeNo = parseInt($(this).closest(".customoverlay").attr("data-storeNo"))
+	deleteBasketItem(storeNo)
+
+	// 부모 태그 function 작동 방지
+	e.stopPropagation()
+})
+
 	
 	
 // 중심 좌표로 이동하기
@@ -462,7 +472,7 @@ function updateMapPin(idx, selected) {
 	
 	if (selected) {
 		content =   '<div class="customoverlay" data-storeNo="' + curr_store.storeNo + '">' 
-        		  + 	'<span class="store_name">' + storeName + '</span>'
+        		  + 	'<span class="store_name">' + storeName + '<i class="far fa-minus-square"></i></span>'
         		  + '</div>'
         
 	} else {
