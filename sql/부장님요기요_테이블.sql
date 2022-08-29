@@ -134,10 +134,6 @@ drop constraint group_member_group_no;
 alter table group_member 
 drop constraint group_member_user_no;
 
---===== 그룹 =====
-alter table groups 
-drop constraint groups_group_leader;
-
 
 --=============== 유저 테이블 ==================================
 --===== FAQ =====
@@ -337,6 +333,7 @@ create table random (
     result_time DATE not null
 );
 
+
 --===== 투표 =====
 CREATE TABLE vote (
  vote_no number(20) NOT NULL,
@@ -483,10 +480,6 @@ add constraint faq_user_no FOREIGN KEY (user_no) REFERENCES users(user_no) ON DE
 
 
 --=============== 그룹 테이블 ========================================
---===== 그룹 =====
-ALTER TABLE groups 
-add constraint groups_group_leader FOREIGN KEY (group_leader) REFERENCES users(user_no) ON DELETE CASCADE;
-
 --===== 그룹멤버 =====
 ALTER TABLE group_member 
 add constraint group_member_user_no FOREIGN KEY (user_no) REFERENCES users(user_no) ON DELETE CASCADE;
