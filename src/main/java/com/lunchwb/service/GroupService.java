@@ -87,13 +87,16 @@ public class GroupService {
 				int memberCount = memberList.size();
 				map.put("memberCount", memberCount);
 				
-				//초대중인 회원 수
-				int inviteCount = notiDao.membersInvitedCount(groupNo);
-				map.put("inviteCount", inviteCount);
-				
 				//그룹 리더 
 				int leader = groupDao.groupLeader(groupNo);
 				map.put("leader", leader);
+
+				//초대중인 회원 수(그룹장만 표기)
+				if(leader == userNo) {
+					int inviteCount = notiDao.membersInvitedCount(groupNo);
+					map.put("inviteCount", inviteCount);
+				}
+				
 			}
 		}
 		
@@ -237,7 +240,9 @@ public class GroupService {
 	public Map<String, Object> userCheck(Map<String, Object> map, UserVo authUser) {
 		Map<String, Object> checkMap = new HashMap<String, Object>(); 
 		
-		UserVo userVo = userDao.userCheck((String)map.get("userEmail"));
+		String userEmail = (String)map.get("userEmail");
+		UserVo userVo = userDao.userCheck(userEmail);
+		
 		
 		String state = "not user";
 		if(userVo != null) {
@@ -403,11 +408,22 @@ public class GroupService {
 		if(userNo == groupLeader) {
 			groupVo.setGroupLeader(0);
 			groupDao.groupChange(groupVo);
+		
+		}else {
+			//탈퇴 알림(그룹장에게) type : 4
+			Map<String, Object> map = new HashMap<>();
+			groupVo.setUserNo(groupLeader);
+			map.put("noti", groupVo);
+			map.put("notiType", 4);
+			
+			notiDao.addNoti(map);
 		}
 	
 		groupDao.outGroup(groupVo);
 		groupDao.autoOrder(groupVo);
-	
+		
+		//그룹장이 아닐 때만 알림(그룹장이면 보낼 사람이 없어)
+
 		int groupCount = groupDao.groupCount(userNo); 
 		
 		return groupCount;
