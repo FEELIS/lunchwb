@@ -162,3 +162,6 @@
 
 -- 2022.08.29 17:07 =====================
 -- notification테이블 group_no fk 삭제 , null, dafault 0
+
+-- 2022.08.29 17:36 =====================
+-- notification테이블 alert_comment null로 변경
