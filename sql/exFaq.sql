@@ -19,3 +19,6 @@ insert into faq
 values(seq_faq_no.nextval, 1,'그룹 관리','그룹장이 모든 권한을 가집니다.' , 'help');
 insert into faq 
 values(seq_faq_no.nextval, 1,'전체 통계','개인통계기능은 지원하지 않습니다.' , 'help');
+
+
+commit;
