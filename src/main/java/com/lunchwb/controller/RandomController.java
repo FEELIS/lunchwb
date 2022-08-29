@@ -52,12 +52,19 @@ public class RandomController {
 							@PathVariable(required = false, name = "randomNo") Integer randomNo) throws Exception {
 		logger.info("/randomMain");
 		
+		
+		
 		if(randomNo == null) {
 			return "main/random/randomMain";
 		}else {
 			Map<String, Object> randomInfo = randomService.checkAllRandomResult(randomNo);
-			model.addAllAttributes(randomInfo);
-			return "main/random/randomRouletteResult";
+			
+			if(randomInfo == null) {
+				return "main/random/randomMain";
+			}else {
+				model.addAllAttributes(randomInfo);
+				return "main/random/randomRouletteResult";
+			}
 		}
 		
 	}

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lunchwb.dao.RandomDao;
 import com.lunchwb.dao.TestDao;
+import com.lunchwb.dao.UserDao;
 import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.RandomVo;
 import com.lunchwb.vo.StoreVo;
@@ -24,6 +25,8 @@ public class RandomService {
 	RandomDao randomDao;
 	@Autowired
 	TestDao testDao;
+	@Autowired
+	UserDao userDao;
 	
 	// 랜덤 결과 저장하기
 	public int makeResult(int stopAtValue, String currBasket, int currBasketGroup, int creatorUserNo) {
@@ -81,40 +84,63 @@ public class RandomService {
 		
 		RandomVo checkAllRandomResult = randomDao.checkAllRandomResult(randomNo);
 		
-		// 가게 정보
-		JSONArray storeInfo = new JSONArray(checkAllRandomResult.getStoreInfo());
-		List<StoreVo> rouletteStoreInfo = new ArrayList<>();
-		for (int i = 0; i < storeInfo.length(); i++) {
-			// 장바구니 정보 파싱
-			StoreVo store = new StoreVo();
-			JSONObject jstore = (JSONObject)storeInfo.getJSONObject(i);
+		// userState가 4가 아니면 RandomVo 데이터 삭제
+		// userState 조회
+		int userState = userDao.selectUserState(checkAllRandomResult.getUserNo());
+		System.out.println("랜덤 정보 조회 중 유저 상태입니다 = " + userState);
+		
+		if(userState != 4) {
+			// 랜덤 정보가 있는지 다시 한 번 조회
+			RandomVo checkRandomVo = randomDao.checkRandomResult(checkAllRandomResult.getUserNo());
+			System.out.println("기존의 랜덤 결과를 조회합니다 : " + checkRandomVo);
 			
-			String storeName = jstore.getString("storeName");
-			if (storeName.length() >= 13) {
-				storeName = storeName.substring(0, 13);
-				if (storeName.charAt(storeName.length()-1) == ' ') storeName = storeName.substring(0, storeName.length()-1);
+			// 유저 상태가 4가 아닌데, Random에 자료가 있다면 삭제.
+			if(checkRandomVo != null) {
+				randomDao.deleteRandomResult(checkAllRandomResult.getUserNo());
 			}
-			store.setStoreName(storeName);
-			store.setStoreNo(jstore.getInt("storeNo"));
-			store.setDistance(jstore.getInt("distance"));
-			store.setMenu2ndCateName(jstore.getString("menu2ndCateName"));
-			store.setStoreX(jstore.getDouble("storeX"));
-			store.setStoreY(jstore.getDouble("storeY"));
 			
-			rouletteStoreInfo.add(store);
+			// Random에 자료가 있든 없든 null 반환.
+			randomInfo = null;
+		}else {
+			
+			// 가게 정보
+			JSONArray storeInfo = new JSONArray(checkAllRandomResult.getStoreInfo());
+			List<StoreVo> rouletteStoreInfo = new ArrayList<>();
+			for (int i = 0; i < storeInfo.length(); i++) {
+				// 장바구니 정보 파싱
+				StoreVo store = new StoreVo();
+				JSONObject jstore = (JSONObject)storeInfo.getJSONObject(i);
+				
+				String storeName = jstore.getString("storeName");
+				if (storeName.length() >= 13) {
+					storeName = storeName.substring(0, 13);
+					if (storeName.charAt(storeName.length()-1) == ' ') storeName = storeName.substring(0, storeName.length()-1);
+				}
+				store.setStoreName(storeName);
+				store.setStoreNo(jstore.getInt("storeNo"));
+				store.setDistance(jstore.getInt("distance"));
+				store.setMenu2ndCateName(jstore.getString("menu2ndCateName"));
+				store.setStoreX(jstore.getDouble("storeX"));
+				store.setStoreY(jstore.getDouble("storeY"));
+				
+				rouletteStoreInfo.add(store);
+			}
+			checkAllRandomResult.setRouletteStoreInfo(rouletteStoreInfo);
+			ObjectMapper mapper = new ObjectMapper();
+			String store = mapper.writeValueAsString(rouletteStoreInfo);
+			// randomData에 자료 넣기
+			
+			randomInfo.put("stopAtValue", checkAllRandomResult.getStopAtValue());
+			randomInfo.put("randomNo", checkAllRandomResult.getRandomNo());
+			randomInfo.put("groupName", checkAllRandomResult.getGroupName());
+			randomInfo.put("basketInfo", rouletteStoreInfo);
+			randomInfo.put("storeInfo", store);
+			
+			System.out.println("스토어 정보" + store);
+			
 		}
-		checkAllRandomResult.setRouletteStoreInfo(rouletteStoreInfo);
-		ObjectMapper mapper = new ObjectMapper();
-		String store = mapper.writeValueAsString(rouletteStoreInfo);
-		// randomData에 자료 넣기
 		
-		randomInfo.put("stopAtValue", checkAllRandomResult.getStopAtValue());
-		randomInfo.put("randomNo", checkAllRandomResult.getRandomNo());
-		randomInfo.put("groupName", checkAllRandomResult.getGroupName());
-		randomInfo.put("basketInfo", rouletteStoreInfo);
-		randomInfo.put("storeInfo", store);
 		
-		System.out.println("스토어 정보" + store);
 		return randomInfo;
 	}
 }
