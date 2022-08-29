@@ -19,6 +19,7 @@ drop sequence seq_noti_no;
 --===== 투표 =====
 drop sequence seq_vote_member_no;
 drop sequence seq_vote_no;
+drop sequence seq_random_no;
 
 --===== 메뉴 =====
 drop sequence seq_menu_no;
@@ -93,6 +94,11 @@ alter table vote
 drop constraint vote_group_no;
 alter table vote 
 drop constraint vote_vote_made_user;
+
+--===== 투표 =====
+alter table random 
+drop constraint random_user_no;
+
 
 
 --=============== 메뉴 테이블 ==================================
@@ -175,6 +181,7 @@ DROP TABLE food_1st_category;
 --===== 투표 =====
 DROP TABLE vote_members;
 DROP TABLE vote;
+DROP TABLE random;
 
 --===== 알림 =====
 DROP TABLE noti_no;
@@ -320,6 +327,17 @@ CREATE TABLE menu (
 );
 
 --======================= 투표 테이블=======================
+--===== 랜덤 =====
+create table random (
+    random_no number(20) not null, 
+    user_no number(20) not null, 
+    store_info varchar2(3000) not null, 
+    stop_at_value number(20) not null, 
+    group_name varchar2(200) not null, 
+    result_time DATE not null
+);
+
+
 --===== 투표 =====
 CREATE TABLE vote (
  vote_no number(20) NOT NULL,
@@ -429,6 +447,7 @@ ALTER TABLE food_2nd_category ADD CONSTRAINT menu_2nd_cate_no_pk PRIMARY KEY (me
 ALTER TABLE menu ADD CONSTRAINT menu_no_pk PRIMARY KEY (menu_no);
 
 --===== 투표 =====
+ALTER TABLE random ADD CONSTRAINT random_no_pk PRIMARY KEY (random_no);
 ALTER TABLE vote ADD CONSTRAINT vote_no_pk PRIMARY KEY (vote_no);
 ALTER TABLE vote_members ADD CONSTRAINT vote_member_no_pk PRIMARY KEY (vote_member_no);
 
@@ -508,6 +527,10 @@ add constraint menu_menu_2nd_cate_no FOREIGN KEY (menu_2nd_cate_no) REFERENCES f
 
 
 --=============== 투표 테이블 ========================================
+--===== 랜덤 =====
+ALTER TABLE random 
+add constraint random_user_no FOREIGN KEY (user_no) REFERENCES users(user_no) ON DELETE CASCADE;
+
 --===== 투표 =====
 ALTER TABLE vote 
 add constraint vote_vote_made_user FOREIGN KEY (vote_made_user) REFERENCES users(user_no) ON DELETE CASCADE;
@@ -624,6 +647,11 @@ increment by 1
 start with 1 
 nocache;
 
+--===== 랜덤 =====
+create sequence seq_random_no 
+increment by 1 
+start with 1 
+nocache;
 
 --===== 투표 =====
 create sequence seq_vote_no 
