@@ -177,6 +177,13 @@
 		</dependency>
 		<!-- 메일 발송 기능을 위한 dependency 추가 END-->
 		
+		<!-- 모바일 페이지 디바이스 구분 -->		
+		<dependency>
+			<groupId>org.springframework.mobile</groupId>
+			<artifactId>spring-mobile-device</artifactId>
+			<version>1.1.5.RELEASE</version>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

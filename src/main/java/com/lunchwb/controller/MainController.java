@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mobile.device.Device;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,7 +42,7 @@ public class MainController {
 	@RequestMapping(value = {"/", "/{voteNo}"})
 	public String main(@PathVariable(required = false) Integer voteNo, 
 				       @RequestParam(required = false) VoteVo reload,
-				       HttpSession session, HttpServletRequest request, Model model) throws UnknownHostException {
+				       HttpSession session, HttpServletRequest request, Model model, Device device) throws UnknownHostException {
 		
 		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("MainController");
@@ -93,7 +94,8 @@ public class MainController {
 				voteAsideData = voteService.getVoteAsideData(voteNo, userState);
 				model.addAllAttributes(voteAsideData);
 				
-				return "main/vote/voteProgress";
+				if (device.isMobile()) return "mobile/main/vote/voteProgress";
+				else return "main/vote/voteProgress";
 				
 			case 2:
 				voteAsideData = voteService.getVoteAsideData(voteNo, userState);
