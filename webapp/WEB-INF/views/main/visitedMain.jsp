@@ -42,9 +42,7 @@
 
 				<div id="header-logo">
 					<a href="${pageContext.request.contextPath}/" class="no-drag">
-						<img data-bss-hover-animate="pulse" id="bujang-logo-blue"
-						class="no-drag"
-						src="${pageContext.request.contextPath}/assets/img/bujang-logo blue.png" />
+						<img data-bss-hover-animate="pulse" id="bujang-logo-blue" class="no-drag" src="${pageContext.request.contextPath}/assets/img/bujang-logo blue.png" />
 					</a>
 				</div>
 
@@ -58,14 +56,11 @@
 						<span class="d-inline-block">나와 점심을 함께 한 그룹</span>
 					</div>
 
-					<div id="my-lunch-group"
-						class="d-xxl-flex justify-content-xxl-center align-items-xxl-center">
+					<div id="my-lunch-group" class="d-xxl-flex justify-content-xxl-center align-items-xxl-center">
 						<div>
 							<span id="my-lunch-group-name"> 
-								<svg id="my-lunch-group-icon" xmlns="http://www.w3.org/2000/svg"
-									 viewBox="0 -64 640 640" width="1em" height="1em"
-									 fill="currentColor">
-                                <path d="M224 256c70.7 0 128-57.31 128-128S294.7 0 224 0C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3c-95.73 0-173.3 77.6-173.3 173.3C0 496.5 15.52 512 34.66 512H413.3C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304zM479.1 320h-73.85C451.2 357.7 480 414.1 480 477.3C480 490.1 476.2 501.9 470 512h138C625.7 512 640 497.6 640 479.1C640 391.6 568.4 320 479.1 320zM432 256C493.9 256 544 205.9 544 144S493.9 32 432 32c-25.11 0-48.04 8.555-66.72 22.51C376.8 76.63 384 101.4 384 128c0 35.52-11.93 68.14-31.59 94.71C372.7 243.2 400.8 256 432 256z"></path>
+								<svg id="my-lunch-group-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 -64 640 640" width="1em" height="1em" fill="currentColor">
+                               		<path d="M224 256c70.7 0 128-57.31 128-128S294.7 0 224 0C153.3 0 96 57.31 96 128S153.3 256 224 256zM274.7 304H173.3c-95.73 0-173.3 77.6-173.3 173.3C0 496.5 15.52 512 34.66 512H413.3C432.5 512 448 496.5 448 477.3C448 381.6 370.4 304 274.7 304zM479.1 320h-73.85C451.2 357.7 480 414.1 480 477.3C480 490.1 476.2 501.9 470 512h138C625.7 512 640 497.6 640 479.1C640 391.6 568.4 320 479.1 320zM432 256C493.9 256 544 205.9 544 144S493.9 32 432 32c-25.11 0-48.04 8.555-66.72 22.51C376.8 76.63 384 101.4 384 128c0 35.52-11.93 68.14-31.59 94.71C372.7 243.2 400.8 256 432 256z"></path>
                             	</svg> 
                             	${visitedMap.visitedVo.groupName}
 							</span>
@@ -98,13 +93,12 @@
 						이 가게의 최근 리뷰 (${visitedMap.reviewCount}건)
 					</p>
 
-					<c:forEach items="${visitedMap.reviewList}" var="reviewVo"
-						varStatus="status">
+					<c:forEach items="${visitedMap.reviewList}" var="reviewVo" varStatus="status">
 						<div class="visited-reviews">
 							<div>
 								<span class="visited-review-user">${reviewVo.userName}(${reviewVo.avgAge}/${reviewVo.withCount}인)</span>
-								<span class="visited-review-star"> <c:forEach var="i"
-										begin="0" end="4">
+								<span class="visited-review-star"> 
+									<c:forEach var="i" begin="0" end="4">
 										<c:choose>
 											<c:when test="${reviewVo.userScore > i}">
 												<i class="fas fa-star"></i>
@@ -184,8 +178,7 @@
 								</div>
 
 								<div class="card-body">
-									<div class="table-responsive table mt-2 today-store-table"
-										role="grid" aria-describedby="dataTable_info">
+									<div class="table-responsive table mt-2 today-store-table" role="grid" aria-describedby="dataTable_info">
 										<table id="dataTable" class="table my-0">
 
 											<thead>
@@ -211,8 +204,7 @@
 										</table>
 									</div>
 
-									<div class="table-responsive table mt-2 today-store-table"
-										role="grid" aria-describedby="dataTable_info">
+									<div class="table-responsive table mt-2 today-store-table" role="grid" aria-describedby="dataTable_info">
 										<table id="dataTable" class="table my-0">
 
 											<thead>
