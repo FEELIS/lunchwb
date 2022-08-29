@@ -243,12 +243,15 @@
 				 	    						WHERE s.store_no = #{storeVo.storeNo} 
 				 	    						AND s.menu_2nd_cate_no = f.menu_2nd_cate_no)
 				 	    <if test="storeVo.groupNo != 0 and storeVo.groupNo != ''">						
-				 	    AND s.store_no NOT IN (SELECT  store_no 
+				 	    AND s.store_no NOT IN (SELECT store_no 
 						 	    		       FROM visited 
 		<![CDATA[						 	    		       
 						 	    		       WHERE visited_date >= TO_DATE(SYSDATE-5) 
 						 	    		       AND group_no = #{storeVo.groupNo})
-		]]>						 	    		       
+		]]>
+						AND s.store_no NOT IN (SELECT black_no 
+											   FROM blacklist 
+											   WHERE group_no = #{storeVo.groupNo})						 	    		       
 						</if> 	    		     
 				 	    AND s.store_no = vct.store_no (+)
 				 	    AND s.store_no = rbt.store_no (+)
