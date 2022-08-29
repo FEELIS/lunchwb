@@ -39,6 +39,11 @@ public class GroupDao {
 		return leader;
 	}
 	
+	/******************** 찐 회원 수 ***********************************************/
+	public int groupUsers(int groupNo) {
+		return sqlSession.selectOne("group.groupUsers", groupNo);
+	}
+	
 	/******************** 그룹 생성 ***********************************************/
 	public void createGroup(GroupVo groupVo) {
 		sqlSession.insert("group.createGroup", groupVo);
