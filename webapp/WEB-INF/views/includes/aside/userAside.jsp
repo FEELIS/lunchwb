@@ -71,35 +71,8 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-	isThereGroup()
 	indexActive()
 })
-
-
-function isThereGroup(){
-	var userNo = "${authUser.userNo}"
-	
-	$.ajax({
-		url : "${pageContext.request.contextPath}/group/isThere",
-		type : "post",
-		contentType : "application/json",
-		data : JSON.stringify(userNo),
-		dataType : "json",
-		
-		success : function(result){
-			console.log("result: "+result)
-			
-			//그룹있음
-			if(result == false){
-				$("#black").remove()
-			}
-		},
-		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
-		}
- 
-	})
-}
 
 
 function indexActive(){
