@@ -15,11 +15,15 @@ public class RandomVo {
 	// user table
 	private int userState;
 	
+	// 가게 정보 담기
+	private List<StoreVo> rouletteStoreInfo;
+	
 	public RandomVo() {
 	}
 
 	public RandomVo(int randomNo, String storeInfo, int stopAtValue, String groupName, String resultTime, int userNo,
-			int userState) {
+			int userState, List<StoreVo> rouletteStoreInfo) {
+		super();
 		this.randomNo = randomNo;
 		this.storeInfo = storeInfo;
 		this.stopAtValue = stopAtValue;
@@ -27,6 +31,7 @@ public class RandomVo {
 		this.resultTime = resultTime;
 		this.userNo = userNo;
 		this.userState = userState;
+		this.rouletteStoreInfo = rouletteStoreInfo;
 	}
 
 	public int getRandomNo() {
@@ -85,13 +90,23 @@ public class RandomVo {
 		this.userState = userState;
 	}
 
+	public List<StoreVo> getRouletteStoreInfo() {
+		return rouletteStoreInfo;
+	}
+
+	public void setRouletteStoreInfo(List<StoreVo> rouletteStoreInfo) {
+		this.rouletteStoreInfo = rouletteStoreInfo;
+	}
+
 	@Override
 	public String toString() {
 		return "RandomVo [randomNo=" + randomNo + ", storeInfo=" + storeInfo + ", stopAtValue=" + stopAtValue
 				+ ", groupName=" + groupName + ", resultTime=" + resultTime + ", userNo=" + userNo + ", userState="
-				+ userState + "]";
+				+ userState + ", rouletteStoreInfo=" + rouletteStoreInfo + "]";
 	}
 	
 	
+	
+
 
 }

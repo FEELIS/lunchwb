@@ -1,13 +1,21 @@
 package com.lunchwb.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lunchwb.dao.RandomDao;
 import com.lunchwb.dao.TestDao;
 import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.RandomVo;
+import com.lunchwb.vo.StoreVo;
 
 @Service
 public class RandomService {
@@ -43,6 +51,7 @@ public class RandomService {
 		
 
 		// 장바구니에 담긴 가게
+		
 		JSONArray basketArray = new JSONArray(currBasket);
 		randomVo.setStoreInfo(basketArray.toString());
 		
@@ -66,8 +75,46 @@ public class RandomService {
 	}
 	
 	// 랜덤 정보 조회 (jsp사용을 위한 정보 추출)
-	public RandomVo checkAllRandomResult(int randomNo) {
+	public Map<String, Object> checkAllRandomResult(int randomNo) throws Exception {
+		
+		Map<String, Object> randomInfo = new HashMap<>();
+		
 		RandomVo checkAllRandomResult = randomDao.checkAllRandomResult(randomNo);
-		return checkAllRandomResult;
+		
+		// 가게 정보
+		JSONArray storeInfo = new JSONArray(checkAllRandomResult.getStoreInfo());
+		List<StoreVo> rouletteStoreInfo = new ArrayList<>();
+		for (int i = 0; i < storeInfo.length(); i++) {
+			// 장바구니 정보 파싱
+			StoreVo store = new StoreVo();
+			JSONObject jstore = (JSONObject)storeInfo.getJSONObject(i);
+			
+			String storeName = jstore.getString("storeName");
+			if (storeName.length() >= 13) {
+				storeName = storeName.substring(0, 13);
+				if (storeName.charAt(storeName.length()-1) == ' ') storeName = storeName.substring(0, storeName.length()-1);
+			}
+			store.setStoreName(storeName);
+			store.setStoreNo(jstore.getInt("storeNo"));
+			store.setDistance(jstore.getInt("distance"));
+			store.setMenu2ndCateName(jstore.getString("menu2ndCateName"));
+			store.setStoreX(jstore.getDouble("storeX"));
+			store.setStoreY(jstore.getDouble("storeY"));
+			
+			rouletteStoreInfo.add(store);
+		}
+		checkAllRandomResult.setRouletteStoreInfo(rouletteStoreInfo);
+		ObjectMapper mapper = new ObjectMapper();
+		String store = mapper.writeValueAsString(rouletteStoreInfo);
+		// randomData에 자료 넣기
+		
+		randomInfo.put("stopAtValue", checkAllRandomResult.getStopAtValue());
+		randomInfo.put("randomNo", checkAllRandomResult.getRandomNo());
+		randomInfo.put("groupName", checkAllRandomResult.getGroupName());
+		randomInfo.put("basketInfo", rouletteStoreInfo);
+		randomInfo.put("storeInfo", store);
+		
+		System.out.println("스토어 정보" + store);
+		return randomInfo;
 	}
 }

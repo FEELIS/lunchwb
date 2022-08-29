@@ -59,7 +59,7 @@
             	</a>	
             	<span class="d-inline-flex flex-shrink-0 justify-content-center flex-nowrap align-items-xxl-center" id="vote-url-copy-box">
             		<i class="fas fa-link d-inline-flex d-xxl-flex flex-shrink-0 justify-content-start align-items-center justify-content-xl-start align-items-xl-center justify-content-xxl-start align-items-xxl-center"></i>
-            		<input id="vote-url-input" class="d-inline-flex d-xxl-flex flex-shrink-0 align-items-xxl-center" type="text" value="http://localhost:8088/lunchwb/${randomInfo.randomNo}">
+            		<input id="vote-url-input" class="d-inline-flex d-xxl-flex flex-shrink-0 align-items-xxl-center" type="text" value="http://localhost:8088/lunchwb/${randomNo}">
             		<button id="vote-url-copy-btn" class="btn btn-primary d-inline-flex d-xxl-flex flex-shrink-0 justify-content-center align-items-center align-content-center align-items-xl-center justify-content-xxl-center align-items-xxl-center" type="button">복사</button>
             	</span>
             </div>
@@ -88,29 +88,18 @@
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script type="text/javascript">
 
-// 장바구니 비우기
-async function clearBasket() {
-	$.ajax({
-		url : "${pageContext.request.contextPath}/basket/clearBasket",		
-		type : "post",
-		async : false,
-		success : function() {
-			console.log("장바구니 비우기 완료")
-		},
-		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
-		}
-	})
-}
-
 
 let countbas;
 let theWheel;
+let storeInfo = ${storeInfo};
+console.log(storeInfo);
+console.log(storeInfo[0].storeNo);
+console.log(storeInfo.length);
 // 룰렛
 // Create new wheel object specifying the parameters at creation time.
 
 setTimeout(() => {
-	countbas = countBasketItems(curr_basket_group);
+	countbas = storeInfo.length;
       
       if(countbas == 3){
     	  theWheel = new Winwheel({
@@ -120,9 +109,9 @@ setTimeout(() => {
               'textFontSize' : 18,    // Set font size as desired.
               'segments'     :        // Define segments including colour and text.
               [ 
-                    {'fillStyle' : '#36b9cc', 'text' : basket[curr_basket_group][0].storeName, 'storeNo' : basket[curr_basket_group][0].storeNo},
-                    {'fillStyle' : '#f6c23e', 'text' : basket[curr_basket_group][1].storeName, 'storeNo' : basket[curr_basket_group][1].storeNo},
-                    {'fillStyle' : '#1cc88a', 'text' : basket[curr_basket_group][2].storeName, 'storeNo' : basket[curr_basket_group][2].storeNo}
+                    {'fillStyle' : '#36b9cc', 'text' : storeInfo[0].storeName, 'storeNo' : storeInfo[0].storeNo},
+                    {'fillStyle' : '#f6c23e', 'text' : storeInfo[1].storeName, 'storeNo' : storeInfo[1].storeNo},
+                    {'fillStyle' : '#1cc88a', 'text' : storeInfo[2].storeName, 'storeNo' : storeInfo[2].storeNo}
               ],
               'animation' :           // Specify the animation to use.
               {
@@ -148,8 +137,8 @@ setTimeout(() => {
               'textFontSize' : 18,    // Set font size as desired.
               'segments'     :        // Define segments including colour and text.
               [ 
-                    {'fillStyle' : '#36b9cc', 'text' : basket[curr_basket_group][0].storeName, 'storeNo' : basket[curr_basket_group][0].storeNo},
-                    {'fillStyle' : '#f6c23e', 'text' : basket[curr_basket_group][1].storeName, 'storeNo' : basket[curr_basket_group][1].storeNo}
+                    {'fillStyle' : '#36b9cc', 'text' : storeInfo[0].storeName, 'storeNo' : storeInfo[0].storeNo},
+                    {'fillStyle' : '#f6c23e', 'text' : storeInfo[1].storeName, 'storeNo' : storeInfo[1].storeNo}
               ],
               'animation' :           // Specify the animation to use.
               {
@@ -173,19 +162,14 @@ setTimeout(() => {
 
 // Vars used by the code in this page to do power controls.
 let wheelSpinning = false;
-let stopAt;
+let stopAt = "${stopAtValue}"
 function startSpin()
 {
     if (wheelSpinning == false) {
-    	 // This formula always makes the wheel stop somewhere inside prize 3 at least
-        // 1 degree away from the start and end edges of the segment.
-        stopAt = (1 + Math.floor((Math.random() * 120)))
- 
         // Important thing is to set the stopAngle of the animation before stating the spin.
         theWheel.animation.stopAngle = stopAt;
 
     	console.log("stopAt = " + stopAt);
-    	console.log("basket = " + "${basket}");
     	
         // Disable the spin button so can't click again while wheel is spinning.
         document.getElementById('spin_button').src       = "${pageContext.request.contextPath}/assets/img/rouletteOff.png";
@@ -206,126 +190,20 @@ let creatorNo = "${authUser.userNo}";
 console.log("creatorNo = " + creatorNo );
 function alertPrize(indicatedSegment){
     // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
-    if(confirm("오늘 방문할 가게는 [" + indicatedSegment.text +"] 입니다. \n방문하시겠습니까?" ) == false){
-    	wheelSpinning = false
+    
+    alert("오늘 방문할 가게는 [" + indicatedSegment.text +"] 입니다." )
+    
+    wheelSpinning = false
     	
-    	document.getElementById('spin_button').src       = "${pageContext.request.contextPath}/assets/img/rouletteOn.png";
-        document.getElementById('spin_button').className = "";
-        
-        theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
-        theWheel.rotationAngle = 0;     // Re-set the wheel angle to 0 degrees.
-        theWheel.draw();                // Call draw to render changes to the wheel.
-        
-    	return false
-    }
-      
-   // 장바구니 데이터 정리
-  	var curr_basket = []
-  	for (var i = 0; i < basket[curr_basket_group].length; i++) {
-  		if (basket[curr_basket_group][i].stored) {
-  			curr_basket.push(basket[curr_basket_group][i])
-  		}
-  	}
-  	console.log(curr_basket)
-  	currBasket = JSON.stringify(curr_basket)
-  	
-    let randomData = {
-    		stopAt : stopAt,
-    		currBasket : currBasket,
-    		currBasketGroup : curr_basket_group,
-    		creatorNo : creatorNo
-	}
-      
-      
-    console.log("randomData = " + randomData);
-  	
-  	$.ajax({
-		type : "POST",
-		url : "${pageContext.request.contextPath}/random/makeRandomResult",
-		contentType : "application/json",
-		async : false,
-		data : JSON.stringify(randomData),
-		dataType : 'json',
-		
-		success : function(randomNo) {
-			if (randomNo == 0) {
-				alert("랜덤 결과 생성 실패")
-				
-			}
-		},
-		error: function(xhr, status, error){
-			console.log("오류 발생" + error)
-		}
-	})
-  	
-      if(modalSelectRandomMembers(indicatedSegment.storeNo, curr_basket_group) == false){
-	return false
-        
-    }
+   	document.getElementById('spin_button').src       = "${pageContext.request.contextPath}/assets/img/rouletteOn.png";
+    document.getElementById('spin_button').className = "";
+    
+    theWheel.stopAnimation(false);  // Stop the animation, false as param so does not call callback function.
+    theWheel.rotationAngle = 0;     // Re-set the wheel angle to 0 degrees.
+    theWheel.draw();                // Call draw to render changes to the wheel.
+
 }
     
-function modalSelectRandomMembers(storeNo, groupNo){
-	console.log("여기갈래요 그룹 멤버")
-	$("#modal-select-member-area").html("")
-	
-	$.ajax({
-		url : "${pageContext.request.contextPath}/visited/members/goWith",
-		type : "post",
-		contentType : "application/json",
-		data : JSON.stringify(groupNo),
-		dataType : "json",
-		
-		success : function(memberList){
-			console.log(memberList)
-			
-			var str = ''
-			str += '<form id="members-with-me" action="${pageContext.request.contextPath}/random/decision/'+storeNo+'/'+groupNo+'" method="post">'
-			str += '	<div class="row">'
-			
-			if(memberList.length == 0){
-				str += '			<p>선택할 수 있는 멤버가 없습니다</p>'
-			}
-
-			str += '		<div class="col" style="border-right: 1px solid; border-right-color: #EAEAEA;z">'
-			
-			for(var i=0; i<parseInt((memberList.length+1)/2); i++){
-				var n= String(i)
-				str += '			<div class="form-check">'
-				str += '				<input id="formCheck-'+n+'1" class="form-check-input" type="checkbox" name="memberList" value="'+memberList[i].userNo+'">'
-				str += '				<label class="form-check-label" for="formCheck-'+n+'1" data-no="'+i+'">  '+memberList[i].userName+'  </label>'
-				str += '			</div>'
-			}
-			str += '		</div>'
-			
-			str += '		<div class="col">'
-			for(var i=parseInt((memberList.length+1)/2); i<memberList.length; i++){
-				var n= String(i)
-				str += '			<div class="form-check">'
-				str += '				<input id="formCheck-'+n+'1" class="form-check-input" type="checkbox" name="memberList" value="'+memberList[i].userNo+'">'
-				str += '				<label class="form-check-label" for="formCheck-'+n+'1" data-no="'+i+'">  '+memberList[i].userName+'  </label>'
-				str += '			</div>'
-			}
-			str += '		</div>'
-			
-			str += '	</div>'
-			str += '	<div class="modal-footer-custom" style="margin-top: 20px; padding-top: 15px;">'
-			str += '		<span><button id="modal-select-member-ok" class="btn btn-primary" type="submit" style="width: 100px;">확인</button></span>'
-			str += '		<span><button id="modal-select-member-cancel" class="btn btn-light" type="button" data-bs-dismiss="modal" style="width: 100px;">취소</button></span>'
-			str += '	</div>'
-			str += '</form>'
-			
-			$("#modal-select-member-area").append(str)
-			$("#modal-select-member-go").modal("show")
-			
-		},
-		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
-		}
- 
-	})
-	
-	
-}    
 
 //////////////////////투표 생성 모달 //////////////////////////////////////////////
 

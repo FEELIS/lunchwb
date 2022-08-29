@@ -49,16 +49,14 @@ public class RandomController {
 	@RequestMapping(value = {"", "/{randomNo}"})
 	public String randomMain(Model model,
 							HttpSession session,
-							@PathVariable(required = false, name = "randomNo") Integer randomNo) {
+							@PathVariable(required = false, name = "randomNo") Integer randomNo) throws Exception {
 		logger.info("/randomMain");
 		
 		if(randomNo == null) {
 			return "main/random/randomMain";
 		}else {
-			RandomVo randomInfo = randomService.checkAllRandomResult(randomNo);
-			
-			model.addAttribute("randomInfo", randomInfo);
-			
+			Map<String, Object> randomInfo = randomService.checkAllRandomResult(randomNo);
+			model.addAllAttributes(randomInfo);
 			return "main/random/randomRouletteResult";
 		}
 		
