@@ -10,7 +10,7 @@ public class NotificationVo {
 	private int groupNo;
 	private int replyNo;
 	private String alertComment;
-	private int noti_state;
+	private int notiState;
 	
 	
 	////////////////////notiNo table ////////////////////
@@ -20,14 +20,14 @@ public class NotificationVo {
 	
 	public NotificationVo() {}
 
-	public NotificationVo(int notiNo, int userNo, int groupNo, int replyNo, String alertComment, int noti_state,
+	public NotificationVo(int notiNo, int userNo, int groupNo, int replyNo, String alertComment, int notiState,
 			int notiType, String notiName) {
 		this.notiNo = notiNo;
 		this.userNo = userNo;
 		this.groupNo = groupNo;
 		this.replyNo = replyNo;
 		this.alertComment = alertComment;
-		this.noti_state = noti_state;
+		this.notiState = notiState;
 		this.notiType = notiType;
 		this.notiName = notiName;
 	}
@@ -72,12 +72,12 @@ public class NotificationVo {
 		this.alertComment = alertComment;
 	}
 
-	public int getNoti_state() {
-		return noti_state;
+	public int getNotiState() {
+		return notiState;
 	}
 
-	public void setNoti_state(int noti_state) {
-		this.noti_state = noti_state;
+	public void setNotiState(int notiState) {
+		this.notiState = notiState;
 	}
 
 	public int getNotiType() {
@@ -99,7 +99,7 @@ public class NotificationVo {
 	@Override
 	public String toString() {
 		return "NotificationVo [notiNo=" + notiNo + ", userNo=" + userNo + ", groupNo=" + groupNo + ", replyNo="
-				+ replyNo + ", alertComment=" + alertComment + ", noti_state=" + noti_state + ", notiType=" + notiType
+				+ replyNo + ", alertComment=" + alertComment + ", notiState=" + notiState + ", notiType=" + notiType
 				+ ", notiName=" + notiName + "]";
 	}
 	
