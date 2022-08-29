@@ -64,7 +64,7 @@ public class GroupController {
 		
 		//내 그룹 없음
 		if((Integer)map.get("groupCount") == 0) {
-			return "group/addGroup";
+			return "redirect:add";
 		}
 		
 		//내 그룹이 아님(가져온 멤버목록이 없음) - 내가 있으면 0 일 수가 없어요
@@ -286,7 +286,7 @@ public class GroupController {
 		
 		//내 그룹 없음
 		if((Integer)map.get("groupCount") == 0) {
-			return "group/addGroup";
+			return "redirect:add";
 		}
 		
 		if((String)map.get("groupName") == null) {
