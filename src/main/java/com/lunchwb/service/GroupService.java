@@ -304,12 +304,13 @@ public class GroupService {
 	
 	
 	/******************** 회원 그룹 멤버 초대 ********************************************/
-	public String invtMember(GroupVo groupVo) {
+	public String invtMember(GroupVo groupVo, UserVo authUser) {
 		
 		//그룹 초대 보내기 
 		NotificationVo notiVo = new NotificationVo(); 
 		notiVo.setUserNo(groupVo.getUserNo());
 		notiVo.setGroupNo(groupVo.getGroupNo());
+		notiVo.setSendUser(authUser.getUserNo());
 		
 		//보스 변경
 		if(groupVo.getBossCheck() == 1) {
@@ -330,7 +331,7 @@ public class GroupService {
 		 */
 		
 		//알림 추가
-		if(notiDao.addGroupNoti(notiVo) > 0) {
+		if(notiDao.addGroupReNoti(notiVo) > 0) {
 			return "success";
 			
 		}else {
@@ -431,7 +432,7 @@ public class GroupService {
 			notiVo.setGroupNo(groupNo);
 			notiVo.setSendUser(userNo);
 			
-			notiDao.addLeaderNoti(notiVo);
+			notiDao.addGroupReNoti(notiVo);
 		}
 		
 		//그룹장이 아닐 때만 알림(그룹장이면 보낼 사람이 없어)

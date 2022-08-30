@@ -33,22 +33,22 @@
 	</select>
 	
 	
-	<!-- 그룹원 단체 알림 : 그룹 이름 변경 7 -->
+	<!-- 그룹원 단체 알림(통보) : 그룹 이름 변경 7 -->
 	<insert id="alertOfGroupChange" parameterType="NotiVo" >
 		INSERT INTO notification
 		VALUES (SEQ_NOTI_NO.NEXTVAL, #{userNo}, 7, #{groupNo}, 0, #{alertCmt}, 0)
 	</insert>
 	
 	
-	<!-- 그룹원 알림 1/5/6/10 -->
+	<!-- 그룹원 알림 - 통보 5/6 -->
 	<insert id="addGroupNoti" parameterType="NotiVo">
 		INSERT INTO notification (noti_no, user_no, noti_type, group_no)
 		VALUES (SEQ_NOTI_NO.NEXTVAL, #{userNo}, #{notiType}, #{groupNo})
 	</insert>
 	
 	
-	<!-- 그룹장 알림 2/3/4 -->
-	<insert id="addLeaderNoti" parameterType="NotiVo">
+	<!-- 그룹 알림 - 회신 1(회신받을)/2(회신)/3(회신)/4(정보)/10(회신받을) -->
+	<insert id="addGroupReNoti" parameterType="NotiVo">
 		INSERT INTO notification (noti_no, user_no, noti_type, group_no, send_user)
 		VALUES (SEQ_NOTI_NO.NEXTVAL, #{userNo}, #{notiType}, #{groupNo}, #{sendUser})
 	</insert>

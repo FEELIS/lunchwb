@@ -21,19 +21,19 @@ public class NotiDao {
 	}
 	
 	
-	/* 그룹 이름 변경 알림 */
+	/* 그룹 이름 변경 알림 7 */
 	public int alertOfGroupChange(NotificationVo notiVo) {
 		return sqlSession.insert("notification.alertOfGroupChange", notiVo);
 	}
 	
-	/* 그룹원 알림 1/5/6/10 */
+	/* 그룹원 알림 5/6 */
 	public int addGroupNoti(NotificationVo notiVo) {
 		return sqlSession.insert("notification.addGroupNoti", notiVo);
 	}
 
-	/* 그룹장 알림 2/3/4 */
-	public int addLeaderNoti(NotificationVo notiVo) {
-		return sqlSession.insert("notification.addLeaderNoti", notiVo);
+	/* 그룹 알림(회신) 1/2/3/4/10 */
+	public int addGroupReNoti(NotificationVo notiVo) {
+		return sqlSession.insert("notification.addGroupReNoti", notiVo);
 	}
 	
 	/* 리뷰 삭제 알림 8 */

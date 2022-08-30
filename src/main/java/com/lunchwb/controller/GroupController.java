@@ -177,7 +177,6 @@ public class GroupController {
 	public Map<String, Object> userCheck(@RequestBody Map<String, Object> inviteMap, HttpSession session) {
 		logger.info("GroupController > userCheck()");
 		
-		System.out.println("inviteMap"+inviteMap);
 		UserVo authUser = (UserVo)session.getAttribute("authUser");	
 		Map<String, Object> checkMap = groupService.userCheck(inviteMap, authUser);
 		
@@ -196,9 +195,11 @@ public class GroupController {
 	
 	/******************** 회원 그룹 멤버 초대 *******************************************/
 	@ResponseBody
-	@PostMapping("/invtMember") public String invtMember(@RequestBody GroupVo groupVo) {
+	@PostMapping("/invtMember") public String invtMember(@RequestBody GroupVo groupVo, HttpSession session) {
 		logger.info("GroupController > invtMember()");
-		return groupService.invtMember(groupVo);
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");	
+		return groupService.invtMember(groupVo, authUser);
 	}
 	
 	
