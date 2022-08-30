@@ -89,6 +89,8 @@ public class MainController {
 		
 		Map<String, Object> voteAsideData;
 		
+		logger.info("userState: " + userState + " > main으로 이동");
+		
 		switch (userState) {
 			case 1:
 				voteAsideData = voteService.getVoteAsideData(voteNo, userState);
