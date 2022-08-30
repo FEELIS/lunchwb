@@ -5,58 +5,64 @@ public class NotificationVo {
 	private int notiNo;
 	private int userNo;
 	
-	/* join해서 써야합니다.*/
-	// private int notiType;
+	private int notiType;
 	private int groupNo;
+	private int reportNo;
 	private int replyNo;
 	private String alertCmt;
 	private int notiState;
 	
 	////////////////////notiNo table ////////////////////
-	private int notiType;
+	/* join해서 써야합니다.*/
+	// private int notiType;
 	private String notiName;
 	
-	//////////////이름들 가져오기
+	//////////////
 	//user
-	private String userName;
+	private int sendUser;
+	private String sendEmail;
+	private String sendName;
 	
 	//group
 	private String groupName;
 	
+	//group member
+	private int groupOrder;
+	
 	//report cate
 	private String reportCateName;
+	private String reviewDate;
+	
+	//inquiry
+	private String inquiryTitle;
 	
 	
 	
 	public NotificationVo() {}
 
-	public NotificationVo(int notiNo, int userNo, int groupNo, int replyNo, String alertCmt, int notiState,
-			int notiType, String notiName) {
+	public NotificationVo(int notiNo, int userNo, int notiType, int groupNo, int reportNo, int replyNo, String alertCmt,
+			int notiState, String notiName, int sendUser, String sendEmail, String sendName, String groupName,
+			int groupOrder, String reportCateName, String reviewDate, String inquiryTitle) {
 		this.notiNo = notiNo;
 		this.userNo = userNo;
+		this.notiType = notiType;
 		this.groupNo = groupNo;
+		this.reportNo = reportNo;
 		this.replyNo = replyNo;
 		this.alertCmt = alertCmt;
 		this.notiState = notiState;
-		this.notiType = notiType;
 		this.notiName = notiName;
+		this.sendUser = sendUser;
+		this.sendEmail = sendEmail;
+		this.sendName = sendName;
+		this.groupName = groupName;
+		this.groupOrder = groupOrder;
+		this.reportCateName = reportCateName;
+		this.reviewDate = reviewDate;
+		this.inquiryTitle = inquiryTitle;
 	}
 
-	public NotificationVo(int notiNo, int userNo, int groupNo, int replyNo, String alertCmt, int notiState,
-			int notiType, String notiName, String userName, String groupName, String reportCateName) {
-		super();
-		this.notiNo = notiNo;
-		this.userNo = userNo;
-		this.groupNo = groupNo;
-		this.replyNo = replyNo;
-		this.alertCmt = alertCmt;
-		this.notiState = notiState;
-		this.notiType = notiType;
-		this.notiName = notiName;
-		this.userName = userName;
-		this.groupName = groupName;
-		this.reportCateName = reportCateName;
-	}
+
 
 	public int getNotiNo() {
 		return notiNo;
@@ -122,20 +128,20 @@ public class NotificationVo {
 		this.notiName = notiName;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
 	public String getGroupName() {
 		return groupName;
 	}
 
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
+	}
+
+	public int getGroupOrder() {
+		return groupOrder;
+	}
+
+	public void setGroupOrder(int groupOrder) {
+		this.groupOrder = groupOrder;
 	}
 
 	public String getReportCateName() {
@@ -146,13 +152,62 @@ public class NotificationVo {
 		this.reportCateName = reportCateName;
 	}
 
-	@Override
-	public String toString() {
-		return "NotificationVo [notiNo=" + notiNo + ", userNo=" + userNo + ", groupNo=" + groupNo + ", replyNo="
-				+ replyNo + ", alertCmt=" + alertCmt + ", notiState=" + notiState + ", notiType=" + notiType
-				+ ", notiName=" + notiName + ", userName=" + userName + ", groupName=" + groupName + ", reportCateName="
-				+ reportCateName + "]";
+	public int getReportNo() {
+		return reportNo;
 	}
 
+	public void setReportNo(int reportNo) {
+		this.reportNo = reportNo;
+	}
+
+	public int getSendUser() {
+		return sendUser;
+	}
+
+	public void setSendUser(int sendUser) {
+		this.sendUser = sendUser;
+	}
+
+	public String getSendEmail() {
+		return sendEmail;
+	}
+
+	public void setSendEmail(String sendEmail) {
+		this.sendEmail = sendEmail;
+	}
+
+	public String getSendName() {
+		return sendName;
+	}
+
+	public void setSendName(String sendName) {
+		this.sendName = sendName;
+	}
+
+	public String getReviewDate() {
+		return reviewDate;
+	}
+
+	public void setReviewDate(String reviewDate) {
+		this.reviewDate = reviewDate;
+	}
+
+	public String getInquiryTitle() {
+		return inquiryTitle;
+	}
+
+	public void setInquiryTitle(String inquiryTitle) {
+		this.inquiryTitle = inquiryTitle;
+	}
+
+	@Override
+	public String toString() {
+		return "NotificationVo [notiNo=" + notiNo + ", userNo=" + userNo + ", notiType=" + notiType + ", groupNo="
+				+ groupNo + ", reportNo=" + reportNo + ", replyNo=" + replyNo + ", alertCmt=" + alertCmt
+				+ ", notiState=" + notiState + ", notiName=" + notiName + ", sendUser=" + sendUser + ", sendEmail="
+				+ sendEmail + ", sendName=" + sendName + ", groupName=" + groupName + ", groupOrder=" + groupOrder
+				+ ", reportCateName=" + reportCateName + ", reviewDate=" + reviewDate + ", inquiryTitle=" + inquiryTitle
+				+ "]";
+	}
 	
 };
