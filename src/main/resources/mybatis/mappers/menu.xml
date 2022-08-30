@@ -18,7 +18,7 @@
 		        , m.menu_name
 		FROM store s, menu m
 		WHERE s.menu_2nd_cate_no = m.menu_2nd_cate_no
-		AND s.store_no = 284
+		AND s.store_no = #{storeNo}
 		ORDER BY m.menu_no ASC
 	</select>
 

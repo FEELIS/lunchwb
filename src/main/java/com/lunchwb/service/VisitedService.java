@@ -71,8 +71,7 @@ public class VisitedService {
 	
 	
 	//THIS IS 즉각적으로 결정했을 경우 (투표 no)
-	//그룹원 전체대상 > 참여하지 않은 그룹원은 알아서 방문취소를 누르도록 ㅎ :그러면 안될건데 어쩌지 다시해야됨 이미 다른데서 방문 결정했으면 충돌일어남
-	
+	//그룹원 선택 
 	/****************** 여기갈래요> 함께할 그룹 멤버 리스트 for selection *****************/
 	public List<GroupVo> membersGoWith(UserVo authUser, int groupNo){
 		GroupVo groupVo = new GroupVo();
