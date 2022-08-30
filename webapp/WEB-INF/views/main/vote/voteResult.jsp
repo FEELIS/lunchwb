@@ -130,7 +130,6 @@
                 </c:if>
             </div>
         </div>
-        <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     </div>
     <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
@@ -279,6 +278,15 @@ $("#vote-result-random-btn").on("click", function(){
 		return false
 	}
 })
+
+
+////////////////// 투표 결과창 모달 연결 /////////////////////////////////////////////////////////
+
+$(".vote-graph-store").on("click", function(){
+	var storeNo = parseInt($(this).attr("data-storeNo"))
+	
+})
+
 
 </script>
 
