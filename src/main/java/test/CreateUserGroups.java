@@ -1,11 +1,11 @@
-package com.lunchwb.service;
+package test;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Test {
-
+public class CreateUserGroups {
+	
 	public static String randomHangulName() {
 
 		// 성
