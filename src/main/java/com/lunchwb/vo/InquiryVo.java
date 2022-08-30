@@ -14,10 +14,19 @@ public class InquiryVo {
 	private int replyNo;
 	// private int inquiryNo;
 	private String replyContent;
+	
+	//////////////////// users table ////////////////////
+	private String userEmail;
+	
 
 	// 생성자
 	public InquiryVo() {
 	};
+	
+	public InquiryVo(int inquiryNo) {
+		this.inquiryNo = inquiryNo;
+	};
+	
 	
 	
 	//회원이 문의등록 시
@@ -141,13 +150,23 @@ public class InquiryVo {
 	public void setReplyContent(String replyContent) {
 		this.replyContent = replyContent;
 	};
+	
+	public String getUserEmail() {
+		return userEmail;
+	}
+
+
+	public void setUserEmail(String userEmail) {
+		this.userEmail = userEmail;
+	}
 
 	@Override
 	public String toString() {
 		return "InquiryVo [inquiryNo=" + inquiryNo + ", userNo=" + userNo + ", inquiryTitle=" + inquiryTitle
 				+ ", inquiryContent=" + inquiryContent + ", inquiryFilePath=" + inquiryFilePath + ", inquiryDate="
-				+ inquiryDate + ", inquiryStatus=" + inquiryStatus + ", replyNo=" + replyNo
-				+ ", replyContent=" + replyContent + "]";
-	};
+				+ inquiryDate + ", inquiryStatus=" + inquiryStatus + ", replyNo=" + replyNo + ", replyContent="
+				+ replyContent + ", userEmail=" + userEmail + "]";
+	}
+	
 
 };
