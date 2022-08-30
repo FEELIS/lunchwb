@@ -19,7 +19,7 @@
 		<result column="review_date" property="reviewDate" />
 		<result column="reply_no" property="replyNo" />
 		<result column="inquiry_title" property="inquiryTitle" />
-		<result column="alert_comment" property="alertComment" />
+		<result column="alert_comment" property="alertCmt" />
 		<result column="noti_state" property="notiState" />
 	</resultMap>
 	
