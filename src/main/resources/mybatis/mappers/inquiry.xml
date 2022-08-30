@@ -13,6 +13,7 @@
 		<result column="reply_no" property="replyNo" />
 		<result column="admin_no" property="adminNo" />
 		<result column="reply_content" property="replyContent" />
+		<result column="user_email" property="userEmail" />
 	</resultMap>
 
 
@@ -47,5 +48,18 @@
 		]]>
 		</if>
 	</insert>
+	
+	<select id="readInquiry" parameterType="int" resultMap="resultMapInquiryVo">
+        <![CDATA[
+            select  i.inquiry_no, 
+                    i.inquiry_title, 
+                    i.inquiry_content, 
+                    u.user_email, 
+                    i.inquiry_file_path 
+            from inquiry i, users u 
+            where i.user_no = u.user_no 
+            and i.inquiry_no = #{inquiryNo}
+        ]]>
+    </select>
 
 </mapper>
