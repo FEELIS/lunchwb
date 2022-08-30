@@ -75,7 +75,7 @@
                 </div>
             </div>
             <div class="modal-footer-custom">
-                <p class="modalStoreWithMe"></p>
+                <p class="modalStoreWithMe text-center"></p>
                 <div class="store-button-area"></div>
             </div>
         </div>
@@ -136,7 +136,7 @@
                 </div>
             </div>
             <div class="modal-footer-custom">
-                <p class="modalStoreWithMe"></p>
+                <p class="modalStoreWithMe text-center"></p>
                 <div class="store-button-area">
                 </div>
             </div>
@@ -202,7 +202,7 @@
                 </div>
             </div>
             <div class="modal-footer-custom">
-                <p class="modalStoreWithMe"></p>
+                <p class="modalStoreWithMe text-center"></p>
                 <div class="store-button-area"></div>
             </div>
         </div>
@@ -242,7 +242,7 @@
 /* 메인-가게바구니에서 조회할 때 */
 $("#basket-table").on("click", ".basket-table-store-name", function(){
    if(typeof indexJSP === 'undefined'){
-        var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
+      var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
       var groupNo = curr_basket_group
       console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
       
@@ -250,7 +250,6 @@ $("#basket-table").on("click", ".basket-table-store-name", function(){
       
    } else if (indexJSP) {
       var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
-      
       groupNo = curr_basket_group
       console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
       
@@ -378,7 +377,7 @@ function storeInfoOpen(storeNo, groupNo, k){
 	
 	//k:footer 버튼 용
 	//k=2 > 버튼 없음
-	//k=5 > 리뷰 내역 버튼 안띄울거...........띄우려면 이제 groupNo groupLeader 다 가지고 확장시켜야함
+	//k=5 > 버튼 안띄움
 	if(k != 2 && k != 5){
 		modalSortOfStore(storeNo, k)
 	}
