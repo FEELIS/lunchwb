@@ -344,4 +344,14 @@ public class GroupController {
 		return groupService.blackStoreSearch(blackVo);
 	}
 	
+	
+	/************************ 초대 수락 전 그룹 개수 확인 ************************************/
+	@ResponseBody
+	@PostMapping("/count")
+	public int groupCount(@RequestBody int userNo) {
+		logger.info("GroupController > groupCount()");
+		return groupService.groupCount(userNo);
+	}
+	
+	
 }

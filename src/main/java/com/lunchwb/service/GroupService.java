@@ -402,11 +402,6 @@ public class GroupService {
 			
 			notiDao.addGroupNoti(notiVo);
 			
-			//NotificationVo notiVo = new NotificationVo();
-			//notiVo.setUserNo(groupVo.getUserNo());
-			//notiVo.setNotiType(5);
-			//notiVo.setGroupNo(groupVo.getGroupNo());
-			
 		}
 		
 		return result;
@@ -568,6 +563,13 @@ public class GroupService {
 	public List<BlacklistVo> blackStoreSearch(BlacklistVo blackVo){
 		return blackDao.blackStoreSearch(blackVo);
 	}
+	
+	
+	/********************* 초대 수락 전 그룹 개수 확인하기 *****************************************/
+	public int groupCount(int userNo) {
+		return groupDao.groupCount(userNo);
+	}
+	
 	
 	
 }
