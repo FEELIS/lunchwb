@@ -119,9 +119,9 @@
                     
                     <div class="text-center" id="vote-make-finish"><button class="btn btn-primary text-center" id="make-vote-btn" type="button">투표 만들기</button></div>
                 </div>
-            </div>          
+            </div>                 
         </div>
-        <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+        <div class="push"></div>
     </div>
     
     <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
