@@ -65,7 +65,7 @@
                 <table class="table" id="basket-table-table">
 	                <!--  장바구니 아이템이 올 자리 -->
 	                <c:forEach var="basket" items="${basketInfo}">
-                		<tr class="basket-table-row">
+                		<tr class="basket-table-row" data-storeNo="${basket.storeNo}">
                 			<td class="d-xxl-flex justify-content-xxl-start basket-table-cell">
                 				<div class="basket-table-store-info">
                 					<span class="text-start basket-table-store-name">${basket.storeName}</span>
