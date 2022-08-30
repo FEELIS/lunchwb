@@ -360,8 +360,10 @@ CREATE TABLE notification (
  noti_no number(20) NOT NULL,
  user_no number(20) NOT NULL,
  noti_type number(20) NOT null,
- group_no number(20) DEFAULT 0 null,
- reply_no number(20) DEFAULT 0 null,
+ group_no number(20) DEFAULT 0 null, 
+ send_user number(20) DEFAULT 0 null, 
+ report_no number(20) DEFAULT 0 null, 
+ reply_no number(20) DEFAULT 0 null, 
  alert_comment varchar2(400) null, 
  noti_state number(20) DEFAULT 0 NOT NULL
 );
