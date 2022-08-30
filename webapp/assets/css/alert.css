@@ -5,6 +5,10 @@
   font-size: 12px;
 }
 
+#user-alert-list ul{
+  padding: 0px;
+}
+
 #user-alert-list .dropdown-item {
   padding: 8px 12px;
 }
