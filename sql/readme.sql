@@ -165,3 +165,8 @@
 
 -- 2022.08.29 17:36 =====================
 -- notification테이블 alert_comment null로 변경
+
+-- 2022.08.30 11:22 =====================
+-- notification테이블 
+-- send_user number(20) DEFAULT 0 null, 
+-- report_no number(20) DEFAULT 0 null, 칼럼 추가
