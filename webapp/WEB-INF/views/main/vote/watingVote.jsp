@@ -67,7 +67,6 @@
                 </div>
             </div>
         </div>
-        <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     </div>
     <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
