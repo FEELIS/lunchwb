@@ -216,7 +216,10 @@ public class GroupService {
 				NotificationVo notiVo = new NotificationVo();
 				notiVo.setUserNo(groupMembers.get(i));
 				notiVo.setGroupNo(groupVo.getGroupNo());
-				notiVo.setAlertCmt(groupVo.getBeforeGroupName());
+				
+				//확인 전에 여러번 변경 되는 경우 고려
+				String alertCmt = groupVo.getBeforeGroupName()+"의 이름이 "+groupVo.getGroupName()+"로 변경되었습니다.";
+				notiVo.setAlertCmt(alertCmt);
 
 				notiDao.alertOfGroupChange(notiVo);
 			}
@@ -304,19 +307,20 @@ public class GroupService {
 	public String invtMember(GroupVo groupVo) {
 		
 		//그룹 초대 보내기 
-		Map<String, Object> map = new HashMap<>();
-		map.put("noti", groupVo);
+		NotificationVo notiVo = new NotificationVo(); 
+		notiVo.setUserNo(groupVo.getUserNo());
+		notiVo.setGroupNo(groupVo.getGroupNo());
 		
 		//보스 변경
 		if(groupVo.getBossCheck() == 1) {
 			groupDao.deleteBoss(groupVo.getGroupNo());
 			
 			//부장님으로 초대 type : 10
-			map.put("notiType", 10);
+			notiVo.setNotiType(10);
 		}else {
 			
-			//일반 그룹원으로 초대 type : 1
-			map.put("notiType", 1);
+			//일반 그룹원으로 초대 type : 1d
+			notiVo.setNotiType(1);
 		}
 		
 		//멤버 추가 안함(초대 수락 후)
@@ -326,7 +330,7 @@ public class GroupService {
 		 */
 		
 		//알림 추가
-		if(notiDao.addNoti(map) > 0) {
+		if(notiDao.addGroupNoti(notiVo) > 0) {
 			return "success";
 			
 		}else {
@@ -385,11 +389,12 @@ public class GroupService {
 			groupDao.autoOrder(groupVo);
 			
 			//강퇴 알림 noti_type : 5
-			Map<String, Object> map = new HashMap<>();
-			map.put("noti", groupVo);
-			map.put("notiType", 5);
+			NotificationVo notiVo = new NotificationVo(); 
+			notiVo.setUserNo(groupVo.getUserNo());
+			notiVo.setNotiType(5);
+			notiVo.setGroupNo(groupVo.getGroupNo());
 			
-			notiDao.addNoti(map);
+			notiDao.addGroupNoti(notiVo);
 			
 			//NotificationVo notiVo = new NotificationVo();
 			//notiVo.setUserNo(groupVo.getUserNo());
@@ -420,12 +425,13 @@ public class GroupService {
 			
 		}else {
 			//탈퇴 알림(그룹장에게) type : 4
-			Map<String, Object> map = new HashMap<>();
-			groupVo.setUserNo(groupLeader);
-			map.put("noti", groupVo);
-			map.put("notiType", 4);
+			NotificationVo notiVo = new NotificationVo(); 
+			notiVo.setUserNo(groupLeader);
+			notiVo.setNotiType(4);
+			notiVo.setGroupNo(groupNo);
+			notiVo.setSendUser(userNo);
 			
-			notiDao.addNoti(map);
+			notiDao.addLeaderNoti(notiVo);
 		}
 		
 		//그룹장이 아닐 때만 알림(그룹장이면 보낼 사람이 없어)
@@ -441,13 +447,12 @@ public class GroupService {
 		if(groupDao.groupChange(groupVo) > 0) {
 			
 			//그룹장 위임 알림(type : 6)
-			groupVo.setUserNo(groupVo.getGroupLeader());
+			NotificationVo notiVo = new NotificationVo(); 
+			notiVo.setUserNo(groupVo.getGroupLeader());
+			notiVo.setNotiType(6);
+			notiVo.setGroupNo(groupVo.getGroupNo());
 			
-			Map<String, Object> map = new HashMap<>();
-			map.put("noti", groupVo);
-			map.put("notiType", 6);
-			
-			notiDao.addNoti(map);
+			notiDao.addGroupNoti(notiVo);
 			
 			return "success";
 		}else {

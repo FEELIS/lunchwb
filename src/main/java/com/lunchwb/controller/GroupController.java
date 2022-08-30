@@ -343,5 +343,4 @@ public class GroupController {
 		return groupService.blackStoreSearch(blackVo);
 	}
 	
-	
 }
