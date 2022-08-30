@@ -1,12 +1,13 @@
-package test;
+package com.lunchwb.service;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class CreateUserGroups {
+public class Test {
 
 	public static String randomHangulName() {
+
 		// 성
 		List<String> lastName = Arrays.asList("김", "이", "박", "최", "정", "강", "조", "윤", "장", "임", "한", "오", "서", "신", "권",
 				"황", "안", "송", "류", "전", "홍", "고", "문", "양", "손", "배", "조", "백", "허", "유", "남", "심", "노", "정", "하", "곽",
@@ -54,7 +55,8 @@ public class CreateUserGroups {
 
 			}
 
-			String str = "insert into users (user_no,user_email,user_password,user_name, user_birth_year,user_sex,user_joindate,user_grade)values "
+			String str = "insert into users (user_no,user_email,user_password,user_name, user_birth_year,user_sex,user_joindate,user_grade)\n"
+					+ "values "
 					+ "(seq_user_no.nextval, 'test" + i + "@naver.com', '12341234','" + randomHangulName() + "'," + j
 					+ ",";
 
@@ -91,10 +93,41 @@ public class CreateUserGroups {
 		for (int i = 1; i <= 100; i++) {
 			for (int j = 1; j <= 4; j++) {
 				System.out.println(
-						"INSERT INTO GROUPS VALUES(SEQ_GROUP_NO.NEXTVAL," + i + ",'" + randomHangulName() + "팀');");
+						"INSERT INTO GROUPS \nVALUES(SEQ_GROUP_NO.NEXTVAL," + i + ",'" + randomHangulName() + "팀');");
 			}
 		}
 
+		
+		// =====================================================================================================
+
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		System.out.println("");
+		
+		
+		// 유저마다 그룹 4개씩 생성(100명)
+		int count = 1;
+		
+		for (int i = 1; i <= 100; i++) {
+			for (int j = 1; j <= 4; j++) {
+				System.out.println(
+						"insert into group_member \nvalues(SEQ_GROUP_MEMBER_NO.NEXTVAL,"+i+","+count+",0,"+j+");");
+				
+				count++;
+			}
+		}
+		
 	}
 
 }
