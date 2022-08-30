@@ -95,7 +95,7 @@
                                     <tbody>
 
                                         <c:forEach items="${inqList}" var="inqVo" varStatus="status">
-                                            <tr>
+                                            <tr onclick="location.href='${pageContext.request.contextPath}/customer/readInquiryForm/${inqVo.inquiryNo}'">
                                                 <td>${status.count}</td>
                                                 <td>${inqVo.inquiryTitle}</td>
 
@@ -110,7 +110,6 @@
                                                         <td class="text-secondary">답변완료</td>
                                                     </c:otherwise>
                                                 </c:choose>
-
                                                 <td>${inqVo.inquiryNo}</td>
                                                 <td>----</td>
                                                 <td>${inqVo.inquiryDate }</td>
