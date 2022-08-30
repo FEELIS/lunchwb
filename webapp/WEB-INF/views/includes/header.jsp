@@ -15,12 +15,9 @@
     <div class="container">
         <div></div>
         
-        <ul class="navbar-nav d-xxl-flex align-items-xxl-center">
-        	
-        	<c:choose>
-
-        		<c:when test="${!empty authUser}">
-        	
+       	<c:choose>
+       		<c:when test="${!empty authUser}">
+       			<ul class="navbar-nav d-xxl-flex align-items-xxl-center">
 		        	<!-- 알림 -->
 					<c:import url="/WEB-INF/views/includes/alertCenter.jsp"></c:import>
 							            
@@ -43,16 +40,15 @@
 		                	<a class="dropdown-item" href="${pageContext.request.contextPath}/customer/faq">고객센터</a>
 		                </div>
 		            </li>
-            	</c:when>
-            	<c:otherwise>
-            		<!-- 로그인 -->
-		            <li class="nav-item d-inline-flex">
-		            	<a href="${pageContext.request.contextPath}/login" style="padding: 15px 0px">
-		            		<button id="logout-btn" class="btn btn-primary" type="button" style="2px 0px 0px 0px">로그인</button>
-		            	</a>
-		            </li>
-            	</c:otherwise>
-            </c:choose>
-        </ul>
+	            </ul>
+           	</c:when>
+           	
+           	<c:otherwise>
+           		<!-- 로그인 -->		            
+            	<a href="${pageContext.request.contextPath}/login" style="padding: 15px 0px">
+            		<button id="logout-btn" class="btn btn-primary" type="button" style="2px 0px 0px 0px">로그인</button>
+            	</a>		            
+           	</c:otherwise>
+    	</c:choose>      
     </div>
 </nav>
