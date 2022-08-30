@@ -105,8 +105,8 @@ public class VisitedController {
 	
 	/* 같은 카테 다른 가게를 조회할 "그룹 번호"(for 캘린더 - by 방문일자) */
 	@ResponseBody
-	@PostMapping("/group/byOrder")
-	public int groupByOrder(@RequestBody VisitedVo visitedVo) {
+	@PostMapping("/group/byDate")
+	public int groupByDate(@RequestBody VisitedVo visitedVo) {
 		logger.info("VisitedController > groupByDate()");
 		return visitedService.groupByDate(visitedVo);
 	}
