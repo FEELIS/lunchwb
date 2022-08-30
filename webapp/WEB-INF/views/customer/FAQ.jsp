@@ -48,10 +48,8 @@
                 <div class="container-fluid" id="main-content">
                     <div class="d-sm-flex justify-content-between align-items-center mb-4">
                         <h3 class="text-dark mb-0">FAQ</h3>
-                        <a class="btn btn-primary btn-sm d-none d-sm-inline-block" 
-	                        role="button" 
-	                        href="${pageContext.request.contextPath}/customer/writeInquiry"> 
-	                        <i class="fas fa-download fa-sm text-white-50"></i> &nbsp;문의하러가기
+                        <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="${pageContext.request.contextPath}/customer/writeInquiry">
+                            <i class="fas fa-download fa-sm text-white-50"></i> &nbsp;문의하러가기
                         </a>
 
                     </div>
@@ -121,10 +119,10 @@
                         </div>
                     </div>
                 </div>
-                <!-- footer -->
-                <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
-                <!-- /footer -->
             </div>
+            <!-- footer -->
+            <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+            <!-- /footer -->
         </div>
         <!-- content-wrapper -->
     </div>
