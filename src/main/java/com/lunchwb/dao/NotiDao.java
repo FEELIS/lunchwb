@@ -1,5 +1,6 @@
 package com.lunchwb.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -20,6 +21,10 @@ public class NotiDao {
 		return sqlSession.selectOne("notification.notiCount", userNo);
 	}
 	
+	/* 알림 리스트 */
+	public List<NotificationVo> notiList(NotificationVo notiVo) {
+		return sqlSession.selectList("notification.notiList", notiVo);
+	}
 	
 	/* 그룹 이름 변경 알림 7 */
 	public int alertOfGroupChange(NotificationVo notiVo) {
@@ -51,12 +56,15 @@ public class NotiDao {
 		return sqlSession.selectOne("notification.membersInvitedCount", groupNo);
 	}
 	
-	
 	/* 초대 중 여부 확인 */
 	public int alreadyInvite(Map<String, Object> map) {
 		return sqlSession.selectOne("notification.alreadyInvite", map);
 	}
 	
+	/* 보스 초대 중? */
+	public int invitingBoss(int groupNo) {
+		return sqlSession.selectOne("notification.invitingBoss", groupNo);
+	}
 	
 
 }
