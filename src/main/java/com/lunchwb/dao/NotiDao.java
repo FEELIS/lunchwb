@@ -66,5 +66,10 @@ public class NotiDao {
 		return sqlSession.selectOne("notification.invitingBoss", groupNo);
 	}
 	
+	/* 알림 확인 처리 */
+	public int notiChangeToCheck(int groupNo) {
+		return sqlSession.update("notification.notiChangeToCheck", groupNo);
+	}
+	
 
 }
