@@ -74,8 +74,8 @@ public class InquiryService {
 		
 		int count = 0;
 		
-		String saveDir = "E:\\javaStudy\\upload";					//윈도우용
-		//String saveDir = "/Users/choijungphil/javaStudy/upload";	//맥OS용
+		String saveDir = "C:\\javaStudy\\upload";					//윈도우용
+		//String saveDir = "/Users/choijungphil/javaStudy/upload";			//맥OS용
 		String orgName = "";
 		String saveName = "";
 
