@@ -2,6 +2,15 @@ body {
   height: 100%;	
 }
 
+#header {
+  background: var(--bs-blue);
+  padding: 10px 0;	
+}
+
+#header > img {
+  height: 38px;
+}
+
 header > div {
   background: var(--bs-blue);
   margin: 0;
@@ -62,8 +71,8 @@ header > div > img {
 #vote-name-area {
   padding-top: 19px;
   padding-bottom: 10px;
-  padding-left: 20px;
-  padding-right: 15px;	
+  padding-left: 10px;
+  padding-right: 5px;	
 }
 
 .vote-select-name-btn {
@@ -74,10 +83,10 @@ header > div > img {
   border-color: rgb(234,236,244);
   padding-left: 20px;
   padding-right: 20px;
-  margin-right: 9px;
+  margin-right: 5px;
   padding-top: 8px;
   padding-bottom: 8px;
-  margin-bottom: 9px;	
+  margin-bottom: 7px;	
 }
 
 .vote-select-name-btn:active {
@@ -139,5 +148,126 @@ header > div > img {
 }
 
 #vote-btn button:active {
-  background-color: #3557bc;
+  color: var(--bs-blue);
+  background: rgb(255,255,255);	
+  border-color: var(--bs-blue);
+  font-weight: bold;
+}
+
+#result-box {
+  padding-top: 39px;
+  padding-bottom: 50px;
+}
+
+#result-1 {
+  color: rgb(0,0,0);
+  font-weight: bold;
+  font-size: 18px;	
+}
+
+#result-2 {
+  color: rgb(74,75,81);	
+}
+
+#result-3 {
+  color: var(--bs-blue);
+  font-size: 22px;
+  font-weight: bold;
+}
+
+#result-4 {
+  color: rgb(85,86,91);
+}
+
+#result-graph-box {
+  padding-bottom: 39px;	
+}
+
+.graph-area {
+  display: block;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;	
+}
+
+.graph-info {
+  margin-bottom: 4px;
+}
+
+.graph-1  {
+  color: rgb(0,0,0);
+  font-weight: bold;
+  font-size: 12px;
+  margin: 0;
+  margin-right: 9px;	
+}
+
+.graph-2 {
+  color: rgb(34,34,34);
+  font-size: 10px;	
+}
+
+.graph-graph {
+  display: flex;	
+}
+
+.progress {
+  width: 100%;
+  margin: 0;
+  height: 13px;
+  margin-right: 7px;
+}
+
+#link-box > div {
+  padding-bottom: 13px;	
+}
+
+#link-comment {
+  font-size: 12px;
+  color: rgb(102,103,112);
+}
+
+#vote-kakao-btn {
+  width: 100px;
+  min-width: 100px;
+  max-width: 100px;
+  height: 35px;
+  min-height: 35px;
+  max-height: 35px;
+  margin-right: 10px;
+  color: rgb(96,78,64);
+  font-weight: bold;
+  background: #f9e000;
+  border-width: 2px;
+  border-color: #f9e000;
+  padding-right: 0;
+  padding-left: 0;
+  margin-left: 0;
+  font-size: 14px;
+}
+
+#vote-kakao-btn i {
+  color: rgb(96,78,64);
+  margin-right: 6px;
+  font-size: 18px;
+}
+
+#vote-kakao-btn:active {
+  background: rgb(239,187,52);
+  border-color: rgb(239,187,52);
+}
+
+#copy-link-btn {
+  height: 35px;
+  font-size: 14px;
+  background: rgb(104,105,109);
+  width: 100px;
+  max-height: 35px;
+  min-height: 35px;
+  min-width: 100px;
+  max-width: 100px;	
+}
+
+#copy-link-btn:active {
+  background: var(--bs-gray-800);
 }
