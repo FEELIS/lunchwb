@@ -35,6 +35,7 @@ public class NotificationVo {
 	
 	//inquiry
 	private String inquiryTitle;
+	private int inquiryNo;
 	
 	
 	
@@ -42,7 +43,7 @@ public class NotificationVo {
 
 	public NotificationVo(int notiNo, int userNo, int notiType, int groupNo, int reportNo, int replyNo, String alertCmt,
 			int notiState, String notiName, int sendUser, String sendEmail, String sendName, String groupName,
-			int groupOrder, String reportCateName, String reviewDate, String inquiryTitle) {
+			int groupOrder, String reportCateName, String reviewDate, String inquiryTitle, int inquiryNo) {
 		this.notiNo = notiNo;
 		this.userNo = userNo;
 		this.notiType = notiType;
@@ -60,6 +61,7 @@ public class NotificationVo {
 		this.reportCateName = reportCateName;
 		this.reviewDate = reviewDate;
 		this.inquiryTitle = inquiryTitle;
+		this.inquiryNo = inquiryNo;
 	}
 
 
@@ -200,6 +202,14 @@ public class NotificationVo {
 		this.inquiryTitle = inquiryTitle;
 	}
 
+	public int getInquiryNo() {
+		return inquiryNo;
+	}
+
+	public void setInquiryNo(int inquiryNo) {
+		this.inquiryNo = inquiryNo;
+	}
+
 	@Override
 	public String toString() {
 		return "NotificationVo [notiNo=" + notiNo + ", userNo=" + userNo + ", notiType=" + notiType + ", groupNo="
@@ -207,7 +217,7 @@ public class NotificationVo {
 				+ ", notiState=" + notiState + ", notiName=" + notiName + ", sendUser=" + sendUser + ", sendEmail="
 				+ sendEmail + ", sendName=" + sendName + ", groupName=" + groupName + ", groupOrder=" + groupOrder
 				+ ", reportCateName=" + reportCateName + ", reviewDate=" + reviewDate + ", inquiryTitle=" + inquiryTitle
-				+ "]";
+				+ ", inquiryNo=" + inquiryNo + "]";
 	}
 	
 };
