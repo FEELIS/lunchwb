@@ -27,8 +27,11 @@ public class InquiryDao {
 		return count;
 	};
 	
-	
-	
+	public InquiryVo getInq(int inquiryNo){
+		InquiryVo inqVo = sqlSession.selectOne("inquiry.readInquiry",inquiryNo);
+		
+		return inqVo;
+	};
 	
 	
 	
