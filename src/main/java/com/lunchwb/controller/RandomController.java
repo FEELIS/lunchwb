@@ -44,7 +44,7 @@ public class RandomController {
 	public String roulette(Model model) {
 		
 		logger.info("/roulette");
-		return "main/random/randomRouletteTest";
+		return "main/random/randomRoulette";
 	}
 	
 	@RequestMapping(value = {"", "/{randomNo}"})

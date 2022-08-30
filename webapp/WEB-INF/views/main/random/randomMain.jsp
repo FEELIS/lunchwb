@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
@@ -7,9 +6,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+
 <title>부장님요기요</title>
+
 <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/assets/img/bujang.png">
+
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Bold-BS4-Responsive-Pricing-Table-Snippet.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/style-jw.css">
@@ -34,38 +36,37 @@
 
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/Winwheel.js"></script>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
 </head>
 
 
 <body>
-    <div id="wrapper">
-        <c:import url="/WEB-INF/views/includes/aside/basketAside.jsp" />
-        <div class="d-flex flex-column" id="content-wrapper" style="position: relative;">
-            <c:import url="/WEB-INF/views/includes/header.jsp" />
-            <div style="height: 400px;text-align: center;background: var(--bs-white);width: 700px;margin: auto;border-radius: 50px;box-shadow: 2px 4px 15px var(--bs-blue);">
-                <div style="text-align: center;padding-top: 90px;">
-                    <div class="col-xxl-11" style="height: 100px;width: 700px;margin-bottom: 60px;"><img src="${pageContext.request.contextPath}/assets/img/random-box.png" style="width: 100px;margin-right: 10px;"><span style="font-size: 24px;">랜덤 방식을 선택해주세요!</span>
-                        <div></div>
-                    </div>
-                    <div class="col" style="width: 700px;">
-                        <div class="row" style="width: 700px;margin: 0px;">
-                            <div class="col" style="padding: 0px;">
-                            	<button class="btn btn-primary" id="random-btn" type="button" style="width: 172px;height: 60px;">부장님 요기요의 선택</button>
-                           	</div>
-                           	<c:if test="${!empty(basketGroup)}">
-                           		<div class="col" style="padding: 0px;">
-                           			<a href="${pageContext.request.contextPath}/random/roulette" style="text-decoration:none;">
-                            			<button class="btn btn-primary" type="button" style="width: 172px;height: 60px;">룰렛 돌리기</button>
-                           			</a>
-                       			</div>
-                            </c:if>
-                        </div>
+<div id="wrapper">
+    <c:import url="/WEB-INF/views/includes/aside/basketAside.jsp" />
+    <div class="d-flex flex-column" id="content-wrapper" >
+        <c:import url="/WEB-INF/views/includes/header.jsp" />
+        <div style="height: 400px;text-align: center;background: var(--bs-white);width: 700px;margin: auto;border-radius: 50px;box-shadow: 2px 4px 15px var(--bs-blue);">
+            <div style="text-align: center;padding-top: 90px;">
+                <div class="col-xxl-11" style="height: 100px;width: 700px;margin-bottom: 60px;"><img src="${pageContext.request.contextPath}/assets/img/random-box.png" style="width: 100px;margin-right: 10px;"><span style="font-size: 24px;">랜덤 방식을 선택해주세요!</span>
+                    <div></div>
+                </div>
+                <div class="col" style="width: 700px;">
+                    <div class="row" style="width: 700px;margin: 0px;">
+                        <div class="col" style="padding: 0px;">
+                        	<button class="btn btn-primary" id="random-btn" type="button" style="width: 172px;height: 60px;">부장님 요기요의 선택</button>
+                       	</div>
+                       	<c:if test="${!empty(basketGroup)}">
+                       		<div class="col" style="padding: 0px;">
+                       			<a href="${pageContext.request.contextPath}/random/roulette" style="text-decoration:none;">
+                        			<button class="btn btn-primary" type="button" style="width: 172px;height: 60px;">룰렛 돌리기</button>
+                       			</a>
+                   			</div>
+                        </c:if>
                     </div>
                 </div>
             </div>
-        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
-    </div>
+        </div>
+    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+</div>
 </body>
 <script type="text/javascript">
 
