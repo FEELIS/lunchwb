@@ -85,16 +85,18 @@ public class CustomerController {
 	public String reviewSearch() {
 		logger.info("CustomerController > reviewSearch()");
 		
-		
+			
 		return "customer/reviewReport";
 	};
 	
 	// ============================================ 문의상세보기 폼 ============================================
-	@RequestMapping(value = "/readInquiry", method= {RequestMethod.GET,RequestMethod.POST})
-	public String readInquiryForm() {
+	@RequestMapping(value = "/readInquiryForm/{inquiryNo}", method= {RequestMethod.GET,RequestMethod.POST})
+	public String readInquiryForm(@PathVariable("inquiryNo") int inquiryNo, Model model) {
 		logger.info("CustomerController > readInquiryForm");
 		
-		
+		InquiryVo inqVo = inquiryService.readInquiry(inquiryNo);
+		model.addAttribute("inqVo",inqVo);
+		logger.info(inqVo.toString());
 		
 		return "customer/readInquiry";
 	};
