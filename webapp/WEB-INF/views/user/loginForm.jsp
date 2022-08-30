@@ -66,11 +66,8 @@
             </div>
         </div>
     </div>
-    <footer class="bg-white sticky-footer" id="footer">
-        <div class="container my-auto">
-            <div class="text-center my-auto copyright"><span>Copyright © FEELIS 2022<br>https://github.com/FEELIS&nbsp;<br></span></div>
-        </div>
-    </footer>
+    <!-- footer -->
+    <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     <script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>

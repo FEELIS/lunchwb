@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/alert.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/group.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/Login-Form-Basic-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/user.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/yogiyo.css">
@@ -41,7 +40,10 @@
                                     <div class="text-center fix-380"></div>
                                     <form method="post" action="${pageContext.request.contextPath}/findPW" class="user">
                                         <div class="mb-3 fix-380">
-                                            <div><span class="check-text">입력하신 이메일로 임시 비밀번호를 발급합니다.</span></div><input class="form-control form-control-user" type="email" id="InputLoginEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="userEmail">
+                                            <div>
+                                            	<span class="check-text">입력하신 이메일로 임시 비밀번호를 발급합니다.</span>
+                                           	</div>
+                                           	<input class="form-control form-control-user fix-380" type="email" id="InputLoginEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="userEmail">
                                         </div>
                                         <div class="mb-3 fix-380"></div>
                                         <div class="mb-3 fix-380">
@@ -56,11 +58,8 @@
             </div>
         </div>
     </div>
-    <footer class="bg-white sticky-footer" id="footer">
-        <div class="container my-auto">
-            <div class="text-center my-auto copyright"><span>Copyright © FEELIS 2022<br>https://github.com/FEELIS&nbsp;<br></span></div>
-        </div>
-    </footer>
+    <!-- footer -->
+    <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
     <script src="${pageContext.request.contextPath}/assets/js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>

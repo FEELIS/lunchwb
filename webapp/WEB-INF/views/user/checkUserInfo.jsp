@@ -51,11 +51,8 @@
                     </section>
                 </div>
             </div>
-            <footer class="bg-white sticky-footer" id="footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © FEELIS 2022<br>https://github.com/FEELIS&nbsp;<br></span></div>
-                </div>
-            </footer>
+            <!-- footer -->
+    		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
     <script src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
