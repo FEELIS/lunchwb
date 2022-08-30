@@ -19,6 +19,7 @@
 		<result column="review_date" property="reviewDate" />
 		<result column="reply_no" property="replyNo" />
 		<result column="inquiry_title" property="inquiryTitle" />
+		<result column="inquiry_no" property="inquiryNo" />
 		<result column="alert_comment" property="alertCmt" />
 		<result column="noti_state" property="notiState" />
 	</resultMap>
@@ -33,8 +34,8 @@
 	</select>
 	
 	
-	<!-- 미확인 알림 리스트 - 알림 아이콘 누를 때 -->
-	<select id="notiList" parameterType="int" resultMap="NotiVo">
+	<!-- 미확인 알림 리스트 - 알림 아이콘 누를 때 뜨지 않았던것만 추가 갱신 붙이기 -->
+	<select id="notiList" parameterType="NotiVo" resultMap="NotiVo">
 		SELECT  n.noti_no
 				, n.noti_type
 				, n.group_no
@@ -67,6 +68,7 @@
 			 	AND r.inquiry_no = i.inquiry_no) ia
 		WHERE n.user_no = #{userNo}
 		AND n.noti_state = 0
+		AND n.noti_no > #{notiNo}
 		AND n.noti_no = ga.noti_no(+)
 		AND n.noti_no = ra.noti_no(+)
 		AND n.noti_no = ia.noti_no(+)
@@ -114,7 +116,7 @@
 		SELECT count(user_no)
 		FROM notification
 		WHERE group_no = #{groupNo}
-		AND noti_type = 1
+		AND noti_type IN (1, 10)
 		AND noti_state = 0
 	</select>
 	
@@ -124,11 +126,21 @@
 		SELECT count(user_no)
 		FROM notification
 		WHERE group_no = #{groupNo}
-		AND noti_type = 1
+		AND noti_type IN (1, 10)
 		AND noti_state = 0
 		AND user_no = (SELECT user_no 
 					   FROM users 
 					   WHERE user_email = #{userEmail})
+	</select>
+	
+	
+	<!-- 보스로 초대한 유저가 있나? -->
+	<select id="invitingBoss" parameterType="int" resultType="int">
+		SELECT count(user_no)
+		FROM notification
+		WHERE group_no = #{groupNo}
+		AND noti_type = 10
+		AND noti_state = 0		
 	</select>
 	
 	
