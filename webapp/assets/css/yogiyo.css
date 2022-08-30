@@ -82,6 +82,10 @@ body {
 #header {
   width: 100%;
   white-space: nowrap;
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 #header .container {
