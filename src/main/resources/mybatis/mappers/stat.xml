@@ -65,7 +65,8 @@
 			and to_char(v.visited_date,'YYMM')<to_char(add_months(sysdate,0),'YYMM') 
 			and to_char(v.visited_date,'YYMM')>=to_char(add_months(sysdate,-6),'YYMM')  
 			and f1.menu_1st_cate_name like #{menu1stCateName} 
-			group by (f1.menu_1st_cate_name,to_char(v.visited_date,'mm'))
+			group by (f1.menu_1st_cate_name,to_char(v.visited_date,'mm')) 
+			order by v.visited_date asc
 		]]>
 	</select>
 	
