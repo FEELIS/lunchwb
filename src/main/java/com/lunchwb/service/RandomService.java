@@ -133,14 +133,21 @@ public class RandomService {
 			randomInfo.put("stopAtValue", checkAllRandomResult.getStopAtValue());
 			randomInfo.put("randomNo", checkAllRandomResult.getRandomNo());
 			randomInfo.put("groupName", checkAllRandomResult.getGroupName());
+			randomInfo.put("groupNo", checkAllRandomResult.getGroupNo());
 			randomInfo.put("basketInfo", rouletteStoreInfo);
 			randomInfo.put("storeInfo", store);
 			
-			System.out.println("스토어 정보" + store);
+			System.out.println("스토어 정보 = " + store);
+			System.out.println("그룹 넘버 = " + randomInfo.get("groupNo"));
 			
 		}
-		
-		
 		return randomInfo;
+	}
+	
+	public void deleteRandomInfo() {
+		randomDao.deleteRandomInfo();
+	}
+	public void deleteRandomInfoOverHalf() {
+		randomDao.deleteRandomInfoOverHalf();
 	}
 }

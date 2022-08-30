@@ -8,6 +8,8 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,6 @@ import com.lunchwb.service.RandomService;
 import com.lunchwb.service.TestService;
 import com.lunchwb.service.VisitedService;
 import com.lunchwb.vo.GroupVo;
-import com.lunchwb.vo.RandomVo;
 import com.lunchwb.vo.UserVo;
 
 @RequestMapping("/random")
@@ -133,9 +134,22 @@ public class RandomController {
 		logger.info("VisitedController > decideVisit()");
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		int randomNo = (randomService.checkRandomResult(authUser.getUserNo())).getRandomNo();
-		
 		visitedService.decideVisit(storeNo, groupNo, memberList, authUser);
 		return "redirect:/random/" + randomNo;
 	}
 	
+	
+	/* 매일 자정 랜덤 정보 삭제 */
+	@Scheduled(cron = "0 0 0 * * *") 
+	public void deleteRandomInfo() {
+		randomService.deleteRandomInfo();
+	}
+	
+	/* 추후에 사용자가 많아져서 데이터가 많이 쌓이게 되면 실행할 컨트롤러.
+	// 15분마다 30분 넘은 랜덤 정보 삭제 
+	@Scheduled(cron = "0 0/15 * * * *") 
+	public void deleteRandomInfoQuarter() {
+		randomService.deleteRandomInfoOverHalf();
+	}
+	*/
 }

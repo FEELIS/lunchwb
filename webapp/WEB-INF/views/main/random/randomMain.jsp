@@ -66,7 +66,6 @@
             </div>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
-<c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
 </body>
 <script type="text/javascript">
 

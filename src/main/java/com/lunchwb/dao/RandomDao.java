@@ -30,5 +30,14 @@ public class RandomDao {
 	public int deleteRandomResult(int userNo) {
 		return sqlSession.delete("random.deleteRandomResult", userNo);
 	}
+	
+	
+	public void deleteRandomInfo() {
+		sqlSession.delete("random.deleteRandomInfo");
+	}
+	
+	public void deleteRandomInfoOverHalf() {
+		sqlSession.delete("random.deleteRandomInfoOverHalf");
+	}
 
 }
