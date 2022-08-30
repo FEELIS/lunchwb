@@ -237,7 +237,12 @@ public class GroupService {
 		int count = groupDao.beBoss(groupNo);
 		
 		if(count == 0) {
-			result = "can";
+			if(notiDao.invitingBoss(groupNo) > 0) {
+				result = "can't: inviting";
+				
+			}else {
+				result = "can";
+			}
 		}
 		
 		return result;

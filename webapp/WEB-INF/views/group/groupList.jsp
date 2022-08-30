@@ -359,6 +359,10 @@ $(".form-check-input").on("click", function(){
 					if(confirm("부장님을 교체하시겠습니까?") != true) {
 						$(".form-check-input").prop("checked", false)
 					}
+				
+				//초대중
+				}else if(result != "can"){
+					alert("이미 부장님을 초대중입니다. 초대중에는 변경이 불가합니다.")
 				}
 				
 			}, 
