@@ -6,60 +6,88 @@
 	<resultMap id="NotiVo" type="com.lunchwb.vo.NotificationVo">
 		<result column="noti_no" property="notiNo" />
 		<result column="user_no" property="userNo" />
-		<result column="group_no" property="groupNo" />
-		<result column="reply_no" property="replyNo" />
-		<result column="alert_comment" property="alertComment" />
-		<result column="noti_state" property="notiState" />
 		<result column="noti_type" property="notiType" />
 		<result column="noti_name" property="notiName" />
+		<result column="group_no" property="groupNo" />
+		<result column="group_order" property="groupOrder" />
+		<result column="group_name" property="groupName" />
+		<result column="send_user" property="sendUser" />
+		<result column="send_email" property="sendEmail" />
+		<result column="send_name" property="sendName" />
+		<result column="report_no" property="reportNo" />
+		<result column="report_cate_name" property="reportCateName" />
+		<result column="review_date" property="reviewDate" />
+		<result column="reply_no" property="replyNo" />
+		<result column="inquiry_title" property="inquiryTitle" />
+		<result column="alert_comment" property="alertComment" />
+		<result column="noti_state" property="notiState" />
 	</resultMap>
 	
 	
-	<!-- 그룹원 단체 알림 : 그룹 이름 변경 -->
+	<!-- 알림 개수 -->
+	<select id="notiCount" parameterType="int" resultType="int">
+		SELECT count(noti_no)
+		FROM notification n
+		WHERE user_no = #{userNo}
+		AND noti_state = 0
+	</select>
+	
+	
+	<!-- 그룹원 단체 알림 : 그룹 이름 변경 7 -->
 	<insert id="alertOfGroupChange" parameterType="NotiVo" >
 		INSERT INTO notification
 		VALUES (SEQ_NOTI_NO.NEXTVAL, #{userNo}, 7, #{groupNo}, 0, #{alertCmt}, 0)
 	</insert>
 	
 	
-	<!-- 개인 알림 -->
-	<insert id="addNoti" parameterType="Map">
-		INSERT INTO notification
-		VALUES (SEQ_NOTI_NO.NEXTVAL, #{noti.userNo}, #{notiType},
-				<choose>
-					<when test="noti.groupNo == 0 || noti.groupNo == ''">
-						0, #{noti.replyNo},
-					</when>
-					<otherwise>
-						#{noti.groupNo}, 0,
-					</otherwise>
-				</choose>
-			 	'', 0)
+	<!-- 그룹원 알림 1/5/6/10 -->
+	<insert id="addGroupNoti" parameterType="NotiVo">
+		INSERT INTO notification (noti_no, user_no, noti_type, group_no)
+		VALUES (SEQ_NOTI_NO.NEXTVAL, #{userNo}, #{notiType}, #{groupNo})
+	</insert>
+	
+	
+	<!-- 그룹장 알림 2/3/4 -->
+	<insert id="addLeaderNoti" parameterType="NotiVo">
+		INSERT INTO notification (noti_no, user_no, noti_type, group_no, send_user)
+		VALUES (SEQ_NOTI_NO.NEXTVAL, #{userNo}, #{notiType}, #{groupNo}, #{sendUser})
+	</insert>
+	
+	
+	<!-- 리뷰 삭제 알림 8 -->
+	<insert id="addReportNoti" parameterType="NotiVo">
+		INSERT INTO notification (noti_no, user_no, noti_type, report_no)
+		VALUES (SEQ_NOTI_NO.NEXTVAL, #{userNo}, #{notiType}, #{reportNo})
+	</insert>
+	
+	
+	<!-- 문의 답변 알림 9 -->
+	<insert id="addReplyNoti" parameterType="NotiVo">
+		INSERT INTO notification (noti_no, user_no, noti_type, reply_no)
+		VALUES (SEQ_NOTI_NO.NEXTVAL, #{userNo}, #{notiType}, #{replyNo})
 	</insert>
 	
 	
 	<!-- 그룹 초대장을 보낸 인원(초대 중)/초대중인지 확인 -->
 	<select id="membersInvitedCount" parameterType="int" resultType="int">
-		SELECT NVL(MAX(count(user_no)) , 0)
+		SELECT count(user_no)
 		FROM notification
 		WHERE group_no = #{groupNo}
 		AND noti_type = 1
-		AND alert_state = 0
-		GROUP BY group_no
+		AND noti_state = 0
 	</select>
 	
 	
 	<!-- 그룹 초대중인 회원인가? -->
 	<select id="alreadyInvite" parameterType="Map" resultType="int">
-		SELECT NVL(MAX(count(user_no)) , 0)
+		SELECT count(user_no)
 		FROM notification
 		WHERE group_no = #{groupNo}
 		AND noti_type = 1
-		AND alert_state = 0
+		AND noti_state = 0
 		AND user_no = (SELECT user_no 
 					   FROM users 
 					   WHERE user_email = #{userEmail})
-		GROUP BY group_no
 	</select>
 	
 	

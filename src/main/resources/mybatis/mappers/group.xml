@@ -44,12 +44,11 @@
 	
 	<!-- 그룹에 포함된 회원(유령x)수 -->
 	<select id="groupUsers" parameterType="int" resultType="int">
-		SELECT NVL(MAX(count(u.user_no)) , 0) 
+		SELECT count(u.user_no) 
 		FROM users u, group_member m
 		WHERE u.user_no = m.user_no
 		AND m.group_no = #{groupNo}
 		AND user_email IS NOT NUll
-		GROUP BY group_no
 	</select>
 	
 	
