@@ -24,14 +24,19 @@
 <script type="text/javascript">
 
 //마지막으로 띄운 알림 번호
-var lastNoti = 0
+let lastNoti = 0
 //확인하지 않은 알림 개수
-var countNoti = 0
+let countNoti = 0
 
 $(document).ready(function(){
 	notiCount()
 })
 
+
+let click = document.querySelector("body")
+click.addEventListener("click", function(){
+	notiCount()
+})
 
 /* 알림 개수 표시 */
 function notiCount(){
