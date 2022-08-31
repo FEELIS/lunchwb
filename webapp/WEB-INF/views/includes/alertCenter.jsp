@@ -151,7 +151,7 @@ function renderNoti(notiVo){
 			str += '	</div>'
 			str += '	<div class="btn-group" role="group">'
 			str += '		<button class="btn btn-primary btn-alert-ok btn-alert-invite-ok" type="button" data-type="1" data-notino="'+notiVo.notiNo+'" data-groupno="'+notiVo.groupNo+'"'
-			str += '			data-leader="'+notiVo.sendUser+'">수락</button>'
+			str += '			data-groupname="'+notiVo.groupName+'" data-leader="'+notiVo.sendUser+'">수락</button>'
 			str += '		<button class="btn btn-primary btn-alert-opposite btn-alert-invite-reject" type="button" data-type="1" data-notino="'+notiVo.notiNo+'" data-groupno="'+notiVo.groupNo+'"'
 			str += '			data-leader="'+notiVo.sendUser+'">거절</button>'
 			str += '	</div>'
@@ -219,7 +219,7 @@ function renderNoti(notiVo){
 			str += '		<p class="alert-basic">'+notiVo.alertCmt+'</p>'
 			str += '	</div>'
 			str += '	<div class="btn-group" role="group">'
-			str += '		<button class="btn btn-primary btn-alert-check" type="button" data-notino="'+notiVo.notiNo+'">확인</button>'
+			str += '		<button class="btn btn-primary btn-alert-check" type="button" data-type="7" data-notino="'+notiVo.notiNo+'">확인</button>'
 			str += '	</div>'
 			break
 		
@@ -256,7 +256,7 @@ function renderNoti(notiVo){
 			str += '	</div>'
 			str += '	<div class="btn-group" role="group">'
 			str += '		<button class="btn btn-primary btn-alert-ok btn-alert-invite-ok" type="button" data-type="10" data-notino="'+notiVo.notiNo+'" data-groupno="'+notiVo.groupNo+'"'
-			str += '			data-leader="'+notiVo.sendUser+'">수락</button>'
+			str += '			data-groupname="'+notiVo.groupName+'" data-leader="'+notiVo.sendUser+'">수락</button>'
 			str += '		<button class="btn btn-primary btn-alert-opposite btn-alert-invite-reject" type="button" data-type="10" data-notino="'+notiVo.notiNo+'" data-groupno="'+notiVo.groupNo+'"'
 			str += '			data-leader="'+notiVo.sendUser+'">거절</button>'
 			str += '	</div>'
@@ -278,6 +278,7 @@ $("#draw-noti-area").on("click", ".btn-alert-invite-ok", function(){
 	var notiNo = $(this).attr("data-notino")  //삭제용+부장님 구분용(db/view)
 	var groupLeader = $(this).attr("data-leader")
 	var groupNo = $(this).attr("data-groupno")
+	var groupName = $(this).attr("data-groupname")
 	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/group/count",
@@ -297,6 +298,7 @@ $("#draw-noti-area").on("click", ".btn-alert-invite-ok", function(){
 					notiNo : notiNo,  //삭제용+부장님 구분용(db/view)
 					userNo : groupLeader,	//확인알림 받을 사람
 					groupNo : groupNo,
+					groupName : groupName,
 					sendUser : "${authUser.userNo}", //내가 초대 받았다고
 					groupOrder : groupCount+1 //그룹 추가 > 순서조정
 				}
@@ -419,7 +421,7 @@ function alertCheck(notiNo, groupNo, notiType){
 				if(window.location.pathname == "/lunchwb/group/list" && groupNo == "${map.groupNo}"){
 					//내가 그룹장이고 그룹페이지를 보고있는데 초대 수락알림이 왔으면 그 사람 포함한 목록을 그려)
 					//그룹원이었는데 그룹장이 됐다는 알림을 확인했어)
-					if(notiType == 2 || notiType == 6){
+					if(notiType == 2 || notiType == 6 || notiTYpe == 7){
 						location.replace("${pageContext.request.contextPath}/group/list?no="+groupNo)
 					
 					//내가 그룹장이 아니고 리스트를 보는데 그룹에서 강퇴당했다는 알림을 확인하면 첫번째 그룹으로 보내줘
