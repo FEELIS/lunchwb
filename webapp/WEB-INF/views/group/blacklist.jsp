@@ -210,7 +210,7 @@
 <script type="text/javascript">
 
 //검색 결과 > 추가시 배열에 저장: 
-const blackAdded = []
+var blackAdded = []
 
 //블랙할 가게 검색 > 엔터
 var input = document.getElementById("store-search")
@@ -390,6 +390,7 @@ function addBlackThis(blackVo, addNo){
 				renderTable(addBlackVo, 1)
 				//추가된 목록
 				blackAdded.push(addBlackVo.storeNo)
+				console.log(blackAdded)
 				console.log(blackAdded)
 			
 			}else{
