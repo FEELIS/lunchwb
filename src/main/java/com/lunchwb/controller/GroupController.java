@@ -158,9 +158,23 @@ public class GroupController {
 	/******************** 그룹 이름 변경 ********************************************/
 	@ResponseBody
 	@PostMapping("/nameChange")
-	public String nameChange(@RequestBody GroupVo groupVo) {
+	public String nameChange(@RequestBody GroupVo groupVo, HttpSession session) {
 		logger.info("GroupController > nameChange()");
-		return groupService.nameChange(groupVo);
+		
+		String result = groupService.nameChange(groupVo);
+		
+		if(result == "success") {
+			
+			if(session.getAttribute("basketGroup") != null) {
+				session.removeAttribute("basketGroup");
+			}
+			
+			List<GroupVo> basketGroup = basketService.getBasketGroup(((UserVo)session.getAttribute("authUser")).getUserNo());
+			session.setAttribute("basketGroup", basketGroup);
+			
+		}
+		
+		return result;
 	}
 	
 	
