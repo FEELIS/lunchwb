@@ -366,7 +366,10 @@ public class GroupController {
 	@PostMapping("/count")
 	public int groupCount(@RequestBody int userNo) {
 		logger.info("GroupController > groupCount()");
-		return groupService.groupCount(userNo);
+		
+		int groupCount = groupService.groupCount(userNo);
+
+		return groupCount; 
 	}
 	
 	
