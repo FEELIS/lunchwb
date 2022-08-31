@@ -418,7 +418,7 @@ function storeBasicInfo(storeNo){
 			
 			//가게 이미지
 			if(storeMap.imgList.length == 0){
-				$(".img-area span").html('<img src="${pageContext.request.contextPath}/assets/img/no-review-img.png"/>')
+				$(".img-area span").html('<img src="${pageContext.request.contextPath}/assets/img/bujang.png"/>')
 				
 			}else{
 				for(var i=0; i<storeMap.imgList.length; i++){
@@ -428,11 +428,11 @@ function storeBasicInfo(storeNo){
 					
 					}else if(i==1){
 						$(".img-area span").append('<img id="proImg-2" class="visually-hidden" data-imgno="2" data-end="'+storeMap.imgList.length+'" src="${pageContext.request.contextPath}/upload/'+storeMap.imgList[1]+'">')	
-						//document.getElementById("imgIcon-2").className = "far fa-circle"
+						document.getElementById("imgIcon-2").className = "far fa-circle"
 
 					}else{
 						$(".img-area span").append('<img id="proImg-3" class="visually-hidden" data-imgno="3" data-end="'+storeMap.imgList.length+'" src="${pageContext.request.contextPath}/upload/'+storeMap.imgList[2]+'">')	
-						//document.getElementById("imgIcon-3").className = "far fa-circle"
+						document.getElementById("imgIcon-3").className = "far fa-circle"
 					}
 				}
 			}
@@ -440,7 +440,7 @@ function storeBasicInfo(storeNo){
 			//가게 정보창
 			$("#modal-store .review-area").text("")
 			if(storeMap.reviewList.length != 0){
-				for(var i=0; i<2; i++){
+				for(var i=0; i<3; i++){
 					modalStoreReivew(storeMap.reviewList[i], 1)
 					
 				}
@@ -584,7 +584,6 @@ function modalStoreTime(storeTime, opt){
 
 
 /* 가게 이미지 클릭 > 다음 이미지로 전환 */
-/* 
 $("#store-about").on("click", "img", function(){
 	var imgNo = $(this).attr("data-imgno")
 	var endNo = $(this).attr("data-end")
@@ -603,7 +602,6 @@ $("#store-about").on("click", "img", function(){
 	}
 	
 })
- */
 
 /* 가게 리뷰 */
 function modalStoreReivew(storeReview, k){
