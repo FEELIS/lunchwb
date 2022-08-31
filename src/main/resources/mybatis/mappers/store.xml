@@ -17,7 +17,7 @@
 	</resultMap>
 	
 	
-	<!-- 비로그인 회원 장바구니 아이템 추천(알고리즘 이후에 더 세세히...)-->
+	<!-- 비로그인 회원 장바구니 아이템 추천 -->
 	<select id="guestStoreRecommend" parameterType="Map" resultType="StoreVo">
 		<![CDATA[
 			SELECT store_no storeNo
@@ -54,6 +54,7 @@
 		
 		<foreach collection="basket" item="storedItem" separator="">
 	              AND    s.store_no != #{storedItem.storeNo}
+	              AND    s.store_road_address != #{storedItem.storeRoadAddress}
 		</foreach>
 			  
 		<![CDATA[
@@ -125,6 +126,7 @@
 			  
 		<![CDATA[
 		         AND    ((r.rating_naver >= 4.3 AND r.rating_kakao >= 3) OR (r.rating_naver >= 4.5 AND r.rating_kakao = 0)) 
+		         AND     s.store_no NOT IN (SELECT store_no FROM blacklist WHERE group_no = #{groupNo})
 			     ORDER BY score DESC)
 		    WHERE  distance <= 500
 		    AND    ROWNUM <= 100
