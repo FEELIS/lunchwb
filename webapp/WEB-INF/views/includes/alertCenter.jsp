@@ -164,7 +164,7 @@ function renderNoti(notiVo){
 			str += '		<p class="alert-basic">'+notiVo.sendEmail+'님이 '+notiVo.groupName+'의 초대를 수락하였습니다.</p>'
 			str += '	</div>'
 			str += '	<div class="btn-group" role="group">'
-			str += '		<button class="btn btn-primary btn-alert-check" type="button" data-notino="'+notiVo.notiNo+'" data-groupno="'+notiVo.groupNo+'">확인</button>'
+			str += '		<button class="btn btn-primary btn-alert-check" type="button" data-type="2" data-notino="'+notiVo.notiNo+'" data-groupno="'+notiVo.groupNo+'">확인</button>'
 			str += '	</div>'
 			break
 		
@@ -197,7 +197,7 @@ function renderNoti(notiVo){
 			str += '		<p class="alert-basic">'+notiVo.groupName+'에서 퇴장되었습니다.</p>'
 			str += '	</div>'
 			str += '	<div class="btn-group" role="group">'
-			str += '		<button class="btn btn-primary btn-alert-check" type="button" data-notino="'+notiVo.notiNo+'">확인</button>'
+			str += '		<button class="btn btn-primary btn-alert-check" type="button" data-type="5" data-notino="'+notiVo.notiNo+'">확인</button>'
 			str += '	</div>'
 			break
 		
@@ -394,20 +394,15 @@ $("#draw-noti-area").on("click", ".btn-alert-reply", function(){
 /* 알림 - 단순 확인 버튼 눌렀을 때 */
 $("#draw-noti-area").on("click", ".btn-alert-check", function(){
 	var notiNo = $(this).attr("data-notino")
+	var notiType = $(this).attr("data-type")
+	var groupNo = $(this).attr("data-groupno")
 	
-	if(window.location.pathname == "/lunchwb/group/list"){
-		var groupNo = $(this).attr("data-groupno")
-	
-	}else{
-		var groupNo = 0
-	}
-	
-	alertCheck(notiNo, groupNo)
+	alertCheck(notiNo, groupNo, notiType)
 })
 
 
 /* 알림 확인 처리 */
-function alertCheck(notiNo, groupNo){
+function alertCheck(notiNo, groupNo, notiType){
 	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/notice/check",
@@ -421,8 +416,15 @@ function alertCheck(notiNo, groupNo){
 			if(result == "success"){
 				$("#noti-"+notiNo).remove()
 				
-				if(window.location.pathname == "/lunchwb/group/list"){
-					location.replace("${pageContext.request.contextPath}/group/list?no="+groupNo)
+				if(window.location.pathname == "/lunchwb/group/list" && groupNo == "${map.groupNo}" && ){
+					//내가 그룹장이고 그룹페이지를 보고있는데 초대 수락알림이 왔으면 그 사람 포함한 목록을 그려) 
+					if(notiType == 2){
+						location.replace("${pageContext.request.contextPath}/group/list?no="+groupNo)
+					
+					//내가 그룹장이 아니고 리스트를 보는데 그룹에서 강퇴당했다는 알림을 확인하면 첫번째 그룹으로 보내줘
+					}else if(notiType == 5){
+						location.replace("${pageContext.request.contextPath}/group/list")
+					}
 				}
 				
 				drawNotiBadge(-1)
