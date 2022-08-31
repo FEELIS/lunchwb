@@ -164,7 +164,7 @@ function renderNoti(notiVo){
 			str += '		<p class="alert-basic">'+notiVo.sendEmail+'님이 '+notiVo.groupName+'의 초대를 수락하였습니다.</p>'
 			str += '	</div>'
 			str += '	<div class="btn-group" role="group">'
-			str += '		<button class="btn btn-primary btn-alert-check" type="button" data-notino="'+notiVo.notiNo+'">확인</button>'
+			str += '		<button class="btn btn-primary btn-alert-check" type="button" data-notino="'+notiVo.notiNo+'" data-groupno="'+notiVo.groupNo+'">확인</button>'
 			str += '	</div>'
 			break
 		
@@ -394,12 +394,20 @@ $("#draw-noti-area").on("click", ".btn-alert-reply", function(){
 /* 알림 - 단순 확인 버튼 눌렀을 때 */
 $("#draw-noti-area").on("click", ".btn-alert-check", function(){
 	var notiNo = $(this).attr("data-notino")
-	alertCheck(notiNo)
+	
+	if(window.location.pathname == "/lunchwb/group/list"){
+		var groupNo = $(this).attr("data-groupno")
+	
+	}else{
+		var groupNo = 0
+	}
+	
+	alertCheck(notiNo, groupNo)
 })
 
 
 /* 알림 확인 처리 */
-function alertCheck(notiNo){
+function alertCheck(notiNo, groupNo){
 	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/notice/check",
@@ -413,7 +421,12 @@ function alertCheck(notiNo){
 			if(result == "success"){
 				$("#noti-"+notiNo).remove()
 				
+				if(window.location.pathname == "/lunchwb/group/list"){
+					location.replace("${pageContext.request.contextPath}/group/list?no="+groupNo)
+				}
+				
 				drawNotiBadge(-1)
+				
 				
 			}else{
 				console.log("알림 확인 처리 실패")
