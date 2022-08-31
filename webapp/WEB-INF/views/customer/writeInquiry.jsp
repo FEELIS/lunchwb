@@ -14,7 +14,6 @@
 
     <!-- css -->
     <link href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="${pageContext.request.contextPath}/assets/css/notification.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/assets/css/yogiyo.css" rel="stylesheet" type="text/css">
 
 
