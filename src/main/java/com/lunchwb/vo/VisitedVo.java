@@ -15,9 +15,6 @@ public class VisitedVo {
 	///////////집계용//////
 	private int visitCount;
 	private int menuCount;
-	private int favoriteCount;
-	private String favoriteGroup;
-	
 	
 	///////// 리뷰용 ////////
 	private String menu2ndCateName;

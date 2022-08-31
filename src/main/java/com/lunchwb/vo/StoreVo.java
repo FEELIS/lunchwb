@@ -15,6 +15,10 @@ public class StoreVo {
 	private String storeOpeningHours;
 	private String storeBreaktime;
 	
+	//////// 선호 정보 //////////////////////////////
+	private int favoriteCount;
+	private String favoriteGroup;
+	
 	//////// 스페어용 ////////////////////////////////
 	private List<String> openingHours;
 	private List<String> breaktime;
@@ -54,13 +58,11 @@ public class StoreVo {
 		
 	}
 
-
 	public StoreVo(int storeNo, int menu2ndCateNo, String storeName, double storeX, double storeY,
 			String storeRoadAddress, String storeOldAddress, String storeOpeningHours, String storeBreaktime,
-			List<String> openingHours, List<String> breaktime, String menu2ndCateName, float ratingNaver,
-			float ratingKakao, int distance, int score, boolean stored, float ratingBujang, int visitCnt, int groupNo,
-			int votes, boolean vote1st) {
-		super();
+			int favoriteCount, String favoriteGroup, List<String> openingHours, List<String> breaktime,
+			String menu2ndCateName, float ratingNaver, float ratingKakao, int distance, int score, boolean stored,
+			float ratingBujang, int visitCnt, int groupNo, int votes, boolean vote1st) {
 		this.storeNo = storeNo;
 		this.menu2ndCateNo = menu2ndCateNo;
 		this.storeName = storeName;
@@ -70,6 +72,8 @@ public class StoreVo {
 		this.storeOldAddress = storeOldAddress;
 		this.storeOpeningHours = storeOpeningHours;
 		this.storeBreaktime = storeBreaktime;
+		this.favoriteCount = favoriteCount;
+		this.favoriteGroup = favoriteGroup;
 		this.openingHours = openingHours;
 		this.breaktime = breaktime;
 		this.menu2ndCateName = menu2ndCateName;
@@ -84,7 +88,6 @@ public class StoreVo {
 		this.votes = votes;
 		this.vote1st = vote1st;
 	}
-
 
 
 	////////////// getter setter ////////////////////////////////////////////////////////////////////////
@@ -308,6 +311,21 @@ public class StoreVo {
 		this.groupNo = groupNo;
 	}
 
+	public int getFavoriteCount() {
+		return favoriteCount;
+	}
+
+	public void setFavoriteCount(int favoriteCount) {
+		this.favoriteCount = favoriteCount;
+	}
+
+	public String getFavoriteGroup() {
+		return favoriteGroup;
+	}
+
+	public void setFavoriteGroup(String favoriteGroup) {
+		this.favoriteGroup = favoriteGroup;
+	}
 
 	
 	///// toString //////////////////////////////////////////////////////////////
@@ -316,11 +334,11 @@ public class StoreVo {
 		return "StoreVo [storeNo=" + storeNo + ", menu2ndCateNo=" + menu2ndCateNo + ", storeName=" + storeName
 				+ ", storeX=" + storeX + ", storeY=" + storeY + ", storeRoadAddress=" + storeRoadAddress
 				+ ", storeOldAddress=" + storeOldAddress + ", storeOpeningHours=" + storeOpeningHours
-				+ ", storeBreaktime=" + storeBreaktime + ", openingHours=" + openingHours + ", breaktime=" + breaktime
-				+ ", menu2ndCateName=" + menu2ndCateName + ", ratingNaver=" + ratingNaver + ", ratingKakao="
-				+ ratingKakao + ", distance=" + distance + ", score=" + score + ", stored=" + stored + ", ratingBujang="
-				+ ratingBujang + ", visitCnt=" + visitCnt + ", groupNo=" + groupNo + ", votes=" + votes + ", vote1st="
-				+ vote1st + "]";
+				+ ", storeBreaktime=" + storeBreaktime + ", favoriteCount=" + favoriteCount + ", favoriteGroup="
+				+ favoriteGroup + ", openingHours=" + openingHours + ", breaktime=" + breaktime + ", menu2ndCateName="
+				+ menu2ndCateName + ", ratingNaver=" + ratingNaver + ", ratingKakao=" + ratingKakao + ", distance="
+				+ distance + ", score=" + score + ", stored=" + stored + ", ratingBujang=" + ratingBujang
+				+ ", visitCnt=" + visitCnt + ", groupNo=" + groupNo + ", votes=" + votes + ", vote1st=" + vote1st + "]";
 	}
 
 	

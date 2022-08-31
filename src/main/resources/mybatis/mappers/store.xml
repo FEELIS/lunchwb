@@ -14,6 +14,8 @@
 		<result column="store_breaktime" property="storeBreaktime" />
 		<result column="visit_count" property="visitCnt" />
 		<result column="rating_bujang" property="ratingBujang" />
+		<result column="favorite_group" property="favoriteGroup" />
+		<result column="favorite_count" property="favoriteCount" />
 	</resultMap>
 	
 	
@@ -149,26 +151,49 @@
 	
 	<!-- 가게기본정보 -->
 	<select id="basicStoreInfo" parameterType="int" resultMap="StoreVo">
-		SELECT  s.store_no
-		        , store_name
-				, menu_2nd_cate_name
-				, store_road_address
-				, store_opening_hours
-		        , store_breaktime
-		        , visit_count
-		        , rating_bujang
-		FROM store s
-		     , food_2nd_category f
-		     , (SELECT COUNT(visited_no) visit_count
-		        FROM visited
-		        WHERE store_no = #{storeNo} ) 
-		     , (SELECT  ROUND(AVG(user_score), 2) rating_bujang
-		        FROM review r, visited v
-		        WHERE v.visited_no = r.visited_no
-		        AND v.user_no = r.user_no
-		        AND v.store_no = #{storeNo}) 
-		WHERE s.menu_2nd_cate_no = f.menu_2nd_cate_no
-		AND s.store_no = #{storeNo}
+		<![CDATA[
+			SELECT  s.store_no
+					, store_name
+					, menu_2nd_cate_name
+					, store_road_address
+					, store_opening_hours
+					, store_breaktime
+					, visit_count
+					, rating_bujang
+					, favorite_group
+					, favorite_count
+			FROM 	store s, food_2nd_category f
+					, (SELECT COUNT(visited_no) visit_count
+					   FROM visited
+					   WHERE store_no = #{storeNo}) 
+					, (SELECT  ROUND(AVG(user_score), 2) rating_bujang
+					   FROM review r, visited v
+			   		   WHERE v.visited_no = r.visited_no
+			   		   AND v.user_no = r.user_no
+			   		   AND v.store_no = #{storeNo}) 
+					, (SELECT favorite_group, favorite_count
+					   FROM	(SELECT favorite_group, COUNT(favorite_group) favorite_count
+							 FROM	(SELECT vt.group_no, vt.visited_date
+											, CASE WHEN COUNT(vt.user_no) > 5 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year)  < 30 THEN '20대 이하 6인 이상'
+												   WHEN COUNT(vt.user_no) > 5 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year)  >= 30 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year) < 40 THEN '30대 6인 이상'
+												   WHEN COUNT(vt.user_no) > 5 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year)  >= 40 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year) < 50 THEN '40대 6인 이상'
+												   WHEN COUNT(vt.user_no) > 5 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year)  >= 50 THEN '50대 이상 6인 이상'
+												   WHEN COUNT(vt.user_no) <= 5 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year)  < 30 THEN '20대 이하 5인 이하'
+												   WHEN COUNT(vt.user_no) <= 5 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year)  >= 30 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year) < 40 THEN '30대 5인 이하'
+												   WHEN COUNT(vt.user_no) <= 5 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year)  >= 40 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year) < 50 THEN '40대 5인 이하'
+												   WHEN COUNT(vt.user_no) <= 5 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year)  >= 50 THEN '50대 이상 5인 이하'
+											END favorite_group
+								     FROM	(SELECT TO_DATE(v.visited_date) visited_date, v.user_no, v.group_no, v.store_no, u.user_birth_year
+										 	 FROM visited v, users u
+										 	 WHERE v.store_no = #{storeNo}
+										 	 AND v.user_no = u.user_no) vt
+					   				 GROUP BY vt.group_no, vt.visited_date) dt
+							 GROUP BY favorite_group
+							 ORDER BY COUNT(favorite_group) DESC)
+					   WHERE ROWNUM = 1)
+			WHERE s.menu_2nd_cate_no = f.menu_2nd_cate_no
+			AND s.store_no = #{storeNo}
+		]]>
 	</select>	
 	
 	
