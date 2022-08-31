@@ -27,7 +27,7 @@
 }
 
 #user-alert-list .dropdown-item p {
-  word-wrap:break-word;
+  white-space: normal;
 }
 
 #user-alert-list .dropdown-item .alert-basic {
