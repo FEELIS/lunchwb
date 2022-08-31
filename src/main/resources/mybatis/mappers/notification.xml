@@ -78,8 +78,8 @@
 	
 	<!-- 그룹원 단체 알림(통보) : 그룹 이름 변경 7 -->
 	<insert id="alertOfGroupChange" parameterType="NotiVo" >
-		INSERT INTO notification
-		VALUES (SEQ_NOTI_NO.NEXTVAL, #{userNo}, 7, #{groupNo}, 0, #{alertCmt}, 0)
+			INSERT INTO notification (noti_no, user_no, noti_type, group_no, alert_comment)
+			VALUES (SEQ_NOTI_NO.NEXTVAL, #{userNo}, 7, #{groupNo}, #{alertCmt})
 	</insert>
 	
 	
