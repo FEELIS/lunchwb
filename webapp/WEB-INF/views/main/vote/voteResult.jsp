@@ -285,8 +285,28 @@ $("#vote-result-random-btn").on("click", function(){
 $(".vote-graph-store").on("click", function(){
 	var storeNo = parseInt($(this).attr("data-storeNo"))
 	
+	var groupNo = parseInt("${voteInfo.groupNo}")
+    console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+    
+    $(".store-button-area").html("")
+    
+    if ("${authUser}" != "" && "${authUser.userNo}" == "${voteInfo.voteMadeUser}" && "${topStore}".indexOf($(this).text().split(" ")[0]) != -1) {
+	    $(".store-button-area").append('<button class="btn btn-primary btn-decision-this" type="button" data-storeno="'+storeNo+'" data-bs-dismiss="modal">여기갈래요</button>')
+    }
+	
+    storeInfoOpen(storeNo, groupNo, 2)
 })
 
+
+$(".basket-table-store-name").on("click", function(){
+	var storeNo = parseInt($(this).closest(".vote-table-row").attr("data-storeNo"))
+	
+	$(".store-button-area").html("")
+	
+    if ("${authUser}" != "" && "${authUser.userNo}" == "${voteInfo.voteMadeUser}" && "${topStore}".indexOf($(this).text().split(" ")[0]) != -1) {
+	    $(".store-button-area").append('<button class="btn btn-primary btn-decision-this" type="button" data-storeno="'+storeNo+'" data-bs-dismiss="modal">여기갈래요</button>')
+    }	
+})
 
 </script>
 

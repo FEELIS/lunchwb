@@ -760,6 +760,7 @@ html, body{
 }
 
 #vote-result-graph .vote-graph-store {
+  cursor: pointer;
   margin-right: 20px;
   color: rgb(0,0,0);
   font-weight: bold;
