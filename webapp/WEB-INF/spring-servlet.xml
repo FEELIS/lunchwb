@@ -93,6 +93,7 @@
         	<mvc:mapping path="/group/**" />
         	<mvc:mapping path="/genie/review" />
         	<mvc:mapping path="/random/roulette" />
+        	<mvc:mapping path="/customer/***" />
         	<bean class="com.lunchwb.interceptor.AuthenticationInterceptor" />      	
 		</mvc:interceptor>
 		
