@@ -271,6 +271,10 @@ function renderNoti(notiVo){
 $("#draw-noti-area").on("click", ".btn-alert-invite-ok", function(){
 	var userNo = "${authUser.userNo}"
 	
+	console.log("초대 수락 버튼 누름")
+	
+	return false 
+	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/group/count",
 		type : "post",
@@ -319,7 +323,8 @@ function alertInviteOk(notiVo){
 			if(result == "success"){
 				var notiNo = notiVo.notiNo
 				$("#noti-"+notiNo).remove()
-				countNoti = countNoti - 1
+				
+				drawNotiBadge(-1)
 				
 			}else{
 				console.log("초대 수락 처리 실패")
@@ -356,7 +361,8 @@ $("#draw-noti-area").on("click", ".btn-alert-invite-reject", function(){
 			if(result == "success"){
 				var notiNo = notiVo.notiNo
 				$("#noti-"+notiNo).remove()
-				countNoti = countNoti - 1
+
+				drawNotiBadge(-1)
 				
 			}else{
 				console.log("초대 거절 처리 실패")
@@ -399,7 +405,8 @@ function alertCheck(notiNo){
 			
 			if(result == "success"){
 				$("#noti-"+notiNo).remove()
-				countNoti = countNoti - 1
+				
+				drawNotiBadge(-1)
 				
 			}else{
 				console.log("알림 확인 처리 실패")
