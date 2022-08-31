@@ -859,10 +859,12 @@ function modalSortOfStore(storeNo, k){
 			// 바구니? ${basket.curr_basket_group}: 선택된 가게 리스트
 			console.log("basket: " + basket)
 			console.log("basket(curr_group): " + basket[curr_basket_group])
+			
 			//장바구니 안에 가게가 있으면 있는 가게인지 검사 해줘야해
 			if(basket[curr_basket_group] != null && basket[curr_basket_group] != "" && basket[curr_basket_group] != []){
 				console.log("장바구니에 추가된 가게 있음")
 				for(var i=0; i<basket[curr_basket_group].length; i++){
+					
 					//장바구니에 있는 가게만 검사했어
 					if(basket[curr_basket_group][i].storeNo == storeNo){
 						console.log("바구니 가게: "+basket[curr_basket_group][i].storeNo)
@@ -901,11 +903,22 @@ function modalSortOfStore(storeNo, k){
 			break
 		
 		case 4:
-		// 블랙리스트에서 블랙할 가게 검색(없음 > 추가)
+		// 블랙리스트에서 블랙할 가게 검색(없음 > 추가 : 추가한 가게는 블랙제거로)
 			//그룹장만 가능(애초에 접근자체가 그룹장만 되는데)
 			if("${authUser.userNo}" == "${map.groupLeader}"){
 				
-				$(".store-button-area").append('<button class="btn btn-light btn-add-black" type="button" data-storeNo="'+storeNo+'">블랙추가</button>')
+				//블랙으로 추가 했는지 배열에서 검사
+				for(var i=0; i<blackAdded.length; i++){
+					//블랙 걸었어
+					if(blackAdded[i] == storeNo){
+						addModalBlackBtn(storeNo, "Y")
+						break
+					
+					//마지막까지 없었어
+					}else if(i == blackAdded.length - 1){
+						addModalBlackBtn(storeNo, "N")
+					}
+				}
 			}
 			
 		//case 5:
@@ -1171,9 +1184,11 @@ function isBlack(blackVo, bno){
 				case 0:
 					//방문메인ASIDE
 					drawBlackBtn(result)
+					break
 				case 1:
 					//방문메인 가게모달창
 					addModalBlackBtn(blackVo.storeNo, result)
+					break
 			}
 		},
 		error : function(XHR, status, error) {
