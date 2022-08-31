@@ -122,6 +122,7 @@
 </div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=e74b599be710b798192fd5221284718a"></script> 
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 <script type="text/javascript">
 
@@ -162,17 +163,17 @@ $("#modal-curr-location-btn").on("click", function(){
 
 
 // 직접 주소 검색하기
-$(".location-search-bar").on("click", function(){			
-	DaumPostcode()
+$(".location-search-bar").on("click", async function(){			
+	await DaumPostcode()
 })
 
 
 // Daum 주소 api 불러오는 함수
-   function DaumPostcode() {
+   async function DaumPostcode() {
       new daum.Postcode({
           oncomplete: function(data) {
         	  // 검색해서 클릭한 주소로 모달에 표시되는 주소도 변경
-              $("#modal-curr-location").text(data.jibunAddress)
+              $("#modal-curr-location").text(data.autoJibunAddress)
           }
       }).open()
    }
