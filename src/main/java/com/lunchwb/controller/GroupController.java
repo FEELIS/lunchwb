@@ -60,6 +60,10 @@ public class GroupController {
 		
 		Map<String, Object> map = groupService.groupList(authUser, groupNo);
 		
+		if(map.get("groupName") == null || map.get("groupName") == "") {
+			return "error/403";
+		}
+		
 		model.addAttribute("map", map);
 		
 		//내 그룹 없음
