@@ -9,8 +9,6 @@
 		<result column="group_name" property="groupName" />
 		<result column="store_no" property="storeNo" />
 		<result column="menu_no" property="menuNo" />
-		<result column="favorite_group" property="favoriteGroup" />
-		<result column="favorite_count" property="favoriteCount" />
 		<result column="visited_date" property="visitedDate" />
 		<result column="menu_1st_cate_Name" property="menu1stCateName" />
 		<result column="menu_2nd_cate_Name" property="menu2ndCateName" />
