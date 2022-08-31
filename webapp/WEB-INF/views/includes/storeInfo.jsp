@@ -257,15 +257,6 @@ $("#basket-table").on("click", ".basket-table-store-name", function(){
    }
 })
 
-/* 실험용 */
-$("#test-storeInfo").on("click", function(){
-	var storeNo = $(this).data("storeno")
-	var groupNo = curr_basket_group
-	console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
-	
-	storeInfoOpen(storeNo, groupNo, 1)
-})
-
 
 /* 가게 고정 */
 /* 리뷰 메인 가게정보에서 조회할 때 */
@@ -341,24 +332,36 @@ $("#calendar-area").on("click", ".show-menu", function(){
 //페이지 구분 두고 나중에 마지막까지 안쓰면 다 지워버리겠어
 /* 모달에서 > 다시 다른 가게 정보 조회(버튼) */
 $("#modal-store").on("click", ".other-store-btn", function(){
-	//모달에서 다른 모달로 넘어가기 : 페이지 상관없이 불러올 변수는 동일
-	var storeNo = $(this).attr("data-no")
-	var groupNo = $(this).attr("data-groupno")
-	var sortNo = $(this).attr("data-sortno")
-	console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
+
+	if(typeof indexJSP === 'undefined'){
+		console.log("투표 결과: 다른 가게리스트클릭 > 아무일도 잃어나지 않음")
+	}else{
 	
-	storeInfoOpen(storeNo, groupNo, Number(sortNo))
+		//모달에서 다른 모달로 넘어가기 : 페이지 상관없이 불러올 변수는 동일
+		var storeNo = $(this).attr("data-no")
+		var groupNo = $(this).attr("data-groupno")
+		var sortNo = $(this).attr("data-sortno")
+		console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
+		
+		storeInfoOpen(storeNo, groupNo, Number(sortNo))
+	}
+	
 })
 
 $("#modal-all-menu").on("click", ".other-store-btn", function(){
-	//모달에서 다른 모달로 넘어가기 : 페이지 상관없이 불러올 변수는 동일
-	var storeNo = $(this).attr("data-no")
-	var groupNo = $(this).attr("data-groupno")
-	var sortNo = $(this).attr("data-sortno")
-	console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
 	
+	if(typeof indexJSP === 'undefined'){
+		console.log("투표 결과: 다른 가게리스트클릭 > 아무일도 잃어나지 않음")
+	}else{
 	
-	storeInfoOpen(storeNo, groupNo, Number(sortNo))
+		//모달에서 다른 모달로 넘어가기 : 페이지 상관없이 불러올 변수는 동일
+		var storeNo = $(this).attr("data-no")
+		var groupNo = $(this).attr("data-groupno")
+		var sortNo = $(this).attr("data-sortno")
+		console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
+		
+		storeInfoOpen(storeNo, groupNo, Number(sortNo))
+	}
 })
  
  
