@@ -30,7 +30,7 @@
                         </div>
                         <div>
                         	<span class="fw-bold text-primary modalStoreVisitCnt"></span>
-                        	<span> / 40대 그룹 선호 가게 "여기 해야함"</span>
+                        	<span class="modalStoreFavorite"></span>
                         </div>
                     </div>
                     <div class="text-end d-inline-block store-info-right">
@@ -111,7 +111,7 @@
                        	</div>
                         <div>
                         	<span class="fw-bold text-primary modalStoreVisitCnt"></span>
-                        	<span> / 40대 그룹 선호 가게 "여기 해야함"</span>
+                        	<span class="modalStoreFavorite"></span>
                         </div>
                     </div>
                     <div class="text-end d-inline-block store-info-right">
@@ -172,7 +172,7 @@
                         </div>
                         <div>
 	                        <span class="fw-bold text-primary modalStoreVisitCnt"></span>
-	                        <span> / 40대 그룹 선호 가게 "여기 해야함"</span>
+	                        <span class="modalStoreFavortie"></span>
                         </div>
                     </div>
                     <div class="text-end d-inline-block store-info-right">
@@ -407,6 +407,7 @@ function storeBasicInfo(storeNo){
 			$(".modalStoreCate").text("|   " + storeMap.storeVo.menu2ndCateName + "   |")
 			$(".modalStoreAddress").text(storeMap.storeVo.storeRoadAddress)
 			$(".modalStoreVisitCnt").text("여기갈래요 "+ storeMap.storeVo.visitCnt +"회")
+			$(".modalStoreFavorite").text(" / "+storeMap.storeVo.favoriteGroup+" 그룹 선호 가게("+storeMap.storeVo.favoriteCount+"회)")
 			$(".modalStoreScore").text("(" + storeMap.storeVo.ratingBujang + "/5)")
 			
 			modalStoreStar(storeMap.storeVo.ratingBujang, 0)
