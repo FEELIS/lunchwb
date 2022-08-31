@@ -329,4 +329,12 @@
 			AND    TO_CHAR(vote_end_time, 'YY/MM/DD') = TO_CHAR(SYSDATE, 'YY/MM/DD')
 		]]>
 	</select>
+	
+	
+	<!--  자정에 투표 삭제  -->
+	<delete id="deleteVoteMidnight">
+		<![CDATA[
+			DELETE vote
+		]]>
+	</delete>
 </mapper>
