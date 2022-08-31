@@ -363,6 +363,7 @@ $(".form-check-input").on("click", function(){
 				//초대중
 				}else if(result != "can"){
 					alert("이미 부장님을 초대중입니다. 초대중에는 변경이 불가합니다.")
+					$(".form-check-input").prop("checked", false)
 				}
 				
 			}, 
