@@ -311,8 +311,8 @@ console.log(groupNo+"번 그룹")
 
 
 //그룹원초대 > 엔터
-var invt = document.getElementById("groupmem-invt")
-invt.addEventListener("keyup", function (event) {
+var inputInvt = document.getElementById("groupmem-invt")
+inputInvt.addEventListener("keyup", function (event) {
 	if (event.keyCode === 13) {
 		event.preventDefault();
 		document.getElementById("btn-invite").click()
