@@ -437,9 +437,6 @@
 
 <script type="text/javascript">
 
-//방문 메인에서 (모달종류체크용)
-visitedJSP = true
-
 const visitedVo = "${visitedMap.visitedVo}"
 const myVisit = "${visitedMap.relVo}"
 const todayReview = "${visitedMap.reviewVo}"
@@ -450,15 +447,18 @@ if(todayReview != null && todayReview != ""){
 	console.log("오늘의 리뷰 정보" + todayReview)
 }
 
-$(document).ready(function(){
-	drawStoreStar()
-	drawReviewStar()
-	visitedBlack()
+$(document).ready(async function(){
+	//방문가게별점그리기
+	await drawStoreStar()
+	//오늘리뷰별점그리기
+	await drawReviewStar()
+	//방문가게블랙여부
+	await visitedBlack()
 })
 
 
 //오늘 방문한 곳 전체 별점 그리기
-function drawStoreStar(){
+async function drawStoreStar(){
 	var starScore = "${visitedMap.visitedVo.ratingBujang}"
 	
 	var str = ''
@@ -478,7 +478,7 @@ function drawStoreStar(){
 
 
 //오늘 방문한 곳 리뷰 별점 그리기
-function drawReviewStar(){
+async function drawReviewStar(){
 	var review = "${visitedMap.reviewVo}"
 	if(review != null && review != ""){
 		var userScore = "${visitedMap.reviewVo.userScore}"
@@ -494,7 +494,7 @@ function drawReviewStar(){
 
 
 //방문 가게 블랙리스트 여부
-function visitedBlack(){
+async function visitedBlack(){
 	var blackVo = {
 		storeNo : "${visitedMap.visitedVo.storeNo}",
 		groupNo : "${visitedMap.visitedVo.groupNo}" 
@@ -692,6 +692,35 @@ $("#review-submit").on("submit", function(){
 	
 	return true
 })
+
+
+//카카오지도 API 불러오기
+async function callMap() {
+	// 지도가 표시될 구역
+	var mapDiv = document.getElementById('kakaoMap')
+	
+	// 지도의 기본 설정
+	var mapOption = {
+		center: new kakao.maps.LatLng(gpsVo.gpsY, gpsVo.gpsX),
+		level: 3		
+	}
+	
+	// 지도 표시하기, 축소 최대 레벨 설정
+	map = new kakao.maps.Map(mapDiv, mapOption)
+	map.setMaxLevel(4)
+	
+	
+	// 현재 위치 마커 표시하기
+	var currMarker = new kakao.maps.Marker({
+		position: new kakao.maps.LatLng(gpsVo.gpsY, gpsVo.gpsX),
+		image: new kakao.maps.MarkerImage(
+			"${pageContext.request.contextPath}/assets/img/markers/currMarker.png",
+			new kakao.maps.Size(40, 40)
+		)
+	})
+	
+	currMarker.setMap(map)
+}
 
 
 
