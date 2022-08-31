@@ -487,9 +487,11 @@ function invt(groupVo){
 			$(".form-check-input").prop("checked", false)
 
 			if(result == "success"){
+				
+				alert("초대장을 보냈습니다")
+				
 				var inviteCount = $("#inviteCount").text()
 				$("#inviteCount").text(Number(inviteCount)+1)
-
 				
 				if(bossCheck == 1){
 					$(".group-bujang").html("")
