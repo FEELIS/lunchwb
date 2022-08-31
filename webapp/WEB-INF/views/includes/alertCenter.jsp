@@ -208,7 +208,7 @@ function renderNoti(notiVo){
 			str += '		<p class="alert-basic">'+notiVo.groupName+'의 그룹장이 되었습니다.</p>'
 			str += '	</div>'
 			str += '	<div class="btn-group" role="group">'
-			str += '		<button class="btn btn-primary btn-alert-check" type="button" data-notino="'+notiVo.notiNo+'">확인</button>'
+			str += '		<button class="btn btn-primary btn-alert-check" type="button" data-type="6" data-notino="'+notiVo.notiNo+'">확인</button>'
 			str += '	</div>'
 			break
 		
@@ -416,9 +416,10 @@ function alertCheck(notiNo, groupNo, notiType){
 			if(result == "success"){
 				$("#noti-"+notiNo).remove()
 				
-				if(window.location.pathname == "/lunchwb/group/list" && groupNo == "${map.groupNo}" && ){
-					//내가 그룹장이고 그룹페이지를 보고있는데 초대 수락알림이 왔으면 그 사람 포함한 목록을 그려) 
-					if(notiType == 2){
+				if(window.location.pathname == "/lunchwb/group/list" && groupNo == "${map.groupNo}"){
+					//내가 그룹장이고 그룹페이지를 보고있는데 초대 수락알림이 왔으면 그 사람 포함한 목록을 그려)
+					//그룹원이었는데 그룹장이 됐다는 알림을 확인했어)
+					if(notiType == 2 || notiType == 6){
 						location.replace("${pageContext.request.contextPath}/group/list?no="+groupNo)
 					
 					//내가 그룹장이 아니고 리스트를 보는데 그룹에서 강퇴당했다는 알림을 확인하면 첫번째 그룹으로 보내줘
