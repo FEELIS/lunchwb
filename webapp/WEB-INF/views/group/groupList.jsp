@@ -270,7 +270,7 @@
             </div>
             <div class="modal-footer-custom">
            		<a href="${pageContext.request.contextPath}/group/leave?no=${map.groupNo}&lead=${map.leader}"><button class="btn btn-primary" type="submit">확인</button></a>
-           		<button class="btn btn-light" type="button">취소</button>
+           		<button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button>
             </div>
         </div>
     </div>
@@ -310,24 +310,27 @@ var groupNo = $("#thisGpNo").val()
 console.log(groupNo+"번 그룹")
 
 
-//그룹원초대 > 엔터
-var inputInvt = document.getElementById("groupmem-invt")
-inputInvt.addEventListener("keyup", function (event) {
-	if (event.keyCode === 13) {
-		event.preventDefault();
-		document.getElementById("btn-invite").click()
-	}
-})
+if("${authUser.userNo}" == "${map.leader}"){
 
-
-//그룹원추가 > 엔터
-var inputAdd = document.getElementById("groupmem-add")
-inputAdd.addEventListener("keyup", function (event) {
-	if (event.keyCode === 13) {
-		event.preventDefault();
-		document.getElementById("btn-add").click()
-	}
-})
+	//그룹원초대 > 엔터
+	var inputInvt = document.getElementById("groupmem-invt")
+	inputInvt.addEventListener("keyup", function (event) {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+			document.getElementById("btn-invite").click()
+		}
+	})
+	
+	
+	//그룹원추가 > 엔터
+	var inputAdd = document.getElementById("groupmem-add")
+	inputAdd.addEventListener("keyup", function (event) {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+			document.getElementById("btn-add").click()
+		}
+	})
+}
 
 
 //그룹이름변경 > 엔터
