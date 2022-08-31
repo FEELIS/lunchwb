@@ -173,7 +173,12 @@ $(".location-search-bar").on("click", async function(){
       new daum.Postcode({
           oncomplete: function(data) {
         	  // 검색해서 클릭한 주소로 모달에 표시되는 주소도 변경
-              $("#modal-curr-location").text(data.autoJibunAddress)
+        	  var daumAddress = data.jibunAddress
+        	  
+        	  if (daumAddress == "") {
+        		  daumAddress = data.autoJibunAddress
+        	  }
+              $("#modal-curr-location").text(daumAddress)
           }
       }).open()
    }
