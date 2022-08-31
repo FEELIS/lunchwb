@@ -54,8 +54,7 @@ function notiCount(){
 				
 			}else{
 				$("#user-alert .badge-counter").text(notiCnt)
-				
-			}
+			}	
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
@@ -68,18 +67,33 @@ function notiCount(){
 //알림 개수 뱃지
 function drawNotiBadge(notiCnt){
 	countNoti = countNoti + notiCnt
-
+	
 	if(countNoti > 3){
 		$("#user-alert .badge-counter").text("3+")
 	
 	}else if(countNoti == 0){
 		$("#user-alert .badge-counter").text("")
 		
+		noAlert()
+		
 	}else{
 		$("#user-alert .badge-counter").text(countNoti)
 		
 	}
 	
+}
+
+
+function noAlert(){
+	
+	var str = ''
+		str = '<li id="noti-0" class="dropdown-item d-flex align-items-center">'
+		str += '	<div class="text-center">'
+		str += '		알림이 없습니다'
+		str += '	</div>'
+		str += '</li>'
+		
+	$("#draw-noti-area").append(str)
 }
 
 
@@ -99,7 +113,11 @@ $("#user-alert").on("click", function(){
 		dataType : "json",
 		
 		success : function(notiList){
-			drawNotiBadge(notiList.length)
+			
+			if(notiList.length > 0){
+				$("#noti-0").remove()
+				drawNotiBadge(notiList.length, 1)
+			}
 			
 			for(var i=0; i<notiList.length; i++){
 				renderNoti(notiList[i])
@@ -131,9 +149,9 @@ function renderNoti(notiVo){
 			str += '	</div>'
 			str += '	<div class="btn-group" role="group">'
 			str += '		<button class="btn btn-primary btn-alert-ok btn-alert-invite-ok" type="button" data-type="1" data-notino="'+notiVo.notiNo+'" data-groupno="'+notiVo.groupNo+'"'
-			str += '			data-leader="'+notiVo.groupLeader+'">수락</button>'
+			str += '			data-leader="'+notiVo.sendUser+'">수락</button>'
 			str += '		<button class="btn btn-primary btn-alert-opposite btn-alert-invite-reject" type="button" data-type="1" data-notino="'+notiVo.notiNo+'" data-groupno="'+notiVo.groupNo+'"'
-			str += '			data-leader="'+notiVo.groupLeader+'">거절</button>'
+			str += '			data-leader="'+notiVo.sendUser+'">거절</button>'
 			str += '	</div>'
 			break
 
@@ -236,9 +254,9 @@ function renderNoti(notiVo){
 			str += '	</div>'
 			str += '	<div class="btn-group" role="group">'
 			str += '		<button class="btn btn-primary btn-alert-ok btn-alert-invite-ok" type="button" data-type="10" data-notino="'+notiVo.notiNo+'" data-groupno="'+notiVo.groupNo+'"'
-			str += '			data-leader="'+notiVo.groupLeader+'">수락</button>'
+			str += '			data-leader="'+notiVo.sendUser+'">수락</button>'
 			str += '		<button class="btn btn-primary btn-alert-opposite btn-alert-invite-reject" type="button" data-type="10" data-notino="'+notiVo.notiNo+'" data-groupno="'+notiVo.groupNo+'"'
-			str += '			data-leader="'+notiVo.groupLeader+'">거절</button>'
+			str += '			data-leader="'+notiVo.sendUser+'">거절</button>'
 			str += '	</div>'
 			break
 	}
