@@ -346,6 +346,7 @@ public class UserController {
 		UserVo loginUser = (UserVo) session.getAttribute("authUser");
 
 		if (loginUser != null) {
+			session.setAttribute("basketGroup", basketService.getBasketGroup(loginUser.getUserNo()));
 			return "redirect:/lunchwb";
 		} else {
 			return "user/joinForm";
