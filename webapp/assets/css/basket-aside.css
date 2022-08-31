@@ -527,3 +527,8 @@
   margin-left: 10px;
 }
 
+#kindComment {
+  font-weight: normal !important;
+  color: var(--bs-gray-700) !important;
+  font-size: 13px !important;
+}

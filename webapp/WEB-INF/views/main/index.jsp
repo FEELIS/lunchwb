@@ -98,7 +98,10 @@
             </div>
             
             <div class="modal-body">
-                <div><span>출발 위치를 선택해주세요.</span>
+                <div>
+                	<span>출발 위치를 선택해주세요.</span>
+                	<span id="kindComment">(지도에서 현 위치 마커를 클릭하면 직접 위치를 변경할 수 있습니다.)</span>
+                	
                     <div id="modal-curr-location-box">
                     	<span class="emphasize-blue">현재 설정 위치:&nbsp;</span>
                     	<span id="modal-curr-location">${curr_location.address}</span>
