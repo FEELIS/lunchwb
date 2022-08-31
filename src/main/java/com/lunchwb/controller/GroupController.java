@@ -115,7 +115,9 @@ public class GroupController {
 		
 		///////// Basket /////////////////////
 		List<GroupVo> basketGroup = (List<GroupVo>)session.getAttribute("basketGroup");
-		basketGroup = basketService.basketGroupAdd(basketGroup, groupVo);
+		if(basketGroup != null) {
+			basketGroup = basketService.basketGroupAdd(basketGroup, groupVo);
+		}
 
 		session.setAttribute("basketGroup", basketGroup);
 		
