@@ -271,11 +271,13 @@ function renderNoti(notiVo){
 
 /* 초대-수락 버튼을 눌렀을 때 */
 $("#draw-noti-area").on("click", ".btn-alert-invite-ok", function(){
+	console.log("초대 수락 버튼 누름")
 	var userNo = "${authUser.userNo}"
 	
-	console.log("초대 수락 버튼 누름")
-	
-	return false 
+	var notiType = $(this).attr("data-type")
+	var notiNo = $(this).attr("data-notino")  //삭제용+부장님 구분용(db/view)
+	var groupLeader = $(this).attr("data-leader")
+	var groupNo = $(this).attr("data-groupno")
 	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/group/count",
@@ -284,19 +286,19 @@ $("#draw-noti-area").on("click", ".btn-alert-invite-ok", function(){
 		data : JSON.stringify(userNo),
 		dataType : "json",
 		
-		ssuccess : function(groupCount){
+		success : function(groupCount){
 			
 			if(groupCount > 3){
 				alert("수락 불가: 그룹은 4개까지 보유가능합니다.")
 			
 			}else{
 				var notiVo = {
-					notiType : $(this).attr("data-type"),
-					notiNo : $(this).attr("data-notino"),  //삭제용(db/view)
-					userNo : $(this).attr("data-leader"),
-					groupNo : $(this).attr("data-groupno"),
-					sendUser : "${authUser.userNo}",
-					groupOrder : groupCount+1 //그룹원 추가용
+					notiType : notiType,
+					notiNo : notiNo,  //삭제용+부장님 구분용(db/view)
+					userNo : groupLeader,	//확인알림 받을 사람
+					groupNo : groupNo,
+					sendUser : "${authUser.userNo}", //내가 초대 받았다고
+					groupOrder : groupCount+1 //그룹 추가 > 순서조정
 				}
 				
 				alertInviteOk(notiVo)
@@ -312,6 +314,7 @@ $("#draw-noti-area").on("click", ".btn-alert-invite-ok", function(){
 
 /* 초대 수락 */
 function alertInviteOk(notiVo){
+	console.log(notiVo)
 	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/notice/group/invite/ok",
@@ -321,6 +324,7 @@ function alertInviteOk(notiVo){
 		dataType : "json",
 		
 		ssuccess : function(result){
+			console.log(result + ": 초대수락 결과")
 			
 			if(result == "success"){
 				var notiNo = notiVo.notiNo
