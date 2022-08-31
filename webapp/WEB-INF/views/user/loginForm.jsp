@@ -37,12 +37,19 @@
                                         <h4 class="text-dark mb-4 h3 input-box fix-380">로그인</h4>
                                     </div>
                                     <form method="post" action="${pageContext.request.contextPath}/login" class="user fix-380">
-                                        <div class="mb-3 fix-380"><input class="form-control form-control-user " type="email" id="InputLoginEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="userEmail"></div>
-                                        <div class="mb-3 fix-380"><input class="form-control form-control-user " type="password" id="inputLoginPassword" placeholder="비밀번호를 입력해주세요." name="userPassword"></div>
+                                        <div class="mb-3 fix-380">
+                                        	<input class="form-control form-control-user " type="email" id="InputLoginEmail" aria-describedby="emailHelp" placeholder="이메일을 입력해주세요." name="userEmail">
+                                       	</div>
+                                        <div class="mb-3 fix-380">
+                                        	<input class="form-control form-control-user " type="password" id="inputLoginPassword" placeholder="비밀번호를 입력해주세요." name="userPassword">
+                                        </div>
                                         <div class="mb-3 fix-380">
                                             <div class="custom-control custom-checkbox small">
                                                 <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="autoLogin" name = "autoLogin"><label class="form-check-label custom-control-label input-box" for="autoLogin">로그인 상태 유지</label></div>
                                             </div>
+                                            <c:if test="${param.result eq 'fail' }">
+	                                    		<span class="check-text" id="msgErrorName">로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.</span>
+											</c:if>
                                         </div><button class="btn btn-primary d-block btn-user w-100 " id="btn-login" type="submit">로그인</button>
                                         <hr>
                                         <a class="btn btn-primary d-block btn-naver btn-user w-100 mb-2 fix-380" role="button" href="${naverUrl}">네이버 아이디로 로그인</a>
