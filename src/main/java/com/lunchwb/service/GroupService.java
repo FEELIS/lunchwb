@@ -211,19 +211,17 @@ public class GroupService {
 
 			//그룹장 제외(본인이 바꿨으니까) 멤버원 알림 전송 (noti_type = 7)
 			List<Integer> groupMembers = groupDao.groupMembersForAlert(groupVo.getGroupNo());
-			System.out.println("groupMembers "+groupMembers);
+			
 			for(int i=0; i<groupMembers.size(); i++) {
 				NotificationVo notiVo = new NotificationVo();
 				notiVo.setUserNo(groupMembers.get(i));
 				notiVo.setGroupNo(groupVo.getGroupNo());
-				System.out.println("groupmem notiVo: " + notiVo);
 				//확인 전에 여러번 변경 되는 경우 고려
 				String alertCmt = groupVo.getBeforeGroupName()+"의 이름이 "+groupVo.getGroupName()+"로 변경되었습니다.";
 				notiVo.setAlertCmt(alertCmt);
 
 				notiDao.alertOfGroupChange(notiVo);
 			}
-			
 		}
 		
 		return result;
