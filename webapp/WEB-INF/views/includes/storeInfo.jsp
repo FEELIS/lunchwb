@@ -936,15 +936,15 @@ $("#modal-all-menu").on("click", ".btn-add-store-basket", function(){
 //장바구니 점심 후보 삭제
 $("#modal-store").on("click", ".btn-delete-store-basket", function(){
 	var storeNo = $(this).attr("data-storeNo") 
-	deleteSessionBasketGroup(Number(storeNo))
+	deleteBasketItem(Number(storeNo)) 
 })
 $("#modal-reviews").on("click", ".btn-delete-store-basket", function(){
 	var storeNo = $(this).attr("data-storeNo") 
-	deleteSessionBasketGroup(Number(storeNo))
+	deleteBasketItem(Number(storeNo)) 
 })
 $("#modal-all-menu").on("click", ".btn-delete-store-basket", function(){
 	var storeNo = $(this).attr("data-storeNo") 
-	deleteSessionBasketGroup(Number(storeNo))
+	deleteBasketItem(Number(storeNo))
 })
 
 
