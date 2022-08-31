@@ -166,4 +166,9 @@ public class VoteDao {
 	public int canMakeVote(int groupNo) {
 		return sqlSession.selectOne("vote.canMakeVote", groupNo);
 	}
+	
+	// 자정 투표 삭제
+	public int deleteVoteMidnight() {
+		return sqlSession.delete("vote.deleteVoteMidnight");
+	}
 }

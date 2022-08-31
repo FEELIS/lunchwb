@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -257,5 +258,11 @@ public class VoteController {
 		voteService.finishVote(voteNo);
 		
 		return "redirect:/";
+	}
+	
+	/* --------------------- 매일 00시 00분 15초 db vote 삭제 ----------------------------------------------------- */
+	@Scheduled(cron = "15 0 0 * * *") 
+	public void deleteVoteMidnight() {
+		voteService.deleteVoteMidnight();
 	}
 }
