@@ -119,7 +119,7 @@
 	      
 	      	<c:if test="${authUser.userNo == voteInfo.voteMadeUser}">
 		        <div id="vote-leader-btn-area" class="d-xxl-flex justify-content-center align-items-center">
-		        	<c:if test="${userState != 99}">
+		        	<c:if test="${userState < 3}">
 		        		<button id="vote-leader-modify-btn" class="btn btn-primary d-flex d-xxl-flex justify-content-center align-items-center align-content-center" type="button">투표 수정하기</button>
 		        	</c:if>
 		        	<button id="vote-leader-cancel-btn" class="btn btn-danger d-flex d-xxl-flex justify-content-center align-items-center align-content-center" type="button">투표 취소하기</button>
