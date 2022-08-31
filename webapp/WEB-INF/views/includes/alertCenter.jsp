@@ -314,7 +314,7 @@ $("#draw-noti-area").on("click", ".btn-alert-invite-ok", function(){
 
 /* 초대 수락 */
 function alertInviteOk(notiVo){
-	console.log(notiVo)
+	var notiNo = notiVo.notiNo
 	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/notice/group/invite/ok",
@@ -323,8 +323,7 @@ function alertInviteOk(notiVo){
 		data : JSON.stringify(notiVo),
 		dataType : "json",
 		
-		ssuccess : function(result){
-			console.log(result + ": 초대수락 결과")
+		success : function(result){
 			
 			if(result == "success"){
 				var notiNo = notiVo.notiNo
@@ -347,6 +346,8 @@ function alertInviteOk(notiVo){
 
 /* 초대-거절 버튼을 눌렀을 때 */
 $("#draw-noti-area").on("click", ".btn-alert-invite-reject", function(){
+	console.log("초대 거절 버튼 누름")
+	
 	var notiVo = {
 		notiType : $(this).attr("data-type"),
 		notiNo : $(this).attr("data-notino"), 
