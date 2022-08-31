@@ -50,9 +50,9 @@
                             	<span class="d-inline-block"></span>
                             </div>
                             <div class="text-center img-paging-icon">
-                            	<i id="imgIcon-1" class="fas fa-circle visually-hidden"></i>
+                            	<i id="imgIcon-0" class="fas fa-circle visually-hidden"></i>
+                            	<i id="imgIcon-1" class="far fa-circle visually-hidden"></i>
                             	<i id="imgIcon-2" class="far fa-circle visually-hidden"></i>
-                            	<i id="imgIcon-3" class="far fa-circle visually-hidden"></i>
                             </div>
                         </div>
                         <div class="d-inline-block review-area" style="height: 256px;">
@@ -238,6 +238,8 @@
 
 
 <script type="text/javascript">
+
+let storeImgName = []
 
 /* 메인-가게바구니에서 조회할 때 */
 $("#basket-table").on("click", ".basket-table-store-name", function(){
@@ -426,19 +428,21 @@ function storeBasicInfo(storeNo){
 				
 			}else{
 				for(var i=0; i<storeMap.imgList.length; i++){
-					if(i==0){
-						$(".img-area span").html('<img id="proImg-1" data-imgno="1" data-end="'+storeMap.imgList.length+'" src="${pageContext.request.contextPath}/upload/'+storeMap.imgList[0]+'">')	
-						document.getElementById("imgIcon-1").className = "fas fa-circle"
+					storeImgName.push(storeMap.imgList[i])
 					
-					}else if(i==1){
-						$(".img-area span").append('<img id="proImg-2" class="visually-hidden" data-imgno="2" data-end="'+storeMap.imgList.length+'" src="${pageContext.request.contextPath}/upload/'+storeMap.imgList[1]+'">')	
-						document.getElementById("imgIcon-2").className = "far fa-circle"
-
+					if(i == 0){
+						$(".img-area span").html('<img id="proImg" data-imgno="1" data-end="'+storeMap.imgList.length+'" src="${pageContext.request.contextPath}/upload/'+storeMap.imgList[0]+'">')	
+						document.getElementById("imgIcon-0").className = "fas fa-circle"
+					
 					}else{
-						$(".img-area span").append('<img id="proImg-3" class="visually-hidden" data-imgno="3" data-end="'+storeMap.imgList.length+'" src="${pageContext.request.contextPath}/upload/'+storeMap.imgList[2]+'">')	
-						document.getElementById("imgIcon-3").className = "far fa-circle"
+						document.getElementById("imgIcon-"+i).className = "far fa-circle"
 					}
 				}
+				
+				console.log(storeImgName)
+				
+				
+				
 			}
 			
 			//가게 정보창
@@ -594,20 +598,32 @@ function modalStoreTime(storeTime, opt){
 
 /* 가게 이미지 클릭 > 다음 이미지로 전환 */
 $("#store-about").on("click", "img", function(){
-	var imgNo = $(this).attr("data-imgno")
-	var endNo = $(this).attr("data-end")
-	
-	document.getElementById("proImg-"+imgNo).className = "visually-hidden"
-	document.getElementById("imgIcon-"+imgNo).className = "far fa-circle"
+	var imgNo = Number($(this).attr("data-imgno"))
+	var endNo = Number($(this).attr("data-end"))
 	
 	//마지막 이미지면 첫번째꺼로 
 	if(imgNo == endNo){
-		document.getElementById("proImg-1").className = ""
-		document.getElementById("imgIcon-1").className = "fas fa-circle"
+		$("#proImg").attr("src", "${pageContext.request.contextPath}/upload/"+storeImgName[0])
+		$("#proImg").attr("data-imgno", 1)
+		document.getElementById("imgIcon-0").className = "fas fa-circle"
+		
+		for(var i=1; i<endNo; i++){
+			document.getElementById("imgIcon-"+i).className = "far fa-circle"
+		}
 	
 	}else{
-		document.getElementById("proImg-"+(imgNo+1)).className = ""
-		document.getElementById("imgIcon-"+(imgNo+1)).className = "fas fa-circle"
+		$("#proImg").attr("src", "${pageContext.request.contextPath}/upload/"+storeImgName[imgNo])
+		$("#proImg").attr("data-imgno", imgNo+1)
+		
+		for(var i=0; i<endNo; i++){
+			if(i == imgNo){
+				document.getElementById("imgIcon-"+i).className = "fas fa-circle"
+				
+			}else{
+				document.getElementById("imgIcon-"+i).className = "far fa-circle"
+			}
+		}
+		
 	}
 	
 })
@@ -812,22 +828,13 @@ function drawOtherStores(storeNo, groupNo, sortNo){
 					modalStoreStar(otherStores[i].ratingBujang, i+1)
 				}
 			}else{
-				$(".other-stores-area").append('<span class="d-block">'
-												+'	</br></br>현재 위치가 설정되지 않았거나 근처에 같은 카테고리의 다른 가게가 없습니다</br></br>'
-												+'</span>')
-				
+
+				//var str = '<span class="d-block">	</br></br>현재 위치가 설정되지 않았거나 근처에 같은 카테고리의 다른 가게가 없습니다</br></br></span>'
+				var str = '<div class="d-block" style="vertical-align: middle;">보여드릴 다른 가게가 없어요!</div>'
+				 $(".other-stores-area").append(str)
 			}
 			
-			console.log("뭐가 문젤까")
 			console.log("여기요"+$("#modal-store .other-stores-area").html())
-			if($("#modal-store .other-stores-area").text() == "" || $("#modal-store .other-stores-area").text()== null){
-				/* $(".other-stores-area").append('<span class="d-block">'
-						+'	</br></br>보여드릴 다른 가게가 없어요!</br></br>'
-				 		+'</span>')*/
-				$(".other-stores-area").append('<div class="d-block" style="vertical-align: middle;" >'
-						+'보여드릴 다른 가게가 없어요!'
-						+'</div>')
-			}
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error)
