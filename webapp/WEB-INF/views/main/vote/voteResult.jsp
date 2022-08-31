@@ -290,7 +290,7 @@ $(".vote-graph-store").on("click", function(){
     
     $(".store-button-area").html("")
     
-    if ("${topStore}".indexOf($(this).text().split(" ")[0]) != -1) {
+    if ("${authUser}" != "" && "${authUser.userNo}" == "${voteInfo.voteMadeUser}" && "${topStore}".indexOf($(this).text().split(" ")[0]) != -1) {
 	    $(".store-button-area").append('<button class="btn btn-primary btn-decision-this" type="button" data-storeno="'+storeNo+'" data-bs-dismiss="modal">여기갈래요</button>')
     }
 	
@@ -303,7 +303,7 @@ $(".basket-table-store-name").on("click", function(){
 	
 	$(".store-button-area").html("")
 	
-    if ("${topStore}".indexOf($(this).text().split(" ")[0]) != -1) {
+    if ("${authUser}" != "" && "${authUser.userNo}" == "${voteInfo.voteMadeUser}" && "${topStore}".indexOf($(this).text().split(" ")[0]) != -1) {
 	    $(".store-button-area").append('<button class="btn btn-primary btn-decision-this" type="button" data-storeno="'+storeNo+'" data-bs-dismiss="modal">여기갈래요</button>')
     }	
 })
