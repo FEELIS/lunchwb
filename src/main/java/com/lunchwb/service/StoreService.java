@@ -68,8 +68,6 @@ public class StoreService {
 		
 		storeMap.put("storeVo", storeVo);
 		
-		//////// 가게 선호 정보 ////////////////////////////////////////////
-		
 		
 		/////// 나와 이곳 : visit (방문횟수/최근 방문날짜 그룹) /////////////////
 		if(authUser != null) {
@@ -134,6 +132,7 @@ public class StoreService {
 		map.put("gpsVo", gpsVo);
 		
 		List<StoreVo> otherStores = storeDao.sameCateOtherStores(map);
+		System.out.println("다른 가게 정보가 있어? " + otherStores);
 		
 		return otherStores;
 	}

@@ -332,10 +332,10 @@ $("#calendar-area").on("click", ".show-menu", function(){
 //페이지 구분 두고 나중에 마지막까지 안쓰면 다 지워버리겠어
 /* 모달에서 > 다시 다른 가게 정보 조회(버튼) */
 $("#modal-store").on("click", ".other-store-btn", function(){
-
+/* 
 	if(typeof indexJSP === 'undefined'){
-		console.log("투표 결과: 다른 가게리스트클릭 > 아무일도 잃어나지 않음")
-	}else{
+		console.log("바스켓 제외: 다른 가게리스트클릭 > 아무일도 잃어나지 않음")
+	}else{ */
 	
 		//모달에서 다른 모달로 넘어가기 : 페이지 상관없이 불러올 변수는 동일
 		var storeNo = $(this).attr("data-no")
@@ -343,16 +343,17 @@ $("#modal-store").on("click", ".other-store-btn", function(){
 		var sortNo = $(this).attr("data-sortno")
 		console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
 		
+		setTimeout(() => $("#modal-store").modal("hide"), 50);
 		storeInfoOpen(storeNo, groupNo, Number(sortNo))
-	}
+	/* } */
 	
 })
 
 $("#modal-all-menu").on("click", ".other-store-btn", function(){
 	
-	if(typeof indexJSP === 'undefined'){
+	/* if(typeof indexJSP === 'undefined'){
 		console.log("투표 결과: 다른 가게리스트클릭 > 아무일도 잃어나지 않음")
-	}else{
+	}else{ */
 	
 		//모달에서 다른 모달로 넘어가기 : 페이지 상관없이 불러올 변수는 동일
 		var storeNo = $(this).attr("data-no")
@@ -361,7 +362,7 @@ $("#modal-all-menu").on("click", ".other-store-btn", function(){
 		console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
 		
 		storeInfoOpen(storeNo, groupNo, Number(sortNo))
-	}
+	/* } */
 })
  
  
@@ -385,7 +386,9 @@ function storeInfoOpen(storeNo, groupNo, k){
 		modalSortOfStore(storeNo, k)
 	}
 	
-	$("#modal-store").modal("show")
+	setTimeout(() => $("#modal-store").modal("show"), 150);
+	//$("#modal-store").fadeIn(150);
+	//$("#modal-store").modal("show")
 }
 
 
@@ -738,6 +741,7 @@ function modalStoreAllMenu(menuVo){
 
 /* 같은 카테 다른 가게 버튼 그리기 */
 function drawOtherStores(storeNo, groupNo, sortNo){
+	console.log("같은 카테고리 다른 가게 알려주러 왔어요")
 	var storeVo = {
 		storeNo : storeNo,
 		groupNo : groupNo
@@ -752,12 +756,21 @@ function drawOtherStores(storeNo, groupNo, sortNo){
 		
 		success : function(otherStores){
 			console.log("otherStores"+otherStores)
-
-			if(otherStores != null && otherStores != ""){
+			console.log("length"+otherStores.length)
+			if(otherStores.length > 0){
 				for(var i=0; i<otherStores.length; i++){
 					var str = ''
 					str += '<span class="d-inline-block">'
-					str += '	<button class="btn other-store-btn other-store-'+(i+1)+'" type="button" data-no="'+otherStores[i].storeNo+'" data-groupno="'+groupNo+'" data-sortno="'+sortNo+'">'
+					str += '	<button class="other-store-btn other-store-'+(i+1)
+					
+					if(sortNo == 2){
+						str += ' no-drag'
+
+					}else{
+						str += ' btn'	
+					}
+			
+					str += '" type="button" data-no="'+otherStores[i].storeNo+'" data-groupno="'+groupNo+'" data-sortno="'+sortNo+'">'
 					
 					if(otherStores[i].storeName.length > 10){
 						var name = (otherStores[i].storeName).split(' ')
@@ -798,12 +811,22 @@ function drawOtherStores(storeNo, groupNo, sortNo){
 					
 					modalStoreStar(otherStores[i].ratingBujang, i+1)
 				}
-				
 			}else{
 				$(".other-stores-area").append('<span class="d-block">'
 												+'	</br></br>현재 위치가 설정되지 않았거나 근처에 같은 카테고리의 다른 가게가 없습니다</br></br>'
 												+'</span>')
 				
+			}
+			
+			console.log("뭐가 문젤까")
+			console.log("여기요"+$("#modal-store .other-stores-area").html())
+			if($("#modal-store .other-stores-area").text() == "" || $("#modal-store .other-stores-area").text()== null){
+				/* $(".other-stores-area").append('<span class="d-block">'
+						+'	</br></br>보여드릴 다른 가게가 없어요!</br></br>'
+				 		+'</span>')*/
+				$(".other-stores-area").append('<div class="d-block" style="vertical-align: middle;" >'
+						+'보여드릴 다른 가게가 없어요!'
+						+'</div>')
 			}
 		},
 		error : function(XHR, status, error) {
