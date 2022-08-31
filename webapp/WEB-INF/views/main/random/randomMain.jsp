@@ -68,6 +68,8 @@
     </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
 </body>
+
+<c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
 <script type="text/javascript">
 
 //랜덤 선택 클릭 > 화이팅
@@ -106,6 +108,9 @@ $("#random-btn").on("click", function(){
 				
 				alert("오늘 방문할 가게는 [" + randomStoreName + "] 입니다.")
 				
+				console.log("방문 가게 no = " + randomStoreNo)
+				console.log("방문 가게 이름 = " + randomStoreName)
+	
 				if(modalSelectMembers(randomStoreNo, curr_basket_group) == false){
 					return false
 				}
