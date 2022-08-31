@@ -440,11 +440,16 @@ function storeBasicInfo(storeNo){
 			//가게 정보창
 			$("#modal-store .review-area").text("")
 			if(storeMap.reviewList.length != 0){
+				//리뷰 3개까지 띄우기
 				for(var i=0; i<3; i++){
 					modalStoreReivew(storeMap.reviewList[i], 1)
 					
 				}
-				modalStoreMoreReivews()
+				
+				//리뷰 3개가 넘어가면 그때 리뷰 더보기 띄우기
+				if(storeMap.reviewList.length > 3){
+					modalStoreMoreReivews()
+				}
 				
 			}else{
 				$(".review-area").html('<div class = "store-reviews text-center" style="height: 192px; margin-bottom: 64px;">'
