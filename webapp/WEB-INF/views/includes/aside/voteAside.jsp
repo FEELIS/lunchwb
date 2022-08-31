@@ -135,7 +135,7 @@
 	</div>
 </nav>
 
-<c:if test="${userState >= 1 and userState != 99}">
+<c:if test="${userState >= 1 && userState <= 3}">
 	<c:import url="/WEB-INF/views/includes/storeInfo.jsp" />
 </c:if>
 
