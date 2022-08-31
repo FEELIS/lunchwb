@@ -51,6 +51,7 @@ function notiCount(){
 			
 			}else if(notiCnt == 0){
 				$("#user-alert .badge-counter").text("")
+				noAlert()
 				
 			}else{
 				$("#user-alert .badge-counter").text(notiCnt)
@@ -116,7 +117,7 @@ $("#user-alert").on("click", function(){
 			
 			if(notiList.length > 0){
 				$("#noti-0").remove()
-				drawNotiBadge(notiList.length, 1)
+				drawNotiBadge(notiList.length)
 			}
 			
 			for(var i=0; i<notiList.length; i++){
