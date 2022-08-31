@@ -15,6 +15,8 @@ public class VisitedVo {
 	///////////집계용//////
 	private int visitCount;
 	private int menuCount;
+	private int favoriteCount;
+	private String favoriteGroup;
 	
 	
 	///////// 리뷰용 ////////
@@ -73,9 +75,9 @@ public class VisitedVo {
 	}
 
 	public VisitedVo(int visitedNo, int userNo, int groupNo, int storeNo, int menuNo, String visitedDate,
-			int visitCount, int menuCount, String menu2ndCateName, String storeRoadAddress, float ratingBujang,
-			int lastVisit, String menu1stCateName, String groupName, String storeName, String menuName,
-			String selectMonth, int groupOrder) {
+			int visitCount, int menuCount, int favoriteCount, String favoriteGroup, String menu2ndCateName,
+			String storeRoadAddress, float ratingBujang, int lastVisit, String menu1stCateName, String groupName,
+			String storeName, String menuName, String selectMonth, int groupOrder, List<GroupVo> groupVoList) {
 		this.visitedNo = visitedNo;
 		this.userNo = userNo;
 		this.groupNo = groupNo;
@@ -84,6 +86,8 @@ public class VisitedVo {
 		this.visitedDate = visitedDate;
 		this.visitCount = visitCount;
 		this.menuCount = menuCount;
+		this.favoriteCount = favoriteCount;
+		this.favoriteGroup = favoriteGroup;
 		this.menu2ndCateName = menu2ndCateName;
 		this.storeRoadAddress = storeRoadAddress;
 		this.ratingBujang = ratingBujang;
@@ -94,6 +98,7 @@ public class VisitedVo {
 		this.menuName = menuName;
 		this.selectMonth = selectMonth;
 		this.groupOrder = groupOrder;
+		this.groupVoList = groupVoList;
 	}
 
 	public int getVisitedNo() {
@@ -134,6 +139,22 @@ public class VisitedVo {
 
 	public void setMenuNo(int menuNo) {
 		this.menuNo = menuNo;
+	}
+
+	public int getFavoriteCount() {
+		return favoriteCount;
+	}
+
+	public void setFavoriteCount(int favoriteCount) {
+		this.favoriteCount = favoriteCount;
+	}
+
+	public String getFavoriteGroup() {
+		return favoriteGroup;
+	}
+
+	public void setFavoriteGroup(String favoriteGroup) {
+		this.favoriteGroup = favoriteGroup;
 	}
 
 	public String getVisitedDate() {
