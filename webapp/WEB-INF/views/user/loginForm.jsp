@@ -53,10 +53,10 @@
                                         <hr>
                                     </form>
                                     <div class="text-center">
-                                    	<a class="small fix-380" href="${pageContext.request.contextPath}/findPW">비밀번호 찾기</a>
+                                    	<a class="small fix-380" href="${pageContext.request.contextPath}/findPW" style="text-decoration:none;">비밀번호 찾기</a>
                                    	</div>
                                     <div class="text-center">
-                                    	<a class="small fix-380" href="${pageContext.request.contextPath}/join">회원가입</a>
+                                    	<a class="small fix-380" href="${pageContext.request.contextPath}/join" style="text-decoration:none;">회원가입</a>
                                    	</div>
                                 </div>
                             </div>
