@@ -38,6 +38,10 @@ public class VisitedVo {
 	//갈사람들
 	private List<GroupVo> groupVoList;
 	
+	// 달력 표시 순서용
+	private int seq;
+	
+	
 	
 	//생성자
 	public VisitedVo() {
@@ -61,14 +65,14 @@ public class VisitedVo {
 	
 	// 달력 출력용
 	public VisitedVo(int storeNo,String visitedDate, String menu1stCateName, String groupName, String storeName,
-			String menuName, int groupOrder) {
+			String menuName, int seq) {
 		this.storeNo = storeNo;
 		this.visitedDate = visitedDate;
 		this.menu1stCateName = menu1stCateName;
 		this.groupName = groupName;
 		this.storeName = storeName;
 		this.menuName = menuName;
-		this.groupOrder = groupOrder;
+		this.seq = seq;
 	}
 
 	public VisitedVo(int visitedNo, int userNo, int groupNo, int storeNo, int menuNo, String visitedDate,
@@ -247,8 +251,15 @@ public class VisitedVo {
 	public void setGroupVoList(List<GroupVo> groupVoList) {
 		this.groupVoList = groupVoList;
 	}
-
 	
+	public int getSeq() {
+		return seq;
+	}
+
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+
 	@Override
 	public String toString() {
 		return "VisitedVo [visitedNo=" + visitedNo + ", userNo=" + userNo + ", groupNo=" + groupNo + ", storeNo="
@@ -256,7 +267,11 @@ public class VisitedVo {
 				+ ", menuCount=" + menuCount + ", menu2ndCateName=" + menu2ndCateName + ", storeRoadAddress="
 				+ storeRoadAddress + ", ratingBujang=" + ratingBujang + ", lastVisit=" + lastVisit
 				+ ", menu1stCateName=" + menu1stCateName + ", groupName=" + groupName + ", storeName=" + storeName
-				+ ", menuName=" + menuName + ", selectMonth=" + selectMonth + ", groupOrder=" + groupOrder + "]";
+				+ ", menuName=" + menuName + ", selectMonth=" + selectMonth + ", groupOrder=" + groupOrder
+				+ ", groupVoList=" + groupVoList + ", seq=" + seq + "]";
 	}
+
+	
+	
 
 };
