@@ -29,7 +29,7 @@
 
 <body>
 
-<div id="header" class="text-center">
+<div id="header" class="text-center justify-content-center">
 	<img src="${pageContext.request.contextPath}/assets/img/bujang-logo.png">
 </div>
 
