@@ -43,7 +43,7 @@
             <div id="contents-vote-result-title">
             	<span>투표 결과</span>
             	<c:set var="topStore" value="" />
-            	<c:set var="topCnt" value="" />
+            	<c:set var="topCnt" value="0" />
             	
             	<c:forEach var="store" items="${voteResults}">
             		<c:if test="${store.vote1st}">
@@ -114,7 +114,7 @@
                     <div id="vote-result-btn-area" class="d-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center">
 	                    <div class="flex-nowrap" id="vote-result-btn-box">
 	                    	<c:if test="${topCnt == 1}">
-		                    	<button id="vote-result-letsgo-btn" class="btn btn-primary d-inline-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center" type="button">여기갈래요</button>
+		                    	<button id="vote-result-letsgo-btn" class="vote-result-letsgo-btn btn btn-primary d-inline-flex d-xxl-flex justify-content-center align-items-center justify-content-xxl-center align-items-xxl-center" type="button">여기갈래요</button>
 	                    	</c:if>
 	                    	
 	                    	<c:if test="${topCnt > 1}">
@@ -162,7 +162,24 @@ $("#vote-url-copy-btn").on("click", function(){
 
 
 // 여기갈래요 클릭
-$("#vote-result-letsgo-btn").on("click", function(){
+$("html").on("click", ".vote-result-letsgo-btn", function(){
+	var storeName
+	var storeNo
+	
+	if (parseInt("${topCnt}") == 1) {
+		storeName = "${topStore}"
+		storeNo = parseInt($("[data-resultCnt=1]").attr("data-storeNo"))
+	} else {
+		storeName = $(this).closest("#modal-store").find(".modalStoreName").text()
+		storeNo =  parseInt($(this).attr("data-storeNo"))
+	}
+	
+	var confirmVisit = confirm("오늘 [" + storeName + "]에 방문하겠습니까?")
+	
+	if (!confirmVisit) {
+		return false
+	}
+	
 	var voteMember = []
 	
 	$("#vote-select-name-area").find(".vote-select-name-btn").each(function(index, item){
@@ -177,10 +194,11 @@ $("#vote-result-letsgo-btn").on("click", function(){
 	var visitData = {
 		groupNo : parseInt("${voteInfo.groupNo}"),
 		voteNo : parseInt("${voteInfo.voteNo}"),
-		storeNo : parseInt($("[data-resultCnt=1]").attr("data-storeNo")),
+		storeNo : storeNo,
 		voteMember : voteMember
 	}
 	
+	console.log(visitData)
 	postVoteData("${pageContext.request.contextPath}/vote/visitConfirm", visitData)
 })
 
@@ -291,7 +309,7 @@ $(".vote-graph-store").on("click", function(){
     $(".store-button-area").html("")
     
     if ("${authUser}" != "" && "${authUser.userNo}" == "${voteInfo.voteMadeUser}" && "${topStore}".indexOf($(this).text().split(" ")[0]) != -1) {
-	    $(".store-button-area").append('<button class="btn btn-primary btn-decision-this" type="button" data-storeno="'+storeNo+'" data-bs-dismiss="modal">여기갈래요</button>')
+	    $(".store-button-area").append('<button class="btn btn-primary vote-result-letsgo-btn" type="button" data-storeNo="'+ storeNo +'" data-bs-dismiss="modal">여기갈래요</button>')
     }
 	
     storeInfoOpen(storeNo, groupNo, 2)
@@ -304,7 +322,7 @@ $(".basket-table-store-name").on("click", function(){
 	$(".store-button-area").html("")
 	
     if ("${authUser}" != "" && "${authUser.userNo}" == "${voteInfo.voteMadeUser}" && "${topStore}".indexOf($(this).text().split(" ")[0]) != -1) {
-	    $(".store-button-area").append('<button class="btn btn-primary btn-decision-this" type="button" data-storeno="'+storeNo+'" data-bs-dismiss="modal">여기갈래요</button>')
+	    $(".store-button-area").append('<button class="btn btn-primary vote-result-letsgo-btn" type="button" data-storeNo="'+ storeNo +'" data-bs-dismiss="modal">여기갈래요</button>')
     }	
 })
 
