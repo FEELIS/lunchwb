@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.lunchwb.service.AloneService;
 import com.lunchwb.service.StatService;
 import com.lunchwb.service.VisitedService;
 import com.lunchwb.vo.AloneVo;
@@ -36,8 +35,6 @@ public class StatController {
 	@Autowired
 	private StatService statService;
 	
-	@Autowired
-	private AloneService aloneService;
 	
 
 	
@@ -82,7 +79,7 @@ public class StatController {
 		logger.info("StatController > reviewListForm()");
 		// 현재 접속중인 유저의 리뷰들 가져오기
 		int userNo = aloneVo.getUserNo();
-		List<AloneVo> reviewList = aloneService.reviewList(userNo);
+		List<AloneVo> reviewList = statService.reviewList(userNo);
 		
 		logger.info(reviewList.toString());
 		return reviewList;
@@ -93,7 +90,7 @@ public class StatController {
 	public String modifyReviewForm(@PathVariable("reviewNo")int reviewNo, Model model) {
 		logger.info("StatController > modifyReviewForm()");
 		
-		AloneVo aloneVo = aloneService.getReview(reviewNo);
+		AloneVo aloneVo = statService.getReview(reviewNo);
 		logger.info(aloneVo.toString());
 		
 		model.addAttribute("aloneVo",aloneVo);
@@ -108,7 +105,7 @@ public class StatController {
 		logger.info(aloneVo.toString());
 		logger.info(file.toString());
 		
-		int count = aloneService.modifyReview(aloneVo,file);
+		int count = statService.modifyReview(aloneVo,file);
 		logger.info(Integer.toString(count)+ "건 수정하였습니다."); 
 		
 		return "stat/reviewList";	// 리다이렉트로 수정
@@ -121,16 +118,10 @@ public class StatController {
 		int reviewNo = aloneVo.getReviewNo();
 		logger.info("deleteVo"+Integer.toString(reviewNo));
 		
-		String result = aloneService.delReviewResult(reviewNo);
+		String result = statService.delReviewResult(reviewNo);
 		
 		return result; 
 	};
-	
-	
-	
-	
-	
-	
 	
 	
 	// =============== 따로갔어요폼 ===============
@@ -157,15 +148,6 @@ public class StatController {
 		
 		return "stat/reviewList";
 	};
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 
 	// ============================================ 통계 ============================================
