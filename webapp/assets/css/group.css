@@ -86,7 +86,7 @@
 
 
 .group-content-title {
-  min-width: 700px;
+  min-width: 600px;
 }
 
 /* , #group-blacklist-add */
@@ -107,7 +107,7 @@
 
 /* store-list-table < admin */
 #groupmem-list-table, .store-list-table {
-  height: 250px;
+  /* height: 250px; */
   text-align: center;
   font-size: 14px !important;
 }
