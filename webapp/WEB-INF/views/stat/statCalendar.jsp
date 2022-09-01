@@ -24,7 +24,6 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/liveReload.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/WOWSlider-about-us.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
 
     <title>부장님요기요-달력</title>
@@ -104,7 +103,7 @@
             addEventWeek: true,
             highlightSelectedWeekday: true,
             highlightSelectedWeek: true,
-            todayButtonContent: "Today",
+            todayButtonContent: "오늘",
             showYearDropdown: false,
             min: null,
             max: null,
@@ -271,7 +270,7 @@
             return (
                 "" +
                 '<div class="special-buttons">' +
-                '<button class="today-button">' + settings.todayButtonContent + "</button>" +
+                '<button class="today-button btn btn-primary">' + settings.todayButtonContent + "</button>" +
                 "</div>"
             );
         }
@@ -290,16 +289,20 @@
                 (settings.enableMonthChange ?
                     '<button class="next-button">' + settings.nextButton + "</button>" :
                     "");
+            if (settings.showTodayButton) {
+                str += generateTodayButton();
+              }
 
             str += '</div>';
+            
+            
+            
             str +=
                 '<ol class="day-names list-unstyled week' +
                 (settings.startOnSunday ? " start-on-sunday" : "") +
                 '" data-week-no="' +
                 0 +
                 '">';
-
-
 
             for (var weekDay in dayMap) {
                 if (dayMap.hasOwnProperty(weekDay)) {
@@ -317,14 +320,8 @@
         // headerDom 끝
 
 
-
-
         // 일주일마다 방문한 곳 정보 올리기
         function generateWeekDOM(monthData, currentDate) {
-
-
-
-
             var str = "";
 
             // 달력에 날짜별로 for문출력
@@ -367,23 +364,25 @@
                     }
 
                     str +=
-                        '<li class="day' + disabled + selected + today + '" data-date="' + day + '" ' + dateDisabled + '>' +
+                        '<li class="';
+                    
+                    console.log(monthMap[currentDate.getMonth() + 1]+day);
+                    
+                    
+                     str +='day' + disabled + selected + today + '" data-date="' + day + '" ' + dateDisabled + '>' +
                         '<div class="date">' +
                         '<span class="d-flex flex-row-reverse">' + day.getDate() + '</span>' +
                         '</div>';
+                        
                     // 이전달이나 다음달이면 라벨제거   
                     if (disabled == false) {
                         str += '<div id="vday' + (day.getDate() - 1) + '" class="visited"' +
                             'data-vdate="' +
                             day +
                             '"></div>'
-
                     }
-
-
                     str += '</li>';
                 });
-
                 str += "</ol>";
             });
             return str;
@@ -413,6 +412,7 @@
                 selectMonth: selectMonth
             };
 
+            // 달력라벨 띄우기
             $.ajax({
                 url: "${pageContext.request.contextPath}/stat/showVstList",
                 type: "post",
@@ -426,7 +426,9 @@
                     for (var i = 0; i < selectedElement.length; i++) {
                         var thisdate = selectedElement[i].dataset.vdate;
 
+                        // DDD MM YYYY 형식으로 짤라주기
                         thisdate = thisdate.substring(4, 15)
+                        
                         var str = '';
                         if (vstList[j].visitedDate === thisdate) {
                             str += '<div class="event ';
