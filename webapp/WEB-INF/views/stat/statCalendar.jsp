@@ -346,12 +346,14 @@
                     } else {
                         selected = "";
                     }
-
+			
                     var today = false;
+                    var todayColor = false;
 
                     if (day == todayDate.toString()) today = true;
                     today = today ? " today" : "";
-
+                    todayColor = today ? " bg-warning" : "";
+			
                     var dateDisabled = "ola";
                     if (
                         (settings.min && settings.min > day) ||
@@ -366,12 +368,12 @@
                     str +=
                         '<li class="';
                     
-                    console.log(monthMap[currentDate.getMonth() + 1]+day);
+
                     
                     
                      str +='day' + disabled + selected + today + '" data-date="' + day + '" ' + dateDisabled + '>' +
                         '<div class="date">' +
-                        '<span class="d-flex flex-row-reverse">' + day.getDate() + '</span>' +
+                        '<span class="d-flex flex-row-reverse"><span class="' + todayColor + '">' + day.getDate() + '</span></span>' +
                         '</div>';
                         
                     // 이전달이나 다음달이면 라벨제거   
@@ -598,7 +600,7 @@
                 );
             }
 
-            el.off("click", ".day").on("click", ".day", function(e) {
+            el.off("click", ".day.disabled").on("click", ".day.disabled", function(e) {
                 var date = $(this).data("date");
                 var isDisabled = $(this).attr("disabled") === "disabled";
                 if (isDisabled) return;
