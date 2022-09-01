@@ -95,6 +95,12 @@
   background: none;
 }	
 
+.week .day.today span span {
+  border-radius: 50%;
+  width: 30px;
+}
+
+
 .calendar .days li:nth-child(n + 29) {
   border-bottom: none;
 }
