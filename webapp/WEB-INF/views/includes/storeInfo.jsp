@@ -345,7 +345,6 @@ $("#modal-store").on("click", ".other-store-btn", function(){
 		var sortNo = $(this).attr("data-sortno")
 		console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
 		
-		setTimeout(() => $("#modal-store").modal("hide"), 50);
 		storeInfoOpen(storeNo, groupNo, Number(sortNo))
 	/* } */
 	
@@ -401,6 +400,7 @@ function storeBasicInfo(storeNo){
 	$.ajax({
 		url : "${pageContext.request.contextPath}/store/info",
 		type : "post",
+		async : false,
 		contentType : "application/json",
 		data : JSON.stringify(storeNo),
 		dataType : "json",
@@ -449,14 +449,18 @@ function storeBasicInfo(storeNo){
 			$("#modal-store .review-area").text("")
 			if(storeMap.reviewList.length != 0){
 				//리뷰 3개까지 띄우기
-				for(var i=0; i<3; i++){
-					modalStoreReivew(storeMap.reviewList[i], 1)
-					
-				}
-				
 				//리뷰 3개가 넘어가면 그때 리뷰 더보기 띄우기
 				if(storeMap.reviewList.length > 3){
+					for(var i=0; i<3; i++){
+						modalStoreReivew(storeMap.reviewList[i], 1)
+					}
 					modalStoreMoreReivews()
+
+				}else{
+					for(var i=0; i<storeMap.reviewList.length; i++){
+						modalStoreReivew(storeMap.reviewList[i], 1)
+						
+					}
 				}
 				
 			}else{
@@ -630,6 +634,7 @@ $("#store-about").on("click", "img", function(){
 
 /* 가게 리뷰 */
 function modalStoreReivew(storeReview, k){
+	console.log(storeReview)
 	var str = ''
 	str += '<div class="store-reviews">'
 	str += '	<div class="d-inline-block store-review-left">'
@@ -834,7 +839,6 @@ function drawOtherStores(storeNo, groupNo, sortNo){
 				 $(".other-stores-area").append(str)
 			}
 			
-			console.log("여기요"+$("#modal-store .other-stores-area").html())
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error)

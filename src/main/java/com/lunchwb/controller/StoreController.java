@@ -94,10 +94,6 @@ public class StoreController {
 		List<StoreVo> otherStores;
 		GPSVo gpsVo = (GPSVo)session.getAttribute("curr_location");
 		
-		if(gpsVo == null) {
-			return otherStores = null;
-		}
-		
 		otherStores = storeService.sameCateOtherStores(storeVo, gpsVo);
 		
 		return otherStores;

@@ -1,5 +1,6 @@
 package com.lunchwb.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -119,9 +120,11 @@ public class GroupController {
 		
 		///////// Basket /////////////////////
 		List<GroupVo> basketGroup = (List<GroupVo>)session.getAttribute("basketGroup");
-		if(basketGroup != null) {
-			basketGroup = basketService.basketGroupAdd(basketGroup, groupVo);
+		if(basketGroup == null) {
+			basketGroup = new ArrayList<>();
 		}
+		basketGroup = basketService.basketGroupAdd(basketGroup, groupVo);
+
 
 		session.setAttribute("basketGroup", basketGroup);
 		
