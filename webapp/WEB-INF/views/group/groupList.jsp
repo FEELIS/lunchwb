@@ -164,6 +164,8 @@
                                    		</c:if>
                                    	</p>
                                	</div>
+                               	
+                               	<!-- 추가랑 같이해야해서 대기 
                                <div class="col-md-6">
                                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
                                        <ul class="pagination">
@@ -175,6 +177,8 @@
                                        </ul>
                                    </nav>
                                	</div>
+								 -->
+                           	
                            	</div>
                        
                        </div>
@@ -670,7 +674,8 @@ $("#modal-group-name-change .btn-primary").on("click", function(){
 			
 			if(result = "success"){
 				alert("그룹 이름이 변경되었습니다")
-				return true
+				location.replace("${pageContext.request.contextPath}/group/list?no=${map.groupNo}")
+				//return true
 			}
 			
 		}, 

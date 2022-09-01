@@ -1,6 +1,11 @@
 /* group page */
 
 /*********************************** group-aside / 그룹 페이지 공통 *****************************/
+
+#body {
+	overflow-x:scroll;
+}
+
 #group-aside {
   color: var(--bs-blue);
   background: #6484dd;
