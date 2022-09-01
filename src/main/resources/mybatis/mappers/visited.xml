@@ -48,6 +48,7 @@
                and gm.group_no = v.group_no 
                and u.user_no = v.user_no 
                and v.store_no = s.store_no 
+               and gm.user_no = u.user_no 
                and to_char(v.visited_date,'YYMM')=to_char(to_date(${selectMonth},'YYMM'),'YYMM') 
                and v.user_no = #{userNo} 
          order by v.visited_date asc
