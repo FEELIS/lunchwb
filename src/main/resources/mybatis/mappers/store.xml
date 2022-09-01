@@ -124,6 +124,7 @@
 		
 		<foreach collection="basket" item="storedItem" separator="">
 	              AND    s.store_no != #{storedItem.storeNo}
+	              AND    s.store_road_address != #{storedItem.storeRoadAddress}	              
 		</foreach>
 			  
 		<![CDATA[
