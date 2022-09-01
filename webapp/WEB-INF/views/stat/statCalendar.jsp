@@ -421,6 +421,8 @@
 
                 dataType: "json",
                 success: function(vstList) {
+                	
+                	console.log(vstList);
                     var j = 0;
 
                     for (var i = 0; i < selectedElement.length; i++) {
@@ -432,29 +434,34 @@
                         var str = '';
                         if (vstList[j].visitedDate === thisdate) {
                             str += '<div class="event ';
-                            if (vstList[j].groupOrder === 1) {
+                            if (vstList[j].seq === 1) {
                                 str += 'bg-success ';
-                            } else if (vstList[j].groupOrder === 2) {
+                            } else if (vstList[j].seq === 2) {
                                 str += 'bg-warning ';
-                            } else if (vstList[j].groupOrder === 3) {
+                            } else if (vstList[j].seq === 3) {
                                 str += 'bg-danger ';
-                            } else if (vstList[j].groupOrder === 4) {
+                            } else if (vstList[j].seq === 4) {
                                 str += 'bg-info ';
+                            } else if (vstList[j].seq === 5) {
+                                str += 'bg-secondary ';
                             }
                             str += 'show-menu" data-visit="'+vstList[j].visitedDate+'" data-storeno="'+vstList[j].storeNo+'">' + vstList[j].menu1stCateName + "/" + vstList[j].menuName + '</div>';
                             
                             str += '<div class="event ';
-                            if (vstList[j].groupOrder === 1) {
+                            if (vstList[j].seq === 1) {
                                 str += 'bg-success ';
 
-                            } else if (vstList[j].groupOrder === 2) {
+                            } else if (vstList[j].seq === 2) {
                                 str += 'bg-warning ';
 
-                            } else if (vstList[j].groupOrder === 3) {
+                            } else if (vstList[j].seq === 3) {
                                 str += 'bg-danger ';
                                 
-                            } else if (vstList[j].groupOrder === 4) {
+                            } else if (vstList[j].seq === 4) {
                                 str += 'bg-info ';
+
+                            } else if (vstList[j].seq === 5) {
+                                str += 'bg-secondary ';
 
                             }
 
