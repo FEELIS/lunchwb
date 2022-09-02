@@ -14,7 +14,9 @@
 
     <!-- css -->
     <link href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/assets/css/customModal.css" rel="stylesheet" type="text/css">
     <link href="${pageContext.request.contextPath}/assets/css/yogiyo.css" rel="stylesheet" type="text/css">
+    <link href="${pageContext.request.contextPath}/assets/css/review.css" rel="stylesheet" type="text/css">
 
 
     <!-- fonts -->
@@ -72,6 +74,26 @@
         <!-- content-wrapper -->
     </div>
     <!-- wrapper -->
+    
+    
+    <!-- 그룹 탈퇴 확인 모달 -->
+<div id="delModal" class="modal fade" role="dialog" tabindex="-1" aria-expanded="false">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body-custom">
+                <div class="modal-rev-p">
+                    <p class="modal-rev-p guideCmt">리뷰를 삭제하시겠습니까?</p>
+                    <p class="modal-rev-p warningCmt">!삭제하면 복구할 수 없습니다<br /></p>
+                </div>
+            </div>
+            <div class="modal-footer-custom">
+           		<button id="realDel" class="btn btn-primary btnDel" type="submit" data-modalreviewno="">확인</button>
+           		<button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button>
+            </div>
+        </div>
+    </div>
+</div>
+    
 </body>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -79,13 +101,10 @@
         fetchList();
     });
 
-
-
     //====================================== 리뷰 목록 ======================================
     function fetchList() {
         var userNo = '${authUser.userNo}';
 
-        // = 없으면 오류
         var aloneVo = {
             userNo: userNo
         };
@@ -98,9 +117,6 @@
 
             dataType: "json",
             success: function(reviewList) {
-                /*성공시 처리해야될 코드 작성*/
-                console.log(reviewList);
-                //화면에 data + html을 그린다.
                 for (var i = 0; i < reviewList.length; i++) {
                     render(reviewList[i], "down");
                 }
@@ -111,7 +127,10 @@
         })
         // ajax 
     };
-
+    
+    
+    
+  	//====================================== 리뷰목록 렌더링 ======================================
     function render(aloneVo, opt) {
         console.log('render()');
         var str = '';
@@ -141,7 +160,8 @@
         str += '				</div>';
         str += '			</div>';
         str += '			<div class="row row-cols-2">';
-
+        
+		// 이미지 창
         if (aloneVo.reviewFileName != null) {
             str += '					<div class="col-2">';
             str += '						<img src="${pageContext.request.contextPath}/upload/' + aloneVo.reviewFileName + '" alt="이미지 없음" width="200" class="ml-lg-5 order-1 order-lg-2">';
@@ -178,10 +198,20 @@
     };
 
     //====================================== 선택한 리스트 삭제 ======================================
+    //==================== 선택한 리스트 모달 띄우기 ====================
     $("ul").on("click", ".btnRevDel", function() {
-        var $this = $(this);
+    	$("#delModal").modal("show");
+    	var $this = $(this);
         var reviewNo = $this.data("rno");
-
+        $("#realDel").attr("data-modalreviewno",reviewNo);
+    	
+    });
+    	
+    //==================== 삭제 모달창 확인 눌렀을 시 ====================
+    $(".btnDel").on("click",function() {
+        var $this = $(this);
+        var reviewNo = $this.data("modalreviewno");
+        
         var aloneVo = {
             reviewNo: reviewNo
         };
@@ -194,10 +224,9 @@
 
             dataType: "json",
             success: function(result) {
-                console.log("deleteReview");
-                console.log(result);
                 if (result == "true") {
-                    $("#t" + reviewNo).remove();
+                    $("#t" + reviewNo).remove();			// 리뷰내역에서 선택한 리뷰만 지우기
+                    $("#delModal").modal("hide");			// 모달창 닫기
                 }
             },
             error: function(XHR, status, error) {
