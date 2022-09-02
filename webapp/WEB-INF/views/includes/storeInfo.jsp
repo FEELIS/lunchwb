@@ -246,14 +246,14 @@ $("#basket-table").on("click", ".basket-table-store-name", function(){
    if(typeof indexJSP === 'undefined'){
       var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
       var groupNo = curr_basket_group
-      console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+      //console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
       
       storeInfoOpen(storeNo, groupNo, 2)
       
    } else if (indexJSP) {
       var storeNo = $(this).closest(".basket-table-row").attr("data-storeNo")
       groupNo = curr_basket_group
-      console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+      //console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
       
       storeInfoOpen(storeNo, groupNo, 1)
    }
@@ -265,7 +265,7 @@ $("#basket-table").on("click", ".basket-table-store-name", function(){
 $("#visited-store-name").on("click", function(){
 	var storeNo = $(this).data("storeno")
 	var groupNo = "${visitedMap.visitedVo.groupNo}"
-	console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+	//console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
 	
 	storeInfoOpen(storeNo, groupNo, 0)
 })
@@ -275,7 +275,7 @@ $("#visited-store-name").on("click", function(){
 $("#black-body").on("click", ".black-store-name", function(){
 	var storeNo = $(this).attr("data-storeno")
 	var groupNo = "${map.groupNo}"
-	console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+	//console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
 	
 	storeInfoOpen(storeNo, groupNo, 3)
 })
@@ -285,7 +285,7 @@ $("#black-body").on("click", ".black-store-name", function(){
 $("#black-add-body").on("click", ".store-search-name", function(){
 	var storeNo = $(this).attr("data-storeno")
 	var groupNo = "${map.groupNo}"
-	console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
+	//console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
 	
 	storeInfoOpen(storeNo, groupNo, 4)
 })
@@ -294,7 +294,7 @@ $("#black-add-body").on("click", ".store-search-name", function(){
 /* 캘린더 기록 가게 조회 */
 $("#calendar-area").on("click", ".show-menu", function(){
 	var storeNo = $(this).attr("data-storeno")
-	console.log(storeNo+"번 가게 정보 보기")
+	//console.log(storeNo+"번 가게 정보 보기")
 	
 	//임시 : 그룹 순서로 그룹 번호 알아오기 > 탈퇴그룹 불가라서 당시 방문일로 가져오기로함
 	//그룹 넘버를 data로 저장 > 그 번호 가져오고
@@ -320,7 +320,7 @@ $("#calendar-area").on("click", ".show-menu", function(){
 				storeInfoOpen(storeNo, groupNo, 5)
 				
 			}else{
-				console.log("그룹을 찾을 수 없음")
+				//console.log("그룹을 찾을 수 없음")
 			}
 		},
 		error : function(XHR, status, error) {
@@ -338,7 +338,7 @@ $("#modal-store").on("click", ".other-store-btn", function(){
 	var storeNo = $(this).attr("data-no")
 	var groupNo = $(this).attr("data-groupno")
 	var sortNo = $(this).attr("data-sortno")
-	console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
+	//console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
 	
 	$("#modal-store").modal("hide")
 	storeInfoOpen(storeNo, groupNo, Number(sortNo))
@@ -350,7 +350,7 @@ $("#modal-all-menu").on("click", ".other-store-btn", function(){
 	var storeNo = $(this).attr("data-no")
 	var groupNo = $(this).attr("data-groupno")
 	var sortNo = $(this).attr("data-sortno")
-	console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
+	//console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
 	
 	$("#modal-all-menu").modal("hide")
 	storeInfoOpen(storeNo, groupNo, Number(sortNo))
@@ -359,7 +359,7 @@ $("#modal-all-menu").on("click", ".other-store-btn", function(){
  
 /* 가게정보 모달 오픈 */
 function storeInfoOpen(storeNo, groupNo, k){
-	console.log("가게: "+storeNo)
+	//console.log("가게: "+storeNo)
 	
 	storeBasicInfo(storeNo)
 	
@@ -383,7 +383,7 @@ function storeInfoOpen(storeNo, groupNo, k){
 
 /* 가게 기본정보 */
 function storeBasicInfo(storeNo){
-	console.log("modalStoreBasicInfo storeNo : " + storeNo)
+	//console.log("modalStoreBasicInfo storeNo : " + storeNo)
 	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/store/info",
@@ -394,7 +394,7 @@ function storeBasicInfo(storeNo){
 		dataType : "json",
 		
 		success : function(storeMap){
-			console.log(storeMap)
+			//console.log(storeMap)
 			
 			$(".modalStoreName").text(storeMap.storeVo.storeName)
 			$(".modalStoreCate").text("|   " + storeMap.storeVo.menu2ndCateName + "   |")
@@ -503,8 +503,7 @@ function modalStoreDistance(storeNo) {
 		dataType : "json",
 		
 		success : function(distance){
-			console.log( "storeNo: " + storeNo + ", distance: "+distance)
-			
+			//console.log( "storeNo: " + storeNo + ", distance: "+distance)
 			if(distance>0){
 				$(".modalStoreDistance").text(" ("+distance+"m)")
 			}
@@ -520,7 +519,7 @@ function modalStoreDistance(storeNo) {
 /* 별 그리기 */
 /* k:별그릴위치 종류 0:이 가게, 1 2 3: 다른가게 */
 function modalStoreStar(starScore, k){
-	console.log("AvgScore: " + starScore + ", k:"+k)
+	//console.log("AvgScore: " + starScore + ", k:"+k)
 	
 	var str = ''
 	for(var i=0; i<5; i++){
@@ -551,7 +550,7 @@ function modalStoreStar(starScore, k){
 			break
 			
 		default:
-			console.log("별점 그리기 번호 종류 오류")
+			//console.log("별점 그리기 번호 종류 오류")
 			break
 	}
 	
@@ -579,7 +578,7 @@ function modalStoreTime(storeTime, opt){
 	}else if(opt == 2){
 		$(".modalStoreBreak").append(str)
 	}else{
-		console.log("opt 오류")
+		//console.log("opt 오류")
 	}
 }
 
@@ -618,7 +617,7 @@ $("#store-about").on("click", "img", function(){
 
 /* 가게 리뷰 */
 function modalStoreReivew(storeReview, k){
-	console.log(storeReview)
+	//console.log(storeReview)
 	var str = ''
 	str += '<div class="store-reviews">'
 	str += '	<div class="d-inline-block store-review-left">'
@@ -685,7 +684,7 @@ function modalStoreMoreReivews(){
 $("#store-about").on("click", ".dropdown-item", function(){
 	var reviewNo = $(this).data("reviewno")
 	var reportCateNo = $(this).data("reporttype")
-	console.log("리뷰 신고 : " + reviewNo + ", 타입: " + reportCateNo)
+	//console.log("리뷰 신고 : " + reviewNo + ", 타입: " + reportCateNo)
 	
 	if(confirm("리뷰를 신고하시겠습니까?") == false){
 		return false
@@ -746,7 +745,7 @@ function modalStoreAllMenu(menuVo){
 
 /* 같은 카테 다른 가게 버튼 그리기 */
 function drawOtherStores(storeNo, groupNo, sortNo){
-	console.log("같은 카테고리 다른 가게 알려주러 왔어요")
+	//console.log("같은 카테고리 다른 가게 알려주러 왔어요")
 	var storeVo = {
 		storeNo : storeNo,
 		groupNo : groupNo
@@ -760,8 +759,8 @@ function drawOtherStores(storeNo, groupNo, sortNo){
 		dataType : "json",
 		
 		success : function(otherStores){
-			console.log("otherStores"+otherStores)
-			console.log("length"+otherStores.length)
+			//console.log("otherStores"+otherStores)
+			//console.log("length"+otherStores.length)
 			if(otherStores.length > 0){
 				for(var i=0; i<otherStores.length; i++){
 					var str = ''
@@ -843,7 +842,7 @@ function drawOtherStores(storeNo, groupNo, sortNo){
 function modalSortOfStore(storeNo, k){
 	//버튼 영역 초기화
 	$(".store-button-area").html("")
-	console.log("가게정보 모달 버튼 영역: " + k)
+	//console.log("가게정보 모달 버튼 영역: " + k)
 	
 	switch(k){
 		case 0:
@@ -873,7 +872,7 @@ function modalSortOfStore(storeNo, k){
 		
 		case 1:
 		// k=1 : 장바구니/지도
-			console.log("curr_group: " + curr_basket_group)
+			//console.log("curr_group: " + curr_basket_group)
 
 			// 그룹? 비로그인 또는 그룹이 없으면 여기갈래요 불가 > 
 			if(curr_basket_group != 0 && curr_basket_group != null){
@@ -881,17 +880,17 @@ function modalSortOfStore(storeNo, k){
 			}
 			
 			// 바구니? ${basket.curr_basket_group}: 선택된 가게 리스트
-			console.log("basket: " + basket)
-			console.log("basket(curr_group): " + basket[curr_basket_group])
+			//console.log("basket: " + basket)
+			//console.log("basket(curr_group): " + basket[curr_basket_group])
 			
 			//장바구니 안에 가게가 있으면 있는 가게인지 검사 해줘야해
 			if(basket[curr_basket_group] != null && basket[curr_basket_group] != "" && basket[curr_basket_group] != []){
-				console.log("장바구니에 추가된 가게 있음")
+				//console.log("장바구니에 추가된 가게 있음")
 				for(var i=0; i<basket[curr_basket_group].length; i++){
 					
 					//장바구니에 있는 가게 검사했어
 					if(basket[curr_basket_group][i].storeNo == storeNo){
-						console.log("바구니 가게: "+basket[curr_basket_group][i].storeNo)
+						//console.log("바구니 가게: "+basket[curr_basket_group][i].storeNo)
 						
 						//장바구니에 있는 가게
 						if(basket[curr_basket_group][i].stored){
@@ -904,12 +903,12 @@ function modalSortOfStore(storeNo, k){
 						
 					//마지막까지 검사했어 없었어(모달에서 다른 가게 정보 접근)
 					}else if(i == basket[curr_basket_group].length - 1){
-						console.log("같은 카테고리 다른 가게 정보")
+						//console.log("같은 카테고리 다른 가게 정보")
 						$(".store-button-area").append('<button class="btn btn-light btn-add-store-basket" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">점심후보추가</button>')
 					}
 				}
 			}else{
-				console.log("장바구니에 추가된 가게 없음")
+				//console.log("장바구니에 추가된 가게 없음")
 				$(".store-button-area").append('<button class="btn btn-light btn-add-store-basket" type="button" data-storeNo="'+storeNo+'" data-bs-dismiss="modal">점심후보추가</button>')
 			}
 
@@ -955,7 +954,7 @@ function modalSortOfStore(storeNo, k){
 		// 캘린더에서 조회
 			
 		default :
-			console.log("가게 조회 종류 오류")
+			//console.log("가게 조회 종류 오류")
 			break
 	}
 }
@@ -1045,7 +1044,7 @@ function blackDel(blackVo, bDelNo){
 		dataType : "json",
 		
 		success : function(result){
-			console.log("블랙삭제: "+result)
+			//console.log("블랙삭제: "+result)
 			
 			if(result == "success"){
 				
@@ -1083,11 +1082,11 @@ function blackDel(blackVo, bDelNo){
 
 //여기갈래요 버튼 클릭(장바구니화면 모달)
 $("#modal-store").on("click", ".btn-decision-this", function(){
-	console.log("가게 모달창 > 여기갈래요 버튼 클릭")
+	//console.log("가게 모달창 > 여기갈래요 버튼 클릭")
 	
 	if (typeof indexJSP == 'undefined' || indexJSP) {
 		var storeNo = $(this).attr("data-storeNo")
-        console.log("여기갈래요 그룹: ${curr_basket_group}, 가게: " + storeNo)
+        //console.log("여기갈래요 그룹: ${curr_basket_group}, 가게: " + storeNo)
 
         if(confirm("정말로 방문을 선택하시겠습니까?") == true){
 			modalSelectMembers(storeNo, curr_basket_group)
@@ -1096,11 +1095,11 @@ $("#modal-store").on("click", ".btn-decision-this", function(){
 })
 
 $("#modal-reviews").on("click", ".btn-decision-this", function(){
-	console.log("가게 모달창 > 여기갈래요 버튼 클릭")
+	//console.log("가게 모달창 > 여기갈래요 버튼 클릭")
 	
 	if (typeof indexJSP == 'undefined' || indexJSP) {
 		var storeNo = $(this).attr("data-storeNo")
-        console.log("여기갈래요 그룹: ${curr_basket_group}, 가게: " + storeNo)
+        //console.log("여기갈래요 그룹: ${curr_basket_group}, 가게: " + storeNo)
 
         if(confirm("정말로 방문을 선택하시겠습니까?") == true){
 			modalSelectMembers(storeNo, curr_basket_group)
@@ -1109,11 +1108,11 @@ $("#modal-reviews").on("click", ".btn-decision-this", function(){
 })
 
 $("#modal-all-menu").on("click", ".btn-decision-this", function(){
-	console.log("가게 모달창 > 여기갈래요 버튼 클릭")
+	//console.log("가게 모달창 > 여기갈래요 버튼 클릭")
 	
 	if (typeof indexJSP == 'undefined' || indexJSP) {
 		var storeNo = $(this).attr("data-storeNo")
-        console.log("여기갈래요 그룹: ${curr_basket_group}, 가게: " + storeNo)
+        //console.log("여기갈래요 그룹: ${curr_basket_group}, 가게: " + storeNo)
 
         if(confirm("정말로 방문을 선택하시겠습니까?") == true){
 			modalSelectMembers(storeNo, curr_basket_group)
@@ -1123,7 +1122,7 @@ $("#modal-all-menu").on("click", ".btn-decision-this", function(){
 
 
 function modalSelectMembers(storeNo, groupNo){
-	console.log("여기갈래요 그룹 멤버")
+	//console.log("여기갈래요 그룹 멤버")
 	$("#modal-select-member-area").html("")
 	
 	$.ajax({
@@ -1187,14 +1186,14 @@ function modalSelectMembers(storeNo, groupNo){
  
 /* 여기갈래요 > 그룹멤버선택모달창 멤버 전체선택 */
 $("#member-all-selection").on("click", function(){
-	console.log("전체선택")
+	//console.log("전체선택")
 	$("#modal-select-member-area [name='memberList']").attr("checked",true)
 })
 
 
 /* 여기갈래요 > 그룹멤버선택모달창 멤버 전체해제 */
 $("#member-all-selection-del").on("click", function(){
-	console.log("전체해제")
+	//console.log("전체해제")
 	$("#modal-select-member-area [name='memberList']").attr("checked",false)
 })
 
