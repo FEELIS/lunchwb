@@ -29,14 +29,10 @@ public class StatService {
 
 	@Autowired
 	private VisitedDao vstDao;
-
 	@Autowired
 	private StatDao statDao;
-
 	@Autowired
 	private AloneDao aloneDao;
-
-	private static final Logger logger = LoggerFactory.getLogger(StatService.class);
 
 	// =============================================== 달력 ===============================================
 	public List<VisitedVo> showCalendar(VisitedVo vstVo) {
@@ -107,7 +103,7 @@ public class StatService {
 
 			// 파일경로(디렉토리+저장파일명)
 			String filePath = saveDir + "\\" + saveName; 											// 윈도우용
-			// String filePath = saveDir + "/" + saveName; 											// 맥OS용
+			//String filePath = saveDir + "/" + saveName; 											// 맥OS용
 
 			aloneVo.setReviewFileName(saveName);
 
@@ -217,7 +213,6 @@ public class StatService {
 		// 연령별 인기
 		for (int i = 0; i < getAgeHitList.size(); i++) {
 			pieLabels.add("\"" + getAgeHitList.get(i).getAgeGroup() + "\"");
-			logger.info(getAgeHitList.get(i).getAgeGroup());
 			pieData.add("\"" + getAgeHitList.get(i).getVisitCount() + "\"");
 		}
 
@@ -231,7 +226,6 @@ public class StatService {
 		lmMap.put("pieLabels", pieLabels);
 		lmMap.put("pieData", pieData);
 
-		logger.info(lmMap.toString());
 
 		return lmMap;
 	};
