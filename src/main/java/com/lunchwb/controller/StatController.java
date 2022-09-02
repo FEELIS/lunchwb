@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lunchwb.service.StatService;
-import com.lunchwb.service.VisitedService;
 import com.lunchwb.vo.AloneVo;
 import com.lunchwb.vo.StatVo;
 import com.lunchwb.vo.VisitedVo;
@@ -30,13 +29,7 @@ import com.lunchwb.vo.VisitedVo;
 public class StatController {
 	
 	@Autowired
-	private VisitedService vstService;
-	
-	@Autowired
 	private StatService statService;
-	
-	
-
 	
 	private static final Logger logger = LoggerFactory.getLogger(StatController.class);
 
@@ -58,7 +51,7 @@ public class StatController {
 		logger.info("StatController > showVstList()");
 		logger.info(vstVo.toString());
 		
-		List<VisitedVo> vstList = vstService.showCalendar(vstVo);
+		List<VisitedVo> vstList = statService.showCalendar(vstVo);
 		logger.info(vstList.toString());
 	
 		return vstList;
