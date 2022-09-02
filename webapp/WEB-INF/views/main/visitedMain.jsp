@@ -688,35 +688,6 @@ $("#review-submit").on("submit", function(){
 })
 
 
-//카카오지도 API 불러오기
-async function callMap() {
-	// 지도가 표시될 구역
-	var mapDiv = document.getElementById('kakaoMap')
-	
-	// 지도의 기본 설정
-	var mapOption = {
-		center: new kakao.maps.LatLng(gpsVo.gpsY, gpsVo.gpsX),
-		level: 3		
-	}
-	
-	// 지도 표시하기, 축소 최대 레벨 설정
-	map = new kakao.maps.Map(mapDiv, mapOption)
-	map.setMaxLevel(4)
-	
-	
-	// 현재 위치 마커 표시하기
-	var currMarker = new kakao.maps.Marker({
-		position: new kakao.maps.LatLng(gpsVo.gpsY, gpsVo.gpsX),
-		image: new kakao.maps.MarkerImage(
-			"${pageContext.request.contextPath}/assets/img/markers/currMarker.png",
-			new kakao.maps.Size(40, 40)
-		)
-	})
-	
-	currMarker.setMap(map)
-}
-
-
 
 </script>
 
