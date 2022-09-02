@@ -303,7 +303,7 @@ public class UserController {
 		}
 		
 		
-		return "redirect:./";
+		return "user/joinSuccess";
 	}
 
 	@GetMapping("/logout")
