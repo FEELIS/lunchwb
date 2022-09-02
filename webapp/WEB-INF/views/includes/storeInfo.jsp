@@ -331,39 +331,29 @@ $("#calendar-area").on("click", ".show-menu", function(){
 })
 
 
-//페이지 구분 두고 나중에 마지막까지 안쓰면 다 지워버리겠어
 /* 모달에서 > 다시 다른 가게 정보 조회(버튼) */
 $("#modal-store").on("click", ".other-store-btn", function(){
-/* 
-	if(typeof indexJSP === 'undefined'){
-		console.log("바스켓 제외: 다른 가게리스트클릭 > 아무일도 잃어나지 않음")
-	}else{ */
 	
-		//모달에서 다른 모달로 넘어가기 : 페이지 상관없이 불러올 변수는 동일
-		var storeNo = $(this).attr("data-no")
-		var groupNo = $(this).attr("data-groupno")
-		var sortNo = $(this).attr("data-sortno")
-		console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
-		
-		storeInfoOpen(storeNo, groupNo, Number(sortNo))
-	/* } */
+	//모달에서 다른 모달로 넘어가기 : 페이지 상관없이 불러올 변수는 동일
+	var storeNo = $(this).attr("data-no")
+	var groupNo = $(this).attr("data-groupno")
+	var sortNo = $(this).attr("data-sortno")
+	console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
 	
+	$("#modal-store").modal("hide")
+	storeInfoOpen(storeNo, groupNo, Number(sortNo))
+
 })
 
 $("#modal-all-menu").on("click", ".other-store-btn", function(){
 	
-	/* if(typeof indexJSP === 'undefined'){
-		console.log("투표 결과: 다른 가게리스트클릭 > 아무일도 잃어나지 않음")
-	}else{ */
+	var storeNo = $(this).attr("data-no")
+	var groupNo = $(this).attr("data-groupno")
+	var sortNo = $(this).attr("data-sortno")
+	console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
 	
-		//모달에서 다른 모달로 넘어가기 : 페이지 상관없이 불러올 변수는 동일
-		var storeNo = $(this).attr("data-no")
-		var groupNo = $(this).attr("data-groupno")
-		var sortNo = $(this).attr("data-sortno")
-		console.log(groupNo + "번 그룹," + storeNo + "번 가게 정보 보기(종류: " + sortNo + ")")
-		
-		storeInfoOpen(storeNo, groupNo, Number(sortNo))
-	/* } */
+	$("#modal-all-menu").modal("hide")
+	storeInfoOpen(storeNo, groupNo, Number(sortNo))
 })
  
  
@@ -381,15 +371,13 @@ function storeInfoOpen(storeNo, groupNo, k){
 	drawOtherStores(storeNo, groupNo, k)
 	
 	//k:footer 버튼 용
-	//k=2 > 버튼 없음
-	//k=5 > 버튼 안띄움
+	//k=2 > 버튼 없음 //k=5 > 버튼 안띄움
 	if(k != 2 && k != 5){
 		modalSortOfStore(storeNo, k)
 	}
 	
-	setTimeout(() => $("#modal-store").modal("show"), 150);
-	//$("#modal-store").fadeIn(150);
-	//$("#modal-store").modal("show")
+	//setTimeout(() => $("#modal-store").modal("show"), 150);
+	$("#modal-store").modal("show")
 }
 
 
@@ -438,10 +426,6 @@ function storeBasicInfo(storeNo){
 						document.getElementById("imgIcon-"+i).className = "far fa-circle"
 					}
 				}
-				
-				console.log(storeImgName)
-				
-				
 				
 			}
 			
@@ -834,8 +818,7 @@ function drawOtherStores(storeNo, groupNo, sortNo){
 				}
 			}else{
 
-				//var str = '<span class="d-block">	</br></br>현재 위치가 설정되지 않았거나 근처에 같은 카테고리의 다른 가게가 없습니다</br></br></span>'
-				var str = '<div class="d-block" style="vertical-align: middle;">보여드릴 다른 가게가 없어요!</div>'
+				var str = '<div class="d-block"><br>현재 위치가 설정되지 않았거나 근처에 같은 카테고리의 다른 가게가 없습니다<br><br><br></div>'
 				 $(".other-stores-area").append(str)
 			}
 			
@@ -871,7 +854,7 @@ function modalSortOfStore(storeNo, k){
 												+'	<button class="btn btn-primary modal-btn-visited-cancel" type="button">방문취소</button>'
 												+'</a>')
 			}
-			//다녀온 가게가 아니면 블랙추가버튼이겠죠.. :  
+			//당일 방문 가게 정보 모달에서 다른 가게 정보 모달로 넘어갔을 때 블랙추가버튼(보여지는 다른 가게 자체가 블랙은 필터링)  
 			if("${authUser.userNo}" == "${visitedMap.groupLeader}"){
 				//다녀온 가게 블추 했는지?
 				if(storeNo == "${visitedMap.visitedVo.storeNo}"){
@@ -906,7 +889,7 @@ function modalSortOfStore(storeNo, k){
 				console.log("장바구니에 추가된 가게 있음")
 				for(var i=0; i<basket[curr_basket_group].length; i++){
 					
-					//장바구니에 있는 가게만 검사했어
+					//장바구니에 있는 가게 검사했어
 					if(basket[curr_basket_group][i].storeNo == storeNo){
 						console.log("바구니 가게: "+basket[curr_basket_group][i].storeNo)
 						
@@ -932,7 +915,7 @@ function modalSortOfStore(storeNo, k){
 
 			break
 			
-		//case 2: 
+		//case 2: 버튼그리지 않음
 		//k=2 : typeof indexJSP === 'undefined'
 			
 		case 3:
@@ -944,8 +927,7 @@ function modalSortOfStore(storeNo, k){
 			break
 		
 		case 4:
-		// 블랙리스트에서 블랙할 가게 검색(없음 > 추가 : 추가한 가게는 블랙제거로)
-			//그룹장만 가능(애초에 접근자체가 그룹장만 되는데)
+		// 블랙리스트에서 블랙할 가게 검색(없음 > 추가 : 추가한 가게는 블랙제거로) :그룹장만 가능
 			if("${authUser.userNo}" == "${map.groupLeader}"){
 				
 				//검색리스트에서 추가한적이 없으면 추가만 있음
