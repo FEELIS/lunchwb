@@ -116,6 +116,7 @@
 			FROM review r, visited v
 			WHERE r.visited_no = v.visited_no
 			AND store_no = #{storeNo}
+			AND review_reported = 0
 			AND review_file_name IS NOT NULL
 			AND ROWNUM <= 3
 			ORDER BY review_no DESC
