@@ -222,27 +222,21 @@
 
 											<tbody>
 												<tr>
-													<td>
-														<c:choose>
-															<c:when test="${visitedMap.relVo.lastVisit == null || visitedMap.relVo.lastVisit == '' }">
-                                                				-
-                                                			</c:when>
-															<c:otherwise>
-                                                				${visitedMap.relVo.lastVisit}일
-                                                			</c:otherwise>
-														</c:choose>
-													</td>
-													
-													<td>
-														<c:choose>
-															<c:when test="${visitedMap.relVo.lastVisit == null || visitedMap.relVo.lastVisit == '' }">
-                                                				-
-                                                			</c:when>
-															<c:otherwise>
-                                                				${visitedMap.relVo.groupName}
-                                                			</c:otherwise>
-														</c:choose>
-													</td>
+													<c:choose>
+														<c:when test="${visitedMap.relVo.lastVisit == null || visitedMap.relVo.lastVisit == '' }">
+                                               				<td colspan="2">
+                                               					오늘이 첫방문이에요
+                                               				</td>
+                                               			</c:when>
+														<c:otherwise>
+															<td>
+                                               					${visitedMap.relVo.lastVisit}일
+															</td>
+															<td>
+                                               					${visitedMap.relVo.groupName}
+															</td>
+                                               			</c:otherwise>
+													</c:choose>
 												</tr>
 											</tbody>
 
