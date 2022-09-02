@@ -39,37 +39,6 @@ public class VisitedService {
 	private UserDao userDao;
 	
 	
-	// ================== 달력에 가게라벨 띄우기 ==================
-	public List<VisitedVo> showCalendar(VisitedVo vstVo){
-		
-		// 현재 연도 가져오기
-		String thisYear = vstVo.getSelectMonth().substring(2,4);
-		// 현재 몇월인지 가져오기
-		int thisMonth = Integer.parseInt(vstVo.getSelectMonth().substring(4).replaceAll(" ",""));
-		
-		// 연도와 월 합치기용 getDate
-		String getDate = "";
-		getDate += thisYear;
-		
-		// 9월 이하 달 앞 '0' 추가 228 => 2208
-		if (thisMonth < 10) {
-			getDate += "0";
-			getDate += Integer.toString(thisMonth);
-		} else {
-			getDate += Integer.toString(thisMonth);
-		}
-		// vstVo 연월 자바에서 바꾼 형식으로 넣기(getDate)
-		vstVo.setSelectMonth(getDate);
-		
-		// 오라클 sql문으로 visited 테이블 조회
-		List<VisitedVo> calendarList = vstDao.getCalendar(vstVo);
-		
-		
-		
-		return calendarList;
-	};
-	
-	
 	//THIS IS 즉각적으로 결정했을 경우 (투표 no)
 	//그룹원 선택 
 	/****************** 여기갈래요> 함께할 그룹 멤버 리스트 for selection *****************/
@@ -179,13 +148,13 @@ public class VisitedService {
 		MultipartFile file = reviewVo.getFile();
 		
 		if(!file.isEmpty()) {
-			String saveDir = "C:\\javaStudy\\upload";			//윈도우용
-			//String saveDir = "/Users/choijungphil/javaStudy/upload";	//맥OS용
+			String saveDir = "C:\\javaStudy\\upload";									//윈도우용
+			//String saveDir = "/Users/choijungphil/javaStudy/upload";					//맥OS용
 			String orgName = file.getOriginalFilename();
 			String exName = orgName.substring(orgName.lastIndexOf("."));
 			String saveName = System.currentTimeMillis()+UUID.randomUUID().toString()+exName;
-			String filePath = saveDir + "\\" + saveName;			//윈도우용
-			// String filePath = saveDir + "/" + saveName;			//맥OS용
+			String filePath = saveDir + "\\" + saveName;								//윈도우용
+			//String filePath = saveDir + "/" + saveName;								//맥OS용
 			
 			reviewVo.setReviewFileName(saveName);
 			
