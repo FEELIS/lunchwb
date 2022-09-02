@@ -948,18 +948,25 @@ function modalSortOfStore(storeNo, k){
 			//그룹장만 가능(애초에 접근자체가 그룹장만 되는데)
 			if("${authUser.userNo}" == "${map.groupLeader}"){
 				
-				//블랙으로 추가 했는지 배열에서 검사
-				for(var i=0; i<blackAdded.length; i++){
-					//블랙 걸었어
-					if(blackAdded[i] == storeNo){
-						addModalBlackBtn(storeNo, "Y")
-						break
+				//검색리스트에서 추가한적이 없으면 추가만 있음
+				if(blackAdded.length == 0){
+					addModalBlackBtn(storeNo, "N")
 					
-					//마지막까지 없었어
-					}else if(i == blackAdded.length - 1){
-						addModalBlackBtn(storeNo, "N")
+				}else{
+					//블랙으로 추가 했는지 배열에서 검사
+					for(var i=0; i<blackAdded.length; i++){
+						//블랙 걸었어
+						if(blackAdded[i] == storeNo){
+							addModalBlackBtn(storeNo, "Y")
+							break
+						
+						//마지막까지 없었어
+						}else if(i == blackAdded.length - 1){
+							addModalBlackBtn(storeNo, "N")
+						}
 					}
 				}
+				
 			}
 			
 		//case 5:
