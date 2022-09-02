@@ -85,7 +85,7 @@ public class StoreService {
 		List<ReviewVo> reviewList = reviewDao.storeReviews(storeNo);
 		storeMap.put("reviewList", reviewList);
 		
-		//최근 리뷰 사진(null 가능이라 따로 최근 3개? - 이거는 리뷰 작성부터.............)
+		//최근 사진 최대 3개
 		List<String> imgList = reviewDao.recentImages(storeNo);
 		storeMap.put("imgList", imgList);
 		
