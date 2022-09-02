@@ -83,8 +83,8 @@ public class StatService {
 
 		int count = 0;
 
-		// String saveDir = "C:\\javaStudy\\upload"; //윈도우용
-		String saveDir = "/Users/choijungphil/javaStudy/upload"; // 맥OS용
+		String saveDir = "C:\\javaStudy\\upload";						//윈도우용
+		//String saveDir = "/Users/choijungphil/javaStudy/upload";		// 맥OS용
 		String orgName = "";
 		String saveName = "";
 
@@ -106,17 +106,16 @@ public class StatService {
 			System.out.println("saveName: " + saveName);
 
 			// 파일경로(디렉토리+저장파일명)
-			// String filePath = saveDir + "\\" + saveName; //윈도우용
-			String filePath = saveDir + "/" + saveName; // 맥OS용
+			String filePath = saveDir + "\\" + saveName; 											// 윈도우용
+			// String filePath = saveDir + "/" + saveName; 											// 맥OS용
 
 			aloneVo.setReviewFileName(saveName);
 
 			int reviewNo = aloneVo.getReviewNo();
 
 			// 이전 파일
-			// String prevFile = saveDir + "\\" +
-			// aloneDao.getReview(reviewNo).getReviewFileName(); //윈도우용
-			String prevFile = saveDir + "/" + aloneDao.getReview(reviewNo).getReviewFileName(); // 맥OS용
+			String prevFile = saveDir + "\\" + aloneDao.getReview(reviewNo).getReviewFileName();	// 윈도우용
+			//String prevFile = saveDir + "/" + aloneDao.getReview(reviewNo).getReviewFileName(); 	// 맥OS용
 			File deleteFile = new File(prevFile);
 
 			// 파일이 존재하는지 체크 존재할경우 true, 존재하지않을경우 false
