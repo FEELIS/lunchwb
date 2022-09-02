@@ -96,17 +96,15 @@
 var groupCount
 
 $("#btn-order-change").on("click", function(){
-	console.log("그룹 순서 변경 모달 열기")
-	
+	//console.log("그룹 순서 변경 모달 열기")
 	var $this = $(this)
 	groupCount = $this.data("count")
-	console.log("groupCount: " + groupCount)
 	
 })
 
 
 $("#group-order").on("click", ".ion-arrow-up-b", function(){
-	console.log("그룹 순서 위로 보내기")
+	//console.log("그룹 순서 위로 보내기")
 	
 	$this = $(this)
 	var orderNo = $this.data("order")
@@ -155,7 +153,7 @@ $("#group-order").on("click", ".ion-arrow-up-b", function(){
 
 
 $("#group-order").on("click", ".ion-arrow-down-b", function(){
-	console.log("그룹 순서 아래로 보내기")
+	//console.log("그룹 순서 아래로 보내기")
 	
 	$this = $(this)
 	var orderNo = $this.data("order")
@@ -200,23 +198,16 @@ $("#group-order").on("click", ".ion-arrow-down-b", function(){
 	//바꾸기
 	$("#order-"+orderNo).html(str1)
 	$("#order-"+afterNo).html(str2)
-	
 })
 
 
 $("#modal-group-order-change").on("click", ".btn-primary", function(){
-	console.log("그룹 순서 변경 버튼 클릭")
+	//console.log("그룹 순서 변경 버튼 클릭")
 	
 	var order1 = $("#order-1 [type='hidden']").val()
 	var order2 = $("#order-2 [type='hidden']").val()
 	var order3 = $("#order-3 [type='hidden']").val()
 	var order4 = $("#order-4 [type='hidden']").val()
-	
-	console.log(order1)
-	console.log(order2)
-	console.log(order3)
-	console.log(order4)
-	console.log(groupCount)
 	
 	var gpOrder = {
 		order1: order1,
