@@ -14,7 +14,7 @@
         <li class="nav-item"></li>
         
         <c:forEach items="${map.groupList}" var="groupVo">	
-	        <li class="nav-item">
+	        <li id="grouplist-${groupVo.groupNo}" class="nav-item">
 	        	<a class="nav-link group-nav-menu 
 	        		<c:if test='${groupVo.groupNo == map.groupNo}'> group-nav-active </c:if>"
 	        		<c:choose>

@@ -340,7 +340,7 @@ function alertInviteOk(notiVo){
 				//그 그룹을 보고 있을리는 없고 다른 그룹 보고있다면 그룹 aside에 채워주기
 				}else if(window.location.pathname == "/lunchwb/group/list"){
 					var str = ''
-					str += '<li class="nav-item">'
+					str += '<li id="grouplist-'+notiVo.groupNo+'" class="nav-item">'
 					str += '	<a class="nav-link group-nav-menu" href="${pageContext.request.contextPath}/group/list?no='+notiVo.groupNo+'">'+notiVo.groupName+'<br /></a>'
 					str += '</li>'
 					
@@ -349,7 +349,7 @@ function alertInviteOk(notiVo){
 				//블랙리스트 화면일 때
 				}else if(window.location.pathname == "/lunchwb/group/blacklist"){
 					var str = ''
-						str += '<li class="nav-item">'
+						str += '<li id="grouplist-'+notiVo.groupNo+'" class="nav-item">'
 						str += '	<a class="nav-link group-nav-menu" href="${pageContext.request.contextPath}/group/blacklist?no='+notiVo.groupNo+'">'+notiVo.groupName+'<br /></a>'
 						str += '</li>'
 						
@@ -442,15 +442,17 @@ function alertCheck(notiNo, groupNo, notiType){
 			if(result == "success"){
 				$("#noti-"+notiNo).remove()
 				
-				if(window.location.pathname == "/lunchwb/group/list" && groupNo == "${map.groupNo}"){
-					//내가 그룹장이고 그룹페이지를 보고있는데 초대 수락알림이 왔으면 그 사람 포함한 목록을 그려)
-					//그룹원이었는데 그룹장이 됐다는 알림을 확인했어)
-					if(notiType == 2 || notiType == 6 || notiTYpe == 7){
-						location.replace("${pageContext.request.contextPath}/group/list?no="+groupNo)
-					
-					//내가 그룹장이 아니고 리스트를 보는데 그룹에서 강퇴당했다는 알림을 확인하면 첫번째 그룹으로 보내줘
+				if(window.location.pathname == "/lunchwb/group/list"){
+					//2 내가 그룹장이고 그룹페이지를 보고있는데 초대 수락알림이 왔으면 그 사람 포함한 목록을 그려)
+					//6 그룹원이었는데 그룹장이 됐다는 알림을 확인했어)
+					//7 어디에 있던 그룹 이름이 바꼈어
+					if(groupNo == "${map.groupNo}" && (notiType == 2 || notiType == 6|| notitype == 7)){
+							location.replace("${pageContext.request.contextPath}/group/list?no=${map.groupNo}")
+							
+					//5 내가 그룹장이 아니고 리스트를 보는데 그룹에서 강퇴당했다는 알림을 확인하면 첫번째 그룹으로 보내줘
 					}else if(notiType == 5){
-						location.replace("${pageContext.request.contextPath}/group/list")
+						location.replace("/lunchwb/group/list")
+						
 					}
 				}
 				
