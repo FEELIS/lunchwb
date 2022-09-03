@@ -20,6 +20,7 @@ import com.lunchwb.vo.GPSVo;
 import com.lunchwb.vo.GroupVo;
 import com.lunchwb.vo.NotificationVo;
 import com.lunchwb.vo.StoreVo;
+import com.lunchwb.vo.UserVo;
 
 @RequestMapping("/notice")
 @Controller
@@ -121,10 +122,20 @@ public class NotiController {
 	/****************************** 알림 확인 *******************************************/
 	@ResponseBody
 	@PostMapping("/check")
-	public String alertCheck(@RequestBody int notiNo) {
-		logger.info("alertCheck...notiVo={}", notiNo);
+	public String alertCheck(@RequestBody NotificationVo notiVo, HttpSession session) {
+		logger.info("alertCheck...notiVo={}", notiVo);
 		
-		String result = notiService.alertCheck(notiNo);
+		String result = notiService.alertCheck(notiVo.getNotiNo());
+		
+		//그룹명 변경/ 그룹 강퇴당했을 시 바구니 세션 변경
+		if(result == "success" && (notiVo.getNotiType() == 7 || notiVo.getNotiNo() == 5)) {
+			if(session.getAttribute("basketGroup") != null) {
+				session.removeAttribute("basketGroup");
+			}
+			
+			List<GroupVo> basketGroup = basketService.getBasketGroup(((UserVo)session.getAttribute("authUser")).getUserNo());
+			session.setAttribute("basketGroup", basketGroup);
+		}
 		
 		return result;
 	}

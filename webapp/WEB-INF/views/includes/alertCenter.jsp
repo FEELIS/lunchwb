@@ -430,19 +430,32 @@ $("#draw-noti-area").on("click", ".btn-alert-check", function(){
 /* 알림 확인 처리 */
 function alertCheck(notiNo, groupNo, notiType){
 	
+	var notiVo = {
+		notiNo : notiNo,
+		notiType : notiType
+	}
+	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/notice/check",
 		type : "post",
 		contentType : "application/json",
-		data : JSON.stringify(notiNo),
+		data : JSON.stringify(notiVo),
 		dataType : "json",
 		
 		success : function(result){
 			
 			if(result == "success"){
+
 				$("#noti-"+notiNo).remove()
+				drawNotiBadge(-1)
 				
-				if(window.location.pathname == "/lunchwb/group/list"){
+				//그룹 이름이 바뀌었거나 강퇴당했을 때(초대를 받는건 1-10 따로 처리)
+				if(notiType == 7 || notiType == 5){
+					if(window.location.pathname == "/lunchwb/" && typeof indexJSP != 'undefined' && indexJSP == true){
+						location.replace("${pageContext.request.contextPath}/")
+					}
+					
+				}else if(window.location.pathname == "/lunchwb/group/list"){
 					//2 내가 그룹장이고 그룹페이지를 보고있는데 초대 수락알림이 왔으면 그 사람 포함한 목록을 그려)
 					//6 그룹원이었는데 그룹장이 됐다는 알림을 확인했어)
 					//7 어디에 있던 그룹 이름이 바꼈어
@@ -455,9 +468,6 @@ function alertCheck(notiNo, groupNo, notiType){
 						
 					}
 				}
-				
-				drawNotiBadge(-1)
-				
 				
 			}else{
 				console.log("알림 확인 처리 실패")
