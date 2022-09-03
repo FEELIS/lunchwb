@@ -333,6 +333,30 @@ function alertInviteOk(notiVo){
 				
 				drawNotiBadge(-1)
 				
+				//추천메인 > 리로드 
+				if(window.location.pathname == "/lunchwb/" && typeof indexJSP != 'undefined' && indexJSP == true){
+					location.replace("${pageContext.request.contextPath}/")
+					
+				//그 그룹을 보고 있을리는 없고 다른 그룹 보고있다면 그룹 aside에 채워주기
+				}else if(window.location.pathname == "/lunchwb/group/list"){
+					var str = ''
+					str += '<li class="nav-item">'
+					str += '	<a class="nav-link group-nav-menu" href="${pageContext.request.contextPath}/group/list?no='+notiVo.groupNo+'">'+notiVo.groupName+'<br /></a>'
+					str += '</li>'
+					
+					$("#group-aside-ul").append(str)
+				
+				//블랙리스트 화면일 때
+				}else if(window.location.pathname == "/lunchwb/group/blacklist"){
+					var str = ''
+						str += '<li class="nav-item">'
+						str += '	<a class="nav-link group-nav-menu" href="${pageContext.request.contextPath}/group/blacklist?no='+notiVo.groupNo+'">'+notiVo.groupName+'<br /></a>'
+						str += '</li>'
+						
+						$("#group-aside-ul").append(str)
+				}
+				
+				
 			}else{
 				console.log("초대 수락 처리 실패")
 			

@@ -337,6 +337,7 @@ if("${authUser.userNo}" == "${map.leader}"){
 }
 
 
+
 //그룹이름변경 > 엔터
 var changeName = document.getElementById("modal-group-name-change")
 changeName.addEventListener("keyup", function (event) {
