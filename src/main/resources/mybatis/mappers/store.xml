@@ -85,7 +85,7 @@
 			       ,score
 			FROM (SELECT s.store_no, f.menu_2nd_cate_name, s.store_name, s.store_road_address, b.rating_bujang, s.store_opening_hours, s.store_breaktime, store_x, store_y
 			             ,ROUND(SQRT(POWER(ABS(s.store_x-#{curr_location.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(s.store_y-#{curr_location.gpsY})*6400000*2*3.14/360, 2)), 0) distance
-			             ,(NVL(v.cnt, 0)/10 + (r.rating_naver-4) * 100 + NVL(b.rating_bujang, 0) * 50 + NVL(gv.group_cnt, 0) * 10 + NVL(gr.group_rating-3, 0) * 10 - NVL(rv.visit, 0) * 10000) score
+			             ,(NVL(v.cnt, 0)/10 + (r.rating_naver-4) * 100 + NVL(b.rating_bujang, 0) * 50 + NVL(gv.group_cnt, 0) * 10 + NVL(gr.group_rating-3, 0) * 10 - NVL(rv.visit, 0) * 10000 - NVL(ABS(age.year - av.groupAge), 20) * 0.5) score
 			      FROM   store s, rating_others r, food_2nd_category f
 			             ,(SELECT store_no, COUNT(*) cnt 
 			               FROM   visited 
@@ -108,7 +108,19 @@
 			               FROM   visited
 			               WHERE  group_no = #{groupNo}
 			               AND    visited_date >= SYSDATE - 2
-			               GROUP BY store_no) rv                     
+			               GROUP BY store_no) rv   
+			             ,(SELECT store_no, ROUND(AVG(year), 0) year
+			               FROM   visited v
+			                      ,(SELECT group_no, AVG(user_birth_year) year 
+			                        FROM users u, group_member m 
+			                        WHERE u.user_no = m.user_no 
+			                        GROUP BY group_no) u
+			               WHERE  v.group_no = u.group_no
+			               GROUP BY store_no) age
+			             ,(SELECT AVG(user_birth_year) groupAge 
+			               FROM   users u, group_member m
+			               WHERE  u.user_no = m.user_no
+			               AND    group_no = #{groupNo}) av                 
 			      WHERE  s.store_no = r.store_no
 			      AND    s.store_no = b.store_no(+)
 			      AND    s.store_no = v.store_no(+)
@@ -116,6 +128,7 @@
 			      AND    s.store_no = gv.store_no(+)
 			      AND    s.store_no = gr.store_no(+)
 			      AND    s.store_no = rv.store_no(+)
+			      AND    s.store_no = age.store_no(+)
 	    ]]>
 		
 		<foreach collection="filter_excluded" item="cate_1st" separator="">
