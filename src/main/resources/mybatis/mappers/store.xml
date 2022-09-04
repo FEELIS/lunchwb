@@ -85,7 +85,7 @@
 			       ,score
 			FROM (SELECT s.store_no, f.menu_2nd_cate_name, s.store_name, s.store_road_address, b.rating_bujang, s.store_opening_hours, s.store_breaktime, store_x, store_y
 			             ,ROUND(SQRT(POWER(ABS(s.store_x-#{curr_location.gpsX})*COS(37)*6400000*2*3.14/360, 2) + POWER(ABS(s.store_y-#{curr_location.gpsY})*6400000*2*3.14/360, 2)), 0) distance
-			             ,(NVL(v.cnt, 0)/10 + (r.rating_naver-4) * 100 + NVL(b.rating_bujang, 0) * 50 + NVL(gv.group_cnt, 0) * 10 + NVL(gr.group_rating-3, 0) * 10 - NVL(rv.visit, 0) * 10000 - NVL(ABS(age.year - av.groupAge), 20) * 0.5) score
+			             ,(NVL(v.cnt, 0)/10 + (r.rating_naver-4) * 100 + NVL(b.rating_bujang, 0) * 50 + NVL(gv.group_cnt, 0) * 10 + NVL(gr.group_rating-3, 0) * 10 - NVL(rv.visit, 0) * 10000 - NVL(ABS(age.year - av.groupAge), 20) - ABS(NVL(groupRate.rate, 0.5) - NVL(rate.rate, 0.5)) * 5) score
 			      FROM   store s, rating_others r, food_2nd_category f
 			             ,(SELECT store_no, COUNT(*) cnt 
 			               FROM   visited 
@@ -120,7 +120,34 @@
 			             ,(SELECT AVG(user_birth_year) groupAge 
 			               FROM   users u, group_member m
 			               WHERE  u.user_no = m.user_no
-			               AND    group_no = #{groupNo}) av                 
+			               AND    group_no = #{groupNo}) av   
+			             ,(SELECT ROUND(female / (female+male), 2) rate
+			               FROM   (SELECT COUNT(*) female
+			                       FROM   group_member m, users u
+			                       WHERE  m.user_no = u.user_no
+			                       AND    group_no = #{groupNo}
+			                       AND    user_sex = 'female')
+			                     ,(SELECT COUNT(*) male   
+			                       FROM   group_member m, users u
+			                       WHERE  m.user_no = u.user_no
+			                       AND    group_no = #{groupNo}
+			                       AND    user_sex = 'male')) groupRate
+			             ,(SELECT  s.store_no, ROUND((NVL(female, 0) / (NVL(female, 0) + NVL(male, 0))), 2) rate     
+			               FROM    store s
+			                     ,(SELECT store_no, COUNT(*) female
+			                       FROM   visited v, group_member m, users u
+			                       WHERE  v.group_no = m.group_no
+			                       AND    u.user_no = m.user_no
+			                       AND    user_sex = 'female'
+			                       GROUP BY store_no) a 
+			                     ,(SELECT store_no, COUNT(*) male
+			                       FROM   visited v, group_member m, users u
+			                       WHERE  v.group_no = m.group_no
+			                       AND    u.user_no = m.user_no
+			                       AND    user_sex = 'male'
+			                       GROUP BY store_no) b    
+			                WHERE  s.store_no = a.store_no
+			                AND    s.store_no = b.store_no) rate
 			      WHERE  s.store_no = r.store_no
 			      AND    s.store_no = b.store_no(+)
 			      AND    s.store_no = v.store_no(+)
@@ -129,6 +156,7 @@
 			      AND    s.store_no = gr.store_no(+)
 			      AND    s.store_no = rv.store_no(+)
 			      AND    s.store_no = age.store_no(+)
+			      AND    s.store_no = rate.store_no(+)
 	    ]]>
 		
 		<foreach collection="filter_excluded" item="cate_1st" separator="">
@@ -145,7 +173,7 @@
 		         AND     s.store_no NOT IN (SELECT store_no FROM blacklist WHERE group_no = #{groupNo})
 			     ORDER BY score DESC)
 		    WHERE  distance <= 500
-		    AND    ROWNUM <= 100
+		    AND    ROWNUM <= 50
 		    ORDER BY DBMS_RANDOM.value
 		]]>
 	</select>
