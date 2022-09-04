@@ -5,6 +5,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
 <script type="text/javascript"src="${pageContext.request.contextPath}/assets/js/bs-init.js"></script>
 <script type="text/javascript"src="${pageContext.request.contextPath}/assets/js/theme.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
 
 <li id="user-alert" class="nav-item dropdown d-xxl-flex no-arrow">
@@ -19,7 +20,7 @@
     </div>
 </li>
 
-
+<div id="msgStack"></div>
 
 <script type="text/javascript">
 
@@ -332,6 +333,7 @@ function alertInviteOk(notiVo){
 				$("#noti-"+notiNo).remove()
 				
 				drawNotiBadge(-1)
+				alertUpdate(notiVo)
 				
 				//추천메인 > 리로드 
 				if(window.location.pathname == "/lunchwb/" && typeof indexJSP != 'undefined' && indexJSP == true){
@@ -396,6 +398,7 @@ $("#draw-noti-area").on("click", ".btn-alert-invite-reject", function(){
 				$("#noti-"+notiNo).remove()
 
 				drawNotiBadge(-1)
+				alertUpdate(notiVo)
 				
 			}else{
 				console.log("초대 거절 처리 실패")
@@ -475,12 +478,73 @@ function alertCheck(notiNo, groupNo, notiType){
 			}
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			console.error(status + " : " + error)
 		}
 	})
 }
 
 
+var sock = null
+
+$(document).ready(function(){
+		connectWs()
+})
+
+function connectWs(){
+	
+	sock = new SockJS(getContextPath()+'/alarm')
+	
+	sock.onopen = function() {
+	 		console.log('open')
+	 
+	 }
+	
+	sock.onmessage = function(e) {
+	  console.log('message', e.data)
+		//  	  sock.close();
+	 }
+	
+	sock.onclose = function() {
+	    console.log('close')
+	 }
+
+}
+
+
+function getContextPath() {
+    var hostIndex = location.href.indexOf( location.host ) + location.host.length
+    return location.href.substring( hostIndex, location.href.indexOf('/', hostIndex + 1) )
+} 
+
+
+function alertUpdate(notiVo){
+	var root = getContextPath(),
+	noticeurl = "/notice/alertUpdate",
+	receiver = notiVo.userNo,
+	groupName = notiVo.groupName,
+	notiType = notiVo.notiType
+	data = {userNo : receiver,
+			groupName : groupName,
+			notiType : notiType}
+	
+	$.ajax({
+		url : noticeurl+root,
+		type : 'PUT',
+		contentType: 'application/json',
+		data : JSON.stringify(data),
+		success : function(result){
+			console.log(result)
+				 if(sock){
+				 var Msg = receiver+","+groupName+","+notiType
+				 console.log(Msg)
+				 sock.send(Msg)
+				 }
+		}, error : function(result){
+			console.log("에러" + result.result)
+		}
+		
+	})
+}
 
 
 </script>

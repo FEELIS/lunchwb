@@ -9,10 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.socket.WebSocketSession;
 
 import com.lunchwb.service.BasketService;
 import com.lunchwb.service.NotiService;
@@ -43,6 +46,18 @@ public class NotiController {
 		int notiCnt = notiService.notiCount(userNo);
 		
 		return notiCnt;
+	}
+
+	
+	/*************************** 소켓......... *******************************************/
+	@ResponseBody
+	@PutMapping("/alertUpdate/{hostroot}")
+	public String alertUpdate(@RequestBody NotificationVo notiVo, @PathVariable(name="hostroot") String root, WebSocketSession socketSession, HttpSession session) {
+		
+		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		
+		return "result";
 	}
 	
 	
