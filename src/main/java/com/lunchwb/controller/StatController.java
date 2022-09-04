@@ -32,13 +32,12 @@ public class StatController {
 	private StatService statService;
 	
 	private static final Logger logger = LoggerFactory.getLogger(StatController.class);
-
+	
 	
 	// ============================================ 캘린더 ============================================
 	// =============== 달력폼 ===============
 	@GetMapping("/statCalendar")
 	public String statCalendarForm() {
-		logger.info("StatController > statCalendarForm()");
 		
 		return "stat/statCalendar";
 	};
@@ -48,58 +47,44 @@ public class StatController {
 	@ResponseBody
 	@RequestMapping(value = "/showVstList",method = {RequestMethod.GET,RequestMethod.POST})
 	public List<VisitedVo> showVstList(@RequestBody VisitedVo vstVo){
-		logger.info("StatController > showVstList()");
-		logger.info(vstVo.toString());
-		
 		List<VisitedVo> vstList = statService.showCalendar(vstVo);
-		logger.info(vstList.toString());
 	
 		return vstList;
 	};
 	
+	// ============================================ 리뷰 ============================================
+	// =============== 리뷰내역폼 ===============
 	@GetMapping("/reviewList")
 	public String reviewListForm() {
-		logger.info("StatController > reviewListForm()");
-		
 		
 		return "stat/reviewList";
 	};
-	// ============================================ 리뷰 ============================================
-	// =============== 리뷰내역폼 ===============
+	
+	// =============== 리뷰내역 가져오기 ===============
 	@ResponseBody
 	@RequestMapping(value="/showReviewList", method = {RequestMethod.GET,RequestMethod.POST})
 	public List<AloneVo> reviewListForm(@RequestBody AloneVo aloneVo) {
-		logger.info("StatController > reviewListForm()");
 		// 현재 접속중인 유저의 리뷰들 가져오기
 		int userNo = aloneVo.getUserNo();
 		List<AloneVo> reviewList = statService.reviewList(userNo);
 		
-		logger.info(reviewList.toString());
 		return reviewList;
 	};
 	
 	// 리뷰 수정폼
 	@GetMapping("/modifyReview/{reviewNo}")
 	public String modifyReviewForm(@PathVariable("reviewNo")int reviewNo, Model model) {
-		logger.info("StatController > modifyReviewForm()");
-		
 		AloneVo aloneVo = statService.getReview(reviewNo);
-		logger.info(aloneVo.toString());
 		
 		model.addAttribute("aloneVo",aloneVo);
 		return "stat/modifyReview";	// 리다이렉트로 수정
 	};
 	
 	@RequestMapping(value = "/modifyReview",method = {RequestMethod.GET,RequestMethod.POST})
-	public String modifyReview(@RequestParam int reviewNo, @RequestParam String reviewContent ,@RequestParam int userScore, @RequestPart(value = "file", required = false) MultipartFile file) {
-		logger.info("StatController > modifyReviewForm()");
-		
+	public String modifyReview(@RequestParam int reviewNo, @RequestParam String reviewContent ,
+			@RequestParam int userScore, @RequestPart(value = "file", required = false) MultipartFile file) {
 		AloneVo aloneVo = new AloneVo(reviewNo,reviewContent,userScore);
-		logger.info(aloneVo.toString());
-		logger.info(file.toString());
-		
-		int count = statService.modifyReview(aloneVo,file);
-		logger.info(Integer.toString(count)+ "건 수정하였습니다."); 
+		statService.modifyReview(aloneVo,file);
 		
 		return "stat/reviewList";	// 리다이렉트로 수정
 	};
@@ -109,8 +94,6 @@ public class StatController {
 	@RequestMapping(value = "/deleteReview",method = {RequestMethod.GET,RequestMethod.POST})
 	public String deleteReview(@RequestBody AloneVo aloneVo) {
 		int reviewNo = aloneVo.getReviewNo();
-		logger.info("deleteVo"+Integer.toString(reviewNo));
-		
 		String result = statService.delReviewResult(reviewNo);
 		
 		return result; 
@@ -121,23 +104,12 @@ public class StatController {
 	@GetMapping("/addAlone")
 	public String addAloneForm() {
 		logger.info("StatController > addAloneForm()");
-		
-		
-		
-		
-		
-		
 		return "stat/addReview";
 	};
 	
 	@PostMapping("/addAlone")
 	public String addAlone() {
 		logger.info("StatController > addAlone()");
-		
-		
-		
-		
-		
 		
 		return "stat/reviewList";
 	};
@@ -147,20 +119,15 @@ public class StatController {
 	// =============== 통계폼 ===============
 	@GetMapping("/statChart")
 	public String statChartForm() {
-		logger.info("StatController > statChartForm()");
-		
-		
 		
 		return "stat/statChart";
 	};
 	
+	// =============== 차트그리기 ===============
 	@ResponseBody
 	@RequestMapping(value = "/getStatChart", method = {RequestMethod.GET,RequestMethod.POST})
 	public Map<String,List<String>> getStatChart(@RequestBody StatVo statVo){
-		logger.info("StatController > getStatChart()");
 		Map<String,List<String>> chartMap = statService.getStatChart(statVo);
-		logger.info(chartMap.toString());
-		
 		
 		return chartMap;
 	};
