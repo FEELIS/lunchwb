@@ -121,7 +121,6 @@ let selected = {
 	voteIdx : -1,
 	voteVoted : 0
 }
-console.log(selected)
 
 //////////////////// 페이지 로드시 ///////////////////////////////////////////////////////////////////////
 
@@ -150,7 +149,6 @@ $(".vote-select-name-btn").on("click", function(){
 	selected["userName"] = $(this).text()
 	selected["userNo"] = parseInt($(this).attr("data-user-no"))
 	
-	console.log(selected)
 })
 
 /////////////////// 가게 클릭시 /////////////////////////////////////////////////////////////
@@ -166,13 +164,11 @@ $("input:radio[name=voteStore]").on("click", function(){
 	selected["voteIdx"] = parseInt($(this).attr("data-vote-idx"))
 	selected["voteVoted"] = parseInt($(this).attr("data-storeNo"))
 	
-	console.log(selected)
 })
 
 /////////////////// 투표하기 클릭 //////////////////////////////////////////////////////////
 
 $("#vote-vote-btn").on("click", function(){
-	console.log(selected)
 	// 투표 가능한 시각인지 확인
 	if (new Date() >= voteEndTime) { // 종료시각 이후면 alert 후 메인으로 이동
 		alert("이미 종료된 투표입니다")
@@ -272,7 +268,6 @@ const countDownTimer = function(voteEndTime) {
 function changeTimeFormat(time) {
 	var timeSplit = time.split(" ")
 	var newTime = new Date(timeSplit[1] + " " + timeSplit[2] + ", " + timeSplit[5] + " " + timeSplit[3])
-	console.log(newTime)
 	
 	return newTime
 }

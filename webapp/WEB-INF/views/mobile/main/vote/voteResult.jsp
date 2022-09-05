@@ -117,10 +117,6 @@ var voteURL = 'http://localhost:8088${pageContext.request.contextPath}/' + ${vot
 
 Kakao.init('f78c3d22061aa91b824c89a07b348da9');
 
-// SDK 초기화 여부를 판단합니다.
-
-console.log(Kakao.isInitialized());
-
 function kakaoShare() {
 	
 	var title
@@ -140,9 +136,7 @@ function kakaoShare() {
 	        webUrl: voteURL
 	    }
 	}
-	
-	console.log(content)
-	console.log(todayStore);
+
 	Kakao.Link.sendDefault({
 	    objectType: 'feed',
 	    content: content,
