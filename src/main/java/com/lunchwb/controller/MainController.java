@@ -48,7 +48,7 @@ public class MainController {
 		logger.info("MainController");
 		System.out.println("**********************************************************************************************************************************************************");
 		
-		logger.info("client ip: " + home(request));
+		//logger.info("client ip: " + home(request));
 		
 		int userState = 0;
 		Integer userNo = null;
@@ -58,7 +58,6 @@ public class MainController {
 			UserVo loginUser = (UserVo)session.getAttribute("authUser");
 			userNo = loginUser.getUserNo();
 			
-			logger.info("회원: " + loginUser.getUserNo() + "번, " + loginUser.getUserName());
 			int checkState = userService.checkUserState(userNo);
 			
 			if (checkState != loginUser.getUserState()) {
@@ -66,9 +65,6 @@ public class MainController {
 				session.setAttribute("authUser", loginUser);
 			}
 			userState = loginUser.getUserState();
-			
-		} else {
-			logger.info("비회원");
 			
 		}
 		
@@ -85,11 +81,9 @@ public class MainController {
 		}		
 		
 		model.addAttribute("userState", userState);
-		logger.info("userState: " + userState);
 		
 		Map<String, Object> voteAsideData;
-		
-		logger.info("userState: " + userState + " > main으로 이동");
+				
 		
 		switch (userState) {
 			case 1:

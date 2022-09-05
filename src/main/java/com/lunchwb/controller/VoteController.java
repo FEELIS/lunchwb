@@ -44,9 +44,7 @@ public class VoteController {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("")
 	public String newVote(Model model, HttpSession session, HttpServletResponse response) throws IOException {
-		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("투표 생성 페이지로 이동");
-		System.out.println("**********************************************************************************************************************************************************");
 
 		Integer groupNo = (Integer)session.getAttribute("curr_basket_group");
 		
@@ -88,20 +86,14 @@ public class VoteController {
 	@ResponseBody
 	@PostMapping("/makeVote")
 	public int makeVote(@RequestBody Map<String, String> voteData, HttpSession session) throws ParseException {
-		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("새 투표 생성하기");
-		System.out.println("**********************************************************************************************************************************************************");
 
 		String voteEndDate = voteData.get("voteEndDate");
 		String voteMember = voteData.get("voteMember");
 		String currBasket = voteData.get("currBasket");
 		String notTodayMember = voteData.get("notTodayMember");
 		Double currX = Double.parseDouble(voteData.get("currX"));
-		Double currY = Double.parseDouble(voteData.get("currY"));
-		
-		System.out.println(currX);
-		System.out.println(currY);
-		
+		Double currY = Double.parseDouble(voteData.get("currY"));		
 
 		if (voteEndDate.contains(".")) {
 			voteEndDate = voteEndDate.substring(0, voteEndDate.indexOf("."));
@@ -126,9 +118,7 @@ public class VoteController {
 	@ResponseBody
 	@PostMapping("/checkVoteMem")
 	public List<String> checkVoteMem(@RequestBody int[] checkVoteMem) {
-		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("투표 참여 불가능 회원 확인");
-		System.out.println("**********************************************************************************************************************************************************");
 		
 		return voteService.checkVoteMember(checkVoteMem);
 	}
@@ -137,11 +127,8 @@ public class VoteController {
 	// 투표하기
 	@PostMapping("/submitVote")
 	public String submitVote(@ModelAttribute VoteVo myVote, HttpSession session) throws JsonProcessingException {
-		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("투표하기");
-		System.out.println("**********************************************************************************************************************************************************");
 
-		logger.info(myVote.toString());
 		voteService.submitVote(myVote);
 		
 		String url = "redirect:/";
@@ -155,9 +142,7 @@ public class VoteController {
 	// 여기갈래요
 	@PostMapping("/visitConfirm")
 	public String visitConfirm(@ModelAttribute VoteVo visitData) {
-		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("여기갈래요");
-		System.out.println("**********************************************************************************************************************************************************");
 
 		voteService.visitConfirm(visitData);
 		
@@ -168,9 +153,7 @@ public class VoteController {
 	// 투표 초기화하기
 	@PostMapping("/resetVote")
 	public String resetVote(@RequestParam("voteNo") int voteNo) {
-		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("투표 초기화하기");
-		System.out.println("**********************************************************************************************************************************************************");
 
 		voteService.cancelVote(voteNo);
 		
@@ -181,9 +164,7 @@ public class VoteController {
 	// 투표 수정하기페이지 호출
 	@PostMapping("/modifyVoteReady")
 	public String modifyVoteReady(HttpSession session) {
-		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("투표 수정하기로 이동");
-		System.out.println("**********************************************************************************************************************************************************");
 		
 		UserVo loginUser = (UserVo)session.getAttribute("authUser");
 			
@@ -199,9 +180,7 @@ public class VoteController {
 	@ResponseBody
 	@PostMapping("/modifyVote")
 	public boolean modifyVote(@RequestBody Map<String, Object> voteData) {
-		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("투표 수정하기");
-		System.out.println("**********************************************************************************************************************************************************");
 		
 		String voteEndDate = (String)voteData.get("voteEndDate");
 		String voteMember = (String)voteData.get("voteMember");
@@ -225,9 +204,7 @@ public class VoteController {
 	// 투표 > 다른 사람들이랑 먹을래요
 	@PostMapping("/escapeVote")
 	public String escapeVote(@ModelAttribute VoteVo myVote) {
-		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("다른 사람들이랑 먹을래요");
-		System.out.println("**********************************************************************************************************************************************************");
 		
 		voteService.escapeVote(myVote);
 		
@@ -238,9 +215,7 @@ public class VoteController {
 	// 투표 완료 후 다른 가게로 변경
 	@PostMapping("/changeVotedStore")
 	public String changeVotedStore(@ModelAttribute VoteVo changeVote) {		
-		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("투표한 가게 변경");
-		System.out.println("**********************************************************************************************************************************************************");
 	
 		voteService.changeVotedStore(changeVote);
 		
@@ -251,9 +226,7 @@ public class VoteController {
 	// 투표 종료하기
 	@PostMapping("/finishVote")
 	public String finishVote(@RequestParam int voteNo) {
-		System.out.println("**********************************************************************************************************************************************************");
 		logger.info("투표종료");
-		System.out.println("**********************************************************************************************************************************************************");
 	
 		voteService.finishVote(voteNo);
 		

@@ -60,7 +60,6 @@ public class BasketController {
 			session.removeAttribute("curr_basket_group");
 		}
 		session.setAttribute("curr_basket_group", currBasketGroup);
-		logger.info("현재 장바구니 그룹: " + currBasketGroup + " - 세션 저장 완료");
 		
 		return result;
 		
@@ -101,7 +100,6 @@ public class BasketController {
 			session.removeAttribute("basket");
 		}
 		session.setAttribute("basket", basket);
-		logger.info(basket.toString());
 		
 		return basket;
 	}
@@ -136,7 +134,6 @@ public class BasketController {
 			session.removeAttribute("basket");
 		}
 		session.setAttribute("basket", basket);
-		logger.info(basket.toString());
 		
 		return basket;
 	}
@@ -146,7 +143,7 @@ public class BasketController {
 	@ResponseBody
 	@PostMapping("/addMoreStore")
 	public Map<Integer, List<StoreVo>> addMoreStore(HttpSession session) {
-		logger.info(" 장바구니 추가 추천");
+		logger.info("장바구니 추가 추천");
 		
 		GPSVo curr_location = (GPSVo)session.getAttribute("curr_location");
 		
@@ -168,7 +165,6 @@ public class BasketController {
 			session.removeAttribute("basket");
 		}
 		session.setAttribute("basket", basket);
-		logger.info(basket.toString());
 		
 		return basket;
 	}
@@ -191,7 +187,6 @@ public class BasketController {
 			session.removeAttribute("basket");
 		}
 		session.setAttribute("basket", basket);
-		logger.info(basket.toString());
 		
 		return basket;
 	}
@@ -215,7 +210,6 @@ public class BasketController {
 			session.removeAttribute("basket");
 		}
 		session.setAttribute("basket", basket);
-		logger.info(basket.toString());
 		
 		return basket;
 	}
@@ -276,7 +270,6 @@ public class BasketController {
 	@PostMapping("/saveFilterSession")
 	public boolean saveFilterSession(@RequestBody List<Integer> filter_excluded, HttpSession session) {
 		logger.info("세션 필터 저장");
-		logger.info("filter_excluded: " + filter_excluded.toString());
 		
 		if (session.getAttribute("filter_excluded") != null) {
 			session.removeAttribute("filter_excluded");
