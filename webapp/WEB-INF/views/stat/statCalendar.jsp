@@ -424,6 +424,8 @@
                 	
                 	console.log(vstList);
                     var j = 0;
+                    
+                    if (vstList.length > 0) {
 
                     for (var i = 0; i < selectedElement.length; i++) {
                         var thisdate = selectedElement[i].dataset.vdate;
@@ -433,44 +435,54 @@
                         
                         // 한달에 최대 5개의 그룹을 보여준다
                         var str = '';
-                        if (vstList[j].visitedDate === thisdate) {
-                            str += '<div class="event ';
-                            if (vstList[j].seq === 1) {
-                                str += 'bg-success ';
-                            } else if (vstList[j].seq === 2) {
-                                str += 'bg-warning ';
-                            } else if (vstList[j].seq === 3) {
-                                str += 'bg-danger ';
-                            } else if (vstList[j].seq === 4) {
-                                str += 'bg-info ';
-                            } else if (vstList[j].seq === 5) {
-                                str += 'bg-secondary ';
-                            }
-                            str += 'show-menu" data-visit="'+vstList[j].visitedDate+'" data-storeno="'+vstList[j].storeNo+'">' + vstList[j].menu1stCateName + "/" + vstList[j].menuName + '</div>';
-                            
-                            str += '<div class="event ';
-                            if (vstList[j].seq === 1) {
-                                str += 'bg-success ';
-                            } else if (vstList[j].seq === 2) {
-                                str += 'bg-warning ';
-                            } else if (vstList[j].seq === 3) {
-                                str += 'bg-danger ';
-                            } else if (vstList[j].seq === 4) {
-                                str += 'bg-info ';
-                            } else if (vstList[j].seq === 5) {
-                                str += 'bg-secondary ';
-                            }
-
-                            str += 'show-menu" data-visit="'+vstList[j].visitedDate+'" data-storeno="'+vstList[j].storeNo+'">' + vstList[j].storeName + '</div>';
-                            $("#vday" + i).after(str);
-
-                            j++;
-
-                        }
+                        
+                        
+	                        if (vstList[j].visitedDate === thisdate) {
+	                            str += '<div class="event ';
+	                            if (vstList[j].seq === 1) {
+	                                str += 'bg-success ';
+	                            } else if (vstList[j].seq === 2) {
+	                                str += 'bg-warning ';
+	                            } else if (vstList[j].seq === 3) {
+	                                str += 'bg-danger ';
+	                            } else if (vstList[j].seq === 4) {
+	                                str += 'bg-info ';
+	                            } else if (vstList[j].seq === 5) {
+	                                str += 'bg-secondary ';
+	                            }
+	                            str += 'show-menu" data-visit="'+vstList[j].visitedDate+'" data-storeno="'+vstList[j].storeNo+'">' + vstList[j].menu1stCateName;
+	                            
+	                            if (vstList[j].menuName != null) {
+	                        	    str += "/" + vstList[j].menuName
+								}
+	                            str += '</div>';
+	                            
+	                            str += '<div class="event ';
+	                            if (vstList[j].seq === 1) {
+	                                str += 'bg-success ';
+	                            } else if (vstList[j].seq === 2) {
+	                                str += 'bg-warning ';
+	                            } else if (vstList[j].seq === 3) {
+	                                str += 'bg-danger ';
+	                            } else if (vstList[j].seq === 4) {
+	                                str += 'bg-info ';
+	                            } else if (vstList[j].seq === 5) {
+	                                str += 'bg-secondary ';
+	                            }
+	
+	                            str += 'show-menu" data-visit="'+vstList[j].visitedDate+'" data-storeno="'+vstList[j].storeNo+'">' + vstList[j].storeName + '</div>';
+	                            $("#vday" + i).after(str);
+	
+	                            j++;
+	
+	                        }
+                        
+                        
 
                         if (vstList.length <= j) {
                             break;
-                        }
+                      	 	}
+                    	}
                     }
 
                 },
