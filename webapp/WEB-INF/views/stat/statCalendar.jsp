@@ -130,7 +130,8 @@
             11: "11월",
             12: "12월",
         };
-
+        
+        // 1주를 일요일부터 시작하는 배열로 지정
         var dayMap = {
             0: "일요일",
             1: "월요일",
@@ -175,8 +176,11 @@
 
             return new Date(year, month, 0);
         }
-
-        // ==========================================================================================================
+        // ================================= /날짜데이터 가져오기 끝 =================================
+        
+        
+        
+        // ================================= 달력 그리기 =================================
         // 달력 정보 구성 배열로 하기
         function generateWeekData(currentDate, weekNo) {
             var firstDay = getFirstDayOfMonth(currentDate);
@@ -295,8 +299,6 @@
 
             str += '</div>';
             
-            
-            
             str +=
                 '<ol class="day-names list-unstyled week' +
                 (settings.startOnSunday ? " start-on-sunday" : "") +
@@ -365,11 +367,7 @@
                         dateDisabled = 'disabled="disabled" ';
                     }
 
-                    str +=
-                        '<li class="';
-                    
-
-                    
+                    str += '<li class="';
                     
                      str +='day' + disabled + selected + today + '" data-date="' + day + '" ' + dateDisabled + '>' +
                         '<div class="date">' +
@@ -433,6 +431,7 @@
                         // DDD MM YYYY 형식으로 짤라주기
                         thisdate = thisdate.substring(4, 15)
                         
+                        // 한달에 최대 5개의 그룹을 보여준다
                         var str = '';
                         if (vstList[j].visitedDate === thisdate) {
                             str += '<div class="event ';
@@ -452,23 +451,17 @@
                             str += '<div class="event ';
                             if (vstList[j].seq === 1) {
                                 str += 'bg-success ';
-
                             } else if (vstList[j].seq === 2) {
                                 str += 'bg-warning ';
-
                             } else if (vstList[j].seq === 3) {
                                 str += 'bg-danger ';
-                                
                             } else if (vstList[j].seq === 4) {
                                 str += 'bg-info ';
-
                             } else if (vstList[j].seq === 5) {
                                 str += 'bg-secondary ';
-
                             }
 
                             str += 'show-menu" data-visit="'+vstList[j].visitedDate+'" data-storeno="'+vstList[j].storeNo+'">' + vstList[j].storeName + '</div>';
-
                             $("#vday" + i).after(str);
 
                             j++;
@@ -478,9 +471,7 @@
                         if (vstList.length <= j) {
                             break;
                         }
-
                     }
-
 
                 },
                 error: function(XHR, status, error) {
@@ -686,9 +677,10 @@
             return this;
         };
     })(jQuery); //jquery로 취급하겠다 라고 선언
+    
 
 
-    // eval로 문구를 자바스크립트로 변환한다.
+    // eval로 문구(String 타입)를 자바스크립트로 변환한다.
     var config =
         `function selectDate(date) {
       $('.calendar').updateCalendarOptions({
