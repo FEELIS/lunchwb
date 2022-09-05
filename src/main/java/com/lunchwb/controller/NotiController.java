@@ -143,7 +143,7 @@ public class NotiController {
 		String result = notiService.alertCheck(notiVo.getNotiNo());
 		
 		//그룹명 변경/ 그룹 강퇴당했을 시 바구니 세션 변경
-		if(result == "success" && (notiVo.getNotiType() == 7 || notiVo.getNotiNo() == 5)) {
+		if(result == "success" && (notiVo.getNotiType() == 7 || notiVo.getNotiType() == 5)) {
 			if(session.getAttribute("basketGroup") != null) {
 				session.removeAttribute("basketGroup");
 			}
