@@ -349,11 +349,14 @@ changeName.addEventListener("keyup", function (event) {
 
 
 $("#out-group").on("click", function(){
-	var memberCount = Number($("#memberCount").text()) + Number($("#inviteCount").text())
 	
-	if(memberCount > 1){
-		alert("다른 그룹원이 존재하여 탈퇴가 불가능합니다.")
-		return false
+	if("${authUser.userNo}" == "${map.leader}"){
+		var memberCount = Number($("#memberCount").text()) + Number($("#inviteCount").text())
+		
+		if(memberCount > 1){
+			alert("다른 그룹원이 존재하여 탈퇴가 불가능합니다.")
+			return false
+		}
 	}
 	
 	$("#modal-group-leave").modal("show")
