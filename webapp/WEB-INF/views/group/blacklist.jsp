@@ -394,10 +394,6 @@ function addBlackThis(blackVo, addNo){
 				blackAdded.push(addBlackVo.storeNo)
 				//console.log(blackAdded)
 				
-				$("#modal-store").modal("hide")
-				$("#modal-reviews").modal("hide")
-				$("#modal-all-menu").modal("hide")
-				
 			}else{
 				alert("블랙리스트 추가 실패")
 			}
@@ -409,22 +405,7 @@ function addBlackThis(blackVo, addNo){
 }
 
 
-//블랙리스트 추가한 가게 블랙리스트 목록 가장 앞으로 추가
-/* 
-function addBlackTable(blackVo){
-	var storeNo = blackVo.storeNo
-	
-	$("#nonBlack").remove()
-	$("#black-count").text($("#black-count").text() +1)
-	
-	//검색테이블에서 블랙추가 버튼 삭제
-	$("#search-" + storeNo + " .group-black-delete").remove()
-	
-	//블랙리스트 목록에 추가
-	renderTable(blackVo, 1)
-}
 
- */
 //그룹블랙리스트 페이지) black-body 테이블/가게모달/리뷰모달/메뉴모달 블랙 삭제 버튼 클릭
 $("#black-body").on("click", ".group-black-delete", function(){
 	if(confirm("삭제하시겠습니까?")){

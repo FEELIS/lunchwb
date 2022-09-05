@@ -921,7 +921,7 @@ function modalSortOfStore(storeNo, k){
 		// 블랙리스트 테이블에서 조회(이미 있음 > 제거)
 			// 그룹장만 가능
 			if("${authUser.userNo}" == "${map.groupLeader}"){
-				$(".store-button-area").append('<button class="btn btn-light btn-del-black" type="button" data-storeNo="'+storeNo+'">블랙제외</button>')
+				addModalBlackBtn(storeNo, "Y")
 			}
 			break
 		
@@ -949,6 +949,7 @@ function modalSortOfStore(storeNo, k){
 				}
 				
 			}
+			break
 			
 		//case 5:
 		// 캘린더에서 조회
@@ -1232,10 +1233,10 @@ function isBlack(blackVo, bno){
 function addModalBlackBtn(storeNo, result){
 	//블랙맞음
 	if(result == "Y"){
-		$(".store-button-area").append('<button class="btn btn-light modal-btn-del-black" type="button" data-storeno="' + storeNo + '">블랙삭제</button>')
+		$(".store-button-area").append('<button class="btn btn-light modal-btn-del-black" type="button" data-storeno="' + storeNo + '" data-bs-dismiss="modal">블랙삭제</button>')
 	//블랙아냐
 	}else{
-		$(".store-button-area").append('<button class="btn btn-light modal-btn-add-black" type="button" data-storeno="' + storeNo + '">블랙추가</button>')
+		$(".store-button-area").append('<button class="btn btn-light modal-btn-add-black" type="button" data-storeno="' + storeNo + '" data-bs-dismiss="modal">블랙추가</button>')
 	}
 }
 
