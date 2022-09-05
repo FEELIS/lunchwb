@@ -57,14 +57,13 @@
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
 <script>
-//const url = "ws://localhost:8088/${pageContext.request.contextPath}/alarm"
 const url = "${pageContext.request.contextPath}/alarm"
 
 let ws
 
 $(document).ready(function(){
 	if ("${authUser.userName}" != "") {
-		ws = new WebSocket(url)
+		ws = new SockJS(url)
 		ws.onmessage = onMessage
 		ws.onclose = onClose
 		
