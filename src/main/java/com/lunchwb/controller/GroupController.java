@@ -61,18 +61,17 @@ public class GroupController {
 		
 		Map<String, Object> map = groupService.groupList(authUser, groupNo);
 		
-		if(map.get("groupName") == null || map.get("groupName") == "") {
+		//내 그룹 없음
+		if((Integer)map.get("groupCount") == 0) {
+			return "redirect:add";
+		}
+
+		if(map.get("leader") == null || map.get("leader") == "") {
 			return "error/403";
 		}
 		
 		model.addAttribute("map", map);
 		
-		//내 그룹 없음
-		if((Integer)map.get("groupCount") == 0) {
-			return "redirect:add";
-		}
-		
-		//내 그룹이 아님(가져온 멤버목록이 없음) - 내가 있으면 0 일 수가 없어요
 		
 		return "group/groupList";
 	}
