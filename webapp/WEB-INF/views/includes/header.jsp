@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/alert.css">
 <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/fonts/ionicons.min.css">
 
+
 <c:set var="URL" value="${pageContext.request.requestURL}" />
 <c:if test="${fn:contains(URL, 'group') or fn:contains(URL, 'stat') or fn:contains(URL, 'customer') or fn:contains(URL, 'user')}">
 	<script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.min.js"></script>
@@ -52,3 +53,39 @@
     	</c:choose>      
     </div>
 </nav>
+
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+
+<script>
+//const url = "ws://localhost:8088/${pageContext.request.contextPath}/alarm"
+const url = "${pageContext.request.contextPath}/alarm"
+
+let ws
+
+$(document).ready(function(){
+	if ("${authUser.userName}" != "") {
+		ws = new WebSocket(url)
+		ws.onmessage = onMessage
+		ws.onclose = onClose
+		
+		ws.onopen = function() {
+			alert("서버 연결 성공")		
+		}
+	}
+})
+
+
+function onMessage(event){
+	var data=event.data
+	alert('서버에서 데이터 받음: ${data}')
+	//연결종료
+	socket.close()
+	
+}
+
+//연결 종료시 실행
+function onClose(event){
+	alert("연결 끊김")
+}
+
+</script>
