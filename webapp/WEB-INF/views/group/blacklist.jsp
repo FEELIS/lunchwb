@@ -269,7 +269,7 @@ $("#black-add-search button").on("click", function(){
 			$("#black-search-count").text(searchList.length)
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 		}
 		
 	})
@@ -390,15 +390,14 @@ function addBlackThis(blackVo, addNo){
 				renderTable(addBlackVo, 1)
 				//추가된 목록
 				blackAdded.push(addBlackVo.storeNo)
-				console.log(blackAdded)
-				console.log(blackAdded)
+				//console.log(blackAdded)
 			
 			}else{
 				alert("블랙리스트 추가 실패")
 			}
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 		}
 	})
 }

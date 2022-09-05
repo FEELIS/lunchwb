@@ -77,7 +77,7 @@
 
 $("#addGroupForm").on("submit", function(){
 	var groupName = $("#addGroupForm [name = 'groupName']").val()
-	console.log(groupName)
+	//console.log(groupName)
 	
 	if(groupName == null || groupName == ""){
 		alert("그룹 이름을 입력해주세요")

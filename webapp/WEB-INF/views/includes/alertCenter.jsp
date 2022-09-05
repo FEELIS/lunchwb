@@ -61,7 +61,7 @@ function notiCount(){
 			}	
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 		}
 	 
 	})
@@ -124,7 +124,7 @@ $("#user-alert").on("click", function(){
 			
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 		}
 	 
 	})
@@ -268,7 +268,7 @@ function renderNoti(notiVo){
 
 /* 초대-수락 버튼을 눌렀을 때 */
 $("#draw-noti-area").on("click", ".btn-alert-invite-ok", function(){
-	console.log("초대 수락 버튼 누름")
+	//console.log("초대 수락 버튼 누름")
 	var userNo = "${authUser.userNo}"
 	
 	var notiType = $(this).attr("data-type")
@@ -305,7 +305,7 @@ $("#draw-noti-area").on("click", ".btn-alert-invite-ok", function(){
 			
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 		}
 	})
 })
@@ -356,12 +356,12 @@ function alertInviteOk(notiVo){
 				
 				
 			}else{
-				console.log("초대 수락 처리 실패")
+				//console.log("초대 수락 처리 실패")
 			
 			}
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 		}
 	})
 }
@@ -370,7 +370,7 @@ function alertInviteOk(notiVo){
 
 /* 초대-거절 버튼을 눌렀을 때 */
 $("#draw-noti-area").on("click", ".btn-alert-invite-reject", function(){
-	console.log("초대 거절 버튼 누름")
+	//console.log("초대 거절 버튼 누름")
 	
 	var notiVo = {
 		notiType : $(this).attr("data-type"),
@@ -397,12 +397,12 @@ $("#draw-noti-area").on("click", ".btn-alert-invite-reject", function(){
 				alertUpdate(notiVo)
 				
 			}else{
-				console.log("초대 거절 처리 실패")
+				//console.log("초대 거절 처리 실패")
 			
 			}
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 		}
 	})
 	
@@ -472,12 +472,12 @@ function alertCheck(notiNo, groupNo, notiType){
 				}
 				
 			}else{
-				console.log("알림 확인 처리 실패")
+				//console.log("알림 확인 처리 실패")
 			
 			}
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error)
+			//console.error(status + " : " + error)
 		}
 	})
 }
@@ -496,12 +496,12 @@ function connectWs(){
 	sock = new SockJS(getContextPath()+'/alarm')
 	
 	sock.onopen = function() {
-	 		console.log('socket: open')
+	 		//console.log('socket: open')
 	 
 	 }
 	
 	sock.onmessage = function(e) {
-	  console.log('message', e.data)
+	  //console.log('message', e.data)
 	  //alert("확인하지 않은 알림이 있습니다.")
 	  
 	  $('.toast').remove()
@@ -520,7 +520,7 @@ function connectWs(){
 	 }
 	
 	sock.onclose = function() {
-	    console.log('close')
+	    //console.log('close')
 	 }
 
 }

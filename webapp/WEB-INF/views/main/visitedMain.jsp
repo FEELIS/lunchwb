@@ -434,11 +434,11 @@
 const visitedVo = "${visitedMap.visitedVo}"
 const myVisit = "${visitedMap.relVo}"
 const todayReview = "${visitedMap.reviewVo}"
-console.log("오늘 방문 정보" + visitedVo)
-console.log("오늘 방문한 곳의 지난 방문 정보" + myVisit)
+//console.log("오늘 방문 정보" + visitedVo)
+//console.log("오늘 방문한 곳의 지난 방문 정보" + myVisit)
 
 if(todayReview != null && todayReview != ""){
-	console.log("오늘의 리뷰 정보" + todayReview)
+	//console.log("오늘의 리뷰 정보" + todayReview)
 }
 
 $(document).ready(async function(){
@@ -623,7 +623,7 @@ $("#modal-all-menu").on("click", ".modal-btn-del-black", function(){
 $("#today-star-icon").on("click", ".starScore", function(){
 	var score = $(this).attr("data-score")
 	var state = $(this).attr("data-stt")
-	console.log(score + "번 별 클릭, 상태: " + state)
+	//console.log(score + "번 별 클릭, 상태: " + state)
 	
 	if(state == "off"){
 		$("#today-star-icon [name='userScore']").val(score)
@@ -659,7 +659,7 @@ function prev_img(input) {
 
 
 $("#review-submit").on("submit", function(){
-	console.log("리뷰 등록 버튼 클릭")
+	//console.log("리뷰 등록 버튼 클릭")
 
 	var menuNo = $("[name = 'menuNo']").val()
 	if(menuNo == null){

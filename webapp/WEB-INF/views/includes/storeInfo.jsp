@@ -324,7 +324,7 @@ $("#calendar-area").on("click", ".show-menu", function(){
 			}
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 		}
 	})
 	
@@ -486,7 +486,7 @@ function storeBasicInfo(storeNo){
 			
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 		}
 	 
 	})
@@ -509,7 +509,7 @@ function modalStoreDistance(storeNo) {
 			}
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 		}
  
 	})
@@ -713,7 +713,7 @@ $("#store-about").on("click", ".dropdown-item", function(){
 			
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 		}
  
 	})

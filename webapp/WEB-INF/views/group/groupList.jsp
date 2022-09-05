@@ -391,7 +391,6 @@ $(".form-check-input").on("click", function(){
 			dataType : "json",
 			
 			success : function(result){
-				console.log(result)
 				
 				if(result == "can't"){
 					if(confirm("부장님을 교체하시겠습니까?") != true) {
@@ -407,7 +406,7 @@ $(".form-check-input").on("click", function(){
 			}, 
 			
 			error : function(XHR, status, error) {
-				console.error(status + " : " + error)
+				//console.error(status + " : " + error)
 				
 			}
 		})
@@ -418,7 +417,7 @@ $(".form-check-input").on("click", function(){
 
 /* 초대할 그룹원 확인 */
 $("#groupmem-invt button").on("click", function(){
-	console.log("그룹원 초대 버튼 클릭")
+	//console.log("그룹원 초대 버튼 클릭")
 	
 	var members = $("#memberCount").text() + $("inviteCount").text()
 	if(members == 15){
@@ -445,7 +444,7 @@ $("#groupmem-invt button").on("click", function(){
 		dataType : "json",
 		
 		success : function(checkMap){
-			console.log(checkMap.state)
+			//console.log(checkMap.state)
 			
 			//해당 이메일 유저 초대 가능
 			if(checkMap.state == "possible"){
@@ -488,7 +487,7 @@ function memberCheck(userNo, userEmail, gpCount){
 		dataType : "json",
 		
 		success : function(state){
-			console.log(state)
+			//console.log(state)
 			
 			if(state == "already"){
 				alert("이미 그룹 멤버입니다")
@@ -548,7 +547,7 @@ function invt(groupVo){
 			
 		}, 
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 			
 		}
 	})
@@ -558,7 +557,7 @@ function invt(groupVo){
 
 /* 그룹원 직접 추가 */
 $("#groupmem-add button").on("click", function(){
-	console.log("비회원 그룹 멤버 추가 버튼 클릭")
+	//console.log("비회원 그룹 멤버 추가 버튼 클릭")
 	
 	var members = $("#memberCount").text() + $("inviteCount").text()
 	if(members == 15){
@@ -633,7 +632,7 @@ $("#groupmem-add button").on("click", function(){
 			
 		}, 
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 			
 		}
 	})
@@ -643,7 +642,7 @@ $("#groupmem-add button").on("click", function(){
 
 /* 멤버 직접 추가 > 테이블 추가 */
 function render(memberVo){
-	console.log("render()")
+	//console.log("render()")
 	
 	var str = ''
 		str += '<tr id="member-' + memberVo.userNo + '">'
@@ -673,7 +672,7 @@ function render(memberVo){
 
 /* 그룹 이름 변경 모달 띄우기 */
 $(".group-content-title .btn-sm").on("click", function(){
-	console.log("그룹 이름 변경 버튼 클릭")
+	//console.log("그룹 이름 변경 버튼 클릭")
 	$("#modal-group-name-change [name = 'groupName']").val("")
 	return true
 })
@@ -723,7 +722,7 @@ $("#modal-group-name-change .btn-primary").on("click", function(){
 			
 		}, 
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 			
 		}
 	})
@@ -785,7 +784,7 @@ $("#memberListArea").on("click", ".groupmem-delete", function(){
  
 
 $(".btn-leader-pass").on("click", function(){
-	console.log("그룹장 위임 버튼 클릭 > 모달")
+	//console.log("그룹장 위임 버튼 클릭 > 모달")
 	$("#dropdown-group-leader-pass").val("그룹원(회원) 선택")
 })
 
@@ -831,7 +830,7 @@ $("#modal-group-leader-pass .btn-primary").on("click", function(){
 			}
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 		}
 		
 	})
