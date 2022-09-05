@@ -65,7 +65,7 @@
 		                    		그룹장 위임
 		                    	</button>
 	                    	</c:if>
-                    		<c:if test='${authUser.userNo != map.leader || map.userCount == 1}'> 
+                    		<c:if test='${authUser.userNo != map.leader || map.memberCount == 1}'> 
 		                    	<button id="out-group" class="btn btn-primary group-title-btn btn-group-leave" type="button">
 		                    		그룹 탈퇴
 		                    	</button>
