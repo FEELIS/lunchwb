@@ -39,7 +39,7 @@
 		left outer join groups g on g.group_no = v.group_no 
 		left outer join food_1st_category f1 on f1.menu_1st_cate_no = f2.menu_1st_cate_no 
 		left outer join menu m on m.menu_no = v.menu_no 
-		where to_char(v.visited_date,'YYMM')=to_char(to_date(2209,'YYMM'),'YYMM') 
+		where to_char(v.visited_date,'YYMM')=to_char(to_date(${selectMonth},'YYMM'),'YYMM') 
 		and v.user_no = #{userNo} 
 		order by visited_date asc
    </select>
