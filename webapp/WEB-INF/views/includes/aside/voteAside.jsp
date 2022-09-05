@@ -146,7 +146,6 @@
 
 /////////////////////// 전역 변수 //////////////////////////////
 
-console.log("${voteMember}")
 let curr_basket_group = parseInt("${voteInfo.groupNo}")
 let voteEndTime = "${voteInfo.voteEndTime}"
 let clientIp
@@ -178,9 +177,7 @@ $(document).ready(async function(){
 	} else { 
 		if (userState == "1") { // 로그인 안했고 투표 안한 회원 - 투표할 때 보낼 정보 추가
 			selected["userNo"] = $(".vote-selected-name").attr("data-user-no")
-			selected["voteMemberNo"] = $(".vote-selected-name").attr("data-vote-member-no")
-	
-			console.log(selected)
+			selected["voteMemberNo"] = $(".vote-selected-name").attr("data-vote-member-no")	
 		}
 	}
 })
@@ -192,7 +189,6 @@ $(document).ready(async function(){
 async function getIpClient() {
   try {
     const response = await axios.get('https://api.ipify.org?format=json')
-    console.log("clientIp: " + response["data"]["ip"])
     
     clientIp = response["data"]["ip"]
     selected["voteIp"] = clientIp
@@ -214,8 +210,6 @@ $(".can-click-name").on("click", function(){
 	
 	selected["voteMemberNo"] = parseInt($(this).attr("data-vote-member-no"))
 	selected["userName"] = $(this).text()
-	
-	console.log(selected)
 })
 
 
@@ -241,8 +235,6 @@ $(".vote-vote-btn").on("click", function(){
 	var voteRow = $(this).closest(".vote-table-row")
 	selected["voteIdx"] = parseInt(voteRow.attr("data-vote-idx"))
 	selected["voteVoted"] = parseInt(voteRow.attr("data-storeNo"))
-	
-	console.log(selected)
 
 	// form으로 묶어서 controller에 전송	
 	postVoteData("${pageContext.request.contextPath}/vote/submitVote", selected)
@@ -297,7 +289,6 @@ $("#vote-member-escape-btn").on("click", function(){
 			"voteIdx" : myIdx 		
 		}
 		
-		console.log(modifyData)
 		postVoteData("${pageContext.request.contextPath}/vote/escapeVote", modifyData)
 		
 	} else {
@@ -396,7 +387,6 @@ const countDownTimer = function(voteEndTime) {
 function changeTimeFormat(time) {
 	var timeSplit = time.split(" ")
 	var newTime = new Date(timeSplit[1] + " " + timeSplit[2] + ", " + timeSplit[5] + " " + timeSplit[3])
-	console.log(newTime)
 	
 	return newTime
 }
@@ -438,9 +428,6 @@ async function callMap() {
 	var gpsX = parseFloat("${voteInfo.currX}")
 	var gpsY = parseFloat("${voteInfo.currY}")
 	
-	console.log(gpsX)
-	console.log(gpsY)
-	
 	// 지도의 기본 설정
 	var mapOption = {
 		center: new kakao.maps.LatLng(gpsY, gpsX),
@@ -462,7 +449,6 @@ async function callMap() {
 	
 	currMarker.setMap(map)
 	
-	console.log(${voteIdx})
 	// 장바구니 항목들 지도에 마커로 표시하기
 	for (var i = 0; i <= ${voteIdx}; i++) {
 		var currTr = $("[data-vote-idx=" + i + "]")

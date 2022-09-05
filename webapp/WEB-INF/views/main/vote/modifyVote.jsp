@@ -671,8 +671,6 @@ $("#make-vote-btn").on("click", function(){
 		voteNo : parseInt("${voteInfo.voteNo}"),
 		notTodayMember : notTodayMem
 	}
-	
-	console.log(voteData)
 		
 	$.ajax({
 		type : "POST",

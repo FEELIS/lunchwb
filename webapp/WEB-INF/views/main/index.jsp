@@ -142,7 +142,6 @@ let overlays = []
 
 // 위치재설정 버튼 클릭 시 > 모달 텍스트 불러옴 + 모달 보여주게
 $("#location-change-btn").on("click", function(){
-	console.log(countBasketItems(curr_basket_group))
 	var curr_address = ""
 	
 	// 모달 내부에 표시될 현재 위치 불러오기
@@ -233,7 +232,6 @@ async function clearBasket() {
 		type : "post",
 		async : false,
 		success : function() {
-			console.log("장바구니 비우기 완료")
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
@@ -314,7 +312,6 @@ async function callMap() {
 				geocoder.coord2Address(newX, newY, async function(result, status) {
 					if (status === kakao.maps.services.Status.OK) {
 						newAddress = result[0].address.address_name // 주소 획득
-						console.log(newAddress)
 											
 						var changeAddr = confirm("[" + newAddress + "]로 기준 위치를 변경하시겠습니까? 추천된 가게 목록은 초기화됩니다.")
 						
@@ -376,7 +373,6 @@ async function callMap() {
 $("#kakaoMap").on("click", ".customoverlay", function(){
 	var storeNo = parseInt($(this).attr("data-storeNo"))
 	var groupNo = curr_basket_group
-	console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
 
 	storeInfoOpen(storeNo, groupNo, 1)
 })

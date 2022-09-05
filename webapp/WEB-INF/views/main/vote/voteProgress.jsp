@@ -95,13 +95,7 @@ var basketItem = ["${voteBasket[0].storeName}", "${voteBasket[1].storeName}", "$
 // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
 Kakao.init('f78c3d22061aa91b824c89a07b348da9');
 
-// SDK 초기화 여부를 판단합니다.
-console.log(Kakao.isInitialized());
-
-function kakaoShare() {
-	console.log(basketItem);
-	console.log(basketItem.length);
-	
+function kakaoShare() {	
 	var descr;
 	if(basketItem[2] == '' || basketItem[2] == null){
 		descr = basketItem[0] + ", " + basketItem[1];
@@ -141,7 +135,6 @@ function kakaoShare() {
 $("#kakaoMap").on("click", ".customoverlay", function(){
 	var storeNo = parseInt($(this).attr("data-storeNo"))
 	var groupNo = curr_basket_group
-	console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
 
 	storeInfoOpen(storeNo, groupNo, 2)
 })

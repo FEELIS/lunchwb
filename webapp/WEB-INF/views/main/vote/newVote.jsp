@@ -523,7 +523,6 @@ $("#make-vote-btn").on("click", function(){
 	let voteEndDate = new Date()
 	voteEndDate.setHours($("#vote-end-hour").val())
 	voteEndDate.setMinutes($("#vote-end-min").val())
-	console.log(voteEndDate)
 	
 	// 현재시각이 투표종료시각 이후라면
 	if (voteEndDate <= new Date()) {
@@ -581,7 +580,6 @@ $("#make-vote-btn").on("click", function(){
 	
 	voteMem = JSON.stringify({"mem" : voteMember})
 	notTodayMem = JSON.stringify({"mem" : notTodayMember})
-	console.log(voteMem)
 	
 	
 	// 투표 참여중인 회원 있는지 확인
@@ -638,7 +636,6 @@ $("#make-vote-btn").on("click", function(){
 			curr_basket.push(basket[curr_basket_group][i])
 		}
 	}
-	console.log(curr_basket)
 	currBasket = JSON.stringify(curr_basket)
 	
 	
@@ -711,13 +708,9 @@ $("#vote-link-modal").on("hide.bs.modal", function(){
 // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
 Kakao.init('f78c3d22061aa91b824c89a07b348da9');
 
-// SDK 초기화 여부를 판단합니다.
-console.log(Kakao.isInitialized());
-
 function kakaoShare() {
 	var voteURL = $("#vote-url-input").val();
 	var basketItem = [JSON.parse(currBasket)[0].storeName, JSON.parse(currBasket)[1].storeName, JSON.parse(currBasket)[2].storeName];
-	console.log(basketItem)
 	var desc;
 	
 	if(basketItem[2] == '' || basketItem[2] == null){

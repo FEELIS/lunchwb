@@ -68,7 +68,7 @@ $(document).ready(function(){
 		ws.onclose = onClose
 		
 		ws.onopen = function() {
-			alert("서버 연결 성공")		
+			console.log("서버 연결 성공")		
 		}
 	}
 })
@@ -77,14 +77,15 @@ $(document).ready(function(){
 function onMessage(event){
 	var data=event.data
 	alert('서버에서 데이터 받음: ${data}')
-	//연결종료
-	socket.close()
-	
+
 }
 
 //연결 종료시 실행
 function onClose(event){
 	alert("연결 끊김")
+	
+	//연결종료
+	socket.close()
 }
 
 </script>

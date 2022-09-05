@@ -196,9 +196,7 @@ $("html").on("click", ".vote-result-letsgo-btn", function(){
 		voteNo : parseInt("${voteInfo.voteNo}"),
 		storeNo : storeNo,
 		voteMember : voteMember
-	}
-	
-	console.log(visitData)
+	}	
 	postVoteData("${pageContext.request.contextPath}/vote/visitConfirm", visitData)
 })
 
@@ -223,9 +221,6 @@ var voteURL = ${voteInfo.voteNo};
 // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
 Kakao.init('f78c3d22061aa91b824c89a07b348da9');
 
-// SDK 초기화 여부를 판단합니다.
-console.log(Kakao.isInitialized());
-
 function kakaoShare() {
 	var title
 	
@@ -245,8 +240,6 @@ function kakaoShare() {
 	    }
 	}
 	
-	console.log(content)
-	console.log(todayStore);
 	Kakao.Link.sendDefault({
 	    objectType: 'feed',
 	    content: content,
@@ -304,7 +297,6 @@ $(".vote-graph-store").on("click", function(){
 	var storeNo = parseInt($(this).attr("data-storeNo"))
 	
 	var groupNo = parseInt("${voteInfo.groupNo}")
-    console.log(groupNo +"번 그룹, " + storeNo+"번 가게 정보 보기")
     
     $(".store-button-area").html("")
     
