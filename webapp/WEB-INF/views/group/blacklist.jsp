@@ -284,11 +284,13 @@ function renderTable(blackVo, opt){
 	
 	if(opt == 1){
 		str += '<tr id="black-' + blackVo.storeNo + '">'
+		str += '	<td class="black-store-name" data-storeno="' + blackVo.storeNo + '">' + blackVo.storeName + '</td>'
+	
 	}else {
 		str += '<tr id="search-'+ blackVo.storeNo +'">'
+		str += '	<td class="store-search-name" data-storeno="' + blackVo.storeNo + '">' + blackVo.storeName + '</td>'
 	}
 	
-	str += '	<td class="store-search-name" data-storeno="' + blackVo.storeNo + '">' + blackVo.storeName + '</td>'
 	str += '	<td>' + blackVo.menu2ndCateName +'</td>'
 	str += '	<td>' + blackVo.storeRoadAddress + '</td>'
 	
@@ -391,7 +393,11 @@ function addBlackThis(blackVo, addNo){
 				//추가된 목록
 				blackAdded.push(addBlackVo.storeNo)
 				//console.log(blackAdded)
-			
+				
+				$("#modal-store").modal("hide")
+				$("#modal-reviews").modal("hide")
+				$("#modal-all-menu").modal("hide")
+				
 			}else{
 				alert("블랙리스트 추가 실패")
 			}

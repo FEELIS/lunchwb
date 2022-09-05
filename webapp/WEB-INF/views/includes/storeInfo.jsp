@@ -271,7 +271,7 @@ $("#visited-store-name").on("click", function(){
 })
 
 
-/* 블랙리스트(alrady)가게 조회 */
+/* 블랙리스트(already)가게 조회 */
 $("#black-body").on("click", ".black-store-name", function(){
 	var storeNo = $(this).attr("data-storeno")
 	var groupNo = "${map.groupNo}"
@@ -823,7 +823,7 @@ function drawOtherStores(storeNo, groupNo, sortNo){
 			
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error)
+			//console.error(status + " : " + error)
 		}
 	})
 	
@@ -1003,7 +1003,7 @@ function blackAdd(blackVo, bAddNo){
 		dataType : "json",
 		
 		success : function(result){
-			console.log("블랙추가: "+result)
+			//console.log("블랙추가: "+result)
 			
 			if(result == "success"){
 				
@@ -1026,7 +1026,7 @@ function blackAdd(blackVo, bAddNo){
 			}
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 		}
 	})
 }
@@ -1072,7 +1072,7 @@ function blackDel(blackVo, bDelNo){
 			}
 		},
 		error : function(XHR, status, error) {
-			console.error(status + " : " + error);
+			//console.error(status + " : " + error);
 		}
  
 	})
