@@ -87,6 +87,28 @@
 		<error-code>403</error-code>
 		<location>/error/403</location>
 	</error-page>
+	
+	
+	<!-- event publisher 
+	<servlet>
+	    <servlet-name>community-servlet</servlet-name>
+	    	<servlet-class>
+	    		org.springframework.web.servlet.DispatcherServlet
+	    	</servlet-class>
+	    	
+	    <init-param>
+	        <param-name>contextConfigLocation</param-name>
+	        <param-value>
+	        	classpath:spring-servlet.xml
+	        </param-value>
+	    </init-param>
+	    
+	    <load-on-startup>1</load-on-startup>
+	    <async-supported>true</async-supported>
+	</servlet> -->
+	
+	
+	
 
 	
 </web-app>

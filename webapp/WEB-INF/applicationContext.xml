@@ -4,6 +4,7 @@
 	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
@@ -15,7 +16,9 @@
         http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring
         http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd
         http://www.springframework.org/schema/task
-        http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+        http://www.springframework.org/schema/task/spring-task-3.0.xsd
+        http://www.springframework.org/schema/websocket						
+        http://www.springframework.org/schema/websocket/spring-websocket.xsd">
 
 	<context:annotation-config />
 
@@ -57,8 +60,5 @@
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
 	
-    
-    
-   
-	
+ 
 </beans>

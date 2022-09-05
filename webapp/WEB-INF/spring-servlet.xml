@@ -67,10 +67,14 @@
 	<!-- websocket -->
 	<websocket:handlers>
 		<websocket:mapping handler="myHandler" path="/alarm" />
-		<websocket:sockjs websocket-enabled="true"/>
+		<websocket:handshake-interceptors>
+			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+		<websocket:sockjs websocket-enabled="true"/>			
 	</websocket:handlers>	
- 	<bean id="myHandler" class="com.lunchwb.socket.WebSocketHandler" />
- 	
+	
+ 	<bean id="myHandler" class="com.lunchwb.socket.WebSocketHandler" /> 
+
  	
 	<!-- url매핑 -->
 	<!-- mapping과 location은 경로에 맞춰 수정해주어야 한다. -->
@@ -116,5 +120,6 @@
 			<bean class="org.springframework.mobile.device.site.SitePreferenceHandlerInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
+	
 	
 </beans>
