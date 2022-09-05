@@ -130,14 +130,16 @@ public class GroupController {
 		int groupCount = (Integer)map.get("groupCount");
 		
 		if(groupCount > 1) {
-			GPSVo curr_location = (GPSVo)session.getAttribute("curr_location");
-			List<Integer> filter_excluded = (List<Integer>)session.getAttribute("filter_excluded");
-			Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
-
-			basket = basketService.addBasketGroup(basket, groupNo);
-			basket.put(groupNo, basketService.addItemsToBasket(basket.get(groupNo), groupNo, curr_location, filter_excluded, true, true));
-
-			session.setAttribute("basket", basket);
+			if (session.getAttribute("basket") != null) {
+				GPSVo curr_location = (GPSVo)session.getAttribute("curr_location");
+				List<Integer> filter_excluded = (List<Integer>)session.getAttribute("filter_excluded");
+				Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
+	
+				basket = basketService.addBasketGroup(basket, groupNo);
+				basket.put(groupNo, basketService.addItemsToBasket(basket.get(groupNo), groupNo, curr_location, filter_excluded, true, true));
+	
+				session.setAttribute("basket", basket);
+			}
 
 		
 		}else {
@@ -269,10 +271,12 @@ public class GroupController {
 		session.setAttribute("basketGroup", basketGroup);
 		
 		if(groupCount > 0) {
-			Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
-			basket = basketService.deleteBasketGroup(basket, groupNo);
-
-			session.setAttribute("basket", basket); 
+			if (session.getAttribute("basket") != null) {
+				Map<Integer, List<StoreVo>> basket = (Map<Integer, List<StoreVo>>)session.getAttribute("basket");
+				basket = basketService.deleteBasketGroup(basket, groupNo);
+				
+				session.setAttribute("basket", basket); 
+			}
 
 			return "redirect:./list";
 		

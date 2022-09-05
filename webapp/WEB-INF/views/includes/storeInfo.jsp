@@ -413,6 +413,9 @@ function storeBasicInfo(storeNo){
 			//가게 이미지
 			if(storeMap.imgList.length == 0){
 				$(".img-area span").html('<img src="${pageContext.request.contextPath}/assets/img/bujang.png"/>')
+				document.getElementById("imgIcon-0").className = "fas fa-circle visually-hidden"
+				document.getElementById("imgIcon-1").className = "far fa-circle visually-hidden"
+				document.getElementById("imgIcon-2").className = "far fa-circle visually-hidden"
 				
 			}else{
 				for(var i=0; i<storeMap.imgList.length; i++){
