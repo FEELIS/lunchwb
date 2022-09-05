@@ -140,6 +140,7 @@ public class GroupController {
 
 			session.setAttribute("basket", basket);
 
+		
 		}else {
 			if (session.getAttribute("basket") != null) {
 			    session.removeAttribute("basket");
@@ -273,13 +274,17 @@ public class GroupController {
 			basket = basketService.deleteBasketGroup(basket, groupNo);
 
 			session.setAttribute("basket", basket); 
+
+			return "redirect:./list";
+		
 		}else {
 			if (session.getAttribute("basket") != null) {
 			    session.removeAttribute("basket");
 			}
+			
+			return "redirect:./add";
 		}
 		
-		return "redirect:./list";
 	}
 	
 	

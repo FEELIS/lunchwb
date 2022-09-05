@@ -63,10 +63,10 @@ public class WebSocketHandler extends TextWebSocketHandler {
 				if(receiversession !=null) {
 					TextMessage txtmsg = new TextMessage(comment);
 					receiversession.sendMessage(txtmsg);//보내기
-				}else {
-					TextMessage txtmsg = new TextMessage(comment);
-					session.sendMessage(txtmsg);//보내지는지 체크하기
-				}
+					/*
+					 * }else { TextMessage txtmsg = new TextMessage(comment);
+					 * session.sendMessage(txtmsg);//보내지는지 체크하기
+					 */				}
 			}
 			
 		}

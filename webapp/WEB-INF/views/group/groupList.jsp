@@ -65,8 +65,8 @@
 		                    		그룹장 위임
 		                    	</button>
 	                    	</c:if>
-                    		<c:if test='${authUser.userNo != map.leader || map.memberCount == 1}'> 
-		                    	<button id="out-group" class="btn btn-primary group-title-btn btn-group-leave" type="button" data-bs-target="#modal-group-leave" data-bs-toggle="modal">
+                    		<c:if test='${authUser.userNo != map.leader || map.userCount == 1}'> 
+		                    	<button id="out-group" class="btn btn-primary group-title-btn btn-group-leave" type="button">
 		                    		그룹 탈퇴
 		                    	</button>
                     		</c:if>
@@ -349,10 +349,14 @@ changeName.addEventListener("keyup", function (event) {
 
 
 $("#out-group").on("click", function(){
-	var memberCount = $("#memberCount").text() + $("#inviteCount").text()
+	var memberCount = Number($("#memberCount").text()) + Number($("#inviteCount").text())
+	
 	if(memberCount > 1){
 		alert("다른 그룹원이 존재하여 탈퇴가 불가능합니다.")
+		return false
 	}
+	
+	$("#modal-group-leave").modal("show")
 })
 
 
@@ -367,14 +371,16 @@ outGroup.addEventListener("keyup", function (event) {
 
 
 // 탈퇴알림 보내기
-$("#btn-our-group").on("click", function(){
-	if("${authUser.userNo}" != "${map.leader}")
+$("#btn-out-group").on("click", function(){
+	if("${authUser.userNo}" != "${map.leader}"){
 		//리더한테 보내야해
-	var notiVo = {
-		userNo: "${map.leader}",
-		notiType: 4
+		var notiVo = {
+			userNo: "${map.leader}",
+			notiType: 4
+		}
+		
+		alertUpdate(notiVo)
 	}
-	alertUpdate(notiVo)
 })
 
 
@@ -772,11 +778,9 @@ $("#memberListArea").on("click", ".groupmem-delete", function(){
 			var memberCount = $("#memberCount").text()
 			$("#memberCount").text(Number(memberCount)-1)
 			
-			if(Number(memberCount) - 1 == 1){
-				$("#pass-leader").attr("data-bs-target", "#modal-group-leave")
-				$("#pass-leader").text("그룹 탈퇴")
-				document.getElementById("pass-leader").className = "btn btn-primary group-title-btn btn-group-leave"
-			}
+		},
+		error : function(XHR, status, error) {
+			//console.error(status + " : " + error);
 		}
 	})
 	
