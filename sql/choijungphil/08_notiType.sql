@@ -8,3 +8,5 @@ INSERT INTO noti_no VALUES (7, '그룹명 변경(그룹장 제외)');
 INSERT INTO noti_no VALUES (8, '신고된 리뷰 삭제');
 INSERT INTO noti_no VALUES (9, '문의 답변(문의 작성자)');
 INSERT INTO noti_no VALUES (10, '그룹 부장님 초대(초대받은 유저)');
+
+commit;
