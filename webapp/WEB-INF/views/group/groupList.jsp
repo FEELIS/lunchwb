@@ -348,6 +348,14 @@ changeName.addEventListener("keyup", function (event) {
 })
 
 
+$("#out-group").on("click", function(){
+	var memberCount = $("#memberCount").text() + $("#inviteCount").text()
+	if(memberCount > 1){
+		alert("다른 그룹원이 존재하여 탈퇴가 불가능합니다.")
+	}
+})
+
+
 //그룹탈퇴 > 엔터
 var outGroup = document.getElementById("modal-group-leave")
 outGroup.addEventListener("keyup", function (event) {
@@ -361,8 +369,9 @@ outGroup.addEventListener("keyup", function (event) {
 // 탈퇴알림 보내기
 $("#btn-our-group").on("click", function(){
 	if("${authUser.userNo}" != "${map.leader}")
+		//리더한테 보내야해
 	var notiVo = {
-		userNo: "${authUser.userNo}",
+		userNo: "${map.leader}",
 		notiType: 4
 	}
 	alertUpdate(notiVo)
@@ -527,7 +536,7 @@ function invt(groupVo){
 				}
 				
 				var notiVo = {
-					userNo: userNo,
+					userNo: groupVo.userNo,
 					notiType: 0
 				}
 				alertUpdate(notiVo)
@@ -766,7 +775,8 @@ $("#memberListArea").on("click", ".groupmem-delete", function(){
 			
 			if(Number(memberCount) - 1 == 1){
 				$("#pass-leader").attr("data-bs-target", "#modal-group-leave")
-				document.getElementById("pass-group").className = "btn btn-primary group-title-btn btn-group-leave"
+				$("#pass-leader").text("그룹 탈퇴")
+				document.getElementById("pass-leader").className = "btn btn-primary group-title-btn btn-group-leave"
 			}
 		}
 	})

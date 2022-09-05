@@ -117,8 +117,6 @@ $("#user-alert").on("click", function(){
 		dataType : "json",
 		
 		success : function(notiList){
-			$('.toast').toast('hide')
-			$('.toast').remove()
 			
 			for(var i=0; i<notiList.length; i++){
 				renderNoti(notiList[i])
@@ -454,19 +452,22 @@ function alertCheck(notiNo, groupNo, notiType){
 				if(notiType == 5){
 					if(window.location.pathname == "/lunchwb/" && typeof indexJSP != 'undefined' && indexJSP == true){
 						location.replace("${pageContext.request.contextPath}/")
+					
+					//5 내가 그룹장이 아니고 리스트를 보는데 그룹에서 강퇴당했다는 알림을 확인하면 첫번째 그룹으로 보내줘
+					}else if(window.location.pathname == "/lunchwb/group/list" || window.location.pathname == "/lunchwb/group/blacklist"){
+						location.replace("/lunchwb/group/list")
 					}
 					
 				}else if(window.location.pathname == "/lunchwb/group/list"){
 					//2 내가 그룹장이고 그룹페이지를 보고있는데 초대 수락알림이 왔으면 그 사람 포함한 목록을 그려)
 					//6 그룹원이었는데 그룹장이 됐다는 알림을 확인했어)
 					//7 어디에 있던 그룹 이름이 바꼈어
-					if(groupNo == "${map.groupNo}" && (notiType == 2 || notiType == 6|| notitype == 7)){
+					if(groupNo == "${map.groupNo}" && (notiType == 2 || notiType == 6)){
 							location.replace("${pageContext.request.contextPath}/group/list?no=${map.groupNo}")
 							
-					//5 내가 그룹장이 아니고 리스트를 보는데 그룹에서 강퇴당했다는 알림을 확인하면 첫번째 그룹으로 보내줘
-					}else if(notiType == 5){
-						location.replace("/lunchwb/group/list")
-						
+					}else if(notiType == 7){
+						location.replace("${pageContext.request.contextPath}/group/list?no=${map.groupNo}")
+
 					}
 				}
 				
@@ -503,7 +504,7 @@ function connectWs(){
 	  console.log('message', e.data)
 	  //alert("확인하지 않은 알림이 있습니다.")
 	  
-	  $('.toast').toast('hide')
+	  $('.toast').remove()
 	  let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>"
 	  toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>"+"새로운 알림이 도착했습니다."+"</strong>"
 	  $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
@@ -512,7 +513,7 @@ function connectWs(){
 	  
 	  drawNotiBadge(1)
 
-	  setTimeout(() => $(".toast").toast("hide"), 5000);
+	  setTimeout(() => $(".toast").toast("hide"), 4000);
 	  
 	  
 		//  	  sock.close();
