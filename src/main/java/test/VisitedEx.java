@@ -1,10 +1,6 @@
 package test;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-public class CreateUserGroups {
+public class VisitedEx {
 	public static void main(String[] args) {
 
 		for (int i = 1; i <= 100; i++) {
