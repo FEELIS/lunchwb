@@ -11,6 +11,8 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.lunchwb.vo.UserVo;
+
 public class WebSocketHandler extends TextWebSocketHandler {
 			
 	private static final Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
@@ -72,7 +74,12 @@ public class WebSocketHandler extends TextWebSocketHandler {
 	
 	
 	private String currentUserName(WebSocketSession session) {
-		String mid = session.getPrincipal().getName();
+		Map<String,Object> map = session.getAttributes();  
+		
+		UserVo authUser = (UserVo)map.get("authUser");  
+		System.out.println("로그인 한 아이디 : " + authUser.getUserName());
+		String mid = authUser.getUserName();
+		
 		return mid;
 	}
 }
