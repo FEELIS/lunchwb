@@ -201,7 +201,9 @@ public class GroupService {
 	
 	
 	/******************** 그룹 이름 변경 *********************************************/
-	public String nameChange(GroupVo groupVo) {
+public Map<String, Object> nameChange(GroupVo groupVo) {
+		
+		Map<String, Object> map = new HashMap<>();
 		String result = "fail";
 		
 		int count = groupDao.groupChange(groupVo);
@@ -222,9 +224,13 @@ public class GroupService {
 
 				notiDao.alertOfGroupChange(notiVo);
 			}
+			
+			map.put("members", groupMembers);
 		}
 		
-		return result;
+		map.put("result", result);
+		
+		return map;
 	}
 	
 	

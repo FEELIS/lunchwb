@@ -165,12 +165,12 @@ public class GroupController {
 	/******************** 그룹 이름 변경 ********************************************/
 	@ResponseBody
 	@PostMapping("/nameChange")
-	public String nameChange(@RequestBody GroupVo groupVo, HttpSession session) {
+	public Map<String, Object> nameChange(@RequestBody GroupVo groupVo, HttpSession session) {
 		logger.info("GroupController > nameChange()");
 		
-		String result = groupService.nameChange(groupVo);
+		Map<String, Object> map = groupService.nameChange(groupVo);
 		
-		if(result == "success") {
+		if(map.get("result") == "success") {
 			
 			if(session.getAttribute("basketGroup") != null) {
 				session.removeAttribute("basketGroup");
@@ -181,7 +181,7 @@ public class GroupController {
 			
 		}
 		
-		return result;
+		return map;
 	}
 	
 	

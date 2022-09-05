@@ -15,6 +15,7 @@
 <nav id="header" class="navbar navbar-light navbar-expand-xl bg-white shadow d-xxl-flex justify-content-xxl-end mb-4 topbar static-top">
     <div class="container">
         <div></div>
+        <div id="msgStack"></div>
         
        	<c:choose>
        		<c:when test="${!empty authUser}">
@@ -57,35 +58,4 @@
 <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
 <script>
-const url = "${pageContext.request.contextPath}/alarm"
-
-let ws
-
-$(document).ready(function(){
-	if ("${authUser.userName}" != "") {
-		ws = new SockJS(url)
-		ws.onmessage = onMessage
-		ws.onclose = onClose
-		
-		ws.onopen = function() {
-			console.log("서버 연결 성공")		
-		}
-	}
-})
-
-
-function onMessage(event){
-	var data=event.data
-	alert('서버에서 데이터 받음: ${data}')
-
-}
-
-//연결 종료시 실행
-function onClose(event){
-	alert("연결 끊김")
-	
-	//연결종료
-	socket.close()
-}
-
 </script>

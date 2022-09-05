@@ -218,6 +218,12 @@
          WHERE user_email = #{userEmail}
    	</select>
    	
+   	<select id="alertReceiver" parameterType="int" resultType="String">
+   		SELECT user_email userEmail
+   		FROM users
+   		WHERE user_no = #{userNo}
+   	</select>
+   	
    	
    	<!--  정원  -->
    	<!--  기본 상태로 변경  -->

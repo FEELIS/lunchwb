@@ -61,15 +61,15 @@
 	                    
 	                    <span class="group-title-btn-area">
 	                    	<c:if test="${authUser.userNo == map.leader && map.userCount > 1}">
-		                    	<button class="btn btn-primary group-title-btn btn-leader-pass" type="button" data-bs-target="#modal-group-leader-pass" data-bs-toggle="modal">
+		                    	<button id="pass-leader" class="btn btn-primary group-title-btn btn-leader-pass" type="button" data-bs-target="#modal-group-leader-pass" data-bs-toggle="modal">
 		                    		그룹장 위임
 		                    	</button>
 	                    	</c:if>
-	                    	<c:if test="${authUser.userNo != map.leader || map.memberCount == 1}">
-		                    	<button class="btn btn-primary group-title-btn btn-group-leave" type="button" data-bs-target="#modal-group-leave" data-bs-toggle="modal">
+                    		<c:if test='${authUser.userNo != map.leader || map.memberCount == 1}'> 
+		                    	<button id="out-group" class="btn btn-primary group-title-btn btn-group-leave" type="button" data-bs-target="#modal-group-leave" data-bs-toggle="modal">
 		                    		그룹 탈퇴
 		                    	</button>
-	                    	</c:if>
+                    		</c:if>
 	                    </span>
 	                    
                     </h3>
@@ -273,7 +273,7 @@
                 </div>
             </div>
             <div class="modal-footer-custom">
-           		<a href="${pageContext.request.contextPath}/group/leave?no=${map.groupNo}&lead=${map.leader}"><button class="btn btn-primary" type="submit">확인</button></a>
+           		<a href="${pageContext.request.contextPath}/group/leave?no=${map.groupNo}&lead=${map.leader}"><button id="btn-out-group" class="btn btn-primary" type="submit">확인</button></a>
            		<button class="btn btn-light" type="button" data-bs-dismiss="modal">취소</button>
             </div>
         </div>
@@ -348,8 +348,29 @@ changeName.addEventListener("keyup", function (event) {
 })
 
 
+//그룹탈퇴 > 엔터
+var outGroup = document.getElementById("modal-group-leave")
+outGroup.addEventListener("keyup", function (event) {
+	if (event.keyCode === 13) {
+		event.preventDefault();
+		document.getElementById("btn-out-group").click()
+	}
+})
+
+
+// 탈퇴알림 보내기
+$("#btn-our-group").on("click", function(){
+	if("${authUser.userNo}" != "${map.leader}")
+	var notiVo = {
+		userNo: "${authUser.userNo}",
+		notiType: 4
+	}
+	alertUpdate(notiVo)
+})
+
+
 $(".form-check-input").on("click", function(){
-	console.log("부장님 여부 체크")
+	//console.log("부장님 여부 체크")
 	
 	if($(".form-check-input").is(":checked")){
 		
@@ -505,6 +526,11 @@ function invt(groupVo){
 					$(".group-bujang").html("")
 				}
 				
+				var notiVo = {
+					userNo: userNo,
+					notiType: 0
+				}
+				alertUpdate(notiVo)
 				//테이블 표기 안함
 				
 			}else{
@@ -671,12 +697,19 @@ $("#modal-group-name-change .btn-primary").on("click", function(){
 		data : JSON.stringify(groupVo),
 		dataType : "json",
 		
-		success : function(result){
+		success : function(map){
 			
-			if(result = "success"){
+			if(map.result = "success"){
 				alert("그룹 이름이 변경되었습니다")
 				location.replace("${pageContext.request.contextPath}/group/list?no=${map.groupNo}")
-				//return true
+				
+				for(var i=0; i<map.members.length; i++){
+					var notiVo = {
+						userNo: map.members[i],
+						notiType: 7
+					}
+					alertUpdate(notiVo)
+				}
 			}
 			
 		}, 
@@ -717,6 +750,12 @@ $("#memberListArea").on("click", ".groupmem-delete", function(){
 			
 			if(result == "success"){
 				alert("삭제되었습니다")
+				var notiVo = {
+						userNo: userNo,
+						notiType: 5
+					}
+				alertUpdate(notiVo)
+				
 			}else{
 				alert("그룹원이 이미 탈퇴하였습니다)")
 			}
@@ -724,6 +763,11 @@ $("#memberListArea").on("click", ".groupmem-delete", function(){
 			$("#member-"+userNo).remove()
 			var memberCount = $("#memberCount").text()
 			$("#memberCount").text(Number(memberCount)-1)
+			
+			if(Number(memberCount) - 1 == 1){
+				$("#pass-leader").attr("data-bs-target", "#modal-group-leave")
+				document.getElementById("pass-group").className = "btn btn-primary group-title-btn btn-group-leave"
+			}
 		}
 	})
 	
@@ -766,6 +810,12 @@ $("#modal-group-leader-pass .btn-primary").on("click", function(){
 				
 			}else{
 				alert("그룹장을 " + userName + "님에게 위임하였습니다")
+				var notiVo = {
+					userNo: groupLeader,
+					notiType: 6
+				}
+				alertUpdate(notiVo)
+				
 				return true
 				
 			}

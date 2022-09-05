@@ -1,3 +1,16 @@
+#msgStack {
+  width: 250px;	
+}
+
+#msgStack .toast i{
+  margin-right: 15px;  
+  color: #FFE400;
+}
+
+#msgStack .toast  .mr-auto{
+  color: #1266FF;
+}
+
 #user-alert-list {
   z-index:100;
   width: 328px !important;

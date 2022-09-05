@@ -20,8 +20,6 @@
     </div>
 </li>
 
-<div id="msgStack"></div>
-
 <script type="text/javascript">
 
 //마지막으로 띄운 알림 번호
@@ -33,12 +31,12 @@ $(document).ready(function(){
 	notiCount()
 })
 
-
+/* 
 let click = document.querySelector("body")
 click.addEventListener("click", function(){
 	notiCount()
 })
-
+ */
 /* 알림 개수 표시 */
 function notiCount(){
 	var userNo = "${authUser.userNo}"
@@ -57,7 +55,7 @@ function notiCount(){
 			
 			}else if(notiCnt == 0){
 				$("#user-alert .badge-counter").text("")
-				
+				noAlert()
 			}else{
 				$("#user-alert .badge-counter").text(notiCnt)
 			}	
@@ -73,6 +71,7 @@ function notiCount(){
 //알림 개수 뱃지
 function drawNotiBadge(notiCnt){
 	countNoti = countNoti + notiCnt
+	$("#noti-0").remove()
 	
 	if(countNoti > 3){
 		$("#user-alert .badge-counter").text("3+")
@@ -118,9 +117,8 @@ $("#user-alert").on("click", function(){
 		dataType : "json",
 		
 		success : function(notiList){
-			
-			$("#noti-0").remove()
-			drawNotiBadge(notiList.length)
+			$('.toast').toast('hide')
+			$('.toast').remove()
 			
 			for(var i=0; i<notiList.length; i++){
 				renderNoti(notiList[i])
@@ -452,8 +450,8 @@ function alertCheck(notiNo, groupNo, notiType){
 				$("#noti-"+notiNo).remove()
 				drawNotiBadge(-1)
 				
-				//그룹 이름이 바뀌었거나 강퇴당했을 때(초대를 받는건 1-10 따로 처리)
-				if(notiType == 7 || notiType == 5){
+				//그룹 이름이 바뀌었거나 강퇴당했을 때(초대를 받는건 1-10 따로 처리) 이름이 바뀌는건 뺌
+				if(notiType == 5){
 					if(window.location.pathname == "/lunchwb/" && typeof indexJSP != 'undefined' && indexJSP == true){
 						location.replace("${pageContext.request.contextPath}/")
 					}
@@ -484,10 +482,12 @@ function alertCheck(notiNo, groupNo, notiType){
 }
 
 
-var sock = null
+let sock = null
 
 $(document).ready(function(){
+	if ("${authUser.userName}" != "") {
 		connectWs()
+	}
 })
 
 function connectWs(){
@@ -495,12 +495,26 @@ function connectWs(){
 	sock = new SockJS(getContextPath()+'/alarm')
 	
 	sock.onopen = function() {
-	 		console.log('open')
+	 		console.log('socket: open')
 	 
 	 }
 	
 	sock.onmessage = function(e) {
 	  console.log('message', e.data)
+	  //alert("확인하지 않은 알림이 있습니다.")
+	  
+	  $('.toast').toast('hide')
+	  let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>"
+	  toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>"+"새로운 알림이 도착했습니다."+"</strong>"
+	  $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
+	  $(".toast").toast({"animation": true, "autohide": true})
+	  $('.toast').toast('show')
+	  
+	  drawNotiBadge(1)
+
+	  setTimeout(() => $(".toast").toast("hide"), 5000);
+	  
+	  
 		//  	  sock.close();
 	 }
 	
@@ -518,32 +532,13 @@ function getContextPath() {
 
 
 function alertUpdate(notiVo){
-	var root = getContextPath(),
-	noticeurl = "/notice/alertUpdate",
-	receiver = notiVo.userNo,
-	groupName = notiVo.groupName,
-	notiType = notiVo.notiType
-	data = {userNo : receiver,
-			groupName : groupName,
-			notiType : notiType}
+	var receiver = notiVo.userNo
+	var notiType = notiVo.notiType 
 	
-	$.ajax({
-		url : noticeurl+root,
-		type : 'PUT',
-		contentType: 'application/json',
-		data : JSON.stringify(data),
-		success : function(result){
-			console.log(result)
-				 if(sock){
-				 var Msg = receiver+","+groupName+","+notiType
-				 console.log(Msg)
-				 sock.send(Msg)
-				 }
-		}, error : function(result){
-			console.log("에러" + result.result)
-		}
-		
-	})
+	if(sock){
+		var Msg = receiver+","+notiType
+		sock.send(Msg)
+	}
 }
 
 
