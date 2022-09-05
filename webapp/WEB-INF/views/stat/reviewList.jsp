@@ -159,7 +159,7 @@
         str += '					</ul>';
         str += '				</div>';
         str += '			</div>';
-        str += '			<div class="row row-cols-2">';
+        str += '			<div class="row row-cols-2 imgrow">';
         
 		// 이미지 창
         if (aloneVo.reviewFileName != null) {
