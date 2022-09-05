@@ -53,7 +53,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
 				System.out.println("알림타입: "+notiType);
 				
 				if(notiType == 1 || notiType == 10) { //초대를 받았던거야
-					comment = "그룹 초대에 대한 답변이 도착했습니다.";
+					comment = "그룹 초대 답변이 도착했습니다.";
 				
 				}else if(notiType == 0) { //초대를 보냈어
 					comment = "그룹 초대가 도착했습니다.";

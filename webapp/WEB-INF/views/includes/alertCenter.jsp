@@ -49,6 +49,7 @@ function notiCount(){
 		dataType : "json",
 		
 		success : function(notiCnt){
+			countNoti = notiCnt
 			
 			if(notiCnt > 3){
 				$("#user-alert .badge-counter").text("3+")
