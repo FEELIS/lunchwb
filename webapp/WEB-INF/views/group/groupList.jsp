@@ -373,6 +373,14 @@ outGroup.addEventListener("keyup", function (event) {
 })
 
 
+$("#pass-leader").on("click", function(){
+	if("$(map.userCount)" == 1){
+		alert("그룹장을 위임할 그룹원이 없습니다.")
+		return false
+	}
+})
+
+
 // 탈퇴알림 보내기
 $("#btn-out-group").on("click", function(){
 	if("${authUser.userNo}" != "${map.leader}"){

@@ -46,19 +46,21 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			String[] msgs = msg.split(",");
 			if(msgs != null && msgs.length == 2) {
 				String receiver = msgs[0];//수신인
-				String notiType = msgs[1]; //알림타입
+				int notiType = Integer.parseInt(msgs[1]); //알림타입
 				String receiverId = sqlSession.selectOne("user.alertReceiver", receiver); //수신인아이디
 				String comment = "";
-				if(notiType.equals("1") || notiType.equals("10")) { //초대를 받았던거야
+				
+				System.out.println("알림타입: "+notiType);
+				
+				if(notiType == 1 || notiType == 10) { //초대를 받았던거야
 					comment = "그룹 초대에 대한 답변이 도착했습니다.";
 				
-				}else if(notiType.equals("0")) { //초대를 보냈어
+				}else if(notiType == 0) { //초대를 보냈어
 					comment = "그룹 초대가 도착했습니다.";
 				
 				}else { //그룹이름이 바뀜
 					comment = "새로운 알림이 도착했습니다.";
 				}
-
 				WebSocketSession receiversession = userSessionsMap.get(receiverId);//수신인이 현재 접속중인가 체크
 				if(receiversession !=null) {
 					TextMessage txtmsg = new TextMessage(comment);

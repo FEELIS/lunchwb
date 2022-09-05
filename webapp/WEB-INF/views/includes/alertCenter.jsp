@@ -506,7 +506,7 @@ function connectWs(){
 	  
 	  $('.toast').remove()
 	  let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>"
-	  toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>"+"새로운 알림이 도착했습니다."+"</strong>"
+	  toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>"+e.data+"</strong>"
 	  $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
 	  $(".toast").toast({"animation": true, "autohide": true})
 	  $('.toast').toast('show')
