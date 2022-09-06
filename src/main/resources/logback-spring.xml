@@ -60,12 +60,6 @@
 		</encoder> 	    
 	</appender>
 
-    <logger name="com.test.controller" level="INFO" additivity="false">
-		<appender-ref ref="ROLLING" />
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="Error" />    	
-    </logger>
-     
     <root level="INFO">
 		<appender-ref ref="ROLLING"/>
 		<appender-ref ref="STDOUT" />

@@ -505,19 +505,19 @@ function connectWs(){
 	  //console.log('message', e.data)
 	  //alert("확인하지 않은 알림이 있습니다.")
 	  
-	  $('.toast').remove()
-	  let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>"
-	  toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>"+e.data+"</strong>"
-	  $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
-	  $(".toast").toast({"animation": true, "autohide": true})
-	  $('.toast').toast('show')
+		  $('.toast').remove()
+		  let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>"
+		  toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>"+e.data+"</strong>"
+		  $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
+		  $(".toast").toast({"animation": true, "autohide": true})
+		  $('.toast').toast('show')
+		  
+		  drawNotiBadge(1)
+	
+		  setTimeout(() => $(".toast").toast("hide"), 4000)
 	  
-	  drawNotiBadge(1)
-
-	  setTimeout(() => $(".toast").toast("hide"), 4000);
 	  
-	  
-		//  	  sock.close();
+		sock.close()
 	 }
 	
 	sock.onclose = function() {
