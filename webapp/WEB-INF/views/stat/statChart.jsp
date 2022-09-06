@@ -92,7 +92,7 @@
                                     <div class="row align-items-center no-gutters">
                                         <div class="col me-2">
                                             <div class="text-uppercase text-info fw-bold text-xs mb-1">
-                                                <span>이전달 제일 많이 먹은 음식</span>
+                                                <span>이전달 제일 많이 먹은 음식 '한식'</span>
                                             </div>
                                             <div class="row g-0 align-items-center">
                                                 <div class="col-auto">
@@ -278,18 +278,18 @@
         var charts = document.querySelectorAll('[data-bss-chart]');
 
         // 지난 한달간 음식별 여기갈래요 횟수
-        var bar = barGraph();
+        var graph = renderGraph();
         var i = 0;
 
         for (var chart of charts) {
 
-            chart.chart = new Chart(chart, JSON.parse(chart.dataset.bssChart = bar[i]));
+            chart.chart = new Chart(chart, JSON.parse(chart.dataset.bssChart = graph[i]));
             i++;
         }
 
     }, false);
 
-    function barGraph() {
+    function renderGraph() {
 
         var strArray = [];
         var menu = ['뷔페', '아시아음식', '양식', '일식', '한식', '패스트푸드', '패밀리레스토랑', '치킨', '분식', '중식'];
