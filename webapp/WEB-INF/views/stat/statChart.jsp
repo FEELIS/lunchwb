@@ -27,9 +27,6 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/assets/js/chart.min.js"></script>
 
-
-
-
     <title>방문통계</title>
 </head>
 
@@ -287,7 +284,6 @@
         for (var chart of charts) {
 
             chart.chart = new Chart(chart, JSON.parse(chart.dataset.bssChart = bar[i]));
-            console.log(chart.chart);
             i++;
         }
 
@@ -321,8 +317,7 @@
 
             dataType: "json",
             success: function(chartMap) {
-                /*성공시 처리해야될 코드 작성*/
-                console.log(chartMap);
+            	
                 var bar = renderToBar(chartMap);
                 var doughnut = renderToDoughnut(chartMap);
                 var line = renderToLine(chartMap);
@@ -332,8 +327,6 @@
                 strArray.push(doughnut);
                 strArray.push(line);
                 strArray.push(pie);
-
-
             },
             error: function(XHR, status, error) {
                 console.error(status + " : " + error);
