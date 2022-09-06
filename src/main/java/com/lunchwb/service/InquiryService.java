@@ -36,17 +36,16 @@ public class InquiryService {
 		List<FaqVo> faqQuestList = new ArrayList<FaqVo>();		// 자주 찾는 질문
 		List<FaqVo> faqHelpList = new ArrayList<FaqVo>();		// 문의 유형별 도움말
 		
-		
-		// faqStatus로 구분
+		// faqStatus로 자주찾는질문, 문의유형별도움말 구분
 		for (int i = 0; i < faqList.size(); i++) {
 			if (faqList.get(i).getFaqStatus().equals("help")) {
 				faqHelpList.add(faqList.get(i));
 				
 			} else if(faqList.get(i).getFaqStatus().equals("quest")){
 				faqQuestList.add(faqList.get(i));
-				
 			}
 		};
+		
 		
 		Map<String, Object> fMap = new HashMap<String,Object>();
 		fMap.put("qList", faqQuestList);
@@ -56,11 +55,6 @@ public class InquiryService {
 	};
 	
 	
-	// **********************************************************************************************************************
-	// **********************************************************************************************************************
-	// **********************************************************************************************************************
-	
-	
 	// ================================ 개인유저 문의내역 ================================
 	public List<InquiryVo> userInqList(int userNo){
 		List<InquiryVo> inqList = inquiryDao.userInqList(userNo);
@@ -68,13 +62,12 @@ public class InquiryService {
 		return inqList;
 	};
 	
-	
 	// ================================ 개인유저 문의하기(이미지 첨부 구분) ================================
 	public int writeInquiry(InquiryVo inqVo,MultipartFile file) {
 		
 		int count = 0;
 		
-		String saveDir = "C:\\javaStudy\\upload";					//윈도우용
+		String saveDir = "C:\\javaStudy\\upload";							//윈도우용
 		//String saveDir = "/Users/choijungphil/javaStudy/upload";			//맥OS용
 		String orgName = "";
 		String saveName = "";
@@ -98,8 +91,8 @@ public class InquiryService {
 			System.out.println("saveName: " + saveName);
 
 			// 파일경로(디렉토리+저장파일명)
-			String filePath = saveDir + "\\" + saveName;			//윈도우용
-			//String filePath = saveDir + "/" + saveName;			//맥OS용
+			String filePath = saveDir + "\\" + saveName;					//윈도우용
+			//String filePath = saveDir + "/" + saveName;					//맥OS용
 			
 			inqVo.setInquiryFilePath(saveName);
 
@@ -123,9 +116,9 @@ public class InquiryService {
 		return count;
 	};
 	
+	// ================================ 문의 클릭시 해당 문의정보 ================================
 	public InquiryVo readInquiry(int inquiryNo) {
 		InquiryVo inqVo = inquiryDao.getInq(inquiryNo);
-		
 		
 		return inqVo;
 	};
