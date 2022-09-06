@@ -201,7 +201,7 @@
                         <div class="col-lg-7 col-xl-8">
                             <div class="card shadow mb-4">
                                 <div class="card-header d-flex justify-content-between align-items-center" style="-bs-primary: #4e73df; - -bs-primary-rgb: 78, 115, 223;">
-                                    <h6 id="lineMenu" class="text-primary fw-bold m-0">지난 6개월간 '한식' 여기갈래요 수</h6>
+                                    <h6 id="lineMenu" class="text-primary fw-bold m-0"></h6>
                                     <div class="dropdown no-arrow">
                                         <button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button">
                                             <i class="fas fa-ellipsis-v text-gray-400"></i>
@@ -226,7 +226,7 @@
                         <div class="col-lg-5 col-xl-4">
                             <div class="card shadow mb-4">
                                 <div class="card-header d-flex justify-content-between align-items-center" style="-bs-primary: #147a25; - -bs-primary-rgb: 20, 122, 37;">
-                                    <h6 id="pieMenu" class="text-primary fw-bold m-0">연령별 '한식' 선호도</h6>
+                                    <h6 id="pieMenu" class="text-primary fw-bold m-0"></h6>
                                     <div class="dropdown no-arrow">
                                         <button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button">
                                             <i class="fas fa-ellipsis-v text-gray-400"></i>
