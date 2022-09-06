@@ -81,14 +81,12 @@ public class InquiryService {
 		} else {	// 파일업로드 할 때 작용
 			// 오리지널 파일명
 			orgName = file.getOriginalFilename();
-			System.out.println("orgName: " + orgName);
 
 			// 확장자명 가져오기
 			String exName = orgName.substring(orgName.lastIndexOf("."));
 
 			// 드라이브에 저장할 파일명
 			saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
-			System.out.println("saveName: " + saveName);
 
 			// 파일경로(디렉토리+저장파일명)
 			String filePath = saveDir + "\\" + saveName;					//윈도우용
