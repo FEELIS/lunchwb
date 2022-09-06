@@ -189,9 +189,9 @@
                                     <div id="doughnutMenu" class="text-center small mt-4">
 
                                         <!-- group_name -->
-                                        <span class="me-2"><i class="fas fa-circle text-primary"></i>&nbsp;소방기계</span>
-                                        <span class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;소방전기</span>
-                                        <span class="me-2"><i class="fas fa-circle text-info"></i>&nbsp;BIM팀</span>
+                                        <span class="me-2"><i class="fas fa-circle text-primary"></i>&nbsp;</span>
+                                        <span class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;</span>
+                                        <span class="me-2"><i class="fas fa-circle text-info"></i>&nbsp;</span>
                                     </div>
                                 </div>
                             </div>
