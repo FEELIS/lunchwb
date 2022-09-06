@@ -39,7 +39,6 @@ public class AloneDao {
 	
 	// 리뷰 삭제
 	public int delReview(int reviewNo) {
-		System.out.println("Dao: "+reviewNo);
 		int count = sqlSession.delete("alone.deleteReview",reviewNo);
 		
 		return count;
