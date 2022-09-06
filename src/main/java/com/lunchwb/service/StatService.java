@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,19 +60,24 @@ public class StatService {
 		return calendarList;
 	};
 
+	
+	
 	// =============================================== 리뷰관련 ===============================================
+	// =============== 리뷰목록 ===============
 	public List<AloneVo> reviewList(int userNo) {
 		List<AloneVo> reviewList = aloneDao.reviewList(userNo);
-
 		return reviewList;
 	};
 
+	// =============== 한 개의 리뷰정보 가져오기 ===============
 	public AloneVo getReview(int reviewNo) {
 		AloneVo aloneVo = aloneDao.getReview(reviewNo);
 
 		return aloneVo;
 	};
 
+	
+	// =============== 리뷰수정 ===============
 	public int modifyReview(AloneVo aloneVo, MultipartFile file) {
 
 		int count = 0;
@@ -85,25 +88,22 @@ public class StatService {
 		String saveName = "";
 
 		if (file.getOriginalFilename().equals("")) { // 파일 없을 경우
-			System.out.println("이미 미업로드시");
 			// (1)다오로 보내서 DB 업데이트
 			count = aloneDao.updateReview(aloneVo);
 
 		} else { // 파일업로드 할 때 작용
 			// 오리지널 파일명
 			orgName = file.getOriginalFilename();
-			System.out.println("orgName: " + orgName);
 
 			// 확장자명 가져오기
 			String exName = orgName.substring(orgName.lastIndexOf("."));
 
 			// 드라이브에 저장할 파일명
 			saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
-			System.out.println("saveName: " + saveName);
 
 			// 파일경로(디렉토리+저장파일명)
-			String filePath = saveDir + "\\" + saveName; 											// 윈도우용
-			//String filePath = saveDir + "/" + saveName; 											// 맥OS용
+			String filePath = saveDir + "\\" + saveName; 				// 윈도우용
+			//String filePath = saveDir + "/" + saveName; 				// 맥OS용
 
 			aloneVo.setReviewFileName(saveName);
 
@@ -142,9 +142,8 @@ public class StatService {
 		return count;
 	};
 
+	// =============== 리뷰삭제 ===============
 	public String delReviewResult(int reviewNo) {
-		System.out.println("service: " + reviewNo);
-
 		int count = aloneDao.delReview(reviewNo);
 		String result = "";
 
