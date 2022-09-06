@@ -43,8 +43,6 @@
                 <c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
                 <!-- /header -->
 
-
-
                 <div class="container">
                     <div class="d-sm-flex justify-content-between align-items-center mb-4">
                         <h3 class="text-dark mb-0">리뷰내역</h3>
@@ -62,10 +60,8 @@
                     </div>
                 </div>
 
-
             </div>
             <!-- content -->
-
 
             <!-- footer -->
             <c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
@@ -97,7 +93,6 @@
 </body>
 <script type="text/javascript">
     $(document).ready(function() {
-        console.log("jquery로 데이터 받기");
         fetchList();
     });
 
@@ -129,10 +124,8 @@
     };
     
     
-    
   	//====================================== 리뷰목록 렌더링 ======================================
     function render(aloneVo, opt) {
-        console.log('render()');
         var str = '';
 
         str += '	<li id="t' + aloneVo.reviewNo + '" class="list-group-item">';
@@ -184,8 +177,6 @@
         str += '			</div>';
         str += '		</div>';
         str += '	</li>';
-
-
 
         //리스트 순서
         if (opt == "up") {
