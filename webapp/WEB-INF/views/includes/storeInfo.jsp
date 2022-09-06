@@ -400,8 +400,11 @@ function storeBasicInfo(storeNo){
 			$(".modalStoreCate").text("|   " + storeMap.storeVo.menu2ndCateName + "   |")
 			$(".modalStoreAddress").text(storeMap.storeVo.storeRoadAddress)
 			$(".modalStoreVisitCnt").text("여기갈래요 "+ storeMap.storeVo.visitCnt +"회")
-			$(".modalStoreFavorite").html(' / '+storeMap.storeVo.favoriteGroup+' 그룹 선호 가게<span class="fw-bold text-primary">('+storeMap.storeVo.favoriteCount+'회)</span>')
-			$(".modalStoreScore").text("(" + storeMap.storeVo.ratingBujang + "/5)")
+			
+			if(storeMap.storeVo.favoriteGroup != "" && storeMap.storeVo.favoriteGroup != null){
+				$(".modalStoreFavorite").html(' / '+storeMap.storeVo.favoriteGroup+' 그룹 선호 가게<span class="fw-bold text-primary">('+storeMap.storeVo.favoriteCount+'회)</span>')
+				$(".modalStoreScore").text("(" + storeMap.storeVo.ratingBujang + "/5)")
+			}
 			
 			modalStoreStar(storeMap.storeVo.ratingBujang, 0)
 			
