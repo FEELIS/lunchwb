@@ -215,7 +215,7 @@
 			   		   AND v.store_no = #{storeNo}) 
 					, (SELECT favorite_group, favorite_count
 					   FROM	(SELECT favorite_group, COUNT(favorite_group) favorite_count
-							 FROM	(SELECT vt.group_no, vt.visited_date
+							 FROM	(SELECT vt.store_no, vt.group_no, vt.visited_date
 											, CASE WHEN COUNT(vt.user_no) > 5 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year) < 30 THEN '20대 이하 6인 이상'
 												   WHEN COUNT(vt.user_no) > 5 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year) >= 30 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year) < 40 THEN '30대 6인 이상'
 												   WHEN COUNT(vt.user_no) > 5 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year) >= 40 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year) < 50 THEN '40대 6인 이상'
@@ -225,11 +225,11 @@
 												   WHEN COUNT(vt.user_no) <= 5 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year) >= 40 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year) < 50 THEN '40대 5인 이하'
 												   WHEN COUNT(vt.user_no) <= 5 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year) >= 50 THEN '50대 이상 5인 이하'
 											END favorite_group
-								     FROM	(SELECT TO_DATE(v.visited_date) visited_date, v.user_no, v.group_no, v.store_no, u.user_birth_year
-										 	 FROM visited v, users u
-										 	 WHERE v.store_no = #{storeNo}
-										 	 AND v.user_no = u.user_no) vt
-					   				 GROUP BY vt.group_no, vt.visited_date) dt
+								     FROM	(SELECT s.store_no, TO_DATE(v.visited_date) visited_date, v.user_no, v.group_no, u.user_birth_year
+										 	 FROM store s, visited v, users u
+										 	 WHERE s.store_no = v.store_no(+)
+										 	 AND v.user_no(+) = u.user_no) vt
+					   				 GROUP BY vt.store_no, vt.group_no, vt.visited_date) dt
 							 GROUP BY favorite_group
 							 ORDER BY COUNT(favorite_group) DESC)
 					   WHERE ROWNUM = 1)
