@@ -165,7 +165,6 @@
 	        function() {
 	            var score = $(this).attr("data-score")
 	            var state = $(this).attr("data-stt")
-	            console.log(score + "번 별 클릭, 상태: " + state)
 	
 	            if (state == "off") {
 	                $("#today-star-icon [name='userScore']").val(score)
@@ -189,7 +188,6 @@
 	$(".starScore").hover(function() {
 	    var score = $(this).attr("data-score")
 	    var state = $(this).attr("data-stt")
-	    console.log(score + "번 별 마우스올림, 상태: " + state)
 	
 	    // 마우스 hover 중일 때
 	    if (state == "off") {
@@ -211,7 +209,6 @@
 	}, function() {
 	    var score = $(this).attr("data-score")
 	    var state = $(this).attr("data-stt")
-	    console.log(score + "번 별 마우스올림, 상태: " + state)
 	
 	    // 마우스 hover 후 마우스를 다른 곳으로 옮겼을 때
 	    if (state == "off") {
