@@ -101,7 +101,6 @@ async function clearBasket() {
 		type : "post",
 		async : false,
 		success : function() {
-			console.log("장바구니 비우기 완료")
 		},
 		error : function(XHR, status, error) {
 			console.error(status + " : " + error);
@@ -190,8 +189,6 @@ function startSpin()
         // Important thing is to set the stopAngle of the animation before stating the spin.
         theWheel.animation.stopAngle = stopAt;
 
-    	console.log("stopAt = " + stopAt);
-    	console.log("basket = " + "${basket}");
     	
         // Disable the spin button so can't click again while wheel is spinning.
         document.getElementById('spin_button').src       = "${pageContext.request.contextPath}/assets/img/rouletteOff.png";
@@ -209,7 +206,6 @@ function startSpin()
 }
 
 let creatorNo = "${authUser.userNo}";
-console.log("creatorNo = " + creatorNo );
 
 function alertPrize(indicatedSegment){
     // Do basic alert of the segment text. You would probably want to do something more interesting with this information.
@@ -233,7 +229,6 @@ function alertPrize(indicatedSegment){
   			curr_basket.push(basket[curr_basket_group][i])
   		}
   	}
-  	console.log(curr_basket)
   	currBasket = JSON.stringify(curr_basket)
   	
     let randomData = {
@@ -244,8 +239,6 @@ function alertPrize(indicatedSegment){
 	}
       
       
-    console.log("randomData = " + randomData);
-  	
   	$.ajax({
 		type : "POST",
 		url : "${pageContext.request.contextPath}/random/makeRandomResult",
@@ -271,7 +264,6 @@ function alertPrize(indicatedSegment){
 }
     
 function modalSelectRandomMembers(storeNo, groupNo){
-	console.log("여기갈래요 그룹 멤버")
 	$("#modal-select-member-area").html("")
 	
 	$.ajax({
@@ -368,12 +360,11 @@ function modalSelectRandomMembers(storeNo, groupNo){
  Kakao.init('f78c3d22061aa91b824c89a07b348da9');
 
  // SDK 초기화 여부를 판단합니다.
- console.log(Kakao.isInitialized());
+ //console.log(Kakao.isInitialized());
 
  /* function kakaoShare() {
  	var voteURL = $("#vote-url-input").val();
  	var basketItem = [JSON.parse(currBasket)[0].storeName, JSON.parse(currBasket)[1].storeName, JSON.parse(currBasket)[2].storeName];
- 	console.log(basketItem)
  	var desc;
  	
  	if(basketItem[2] == '' || basketItem[2] == null){

@@ -196,19 +196,12 @@ $("input").change(function(){
 
 
 $("#btn-submit").on("click", function(){
-	console.log("버튼 확인");
 	
 	var password = $('#updateForm [name = userPassword]').val();
 	var checkPassword = $('#updateForm [name = checkPassword]').val();
 	var name = $('#updateForm [name = userName]').val();
 	var birth = $('#updateForm [name = userBirthYear]').val();
 	var sex = $('#updateForm [name = userSex]').val();
-	
-	console.log(password);
-	console.log(checkPassword);
-	console.log(name);
-	console.log(birth);
-	console.log(sex);
 	
 	if(password =="" || password == null){
 		alert("비밀번호를 확인해주세요.");

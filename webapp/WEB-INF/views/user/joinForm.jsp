@@ -130,11 +130,9 @@ var specialCheckEmail = /[`~!#$%^&*|\\\'\";:\/?]/gi;
 var specialCheck = /[`~!@#$%^&*|\\\'\";:\/?.]/gi;
 
 $("#check-email").on("click", function(){
-	console.log("아이디 체크");
 	
 	var id = $('[name = "userEmail"]').val();
 	
-	console.log(id);
 	if($("#msgErrorEmail").text() != "") {
 		if($("#msgOverlapEmail").hasClass("check-text") === false) {
 			$("#msgOverlapEmail").addClass("check-text");
@@ -149,7 +147,6 @@ $("#check-email").on("click", function(){
 			data : JSON.stringify(id),
 			dataType : "json",
 			success : function(result){
-				console.log(result);
 				
 				if(result == "success"){
 					if($("#msgOverlapEmail").hasClass("collect-text") === false) {
@@ -315,7 +312,6 @@ $("input").change(function(){
 	
 	
 $("#btn-join").on("click", function(){
-	console.log("회원가입 버튼 체크");
 	
 	var id = $('#joinForm [name = userEmail]').val();
 	var password = $('#joinForm [name = userPassword]').val();
@@ -324,11 +320,6 @@ $("#btn-join").on("click", function(){
 	var birth = $('#joinForm [name = userBirthYear]').val();
 	var sex = $('#joinForm [name = userSex]').val();
 	var Check = $('#formCheck-1').is(":checked");
-	
-	console.log(id);
-	console.log(password);
-	console.log(name);
-	console.log(Check);
 		
 	if(id=="" || id == null){
 		alert("이메일을 확인해주세요.");
@@ -342,7 +333,6 @@ $("#btn-join").on("click", function(){
  		return false;
      }
 	
-	console.log(idChk);
 	
 	if(idChk != id){
 		alert("이메일 중복 확인을 다시 해주세요.");

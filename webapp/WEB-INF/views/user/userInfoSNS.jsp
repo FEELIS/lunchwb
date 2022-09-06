@@ -148,15 +148,10 @@ $("input").change(function(){
 })
 
 $("#btn-submit").on("click", function(){
-	console.log("버튼 확인");
 	
 	var name = $('#updateForm [name = userName]').val();
 	var birth = $('#updateForm [name = userBirthYear]').val();
 	var sex = $('#updateForm [name = userSex]').val();
-	
-	console.log(name);
-	console.log(birth);
-	console.log(sex);
 	
 	if(name == "" || name == null){
 		alert("닉네임을 입력해주세요.");

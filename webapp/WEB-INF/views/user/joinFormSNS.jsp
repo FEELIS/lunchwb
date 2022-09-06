@@ -189,8 +189,6 @@ $("input").change(function(){
 })
 
 $("#btn-join").on("click", function(){
-	console.log("회원가입 버튼 체크");
-	
 	var name = $('#joinForm [name = userName]').val();
 	var birth = $('#joinForm [name = userBirthYear]').val();
 	var sex = $('#joinForm [name = userSex]').val();

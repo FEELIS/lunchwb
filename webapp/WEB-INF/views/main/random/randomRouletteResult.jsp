@@ -93,9 +93,6 @@
 let countbas;
 let theWheel;
 let storeInfo = ${storeInfo};
-console.log(storeInfo);
-console.log(storeInfo[0].storeNo);
-console.log(storeInfo.length);
 
 
 
@@ -176,8 +173,6 @@ function startSpin()
         // Important thing is to set the stopAngle of the animation before stating the spin.
         theWheel.animation.stopAngle = stopAt;
 
-    	console.log("stopAt = " + stopAt);
-    	
         // Disable the spin button so can't click again while wheel is spinning.
         document.getElementById('spin_button').src       = "${pageContext.request.contextPath}/assets/img/rouletteOff.png";
         document.getElementById('spin_button').className = "";
@@ -228,7 +223,6 @@ function alertPrize(indicatedSegment){
          alert("클립보드에 복사되었습니다.")
      })
          .catch(err => {
-         console.log("클립보드 복사 실패")
      })
  }
 
@@ -245,12 +239,10 @@ function alertPrize(indicatedSegment){
  Kakao.init('f78c3d22061aa91b824c89a07b348da9');
 
  // SDK 초기화 여부를 판단합니다.
- console.log(Kakao.isInitialized());
 
 function kakaoShare() {
  	var voteURL = $("#vote-url-input").val();
  	var basketItem = [storeInfo[0].storeName, storeInfo[1].storeName, storeInfo[2].storeName];
- 	console.log(basketItem)
  	var desc;
  	
  	if(basketItem[2] == '' || basketItem[2] == null){

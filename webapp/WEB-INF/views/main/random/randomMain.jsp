@@ -98,8 +98,6 @@ $("#random-btn").on("click", function(){
 			async : false,
 			success : function(result){				
 				
-				console.log(result)
-				
 				checkGroup = confirm("현재 선택하신 그룹이 [" + result + "] 맞습니까?");
 				
 				if(!checkGroup) {
@@ -108,9 +106,6 @@ $("#random-btn").on("click", function(){
 				
 				alert("오늘 방문할 가게는 [" + randomStoreName + "] 입니다.")
 				
-				console.log("방문 가게 no = " + randomStoreNo)
-				console.log("방문 가게 이름 = " + randomStoreName)
-	
 				if(modalSelectMembers(randomStoreNo, curr_basket_group) == false){
 					return false
 				}
@@ -125,9 +120,6 @@ $("#random-btn").on("click", function(){
 		alert("오늘 방문할 가게는 [" + randomStoreName + "] 입니다.")
 		alert("시간 있으시면 가입하시죠?")
 	}
-	
-	console.log("방문 가게 no = " + randomStoreNo)
-	console.log("방문 가게 이름 = " + randomStoreName)
 	
 })	
 

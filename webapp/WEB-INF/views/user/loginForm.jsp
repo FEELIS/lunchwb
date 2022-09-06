@@ -83,11 +83,9 @@
 <script type="text/javascript">
 
 $("#check-email").on("click", function(){
-	console.log("아이디 체크");
 	
 	var id = $('[name = "userEmail"]').val();
 	
-	console.log(id);
 	
  	$.ajax({
 		url : "${pageContext.request.contextPath }/user/checkEmail",		
@@ -96,7 +94,6 @@ $("#check-email").on("click", function(){
 		data : JSON.stringify(id),
 		dataType : "json",
 		success : function(result){
-			console.log(result);
 			
 			if(result == "success"){
 				if($("#msgOverlapEmail").hasClass("collect-text") === false) {
