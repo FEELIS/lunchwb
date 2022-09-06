@@ -119,8 +119,11 @@ $("#user-alert").on("click", function(){
 		
 		success : function(notiList){
 			
-			for(var i=0; i<notiList.length; i++){
-				renderNoti(notiList[i])
+			if(notiList.length > 0){
+				$("#noti-0").remove()
+				for(var i=0; i<notiList.length; i++){
+					renderNoti(notiList[i])
+				}
 			}
 			
 		},
