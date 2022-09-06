@@ -71,22 +71,24 @@ public class StatController {
 		return reviewList;
 	};
 	
-	// 리뷰 수정폼
+	// ============================================ 리뷰 수정 ============================================
+	// =============== 리뷰수정하기 폼 ===============
 	@GetMapping("/modifyReview/{reviewNo}")
 	public String modifyReviewForm(@PathVariable("reviewNo")int reviewNo, Model model) {
 		AloneVo aloneVo = statService.getReview(reviewNo);
 		
 		model.addAttribute("aloneVo",aloneVo);
-		return "stat/modifyReview";	// 리다이렉트로 수정
+		return "stat/modifyReview";
 	};
 	
+	// =============== 리뷰 수정하기(DB반영) ===============
 	@RequestMapping(value = "/modifyReview",method = {RequestMethod.GET,RequestMethod.POST})
 	public String modifyReview(@RequestParam int reviewNo, @RequestParam String reviewContent ,
 			@RequestParam int userScore, @RequestPart(value = "file", required = false) MultipartFile file) {
 		AloneVo aloneVo = new AloneVo(reviewNo,reviewContent,userScore);
 		statService.modifyReview(aloneVo,file);
 		
-		return "stat/reviewList";	// 리다이렉트로 수정
+		return "stat/reviewList";
 	};
 	
 	// ============================================ 리뷰 삭제 ============================================
