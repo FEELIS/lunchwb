@@ -422,7 +422,6 @@
                 dataType: "json",
                 success: function(vstList) {
                 	
-                	console.log(vstList);
                     var j = 0;
                     
                     if (vstList.length > 0) {
