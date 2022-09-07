@@ -854,7 +854,7 @@ function modalSortOfStore(storeNo, k){
 		case 0:
 		// k=1 : 리뷰메인(모달에서 넘어가는거 아니고)
 			//조회하는 가게 = 다녀온 가게
-			if(storeNo == "${visitedMap.visitedVo.storeNo}" && "${visitedMap.reviewVo}" == ""){
+			if((storeNo == "${visitedMap.visitedVo.storeNo}") && ("${visitedMap.reviewVo.userScore}" == null)){
 				$(".store-button-area").append('<a href="${pageContext.request.contextPath}/visited/cancel/${visitedMap.visitedVo.visitedNo}">'
 												+'	<button class="btn btn-primary modal-btn-visited-cancel" type="button">방문취소</button>'
 												+'</a>')

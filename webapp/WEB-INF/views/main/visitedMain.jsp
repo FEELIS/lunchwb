@@ -433,13 +433,9 @@
 
 const visitedVo = "${visitedMap.visitedVo}"
 const myVisit = "${visitedMap.relVo}"
-const todayReview = "${visitedMap.reviewVo}"
 //console.log("오늘 방문 정보" + visitedVo)
 //console.log("오늘 방문한 곳의 지난 방문 정보" + myVisit)
 
-if(todayReview != null && todayReview != ""){
-	//console.log("오늘의 리뷰 정보" + todayReview)
-}
 
 $(document).ready(async function(){
 	//방문가게별점그리기
@@ -473,8 +469,7 @@ async function drawStoreStar(){
 
 //오늘 방문한 곳 리뷰 별점 그리기
 async function drawReviewStar(){
-	var review = "${visitedMap.reviewVo}"
-	if(review != null && review != ""){
+	if("${visitedMap.reviewVo.userScore}" != null && "${visitedMap.reviewVo.userScore}" != ""){
 		var userScore = "${visitedMap.reviewVo.userScore}"
 		for(var i=0; i<5; i++){
 			if(userScore > i){
