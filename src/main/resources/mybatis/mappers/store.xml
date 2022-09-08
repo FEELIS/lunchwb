@@ -208,7 +208,7 @@
 					, (SELECT COUNT(visited_no) visit_count
 					   FROM visited
 					   WHERE store_no = #{storeNo}) 
-					, (SELECT  ROUND(AVG(user_score), 2) rating_bujang
+					, (SELECT  ROUND(NVL(AVG(user_score),0), 2) rating_bujang
 					   FROM review r, visited v
 			   		   WHERE v.visited_no = r.visited_no
 			   		   AND v.user_no = r.user_no
@@ -225,10 +225,10 @@
 												   WHEN COUNT(vt.user_no) <= 5 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year) >= 40 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year) < 50 THEN '40대 5인 이하'
 												   WHEN COUNT(vt.user_no) <= 5 AND TO_NUMBER(TO_CHAR(vt.visited_date, 'YYYY')) - AVG(vt.user_birth_year) >= 50 THEN '50대 이상 5인 이하'
 											END favorite_group
-								     FROM	(SELECT s.store_no, TO_DATE(v.visited_date) visited_date, v.user_no, v.group_no, u.user_birth_year
+								     FROM	(SELECT s.store_no, TO_DATE(v.visited_date) visited_date, u.user_no, v.group_no, u.user_birth_year
 										 	 FROM store s, visited v, users u
 										 	 WHERE s.store_no = v.store_no(+)
-										 	 AND v.user_no(+) = u.user_no) vt
+										 	 AND v.user_no = u.user_no) vt
 					   				 GROUP BY vt.store_no, vt.group_no, vt.visited_date) dt
 							 GROUP BY favorite_group
 							 ORDER BY COUNT(favorite_group) DESC)
