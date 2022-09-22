@@ -35,8 +35,8 @@
 	<util:properties id="apiProperties" location="classpath:api.properties"/>
 	
 	
-	<!-- oracle datasource 
-	<bean id="oracleDatasource"
+	<!-- oracle datasource  -->
+	<!-- <bean id="oracleDatasource"
 		class="oracle.jdbc.pool.OracleDataSource" destroy-method="close">
 		<property name="URL"
 			value="jdbc:oracle:thin:@localhost:1521:xe" />
@@ -44,22 +44,25 @@
 		<property name="password" value="lunchwb" />
 		<property name="connectionCachingEnabled" value="true" />
 		<qualifier value="main-db" />
-	</bean>-->
+	</bean> -->
 	
 	<!--  oracle datasource -->
-	<bean id="oracleDatasource"
-		class="oracle.jdbc.pool.OracleDataSource" destroy-method="close">
 		<!-- 배포용 -->
-		<property name="URL" value="jdbc:oracle:thin:@lunchwbweb_high?TNS_ADMIN=/Users/amfun/Documents/wallet/Wallet_lunchwbweb" />
+		<!-- <property name="URL" value="jdbc:oracle:thin:@lunchwbweb_high?TNS_ADMIN=/Users/amfun/Documents/wallet/Wallet_lunchwbweb" /> -->
 		<!-- 개발용 -->
 		<!-- <property name="URL" value="jdbc:oracle:thin:@lunchwb_high?TNS_ADMIN=/Users/amfun/Documents/wallet/Wallet_lunchwbweb" /> -->
+		<!-- 지니 -->
+
+	<bean id="oracleDatasource"
+		class="oracle.jdbc.pool.OracleDataSource" destroy-method="close">
+		<property name="URL" value="jdbc:oracle:thin:@lunchwb_high?TNS_ADMIN=/0.FEELIS/Wallet_lunchwb" />
+		
 		<property name="user" value="admin" />
 		<property name="password" value="^^65Rhcemdtla" />
 		<property name="connectionCachingEnabled" value="true" />
 		<qualifier value="main-db" />
 	</bean>
 
-	<!-- MyBatis SqlSessionFactoryBean 설정 -->
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="oracleDatasource" />
