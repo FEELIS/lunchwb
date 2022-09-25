@@ -224,6 +224,15 @@
    		WHERE user_no = #{userNo}
    	</select>
    	
+   	<update id="groupUpdateState4" parameterType="List">
+		UPDATE USERS
+		SET user_state = 4
+		WHERE
+	   	<foreach item="userNo" index="index" collection="list" separator=" OR ">
+			user_no = #{userNo}
+		</foreach>
+	</update>
+   	
    	
    	<!--  정원  -->
    	<!--  기본 상태로 변경  -->

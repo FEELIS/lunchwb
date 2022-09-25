@@ -110,6 +110,11 @@ public class UserDao {
       return userVo;
    }
    
+	/* 그룹 여기갈래요(바로방문) 선택 - userState 4로 변경 */
+   public void groupUpdateState4(List<Integer> memberList) {
+	   sqlSession.update("user.groupUpdateState4", memberList);
+   }
+   
 
    /* 정원 */
    /* 한 번에 바꾸는 경우 */

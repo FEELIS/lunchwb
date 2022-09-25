@@ -60,12 +60,8 @@ public class VisitedService {
 		//나 빼고 선택해서 리스트를 가져왔기 때문에
 		memberList.add(authUser.getUserNo());
 		
-		//같이갈 멤버 전체
-		for(int i=0; i<memberList.size(); i++) {
-			int userNo = memberList.get(i);
-			//방문 결정 상태 변경
-			userDao.updateState4(userNo);
-		}
+		//방문할 그룹 멤버 userState = 4로 변경
+		userDao.groupUpdateState4(memberList);
 		
 		//오늘 방문 저장
 		Map<String, Object> map = new HashMap<>();
