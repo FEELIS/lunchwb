@@ -28,8 +28,8 @@ public class VisitedDao {
 
 	
 	/* 지니 */
-	public void decideVisit(VisitedVo visitedVo) {
-		sqlSession.insert("visited.decideVisit", visitedVo);
+	public void decideVisit(Map<String, Object> map) {
+		sqlSession.insert("visited.decideVisit", map);
 	}
 	
 	public void cancelVisit(VisitedVo visitedVo) {

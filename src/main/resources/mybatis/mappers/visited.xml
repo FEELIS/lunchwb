@@ -46,9 +46,15 @@
 	
 	
 	<!-- 지니 -->
-	<insert id="decideVisit" parameterType="VisitedVo">
-		INSERT INTO visited
-		VALUES(seq_visited_no.NEXTVAL, #{userNo}, #{groupNo}, #{storeNo}, '', TO_DATE(SYSDATE))
+	<insert id="decideVisit" parameterType="Map">
+		INSERT INTO visited (visited_no, user_no, group_no, store_no, visited_date)
+		SELECT seq_visited_no.NEXTVAL, user_no, group_no, store_no, visited_date
+		FROM (
+		<foreach item="userNo" collection="voteMember" separator="UNION ALL ">
+			SELECT #{userNo} user_no, #{groupNo} group_no, #{storeNo} store_no, TO_DATE(SYSDATE) visited_date 
+			FROM DUAL
+		</foreach>
+		) 
 	</insert>
 	
 	

@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,17 +57,23 @@ public class VisitedService {
 	
 	/******************************* 여기갈래요 결정 ********************************/
 	public void decideVisit(int storeNo, int groupNo, List<Integer> memberList, UserVo authUser) {
+		//나 빼고 선택해서 리스트를 가져왔기 때문에
 		memberList.add(authUser.getUserNo());
 		
 		//같이갈 멤버 전체
 		for(int i=0; i<memberList.size(); i++) {
 			int userNo = memberList.get(i);
-			//오늘 방문 저장
-			VisitedVo visitedVo = new VisitedVo(userNo, groupNo, storeNo);
-			vstDao.decideVisit(visitedVo);
 			//방문 결정 상태 변경
 			userDao.updateState4(userNo);
 		}
+		
+		//오늘 방문 저장
+		Map<String, Object> map = new HashMap<>();
+		map.put("storeNo", storeNo);
+		map.put("groupNo", groupNo);
+		map.put("memberList", memberList);
+		
+		vstDao.decideVisit(map);
 		
 	}
 	
